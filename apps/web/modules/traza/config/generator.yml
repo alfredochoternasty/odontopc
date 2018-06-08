@@ -1,0 +1,38 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ProductoTraza
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          producto_traza
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        nro_lote: { label: lote }
+        nro_venta: { label: Venta }
+        numero: { label: Compra }
+        fecha_venta: { date_format: dd/MM/yyyy }
+        fecha_compra: { date_format: dd/MM/yyyy }
+      list:
+        table_method: retrieveConJoins
+        title: Traza de Productos
+        display: [Producto, cant_vendida, nro_lote, nro_venta, fecha_venta, Cliente, fecha_compra, Proveedor, numero]
+        max_per_page: 20
+        object_actions: []
+        batch_actions: []
+        actions:
+          _new: ~
+          imprimir: {label: Imprimir}
+      filter:
+        display: [producto_id, nro_lote, fecha_venta, cliente_id, fecha_compra, proveedor_id, cant_vendida]
+      form:    ~
+      edit:
+        title: Modificar Traza
+      new:
+        title: Nueva Traza

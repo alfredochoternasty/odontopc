@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Pedido
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          pedido_pedvend
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        id: { label: Numero }
+        fecha: { date_format: dd/MM/yyyy }
+        fecha_venta: { label: Vendido, date_format: dd/MM/yyyy }
+      list:
+        title: Pedidos Vendidos
+        table_method: get_vendidos
+        display: [id, fecha, Cliente, fecha_venta]
+        object_actions:
+          detalle: ~
+      filter:
+        display: [fecha, cliente_id, fecha_venta]
+      form:    ~
+      edit:    ~
+      new:     ~

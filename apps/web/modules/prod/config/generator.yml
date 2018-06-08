@@ -1,0 +1,48 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Producto
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          producto
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        codigo: {label: Código, help: Código de barra}
+        genera_comision: {label: Genera Comisión, help: Indica si se obtiene una comisión por las ventas del producto}
+        precio_vta: { label: Precio de Venta, help: Es el precio de venta del producto y el que se toma como referencia en la lista de precio}
+        grupoprod_id: { label: Grupo}
+        minimo_stock: { label: Stock Minimo}
+        ctr_fact_grupo: { label: Control Fact. Grupo, help: Indica si controla lo facturado según el grupo}
+        orden_grupo: { label: Orden, help: Es un numero para los productos se vean ordendos en el grupo}
+        activo: { label: Activo, help: Indica si el producto se puede utilizar o no}
+      list:
+        table_method: retrieveProdConGrupo
+        title: Administraci&oacute;n de Productos
+        sort: [nombre, asc]
+        display: [Grupo, _nombre, _precio_venta, minimo_stock, orden_grupo, activo, GrupoDos, GrupoTres]
+        object_actions:
+          _delete: ~
+          _edit: ~
+        actions:
+          _new: ~
+          imprimir: {label: Imprimir}
+          lista: {label: Lista de Precios}
+        batch_actions:
+          _delete: ~
+          desactivar: ~
+          activar: ~
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar Producto
+        display: [grupoprod_id, codigo, nombre, precio_vta, minimo_stock, orden_grupo, activo, grupo2, grupo3]
+      new:
+        title: Nuevo Producto
+        display: [grupoprod_id, codigo, nombre, precio_vta, minimo_stock, orden_grupo, activo, grupo2, grupo3]

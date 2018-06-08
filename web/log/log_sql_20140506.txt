@@ -1,0 +1,76 @@
+UPDATE `producto` SET `orden_grupo`=10 WHERE  `id`=187; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=20 WHERE  `id`=188; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=30 WHERE  `id`=193; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=40 WHERE  `id`=189; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=50 WHERE  `id`=190; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=60 WHERE  `id`=191; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=70 WHERE  `id`=192; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=80 WHERE  `id`=195; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=110 WHERE  `id`=43; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=120 WHERE  `id`=44; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=130 WHERE  `id`=45; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=140 WHERE  `id`=47; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=150 WHERE  `id`=112; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=130 WHERE  `id`=46; -- -> 11Rows matched: 1  Changed: 1  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=140 WHERE  `id`=22; -- -> 11Rows matched: 1  Changed: 1  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=210 WHERE  `id`=46; -- -> 11Rows matched: 1  Changed: 1  Warnings: 0
+UPDATE `producto` SET `orden_grupo`=220 WHERE  `id`=22; -- -> 11Rows matched: 1  Changed: 1  Warnings: 0
+
+ALTER TABLE `detalle_compra`
+	ADD COLUMN `nro_lote` VARCHAR(50) NULL AFTER `observacion`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `detalle_resumen`
+	ADD COLUMN `nro_lote` VARCHAR(50) NULL AFTER `observacion`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `det_fact_compra`
+	ADD COLUMN `nro_lote` VARCHAR(50) NULL AFTER `total`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `detalle_venta`
+	ADD COLUMN `nro_lote` VARCHAR(50) NULL AFTER `observacion`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `dev_producto`
+	ADD COLUMN `observacion` VARCHAR(255) NULL DEFAULT NULL AFTER `total`,
+	ADD COLUMN `nro_lote` VARCHAR(50) NULL DEFAULT NULL AFTER `observacion`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `detalle_compra`
+	ADD COLUMN `fecha_vto` DATE NULL AFTER `nro_lote`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `det_fact_compra`
+	ADD COLUMN `fecha_vto` DATE NULL DEFAULT NULL AFTER `nro_lote`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `compra`
+	ADD COLUMN `numero` INT(11) NOT NULL AFTER `tipofactura_id`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+ALTER TABLE `pedido`
+	ADD COLUMN `direccion_entrega` VARCHAR(200) NULL DEFAULT NULL AFTER `fecha_venta`; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+	
+DROP VIEW producto_traza; -- -> -1Rows matched: 1  Changed: 1  Warnings: 0
+CREATE VIEW producto_traza
+AS 
+select
+	dr.id,
+	p.id as producto_id,
+	dc.nro_lote,
+	r.id as nro_venta,
+	r.fecha as fecha_venta,
+	c.id as cliente_id,
+	com.fecha as fecha_compra,
+	prov.id as proveedor_id,
+	com.numero
+from 
+	producto p
+		join detalle_resumen dr on p.id = dr.producto_id
+		join resumen r on dr.resumen_id = r.id
+		join cliente c on r.cliente_id = c.id
+		join detalle_compra dc on p.id = dc.producto_id
+		join compra com on dc.compra_id = com.id
+		join proveedor prov on com.proveedor_id = prov.id; -- -> 10
+		
+delete from lista_precio where id = 21; -- -> 11
+update resumen set lista_id = 22 where lista_id = 21; -- -> 10Rows matched: 0  Changed: 0  Warnings: 0
+
+update localidad set nombre = "poner nombre" where id = 49; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0
+
+update presupuesto set descripcion = '' where descripcion is null; -- -> 10
+
+update sf_guard_user set email_address = "" where id = "61"; -- -> 10Rows matched: 1  Changed: 0  Warnings: 0

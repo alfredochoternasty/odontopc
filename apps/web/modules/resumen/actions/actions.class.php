@@ -1,0 +1,120 @@
+<?php
+
+require_once dirname(__FILE__).'/../lib/resumenGeneratorConfiguration.class.php';
+require_once dirname(__FILE__).'/../lib/resumenGeneratorHelper.class.php';
+
+/**
+ * resumen actions.
+ *
+ * @package    odontopc
+ * @subpackage resumen
+ * @author     Your name here
+ * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ */
+class resumenActions extends autoResumenActions
+{
+  public function executeListDetalle(sfWebRequest $request){
+    $this->redirect( 'detres/index?rid='.$this->getRequestParameter('id'));
+  }
+  
+  public function executeListFactura(sfWebRequest $request){
+    $this->redirect( 'vta/index?rid='.$this->getRequestParameter('id'));
+  }    
+  
+  public function executeListMail(sfWebRequest $request){
+    $resumen = Doctrine::getTable('Resumen')->find($this->getRequestParameter('id'));
+    
+    $mensaje = Swift_Message::newInstance();
+    $mensaje->setFrom(array('info@odontovta.net23.net' => 'NTI implantes'));
+    $mensaje->setTo($resumen->getCliente()->getEmail());
+    $mensaje->setSubject('Detalle Venta');
+    $mensaje->setBody($this->getPartial("detres/imprimir", array("resumen" => $resumen)));
+    $mensaje->setContentType("text/html");
+    $this->getMailer()->send($mensaje);
+    
+    $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$resumen->getCliente()->getEmail());
+    $this->redirect('resumen');    
+  }
+  
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid()){
+      $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+      $resumen = $form->save();
+	  $resumen->setListaId($resumen->getCliente()->getListaPrecio());
+	  $resumen->setMonedaId($resumen->getLista()->getMonedaId());
+	  $resumen->save();
+      $id_pedido = $resumen->getPedidoId();
+      if($id_pedido > 0){
+        $detalle_pedido = Doctrine::getTable('DetallePedido')->findbyPedidoId($id_pedido);
+        foreach($detalle_pedido as $detalle):
+          $detalle_resumen = new DetalleResumen();
+          $detalle_resumen->setResumenId($resumen->getId());
+          $detalle_resumen->setProductoId($detalle->getProductoId());
+          $detalle_resumen->setPrecio($detalle->getPrecio());
+          $detalle_resumen->setCantidad($detalle->getCantidad());
+          $detalle_resumen->setTotal($detalle->getTotal());
+          $detalle_resumen->setObservacion($detalle->getObservacion());
+          $detalle_resumen->save();
+          $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+          Doctrine_Query::create()->update('Pedido p')->set('p.vendido', 1)->set('p.fecha_venta', date('Ymd'))->where('p.id = '.$id_pedido)->execute();
+        endforeach;
+        $this->redirect( 'detres/index?rid='.$resumen->getId());
+      }else{
+        $this->redirect( 'detres/new?rid='.$resumen->getId());
+      }
+    }
+  }
+  
+  
+  public function executeGuardarnuevocliente(sfWebRequest $request){
+    $objProd = new Cliente();
+    $datos = $request->getParameter('cliente');
+    
+    $objProd->setTipoId($datos['tipo_id']);
+    $objProd->setDni($datos['dni']);
+    $objProd->setCuit($datos['cuit']);
+    $objProd->setCondicionfiscalId($datos['condicionfiscal_id']);
+    $objProd->setGeneraComision($datos['genera_comision']);
+    $objProd->setSexo($datos['sexo']);
+    $objProd->setApellido($datos['apellido']);
+    $objProd->setNombre($datos['nombre']);
+    $objProd->setFechaNacimiento($datos['fecha_nacimiento']);
+    $objProd->setDomicilio($datos['domicilio']);
+    $objProd->setLocalidadId($datos['localidad_id']);
+    $objProd->setTelefono($datos['telefono']);
+    $objProd->setCelular($datos['celular']);
+    $objProd->setFax($datos['fax']);
+    $objProd->setEmail($datos['email']);
+    $objProd->setObservacion($datos['observacion']);
+    
+    $objProd->save();
+    
+    return $this->renderText(json_encode($objProd->getId()));
+  }    
+  
+  public function executeNew(sfWebRequest $request){
+    if($this->getRequestParameter('pid')){
+      $this->pedido = Doctrine::getTable('Pedido')->find($this->getRequestParameter('pid'));
+      $this->getUser()->setFlash('notice', 'Esta por vender el Pedido Nº '.$this->pedido->getId().' del cliente '.$this->pedido->getCliente(), false);
+      $this->resumen = new Resumen();
+      $this->resumen->setClienteId($this->pedido->getClienteId());
+      $this->resumen->setPedidoId($this->pedido->getId());
+      $this->form = $this->configuration->getForm($this->resumen);
+      $actions = $this->configuration->getFormActions();//->setLabel('aaa');
+      $actions['_¨save']['label'] = 'aaa';
+      $this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->getId())));
+      $this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->getClienteId())));
+    }else{
+      parent::executeNew($request);
+    }
+  }
+  
+  public function executeVerdetalle(sfWebRequest $request){
+    $rid = $this->getRequestParameter('rid');
+    $this->resumen = Doctrine::getTable('Resumen')->find($rid);
+    $rid=0;
+    $this->setTemplate('ver');
+  }
+}

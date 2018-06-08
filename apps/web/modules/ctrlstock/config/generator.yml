@@ -1,0 +1,39 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ControlStock
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          control_stock
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        grupoprod_id: { label: Grupo}
+        producto_id: { label: Producto}
+        fecha_vta: { label: Fecha Venta, date_format: dd/MM/yyyy }
+        vto_lote: { label: Vto. Lote, date_format: dd/MM/yyyy }
+        nro_lote: { label: Lote}
+        cantidad_vendida: { label: Cant. Vendidos }
+        cantidad_bonificados: { label: Bonificados }
+        cantidad_total: { label: Total }
+      list:
+        title: Listado de Control de Stock
+        display: [producto_nombre, fecha_vta, nro_lote, cantidad_vendida, cantidad_bonificados, cantidad_total, stock_actual, vto_lote]
+        max_per_page: 99999
+        object_actions: []
+        batch_actions: []
+        actions:
+          totales: {label: Ver solo totales}
+          detalle: {label: Ver detallado}
+          imprimir: ~     
+      filter:
+        display: [grupoprod_id, producto_id, fecha_vta, nro_lote, vto_lote, grupo2, grupo3]
+      form:    ~
+      edit:    ~
+      new:     ~

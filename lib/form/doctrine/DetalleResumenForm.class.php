@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * DetalleResumen form.
+ *
+ * @package    odontopc
+ * @subpackage form
+ * @author     Your name here
+ * @version    SVN: $Id: sfDoctrineFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ */
+class DetalleResumenForm extends BaseDetalleResumenForm
+{
+  
+  public function configure()
+  {
+    parent::configure();
+    
+    unset($this['fecha_vto']);
+    $choices = ProductoTable::getArrayActivos();
+    
+    $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+    $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => array()));
+    $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
+    $this->widgetSchema['bonificados'] = new sfWidgetFormChoice(array('choices' => array()));
+    $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
+    
+    if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
+      $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+      $this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+    }else{
+      unset($this['iva'], $this['sub_total']);
+    }
+    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+    
+    
+    $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => true, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
+    $this->validatorSchema['cantidad'] =  new sfValidatorNumber(array('required' => true));
+    $this->validatorSchema['bonificados'] =  new sfValidatorNumber(array('required' => true));
+    $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
+  }
+  
+}

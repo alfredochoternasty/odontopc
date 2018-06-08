@@ -1,0 +1,9 @@
+new:
+    is_secure: true
+    credentials: admin
+delete:
+    is_secure: true
+    credentials: admin
+index:
+    is_secure: true
+    credentials: admin

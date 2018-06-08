@@ -1,0 +1,160 @@
+CondicionFiscal:
+  connection: doctrine
+  tableName: condicion_fiscal
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(50), notnull: true}
+  relations:
+    Clientes: {type: many, class: Cliente, local: id, foreign: condicionfiscal_id}
+    Proveedores: {type: many, class: Proveedor, local: id, foreign: condicionfiscal_id}
+Cliente:
+  connection: doctrine
+  tableName: cliente
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    dni: {type: integer(4), notnull: true}
+    cuit: {type: integer(10)}
+    condicionfiscal_id: {type: integer(4)}
+    apellido: {type: string(50), notnull: true}
+    nombre: {type: string(50), notnull: true}
+    domicilio: {type: string(100)}
+    localidad_id: {type: integer(4)}
+    telefono: {type: string(100)}
+    email: {type: string(100)}
+    observacion: {type: string(200)}
+  relations:
+    Resumenes: {type: many, class: Resumen, local: id, foreign: cliente_id}
+    Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
+    CondFiscal: {type: one, class: CondicionFiscal, local: condicionfiscal_id, onDelete: RESTRICT}
+Compra:
+  connection: doctrine
+  tableName: compra
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    numero: {type: integer(4), notnull: true}
+    tipo_fact: {type: string(3), notnull: true}
+    fecha: {type: date(25), notnull: true}
+    proveedor_id: {type: integer(4), notnull: true}}
+  relations:
+    Proveedor: {type: one, local: proveedor_id, onDelete: RESTRICT}
+    DetallesCompra: {type: many, class: DetalleCompra, local: id, foreign: compra_id}
+DetalleCompra:
+  connection: doctrine
+  tableName: detalle_compra
+  columns:
+    compra_id: {type: integer(4), primary: true}
+    producto_id: {type: integer(4), primary: true}
+    precio: {type: 'decimal(6, 2)', notnull: true}
+    cantidad: {type: integer(1), notnull: true, default: 1}
+    total: {type: 'decimal(6, 2)'}
+  relations:
+    Compra: {type: one, local: compra_id, onDelete: CASCADE}
+    Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+Grupoprod:
+  connection: doctrine
+  tableName: grupoprod
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(50), notnull: true}
+  relations:
+    Productos: {type: many, class: Producto, local: id, foreign: grupoprod_id}
+Producto:
+  connection: doctrine
+  tableName: producto
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    codigo: {type: string(50)}
+    nombre: {type: string(100), notnull: true}
+    grupoprod_id: {type: integer(4)}
+    precio_vta: {type: 'decimal(6, 2)'}
+    genera_ganancia: {type: bool, fixed: true, default: 'true'}
+    mueve_stock: {type: bool, fixed: true, default: 'true'}
+    minimo_stock: {type: integer(1)}
+  relations:
+    Grupoprod: {type: one, local: grupoprod_id, onDelete: RESTRICT}
+Proveedor:
+  connection: doctrine
+  tableName: proveedor
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    cuit: {type: integer(10), notnull: true}
+    condicionfiscal_id: {type: integer(4)}
+    razon_social: {type: string(100), notnull: true}
+    domicilio: {type: string(100)}
+    localidad_id: {type: integer(4)}
+    telefono: {type: string(100)}
+    email: {type: string(100)}
+    observacion: {type: string(200)}
+  relations:
+    Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
+    Compras: {type: many, class: Compra, local: id, foreign: proveedor_id}
+    CondFiscal: {type: one, class: CondicionFiscal, local: condicionfiscal_id, onDelete: RESTRICT}
+Venta:
+  connection: doctrine
+  tableName: venta
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    resumen_id: {type: integer(4), notnull: true}
+    numero: {type: integer(4), notnull: true}
+    tipo_fact: {type: string(3), notnull: true}
+    fecha: {type: date(25), notnull: true}    
+    observacion: {type: string(200)}
+  relations:
+    Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
+    DetVta: {type: many, class: DetalleVenta, local: id, foreign: venta_id}
+DetalleVenta:
+  connection: doctrine
+  tableName: detalle_venta
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    venta_id: {type: integer(4)}
+    producto_id: {type: integer(4)}
+    precio: {type: 'decimal(6, 2)', notnull: true}
+    cantidad: {type: integer(1), notnull: true, default: 1}
+    total: {type: 'decimal(6, 2)'}
+  relations:
+    Venta: {type: one, local: venta_id, onDelete: CASCADE}
+    Producto: {type: one, local: producto_id, onDelete: RESTRICT}    
+Resumen:
+  connection: doctrine
+  tableName: resumen
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    numero: {type: integer(4), notnull: true}
+    fecha: {type: date(25), notnull: true}
+    cliente_id: {type: integer(4), notnull: true}
+    observacion: {type: string(200)}
+  relations:
+    DetRes: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
+    Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
+DetalleResumen:
+  connection: doctrine
+  tableName: detalle_resumen
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    resumen_id: {type: integer(4)}
+    producto_id: {type: integer(4)}
+    precio: {type: 'decimal(6, 2)', notnull: true}
+    cantidad: {type: integer(1), notnull: true, default: 1}
+    total: {type: 'decimal(6, 2)'}
+    observacion: {type: string(200)}
+  relations:
+    Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
+    Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+Localidad:
+  connection: doctrine
+  tableName: localidad
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(50), notnull: true}
+    provincia_id: {type: integer(4), notnull: true}
+  relations:
+    Provincia: {type: one, local: provincia_id, onDelete: RESTRICT}
+Provincia:
+  connection: doctrine
+  tableName: provincia
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(100), notnull: true}
+  relations:
+    Localidades: {type: many, class: Localidad, local: id, foreign: provincia_id} 

@@ -1,0 +1,53 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Cliente
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cliente
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        tipo_id: {help: Tipo de Cliente}
+        condicionfiscal_id: {label: Cond. Fiscal}
+        dni: {help: Número de documento sin puntos '.'}
+        cuit: {help: Número de CUIT sin guion '-'}
+        genera_comision: {label: Genera <br>Comisión, help: Indica si se obtiene una comisión por las compras del cliente}
+        localidad_id: {label: Ciudad, help: Si la ciudad no existe puede agregar un nueva}
+        telefono: {label: Teléfono, help: Número de teléfono fijo}
+        celular: {help: Número de teléfono celular}
+        fax: {help: Número de Fax}
+        lista: {help: Lista de precios para este cliente cuando hace el pedido via la parte de pedidos}
+      list:
+        table_method: retrieveConJoins
+        title: Administraci&oacute;n de Clientes
+        display: [_c_fiscal, apellido, nombre, _direccion, _telefonos, email, activo]
+        object_actions:
+          _delete: ~
+          _edit: ~
+        batch_actions:
+          desactivar: ~
+          activar: ~		  
+        actions:
+          _new: ~
+          imprimir: {label: Imprimir}
+      filter:
+        display: [apellido, nombre, sexo, localidad_id, lista_id, activo]
+      form:
+        display: [tipo_id, activo, cuit, condicionfiscal_id, dni, apellido, nombre, sexo, lista_id, localidad_id, domicilio, telefono, celular, fax, email, observacion]
+      edit:
+        title: Modificar Cliente
+        actions:
+          _list: ~
+          _save: ~
+          _save_and_add: ~
+          generar_usuario: ~
+        
+      new:
+        title: Nuevo Cliente

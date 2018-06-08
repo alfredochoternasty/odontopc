@@ -1,0 +1,44 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Resumen
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          resumen
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        id:    { label: Numero }
+        fecha: { date_format: dd/MM/yyyy }
+        lista_id: { label: Lista de Precios }
+        nro_factura: { label: Numero de Factura }
+        tipofactura_id: { label: Tipo de Factura }
+      list:
+        max_per_page: 10
+        table_method: retrieveConJoins
+        title: Ventas realizadas
+        display: [id, fecha, nro_factura, TipoFactura, Cliente, _total, Pedido, observacion]
+        object_actions:
+          _delete: ~
+          _edit: ~
+          detalle: {label: Detalle}
+          mail: {label: Email}          
+          factura: {label: Factura}          
+        batch_actions:
+          _delete: ~
+      filter: ~
+      form:
+        display: [tipofactura_id, fecha, cliente_id, lista_id, nro_factura, observacion]
+        actions:
+          _list: ~
+          _save: {label: 'Guardar y Agregar Detalle'}
+      edit:
+        title: Modificar Venta
+      new:
+        title: Nueva Venta

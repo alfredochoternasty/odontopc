@@ -1,0 +1,39 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Compra
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          compra
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        tipofactura_id: { label: Comprobante }
+      list:
+        table_method: retrieveConJoins
+        title: Compras Realizadas
+        display: [Cuenta, Proveedor, tipofactura, fecha, _total, observacion]
+        object_actions:
+          _delete: ~
+          _edit: ~
+          detalle: {label: Ver Detalle}
+      filter:  ~
+      form: ~
+      edit:
+        title: Modificar Compra
+        actions:
+          _list: ~
+          _save:
+          _save_and_add: {label: Guardar y Agregar detalle}
+      new:
+        title: Nueva Compra
+        actions:
+          _list: ~
+          _save_and_add: {label: Guardar y Agregar detalle}

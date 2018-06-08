@@ -1,0 +1,34 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           VtaFact
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          vta_fact
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        nombre_prod: { label: Producto }
+      list:
+        max_per_page: 9999
+        table_method: retrieve
+        title: Listado de Ventas Facturadas
+        display: [fecha, nombre_prod, cantidad]
+        object_actions: {}
+        batch_actions: {}
+        actions:
+          totales: {label: Ver solo totales}
+          detalle: {label: Ver detallado}
+          imprimir: ~
+      filter:
+        display: [fecha, producto_id]
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Cliente
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cliente_saldos
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        max_per_page: 50
+        table_method: retrieveConSaldos
+        table_count_method: retrieveConSaldosCount
+        title: Listado de Saldos  
+        display: [Tipo, apellido, nombre, saldo]
+        object_actions: []
+        batch_actions: []
+        actions:
+          imprimir: ~
+      filter:
+        display: [tipo_id, apellido, nombre, moneda]
+      form:    ~
+      edit:    ~
+      new:     ~

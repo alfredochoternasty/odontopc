@@ -1,0 +1,39 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Cobro
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cobro
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        resumen_id: { label: Venta, help: Aqui se muestra las ventas del cliente seleccionado }
+        moneda_id: {help: Tipo de moneda en que se realiza el cobro}
+        monto: {help: Monto a cobrar}
+        tipo_id: {help: Forma en que se efectua el pago}
+        numero: {help: "Numero del deposito, cheque o transferencia" }
+        fecha_vto: {label: Fecha de Vto., help: Fecha de vencimiento del cheque}
+        Resumen: {label: Venta}
+      list:
+        table_method: retrieveConJoins
+        title: Cobros Realizados
+        display: [Cliente, fecha, _monto, Tipo, Banco, numero, observacion]
+        object_actions:
+          _delete: ~
+        actions:
+          _new: ~
+          imprimir: {label: Imprimir}
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar Cobro
+      new:
+        title: Nuevo Cobro

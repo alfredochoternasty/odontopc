@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           sfGuardUser
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          admin_user
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      fields:
+        username: { label: Usuario }
+        first_name: { label: Nombres }
+        last_name: { label: Apellido }
+        password: { label: "Clave" }
+        password_again: { label: "Clave (denuevo)" }
+        email_address: { label: "Email" }
+      list:
+        table_method: retrieveByUsername
+        title: Usuario
+        display: [username, first_name, =last_name]
+      form:
+        class: sfGuardUserAdminForm
+        #display: [username, first_name, last_name, email_address, password, password_again]
+      edit:
+        title: Editrar Usuaario "%%first_name%% %%last_name%%"
+      new:

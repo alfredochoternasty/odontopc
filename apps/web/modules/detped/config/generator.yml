@@ -1,0 +1,43 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DetallePedido
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          detalle_pedido
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Detalle de Pedido
+        display: [Producto, _precio, cantidad, _total, observacion]
+        object_actions:
+          _delete: ~
+          _edit: ~
+        actions:
+          _new: {label: Agregar Producto}
+          imprimir: ~
+          volver: ~
+      filter: {}
+      form:
+        display: [pedido_id, producto_id, precio, cantidad, total, observacion]
+        actions:
+          _delete: ~
+          _list: {label: Cancelar}
+          _save: {label: Guardar y Finalizar}
+          _save_and_add: {label: Guardar y Agregar}
+      edit:
+        title: Modificar Detalle
+      new:
+        title: Nuevo Pedido
+        actions:
+          _list: {label: Cancelar}
+          _save: {label: Guardar y Finalizar}
+          _save_and_add: {label: Guardar y Agregar}
+          finalizar: ~		

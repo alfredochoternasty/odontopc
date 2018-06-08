@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DevProducto
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          dev_producto
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        Resumen: {label: Venta}
+        resumen_id: {label: Venta}
+      list:
+        table_method: retrieveConJoins
+        title: Productos Devueltos
+        display: [id, fecha, Cliente, Resumen, Producto, cantidad, _precio, _total]
+        object_actions:
+          _delete: ~
+          _edit: ~
+      filter:
+        display: [fecha, cliente_id, producto_id]
+      form:    ~
+      edit:    ~
+      new:
+        title: Devolver Producto
+        display: [fecha, cliente_id, producto_id, resumen_id, cantidad, precio, total, nro_lote, observacion]

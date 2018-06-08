@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ListadoCobros
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          listado_cobros
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        cli_gen_comis: { label: Cliente<br>Gen.Comis.}
+      list:
+        title: Listado de Cobros
+        max_per_page: 99999
+        object_actions: []
+        batch_actions: []
+        actions:
+          imprimir: ~
+      filter:
+        display: [fecha, cliente, tipo_cliente, tipo_cobro, moneda]
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Pedido
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          pedido_pedidos
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        id: { label: Numero }
+        fecha: { date_format: dd/MM/yyyy }
+      list:
+        title: Pedidos Pendientes
+        table_method: get_pendientes
+        display: [id, fecha, Cliente, observacion]
+        object_actions:
+          _delete: ~
+          detalle: ~
+          vender: ~
+      filter:
+        display: [fecha, cliente_id]
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Presupuesto
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          presupuesto
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+      list:
+        title: Administracion Presupuestos
+        object_actions:
+          _delete: ~
+          _edit: ~
+          detalle: ~
+          imprimir: ~
+      filter:  ~
+      form:
+        actions:
+          _list: ~
+          _save: {label: 'Guardar y Agregar Detalle'}
+      edit:
+        title: Modificar Presupuesto
+      new:
+        title: Nuevo Presupuesto

@@ -1,0 +1,3 @@
+<td colspan="7">
+  <?php echo __('%%c_fiscal%% - %%apellido%% - %%nombre%% - %%direccion%% - %%telefonos%% - %%email%% - %%activo%%', array('%%c_fiscal%%' => get_partial('cli/c_fiscal', array('type' => 'list', 'cliente' => $cliente)), '%%apellido%%' => $cliente->getApellido(), '%%nombre%%' => $cliente->getNombre(), '%%direccion%%' => get_partial('cli/direccion', array('type' => 'list', 'cliente' => $cliente)), '%%telefonos%%' => get_partial('cli/telefonos', array('type' => 'list', 'cliente' => $cliente)), '%%email%%' => $cliente->getEmail(), '%%activo%%' => get_partial('cli/list_field_boolean', array('value' => $cliente->getActivo()))), 'messages') ?>
+</td>

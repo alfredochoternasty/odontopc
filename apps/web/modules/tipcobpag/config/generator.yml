@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           TipoCobroPago
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tipo_cobro_pago
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Tipos de Cobros/Pagos
+        display: [nombre]
+        object_actions:
+          _delete: ~
+          _edit: ~
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar Tipo de Cobros/Pagos
+      new:
+        title: Nuevo Tipo de Cobros/Pagos

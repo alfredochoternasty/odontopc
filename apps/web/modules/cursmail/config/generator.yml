@@ -1,0 +1,29 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           CursoMailEnviado
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          curso_mail_enviado
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: {date_format: dd/MM/yyyy }
+      list: 
+        title: Emails con info de cursos enviados
+        display: [Curso, e_mail, fecha, lo_vio, se_inscribio]
+        object_actions: []
+        batch_actions: []
+      filter:
+        display: [curso_id, e_mail, fecha, lo_vio, se_inscribio]
+      form:    ~
+      edit:    ~
+      new:
+        title: Enviar email con info de curso
+        display: [curso_id, e_mail, fecha]

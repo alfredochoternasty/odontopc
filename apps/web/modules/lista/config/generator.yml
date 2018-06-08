@@ -1,0 +1,37 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ListaPrecio
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          lista_precio
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        nombre: {help: Nombre de la lista de precios}
+        aumento: {help: Porcentaje de aumento para el precio de los productos inlcuidos en la lista}
+        descuento: {help: Porcentaje de descuento para el precio de los productos inlcuidos en la lista}
+        precio: {help: Precio fijo para el precio de los productos inlcuidos en la lista}
+        defecto: {label: Es Prioridad, help: Si el cliente no tiene una lista definida toma esta lista}
+      list:
+        title: Lista de Precios
+        display: [nombre, moneda, aumento, descuento, precio, defecto, activo]
+        object_actions:
+          _delete: ~
+          _edit: ~
+          detalle: {label: Detalle}          
+      filter:  ~
+      form:
+        actions:
+          _list: ~
+          _save: {label: 'Guardar y Agregar Detalle'}
+      edit:
+        title: Modificar Lista de Precios
+      new:
+        title: Nueva Lista de Precios

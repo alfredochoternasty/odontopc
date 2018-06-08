@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Pedido
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          pedido_pedcerr
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        id: { label: Nro. }
+        fecha: { date_format: dd/MM/yyyy }
+        fecha_venta: { label: Vendido, date_format: dd/MM/yyyy }
+      list:
+        title: Pedidos Cerrados
+        max_per_page: 30
+        display: [id, fecha, fecha_venta, observacion]
+        object_actions:
+          _delete: ~
+          detalle: {label: Ver Detalle}
+      filter:
+        display: [fecha, fecha_venta]
+      form:    ~
+      edit:    ~
+      new:     ~

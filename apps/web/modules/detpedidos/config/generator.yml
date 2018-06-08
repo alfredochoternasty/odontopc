@@ -1,0 +1,32 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DetallePedido
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          detalle_pedido_detpedidos
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list: 
+        title: Detalle de pedido
+        display: [Producto, nro_lote, precio, cantidad, total, observacion]
+        object_actions:
+          _delete: ~
+          _edit: ~
+        actions:
+          vender: ~
+          imprimir: ~
+      filter: {}
+      form:    ~
+      edit:
+        title: Modificar de pedido
+        display: [producto_id, nro_lote, precio, cantidad, total, observacion]
+      new: 
+        title: Nuevo de pedido

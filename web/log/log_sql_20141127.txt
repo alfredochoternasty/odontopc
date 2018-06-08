@@ -1,0 +1,75 @@
+CREATE TABLE cliente_seguimiento (
+	id INT NOT NULL AUTO_INCREMENT,
+	cliente_id INT NOT NULL,
+	fecha DATE NOT NULL,
+	hora VARCHAR(5) NOT NULL,
+	tipo_contacto_id TINYINT NOT NULL,
+	tipo_respuesta_id TINYINT NOT NULL,
+	comentario VARCHAR(255) NULL,
+	prox_contac_fecha DATE NULL,
+	prox_contac_hora VARCHAR(5) NULL,
+  prox_contac_tiempo TINYINT NULL,  
+	prox_contact_coment VARCHAR(255) NULL,
+	usuario VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+); -- -> 10
+
+CREATE TABLE curso (
+	id INT NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(100) NOT NULL,
+	descripcion TEXT NULL,
+	fecha DATE NOT NULL,
+	hora VARCHAR(5) NOT NULL,
+	lugar VARCHAR(255) NULL,
+  precio FLOAT NULL,
+	foto_mapa VARCHAR(255) NULL,
+	link_mapa TEXT NULL,
+	sitio_web VARCHAR(255) NULL,
+	ini_insc DATE NOT NULL,
+	fin_insc DATE NOT NULL,
+	habilitado CHAR(2) NOT NULL DEFAULT 'SI',
+	permite_insc CHAR(2) NOT NULL DEFAULT 'SI',
+	foto1 VARCHAR(255) NULL,
+	foto2 VARCHAR(255) NULL,
+	foto3 VARCHAR(255) NULL,
+	foto4 VARCHAR(255) NULL,
+	PRIMARY KEY (id)
+); -- -> 10
+
+CREATE TABLE curso_inscripcion (
+	id INT NOT NULL AUTO_INCREMENT,
+	curso_id INT NOT NULL,
+	cliente_id INT NOT NULL,
+	fecha DATE NOT NULL,
+  tipo_insc_id INT NOT NULL,
+	comentario VARCHAR(255) NULL,
+	asistio CHAR(2) NULL DEFAULT 'SI',
+	pago_monto FLOAT NULL,
+	mas_info CHAR(2) NULL DEFAULT 'SI',
+	observacion VARCHAR(255) NULL,
+	PRIMARY KEY (id)
+); -- -> 10
+
+CREATE TABLE tipo_contacto (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+); -- -> 10
+
+CREATE TABLE tipo_respuesta (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+); -- -> 10
+
+CREATE TABLE tipo_tiempo_contac (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+); -- -> 10
+
+CREATE TABLE tipo_inscripcion (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+); -- -> 10; -- -> -1

@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Grupoprod
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          grupoprod
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        color: {help: Elegir un color y apretar el circulo multicolor}
+      list:
+        table_method: retrieveProds
+        title: Administracion de Grupos de Productos
+        display: [nombre, _color]
+        object_actions:
+          _delete: ~
+          _edit: ~
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar Grupo
+      new:
+        title: Nuevo Grupo

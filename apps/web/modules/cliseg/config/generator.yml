@@ -1,0 +1,34 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ClienteSeguimiento
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cliente_seguimiento
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        prox_contac_fecha: {label: Prox. Fecha, date_format: dd/MM/yyyy}
+        prox_contac_hora: {label: Prox. Hora}
+        TipoTiempoContac: {label: Prox. Tiempo}
+        prox_contact_coment: {label: Comentario}
+      list:
+        title: Seguimiento de Clientes
+        display: [Cliente, fecha, hora, TipoContacto, TipoRespuesta, comentario, prox_contac_fecha, prox_contac_hora, TipoTiempoContac, prox_contact_coment, usuario]
+        object_actions:
+          _delete: ~
+        actions:
+          _new: ~
+          imprimir: {label: Imprimir}        
+      filter:  ~
+      form: ~
+      edit:    ~
+      new:
+        title: Nuevo Conctacto a Cliente
