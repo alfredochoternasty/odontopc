@@ -45,4 +45,21 @@ abstract class PluginsfGuardUserTable extends Doctrine_Table
 
     return $query->fetchOne();
   }
+  
+    static public function getUsuariosUsuarios(){
+
+		$query = Doctrine_Core::getTable('sfGuardUser')->createQuery('u')
+		  ->where('u.es_cliente = ?', 'N')
+		  ->orderBy('first_name ASC, last_name ASC');
+		$result = $query->execute();
+		return $result;
+    }  
+	
+    static public function getUsuariosClientes(){
+		$query = Doctrine_Core::getTable('sfGuardUser')->createQuery('u')
+		  ->where('u.es_cliente = ?', 'S')
+		  ->orderBy('first_name ASC, last_name ASC');
+		$result = $query->execute();
+		return $result;
+    }  	
 }

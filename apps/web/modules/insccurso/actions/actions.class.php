@@ -26,4 +26,15 @@ class insccursoActions extends autoInsccursoActions
     $dompdf->stream("inscriptos.pdf");    
     return sfView::NONE;
   }
+  
+  public function executeIndex(sfWebRequest $request){
+    if($request->hasParameter('cid')){
+      $cid = $request->getParameter('cid');
+      $this->getUser()->setAttribute('cid', $cid);
+    }else{
+      $cid = $this->getUser()->getAttribute('cid');
+    } 
+    $this->setFilters(array("curso_id" => $cid));
+    parent::executeIndex($request);
+  }  
 }

@@ -96,7 +96,7 @@
   <?php endif; ?>
 </div>
 
-<?php if($sf_user->hasPermission('admin')): ?> 
+<?php if($sf_user->hasPermission('@cliente_seguimiento')): ?> 
   <div style="position:absolute;top:0; left:0; width:45%;">
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">

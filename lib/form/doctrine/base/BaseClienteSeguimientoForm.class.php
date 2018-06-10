@@ -26,7 +26,9 @@ abstract class BaseClienteSeguimientoForm extends BaseFormDoctrine
       'prox_contac_hora'    => new sfWidgetFormInputText(),
       'prox_contac_tiempo'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoTiempoContac'), 'add_empty' => true)),
       'prox_contact_coment' => new sfWidgetFormInputText(),
-      'usuario'             => new sfWidgetFormInputText(),
+      'usuario'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'motivo_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoMotivo'), 'add_empty' => true)),
+      'realizada'           => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -41,7 +43,9 @@ abstract class BaseClienteSeguimientoForm extends BaseFormDoctrine
       'prox_contac_hora'    => new sfValidatorString(array('max_length' => 5, 'required' => false)),
       'prox_contac_tiempo'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoTiempoContac'), 'required' => false)),
       'prox_contact_coment' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'usuario'             => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'usuario'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
+      'motivo_id'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoMotivo'), 'required' => false)),
+      'realizada'           => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_seguimiento[%s]');

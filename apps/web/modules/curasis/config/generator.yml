@@ -18,6 +18,9 @@ generator:
       list:
         title: Asistencia a Cursos
         display: [Curso, es_cliente, nombre, fecha, asistio, pago_monto, mas_info, compro, observacion]
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:
         display: [curso_id, es_cliente, nombre, fecha, asistio, pago_monto, mas_info, compro]
       form:    ~

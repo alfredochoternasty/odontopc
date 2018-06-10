@@ -20,13 +20,13 @@ generator:
         title: Facturas de Compras
         display: [numero, Tipofactura, fecha, Proveedor, _total, observacion]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
           detalle: {label: Ver Detalle}
       filter:  ~
       form:
         actions:
-          _list: ~
+          _list: {label: Volver}
           _save: {label: Guardar y Agregar Detalle}      
       edit:
         title: Modificar Factura de Compra

@@ -13,6 +13,7 @@
   </div>
 
   <div id="sf_admin_content">
+		<h1 style="color:#ff0000;">ATENCION!, los precios no incluyen IVA</h1>
     <?php include_partial('detped/form', array('detalle_pedido' => $detalle_pedido, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
     
     <?php

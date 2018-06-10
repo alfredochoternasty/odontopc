@@ -15,8 +15,11 @@ generator:
       actions: ~
       fields:  ~
       list:
-        title: Administración de productos
+        title: Productos para Trazar
         display: [Grupo, codigo, nombre]
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:    ~
       edit:

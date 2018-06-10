@@ -19,6 +19,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
       'fecha_vto'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'compra_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'), 'add_empty' => true)),
       'observacion' => new sfWidgetFormFilterInput(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -28,6 +29,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
       'fecha_vto'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'compra_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Compra'), 'column' => 'id')),
       'observacion' => new sfValidatorPass(array('required' => false)),
+      'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('lote_filters[%s]');
@@ -54,6 +56,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
       'fecha_vto'   => 'Date',
       'compra_id'   => 'ForeignKey',
       'observacion' => 'Text',
+      'usuario'     => 'ForeignKey',
     );
   }
 }

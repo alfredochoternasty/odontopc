@@ -20,8 +20,8 @@ generator:
         title: Administracion de Grupos de Productos
         display: [nombre, _color]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:    ~
       edit:

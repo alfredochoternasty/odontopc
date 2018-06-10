@@ -88,6 +88,7 @@ Cliente:
     usuario_id: {type: integer(4)}
     lista_id: {type: integer(4), notnull: true}
     activo: {type: boolean, default: 1}
+    recibir_curso: {type: boolean, default: 1}
   relations:
     Resumenes: {type: many, class: Resumen, local: id, foreign: cliente_id}
     Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
@@ -109,6 +110,7 @@ Compra:
     moneda_id: {type: integer(4), notnull: true}
     observacion: {type: string(200)}
     pagado: {type: integer(1), notnull: true, default: 0}
+    usuario: {type: integer(4)}
   relations:
     Proveedor: {type: one, class: Proveedor, local: proveedor_id}
     Detalles: {type: many, class: DetalleCompra, local: id, foreign: compra_id}
@@ -116,6 +118,7 @@ Compra:
     Tipofactura: {type: one, class: TipoFactura, local: tipofactura_id, onDelete: RESTRICT}
     Cuenta: {type: one, class: Cuenta, local: cuenta_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 DetalleCompra:
   connection: doctrine
   tableName: detalle_compra
@@ -131,9 +134,12 @@ DetalleCompra:
     fecha_vto: {type: date(25), notnull: true}
     iva: {type: 'decimal(10, 2)'}
     sub_total: {type: 'decimal(10, 2)'}
+    trazable: {type: boolean}
+    usuario: {type: integer(4)}
   relations:
     Compra: {type: one, local: compra_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 Grupoprod:
   connection: doctrine
   tableName: grupoprod
@@ -233,6 +239,7 @@ Resumen:
     pedido_id: {type: integer(4)}
     nro_factura: {type: integer(4)}
     tipofactura_id: {type: integer(4), notnull: true}
+    usuario: {type: integer(4)}
   relations:
     Detalle: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
@@ -242,6 +249,7 @@ Resumen:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Pedido: {type: one, class: Pedido, local: pedido_id, foreign: id, onDelete: RESTRICT}
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 DetalleResumen:
   connection: doctrine
   tableName: detalle_resumen
@@ -258,9 +266,12 @@ DetalleResumen:
     fecha_vto: {type: date(25), notnull: true}
     iva: {type: 'decimal(10, 2)', default: 0}
     sub_total: {type: 'decimal(10, 2)', default: 0}
+    usuario: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    Lote: {type: one, local: nro_lote, onDelete: RESTRICT}
 Localidad:
   connection: doctrine
   tableName: localidad
@@ -294,12 +305,14 @@ Cobro:
     fecha_vto: {type: date(25)}
     devprod_id: {type: integer(4)}
     observacion: {type: string(200)}
+    usuario: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Banco: {type: one, local: banco_id, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 Pago:
   connection: doctrine
   tableName: pago
@@ -430,6 +443,7 @@ ListadoVentas:
     nro_lote: {type: string(50)}
     grupo2: {type: integer(4)}
     grupo3: {type: integer(4)}
+    fecha_vto: {type: date(25)}
   relations:
     Detalle: {type: one, class: DetalleResumen, local: resumen_id}
     Cliente: {type: one, class: Cliente, local: cliente_id}
@@ -469,11 +483,14 @@ DevProducto:
     precio: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
     observacion: {type: string(200)}
-    nro_lote: {type: string(50)}	
+    nro_lote: {type: string(50)}
+    iva: {type: 'decimal(10, 2)'}
+    usuario: {type: integer(4)}
   relations:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 Presupuesto:
   connection: doctrine
   tableName: presupuesto
@@ -568,6 +585,8 @@ Pedido:
     vendido: {type: integer(1), notnull: true, default: 0}
     fecha_venta: {type: date(25), notnull: true}
     direccion_entrega: {type: string(200)}
+    forma_envio: {type: integer(4), notnull: true}
+    finalizado: {type: integer(4), notnull: true}    
   relations:
     Detalle: {type: many, class: DetallePedido, local: id, foreign: pedido_id}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
@@ -592,7 +611,9 @@ ProductoTraza:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     producto_id: {type: integer(4)}
+    codigo: {type: string(50)}
     nro_lote: {type: string(50)}
+    fecha_vto: {type: date(25)}
     nro_venta: {type: integer(4)}
     fecha_venta: {type: date(25)}
     cliente_id: {type: integer(4)}
@@ -616,17 +637,21 @@ Lote:
     fecha_vto: {type: date(25)}
     compra_id: {type: integer(4)}
     observacion: {type: string(255)}
+    usuario: {type: integer(4)}
   relations:
     Compra: {type: one, local: compra_id, onDelete: RESTRICT}
-    Producto: {type: one, local: producto_id, onDelete: RESTRICT}    
+    Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 ClienteUltimaCompra:
   connection: doctrine
   tableName: cliente_ultima_compra
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
-    cliente_id: {type: integer(4)}
     apellido: {type: string(50)}
     nombre: {type: string(50)}
+    telefono: {type: string(50)}
+    email: {type: string(50)}
+    celular: {type: string(50)}
     fecha: {type: date(25)}
 ListadoCompras:
   connection: doctrine
@@ -705,11 +730,15 @@ ClienteSeguimiento:
     prox_contac_tiempo: {type: integer(1)}    
     prox_contact_coment: {type: string(255)}
     usuario: {type: string(50)}
+    motivo_id: {type: integer(1)}
+    realizada: {type: integer(1)}
   relations:
     Cliente: {type: one, class: Cliente, local: cliente_id}
+    TipoMotivo: {type: one, class: TipoMotivo, local: motivo_id}
     TipoContacto: {type: one, class: TipoContacto, local: tipo_contacto_id}
     TipoRespuesta: {type: one, class: TipoRespuesta, local: tipo_respuesta_id}
     TipoTiempoContac: {type: one, class: TipoTiempoContac, local: prox_contac_tiempo}
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 Curso:
   connection: doctrine
   tableName: curso
@@ -776,6 +805,12 @@ TipoTiempoContac:
 TipoInscripcion:
   connection: doctrine
   tableName: tipo_inscripcion
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(50), notnull: true}
+TipoMotivo:
+  connection: doctrine
+  tableName: tipo_motivo
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}

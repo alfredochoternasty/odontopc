@@ -13,6 +13,14 @@ require_once dirname(__FILE__).'/../lib/devprodGeneratorHelper.class.php';
  */
 class devprodActions extends autoDevprodActions
 {
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->form = $this->configuration->getForm();
+		$cliente_id = $this->getUser()->getAttribute('cliente_id');
+		if (!empty($cliente_id)) $this->form->setDefault('cliente_id', $cliente_id);
+    $this->dev_producto = $this->form->getObject();
+  }	
+	
   protected function processForm(sfWebRequest $request, sfForm $form){
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid()){
@@ -30,13 +38,14 @@ class devprodActions extends autoDevprodActions
       $cobro->save();
       if ($request->hasParameter('_save_and_add')){
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
+        $this->getUser()->setAttribute('cliente_id', $dev_producto->getClienteId());
         $this->redirect('@dev_producto_new');
       }else{
+				$this->getUser()->setAttribute('cliente_id', 0);
         if ($request->hasParameter('rtn')){
           return $dev_producto->getId();
         }else{
           $this->getUser()->setFlash('notice', $notice);
-          //$this->redirect(array('sf_route' => 'dev_producto_edit', 'sf_subject' => $dev_producto));
           $this->redirect('@dev_producto');
         }
       }
@@ -66,7 +75,12 @@ class devprodActions extends autoDevprodActions
       $rid = $this->getUser()->getAttribute('rid');
     }
     $prec_prod = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($resumen, $producto);
-    return $this->renderText(json_encode(sprintf("%01.2f", $prec_prod[0]->getPrecio())));
+    $datos['precio'] = sprintf("%01.2f", $prec_prod[0]->getPrecio());
+    $datos['iva'] = sprintf("%01.2f", $prec_prod[0]->getIva()/$prec_prod[0]->getCantidad());
+    $datos['cant'] = sprintf("%01.2f", $prec_prod[0]->getCantidad());
+		$total = $datos['iva'] + $datos['precio'];
+    $datos['total'] = sprintf("%01.2f", $total);
+    return $this->renderText(json_encode($datos));
   }
   
   public function executeGet_vtas_cliente(sfWebRequest $request){
@@ -103,11 +117,17 @@ class devprodActions extends autoDevprodActions
   public function executeGet_vta_lotes(sfWebRequest $request){
     $lotes = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
     $cantidad = $lotes[0]['cantidad'];
-    $options[] = '<option value="">1</option>';
+    $options[] = '<option value="1" selected >1</option>';
     for($i = 2; $i <= $cantidad; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';
     }
     echo implode($options);
     return sfView::NONE;
-  }  
+  }
+  
+    public function executeGet_lote(sfWebRequest $request){
+    $prods = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
+    echo $prods[0]['nro_lote'];
+    return sfView::NONE;
+  }
 }

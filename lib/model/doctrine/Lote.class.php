@@ -15,6 +15,6 @@ class Lote extends BaseLote
 	public function __toString()
 	{
 		$val = $this->getStock();
-		return empty($val)? '' : $val;
+		return empty($val)? 'no tiene' : $val;
 	}
 }

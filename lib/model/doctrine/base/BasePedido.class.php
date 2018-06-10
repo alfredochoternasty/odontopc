@@ -14,6 +14,8 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @property integer $vendido
  * @property date $fecha_venta
  * @property string $direccion_entrega
+ * @property integer $forma_envio
+ * @property integer $finalizado
  * @property Doctrine_Collection $Detalle
  * @property Cliente $Cliente
  * @property Doctrine_Collection $Resumen
@@ -25,6 +27,8 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @method integer             getVendido()           Returns the current record's "vendido" value
  * @method date                getFechaVenta()        Returns the current record's "fecha_venta" value
  * @method string              getDireccionEntrega()  Returns the current record's "direccion_entrega" value
+ * @method integer             getFormaEnvio()        Returns the current record's "forma_envio" value
+ * @method integer             getFinalizado()        Returns the current record's "finalizado" value
  * @method Doctrine_Collection getDetalle()           Returns the current record's "Detalle" collection
  * @method Cliente             getCliente()           Returns the current record's "Cliente" value
  * @method Doctrine_Collection getResumen()           Returns the current record's "Resumen" collection
@@ -35,6 +39,8 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @method Pedido              setVendido()           Sets the current record's "vendido" value
  * @method Pedido              setFechaVenta()        Sets the current record's "fecha_venta" value
  * @method Pedido              setDireccionEntrega()  Sets the current record's "direccion_entrega" value
+ * @method Pedido              setFormaEnvio()        Sets the current record's "forma_envio" value
+ * @method Pedido              setFinalizado()        Sets the current record's "finalizado" value
  * @method Pedido              setDetalle()           Sets the current record's "Detalle" collection
  * @method Pedido              setCliente()           Sets the current record's "Cliente" value
  * @method Pedido              setResumen()           Sets the current record's "Resumen" collection
@@ -83,6 +89,16 @@ abstract class BasePedido extends sfDoctrineRecord
         $this->hasColumn('direccion_entrega', 'string', 200, array(
              'type' => 'string',
              'length' => 200,
+             ));
+        $this->hasColumn('forma_envio', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
+        $this->hasColumn('finalizado', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
              ));
     }
 

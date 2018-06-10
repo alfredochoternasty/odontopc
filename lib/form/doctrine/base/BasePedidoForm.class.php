@@ -22,6 +22,8 @@ abstract class BasePedidoForm extends BaseFormDoctrine
       'vendido'           => new sfWidgetFormInputText(),
       'fecha_venta'       => new sfWidgetFormDate(),
       'direccion_entrega' => new sfWidgetFormInputText(),
+      'forma_envio'       => new sfWidgetFormInputText(),
+      'finalizado'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -32,6 +34,8 @@ abstract class BasePedidoForm extends BaseFormDoctrine
       'vendido'           => new sfValidatorInteger(array('required' => false)),
       'fecha_venta'       => new sfValidatorDate(),
       'direccion_entrega' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+      'forma_envio'       => new sfValidatorInteger(),
+      'finalizado'        => new sfValidatorInteger(),
     ));
 
     $this->widgetSchema->setNameFormat('pedido[%s]');

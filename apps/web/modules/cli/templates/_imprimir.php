@@ -1,30 +1,43 @@
-<html>
-<head>
-</head>
-<body>
-<h2>Listado de Clientes</h2>
-<table border="1" cellspacing="0" cellpadding="1">
-  <tr>
-    <th style="background: #CCC;">Tipo</th>
-    <th style="background: #CCC;">Apellido</th>
-    <th style="background: #CCC;">Nombre</th>
-    <th style="background: #CCC;">Tel&eacute;fono</th>
-    <th style="background: #CCC;">Celular</th>
-    <th style="background: #CCC;">Email</th>
-    <th style="background: #CCC;">Localidad</th>
-  </tr>
-  <?php $saldo = 0; ?>
-  <?php foreach($clientes as $cliente):?>
-  <tr>
-    <td><?php echo $cliente->getTipo() ?></td>
-    <td><?php echo $cliente->getApellido() ?></td>
-    <td><?php echo $cliente->getNombre() ?></td>
-    <td><?php echo $cliente->getTelefono() ?></td>
-    <td><?php echo $cliente->getCelular() ?></td>
-    <td><?php echo $cliente->getEmail() ?></td>
-    <td><?php if($cliente->getLocalidadId()) echo $cliente->getLocalidad(); ?></td>
-  </tr>
-  <?php endforeach;?>
-</table>
-</body>
-<html>
+
+
+
+
+<?php 
+  header("Content-Disposition: attachment; filename=\"clientes.xls\"");
+  header("Content-Type: application/vnd.ms-excel");
+  
+  echo 'Listado de Clientes' . "\r\n";
+
+
+
+
+
+
+
+
+
+
+
+  $titulos = array('Tipo', 'Apellido', 'Nombre', 'Teléfono', 'Celular', 'Email', 'Localidad');
+  $flag = false;
+  foreach($clientes as $cliente):
+
+        if (!$flag) {
+            echo utf8_encode(implode("\t", $titulos)) . "\r\n";
+            $flag = true;
+        }  
+        $fila = array($cliente->getTipo(), $cliente->getApellido(), $cliente->getNombre(), $cliente->getTelefono(), $cliente->getCelular(), $cliente->getEmail(), $cliente->getLocalidad());
+
+
+
+
+
+
+
+        $string = implode("\t", array_values($fila));
+        echo utf8_decode($string)."\r\n"; 
+  endforeach;
+
+
+
+?>

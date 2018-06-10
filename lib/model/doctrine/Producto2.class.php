@@ -14,7 +14,7 @@ class Producto2 extends BaseProducto2
 {
 	public function __toString()
 	{
-		$val = $this->getNombre();
+		$val = $this->getCodigo() .' - '.$this->getNombre();
 		return empty($val)? '' : $val;
 	}
 }

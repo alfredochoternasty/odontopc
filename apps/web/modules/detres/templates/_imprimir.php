@@ -25,6 +25,7 @@ if(!empty($ped)){ ?>
     <th style="background: #CCC;">Total</th>
     <th style="background: #CCC;">Bonificados</th>
     <th style="background: #CCC;">Lote</th>
+    <th style="background: #CCC;">Fecha Vto</th>
   </tr>
   <?php 
   foreach($resumen->getDetalle() as $detalle):
@@ -45,6 +46,7 @@ if(!empty($ped)){ ?>
     <td><?php echo $detalle->TotalFormato() ?></td>
     <td><?php echo $detalle->getBonificados() ?></td>
     <td><?php echo $detalle->getNroLote() ?></td>
+    <td><?php echo implode('/', array_reverse(explode('-', $detalle->getLote()->getFechaVto()))) ?></td>
   </tr>
   <?php endforeach;?>
   <tr>
@@ -56,6 +58,7 @@ if(!empty($ped)){ ?>
     <?php endif; ?>
     <td style="background: #CCC;">Total:&nbsp;</td>
     <td><?php echo $resumen->getTotalResumenFormato() ?></td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>

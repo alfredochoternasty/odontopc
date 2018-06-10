@@ -27,6 +27,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property integer $usuario_id
  * @property integer $lista_id
  * @property boolean $activo
+ * @property boolean $recibir_curso
  * @property Doctrine_Collection $Resumenes
  * @property Localidad $Localidad
  * @property CondicionFiscal $Condfiscal
@@ -64,6 +65,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method integer             getUsuarioId()          Returns the current record's "usuario_id" value
  * @method integer             getListaId()            Returns the current record's "lista_id" value
  * @method boolean             getActivo()             Returns the current record's "activo" value
+ * @method boolean             getRecibirCurso()       Returns the current record's "recibir_curso" value
  * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
@@ -100,6 +102,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setUsuarioId()          Sets the current record's "usuario_id" value
  * @method Cliente             setListaId()            Sets the current record's "lista_id" value
  * @method Cliente             setActivo()             Sets the current record's "activo" value
+ * @method Cliente             setRecibirCurso()       Sets the current record's "recibir_curso" value
  * @method Cliente             setResumenes()          Sets the current record's "Resumenes" collection
  * @method Cliente             setLocalidad()          Sets the current record's "Localidad" value
  * @method Cliente             setCondfiscal()         Sets the current record's "Condfiscal" value
@@ -210,6 +213,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('activo', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => 1,
+             ));
+        $this->hasColumn('recibir_curso', 'boolean', null, array(
              'type' => 'boolean',
              'default' => 1,
              ));

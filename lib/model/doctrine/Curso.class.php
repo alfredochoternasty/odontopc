@@ -23,4 +23,18 @@ class Curso extends BaseCurso
     return 'Desde el '.$inicio.' al '.$fin;
   }
   
+  public function hayActivos(){
+    $q = Doctrine_Query::create()->select('count(id) as cuenta')->from('Curso c')->where('habilitado = ?', 'SI');
+    $cuenta = $q->execute();
+    if($cuenta[0]['cuenta'] > 0)
+      return true;
+    else
+      return false;
+  }
+  
+  public function DesactivarOtros(){
+	$table = Doctrine::getTable('Curso');
+    $table->createQuery()->update()->set('habilitado', "'NO'")->where('id <> ?', $this->getId())->execute();
+  }  
+  
 }

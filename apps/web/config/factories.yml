@@ -2,9 +2,19 @@
 # http://www.symfony-project.org/reference/1_4/en/05-Factories
 dev:
   mailer:
-    param:
-      delivery_strategy: single_address
+    param:      
+      #delivery_strategy: single_address
+      delivery_strategy: none
       delivery_address:  alfredochoternasty@gmail.com
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host: smtp.gmail.com
+          port: 465
+          encryption: ssl
+          auth_mode: auth
+          username: alfredochoternasty@gmail.com
+          password: cham*3213
           
 prod:
   logger:
@@ -15,22 +25,21 @@ prod:
   mailer:
     param:
       delivery_strategy: realtime
-test:
-  storage:
-    class: sfSessionTestStorage
-    param:
-      session_path: %SF_TEST_CACHE_DIR%/sessions
-
-  response:
-    class: sfWebResponse
-    param:
-      send_http_headers: false
-
-  mailer:
-    param:
-      delivery_strategy: none
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host: smtp.gmail.com
+          port: 465
+          encryption: ssl
+          auth_mode: auth
+          username: implantesnti@gmail.com
+          password: tomatepodrido
 
 all:
+  user:
+    class: myUser
+    param:
+      timeout: 36000
   routing:
     class: sfPatternRouting
     param:
@@ -42,15 +51,3 @@ all:
     param:
       cache_key_use_vary_headers: true
       cache_key_use_host_name:    true
-      
-  mailer:
-    param:
-      transport:
-        class: Swift_SmtpTransport
-        param:
-          host: smtp.gmail.com
-          port: 465
-          encryption: ssl
-          auth_mode: auth
-          username: implantesnti@gmail.com
-          password: tomatepodrido      

@@ -21,5 +21,11 @@ class CompraForm extends BaseCompraForm
     $this->validatorSchema['proveedor_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Proveedor')));    
     
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
+	
+    $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
+	$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+	
+    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
+		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
   }
 }

@@ -13,7 +13,7 @@ abstract class Basecompra2FormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'numero' => new sfWidgetFormFilterInput(),
+      'numero_compra' => new sfWidgetFormFilterInput(),
       'proveedor_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Proveedor'), 'add_empty' => true)),
       'fecha'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'producto_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto2'), 'add_empty' => true)),
@@ -22,7 +22,7 @@ abstract class Basecompra2FormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'numero' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'numero_compra' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'proveedor_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Proveedor'), 'column' => 'id')),
       'fecha'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'producto_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto2'), 'column' => 'id')),
@@ -48,7 +48,7 @@ abstract class Basecompra2FormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'            => 'Number',
-      'numero'        => 'Number',
+      'numero_compra' => 'Number',
       'proveedor_id'  => 'ForeignKey',
       'fecha'         => 'Date',
       'producto_id'   => 'ForeignKey',

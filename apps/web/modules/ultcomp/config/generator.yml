@@ -14,14 +14,17 @@ generator:
     config:
       actions: ~
       fields:
-        fecha: { date_format: dd/MM/yyyy }
+        fecha: {label: Ultima compra, date_format: dd/MM/yyyy }
       list:
+        max_per_page: 20
         title: Ultima compra por clientes
-        display: [apellido, nombre, fecha]
+        display: [apellido, nombre, fecha, telefono, celular, email]
         object_actions:
           detalle: ~
+        actions:
+          imprimir: {label: Imprimir}
       filter:
-        display: [cliente_id, fecha]
+        display: [apellido, nombre, fecha]
       form:    ~
       edit:    ~
       new:     ~

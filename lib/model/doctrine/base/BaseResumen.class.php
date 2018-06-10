@@ -17,6 +17,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property integer $pedido_id
  * @property integer $nro_factura
  * @property integer $tipofactura_id
+ * @property integer $usuario
  * @property Doctrine_Collection $Detalle
  * @property Cliente $Cliente
  * @property Venta $Venta
@@ -25,6 +26,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property TipoMoneda $Moneda
  * @property Pedido $Pedido
  * @property TipoFactura $TipoFactura
+ * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $CobroResumen
  * @property Doctrine_Collection $ControlStock
@@ -39,6 +41,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method integer             getPedidoId()       Returns the current record's "pedido_id" value
  * @method integer             getNroFactura()     Returns the current record's "nro_factura" value
  * @method integer             getTipofacturaId()  Returns the current record's "tipofactura_id" value
+ * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method Doctrine_Collection getDetalle()        Returns the current record's "Detalle" collection
  * @method Cliente             getCliente()        Returns the current record's "Cliente" value
  * @method Venta               getVenta()          Returns the current record's "Venta" value
@@ -47,6 +50,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
  * @method Pedido              getPedido()         Returns the current record's "Pedido" value
  * @method TipoFactura         getTipoFactura()    Returns the current record's "TipoFactura" value
+ * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getCobroResumen()   Returns the current record's "CobroResumen" collection
  * @method Doctrine_Collection getControlStock()   Returns the current record's "ControlStock" collection
@@ -60,6 +64,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setPedidoId()       Sets the current record's "pedido_id" value
  * @method Resumen             setNroFactura()     Sets the current record's "nro_factura" value
  * @method Resumen             setTipofacturaId()  Sets the current record's "tipofactura_id" value
+ * @method Resumen             setUsuario()        Sets the current record's "usuario" value
  * @method Resumen             setDetalle()        Sets the current record's "Detalle" collection
  * @method Resumen             setCliente()        Sets the current record's "Cliente" value
  * @method Resumen             setVenta()          Sets the current record's "Venta" value
@@ -68,6 +73,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setMoneda()         Sets the current record's "Moneda" value
  * @method Resumen             setPedido()         Sets the current record's "Pedido" value
  * @method Resumen             setTipoFactura()    Sets the current record's "TipoFactura" value
+ * @method Resumen             setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method Resumen             setDevProducto()    Sets the current record's "DevProducto" collection
  * @method Resumen             setCobroResumen()   Sets the current record's "CobroResumen" collection
  * @method Resumen             setControlStock()   Sets the current record's "ControlStock" collection
@@ -131,6 +137,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'notnull' => true,
              'length' => 4,
              ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -170,6 +180,11 @@ abstract class BaseResumen extends sfDoctrineRecord
 
         $this->hasOne('TipoFactura', array(
              'local' => 'tipofactura_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

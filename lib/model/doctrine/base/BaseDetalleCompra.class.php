@@ -18,8 +18,11 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @property date $fecha_vto
  * @property decimal $iva
  * @property decimal $sub_total
+ * @property boolean $trazable
+ * @property integer $usuario
  * @property Compra $Compra
  * @property Producto $Producto
+ * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $ListadoCompras
  * 
  * @method integer             getId()             Returns the current record's "id" value
@@ -33,8 +36,11 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @method date                getFechaVto()       Returns the current record's "fecha_vto" value
  * @method decimal             getIva()            Returns the current record's "iva" value
  * @method decimal             getSubTotal()       Returns the current record's "sub_total" value
+ * @method boolean             getTrazable()       Returns the current record's "trazable" value
+ * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method Compra              getCompra()         Returns the current record's "Compra" value
  * @method Producto            getProducto()       Returns the current record's "Producto" value
+ * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getListadoCompras() Returns the current record's "ListadoCompras" collection
  * @method DetalleCompra       setId()             Sets the current record's "id" value
  * @method DetalleCompra       setCompraId()       Sets the current record's "compra_id" value
@@ -47,8 +53,11 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @method DetalleCompra       setFechaVto()       Sets the current record's "fecha_vto" value
  * @method DetalleCompra       setIva()            Sets the current record's "iva" value
  * @method DetalleCompra       setSubTotal()       Sets the current record's "sub_total" value
+ * @method DetalleCompra       setTrazable()       Sets the current record's "trazable" value
+ * @method DetalleCompra       setUsuario()        Sets the current record's "usuario" value
  * @method DetalleCompra       setCompra()         Sets the current record's "Compra" value
  * @method DetalleCompra       setProducto()       Sets the current record's "Producto" value
+ * @method DetalleCompra       setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method DetalleCompra       setListadoCompras() Sets the current record's "ListadoCompras" collection
  * 
  * @package    odontopc
@@ -117,6 +126,13 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
              'length' => 10,
              'scale' => '2',
              ));
+        $this->hasColumn('trazable', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -129,6 +145,11 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
 
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

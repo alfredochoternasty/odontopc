@@ -15,19 +15,23 @@ abstract class BaseClienteUltimaCompraForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'         => new sfWidgetFormInputHidden(),
-      'cliente_id' => new sfWidgetFormInputText(),
-      'apellido'   => new sfWidgetFormInputText(),
-      'nombre'     => new sfWidgetFormInputText(),
-      'fecha'      => new sfWidgetFormDate(),
+      'id'       => new sfWidgetFormInputHidden(),
+      'apellido' => new sfWidgetFormInputText(),
+      'nombre'   => new sfWidgetFormInputText(),
+      'telefono' => new sfWidgetFormInputText(),
+      'email'    => new sfWidgetFormInputText(),
+      'celular'  => new sfWidgetFormInputText(),
+      'fecha'    => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
-      'id'         => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'cliente_id' => new sfValidatorInteger(array('required' => false)),
-      'apellido'   => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'nombre'     => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'fecha'      => new sfValidatorDate(array('required' => false)),
+      'id'       => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'apellido' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nombre'   => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'telefono' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'email'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'celular'  => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'fecha'    => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_ultima_compra[%s]');

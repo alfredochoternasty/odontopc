@@ -28,14 +28,14 @@ generator:
         sort: [nombre, asc]
         display: [Grupo, _nombre, _precio_venta, minimo_stock, orden_grupo, activo, GrupoDos, GrupoTres]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
         actions:
-          _new: ~
+          _new: {label: Nuevo}
           imprimir: {label: Imprimir}
           lista: {label: Lista de Precios}
         batch_actions:
-          _delete: ~
+          _delete: {label: Eliminar}
           desactivar: ~
           activar: ~
       filter:  ~

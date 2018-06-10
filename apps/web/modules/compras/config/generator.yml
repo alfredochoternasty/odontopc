@@ -23,11 +23,11 @@ generator:
         title: Compras Realizadas
         display: [Proveedor, fecha, Producto2, cantidad, nro_lote, fecha_vto]
         actions:
-          _new: ~
+          _new: {label: Nuevo}
           imprimir: ~
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:    ~
       edit:

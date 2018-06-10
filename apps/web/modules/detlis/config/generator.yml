@@ -22,8 +22,8 @@ generator:
         title: Detalle de Lista de Precios
         display: [Lista, _producto, _grupo, aumento, descuento, _precio]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
         actions:
           _new: {label: Agregar Producto}
           agregar_grupo: {label: Agregar Grupo de Productos, action: agg}

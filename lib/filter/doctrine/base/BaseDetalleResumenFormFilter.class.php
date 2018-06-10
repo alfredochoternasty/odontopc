@@ -20,10 +20,11 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'total'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'bonificados' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'observacion' => new sfWidgetFormFilterInput(),
-      'nro_lote'    => new sfWidgetFormFilterInput(),
+      'nro_lote'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
       'fecha_vto'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'iva'         => new sfWidgetFormFilterInput(),
       'sub_total'   => new sfWidgetFormFilterInput(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,10 +35,11 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'total'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'bonificados' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'observacion' => new sfValidatorPass(array('required' => false)),
-      'nro_lote'    => new sfValidatorPass(array('required' => false)),
+      'nro_lote'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lote'), 'column' => 'id')),
       'fecha_vto'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'iva'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'sub_total'   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_resumen_filters[%s]');
@@ -65,10 +67,11 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'total'       => 'Number',
       'bonificados' => 'Number',
       'observacion' => 'Text',
-      'nro_lote'    => 'Text',
+      'nro_lote'    => 'ForeignKey',
       'fecha_vto'   => 'Date',
       'iva'         => 'Number',
       'sub_total'   => 'Number',
+      'usuario'     => 'ForeignKey',
     );
   }
 }

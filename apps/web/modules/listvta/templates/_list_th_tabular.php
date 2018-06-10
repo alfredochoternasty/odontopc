@@ -160,7 +160,7 @@ slot('sf_admin.current_header');
   <?php endif; ?>
 </th>
 <?php end_slot(); ?>
-<?php if(!$ver_solo_totales){ ?>
+
 <?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
 <th class="sf_admin_text sf_admin_list_th_total ui-state-default ui-th-column">
   <?php if ('total' == $sort[0]): ?>
@@ -176,6 +176,7 @@ slot('sf_admin.current_header');
   <?php endif; ?>
 </th>
 <?php end_slot(); ?>
+<?php if(!$ver_solo_totales){ ?>
 <?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
 <th class="sf_admin_text sf_admin_list_th_nro_lote ui-state-default ui-th-column">
   <?php if ('nro_lote' == $sort[0]): ?>

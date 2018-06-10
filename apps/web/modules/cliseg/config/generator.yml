@@ -19,16 +19,26 @@ generator:
         prox_contac_hora: {label: Prox. Hora}
         TipoTiempoContac: {label: Prox. Tiempo}
         prox_contact_coment: {label: Comentario}
+        TipoMotivo: {label: Motivo del Contacto}
+        motivo_id: {label: Motivo del Contacto}
+        TipoContacto: {label: Medio de Contacto}
+        tipo_contacto_id: {label: Medio de Contacto}
+        TipoRespuesta: {label: Respuesta}
+        tipo_respuesta_id: {label: Respuesta}
+        realizada: {label: Hecho}
       list:
         title: Seguimiento de Clientes
-        display: [Cliente, fecha, hora, TipoContacto, TipoRespuesta, comentario, prox_contac_fecha, prox_contac_hora, TipoTiempoContac, prox_contact_coment, usuario]
+        display: [Cliente, TipoMotivo, fecha, hora, TipoContacto, TipoRespuesta, comentario, prox_contac_fecha, prox_contac_hora, prox_contact_coment, realizada]
         object_actions:
-          _delete: ~
+          _delete: {label: Eliminar}
+          _hecho: {label: Hecho}
         actions:
           _new: ~
           imprimir: {label: Imprimir}        
-      filter:  ~
+      filter:
+        display: [cliente_id, motivo_id, fecha, hora, tipo_contacto_id, tipo_respuesta_id, prox_contac_fecha, prox_contac_hora, realizada]
       form: ~
       edit:    ~
       new:
         title: Nuevo Conctacto a Cliente
+        display: [cliente_id, motivo_id, fecha, hora, tipo_contacto_id, tipo_respuesta_id, realizada, comentario, prox_contac_fecha, prox_contac_hora, prox_contact_coment]

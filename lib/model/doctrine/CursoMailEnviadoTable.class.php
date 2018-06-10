@@ -14,6 +14,15 @@ class CursoMailEnviadoTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('CursoMailEnviado');
+        return Doctrine_Core::getTable('CursoMailEnviado');//->orderBy('id desc');
     }
+		
+    public function retrieveConJoins(Doctrine_Query $q){
+      $rootAlias = $q->getRootAlias();
+      $q->leftJoin($rootAlias . '.Curso c');
+      //$q->leftJoin($rootAlias . '.Cliente cli');
+      //$q->leftJoin($rootAlias . '.sfGuardUser u');
+			$q->orderBy('id desc');
+      return $q;
+    }		
 }

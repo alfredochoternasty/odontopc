@@ -58,8 +58,8 @@ class sfWidgetFormSelectDoubleList extends sfWidgetForm
     $this->addOption('class', 'double_list');
     $this->addOption('class_select', 'double_list_select');
     $this->addOption('associated_first', true);
-    $this->addOption('label_unassociated', 'Unassociated');
-    $this->addOption('label_associated', 'Associated');
+    $this->addOption('label_unassociated', 'Desasociados');
+    $this->addOption('label_associated', 'Asociados');
     $associated_first = isset($options['associated_first']) ? $options['associated_first'] : true;
 
     if ($associated_first)
@@ -75,8 +75,8 @@ class sfWidgetFormSelectDoubleList extends sfWidgetForm
       $float = 'right';
     }
 
-    $this->addOption('unassociate', '<img src="/sfFormExtraPlugin/images/'.$unassociate_image.'" alt="unassociate" />');
-    $this->addOption('associate', '<img src="/sfFormExtraPlugin/images/'.$associate_image.'" alt="associate" />');
+    $this->addOption('unassociate', '<img src="../sfFormExtraPlugin/images/'.$unassociate_image.'" alt="Desasociar" />');
+    $this->addOption('associate', '<img src="../sfFormExtraPlugin/images/'.$associate_image.'" alt="Asociar" />');
     $this->addOption('template', <<<EOF
 <div class="%class%">
   <div style="float: left">
@@ -144,6 +144,9 @@ EOF
 
     $size = isset($attributes['size']) ? $attributes['size'] : (isset($this->attributes['size']) ? $this->attributes['size'] : 10);
 
+	ksort($associated);
+	ksort($unassociated);
+	
     $associatedWidget = new sfWidgetFormSelect(array('multiple' => true, 'choices' => $associated), array('size' => $size, 'class' => $this->getOption('class_select').'-selected'));
     $unassociatedWidget = new sfWidgetFormSelect(array('multiple' => true, 'choices' => $unassociated), array('size' => $size, 'class' => $this->getOption('class_select')));
 

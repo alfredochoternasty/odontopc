@@ -18,8 +18,8 @@ generator:
         title: Bancos
         display: [nombre]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:    ~
       edit:

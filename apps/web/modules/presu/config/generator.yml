@@ -18,14 +18,14 @@ generator:
       list:
         title: Administracion Presupuestos
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
           detalle: ~
           imprimir: ~
       filter:  ~
       form:
         actions:
-          _list: ~
+          _list: {label: Volver}
           _save: {label: 'Guardar y Agregar Detalle'}
       edit:
         title: Modificar Presupuesto

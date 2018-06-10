@@ -5,7 +5,20 @@
   <?php echo $detalle_resumen->getNroLote() ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_nro_lote">
-  <?php echo implode('/', array_reverse(explode('-', $detalle_resumen->getLote()->getFechaVto()))) ?>
+  <?php 
+    $lote = $detalle_resumen->getNroLote();
+    if($lote[0] != 'i'){
+      $lotes = Doctrine::getTable('Lote')->findByNroLote($lote);
+			$fec = $lotes[0]->getFechaVto();
+      if(!empty($fec)){
+        echo implode('/', array_reverse(explode('-', $fec)));
+      }else{
+        echo 'no tiene';
+      }
+    }else{
+      echo 'no tiene';
+    }
+   ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_precio">
   <?php echo $detalle_resumen->PrecioFormato() ?>

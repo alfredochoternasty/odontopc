@@ -23,6 +23,8 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'fecha_vto'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'iva'         => new sfWidgetFormFilterInput(),
       'sub_total'   => new sfWidgetFormFilterInput(),
+      'trazable'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -36,6 +38,8 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'fecha_vto'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'iva'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'sub_total'   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'trazable'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_compra_filters[%s]');
@@ -66,6 +70,8 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'fecha_vto'   => 'Date',
       'iva'         => 'Number',
       'sub_total'   => 'Number',
+      'trazable'    => 'Boolean',
+      'usuario'     => 'ForeignKey',
     );
   }
 }

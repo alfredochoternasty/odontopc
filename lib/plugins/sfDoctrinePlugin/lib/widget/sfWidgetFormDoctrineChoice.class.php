@@ -59,6 +59,7 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
     $this->addOption('query', null);
     $this->addOption('multiple', false);
     $this->addOption('table_method', null);
+    $this->addOption('parameters', array());
 
     parent::configure($options, $attributes);
   }
@@ -87,8 +88,9 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
     }
     else
     {
-      $tableMethod = $this->getOption('table_method');
-      $results = Doctrine_Core::getTable($this->getOption('model'))->$tableMethod();
+      //$tableMethod = $this->getOption('table_method');
+      //$results = Doctrine_Core::getTable($this->getOption('model'))->$tableMethod();
+      $results = $this->callTableMethod(); 
 
       if ($results instanceof Doctrine_Query)
       {
@@ -119,4 +121,17 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
 
     return $choices;
   }
+  
+  private function callTableMethod(){ 
+    $tableMethod = $this->getOption('table_method'); 
+    if (is_array($tableMethod)){ 
+      $results = call_user_func_array(array(Doctrine::getTable($this->getOption('model')), 
+                                      $tableMethod['method']), 
+                                      $tableMethod['parameters']); 
+    }else{ 
+      $results = Doctrine::getTable($this->getOption('model'))->$tableMethod(); 
+    } 
+    
+    return $results; 
+  } 
 }

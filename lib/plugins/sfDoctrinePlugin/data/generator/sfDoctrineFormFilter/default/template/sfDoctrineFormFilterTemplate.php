@@ -3,9 +3,9 @@
 /**
  * <?php echo $this->table->getOption('name') ?> filter form.
  *
- * @package    ##PROJECT_NAME##
+ * @package    odontopc
  * @subpackage filter
- * @author     ##AUTHOR_NAME##
+ * @author     Your name here
  * @version    SVN: $Id: sfDoctrineFormFilterTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class <?php echo $this->table->getOption('name') ?>FormFilter extends Base<?php echo $this->table->getOption('name') ?>FormFilter

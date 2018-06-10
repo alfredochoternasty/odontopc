@@ -19,11 +19,13 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @property date $fecha_vto
  * @property integer $devprod_id
  * @property string $observacion
+ * @property integer $usuario
  * @property Resumen $Resumen
  * @property Cliente $Cliente
  * @property TipoCobroPago $Tipo
  * @property TipoMoneda $Moneda
  * @property Banco $Banco
+ * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $CobroResumen
  * 
  * @method integer             getId()           Returns the current record's "id" value
@@ -38,11 +40,13 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method date                getFechaVto()     Returns the current record's "fecha_vto" value
  * @method integer             getDevprodId()    Returns the current record's "devprod_id" value
  * @method string              getObservacion()  Returns the current record's "observacion" value
+ * @method integer             getUsuario()      Returns the current record's "usuario" value
  * @method Resumen             getResumen()      Returns the current record's "Resumen" value
  * @method Cliente             getCliente()      Returns the current record's "Cliente" value
  * @method TipoCobroPago       getTipo()         Returns the current record's "Tipo" value
  * @method TipoMoneda          getMoneda()       Returns the current record's "Moneda" value
  * @method Banco               getBanco()        Returns the current record's "Banco" value
+ * @method sfGuardUser         getSfGuardUser()  Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getCobroResumen() Returns the current record's "CobroResumen" collection
  * @method Cobro               setId()           Sets the current record's "id" value
  * @method Cobro               setFecha()        Sets the current record's "fecha" value
@@ -56,11 +60,13 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method Cobro               setFechaVto()     Sets the current record's "fecha_vto" value
  * @method Cobro               setDevprodId()    Sets the current record's "devprod_id" value
  * @method Cobro               setObservacion()  Sets the current record's "observacion" value
+ * @method Cobro               setUsuario()      Sets the current record's "usuario" value
  * @method Cobro               setResumen()      Sets the current record's "Resumen" value
  * @method Cobro               setCliente()      Sets the current record's "Cliente" value
  * @method Cobro               setTipo()         Sets the current record's "Tipo" value
  * @method Cobro               setMoneda()       Sets the current record's "Moneda" value
  * @method Cobro               setBanco()        Sets the current record's "Banco" value
+ * @method Cobro               setSfGuardUser()  Sets the current record's "sfGuardUser" value
  * @method Cobro               setCobroResumen() Sets the current record's "CobroResumen" collection
  * 
  * @package    odontopc
@@ -132,6 +138,10 @@ abstract class BaseCobro extends sfDoctrineRecord
              'type' => 'string',
              'length' => 200,
              ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -159,6 +169,11 @@ abstract class BaseCobro extends sfDoctrineRecord
 
         $this->hasOne('Banco', array(
              'local' => 'banco_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

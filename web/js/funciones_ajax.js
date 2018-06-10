@@ -4,7 +4,31 @@ $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#cliente_seguimiento_hora").mask("99:99",{placeholder:" "});
 $("#cliente_seguimiento_prox_contac_hora").mask("99:99",{placeholder:" "});
 $("#curso_hora").mask("99:99",{placeholder:" "});
+$("#curso_mail_enviado_tipo_envio").change(function(event){
+	var id = $("#curso_mail_enviado_tipo_envio").find(':selected').val();
+	if (id == 3) {
+		alert('Seguro que desea enviar información del curso a TODOS LOS CLIENTES ??');
+	}
 });
+
+});
+
+
+$(document).ready(function(){
+  $("#resumen_cliente_id").change(function(event){
+    var id = $("#resumen_cliente_id").find(':selected').val();
+    $.ajax({
+        url: 'datoscliente?cid='+id,
+        dataType: "json",
+        success: function(data) {
+          $("#resumen_cuit").attr('value', data.cuit);
+          $("#resumen_afip").attr('value', data.afip);
+          $("#resumen_saldo").attr('value', data.saldo);
+        },
+      });
+  });
+})
+
 
 //pedidos 
 $(document).ready(function(){
@@ -295,10 +319,9 @@ $(document).ready(function(){
           url: 'buscarprecio?rid='+rid+'&pid='+pid,
           dataType: "json",
           success: function(data) {
-            $("#dev_producto_precio").attr('value', data);
-            var cantidad = $("#dev_producto_cantidad").val();
-            var total = data * cantidad;
-            $("#dev_producto_total").attr('value', total);
+            $("#dev_producto_precio").attr('value', data.precio);
+            $("#dev_producto_iva").attr('value', data.iva);
+            $("#dev_producto_total").attr('value', data.total);
           }
         });                  
   }); 
@@ -319,11 +342,25 @@ $(document).ready(function(){
           }
         });                  
   });
+ 
+  $("#dev_producto_resumen_id").change(function(event){
+      var pid = $("#dev_producto_producto_id").find(':selected').val();
+      var rid = $("#dev_producto_resumen_id").find(':selected').val();
+      $.ajax({
+          url: 'get_lote?rid='+rid+'&pid='+pid,
+          //dataType: "json",
+          success: function(data) {
+            $("#dev_producto_nro_lote").html('');
+            $("#dev_producto_nro_lote").attr('value', data);
+          }
+        });                  
+  });
 
   $("#dev_producto_cantidad").change(function(event){
       var cantidad = $("#dev_producto_cantidad").find(':selected').val();
       var precio = $("#dev_producto_precio").val();
-      var total = cantidad * precio;
+      var iva = $("#dev_producto_iva").val();
+      var total = cantidad * (parseFloat(precio) + parseFloat(iva));
       $("#dev_producto_total").attr('value', total.toFixed(2));                
   });   
   

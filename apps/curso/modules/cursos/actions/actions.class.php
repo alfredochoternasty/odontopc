@@ -9,7 +9,7 @@
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class cursosActions extends sfActions
-{
+{	
   private function enviarMailInscripcion($p_email, $p_id_curso){
     $o_curso = Doctrine_Core::getTable('Curso')->find($p_id_curso);
     $mensaje = Swift_Message::newInstance();
@@ -100,9 +100,9 @@ class cursosActions extends sfActions
   
   public function executeIndex(sfWebRequest $request)
   {
-    $this->cursos = Doctrine_Core::getTable('Curso')
-      ->createQuery('a')
-      ->execute();
+    $table = Doctrine_Core::getTable('Curso');
+    $rs = $table->createQuery('c')->where("habilitado = 'SI'")->execute();
+	$this->redirect('cursos/show?id='.$rs[0]['id']);
   }
 
   public function executeShow(sfWebRequest $request)
@@ -114,13 +114,25 @@ class cursosActions extends sfActions
     }
     $a = rand(0, 5);
     $b = rand(0, 5);
-    $this->getUser()->setAttribute("captcha", "Resultado de $a + $b ?");
+    $this->getUser()->setAttribute("captcha", "Resultado de $a + $b");
     $this->getUser()->setAttribute("resultado_captcha", $a+$b);
     $this->getUser()->setAttribute("envio_id", $request->getParameter('envio'));
     $this->curso = Doctrine_Core::getTable('Curso')->find(array($request->getParameter('id')));
     $this->forward404Unless($this->curso);
   }
 
+  public function executeDesuscribir(sfWebRequest $request)
+  {
+    if($request->hasParameter('email')){
+      $cliente = Doctrine_Core::getTable('Cliente')->findByEmail($request->getParameter('email'));
+			if (!empty($cliente[0])) {
+				$cliente[0]->setRecibirCurso(0);
+				$cliente[0]->save();
+			}
+    }
+  }
+	
+	
   public function executeNew(sfWebRequest $request)
   {
     $this->forward404Unless(0);

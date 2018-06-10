@@ -25,6 +25,8 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'total'       => new sfWidgetFormInputText(),
       'observacion' => new sfWidgetFormInputText(),
       'nro_lote'    => new sfWidgetFormInputText(),
+      'iva'         => new sfWidgetFormInputText(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -38,6 +40,8 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'total'       => new sfValidatorNumber(array('required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'nro_lote'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'iva'         => new sfValidatorNumber(array('required' => false)),
+      'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto[%s]');

@@ -3,9 +3,9 @@
 /**
  * <?php echo $this->table->getOption('name') ?> filter form base class.
  *
- * @package    ##PROJECT_NAME##
+ * @package    odontopc
  * @subpackage filter
- * @author     ##AUTHOR_NAME##
+ * @author     Your name here
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 29570 2010-05-21 14:49:47Z Kris.Wallsmith $
  */
 abstract class Base<?php echo $this->table->getOption('name') ?>FormFilter extends <?php echo $this->getFormClassToExtend().PHP_EOL ?>

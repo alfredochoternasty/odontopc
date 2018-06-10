@@ -64,7 +64,7 @@ body
   font-family: verdana;
 	background: #fafafa;
 	padding: 10px;
-	width: 500px;
+	width: 650px;
 	margin: 0 auto;
 	border: 1px solid #ffe2e3;
 }
@@ -146,4 +146,14 @@ background-image: url('warning.png');
 color: #D8000C;
 background-color: #FFBABA;
 background-image: url('error.png');
+}
+
+#sf_guard_group_permissions_list option[value="10"], option[value="60"], [value="90"], [value="170"], [value="230"], [value="310"], [value="360"] 
+{
+    background: #ccc;
+}
+
+#unassociated_sf_guard_group_permissions_list option[value="10"], option[value="60"], [value="90"], [value="170"], [value="230"], [value="310"], [value="360"] 
+{
+    background: #ccc;
 }

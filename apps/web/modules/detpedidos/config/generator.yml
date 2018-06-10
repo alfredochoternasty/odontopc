@@ -18,8 +18,8 @@ generator:
         title: Detalle de pedido
         display: [Producto, nro_lote, precio, cantidad, total, observacion]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
         actions:
           vender: ~
           imprimir: ~

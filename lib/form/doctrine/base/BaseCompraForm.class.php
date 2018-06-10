@@ -24,6 +24,7 @@ abstract class BaseCompraForm extends BaseFormDoctrine
       'moneda_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => false)),
       'observacion'    => new sfWidgetFormInputText(),
       'pagado'         => new sfWidgetFormInputText(),
+      'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -36,6 +37,7 @@ abstract class BaseCompraForm extends BaseFormDoctrine
       'moneda_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'))),
       'observacion'    => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'pagado'         => new sfValidatorInteger(array('required' => false)),
+      'usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('compra[%s]');

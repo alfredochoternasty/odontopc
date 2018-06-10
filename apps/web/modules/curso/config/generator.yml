@@ -17,7 +17,8 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
         ini_insc: {label: Inicio de Inscripción, date_format: dd/MM/yyyy }
         fin_insc: {label: Fin de Inscripción, date_format: dd/MM/yyyy }
-        permite_insc: {label: Tiene Inscripción}
+        permite_insc: {label: Permite Inscripción}
+        habilitado: {label: Activo}
         logo: {label: Logo Curso}
         foto1: {label: Programa del Curso}
         foto2: {label: Otro archivo del Curso}
@@ -27,8 +28,8 @@ generator:
         title: Administración de Cursos
         display: [nombre, fecha, hora, lugar, precio, permite_insc, ini_insc, fin_insc, habilitado]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
           inscriptos: ~
           enviar: ~
       filter:

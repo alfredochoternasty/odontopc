@@ -78,7 +78,7 @@ cliente_seguimiento:
     prefix_path:          /cliseg
     column:               id
     with_wildcard_routes: true
-
+    
 detalle_resumen_ultcompdet:
   class: sfDoctrineRouteCollection
   options:

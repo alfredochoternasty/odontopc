@@ -13,15 +13,12 @@ require_once dirname(__FILE__).'/../lib/trazaGeneratorHelper.class.php';
  */
 class trazaActions extends autoTrazaActions
 {
+	
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ProductoTrazaFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
-/*    $consulta->leftJoin('r.Producto p');
-    $consulta->leftJoin('p.Grupo gr');
-    $consulta->andWhere('p.activo = 1');
-    $consulta->andWhere('p.grupoprod_id <> 1');
-    $consulta->andWhere('p.grupoprod_id <> 15');
-    $consulta->orderBy('gr.nombre asc, p.orden_grupo asc, p.nombre asc');*/
+		$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
+		$consulta->orderBy('fecha_venta DESC')->limit(50)->offset($pagina * 50);
     $traza = $consulta->execute();
     
     $dompdf = new DOMPDF();
@@ -31,4 +28,62 @@ class trazaActions extends autoTrazaActions
     $dompdf->stream("traza.pdf");    
     return sfView::NONE;
   }
+	
+  public function executeListExcel(sfWebRequest $request){
+    $filtro = new ProductoTrazaFormFilter();
+    $consulta = $filtro->buildQuery($this->getFilters());
+		$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
+		$consulta->orderBy('fecha_venta DESC')->limit(50)->offset($pagina * 50);		
+    $traza = $consulta->execute();
+			
+    header("Content-Disposition: attachment; filename=\"traza_pagina.xls\"");
+    header("Content-Type: application/vnd.ms-excel");
+		
+		if(!empty($traza[0])){
+			$flag = false;
+			$titulos = array('Fecha', 'Cliente', 'Proveedor', 'Marca', 'Codigo', 'Descripcion', 'Lote', 'Factura', 'Vencimiento', 'Cantidad');
+			
+			echo 'Traza de Productos' . "\r\n";
+			foreach($traza as $fila){
+				if (!$flag) {
+						echo implode("\t", $titulos) . "\r\n";
+						$flag = true;
+				}
+				$fila = array($fila->getFechaVenta(), trim($fila->getCliente()), trim($fila->getProveedor()), 'NTI', trim($fila->getProducto()->getCodigo()), trim($fila->getProducto()), trim($fila->getNroLote()), trim($fila->getNumero()), $fila->getFechaVto(), $fila->getCantVendida());
+				$string = implode("\t", array_values($fila));
+				echo utf8_decode($string)."\r\n";					
+			}
+		}
+				
+    return sfView::NONE;
+  }
+	
+  public function executeListExcelTodo(sfWebRequest $request){
+    $filtro = new ProductoTrazaFormFilter();
+    $consulta = $filtro->buildQuery($this->getFilters());
+		$consulta->orderBy('fecha_venta DESC');
+    $traza = $consulta->execute();
+			
+    header("Content-Disposition: attachment; filename=\"traza_todo.xls\"");
+    header("Content-Type: application/vnd.ms-excel");
+		
+		if(!empty($traza[0])){
+			$flag = false;
+			$titulos = array('Fecha', 'Cliente', 'Proveedor', 'Marca', 'Codigo', 'Descripcion', 'Lote', 'Factura', 'Vencimiento', 'Cantidad');
+			
+			echo 'Traza de Productos' . "\r\n";
+			foreach($traza as $fila){
+				if (!$flag) {
+						echo implode("\t", $titulos) . "\r\n";
+						$flag = true;
+				}
+				$fila = array($fila->getFechaVenta(), trim($fila->getCliente()), trim($fila->getProveedor()), 'NTI', trim($fila->getProducto()->getCodigo()), trim($fila->getProducto()), trim($fila->getNroLote()), trim($fila->getNumero()), $fila->getFechaVto(), $fila->getCantVendida());
+				$string = implode("\t", array_values($fila));
+				echo utf8_decode($string)."\r\n";					
+			}
+		}
+				
+    return sfView::NONE;
+  }	
+	
 }

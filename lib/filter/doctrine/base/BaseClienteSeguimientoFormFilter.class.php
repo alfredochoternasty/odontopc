@@ -23,7 +23,9 @@ abstract class BaseClienteSeguimientoFormFilter extends BaseFormFilterDoctrine
       'prox_contac_hora'    => new sfWidgetFormFilterInput(),
       'prox_contac_tiempo'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoTiempoContac'), 'add_empty' => true)),
       'prox_contact_coment' => new sfWidgetFormFilterInput(),
-      'usuario'             => new sfWidgetFormFilterInput(),
+      'usuario'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'motivo_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoMotivo'), 'add_empty' => true)),
+      'realizada'           => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -37,7 +39,9 @@ abstract class BaseClienteSeguimientoFormFilter extends BaseFormFilterDoctrine
       'prox_contac_hora'    => new sfValidatorPass(array('required' => false)),
       'prox_contac_tiempo'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoTiempoContac'), 'column' => 'id')),
       'prox_contact_coment' => new sfValidatorPass(array('required' => false)),
-      'usuario'             => new sfValidatorPass(array('required' => false)),
+      'usuario'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
+      'motivo_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoMotivo'), 'column' => 'id')),
+      'realizada'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_seguimiento_filters[%s]');
@@ -68,7 +72,9 @@ abstract class BaseClienteSeguimientoFormFilter extends BaseFormFilterDoctrine
       'prox_contac_hora'    => 'Text',
       'prox_contac_tiempo'  => 'ForeignKey',
       'prox_contact_coment' => 'Text',
-      'usuario'             => 'Text',
+      'usuario'             => 'ForeignKey',
+      'motivo_id'           => 'ForeignKey',
+      'realizada'           => 'Number',
     );
   }
 }

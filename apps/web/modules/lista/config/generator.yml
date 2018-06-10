@@ -23,13 +23,13 @@ generator:
         title: Lista de Precios
         display: [nombre, moneda, aumento, descuento, precio, defecto, activo]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
           detalle: {label: Detalle}          
       filter:  ~
       form:
         actions:
-          _list: ~
+          _list: {label: Volver}
           _save: {label: 'Guardar y Agregar Detalle'}
       edit:
         title: Modificar Lista de Precios

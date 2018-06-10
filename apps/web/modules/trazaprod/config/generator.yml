@@ -26,10 +26,10 @@ generator:
         display: [Producto2, cant_vendida, nro_lote, fecha_venta, Cliente]
         max_per_page: 20
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
         actions:
-          _new: ~
+          _new: {label: Nuevo}
           imprimir: {label: Imprimir}
       filter:
         display: [producto_id, cant_vendida, nro_lote, fecha_venta, cliente_id]

@@ -17,17 +17,17 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
         Resumen: {label: Venta}
         resumen_id: {label: Venta}
+        sfGuardUser: {label: Usuario}
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
-        display: [id, fecha, Cliente, Resumen, Producto, cantidad, _precio, _total]
+        display: [id, fecha, Cliente, Resumen, Producto, nro_lote, cantidad, _precio, _iva, _total, sfGuardUser]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
       filter:
-        display: [fecha, cliente_id, producto_id]
+        display: [fecha, cliente_id, producto_id, usuario]
       form:    ~
       edit:    ~
       new:
         title: Devolver Producto
-        display: [fecha, cliente_id, producto_id, resumen_id, cantidad, precio, total, nro_lote, observacion]
+        display: [fecha, cliente_id, producto_id, resumen_id, cantidad, nro_lote, precio, iva, total, observacion]

@@ -20,11 +20,11 @@ generator:
         title: Insacriptos a Cursos
         display: [Curso, nombre, correo, fecha, TipoInscripcion]
         actions:
-          _new: ~
+          _new: {label: Nuevo}
           imprimir: ~
         object_actions:
-          _edit: ~
-          _delete: ~
+          _edit: {label: Modificar}
+          _delete: {label: Eliminar}
       filter:
         display: [curso_id, cliente_id, nombre, correo, fecha, tipo_insc_id]                
       form:    ~

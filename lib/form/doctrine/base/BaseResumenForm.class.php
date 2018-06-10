@@ -25,6 +25,7 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'pedido_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pedido'), 'add_empty' => true)),
       'nro_factura'    => new sfWidgetFormInputText(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false)),
+      'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -38,6 +39,7 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'pedido_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Pedido'), 'required' => false)),
       'nro_factura'    => new sfValidatorInteger(array('required' => false)),
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'))),
+      'usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen[%s]');

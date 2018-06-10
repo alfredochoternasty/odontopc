@@ -14,16 +14,19 @@ generator:
     config:
       actions: ~
       fields:
-        fecha: {date_format: dd/MM/yyyy }
+        fecha: {date_format: dd/MM/yyyy hh:mm}
+        tipo_envio: {label: A quien enviar?}
+        sfGuardUser: {label: Usuario Envio}
       list: 
+        table_method: retrieveConJoins
         title: Emails con info de cursos enviados
-        display: [Curso, e_mail, fecha, lo_vio, se_inscribio]
+        display: [Curso, cliente, e_mail, fecha, sfGuardUser]
         object_actions: []
         batch_actions: []
       filter:
-        display: [curso_id, e_mail, fecha, lo_vio, se_inscribio]
+        display: [curso_id, cliente_id, e_mail]
       form:    ~
       edit:    ~
       new:
         title: Enviar email con info de curso
-        display: [curso_id, e_mail, fecha]
+        display: [curso_id, tipo_envio, cliente_id, e_mail]

@@ -19,10 +19,14 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSeguimiento', 'doctrine')
  * @property integer $prox_contac_tiempo
  * @property string $prox_contact_coment
  * @property string $usuario
+ * @property integer $motivo_id
+ * @property integer $realizada
  * @property Cliente $Cliente
+ * @property TipoMotivo $TipoMotivo
  * @property TipoContacto $TipoContacto
  * @property TipoRespuesta $TipoRespuesta
  * @property TipoTiempoContac $TipoTiempoContac
+ * @property sfGuardUser $sfGuardUser
  * 
  * @method integer            getId()                  Returns the current record's "id" value
  * @method integer            getClienteId()           Returns the current record's "cliente_id" value
@@ -36,10 +40,14 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSeguimiento', 'doctrine')
  * @method integer            getProxContacTiempo()    Returns the current record's "prox_contac_tiempo" value
  * @method string             getProxContactComent()   Returns the current record's "prox_contact_coment" value
  * @method string             getUsuario()             Returns the current record's "usuario" value
+ * @method integer            getMotivoId()            Returns the current record's "motivo_id" value
+ * @method integer            getRealizada()           Returns the current record's "realizada" value
  * @method Cliente            getCliente()             Returns the current record's "Cliente" value
+ * @method TipoMotivo         getTipoMotivo()          Returns the current record's "TipoMotivo" value
  * @method TipoContacto       getTipoContacto()        Returns the current record's "TipoContacto" value
  * @method TipoRespuesta      getTipoRespuesta()       Returns the current record's "TipoRespuesta" value
  * @method TipoTiempoContac   getTipoTiempoContac()    Returns the current record's "TipoTiempoContac" value
+ * @method sfGuardUser        getSfGuardUser()         Returns the current record's "sfGuardUser" value
  * @method ClienteSeguimiento setId()                  Sets the current record's "id" value
  * @method ClienteSeguimiento setClienteId()           Sets the current record's "cliente_id" value
  * @method ClienteSeguimiento setFecha()               Sets the current record's "fecha" value
@@ -52,10 +60,14 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSeguimiento', 'doctrine')
  * @method ClienteSeguimiento setProxContacTiempo()    Sets the current record's "prox_contac_tiempo" value
  * @method ClienteSeguimiento setProxContactComent()   Sets the current record's "prox_contact_coment" value
  * @method ClienteSeguimiento setUsuario()             Sets the current record's "usuario" value
+ * @method ClienteSeguimiento setMotivoId()            Sets the current record's "motivo_id" value
+ * @method ClienteSeguimiento setRealizada()           Sets the current record's "realizada" value
  * @method ClienteSeguimiento setCliente()             Sets the current record's "Cliente" value
+ * @method ClienteSeguimiento setTipoMotivo()          Sets the current record's "TipoMotivo" value
  * @method ClienteSeguimiento setTipoContacto()        Sets the current record's "TipoContacto" value
  * @method ClienteSeguimiento setTipoRespuesta()       Sets the current record's "TipoRespuesta" value
  * @method ClienteSeguimiento setTipoTiempoContac()    Sets the current record's "TipoTiempoContac" value
+ * @method ClienteSeguimiento setSfGuardUser()         Sets the current record's "sfGuardUser" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -122,6 +134,14 @@ abstract class BaseClienteSeguimiento extends sfDoctrineRecord
              'type' => 'string',
              'length' => 50,
              ));
+        $this->hasColumn('motivo_id', 'integer', 1, array(
+             'type' => 'integer',
+             'length' => 1,
+             ));
+        $this->hasColumn('realizada', 'integer', 1, array(
+             'type' => 'integer',
+             'length' => 1,
+             ));
     }
 
     public function setUp()
@@ -129,6 +149,10 @@ abstract class BaseClienteSeguimiento extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Cliente', array(
              'local' => 'cliente_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('TipoMotivo', array(
+             'local' => 'motivo_id',
              'foreign' => 'id'));
 
         $this->hasOne('TipoContacto', array(
@@ -142,5 +166,10 @@ abstract class BaseClienteSeguimiento extends sfDoctrineRecord
         $this->hasOne('TipoTiempoContac', array(
              'local' => 'prox_contac_tiempo',
              'foreign' => 'id'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
     }
 }

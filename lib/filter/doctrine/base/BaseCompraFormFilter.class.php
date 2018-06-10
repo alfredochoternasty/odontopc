@@ -21,6 +21,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'moneda_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'observacion'    => new sfWidgetFormFilterInput(),
       'pagado'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -32,6 +33,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'moneda_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
       'observacion'    => new sfValidatorPass(array('required' => false)),
       'pagado'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('compra_filters[%s]');
@@ -60,6 +62,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'moneda_id'      => 'ForeignKey',
       'observacion'    => 'Text',
       'pagado'         => 'Number',
+      'usuario'        => 'ForeignKey',
     );
   }
 }

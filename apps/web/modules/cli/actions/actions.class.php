@@ -13,23 +13,45 @@ require_once dirname(__FILE__).'/../lib/cliGeneratorHelper.class.php';
  */
 class cliActions extends autoCliActions
 {
-  public function executeListGenerarUsuario(sfWebRequest $request)
+	
+	public function executeListGenerarUsuario(sfWebRequest $request)
+	{
+		$this->GenerarUsuario($request);
+		$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
+	}
+	
+	public function executeList_usuario(sfWebRequest $request)
+	{
+		$this->GenerarUsuario($request);
+		$this->redirect(array('sf_route' => 'cliente'));
+	}
+	
+  private function GenerarUsuario(sfWebRequest $request)
   {
     $cliente = Doctrine::getTable('Cliente')->find($request->getParameter('id'));
-    $correo = $cliente->getEmail();
+    $correo = trim($cliente->getEmail());
+		if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
+				$this->getUser()->setFlash('error', 'El usuario no posee Email correcto - '.$correo);
+				$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));		
+		}
     if(empty($correo)){
-      $this->getUser()->setFlash('error', 'El usuario no posee Email - '.$correo);
+      $this->getUser()->setFlash('error', 'El usuario no posee Email');
       $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
     }else{
       $usuario = $cliente->getUsuarioId();
       $nombres = explode(' ', $cliente->getNombre()); // exploto x si tiene 2 nombres cargado
       $clave = strtolower($nombres[0]).rand(1, 9999); //para la clave uso el primer nombre que tenga guardado	
+			$nom_usuario = strtolower(str_replace(' ', '', substr($cliente->getNombre(), 0, 2).$cliente->getApellido()));//para el usuario, uso las 2 primeras letras del nombre y el apellido, todo junto y en minuscula
+			$usuario_existe = Doctrine::getTable('sfGuardUser')->findByUsername($nom_usuario);
+			if (!empty($usuario_existe)) {
+				$nom_usuario = strtolower(str_replace(' ', '', substr($cliente->getNombre(), 0, 3).$cliente->getApellido()));
+			}
+			
       if(empty($usuario)){
         $user = new sfGuardUser();
         $accion = 'generado';
-        $user->setEmailAddress($cliente->getEmail());
-        $usuario = strtolower(str_replace(" ", "", substr($cliente->getNombre(), 0, 2).$cliente->getApellido()));//para el usuario, uso las 2 primeras letras del nombre y el apellido, todo junto y en minuscula		
-        $user->setUsername($usuario); 
+        $user->setEmailAddress($correo);				
+        $user->setUsername($nom_usuario); 
         $user->setIsActive(true);
         $user->setIsSuperAdmin(false);
         $user->setFirstName($cliente->getNombre());
@@ -37,10 +59,10 @@ class cliActions extends autoCliActions
         $user->setPassword($clave);
         $user->save();      
 
-        $perfil = new sfGuardUserPermission();
+        $perfil = new sfGuardUserGroup();
         $perfil->setUserId($user->getId());
-        $perfil->setPermissionId(4);
-        $perfil->save();	
+        $perfil->setGroupId(4);
+        $perfil->save();
       }else{
         $user = Doctrine::getTable('sfGuardUser')->find($usuario);
         $usuario = $user->getUsername();
@@ -54,11 +76,11 @@ class cliActions extends autoCliActions
 
       $mensaje = Swift_Message::newInstance();
       $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
-      $mensaje->setTo($cliente->getEmail());
+      $mensaje->setTo($correo);
       $mensaje->setSubject('NTI Sistema de Pedidos');
       $headers = $mensaje->getHeaders();
       $headers->addTextHeader('Content-Type', 'text/html');    
-      $msj = '<html><head><meta http-equiv="content-type" content="text/html; charset=windows-1252"></head><body>';
+      $msj = '<html><head><meta http-equiv="content-type" content="text/html; charset=WINDOWS-1252"></head><body>';
       $msj .= "<b>Nuevo Sistema para realizar pedidos de productos</b> </br>";
       $msj .= "Para ingresar a este sistema haga click en el siguiente enlace <a href=\"sistema.ntiimplantes.com.ar/web\">sistema.ntiimplantes.com.ar/web</a> </br>";
       $msj .= "<b>USUARIO: </b> ".$usuario." <br>";
@@ -74,8 +96,6 @@ class cliActions extends autoCliActions
       }else{
         $this->getUser()->setFlash('notice', $accion.' - Usuario: '.$usuario.' - Clave: '.$clave );
       }
-      
-      $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
     }
   }
 
@@ -113,11 +133,28 @@ class cliActions extends autoCliActions
     $consulta = $filtro->buildQuery($this->getFilters());
     $clientes = $consulta->execute();
     
-    $dompdf = new DOMPDF();
+    header("Content-Disposition: attachment; filename=\"clientes.xls\"");
+    header("Content-Type: application/vnd.ms-excel");
+    
+    echo 'Listado de Clientes' . "\r\n";
+    $titulos = array('Tipo', 'Apellido', 'Nombre', 'Teléfono', 'Celular', 'Email', 'Localidad');
+    $flag = false;
+    foreach($clientes as $cliente):
+          if (!$flag) {
+              echo implode("\t", $titulos) . "\r\n";
+              $flag = true;
+          }  
+          $fila = array($cliente->getTipo(), $cliente->getApellido(), $cliente->getNombre(), $cliente->getTelefono(), $cliente->getCelular(), $cliente->getEmail(), $cliente->getLocalidad());
+          $string = implode("\t", array_values($fila));
+          echo utf8_decode($string)."\r\n"; 
+    endforeach;
+    
+    /*$dompdf = new DOMPDF();
     $dompdf->load_html($this->getPartial("imprimir", array("clientes" => $clientes)));
     $dompdf->set_paper('letter','landscape');
     $dompdf->render();
-    $dompdf->stream("clientes.pdf");    
+    $dompdf->stream("clientes.pdf"); 
+    */
     return sfView::NONE;
   }
   
@@ -129,15 +166,38 @@ class cliActions extends autoCliActions
   
   protected function processForm(sfWebRequest $request, sfForm $form){
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    $es_nuevo = $form->getObject()->isNew();
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $cliente = $form->save();
-      $enviado = $this->enviar_cliente($cliete);
-      if($enviado == true){
-        $this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
-      } else {
-        $this->getUser()->setFlash('notice', 'Error: '.$enviado);
+      
+      /* esto es para enviar al otro sistema*/
+      $a_cliente['tipo_id'] = $cliente->tipo_id;
+      $a_cliente['dni'] = $cliente->dni;
+      $a_cliente['cuit'] = $cliente->cuit;
+      $a_cliente['condicionfiscal_id'] = $cliente->condicionfiscal_id;
+      $a_cliente['sexo'] = $cliente->sexo;
+      $a_cliente['apellido'] = $cliente->apellido;
+      $a_cliente['nombre'] = $cliente->nombre;
+      $a_cliente['domicilio'] = $cliente->domicilio;
+      $a_cliente['localidad_id'] = $cliente->localidad_id;
+      $a_cliente['telefono'] = $cliente->telefono;
+      $a_cliente['celular'] = $cliente->celular;
+      $a_cliente['fax'] = $cliente->fax;
+      $a_cliente['email'] = $cliente->email;
+      $a_cliente['observacion'] = $cliente->observacion;
+      $a_cliente['lista_id'] = $cliente->lista_id;
+      $a_cliente['activo'] = $cliente->activo;
+      
+      if ($es_nuevo) {
+        $enviado = $this->enviar_cliente($a_cliente);
+        if($enviado == true){
+          $this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
+        } else {
+          $this->getUser()->setFlash('notice', 'Error: '.$enviado);
+        }
       }
+      
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $cliente)));
       if ($request->hasParameter('generar_usuario')){
         $this->getUser()->setFlash('notice', ' Usuario.');
@@ -203,19 +263,18 @@ class cliActions extends autoCliActions
     $this->redirect('@cliente');
   }  
   
-  protected function enviar_cliente($p_obj)
+  protected function enviar_cliente($arr_datos)
   {
+    foreach($arr_datos as $k => $v){
+      $vars[] = $k.'='.urlencode($v);
+    }
+		
+		if ($this->getUser()->hasGroup('Blanco')) {
+				$url = 'http://sistema.ntiimplantes.com.ar/web/cliente.php?'.implode('&', $vars);
+		} else {
+				$url = 'http://ventas.ntiimplantes.com.ar/web/cliente.php?'.implode('&', $vars);
+		}
     
-    $postdata = http_build_query(array('obj' => get_object_vars($p_obj)));
-    $opts = array('http' => 
-      array (
-        'method' => 'POST',
-        'header' => 'Content-type: application/xwww-form-urlencoded',
-        'content' => $postdata
-      )
-    );
-    $context  = stream_context_create($opts);
-    $url = 'http://www.example.com/api/do/something/';
-    return file_get_contents($url, false, $context);    
+    return file_get_contents($url);
   }
 }

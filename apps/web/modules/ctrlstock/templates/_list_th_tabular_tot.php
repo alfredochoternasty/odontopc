@@ -63,12 +63,12 @@
   <?php if ('stock_sin_lote' == $sort[0]): ?>
     <a href="<?php echo url_for('@control_stock?sort=stock_sin_lote&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')) ?>">
       <span class="ui-icon <?php echo ($sort[1] == 'asc' ? 'ui-icon-circle-triangle-s' : 'ui-icon-circle-triangle-n') ?>"></span>
-      <?php echo __('Stock s/lote', array(), 'messages') ?>
+      <?php echo __('Stock sin Nro. de Lote', array(), 'messages') ?>
     </a>
   <?php else: ?>
     <a href="<?php echo url_for('@control_stock?sort=stock_sin_lote&sort_type=asc') ?>">
       <span class="ui-icon ui-icon-triangle-2-n-s"></span>
-      <?php echo __('Stock s/lote', array(), 'messages') ?>
+      <?php echo __('Stock sin Nro de Lote', array(), 'messages') ?>
     </a>
   <?php endif; ?>
 </th>

@@ -50,6 +50,7 @@ class inicioActions extends autoInicioActions
  
   public function executeIndex(sfWebRequest $request)
   {
+		/*
     $entorno = sfConfig::get('sf_environment');
     if($entorno != 'dev'){
       if($this->getUser()->hasGroup('Blanco')){
@@ -87,7 +88,7 @@ class inicioActions extends autoInicioActions
     if ($request->getParameter('page')){
       $this->setPage($request->getParameter('page'));
     }	
-    
+    */
     parent::executeIndex($request);
     $q = Doctrine::getTable('Pedido')->createQuery('p')->where('p.vendido = 0')->orderBy('p.fecha DESC')->limit('10');
     if($this->getUser()->hasPermission('cliente')){

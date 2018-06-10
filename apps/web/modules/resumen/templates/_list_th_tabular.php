@@ -93,7 +93,7 @@
 
     <a href="<?php echo url_for('@resumen?sort=observacion&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')) ?>">
       <span class="ui-icon <?php echo ($sort[1] == 'asc' ? 'ui-icon-circle-triangle-s' : 'ui-icon-circle-triangle-n') ?>"></span>
-      <?php echo __('Observacion', array(), 'messages') ?>
+      <?php echo __('Usuario', array(), 'messages') ?>
     </a>
 
     <?php //echo image_tag(sfConfig::get('sf_admin_module_web_dir').'/images/'.$sort[1].'.png', array('alt' => __($sort[1], array(), 'sf_admin'), 'title' => __($sort[1], array(), 'sf_admin'))) ?>
@@ -102,7 +102,7 @@
 
     <a href="<?php echo url_for('@resumen?sort=observacion&sort_type=asc') ?>">
       <span class="ui-icon ui-icon-triangle-2-n-s"></span>
-      <?php echo __('Observacion', array(), 'messages') ?>
+      <?php echo __('Usuario', array(), 'messages') ?>
     </a>
 
   <?php endif; ?>

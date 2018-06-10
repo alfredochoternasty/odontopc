@@ -22,6 +22,7 @@ abstract class BaseLoteForm extends BaseFormDoctrine
       'fecha_vto'   => new sfWidgetFormDate(),
       'compra_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'), 'add_empty' => true)),
       'observacion' => new sfWidgetFormInputText(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -32,6 +33,7 @@ abstract class BaseLoteForm extends BaseFormDoctrine
       'fecha_vto'   => new sfValidatorDate(array('required' => false)),
       'compra_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'), 'required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('lote[%s]');

@@ -17,9 +17,12 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property decimal $total
  * @property string $observacion
  * @property string $nro_lote
+ * @property decimal $iva
+ * @property integer $usuario
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property Producto $Producto
+ * @property sfGuardUser $sfGuardUser
  * 
  * @method integer     getId()          Returns the current record's "id" value
  * @method date        getFecha()       Returns the current record's "fecha" value
@@ -31,9 +34,12 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method decimal     getTotal()       Returns the current record's "total" value
  * @method string      getObservacion() Returns the current record's "observacion" value
  * @method string      getNroLote()     Returns the current record's "nro_lote" value
+ * @method decimal     getIva()         Returns the current record's "iva" value
+ * @method integer     getUsuario()     Returns the current record's "usuario" value
  * @method Cliente     getCliente()     Returns the current record's "Cliente" value
  * @method Resumen     getResumen()     Returns the current record's "Resumen" value
  * @method Producto    getProducto()    Returns the current record's "Producto" value
+ * @method sfGuardUser getSfGuardUser() Returns the current record's "sfGuardUser" value
  * @method DevProducto setId()          Sets the current record's "id" value
  * @method DevProducto setFecha()       Sets the current record's "fecha" value
  * @method DevProducto setClienteId()   Sets the current record's "cliente_id" value
@@ -44,9 +50,12 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method DevProducto setTotal()       Sets the current record's "total" value
  * @method DevProducto setObservacion() Sets the current record's "observacion" value
  * @method DevProducto setNroLote()     Sets the current record's "nro_lote" value
+ * @method DevProducto setIva()         Sets the current record's "iva" value
+ * @method DevProducto setUsuario()     Sets the current record's "usuario" value
  * @method DevProducto setCliente()     Sets the current record's "Cliente" value
  * @method DevProducto setResumen()     Sets the current record's "Resumen" value
  * @method DevProducto setProducto()    Sets the current record's "Producto" value
+ * @method DevProducto setSfGuardUser() Sets the current record's "sfGuardUser" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -108,6 +117,15 @@ abstract class BaseDevProducto extends sfDoctrineRecord
              'type' => 'string',
              'length' => 50,
              ));
+        $this->hasColumn('iva', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => '2',
+             ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -125,6 +143,11 @@ abstract class BaseDevProducto extends sfDoctrineRecord
 
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

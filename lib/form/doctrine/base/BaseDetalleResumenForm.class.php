@@ -23,10 +23,11 @@ abstract class BaseDetalleResumenForm extends BaseFormDoctrine
       'total'       => new sfWidgetFormInputText(),
       'bonificados' => new sfWidgetFormInputText(),
       'observacion' => new sfWidgetFormInputText(),
-      'nro_lote'    => new sfWidgetFormInputText(),
+      'nro_lote'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
       'fecha_vto'   => new sfWidgetFormDate(),
       'iva'         => new sfWidgetFormInputText(),
       'sub_total'   => new sfWidgetFormInputText(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -38,10 +39,11 @@ abstract class BaseDetalleResumenForm extends BaseFormDoctrine
       'total'       => new sfValidatorNumber(array('required' => false)),
       'bonificados' => new sfValidatorInteger(array('required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
-      'nro_lote'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'required' => false)),
       'fecha_vto'   => new sfValidatorDate(),
       'iva'         => new sfValidatorNumber(array('required' => false)),
       'sub_total'   => new sfValidatorNumber(array('required' => false)),
+      'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_resumen[%s]');

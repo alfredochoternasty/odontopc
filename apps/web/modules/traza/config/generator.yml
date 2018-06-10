@@ -17,18 +17,20 @@ generator:
         nro_lote: { label: lote }
         nro_venta: { label: Venta }
         numero: { label: Compra }
+        fecha_vto: { date_format: dd/MM/yyyy }
         fecha_venta: { date_format: dd/MM/yyyy }
         fecha_compra: { date_format: dd/MM/yyyy }
       list:
         table_method: retrieveConJoins
-        title: Traza de Productos
-        display: [Producto, cant_vendida, nro_lote, nro_venta, fecha_venta, Cliente, fecha_compra, Proveedor, numero]
-        max_per_page: 20
+        title: Traza de Productos Vendidos
+        display: [codigo, Producto, cant_vendida, nro_lote, fecha_vto, nro_venta, fecha_venta, Cliente, fecha_compra, Proveedor, numero]
+        max_per_page: 50
         object_actions: []
         batch_actions: []
         actions:
-          _new: ~
-          imprimir: {label: Imprimir}
+          imprimir: {label: Imprimir página}
+          excel: {label: Exportar página}
+          excel_todo: {label: Exportar Todo}
       filter:
         display: [producto_id, nro_lote, fecha_venta, cliente_id, fecha_compra, proveedor_id, cant_vendida]
       form:    ~

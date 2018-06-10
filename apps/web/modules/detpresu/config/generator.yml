@@ -18,10 +18,10 @@ generator:
         title: Detalle del presupuesto
         display: [Producto, _precio, cantidad, _total]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
         actions:
-          _new: ~
+          _new: {label: Nuevo}
           imprimir: {label: Imprimir}
       filter: {}
       form: ~

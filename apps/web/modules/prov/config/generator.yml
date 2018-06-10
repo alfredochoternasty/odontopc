@@ -23,8 +23,8 @@ generator:
         title: Administraci&oacute;n de Proveedores
         display: [cuit, razon_social, _ciudad, telefono, email]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:    ~
       edit:

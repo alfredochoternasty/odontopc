@@ -19,8 +19,11 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property date $fecha_vto
  * @property decimal $iva
  * @property decimal $sub_total
+ * @property integer $usuario
  * @property Resumen $Resumen
  * @property Producto $Producto
+ * @property sfGuardUser $sfGuardUser
+ * @property Lote $Lote
  * @property Doctrine_Collection $ListadoVentas
  * 
  * @method integer             getId()            Returns the current record's "id" value
@@ -35,8 +38,11 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method date                getFechaVto()      Returns the current record's "fecha_vto" value
  * @method decimal             getIva()           Returns the current record's "iva" value
  * @method decimal             getSubTotal()      Returns the current record's "sub_total" value
+ * @method integer             getUsuario()       Returns the current record's "usuario" value
  * @method Resumen             getResumen()       Returns the current record's "Resumen" value
  * @method Producto            getProducto()      Returns the current record's "Producto" value
+ * @method sfGuardUser         getSfGuardUser()   Returns the current record's "sfGuardUser" value
+ * @method Lote                getLote()          Returns the current record's "Lote" value
  * @method Doctrine_Collection getListadoVentas() Returns the current record's "ListadoVentas" collection
  * @method DetalleResumen      setId()            Sets the current record's "id" value
  * @method DetalleResumen      setResumenId()     Sets the current record's "resumen_id" value
@@ -50,8 +56,11 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setFechaVto()      Sets the current record's "fecha_vto" value
  * @method DetalleResumen      setIva()           Sets the current record's "iva" value
  * @method DetalleResumen      setSubTotal()      Sets the current record's "sub_total" value
+ * @method DetalleResumen      setUsuario()       Sets the current record's "usuario" value
  * @method DetalleResumen      setResumen()       Sets the current record's "Resumen" value
  * @method DetalleResumen      setProducto()      Sets the current record's "Producto" value
+ * @method DetalleResumen      setSfGuardUser()   Sets the current record's "sfGuardUser" value
+ * @method DetalleResumen      setLote()          Sets the current record's "Lote" value
  * @method DetalleResumen      setListadoVentas() Sets the current record's "ListadoVentas" collection
  * 
  * @package    odontopc
@@ -131,6 +140,10 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'length' => 10,
              'scale' => '2',
              ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -146,9 +159,18 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
         $this->hasOne('Lote', array(
              'local' => 'nro_lote',
-             'foreign' => 'nro_lote',
+             'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('ListadoVentas', array(
+             'local' => 'id',
+             'foreign' => 'resumen_id'));
     }
 }

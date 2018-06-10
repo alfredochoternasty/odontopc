@@ -124,7 +124,6 @@ class detpedActions extends autoDetpedActions
         if ($request->hasParameter('rtn')){
           return $detalle_pedido->getId();
         }else{
-          $this->EnviarPedidoMail($detalle_pedido->getPedidoId());
           $this->getUser()->setFlash('notice', $notice);
           $this->redirect('ped/edit?id='.$detalle_pedido->getPedidoId());
         }
@@ -160,7 +159,7 @@ class detpedActions extends autoDetpedActions
     }else{
       $this->getUser()->setFlash('error', 'No se puede borrar, el registro esta siendo referenciado.');
     }
-    $this->redirect( 'detped/index?pid='.$obj->getPedidoId());    
+		$this->redirect('@detalle_pedido_new');
   }  
   
   public function executeList_imprimir(sfWebRequest $request){
@@ -176,24 +175,24 @@ class detpedActions extends autoDetpedActions
   }
   
   function EnviarPedidoMail($pid){
-	$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
-	$mensaje = Swift_Message::newInstance();
-	$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
-	$mensaje->setTo(array('implantesnti@gmail.com' => 'NTI NTI'));
-	$mensaje->setSubject('Nuevo Pedido');
-	$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));
-	$mensaje->setContentType("text/html");
-	$this->getMailer()->send($mensaje);
-	$this->getUser()->setFlash('notice', 'Pedido Enviado!');
+		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+		$mensaje = Swift_Message::newInstance();
+		$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+		$mensaje->setTo(array('implantesnti@gmail.com' => 'NTI NTI'));
+		$mensaje->setSubject('Nuevo Pedido');
+		$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));
+		$mensaje->setContentType("text/html");
+		$this->getMailer()->send($mensaje);
+		$this->getUser()->setFlash('notice', 'Pedido Enviado!');
   }
   
   function executeListFinalizar(sfWebRequest $request){
-	$pid = $this->getUser()->getAttribute('pid', 1);
+		$pid = $this->getUser()->getAttribute('pid', 1);
     if($entorno != 'dev'){
       $this->EnviarPedidoMail($pid);
     }else{
       $this->getUser()->setFlash('notice', 'dev: Simula Pedido Enviado!');
     }
-  $this->redirect('ped/edit?id='.$pid);
+		$this->redirect('ped/edit?id='.$pid);
   }
 }

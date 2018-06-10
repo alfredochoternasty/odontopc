@@ -19,22 +19,18 @@ class pedActions extends autoPedActions
   
   public function executeIndex(sfWebRequest $request)
   {
-	$q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
+		$q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
     $id_usuario = $this->getUser()->getGuardUser()->getId();
     $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
     $id_cliente = $clientes[0]->getId();
 
-    if ($request->getParameter('sort'))
-    {
+    if ($request->getParameter('sort')) {
       $this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
     }
 
-    // has filters? (usefull for activate reset button)
     $this->hasFilters = $this->getUser()->getAttribute('ped.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     
-    // pager
-    if ($request->getParameter('page'))
-    {
+    if ($request->getParameter('page')) {
       $this->setPage($request->getParameter('page'));
     }
     
@@ -42,8 +38,44 @@ class pedActions extends autoPedActions
     $this->sort = $this->getSort();
     $this->pager->getQuery()->from('pedido p')->where('p.cliente_id = ?', $id_cliente)->andWhere('p.vendido = ?', 0);
     
-    // has filters? (usefull for activate reset button)
-    $this->hasFilters = $this->getUser()->getAttribute('ped.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    
+    $this->hasFilters = $this->getUser()->getAttribute('ped.filters', $this->configuration->getFilterDefaults(), 'admin_module');    
   }  
+	
+  protected function processForm(sfWebRequest $request, sfForm $form){
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid()){
+      $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+      $pedido = $form->save();
+      $pedido->setFinalizado(1);
+			$pedido = $form->save();
+			$this->EnviarPedidoMail($pedido->getId());
+      $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $pedido)));
+      if ($request->hasParameter('_save_and_add')){
+        $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
+        $this->redirect('@pedido_new');
+      }else{
+        if ($request->hasParameter('rtn')){
+          return $pedido->getId();
+        }else{
+          $this->getUser()->setFlash('notice', $notice);
+          $this->redirect('@pedido');
+        }
+      }
+    }else{
+      $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
+    }
+  }
+	
+  function EnviarPedidoMail($pid){
+		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+		$mensaje = Swift_Message::newInstance();
+		$mensaje->setFrom(array('implantesnti@gmail.com' => 'Sistemas de Pedidos'));
+		$mensaje->setTo(array('implantesnti@gmail.com' => 'NTI NTI'));
+		$mensaje->setSubject('Nuevo Pedido');
+		$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));
+		$mensaje->setContentType("text/html");
+		$this->getMailer()->send($mensaje);
+		$this->getUser()->setFlash('notice', 'Pedido Enviado!');
+  }
+	
 }

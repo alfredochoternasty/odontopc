@@ -17,7 +17,9 @@ abstract class BaseProductoTrazaForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'            => new sfWidgetFormInputHidden(),
       'producto_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
+      'codigo'        => new sfWidgetFormInputText(),
       'nro_lote'      => new sfWidgetFormInputText(),
+      'fecha_vto'     => new sfWidgetFormDate(),
       'nro_venta'     => new sfWidgetFormInputText(),
       'fecha_venta'   => new sfWidgetFormDate(),
       'cliente_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
@@ -31,7 +33,9 @@ abstract class BaseProductoTrazaForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'producto_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'required' => false)),
+      'codigo'        => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'nro_lote'      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'fecha_vto'     => new sfValidatorDate(array('required' => false)),
       'nro_venta'     => new sfValidatorInteger(array('required' => false)),
       'fecha_venta'   => new sfValidatorDate(array('required' => false)),
       'cliente_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'required' => false)),

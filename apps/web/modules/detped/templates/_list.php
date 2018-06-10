@@ -52,8 +52,8 @@
           <?php 
             include_partial('detped/list_td_batch_actions', array('detalle_pedido' => $detalle_pedido, 'helper' => $helper));
             include_partial('detped/list_td_tabular', array('detalle_pedido' => $detalle_pedido));
-            $vendido = $detalle_pedido->getPedido()->getVendido();
-            if($vendido == 0){
+            $finalizado = $detalle_pedido->getPedido()->getFinalizado();
+            if($finalizado == 0){
               include_partial('detped/list_td_actions', array('detalle_pedido' => $detalle_pedido, 'helper' => $helper));
             }else{ ?>
               <td style="white-space: nowrap;"></td>

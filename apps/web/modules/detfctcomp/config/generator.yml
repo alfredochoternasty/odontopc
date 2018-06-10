@@ -19,13 +19,13 @@ generator:
         title: Detalle de Factura de Compra
         display: [Factura, _producto, _precio, cantidad, subtotal, iva, _total]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:
         actions:
-          _list: ~
-          _save: ~
+          _list: {label: Volver}
+          _save: {label: Guardar}
           _save_and_add: {label: Guardar y Agregar Otro}
       edit:
         title: Modificar Detalle de Factura de Compra

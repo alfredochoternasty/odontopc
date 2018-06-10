@@ -19,8 +19,8 @@ generator:
         title: Pagos a Proveedores
         display: [Proveedor, fecha, monto, Tipo, Banco, numero, observacion]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
       filter:  ~
       form:    ~
       edit:

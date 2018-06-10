@@ -158,6 +158,7 @@ class detresActions extends autoDetresActions
       ->where('l.producto_id = '.$request->getparameter('pid'))
       ->andWhere('l.stock > 0 ')
       ->andWhere('l.fecha_vto > '.date('Y-m-d'))
+			->andWhere('l.nro_lote not like \'er%\'')
       ->orderBy('l.fecha_vto asc');
      
     $lotes = $q->fetchArray();  
@@ -189,4 +190,16 @@ class detresActions extends autoDetresActions
     echo implode($options);
     return sfView::NONE;
   }
+  
+  public function executeListRemito(sfWebRequest $request){
+    $rid = $this->getUser()->getAttribute('rid', 1);
+    $resumen = Doctrine::getTable('Resumen')->find($rid);
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("remito", array("resumen" => $resumen)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("remito.pdf");    
+    return sfView::NONE;
+  }  
 }

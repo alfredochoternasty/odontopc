@@ -14,27 +14,36 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @property date $fecha_vto
  * @property integer $compra_id
  * @property string $observacion
+ * @property integer $usuario
  * @property Compra $Compra
  * @property Producto $Producto
+ * @property sfGuardUser $sfGuardUser
+ * @property Doctrine_Collection $DetalleResumen
  * 
- * @method integer  getId()          Returns the current record's "id" value
- * @method integer  getProductoId()  Returns the current record's "producto_id" value
- * @method string   getNroLote()     Returns the current record's "nro_lote" value
- * @method integer  getStock()       Returns the current record's "stock" value
- * @method date     getFechaVto()    Returns the current record's "fecha_vto" value
- * @method integer  getCompraId()    Returns the current record's "compra_id" value
- * @method string   getObservacion() Returns the current record's "observacion" value
- * @method Compra   getCompra()      Returns the current record's "Compra" value
- * @method Producto getProducto()    Returns the current record's "Producto" value
- * @method Lote     setId()          Sets the current record's "id" value
- * @method Lote     setProductoId()  Sets the current record's "producto_id" value
- * @method Lote     setNroLote()     Sets the current record's "nro_lote" value
- * @method Lote     setStock()       Sets the current record's "stock" value
- * @method Lote     setFechaVto()    Sets the current record's "fecha_vto" value
- * @method Lote     setCompraId()    Sets the current record's "compra_id" value
- * @method Lote     setObservacion() Sets the current record's "observacion" value
- * @method Lote     setCompra()      Sets the current record's "Compra" value
- * @method Lote     setProducto()    Sets the current record's "Producto" value
+ * @method integer             getId()             Returns the current record's "id" value
+ * @method integer             getProductoId()     Returns the current record's "producto_id" value
+ * @method string              getNroLote()        Returns the current record's "nro_lote" value
+ * @method integer             getStock()          Returns the current record's "stock" value
+ * @method date                getFechaVto()       Returns the current record's "fecha_vto" value
+ * @method integer             getCompraId()       Returns the current record's "compra_id" value
+ * @method string              getObservacion()    Returns the current record's "observacion" value
+ * @method integer             getUsuario()        Returns the current record's "usuario" value
+ * @method Compra              getCompra()         Returns the current record's "Compra" value
+ * @method Producto            getProducto()       Returns the current record's "Producto" value
+ * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
+ * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
+ * @method Lote                setId()             Sets the current record's "id" value
+ * @method Lote                setProductoId()     Sets the current record's "producto_id" value
+ * @method Lote                setNroLote()        Sets the current record's "nro_lote" value
+ * @method Lote                setStock()          Sets the current record's "stock" value
+ * @method Lote                setFechaVto()       Sets the current record's "fecha_vto" value
+ * @method Lote                setCompraId()       Sets the current record's "compra_id" value
+ * @method Lote                setObservacion()    Sets the current record's "observacion" value
+ * @method Lote                setUsuario()        Sets the current record's "usuario" value
+ * @method Lote                setCompra()         Sets the current record's "Compra" value
+ * @method Lote                setProducto()       Sets the current record's "Producto" value
+ * @method Lote                setSfGuardUser()    Sets the current record's "sfGuardUser" value
+ * @method Lote                setDetalleResumen() Sets the current record's "DetalleResumen" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -76,6 +85,10 @@ abstract class BaseLote extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -90,5 +103,14 @@ abstract class BaseLote extends sfDoctrineRecord
              'local' => 'producto_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('DetalleResumen', array(
+             'local' => 'id',
+             'foreign' => 'nro_lote'));
     }
 }

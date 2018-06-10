@@ -24,7 +24,7 @@ class Traza2Form extends BaseTraza2Form
     $this->widgetSchema['fecha_venta'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
     $this->validatorSchema['fecha_venta'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));  
     
-    $this->widgetSchema['fecha_compra'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
-    $this->validatorSchema['fecha_compra'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));  
+    $this->widgetSchema['fecha_vto'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
+    $this->validatorSchema['fecha_vto'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));  
   }
 }

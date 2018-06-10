@@ -19,11 +19,11 @@ generator:
         table_method: retrieveConSaldos
         table_count_method: retrieveConSaldosCount
         title: Listado de Saldos  
-        display: [Tipo, apellido, nombre, saldo]
+        display: [Tipo, apellido, nombre, Moneda, saldo]
         object_actions: []
         batch_actions: []
         actions:
-          imprimir: ~
+          imprimir: {label: Imprimir página}
       filter:
         display: [tipo_id, apellido, nombre, moneda]
       form:    ~

@@ -18,8 +18,8 @@ generator:
         title: Detalle de Pedido
         display: [Producto, _precio, cantidad, _total, observacion]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
         actions:
           _new: {label: Agregar Producto}
           imprimir: ~
@@ -28,7 +28,7 @@ generator:
       form:
         display: [pedido_id, producto_id, precio, cantidad, total, observacion]
         actions:
-          _delete: ~
+          _delete: {label: Eliminar}
           _list: {label: Cancelar}
           _save: {label: Guardar y Finalizar}
           _save_and_add: {label: Guardar y Agregar}

@@ -22,6 +22,8 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'total'       => new sfWidgetFormFilterInput(),
       'observacion' => new sfWidgetFormFilterInput(),
       'nro_lote'    => new sfWidgetFormFilterInput(),
+      'iva'         => new sfWidgetFormFilterInput(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +36,8 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'total'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'observacion' => new sfValidatorPass(array('required' => false)),
       'nro_lote'    => new sfValidatorPass(array('required' => false)),
+      'iva'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto_filters[%s]');
@@ -63,6 +67,8 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'total'       => 'Number',
       'observacion' => 'Text',
       'nro_lote'    => 'Text',
+      'iva'         => 'Number',
+      'usuario'     => 'ForeignKey',
     );
   }
 }

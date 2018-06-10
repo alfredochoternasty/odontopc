@@ -16,6 +16,8 @@ class LoteFormFilter extends BaseLoteFormFilter
 {
   public function configure()
   {
+	parent::setup();
+	
     $choices = ProductoTable::getArrayActivos();
     $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));        
     
@@ -24,12 +26,32 @@ class LoteFormFilter extends BaseLoteFormFilter
     $this->widgetSchema['grupo2'] = new sfWidgetFormDoctrineChoice(array('model' => 'Grupoprod', 'add_empty' => true));
     $this->widgetSchema['grupo3'] = new sfWidgetFormDoctrineChoice(array('model' => 'Grupoprod', 'add_empty' => true));
 
+    $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
     $this->validatorSchema['fecha_vto'] = new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~')), 'to_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'))));    
     $this->validatorSchema['grupo'] = new sfValidatorPass(array('required' => false));
     $this->validatorSchema['grupo2'] = new sfValidatorPass(array('required' => false));
     $this->validatorSchema['grupo3'] = new sfValidatorPass(array('required' => false));
+	
+	//$this->widgetSchema['usuario'] = new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'table_method' => 'getUsuariosUsuarios', 'add_empty' => true));    
+	//$this->validatorSchema['usuario'] =  new sfValidatorInteger();
   }
   
+	public function addUsuarioColumnQuery(Doctrine_Query $query, $field, $values)
+	{
+		//echo $query.'--'.$field.'---'.$values;
+		if (!empty($values)) {
+			$query->andWhere("usuario = ?", $values);
+		}
+	}  
+	
+	public function addProductoIdColumnQuery(Doctrine_Query $query, $field, $values)
+	{
+		//echo $query.'--'.$field.'---'.$values;
+		if (!empty($values)) {
+			$query->andWhere("producto_id = ?", $values);
+		}
+	}  	
+ 
 	public function addGrupoColumnQuery(Doctrine_Query $query, $field, $values)
 	{
     /* esto anda pero el debajo tiene menos codigo
@@ -64,6 +86,6 @@ class LoteFormFilter extends BaseLoteFormFilter
 	
 	public function getFields()
 	{
-	  return parent::getFields() + array('Grupo' => 'custom', 'Grupo2' => 'custom','Grupo3' => 'custom');
+	  return parent::getFields() + array('Grupo' => 'custom', 'Grupo2' => 'custom','Grupo3' => 'custom', 'usuario' => 'Number');
 	}  
 }

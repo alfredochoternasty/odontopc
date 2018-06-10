@@ -115,10 +115,10 @@
             </tr>
             <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
               <td><b>Total: </b></td>
-              <td><?php echo $suma_total_vend ?></td>
-              <td><?php echo $suma_total_bon ?></td>
-              <td><?php echo $suma_total_tot ?></td>
-              <td><?php echo $suma_tot_lote ?></td>
+              <td><b><?php echo $suma_total_vend ?></b></td>
+              <td><b><?php echo $suma_total_bon ?></b></td>
+              <td><b><?php echo $suma_total_tot ?></b></td>
+              <td><b><?php echo $suma_tot_lote ?></b></td>
             </tr>
           <?php 
         }

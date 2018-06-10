@@ -19,6 +19,8 @@ abstract class BasePedidoFormFilter extends BaseFormFilterDoctrine
       'vendido'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'fecha_venta'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'direccion_entrega' => new sfWidgetFormFilterInput(),
+      'forma_envio'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'finalizado'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -28,6 +30,8 @@ abstract class BasePedidoFormFilter extends BaseFormFilterDoctrine
       'vendido'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'fecha_venta'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'direccion_entrega' => new sfValidatorPass(array('required' => false)),
+      'forma_envio'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'finalizado'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('pedido_filters[%s]');
@@ -54,6 +58,8 @@ abstract class BasePedidoFormFilter extends BaseFormFilterDoctrine
       'vendido'           => 'Number',
       'fecha_venta'       => 'Date',
       'direccion_entrega' => 'Text',
+      'forma_envio'       => 'Number',
+      'finalizado'        => 'Number',
     );
   }
 }

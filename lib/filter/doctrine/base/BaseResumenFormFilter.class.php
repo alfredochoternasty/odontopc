@@ -22,6 +22,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'pedido_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pedido'), 'add_empty' => true)),
       'nro_factura'    => new sfWidgetFormFilterInput(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
+      'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'pedido_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Pedido'), 'column' => 'id')),
       'nro_factura'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
+      'usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('resumen_filters[%s]');
@@ -63,6 +65,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'pedido_id'      => 'ForeignKey',
       'nro_factura'    => 'Number',
       'tipofactura_id' => 'ForeignKey',
+      'usuario'        => 'ForeignKey',
     );
   }
 }

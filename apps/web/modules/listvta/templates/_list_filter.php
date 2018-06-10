@@ -32,7 +32,11 @@
 
     <thead class="ui-widget-header">
       <tr>        
-        <?php include_partial('listvta/list_th_tabular', array('sort' => $sort)) ?>
+        <?php 
+				$ver_solo_totales = $sf_user->getAttribute('totales', true);
+				include_partial('listvta/list_th_tabular', array('sort' => $sort)); 
+				if(!$ver_solo_totales){
+				?>
         <th class="sf_admin_text sf_admin_list_th_nro_lote ui-state-default ui-th-column">
           <?php if ('fecha_vto' == $sort[0]): ?>
             <a href="<?php echo url_for('@listado_ventas?sort=fecha_vto&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')) ?>">
@@ -46,6 +50,7 @@
             </a>
           <?php endif; ?>
         </th>
+				<?php }?>
       </tr>
     </thead>
 
@@ -83,6 +88,8 @@
             $anterior = $actual;
             $suma_cant = $actual->getCantidad();
             $suma_bon = $actual->getBonificados();
+            $suma_total += $actual->getCantidad();
+            $suma_total_bon += $actual->getBonificados();
           }else{
             $suma_cant += $actual->getCantidad();
             $suma_bon += $actual->getBonificados();
@@ -118,9 +125,9 @@
             <td><?php echo $suma_bon ?></td>
           </tr>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-            <td colspan="2" style="text-align: right"><b>Total: (<?php echo $suma_total+$suma_total_bon ?>)</b> </td>
-            <td><?php echo $suma_total ?></td>
-            <td><?php echo $suma_total_bon ?></td>
+            <td colspan="2" style="text-align: right"><b>Total: </b> </td>
+            <td><b><?php echo $suma_total ?></b></td>
+            <td><b><?php echo $suma_total_bon ?></b></td>
           </tr>
           <?php 
       }

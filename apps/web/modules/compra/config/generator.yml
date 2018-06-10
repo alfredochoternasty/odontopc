@@ -21,19 +21,19 @@ generator:
         title: Compras Realizadas
         display: [Cuenta, Proveedor, tipofactura, fecha, _total, observacion]
         object_actions:
-          _delete: ~
-          _edit: ~
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
           detalle: {label: Ver Detalle}
       filter:  ~
       form: ~
       edit:
         title: Modificar Compra
         actions:
-          _list: ~
-          _save:
+          _list: {label: Volver}
+          _save: {label: Guardar}
           _save_and_add: {label: Guardar y Agregar detalle}
       new:
         title: Nueva Compra
         actions:
-          _list: ~
+          _list: {label: Volver}
           _save_and_add: {label: Guardar y Agregar detalle}

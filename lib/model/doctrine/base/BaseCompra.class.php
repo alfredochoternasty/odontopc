@@ -16,12 +16,14 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property integer $moneda_id
  * @property string $observacion
  * @property integer $pagado
+ * @property integer $usuario
  * @property Proveedor $Proveedor
  * @property Doctrine_Collection $Detalles
  * @property Doctrine_Collection $Pagos
  * @property TipoFactura $Tipofactura
  * @property Cuenta $Cuenta
  * @property TipoMoneda $Moneda
+ * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $PagoCompra
  * @property Doctrine_Collection $Lote
  * 
@@ -34,12 +36,14 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method integer             getMonedaId()       Returns the current record's "moneda_id" value
  * @method string              getObservacion()    Returns the current record's "observacion" value
  * @method integer             getPagado()         Returns the current record's "pagado" value
+ * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method Proveedor           getProveedor()      Returns the current record's "Proveedor" value
  * @method Doctrine_Collection getDetalles()       Returns the current record's "Detalles" collection
  * @method Doctrine_Collection getPagos()          Returns the current record's "Pagos" collection
  * @method TipoFactura         getTipofactura()    Returns the current record's "Tipofactura" value
  * @method Cuenta              getCuenta()         Returns the current record's "Cuenta" value
  * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
+ * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getPagoCompra()     Returns the current record's "PagoCompra" collection
  * @method Doctrine_Collection getLote()           Returns the current record's "Lote" collection
  * @method Compra              setId()             Sets the current record's "id" value
@@ -51,12 +55,14 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setMonedaId()       Sets the current record's "moneda_id" value
  * @method Compra              setObservacion()    Sets the current record's "observacion" value
  * @method Compra              setPagado()         Sets the current record's "pagado" value
+ * @method Compra              setUsuario()        Sets the current record's "usuario" value
  * @method Compra              setProveedor()      Sets the current record's "Proveedor" value
  * @method Compra              setDetalles()       Sets the current record's "Detalles" collection
  * @method Compra              setPagos()          Sets the current record's "Pagos" collection
  * @method Compra              setTipofactura()    Sets the current record's "Tipofactura" value
  * @method Compra              setCuenta()         Sets the current record's "Cuenta" value
  * @method Compra              setMoneda()         Sets the current record's "Moneda" value
+ * @method Compra              setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method Compra              setPagoCompra()     Sets the current record's "PagoCompra" collection
  * @method Compra              setLote()           Sets the current record's "Lote" collection
  * 
@@ -116,6 +122,10 @@ abstract class BaseCompra extends sfDoctrineRecord
              'default' => 0,
              'length' => 1,
              ));
+        $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -145,6 +155,11 @@ abstract class BaseCompra extends sfDoctrineRecord
 
         $this->hasOne('TipoMoneda as Moneda', array(
              'local' => 'moneda_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

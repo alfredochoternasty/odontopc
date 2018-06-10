@@ -102,20 +102,22 @@ AS
   join fact_compra on det_fact_compra.factcompra_id = fact_compra.id 
   join producto on det_fact_compra.producto_id = producto.id;
   
-DROP VIEW producto_traza;  
+DROP VIEW producto_traza; 
 CREATE VIEW producto_traza 
-AS 
-select
+AS
+select distinct
 	dr.id,
 	p.id as producto_id,
-	dc.nro_lote,
+	p.codigo, 
+	REPLACE(dc.nro_lote, 'T ', '') as nro_lote,
+	dc.fecha_vto, 
 	r.id as nro_venta,
 	r.fecha as fecha_venta,
 	c.id as cliente_id,
 	com.fecha as fecha_compra,
 	prov.id as proveedor_id,
 	com.numero,
-	dr.cantidad as cant_vendida,
+	case when dp.cantidad is null then dr.cantidad else (dr.cantidad - dp.cantidad) end as cant_vendida,
 	dc.cantidad as cant_comprada
 from 
 	producto p
@@ -125,13 +127,21 @@ from
 		join detalle_compra dc on p.id = dc.producto_id and dr.nro_lote = dc.nro_lote
 		join compra com on dc.compra_id = com.id
 		join proveedor prov on com.proveedor_id = prov.id
+		left outer join dev_producto dp on dr.resumen_id = dp.resumen_id and dr.producto_id = dp.producto_id and dr.nro_lote and dp.nro_lote33
+where 
+	dc.trazable = 1;
+having 
+	cant_vendida > 0
 
-DROP VIEW clientes_ultima_compra;
+DROP VIEW cliente_ultima_compra;
 CREATE VIEW cliente_ultima_compra AS select 
 	id, 
 	apellido, 
-	nombre, 
-	(select max(fecha) from resumen where cliente_id = cliente.id)
+	nombre,
+	telefono, 
+	email, 
+	celular,
+	(select max(fecha) from resumen where cliente_id = cliente.id) as fecha
 from cliente ;
 
 DROP VIEW listado_ventas;
@@ -271,7 +281,7 @@ from
 	producto p
 		join detalle_resumen dr on p.id = dr.producto_id
 		join resumen r on dr.resumen_id = r.id
-		join lote l on dr.nro_lote = l.nro_lote
+		join lote l on dr.nro_lote = l.nro_lote and dr.producto_id = l.producto_id
 where
 	p.grupoprod_id not in (1,15) and p.activo = 1
 group by
@@ -288,3 +298,26 @@ group by
   p.grupo3  
 order by
 	p.orden_grupo, p.nombre, r.fecha;
+
+DROP VIEW cliente_ultima_compra;
+CREATE VIEW cliente_ultima_compra  AS  
+select 
+	max(r.id) AS id,
+	c.id AS cliente_id,
+	c.apellido AS apellido,
+	c.nombre AS nombre,
+	max(r.fecha) AS fecha, 
+	c.telefono AS telefono,
+	c.celular AS celular,
+	c.email AS email
+from 
+	cliente c 
+		join resumen r on c.id = r.cliente_id 
+group by 
+	c.id,
+	c.apellido,
+	c.nombre ;
+
+
+
+

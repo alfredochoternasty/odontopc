@@ -16,4 +16,12 @@ class ClienteSeguimiento extends BaseClienteSeguimiento
     $val = $this->getId();
     return empty($val)? '' : $val;
   }
+  
+  public function getRealizadaFormato() {
+	  if ($this->getRealizada()){
+		  return 'Si';
+	  } else {
+		  return 'No';
+	  }
+  }
 }

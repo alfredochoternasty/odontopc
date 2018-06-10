@@ -26,6 +26,7 @@ generator:
         actions:
           _new: ~
           imprimir: {label: Imprimir}
+          remito: {label: Imprimir Remito}
       filter: ~
       form: ~
       edit:

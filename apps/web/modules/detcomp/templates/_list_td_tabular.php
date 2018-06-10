@@ -8,7 +8,7 @@
   <?php echo $detalle_compra->getNroLote() ?>
 </td>
 <td class="sf_admin_date sf_admin_list_td_fecha_vto">
-  <?php echo false !== strtotime($detalle_compra->getFechaVto()) ? format_date($detalle_compra->getFechaVto(), "f") : '&nbsp;' ?>
+  <?php echo false !== strtotime($detalle_compra->getFechaVto()) ? implode('/', array_reverse(explode('-', $detalle_compra->getFechaVto()))) : '&nbsp;' ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_precio">
   <?php echo $detalle_compra->PrecioFormato() ?>

@@ -9,7 +9,9 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * 
  * @property integer $id
  * @property integer $producto_id
+ * @property string $codigo
  * @property string $nro_lote
+ * @property date $fecha_vto
  * @property integer $nro_venta
  * @property date $fecha_venta
  * @property integer $cliente_id
@@ -24,7 +26,9 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * 
  * @method integer       getId()            Returns the current record's "id" value
  * @method integer       getProductoId()    Returns the current record's "producto_id" value
+ * @method string        getCodigo()        Returns the current record's "codigo" value
  * @method string        getNroLote()       Returns the current record's "nro_lote" value
+ * @method date          getFechaVto()      Returns the current record's "fecha_vto" value
  * @method integer       getNroVenta()      Returns the current record's "nro_venta" value
  * @method date          getFechaVenta()    Returns the current record's "fecha_venta" value
  * @method integer       getClienteId()     Returns the current record's "cliente_id" value
@@ -38,7 +42,9 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * @method Producto      getProducto()      Returns the current record's "Producto" value
  * @method ProductoTraza setId()            Sets the current record's "id" value
  * @method ProductoTraza setProductoId()    Sets the current record's "producto_id" value
+ * @method ProductoTraza setCodigo()        Sets the current record's "codigo" value
  * @method ProductoTraza setNroLote()       Sets the current record's "nro_lote" value
+ * @method ProductoTraza setFechaVto()      Sets the current record's "fecha_vto" value
  * @method ProductoTraza setNroVenta()      Sets the current record's "nro_venta" value
  * @method ProductoTraza setFechaVenta()    Sets the current record's "fecha_venta" value
  * @method ProductoTraza setClienteId()     Sets the current record's "cliente_id" value
@@ -71,9 +77,17 @@ abstract class BaseProductoTraza extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('codigo', 'string', 50, array(
+             'type' => 'string',
+             'length' => 50,
+             ));
         $this->hasColumn('nro_lote', 'string', 50, array(
              'type' => 'string',
              'length' => 50,
+             ));
+        $this->hasColumn('fecha_vto', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
              ));
         $this->hasColumn('nro_venta', 'integer', 4, array(
              'type' => 'integer',

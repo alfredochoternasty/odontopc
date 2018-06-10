@@ -13,7 +13,9 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        fecha_vto: { date_format: dd/MM/yyyy }
+        trazable: {help: Esto indica si el lote va a salir en el listado de traza}
       list:
         title: Detalle de Compra
         max_per_page: 999
@@ -30,4 +32,4 @@ generator:
         title: Modificar Detalle de la compra %%Compra%%
       new:
         title: Nuevo Detalle de la compra %%Compra%%
-        display: [producto_id, nro_lote, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]
+        display: [producto_id, trazable, nro_lote, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]

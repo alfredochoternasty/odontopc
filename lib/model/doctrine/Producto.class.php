@@ -45,38 +45,28 @@ class Producto extends BaseProducto
   public static function AumentarStock(sfEvent $event){
     $prod = $event['object']->getProductoId();
     $cant_cmp = $event['object']->getCantidad();
-    $lote = $event['object']->getNroLote();
-    
-    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote);
+    $lote = $event['object']->getNroLote();   
+    $fec_vto = $event['object']->getFechaVto();   
+    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLoteAndFechaVto($prod, $lote, $fec_vto);
     $cant_prod = null;
-    foreach($prods as $producto){
-      $cant_prod = $producto->getStock();
-    }
- 
-    if(empty($cant_prod)){
-      try{
-        $fec_vto = $event['object']->getFechaVto();
-        $compra = $event['object']->getCompraId();
-      }catch(Exception $e){
-        $fec_vto = null;
-        $compra = null;
-      }      
-    
+		if (!empty($prods[0])) {
+			$lote = Doctrine::getTable('Lote')->find($prods[0]->getId());
+			$cant_prod = $lote->getStock();
+			$lote->setStock($cant_prod + $cant_cmp);
+			$lote->save();
+		} else {
+			$usuario = $event['object']->getUsuario();
+			$fec_vto = $event['object']->getFechaVto();
+			$compra = $event['object']->getCompraId();
       $obj_lote = new Lote();
       $obj_lote->setProductoId($prod);
       $obj_lote->setNroLote($lote);
       $obj_lote->setStock($cant_cmp);
       $obj_lote->setFechaVto($fec_vto);
       $obj_lote->setCompraId($compra);
-      $obj_lote->save();
-    }else{    
-      $q = Doctrine_Query::create()
-          ->update('lote l')
-          ->set('l.stock', '?', $cant_prod + $cant_cmp)
-          ->where('l.producto_id = ?', $prod)
-          ->andWhere('l.nro_lote = ?', $lote);
-      $q->execute();    
-    }
+      $obj_lote->setUsuario($usuario);
+      $obj_lote->save();			
+		}
   }
   
   public function CantidadFacturada(){

@@ -22,6 +22,7 @@ class ProductoTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Grupo g');
       $q->where('grupoprod_id <> 1');
       $q->andWhere('grupoprod_id <> 15');
+      $q->andWhere('activo = 1');
       return $q;
     }
     
@@ -31,7 +32,8 @@ class ProductoTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Lote l');
       $q->where('grupoprod_id <> 1');
       $q->andWhere('grupoprod_id <> 15');
-      $q->andWhere('stock < 0');      
+      $q->andWhere('stock < 0'); 
+			$q->andWhere('activo = 1');			
       return $q;
     }
     
@@ -45,9 +47,10 @@ class ProductoTable extends Doctrine_Table
       $q->where('grupoprod_id <> 1');
       $q->andWhere('grupoprod_id <> 15');            
       $q->andWhere('stock <= minimo_stock');
+			$q->andWhere('activo = 1');
       return $q;
     }
-    
+
     static public function getArrayActivos(){
     $q = Doctrine_Query::create()
       ->from('Grupoprod g')
@@ -63,17 +66,34 @@ class ProductoTable extends Doctrine_Table
       foreach($res as $grupos){
         $prods = array();
         foreach($grupos['Productos'] as $prod){
-          $prods[$prod['id']] = $prod['nombre'];  
+					if (!empty($prod['codigo'])) {
+						$prods[$prod['id']] = $prod['nombre'].' ('.$prod['codigo'].')';  
+					} else {
+						$prods[$prod['id']] = $prod['nombre'];
+					}
         }
         $choices[$grupos['nombre']] = $prods; 
       }      
       return $choices;
     }
-    
+
+
+    public function getActivos(){
+			$query = Doctrine_Core::getTable('Producto')
+			->createQuery('q')
+      ->where('grupoprod_id not in (1, 15) or id = 71')
+      ->andWhere('activo = 1')
+      ->orderBy('nombre')			
+      ->addOrderBy('orden_grupo');
+			$result = $query->execute();
+      return $result;
+    }
+		
     public function retrieveProdConCod(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Grupo g');
       $q->where('codigo not is nnull 1');
+			$q->andWhere('activo = 1');
       return $q;
     }
 }

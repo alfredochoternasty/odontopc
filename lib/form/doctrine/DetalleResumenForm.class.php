@@ -16,10 +16,12 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     parent::configure();
     
     unset($this['fecha_vto']);
-    $choices = ProductoTable::getArrayActivos();
     
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+    
+    $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+    $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => true, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
+		
     $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => array()));
     $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
     $this->widgetSchema['bonificados'] = new sfWidgetFormChoice(array('choices' => array()));
@@ -38,6 +40,12 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->validatorSchema['cantidad'] =  new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['bonificados'] =  new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
+	
+    $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
+	$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+	
+    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
+		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
   }
   
 }

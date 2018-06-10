@@ -16,6 +16,11 @@ class Cliente extends BaseCliente
     $val = $this->getApellido().' '.$this->getNombre();
     return empty($val)? '' : $val;
   }
+
+  public function getDescAfip(){
+    $val = $this->getApellido().' '.$this->getNombre().' - CUIT: '.$this->getCuit().' ('.$this->getCondfiscal().')';
+    return empty($val)? '' : $val;
+  }
   
   public function getListaPrecio(){
 	$lista = $this->getListaId();
@@ -25,7 +30,7 @@ class Cliente extends BaseCliente
 	}
 	return $lista;
   }
-  
+	
   public function getSaldoCtaCte($fecha_fin = null){
     $q = Doctrine_Query::create()
           ->select('sum(debe - haber) as saldo')
@@ -39,7 +44,7 @@ class Cliente extends BaseCliente
     if($saldo[0]['saldo'] == '')
       return 0;
     else
-      return $saldo[0]['saldo'];
+      return sprintf(" %01.2f", $saldo[0]['saldo']);
   }
 
 }
