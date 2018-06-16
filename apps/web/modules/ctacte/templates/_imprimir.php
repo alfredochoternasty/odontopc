@@ -19,7 +19,7 @@
   <?php 
     $saldo = 0;
     $fi = implode("/", array_reverse(explode("-", $cta_cte[0]->getFecha())));
-    $saldo_anterior = $cta_cte[0]->getCliente()->getSaldoCtaCte($cta_cte[0]->getFecha());
+    $saldo_anterior = $cta_cte[0]->getCliente()->getSaldoCtaCte($cta_cte[0]->getMonedaId(), $cta_cte[0]->getFecha());
     $saldo += $saldo_anterior;
   ?>
   <tr>
@@ -46,7 +46,7 @@
   </tr>
   <tr>
     <td style="text-align: right;" colspan="4"><?php echo 'Saldo total' ?></td>
-    <td><?php echo '$'.sprintf("%01.2f", $cta_cte[0]->getCliente()->getSaldoCtaCte()) ?></td>
+    <td><?php echo '$'.sprintf("%01.2f", $cta_cte[0]->getCliente()->getSaldoCtaCte($cta_cte[0]->getMonedaId())) ?></td>
   </tr>
 </table>
 <p>&nbsp;</p>

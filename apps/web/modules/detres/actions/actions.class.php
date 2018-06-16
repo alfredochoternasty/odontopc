@@ -111,29 +111,29 @@ class detresActions extends autoDetresActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-    if ($form->isValid())
-    {
+    if ($form->isValid()) {
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-
       $detalle_resumen = $form->save();
-
+			
+			$lista_id = $detalle_resumen->getProducto()->getListaId();
+			$moneda_id = $detalle_resumen->getProducto()->getLista()->getMonedaId();
+			if (empty($lista_id)) {
+				$lista_id = $detalle_resumen->getResumen()->getCliente()->getListaId();
+				$moneda_id = $detalle_resumen->getResumen()->getCliente()->getLista()->getMonedaId();
+			}
+			$detalle_resumen->setListaId($lista_id);
+			$detalle_resumen->setMonedaId($moneda_id);
+			$detalle_resumen->save();
+			
       $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
-
-      if ($request->hasParameter('_save_and_add'))
-      {
+      if ($request->hasParameter('_save_and_add')) {
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
-
         $this->redirect('detres/new?rid='.$detalle_resumen->getResumenId());
-      }
-      else
-      {
+      } else {
         $this->getUser()->setFlash('notice', $notice);
-
         $this->redirect('detres/index?rid='.$detalle_resumen->getResumenId());
       }
-    }
-    else
-    {
+    } else {
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
@@ -158,7 +158,6 @@ class detresActions extends autoDetresActions
       ->where('l.producto_id = '.$request->getparameter('pid'))
       ->andWhere('l.stock > 0 ')
       ->andWhere('l.fecha_vto > '.date('Y-m-d'))
-			->andWhere('l.nro_lote not like \'er%\'')
       ->orderBy('l.fecha_vto asc');
      
     $lotes = $q->fetchArray();  

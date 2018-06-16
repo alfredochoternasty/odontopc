@@ -1,7 +1,7 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:           Cliente
+    model_class:           ClienteSaldo
     theme:                 jroller
     non_verbose_templates: true
     with_show:             false
@@ -16,16 +16,14 @@ generator:
       fields:  ~
       list:
         max_per_page: 50
-        table_method: retrieveConSaldos
-        table_count_method: retrieveConSaldosCount
         title: Listado de Saldos  
-        display: [Tipo, apellido, nombre, Moneda, saldo]
+        display: [tipo_cliente, apellido, nombre, moneda, _saldo]
         object_actions: []
         batch_actions: []
         actions:
           imprimir: {label: Imprimir página}
       filter:
-        display: [tipo_id, apellido, nombre, moneda]
+        display: [apellido, nombre]
       form:    ~
       edit:    ~
       new:     ~

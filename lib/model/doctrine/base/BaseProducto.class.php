@@ -22,10 +22,12 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property boolean $activo
  * @property integer $grupo2
  * @property integer $grupo3
+ * @property integer $lista_id
  * @property Grupoprod $Grupo
  * @property Grupoprod $GrupoDos
  * @property Grupoprod $GrupoTres
  * @property TipoMoneda $Moneda
+ * @property ListaPrecio $Lista
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $DetalleVenta
  * @property Doctrine_Collection $DetalleResumen
@@ -57,10 +59,12 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method boolean             getActivo()             Returns the current record's "activo" value
  * @method integer             getGrupo2()             Returns the current record's "grupo2" value
  * @method integer             getGrupo3()             Returns the current record's "grupo3" value
+ * @method integer             getListaId()            Returns the current record's "lista_id" value
  * @method Grupoprod           getGrupo()              Returns the current record's "Grupo" value
  * @method Grupoprod           getGrupoDos()           Returns the current record's "GrupoDos" value
  * @method Grupoprod           getGrupoTres()          Returns the current record's "GrupoTres" value
  * @method TipoMoneda          getMoneda()             Returns the current record's "Moneda" value
+ * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
  * @method Doctrine_Collection getDetalleCompra()      Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection getDetalleVenta()       Returns the current record's "DetalleVenta" collection
  * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
@@ -91,10 +95,12 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setActivo()             Sets the current record's "activo" value
  * @method Producto            setGrupo2()             Sets the current record's "grupo2" value
  * @method Producto            setGrupo3()             Sets the current record's "grupo3" value
+ * @method Producto            setListaId()            Sets the current record's "lista_id" value
  * @method Producto            setGrupo()              Sets the current record's "Grupo" value
  * @method Producto            setGrupoDos()           Sets the current record's "GrupoDos" value
  * @method Producto            setGrupoTres()          Sets the current record's "GrupoTres" value
  * @method Producto            setMoneda()             Sets the current record's "Moneda" value
+ * @method Producto            setLista()              Sets the current record's "Lista" value
  * @method Producto            setDetalleCompra()      Sets the current record's "DetalleCompra" collection
  * @method Producto            setDetalleVenta()       Sets the current record's "DetalleVenta" collection
  * @method Producto            setDetalleResumen()     Sets the current record's "DetalleResumen" collection
@@ -186,6 +192,11 @@ abstract class BaseProducto extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('lista_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -208,6 +219,11 @@ abstract class BaseProducto extends sfDoctrineRecord
 
         $this->hasOne('TipoMoneda as Moneda', array(
              'local' => 'moneda_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('ListaPrecio as Lista', array(
+             'local' => 'lista_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

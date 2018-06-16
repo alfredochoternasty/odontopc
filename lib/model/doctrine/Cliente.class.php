@@ -31,11 +31,12 @@ class Cliente extends BaseCliente
 	return $lista;
   }
 	
-  public function getSaldoCtaCte($fecha_fin = null){
+  public function getSaldoCtaCte($moneda = 0, $fecha_fin = null){
     $q = Doctrine_Query::create()
           ->select('sum(debe - haber) as saldo')
           ->from('CtaCte c')
-          ->where('cliente_id = ?', $this->getId());
+          ->where('cliente_id = ?', $this->getId())
+          ->andWhere('moneda_id = ?', $moneda);
     
     if(!empty($fecha_fin)) $q->andWhere('fecha < ?', $fecha_fin);
    

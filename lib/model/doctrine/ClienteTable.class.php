@@ -21,6 +21,7 @@ class ClienteTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Tipo t');
       $q->leftJoin($rootAlias . '.Localidad l');
+			$q->where($rootAlias . '.activo = 1');
       return $q;
     }
     
@@ -38,18 +39,18 @@ class ClienteTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Cuenta cta');
       $q->leftJoin($rootAlias . '.Tipo t');
       $q->leftJoin('cta.Moneda m');
+			$q->where($rootAlias . '.activo = 1');
       $q->addGroupBy('t.nombre');
       $q->addGroupBy('m.nombre');
       $q->addGroupBy($rootAlias . '.dni');
       $q->addGroupBy($rootAlias . '.apellido');
       $q->addGroupBy($rootAlias . '.nombre');
-      $q->orderBy($rootAlias . '.apellido asc');
-      $q->addOrderBy($rootAlias . '.nombre asc');
       return $q;
     }
     
     public function retrieveConSaldosCount(Doctrine_Query $q){
-      //$rootAlias = $q->getRootAlias();
+      $rootAlias = $q->getRootAlias();
+			$q->where($rootAlias . '.activo = 1');
       return $q;
     }
     

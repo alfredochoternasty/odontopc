@@ -34,7 +34,7 @@ generator:
           _delete: {label: Eliminar}
       filter: ~
       form:
-        display: [tipofactura_id, fecha, cliente_id, lista_id, nro_factura, cuit, afip, saldo, observacion]
+        display: [tipofactura_id, fecha, cliente_id, lista_id, nro_factura, cuit, afip, saldo_pesos, saldo_dolar, observacion]
         actions:
           _list: {label: Volver}
           _save: {label: 'Guardar y Agregar Detalle'}

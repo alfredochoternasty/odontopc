@@ -42,9 +42,11 @@ class resumenActions extends autoResumenActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $resumen = $form->save();
-	  $resumen->setListaId($resumen->getCliente()->getListaPrecio());
-	  $resumen->setMonedaId($resumen->getLista()->getMonedaId());
-	  $resumen->save();
+			//$resumen->setListaId($resumen->getCliente()->getListaPrecio());
+			$resumen->setListaId(0);
+			//$resumen->setMonedaId($resumen->getLista()->getMonedaId());
+			$resumen->setMonedaId(0);
+			$resumen->save();
       $id_pedido = $resumen->getPedidoId();
       if($id_pedido > 0){
         $detalle_pedido = Doctrine::getTable('DetallePedido')->findbyPedidoId($id_pedido);
@@ -142,7 +144,8 @@ public function executeNew(sfWebRequest $request){
     $cliente = Doctrine::getTable('Cliente')->find($cliente_id);
     $datos['cuit'] = $cliente->getCuit();
     $datos['afip'] = $cliente->getCondfiscal()->getNombre();
-    $datos['saldo'] = $cliente->getSaldoCtaCte();
+    $datos['saldo_pesos'] = $cliente->getSaldoCtaCte(1);
+    $datos['saldo_dolar'] = $cliente->getSaldoCtaCte(2);
     return $this->renderText(json_encode($datos));
   }	
 }

@@ -20,10 +20,14 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property decimal $iva
  * @property decimal $sub_total
  * @property integer $usuario
+ * @property integer $lista_id
+ * @property integer $moneda_id
  * @property Resumen $Resumen
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
  * @property Lote $Lote
+ * @property ListaPrecio $Lista
+ * @property TipoMoneda $Moneda
  * @property Doctrine_Collection $ListadoVentas
  * 
  * @method integer             getId()            Returns the current record's "id" value
@@ -39,10 +43,14 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method decimal             getIva()           Returns the current record's "iva" value
  * @method decimal             getSubTotal()      Returns the current record's "sub_total" value
  * @method integer             getUsuario()       Returns the current record's "usuario" value
+ * @method integer             getListaId()       Returns the current record's "lista_id" value
+ * @method integer             getMonedaId()      Returns the current record's "moneda_id" value
  * @method Resumen             getResumen()       Returns the current record's "Resumen" value
  * @method Producto            getProducto()      Returns the current record's "Producto" value
  * @method sfGuardUser         getSfGuardUser()   Returns the current record's "sfGuardUser" value
  * @method Lote                getLote()          Returns the current record's "Lote" value
+ * @method ListaPrecio         getLista()         Returns the current record's "Lista" value
+ * @method TipoMoneda          getMoneda()        Returns the current record's "Moneda" value
  * @method Doctrine_Collection getListadoVentas() Returns the current record's "ListadoVentas" collection
  * @method DetalleResumen      setId()            Sets the current record's "id" value
  * @method DetalleResumen      setResumenId()     Sets the current record's "resumen_id" value
@@ -57,10 +65,14 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setIva()           Sets the current record's "iva" value
  * @method DetalleResumen      setSubTotal()      Sets the current record's "sub_total" value
  * @method DetalleResumen      setUsuario()       Sets the current record's "usuario" value
+ * @method DetalleResumen      setListaId()       Sets the current record's "lista_id" value
+ * @method DetalleResumen      setMonedaId()      Sets the current record's "moneda_id" value
  * @method DetalleResumen      setResumen()       Sets the current record's "Resumen" value
  * @method DetalleResumen      setProducto()      Sets the current record's "Producto" value
  * @method DetalleResumen      setSfGuardUser()   Sets the current record's "sfGuardUser" value
  * @method DetalleResumen      setLote()          Sets the current record's "Lote" value
+ * @method DetalleResumen      setLista()         Sets the current record's "Lista" value
+ * @method DetalleResumen      setMoneda()        Sets the current record's "Moneda" value
  * @method DetalleResumen      setListadoVentas() Sets the current record's "ListadoVentas" collection
  * 
  * @package    odontopc
@@ -144,6 +156,16 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('lista_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
+        $this->hasColumn('moneda_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -166,6 +188,16 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
 
         $this->hasOne('Lote', array(
              'local' => 'nro_lote',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('ListaPrecio as Lista', array(
+             'local' => 'lista_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('TipoMoneda as Moneda', array(
+             'local' => 'moneda_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

@@ -8,14 +8,14 @@ select
   r.id, 
   r.fecha, 
   c.id, 
-  r.moneda_id, 
+  d.moneda_id, 
   sum( d.total ) AS debe, 
   '0' AS haber,
   r.observacion
 FROM resumen r
   JOIN detalle_resumen d ON r.id = d.resumen_id
   JOIN cliente c ON r.cliente_id = c.id
-GROUP BY r.id
+GROUP BY r.id, d.moneda_id
 UNION
 SELECT 
   FLOOR(1+(RAND()*999999999999)), 
@@ -29,7 +29,7 @@ SELECT
   c.observacion
 FROM cobro c
   JOIN cliente cl ON c.cliente_id = cl.id
-GROUP BY c.id
+GROUP BY c.id, c.moneda_id
 ORDER BY fecha ASC;
 
 DROP VIEW listado_cobros;    
@@ -124,14 +124,15 @@ from
 		join detalle_resumen dr on p.id = dr.producto_id
 		join resumen r on dr.resumen_id = r.id
 		join cliente c on r.cliente_id = c.id
-		join detalle_compra dc on p.id = dc.producto_id and dr.nro_lote = dc.nro_lote
+		join detalle_compra dc on p.id = dc.producto_id 
+			and CONVERT(dr.nro_lote using utf8) collate utf8_spanish_ci = CONVERT(dc.nro_lote using utf8) collate utf8_spanish_ci
 		join compra com on dc.compra_id = com.id
 		join proveedor prov on com.proveedor_id = prov.id
-		left outer join dev_producto dp on dr.resumen_id = dp.resumen_id and dr.producto_id = dp.producto_id and dr.nro_lote and dp.nro_lote33
+		left outer join dev_producto dp on dr.resumen_id = dp.resumen_id and dr.producto_id = dp.producto_id and dr.nro_lote and dp.nro_lote
 where 
-	dc.trazable = 1;
+	dc.trazable = 1
 having 
-	cant_vendida > 0
+	cant_vendida > 0;
 
 DROP VIEW cliente_ultima_compra;
 CREATE VIEW cliente_ultima_compra AS select 
@@ -206,7 +207,8 @@ from
     left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
     left join producto on detalle_resumen.producto_id = producto.id
     left join grupoprod on producto.grupoprod_id = grupoprod.id
-    left join lote on detalle_resumen.producto_id = lote.producto_id and detalle_resumen.nro_lote = lote.nro_lote
+    left join lote on detalle_resumen.producto_id = lote.producto_id 
+	 	and CONVERT(detalle_resumen.nro_lote using utf8) collate utf8_spanish_ci = CONVERT(lote.nro_lote using utf8) collate utf8_spanish_ci
 where
   producto.grupoprod_id not in (1, 15)
 order by
@@ -247,77 +249,66 @@ order by
   
 DROP VIEW control_stock;
 CREATE VIEW control_stock (
-  id,
-  producto_id, 
-  grupoprod_id, 
-  producto_nombre, 
-  resumen_id, 
-  fecha_vta, 
-  nro_lote, 
-  cantidad_vendida,
-  cantidad_bonificados,
-  cantidad_total,
-  stock_actual, 
-  stock_sin_lote,
-  grupo2,
-  grupo3
-) AS 
-select
+ id,
+ grupoprod_id,
+ grupo_nombre,
+ producto_id,
+ producto_nombre,
+ nro_lote,
+ cant_comprada,
+ cant_vendida,
+ stock
+) AS
+SELECT
+   FLOOR(1+(RAND()*999999999999)),
+	p.grupoprod_id,
+	gp.nombre,
+	p.id,
+	p.nombre,
+	dc.nro_lote, SUM(dc.cantidad) AS cant_comprada,
+	(
+SELECT SUM(dr.cantidad + dr.bonificados)
+FROM detalle_resumen dr
+WHERE dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
+	) AS cant_vendida, 
+	(
+SELECT (SUM(dc.cantidad) - SUM(dr.cantidad + dr.bonificados))
+FROM detalle_resumen dr
+WHERE dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
+	) AS stock
+FROM
+	detalle_compra dc
+JOIN producto p ON dc.producto_id = p.id
+JOIN grupoprod gp ON p.grupoprod_id = gp.id
+WHERE
+	p.grupoprod_id NOT IN (1,15) AND p.activo = 1
+GROUP BY
+	p.id, p.nombre, dc.nro_lote
+ORDER BY
+	p.orden_grupo, p.nombre, dc.nro_lote;
+
+DROP VIEW cliente_saldo;
+CREATE VIEW cliente_saldo AS
+SELECT 
 	FLOOR(1+(RAND()*999999999999)),
-	p.id,
-	p.grupoprod_id, 
-	p.nombre,
-  r.id, 
-	r.fecha,
-	dr.nro_lote,
-	sum(dr.cantidad),
-	dr.bonificados,
-	(dr.cantidad + dr.bonificados),
-	l.stock,
-  (select sum(l2.stock) from lote l2 where l2.producto_id = p.id),
-  p.grupo2,
-  p.grupo3
-from
-	producto p
-		join detalle_resumen dr on p.id = dr.producto_id
-		join resumen r on dr.resumen_id = r.id
-		join lote l on dr.nro_lote = l.nro_lote and dr.producto_id = l.producto_id
-where
-	p.grupoprod_id not in (1,15) and p.activo = 1
-group by
-	p.id,
-	p.grupoprod_id, 
-	p.nombre,
-  r.id,
-	r.fecha,
-	dr.nro_lote,
-	dr.bonificados,
-	l.stock,
-	l.fecha_vto,
-  p.grupo2,
-  p.grupo3  
-order by
-	p.orden_grupo, p.nombre, r.fecha;
-
-DROP VIEW cliente_ultima_compra;
-CREATE VIEW cliente_ultima_compra  AS  
-select 
-	max(r.id) AS id,
-	c.id AS cliente_id,
-	c.apellido AS apellido,
-	c.nombre AS nombre,
-	max(r.fecha) AS fecha, 
-	c.telefono AS telefono,
-	c.celular AS celular,
-	c.email AS email
-from 
+	c.dni, 
+	c.apellido, 
+	c.nombre, 
+	cta.id, 
+	tc.nombre as tipo_cliente, 
+	tm.simbolo, 
+	tm.nombre as moneda, 
+	FORMAT(SUM(cta.debe - cta.haber), 2) AS saldo, 
+	MAX(fecha) AS fecha,
+	cta.concepto
+FROM 
 	cliente c 
-		join resumen r on c.id = r.cliente_id 
-group by 
-	c.id,
-	c.apellido,
-	c.nombre ;
-
-
-
-
+		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
+		LEFT JOIN tipo_cliente tc ON c.tipo_id = tc.id 
+		LEFT JOIN tipo_moneda tm ON cta.moneda_id = tm.id 
+WHERE 
+	c.activo = 1
+GROUP BY 
+	tc.nombre, tm.nombre, c.dni, c.apellido, c.nombre 
+ORDER BY 
+	c.apellido asc;

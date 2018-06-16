@@ -13,6 +13,7 @@ require_once dirname(__FILE__).'/../lib/ctrlstockGeneratorHelper.class.php';
  */
 class ctrlstockActions extends autoCtrlstockActions
 {
+	/*
   public function executeListTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);
     $this->filters = $this->configuration->getFilterForm($this->getFilters());
@@ -26,20 +27,22 @@ class ctrlstockActions extends autoCtrlstockActions
     $this->hasFilters = $this->getUser()->getAttribute('ctrlstock.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     $this->redirect('ctrlstock/filter');
   }
-  
+  */
+	
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ControlStockFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+		$dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream("control_stock.pdf");    
     return sfView::NONE;
   }
   
+	/*
   public function executeFilter(sfWebRequest $request)
   {
     $this->setPage(1);  
@@ -65,6 +68,7 @@ class ctrlstockActions extends autoCtrlstockActions
     $this->sort = $this->getSort();
   }  
   
+	
   public function executeIndex(sfWebRequest $request)
   {
     $this->filters = $this->configuration->getFilterForm($this->getFilters());
@@ -74,5 +78,6 @@ class ctrlstockActions extends autoCtrlstockActions
       $this->redirect('ctrlstock/filter');
     }  
   }
+	*/
   
 }

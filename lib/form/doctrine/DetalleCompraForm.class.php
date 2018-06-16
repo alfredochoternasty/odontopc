@@ -37,11 +37,11 @@ class DetalleCompraForm extends BaseDetalleCompraForm
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorString();
 		
-		$this->widgetSchema['trazable'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
-		$this->validatorSchema['trazable'] = new sfValidatorChoice(array('required' => true, 'choices' => array(1, 0)));    
-	
-    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());
+    $this->widgetSchema['trazable'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['trazable'] =  new sfValidatorString();
+		
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		$this->setDefault ('trazable', 1);
     
   }
 }

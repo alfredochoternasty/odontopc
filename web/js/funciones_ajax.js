@@ -13,23 +13,6 @@ $("#curso_mail_enviado_tipo_envio").change(function(event){
 
 });
 
-
-$(document).ready(function(){
-  $("#resumen_cliente_id").change(function(event){
-    var id = $("#resumen_cliente_id").find(':selected').val();
-    $.ajax({
-        url: 'datoscliente?cid='+id,
-        dataType: "json",
-        success: function(data) {
-          $("#resumen_cuit").attr('value', data.cuit);
-          $("#resumen_afip").attr('value', data.afip);
-          $("#resumen_saldo").attr('value', data.saldo);
-        },
-      });
-  });
-})
-
-
 //pedidos 
 $(document).ready(function(){
   $("#detalle_pedido_producto_id").change(function(event){
@@ -129,6 +112,22 @@ $(document).ready(function(){
 });
 
 //resumen
+$(document).ready(function(){
+  $("#resumen_cliente_id").change(function(event){
+    var id = $("#resumen_cliente_id").find(':selected').val();
+    $.ajax({
+        url: 'datoscliente?cid='+id,
+        dataType: "json",
+        success: function(data) {
+          $("#resumen_cuit").attr('value', data.cuit);
+          $("#resumen_afip").attr('value', data.afip);
+          $("#resumen_saldo_pesos").attr('value', data.saldo_pesos);
+          $("#resumen_saldo_dolar").attr('value', data.saldo_dolar);
+        },
+      });
+  });
+})
+
 $(document).ready(function(){
   $("#detalle_resumen_producto_id").change(function(event){
     var id = $("#detalle_resumen_producto_id").find(':selected').val();
@@ -299,6 +298,7 @@ $(document).ready(function(){
 
 //DEVOLUCION DE PRODUCTO
 $(document).ready(function(){
+	
   $("#dev_producto_producto_id").change(function(event){
       var cid = $("#dev_producto_cliente_id").find(':selected').val();
       var pid = $("#dev_producto_producto_id").find(':selected').val();
@@ -337,7 +337,8 @@ $(document).ready(function(){
             $("#dev_producto_cantidad").html(data);
             var cantidad = 1;
             var precio = $("#dev_producto_precio").val();
-            var total = cantidad * precio;
+						var iva = $("#dev_producto_iva").val();
+            var total = (cantidad * precio) + (cantidad * iva);
             $("#dev_producto_total").attr('value', total.toFixed(2));                            
           }
         });                  

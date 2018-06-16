@@ -12,10 +12,10 @@
     <tbody>
     <tbody>
       <?php 
-        $suma_total = 0;
+        $suma_total = array();
         foreach ($pager2 as $i => $detalle_resumen): 
           $odd = fmod(++$i, 2) ? ' odd' : '';
-          $suma_total += $detalle_resumen->getTotal();
+          @$suma_total[$detalle_resumen->SimboloMoneda()] += $detalle_resumen->getTotal();
           ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
           <?php 
@@ -24,15 +24,19 @@
           ?>
         </tr>
       <?php endforeach; ?>
-
+		
+      <?php 
+        foreach ($suma_total as $i => $suma): 
+			?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-        <td colspan="4" class="sf_admin_text">&nbsp;</td>
+        <td colspan="6" class="sf_admin_text">&nbsp;</td>
         <td style="text-align: right;" class="sf_admin_text">Total:</td>
         <td class="sf_admin_text">
-          <?php echo sprintf($detalle_resumen->SimboloMoneda()." %01.2f", $suma_total) ?>
+          <?php echo sprintf($i." %01.2f", $suma) ?>
         </td>
         <td colspan="2" class="sf_admin_text">&nbsp;</td>
       </tr>
+      <?php endforeach; ?>
       
     </tbody>
     </table>

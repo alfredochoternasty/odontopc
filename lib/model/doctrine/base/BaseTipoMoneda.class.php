@@ -17,6 +17,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property Doctrine_Collection $FactCompra
  * @property Doctrine_Collection $Pagos
  * @property Doctrine_Collection $Producto
+ * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $CtaCte
  * @property Doctrine_Collection $ListaPrecio
  * @property Doctrine_Collection $ListadoVentas
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method Doctrine_Collection getFactCompra()     Returns the current record's "FactCompra" collection
  * @method Doctrine_Collection getPagos()          Returns the current record's "Pagos" collection
  * @method Doctrine_Collection getProducto()       Returns the current record's "Producto" collection
+ * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getCtaCte()         Returns the current record's "CtaCte" collection
  * @method Doctrine_Collection getListaPrecio()    Returns the current record's "ListaPrecio" collection
  * @method Doctrine_Collection getListadoVentas()  Returns the current record's "ListadoVentas" collection
@@ -50,6 +52,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method TipoMoneda          setFactCompra()     Sets the current record's "FactCompra" collection
  * @method TipoMoneda          setPagos()          Sets the current record's "Pagos" collection
  * @method TipoMoneda          setProducto()       Sets the current record's "Producto" collection
+ * @method TipoMoneda          setDetalleResumen() Sets the current record's "DetalleResumen" collection
  * @method TipoMoneda          setCtaCte()         Sets the current record's "CtaCte" collection
  * @method TipoMoneda          setListaPrecio()    Sets the current record's "ListaPrecio" collection
  * @method TipoMoneda          setListadoVentas()  Sets the current record's "ListadoVentas" collection
@@ -112,6 +115,10 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
              'foreign' => 'moneda_id'));
 
         $this->hasMany('Producto', array(
+             'local' => 'id',
+             'foreign' => 'moneda_id'));
+
+        $this->hasMany('DetalleResumen', array(
              'local' => 'id',
              'foreign' => 'moneda_id'));
 

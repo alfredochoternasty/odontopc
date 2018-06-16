@@ -31,7 +31,6 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @property string $nro_lote
  * @property integer $grupo2
  * @property integer $grupo3
- * @property date $fecha_vto
  * @property DetalleResumen $Detalle
  * @property Cliente $Cliente
  * @property TipoCliente $Tipo
@@ -65,7 +64,6 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method string         getNroLote()                  Returns the current record's "nro_lote" value
  * @method integer        getGrupo2()                   Returns the current record's "grupo2" value
  * @method integer        getGrupo3()                   Returns the current record's "grupo3" value
- * @method date           getFechaVto()                 Returns the current record's "fecha_vto" value
  * @method DetalleResumen getDetalle()                  Returns the current record's "Detalle" value
  * @method Cliente        getCliente()                  Returns the current record's "Cliente" value
  * @method TipoCliente    getTipo()                     Returns the current record's "Tipo" value
@@ -98,7 +96,6 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method ListadoVentas  setNroLote()                  Sets the current record's "nro_lote" value
  * @method ListadoVentas  setGrupo2()                   Sets the current record's "grupo2" value
  * @method ListadoVentas  setGrupo3()                   Sets the current record's "grupo3" value
- * @method ListadoVentas  setFechaVto()                 Sets the current record's "fecha_vto" value
  * @method ListadoVentas  setDetalle()                  Sets the current record's "Detalle" value
  * @method ListadoVentas  setCliente()                  Sets the current record's "Cliente" value
  * @method ListadoVentas  setTipo()                     Sets the current record's "Tipo" value
@@ -215,10 +212,6 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
         $this->hasColumn('grupo3', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
-             ));
-        $this->hasColumn('fecha_vto', 'date', 25, array(
-             'type' => 'date',
-             'length' => 25,
              ));
     }
 

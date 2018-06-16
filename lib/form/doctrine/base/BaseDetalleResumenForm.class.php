@@ -28,6 +28,8 @@ abstract class BaseDetalleResumenForm extends BaseFormDoctrine
       'iva'         => new sfWidgetFormInputText(),
       'sub_total'   => new sfWidgetFormInputText(),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'lista_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => false)),
+      'moneda_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -44,6 +46,8 @@ abstract class BaseDetalleResumenForm extends BaseFormDoctrine
       'iva'         => new sfValidatorNumber(array('required' => false)),
       'sub_total'   => new sfValidatorNumber(array('required' => false)),
       'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
+      'lista_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'))),
+      'moneda_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'))),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_resumen[%s]');

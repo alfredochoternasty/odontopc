@@ -29,7 +29,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $CobroResumen
- * @property Doctrine_Collection $ControlStock
  * 
  * @method integer             getId()             Returns the current record's "id" value
  * @method date                getFecha()          Returns the current record's "fecha" value
@@ -53,7 +52,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getCobroResumen()   Returns the current record's "CobroResumen" collection
- * @method Doctrine_Collection getControlStock()   Returns the current record's "ControlStock" collection
  * @method Resumen             setId()             Sets the current record's "id" value
  * @method Resumen             setFecha()          Sets the current record's "fecha" value
  * @method Resumen             setClienteId()      Sets the current record's "cliente_id" value
@@ -76,7 +74,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method Resumen             setDevProducto()    Sets the current record's "DevProducto" collection
  * @method Resumen             setCobroResumen()   Sets the current record's "CobroResumen" collection
- * @method Resumen             setControlStock()   Sets the current record's "ControlStock" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -193,10 +190,6 @@ abstract class BaseResumen extends sfDoctrineRecord
              'foreign' => 'resumen_id'));
 
         $this->hasMany('CobroResumen', array(
-             'local' => 'id',
-             'foreign' => 'resumen_id'));
-
-        $this->hasMany('ControlStock', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
     }

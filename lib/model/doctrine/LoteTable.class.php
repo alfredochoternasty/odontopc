@@ -21,7 +21,6 @@ class LoteTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Producto p');
       $q->leftJoin($rootAlias . '.Compra c');
-			$q->where("lote not like 'er%'");
       return $q;      
     }
 }

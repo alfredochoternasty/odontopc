@@ -47,17 +47,17 @@
       foreach ($pager->getResults() as $i => $cta_cte): 
         $saldo_periodo += $cta_cte->getDebe() - $cta_cte->getHaber();
         $cliente = $cta_cte->getCliente();	  
-		$moneda = $cta_cte->getMoneda();
-		if(!empty($fechas['from']) && $i == 0 ):
-			$saldo_anterior = $cliente->getSaldoCtaCte($fechas['from']);
-			?>
-			<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-			<td colspan="5" style="text-align: right;" class="sf_admin_text sf_admin_list_td_numero">Saldo al <?php echo implode('/', array_reverse(explode('-', $fechas['from']))) ?></td>
-			<td class="sf_admin_text <?php if($saldo_anterior < 0) echo 'moneda_negativo'; ?>"><?php echo sprintf($moneda->getSimbolo()." %01.2f", $saldo_anterior) ?></td>
-			</tr>
-			<?php 
-			$saldo_periodo += $saldo_anterior;
-		endif;	  
+				$moneda = $cta_cte->getMoneda();
+				if(!empty($fechas['from']) && $i == 0 ):
+					$saldo_anterior = $cliente->getSaldoCtaCte($moneda->getId(), $fechas['from']);
+					?>
+					<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+					<td colspan="5" style="text-align: right;" class="sf_admin_text sf_admin_list_td_numero">Saldo al <?php echo implode('/', array_reverse(explode('-', $fechas['from']))) ?></td>
+					<td class="sf_admin_text <?php if($saldo_anterior < 0) echo 'moneda_negativo'; ?>"><?php echo sprintf($moneda->getSimbolo()." %01.2f", $saldo_anterior) ?></td>
+					</tr>
+					<?php 
+					$saldo_periodo += $saldo_anterior;
+				endif;	  
         $odd = fmod(++$i, 2) ? ' odd' : '';
       ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
@@ -65,7 +65,7 @@
         </tr>
       <?php 
       endforeach;
-	  $saldo_total = $cliente->getSaldoCtaCte();
+			$saldo_total = $cliente->getSaldoCtaCte($moneda->getId());
       if(!empty($fechas['from'])):
       ?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">

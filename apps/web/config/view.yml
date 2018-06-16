@@ -1,7 +1,7 @@
 default:
   http_metas:
     content-type: text/html
-  stylesheets:    [inicio.css,chosen.css,colorpicker.css,cssmenu.css]
+  stylesheets:    [inicio.css,chosen.css,colorpicker.css]
   javascripts:    [funciones_ajax.js,chosen.jquery.min.js,colorpicker.js, maskedinput.js]
   has_layout:     true
   layout:         layout

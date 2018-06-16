@@ -13,7 +13,7 @@
 class DetalleResumen extends BaseDetalleResumen
 {
   public function SimboloMoneda(){
-    return $this->getResumen()->getCliente()->getLista()->getMoneda()->getSimbolo();
+    return $this->getMoneda()->getSimbolo();
   }
   
   public function PrecioFormato(){

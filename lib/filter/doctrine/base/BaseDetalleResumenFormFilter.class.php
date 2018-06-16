@@ -25,6 +25,8 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'iva'         => new sfWidgetFormFilterInput(),
       'sub_total'   => new sfWidgetFormFilterInput(),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'lista_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
+      'moneda_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -40,6 +42,8 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'iva'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'sub_total'   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
+      'lista_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lista'), 'column' => 'id')),
+      'moneda_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_resumen_filters[%s]');
@@ -72,6 +76,8 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'iva'         => 'Number',
       'sub_total'   => 'Number',
       'usuario'     => 'ForeignKey',
+      'lista_id'    => 'ForeignKey',
+      'moneda_id'   => 'ForeignKey',
     );
   }
 }

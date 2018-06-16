@@ -2,14 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Odonto Venta</title>
-    <link rel="shortcut icon" href="/web/images/favicon.ico" />
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
     <?php use_helper('Date') ?>
-    <?php if($sf_user->hasGroup('Blanco')): ?>
-      <link rel="stylesheet" type="text/css" media="screen" href="/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="/web/css/cssmenu_b.css" />
-    <?php endif; ?>    
+    <?php 
+    $entorno = sfConfig::get('sf_environment');
+		if($entorno == 'dev'){
+			$sufijo = '/odontopc';
+		} else {
+			$sufijo = '';
+		}
+		
+		if($sf_user->hasGroup('Blanco')): ?>
+			<link rel="shortcut icon" href="/web/images/favicon_b.ico" />
+      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $sufijo ?>/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $sufijo ?>/web/css/cssmenu_b.css" />
+    <?php else: ?> 
+			<link rel="shortcut icon" href="/web/images/favicon_n.ico" />
+			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $sufijo ?>/web/web/css/cssmenu.css" />
+    <?php endif; ?>
   </head>
   <body style="margin:0px">
   <?php 

@@ -21,7 +21,7 @@ class DetalleResumenTable extends Doctrine_Table
     $rootAlias = $q->getRootAlias();
     $q->leftJoin($rootAlias . '.Resumen res');
     $q->leftJoin($rootAlias . '.Producto p');
-    $q->leftJoin($rootAlias . '.Lote l');
+    //$q->leftJoin($rootAlias . '.Lote l');
     return $q;
   }
 }

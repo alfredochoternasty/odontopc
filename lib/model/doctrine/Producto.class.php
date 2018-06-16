@@ -46,8 +46,7 @@ class Producto extends BaseProducto
     $prod = $event['object']->getProductoId();
     $cant_cmp = $event['object']->getCantidad();
     $lote = $event['object']->getNroLote();   
-    $fec_vto = $event['object']->getFechaVto();   
-    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLoteAndFechaVto($prod, $lote, $fec_vto);
+    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote);
     $cant_prod = null;
 		if (!empty($prods[0])) {
 			$lote = Doctrine::getTable('Lote')->find($prods[0]->getId());
@@ -96,7 +95,11 @@ class Producto extends BaseProducto
   }  
   
   public function getPrecioFinal($p_lis){
-    return Doctrine::getTable('ListaPrecio')->find($p_lis)->getPrecioLista($this->getId(), $this->getPrecioVta());
+		$prod_lista = $this->getListaId();
+		if (!empty($prod_lista)) {
+			$p_lis = $prod_lista;
+		} 
+		return Doctrine::getTable('ListaPrecio')->find($p_lis)->getPrecioLista($this->getId(), $this->getPrecioVta());
   }
    
 }

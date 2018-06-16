@@ -18,35 +18,41 @@ Doctrine_Manager::getInstance()->bindComponent('ListaPrecio', 'doctrine');
  * @property Doctrine_Collection $Detalle
  * @property TipoMoneda $Moneda
  * @property Doctrine_Collection $Cliente
+ * @property Doctrine_Collection $Producto
  * @property Doctrine_Collection $Resumen
+ * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $Presupuesto
  * 
- * @method integer             getId()          Returns the current record's "id" value
- * @method string              getNombre()      Returns the current record's "nombre" value
- * @method integer             getMonedaId()    Returns the current record's "moneda_id" value
- * @method integer             getAumento()     Returns the current record's "aumento" value
- * @method integer             getDescuento()   Returns the current record's "descuento" value
- * @method decimal             getPrecio()      Returns the current record's "precio" value
- * @method boolean             getDefecto()     Returns the current record's "defecto" value
- * @method boolean             getActivo()      Returns the current record's "activo" value
- * @method Doctrine_Collection getDetalle()     Returns the current record's "Detalle" collection
- * @method TipoMoneda          getMoneda()      Returns the current record's "Moneda" value
- * @method Doctrine_Collection getCliente()     Returns the current record's "Cliente" collection
- * @method Doctrine_Collection getResumen()     Returns the current record's "Resumen" collection
- * @method Doctrine_Collection getPresupuesto() Returns the current record's "Presupuesto" collection
- * @method ListaPrecio         setId()          Sets the current record's "id" value
- * @method ListaPrecio         setNombre()      Sets the current record's "nombre" value
- * @method ListaPrecio         setMonedaId()    Sets the current record's "moneda_id" value
- * @method ListaPrecio         setAumento()     Sets the current record's "aumento" value
- * @method ListaPrecio         setDescuento()   Sets the current record's "descuento" value
- * @method ListaPrecio         setPrecio()      Sets the current record's "precio" value
- * @method ListaPrecio         setDefecto()     Sets the current record's "defecto" value
- * @method ListaPrecio         setActivo()      Sets the current record's "activo" value
- * @method ListaPrecio         setDetalle()     Sets the current record's "Detalle" collection
- * @method ListaPrecio         setMoneda()      Sets the current record's "Moneda" value
- * @method ListaPrecio         setCliente()     Sets the current record's "Cliente" collection
- * @method ListaPrecio         setResumen()     Sets the current record's "Resumen" collection
- * @method ListaPrecio         setPresupuesto() Sets the current record's "Presupuesto" collection
+ * @method integer             getId()             Returns the current record's "id" value
+ * @method string              getNombre()         Returns the current record's "nombre" value
+ * @method integer             getMonedaId()       Returns the current record's "moneda_id" value
+ * @method integer             getAumento()        Returns the current record's "aumento" value
+ * @method integer             getDescuento()      Returns the current record's "descuento" value
+ * @method decimal             getPrecio()         Returns the current record's "precio" value
+ * @method boolean             getDefecto()        Returns the current record's "defecto" value
+ * @method boolean             getActivo()         Returns the current record's "activo" value
+ * @method Doctrine_Collection getDetalle()        Returns the current record's "Detalle" collection
+ * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
+ * @method Doctrine_Collection getCliente()        Returns the current record's "Cliente" collection
+ * @method Doctrine_Collection getProducto()       Returns the current record's "Producto" collection
+ * @method Doctrine_Collection getResumen()        Returns the current record's "Resumen" collection
+ * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
+ * @method Doctrine_Collection getPresupuesto()    Returns the current record's "Presupuesto" collection
+ * @method ListaPrecio         setId()             Sets the current record's "id" value
+ * @method ListaPrecio         setNombre()         Sets the current record's "nombre" value
+ * @method ListaPrecio         setMonedaId()       Sets the current record's "moneda_id" value
+ * @method ListaPrecio         setAumento()        Sets the current record's "aumento" value
+ * @method ListaPrecio         setDescuento()      Sets the current record's "descuento" value
+ * @method ListaPrecio         setPrecio()         Sets the current record's "precio" value
+ * @method ListaPrecio         setDefecto()        Sets the current record's "defecto" value
+ * @method ListaPrecio         setActivo()         Sets the current record's "activo" value
+ * @method ListaPrecio         setDetalle()        Sets the current record's "Detalle" collection
+ * @method ListaPrecio         setMoneda()         Sets the current record's "Moneda" value
+ * @method ListaPrecio         setCliente()        Sets the current record's "Cliente" collection
+ * @method ListaPrecio         setProducto()       Sets the current record's "Producto" collection
+ * @method ListaPrecio         setResumen()        Sets the current record's "Resumen" collection
+ * @method ListaPrecio         setDetalleResumen() Sets the current record's "DetalleResumen" collection
+ * @method ListaPrecio         setPresupuesto()    Sets the current record's "Presupuesto" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -114,7 +120,15 @@ abstract class BaseListaPrecio extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'lista_id'));
 
+        $this->hasMany('Producto', array(
+             'local' => 'id',
+             'foreign' => 'lista_id'));
+
         $this->hasMany('Resumen', array(
+             'local' => 'id',
+             'foreign' => 'lista_id'));
+
+        $this->hasMany('DetalleResumen', array(
              'local' => 'id',
              'foreign' => 'lista_id'));
 

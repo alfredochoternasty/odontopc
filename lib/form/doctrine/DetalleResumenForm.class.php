@@ -15,7 +15,7 @@ class DetalleResumenForm extends BaseDetalleResumenForm
   {
     parent::configure();
     
-    unset($this['fecha_vto']);
+    unset($this['fecha_vto'], $this['lista_id'], $this['moneda_id']);
     
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
     
@@ -42,7 +42,7 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
-	$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+		$this->validatorSchema['usuario'] =  new sfValidatorInteger();	
 	
     //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
