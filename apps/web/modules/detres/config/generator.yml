@@ -19,7 +19,7 @@ generator:
         table_method: retrieveConJoins
         title: Detalle de la Venta
         max_per_page: 999
-        display: [_producto, nro_lote, _precio, cantidad, sub_total, iva, _total, bonificados]
+        display: [_producto, nro_lote, _precio, cantidad, sub_total, iva, _total, bonificados, observacion]
         object_actions:
           _delete: ~
         batch_actions: {}

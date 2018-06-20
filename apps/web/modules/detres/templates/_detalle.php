@@ -29,7 +29,7 @@
         foreach ($suma_total as $i => $suma): 
 			?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-        <td colspan="6" class="sf_admin_text">&nbsp;</td>
+        <td colspan="7" class="sf_admin_text">&nbsp;</td>
         <td style="text-align: right;" class="sf_admin_text">Total:</td>
         <td class="sf_admin_text">
           <?php echo sprintf($i." %01.2f", $suma) ?>

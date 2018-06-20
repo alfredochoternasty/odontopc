@@ -31,16 +31,20 @@ class DetalleCompraForm extends BaseDetalleCompraForm
     }
 		
     $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));    
-    $this->widgetSchema['fecha_vto'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
    
     $this->validatorSchema['compra_id'] =  new sfValidatorNumber();
     $this->validatorSchema['nro_lote'] =  new sfValidatorString();
 
-    $this->validatorSchema['fecha_vto'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
 
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorString();
+		
+		$this->widgetSchema['sin_vto'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
+		$this->validatorSchema['sin_vto'] = new sfValidatorChoice(array('required' => true, 'choices' => array(1, 0))); 
+
+    $this->widgetSchema['fecha_vto'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
+    $this->validatorSchema['fecha_vto'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~', 'required' => false));
 	
     //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());

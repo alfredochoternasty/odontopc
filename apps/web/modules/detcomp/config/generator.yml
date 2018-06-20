@@ -15,6 +15,7 @@ generator:
       actions: ~
       fields:
         fecha_vto: { date_format: dd/MM/yyyy }
+        sin_vto: {label: Sin Fecha de Vto}
         trazable: {help: Esto indica si el lote va a salir en el listado de traza}
       list:
         title: Detalle de Compra
@@ -32,4 +33,4 @@ generator:
         title: Modificar Detalle de la compra %%Compra%%
       new:
         title: Nuevo Detalle de la compra %%Compra%%
-        display: [producto_id, trazable, nro_lote, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]
+        display: [producto_id, trazable, nro_lote, sin_vto, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]

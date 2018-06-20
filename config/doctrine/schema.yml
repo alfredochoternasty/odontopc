@@ -136,6 +136,7 @@ DetalleCompra:
     sub_total: {type: 'decimal(10, 2)'}
     trazable: {type: boolean}
     usuario: {type: integer(4)}
+    sin_vto: {type: boolean}
   relations:
     Compra: {type: one, local: compra_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}

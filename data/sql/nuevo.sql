@@ -66,3 +66,7 @@ GROUP BY
 	tc.nombre, tm.nombre, c.dni, c.apellido, c.nombre 
 ORDER BY 
 	c.apellido asc;
+
+	
+ALTER TABLE detalle_compra
+	ADD COLUMN sin_vto TINYINT NULL AFTER trazable;	
