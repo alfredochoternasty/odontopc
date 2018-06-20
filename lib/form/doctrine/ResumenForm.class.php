@@ -27,6 +27,8 @@ class ResumenForm extends BaseResumenForm
       $this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
       $this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false));
     }else{
+			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInputHidden();
+			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger();
       unset($this['tipofactura_id'], $this['nro_factura']);
     }
 
@@ -39,7 +41,6 @@ class ResumenForm extends BaseResumenForm
 		$this->widgetSchema['cuit'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));		
 		$this->widgetSchema['afip'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));		
 		$this->widgetSchema['saldo_pesos'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));		
-		$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));		
 		
 		$this->validatorSchema->setOption('allow_extra_fields', true);		    
 		

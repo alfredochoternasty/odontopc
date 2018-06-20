@@ -26,11 +26,11 @@
   <div class="sfTMessageContainer sfTAlert">
     <img alt="page not found" class="sfTMessageIcon" src="<?php echo $path ?>/sf/sf_default/images/icons/tools48.png" height="48" width="48" />
     <div class="sfTMessageWrap">
-      <h1>Sitio Temporalmete deshabilitado por tareas de mantenimiento</h1>
-      <h5>por favor intente inegresar mas tarde<h5>
+      <h1>Website Temporarily Unavailable</h1>
+      <h5>Please try again in a few seconds...</h5>
     </div>
   </div>
-<!--
+
   <dl class="sfTMessageInfo">
     <dt>What's next</dt>
     <dd>
@@ -39,7 +39,6 @@
       </ul>
     </dd>
   </dl>
--->
 </div>
 </body>
 </html>

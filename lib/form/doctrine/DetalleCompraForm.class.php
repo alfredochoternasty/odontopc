@@ -21,7 +21,12 @@ class DetalleCompraForm extends BaseDetalleCompraForm
     if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
       $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
       $this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+			$this->widgetSchema['trazable'] = new sfWidgetFormInputHidden();
+			$this->validatorSchema['trazable'] =  new sfValidatorString();
+			$this->setDefault ('usuario', 1);
     }else{
+			$this->widgetSchema['trazable'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
+			$this->validatorSchema['trazable'] = new sfValidatorChoice(array('required' => true, 'choices' => array(1, 0)));    			
       unset($this['iva'], $this['sub_total']);
     }
 		
@@ -36,12 +41,9 @@ class DetalleCompraForm extends BaseDetalleCompraForm
 
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorString();
-		
-    $this->widgetSchema['trazable'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['trazable'] =  new sfValidatorString();
-		
+	
+    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
-		$this->setDefault ('trazable', 1);
     
   }
 }

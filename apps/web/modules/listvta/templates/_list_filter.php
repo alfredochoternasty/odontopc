@@ -111,7 +111,7 @@
             <td><?php echo $listado_ventas->getBonificados() ?></td>
             <td><?php echo $listado_ventas->TotalFormato() ?></td>
             <td><?php echo $listado_ventas->getNroLote() ?></td>
-            <td><?php //echo $listado_ventas->getFechaVto() ?></td>
+            <td><?php echo $listado_ventas->getFechaVto() ?></td>
           </tr>
         <?php 
         }

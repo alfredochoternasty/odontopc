@@ -32,4 +32,4 @@ generator:
         title: Modificar Detalle de la compra %%Compra%%
       new:
         title: Nuevo Detalle de la compra %%Compra%%
-        display: [producto_id, nro_lote, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]
+        display: [producto_id, trazable, nro_lote, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]
