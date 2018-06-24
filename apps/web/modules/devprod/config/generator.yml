@@ -21,7 +21,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
-        display: [id, fecha, Cliente, Resumen, Producto, nro_lote, cantidad, _precio, _iva, _total, sfGuardUser]
+        display: [fecha, Cliente, Resumen, Producto, nro_lote, cantidad, _precio, _iva, _total, sfGuardUser]
         object_actions:
           _delete: {label: Eliminar}
       filter:

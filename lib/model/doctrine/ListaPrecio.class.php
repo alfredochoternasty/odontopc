@@ -41,6 +41,6 @@ class ListaPrecio extends BaseListaPrecio
       $precio_real = $p_precio_vta;
     }
     
-    return $precio_real;
+    return $precio_real.'##'.$this->getMoneda();
   }  
 }

@@ -47,7 +47,8 @@ class detresActions extends autoDetresActions
     $resumen = Doctrine::getTable('Resumen')->find($rid);
     $lis = $resumen->getCliente()->getListaPrecio();
     $prec_prod = Doctrine::getTable('Producto')->find($producto)->getPrecioFinal($lis);
-    return $this->renderText(json_encode(sprintf("%01.2f", $prec_prod)));
+		list($precio, $moneda) = explode('##', $prec_prod);
+    return $this->renderText(json_encode(sprintf("%01.2f", $precio).'=='.$moneda));
   }
   
   public function executeLote(sfWebRequest $request){
@@ -58,7 +59,7 @@ class detresActions extends autoDetresActions
           ->from('lote l')
           ->where('l.producto_id = ?', $prod)
           ->andWhere('l.stock > 0')
-          ->andWhere('l.fecha_vto > ?', date("Y-m-d"))
+          ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null")
           ->orderBy('fecha_vto desc');
       $lotes = $q->execute();
       $nro_lote = '#';
@@ -157,14 +158,19 @@ class detresActions extends autoDetresActions
       ->from('Lote l')
       ->where('l.producto_id = '.$request->getparameter('pid'))
       ->andWhere('l.stock > 0 ')
-      ->andWhere('l.fecha_vto > '.date('Y-m-d'))
+      ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null")
       ->orderBy('l.fecha_vto asc');
      
     $lotes = $q->fetchArray();  
   
     $options[] = '<option value=""></option>';
     foreach($lotes as $lote){
-      $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].' - Vto: '.implode('/', array_reverse(explode('-', $lote['fecha_vto']))).' - Stock: '.$lote['stock'].'</option>';
+			if (empty($lote['fecha_vto'])) {
+				$fec_vto = 'Sin Fecha';
+			} else {
+				$fec_vto = implode('/', array_reverse(explode('-', $lote['fecha_vto'])));
+			}
+      $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].' - Vto: '.$fec_vto.' - Stock: '.$lote['stock'].'</option>';
     }
     echo implode($options);
     return sfView::NONE;
@@ -178,7 +184,7 @@ class detresActions extends autoDetresActions
       ->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
       ->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
       ->andWhere('l.stock > 0 ')
-      ->andWhere('l.fecha_vto > '.date('Y-m-d'));
+      ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
      
     $lotes = $q->fetchArray();  
     $cantidad = $lotes[0]['stock'];

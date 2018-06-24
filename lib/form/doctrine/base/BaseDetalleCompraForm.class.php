@@ -28,7 +28,7 @@ abstract class BaseDetalleCompraForm extends BaseFormDoctrine
       'sub_total'   => new sfWidgetFormInputText(),
       'trazable'    => new sfWidgetFormInputCheckbox(),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
-      'sin_vto'     => new sfWidgetFormInputCheckbox(),
+      'tiene_vto'   => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -45,7 +45,7 @@ abstract class BaseDetalleCompraForm extends BaseFormDoctrine
       'sub_total'   => new sfValidatorNumber(array('required' => false)),
       'trazable'    => new sfValidatorBoolean(array('required' => false)),
       'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
-      'sin_vto'     => new sfValidatorBoolean(array('required' => false)),
+      'tiene_vto'   => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_compra[%s]');

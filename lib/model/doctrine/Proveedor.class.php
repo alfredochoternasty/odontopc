@@ -30,4 +30,14 @@ class Proveedor extends BaseProveedor
     else
       return $saldo[0]['saldo'];
   }
+	
+  public function getProxRemito(){
+    $q = Doctrine_Query::create()
+          ->select('max(numero) as prox')
+          ->from('Compra c')
+          ->where('proveedor_id = ?', $this->getId())
+          ->where('tipofactura_id = 4');
+    $rs = $q->execute();
+    return $rs[0]['prox'];
+	}
 }

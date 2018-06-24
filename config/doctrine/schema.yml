@@ -136,7 +136,7 @@ DetalleCompra:
     sub_total: {type: 'decimal(10, 2)'}
     trazable: {type: boolean}
     usuario: {type: integer(4)}
-    sin_vto: {type: boolean}
+    tiene_vto: {type: boolean}
   relations:
     Compra: {type: one, local: compra_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -886,3 +886,20 @@ ClienteSaldo:
     saldo: {type: 'decimal(10, 2)', notnull: true}
     fecha: {type: date(25), notnull: true}
     concepto: {type: string(50)}
+ListaPrecioDetalle:
+  connection: doctrine
+  tableName: lista_precio_detalle
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    lista_id: {type: integer(4)}
+    nombre: {type: string(255)}
+    moneda_id: {type: integer(4)}
+    grupo_id: {type: integer(4)}
+    producto_grupo_id: {type: integer(4)}
+    producto_id: {type: integer(4)}
+    precio: {type: 'decimal(10, 2)'}
+  relations:
+    Producto: {type: one, class: Producto, local: producto_id, onDelete: RESTRICT}
+    ProductoGrupo: {type: one, class: Producto, local: producto_grupo_id, onDelete: RESTRICT}
+    Grupo: {type: one, class: Grupoprod, local: grupo_id, onDelete: RESTRICT}
+    Moneda: {type: one, class: TipoMoneda, local: moneda_id, onDelete: RESTRICT}

@@ -20,7 +20,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @property decimal $sub_total
  * @property boolean $trazable
  * @property integer $usuario
- * @property boolean $sin_vto
+ * @property boolean $tiene_vto
  * @property Compra $Compra
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
@@ -39,7 +39,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @method decimal             getSubTotal()       Returns the current record's "sub_total" value
  * @method boolean             getTrazable()       Returns the current record's "trazable" value
  * @method integer             getUsuario()        Returns the current record's "usuario" value
- * @method boolean             getSinVto()         Returns the current record's "sin_vto" value
+ * @method boolean             getTieneVto()       Returns the current record's "tiene_vto" value
  * @method Compra              getCompra()         Returns the current record's "Compra" value
  * @method Producto            getProducto()       Returns the current record's "Producto" value
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
@@ -57,7 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @method DetalleCompra       setSubTotal()       Sets the current record's "sub_total" value
  * @method DetalleCompra       setTrazable()       Sets the current record's "trazable" value
  * @method DetalleCompra       setUsuario()        Sets the current record's "usuario" value
- * @method DetalleCompra       setSinVto()         Sets the current record's "sin_vto" value
+ * @method DetalleCompra       setTieneVto()       Sets the current record's "tiene_vto" value
  * @method DetalleCompra       setCompra()         Sets the current record's "Compra" value
  * @method DetalleCompra       setProducto()       Sets the current record's "Producto" value
  * @method DetalleCompra       setSfGuardUser()    Sets the current record's "sfGuardUser" value
@@ -136,7 +136,7 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('sin_vto', 'boolean', null, array(
+        $this->hasColumn('tiene_vto', 'boolean', null, array(
              'type' => 'boolean',
              ));
     }

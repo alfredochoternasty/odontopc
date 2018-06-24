@@ -34,4 +34,14 @@ class compraActions extends autoCompraActions
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
+	
+  public function executeGetnroremito(sfWebRequest $request){
+    $pid = $request->getParameter('pid');
+    if(empty($pid)){
+      $pid = $this->getUser()->getAttribute('pid');
+    }
+    $proveedor = Doctrine::getTable('Proveedor')->find($pid);
+    $nro = $proveedor->getProxRemito();
+    return $this->renderText(json_encode($nro));
+  }
 }

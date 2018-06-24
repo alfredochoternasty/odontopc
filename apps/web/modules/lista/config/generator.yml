@@ -26,6 +26,7 @@ generator:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
           detalle: {label: Detalle}          
+          imprimir: {label: Imprimir}          
       filter:  ~
       form:
         actions:

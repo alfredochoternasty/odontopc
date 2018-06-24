@@ -21,15 +21,17 @@ class ResumenForm extends BaseResumenForm
     $this->widgetSchema['cliente_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Cliente', 'table_method' => 'getActivos', 'method' => 'getDescAfip', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));        
     $this->widgetSchema['pedido_id'] = new sfWidgetFormInputHidden();    
     $this->widgetSchema['fecha'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
-    $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();    
+    $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 
     if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
       $this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
       $this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false));
-    }else{
 			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInputHidden();
 			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger();
+    }else{
       unset($this['tipofactura_id'], $this['nro_factura']);
+			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));
+			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger();
     }
 
     $this->validatorSchema['fecha'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
@@ -40,7 +42,7 @@ class ResumenForm extends BaseResumenForm
     
 		$this->widgetSchema['cuit'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));		
 		$this->widgetSchema['afip'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));		
-		$this->widgetSchema['saldo_pesos'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));		
+		$this->widgetSchema['saldo_pesos'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));
 		
 		$this->validatorSchema->setOption('allow_extra_fields', true);		    
 		

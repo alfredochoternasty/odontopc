@@ -1,72 +1,52 @@
-ALTER TABLE detalle_resumen
-	ADD COLUMN lista_id INT(11) NULL,
-	ADD COLUMN moneda_id INT(11) NULL;
+/*
+insert into producto
+select 
+id + 300,
+'',
+concat('NTI - ', nombre),
+grupoprod_id,
+precio_vta,
+moneda_id,
+genera_comision,
+mueve_stock,
+minimo_stock,
+stock_actual,
+ctr_fact_grupo,
+orden_grupo,
+activo,
+grupo2,
+grupo3,
+lista_id
+from producto;
+*/
 
-ALTER TABLE producto
-	ADD COLUMN lista_id INT NULL;
-	
-update detalle_resumen set lista_id = (select lista_id from resumen where detalle_resumen.resumen_id = resumen.id);
-update detalle_resumen set moneda_id = (select moneda_id from lista_precio where detalle_resumen.lista_id = lista_precio.id);
+ALTER TABLE detalle_compra CHANGE COLUMN sin_vto tiene_vto TINYINT(4) NULL DEFAULT NULL;
+UPDATE detalle_compra SET tiene_vto = 1;
 
-DROP VIEW cta_cte;
-CREATE VIEW cta_cte (
-  id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
-) AS 
+create view lista_precio_detalle as 
 select
-  FLOOR(1+(RAND()*999999999999)), 
-  'Venta',
-  r.id, 
-  r.fecha, 
-  c.id, 
-  d.moneda_id, 
-  sum( d.total ) AS debe, 
-  '0' AS haber,
-  r.observacion
-FROM resumen r
-  JOIN detalle_resumen d ON r.id = d.resumen_id
-  JOIN cliente c ON r.cliente_id = c.id
-GROUP BY r.id, d.moneda_id
-UNION
-SELECT 
-  FLOOR(1+(RAND()*999999999999)), 
-  if(c.devprod_id is null, 'Cobro', 'Devolución'),
-  c.id, 
-  c.fecha, 
-  cl.id, 
-  c.moneda_id, 
-  '0' AS debe, 
-  sum( c.monto ) AS haber, 
-  c.observacion
-FROM cobro c
-  JOIN cliente cl ON c.cliente_id = cl.id
-GROUP BY c.id, c.moneda_id
-ORDER BY fecha ASC;
-
-CREATE VIEW cliente_saldo AS
-SELECT 
-	FLOOR(1+(RAND()*999999999999)),
-	c.dni, 
-	c.apellido, 
-	c.nombre, 
-	cta.id, 
-	tc.nombre as tipo_cliente, 
-	tm.simbolo, 
-	tm.nombre as moneda, 
-	FORMAT(SUM(cta.debe - cta.haber), 2) AS saldo, 
-	MAX(fecha) AS fecha,
-	cta.concepto
-FROM 
-	cliente c 
-		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
-		LEFT JOIN tipo_cliente tc ON c.tipo_id = tc.id 
-		LEFT JOIN tipo_moneda tm ON cta.moneda_id = tm.id 
-WHERE 
-	c.activo = 1
-GROUP BY 
-	tc.nombre, tm.nombre, c.dni, c.apellido, c.nombre 
-ORDER BY 
-	c.apellido asc;
-
-	
-ALTER TABLE detalle_compra
-	ADD COLUMN sin_vto TINYINT NULL AFTER trazable;	
+	FLOOR(1+(RAND()*999999999999)) as id,
+	dlp.lista_id,
+	lp.nombre,
+	lp.moneda_id,
+	dlp.grupoprod_id as grupo_id,
+	g_p.id as producto_grupo_id,
+	dlp.producto_id as producto_id,
+	case when dlp.aumento is not null
+		then g_p.precio_vta + (g_p.precio_vta/(dlp.aumento*100))
+		else case when dlp.descuento is not null
+					then g_p.precio_vta - (g_p.precio_vta / (dlp.descuento * 100))
+					else case when dlp.precio is not null
+								then dlp.precio
+								else 0
+							end
+				end
+	end as precio
+from
+	lista_precio lp
+		join det_lis_precio dlp on lp.id = dlp.lista_id
+		left outer join grupoprod gp on dlp.grupoprod_id = gp.id
+		left outer join producto g_p on gp.id = g_p.grupoprod_id
+		left outer join producto p on dlp.producto_id = p.id
+where 
+	lp.activo = 1

@@ -43,6 +43,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
+ * @property Doctrine_Collection $ListaPrecioDetalle
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getCodigo()             Returns the current record's "codigo" value
@@ -80,6 +81,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Doctrine_Collection getLote()               Returns the current record's "Lote" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
+ * @method Doctrine_Collection getListaPrecioDetalle() Returns the current record's "ListaPrecioDetalle" collection
  * @method Producto            setId()                 Sets the current record's "id" value
  * @method Producto            setCodigo()             Sets the current record's "codigo" value
  * @method Producto            setNombre()             Sets the current record's "nombre" value
@@ -116,6 +118,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setLote()               Sets the current record's "Lote" collection
  * @method Producto            setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method Producto            setControlStock()       Sets the current record's "ControlStock" collection
+ * @method Producto            setListaPrecioDetalle() Sets the current record's "ListaPrecioDetalle" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -284,6 +287,10 @@ abstract class BaseProducto extends sfDoctrineRecord
              'foreign' => 'producto_id'));
 
         $this->hasMany('ControlStock', array(
+             'local' => 'id',
+             'foreign' => 'producto_id'));
+
+        $this->hasMany('ListaPrecioDetalle', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
     }

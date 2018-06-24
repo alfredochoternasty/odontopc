@@ -30,8 +30,9 @@ class devprodActions extends autoDevprodActions
       $cobro = new Cobro();
       $cobro->setFecha(date('Y-m-d'));
       $cobro->setClienteId($dev_producto->getClienteId());
-      $cobro->setResumenId($dev_producto->getResumenId());
-      $cobro->setMonedaId($dev_producto->getResumen()->getMonedaId());
+      $cobro->setResumenId($dev_producto->getResumenId());			
+			$detalle_resumen = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($dev_producto->getResumenId(), $dev_producto->getProductoId());			
+      $cobro->setMonedaId($detalle_resumen[0]->getMonedaId());
       $cobro->setMonto($dev_producto->getTotal());
       $cobro->setTipoId(5);
       $cobro->setDevprodId($dev_producto->getId());

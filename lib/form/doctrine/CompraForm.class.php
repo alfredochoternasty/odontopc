@@ -13,7 +13,7 @@ class CompraForm extends BaseCompraForm
   public function configure()
   {
     parent::configure();
-    unset($this['pagado']);
+    unset($this['pagado'], $this['cuenta_id'], $this['moneda_id']);
     $this->widgetSchema['fecha'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
     $this->validatorSchema['fecha'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
     
@@ -23,7 +23,7 @@ class CompraForm extends BaseCompraForm
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
-	$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
 	
     //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());

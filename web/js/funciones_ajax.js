@@ -136,9 +136,10 @@ $(document).ready(function(){
         url: 'actprecio?pid='+id+'&rid='+rid,
         dataType: "json",
         success: function(data) {
-          $("#detalle_resumen_precio").attr('value', data);
+					var valor = data.split('=');
+          $("#detalle_resumen_precio").attr('value', valor[0]);
           var cantidad = 0;
-          var total = data * cantidad;
+          var total = valor[0] * cantidad;
           $("#detalle_resumen_total").attr('value', parseFloat(total).toFixed(2));
         }
       });
@@ -291,6 +292,30 @@ $(document).ready(function(){
   
   $("#detalle_compra_cantidad").bind("propertychange keyup input paste", function(event){
     calcular()
+  });
+	
+	$("#detalle_compra_tiene_vto").change(function(event){
+      var valor = $("#detalle_compra_tiene_vto").find(':selected').val();
+      if (valor == 1){
+        $(".sf_admin_form_field_fecha_vto").show();
+      }else{
+				$("#detalle_compra_fecha_vto").attr('value', '');
+        $(".sf_admin_form_field_fecha_vto").hide();
+      }
+  });
+	
+  $("#compra_tipofactura_id").change(function(event){
+      var tfid = $("#compra_tipofactura_id").find(':selected').val();
+      var pid = $("#compra_proveedor_id").find(':selected').val();
+			if (tfid == 4) {
+				$.ajax({
+						url: 'getnroremito?pid='+pid,
+						dataType: "json",
+						success: function(data) {
+							$("#compra_numero").attr('value', data);
+						}
+					});
+			}
   });
   
 });

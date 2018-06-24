@@ -24,41 +24,44 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $CtaCteProv
  * @property Doctrine_Collection $ListadoCompras
+ * @property Doctrine_Collection $ListaPrecioDetalle
  * 
- * @method integer             getId()             Returns the current record's "id" value
- * @method string              getNombre()         Returns the current record's "nombre" value
- * @method string              getSimbolo()        Returns the current record's "simbolo" value
- * @method Doctrine_Collection getResumenes()      Returns the current record's "Resumenes" collection
- * @method Doctrine_Collection getVentas()         Returns the current record's "Ventas" collection
- * @method Doctrine_Collection getCobros()         Returns the current record's "Cobros" collection
- * @method Doctrine_Collection getCompras()        Returns the current record's "Compras" collection
- * @method Doctrine_Collection getFactCompra()     Returns the current record's "FactCompra" collection
- * @method Doctrine_Collection getPagos()          Returns the current record's "Pagos" collection
- * @method Doctrine_Collection getProducto()       Returns the current record's "Producto" collection
- * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
- * @method Doctrine_Collection getCtaCte()         Returns the current record's "CtaCte" collection
- * @method Doctrine_Collection getListaPrecio()    Returns the current record's "ListaPrecio" collection
- * @method Doctrine_Collection getListadoVentas()  Returns the current record's "ListadoVentas" collection
- * @method Doctrine_Collection getListadoCobros()  Returns the current record's "ListadoCobros" collection
- * @method Doctrine_Collection getCtaCteProv()     Returns the current record's "CtaCteProv" collection
- * @method Doctrine_Collection getListadoCompras() Returns the current record's "ListadoCompras" collection
- * @method TipoMoneda          setId()             Sets the current record's "id" value
- * @method TipoMoneda          setNombre()         Sets the current record's "nombre" value
- * @method TipoMoneda          setSimbolo()        Sets the current record's "simbolo" value
- * @method TipoMoneda          setResumenes()      Sets the current record's "Resumenes" collection
- * @method TipoMoneda          setVentas()         Sets the current record's "Ventas" collection
- * @method TipoMoneda          setCobros()         Sets the current record's "Cobros" collection
- * @method TipoMoneda          setCompras()        Sets the current record's "Compras" collection
- * @method TipoMoneda          setFactCompra()     Sets the current record's "FactCompra" collection
- * @method TipoMoneda          setPagos()          Sets the current record's "Pagos" collection
- * @method TipoMoneda          setProducto()       Sets the current record's "Producto" collection
- * @method TipoMoneda          setDetalleResumen() Sets the current record's "DetalleResumen" collection
- * @method TipoMoneda          setCtaCte()         Sets the current record's "CtaCte" collection
- * @method TipoMoneda          setListaPrecio()    Sets the current record's "ListaPrecio" collection
- * @method TipoMoneda          setListadoVentas()  Sets the current record's "ListadoVentas" collection
- * @method TipoMoneda          setListadoCobros()  Sets the current record's "ListadoCobros" collection
- * @method TipoMoneda          setCtaCteProv()     Sets the current record's "CtaCteProv" collection
- * @method TipoMoneda          setListadoCompras() Sets the current record's "ListadoCompras" collection
+ * @method integer             getId()                 Returns the current record's "id" value
+ * @method string              getNombre()             Returns the current record's "nombre" value
+ * @method string              getSimbolo()            Returns the current record's "simbolo" value
+ * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
+ * @method Doctrine_Collection getVentas()             Returns the current record's "Ventas" collection
+ * @method Doctrine_Collection getCobros()             Returns the current record's "Cobros" collection
+ * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
+ * @method Doctrine_Collection getFactCompra()         Returns the current record's "FactCompra" collection
+ * @method Doctrine_Collection getPagos()              Returns the current record's "Pagos" collection
+ * @method Doctrine_Collection getProducto()           Returns the current record's "Producto" collection
+ * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
+ * @method Doctrine_Collection getCtaCte()             Returns the current record's "CtaCte" collection
+ * @method Doctrine_Collection getListaPrecio()        Returns the current record's "ListaPrecio" collection
+ * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
+ * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
+ * @method Doctrine_Collection getCtaCteProv()         Returns the current record's "CtaCteProv" collection
+ * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
+ * @method Doctrine_Collection getListaPrecioDetalle() Returns the current record's "ListaPrecioDetalle" collection
+ * @method TipoMoneda          setId()                 Sets the current record's "id" value
+ * @method TipoMoneda          setNombre()             Sets the current record's "nombre" value
+ * @method TipoMoneda          setSimbolo()            Sets the current record's "simbolo" value
+ * @method TipoMoneda          setResumenes()          Sets the current record's "Resumenes" collection
+ * @method TipoMoneda          setVentas()             Sets the current record's "Ventas" collection
+ * @method TipoMoneda          setCobros()             Sets the current record's "Cobros" collection
+ * @method TipoMoneda          setCompras()            Sets the current record's "Compras" collection
+ * @method TipoMoneda          setFactCompra()         Sets the current record's "FactCompra" collection
+ * @method TipoMoneda          setPagos()              Sets the current record's "Pagos" collection
+ * @method TipoMoneda          setProducto()           Sets the current record's "Producto" collection
+ * @method TipoMoneda          setDetalleResumen()     Sets the current record's "DetalleResumen" collection
+ * @method TipoMoneda          setCtaCte()             Sets the current record's "CtaCte" collection
+ * @method TipoMoneda          setListaPrecio()        Sets the current record's "ListaPrecio" collection
+ * @method TipoMoneda          setListadoVentas()      Sets the current record's "ListadoVentas" collection
+ * @method TipoMoneda          setListadoCobros()      Sets the current record's "ListadoCobros" collection
+ * @method TipoMoneda          setCtaCteProv()         Sets the current record's "CtaCteProv" collection
+ * @method TipoMoneda          setListadoCompras()     Sets the current record's "ListadoCompras" collection
+ * @method TipoMoneda          setListaPrecioDetalle() Sets the current record's "ListaPrecioDetalle" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -143,6 +146,10 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
              'foreign' => 'moneda_id'));
 
         $this->hasMany('ListadoCompras', array(
+             'local' => 'id',
+             'foreign' => 'moneda_id'));
+
+        $this->hasMany('ListaPrecioDetalle', array(
              'local' => 'id',
              'foreign' => 'moneda_id'));
     }

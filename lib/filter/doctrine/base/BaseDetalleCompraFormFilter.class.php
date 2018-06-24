@@ -25,7 +25,7 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'sub_total'   => new sfWidgetFormFilterInput(),
       'trazable'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
-      'sin_vto'     => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'tiene_vto'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -41,7 +41,7 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'sub_total'   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'trazable'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
-      'sin_vto'     => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'tiene_vto'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_compra_filters[%s]');
@@ -74,7 +74,7 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'sub_total'   => 'Number',
       'trazable'    => 'Boolean',
       'usuario'     => 'ForeignKey',
-      'sin_vto'     => 'Boolean',
+      'tiene_vto'   => 'Boolean',
     );
   }
 }

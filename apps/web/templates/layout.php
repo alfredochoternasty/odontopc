@@ -6,20 +6,21 @@
     <?php include_javascripts() ?>
     <?php use_helper('Date') ?>
     <?php 
+		
     $entorno = sfConfig::get('sf_environment');
 		if($entorno == 'dev'){
-			$sufijo = '/odontopc';
+			$prefijo = '/odontopc';
 		} else {
-			$sufijo = '';
+			$prefijo = '';
 		}
 		
 		if($sf_user->hasGroup('Blanco')): ?>
 			<link rel="shortcut icon" href="/web/images/favicon_b.ico" />
-      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $sufijo ?>/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $sufijo ?>/web/css/cssmenu_b.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $prefijo ?>/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $prefijo ?>/web/css/cssmenu_b.css" />
     <?php else: ?> 
 			<link rel="shortcut icon" href="/web/images/favicon_n.ico" />
-			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $sufijo ?>/web/web/css/cssmenu.css" />
+			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $prefijo ?>/web/css/cssmenu_n.css" />
     <?php endif; ?>
   </head>
   <body style="margin:0px">

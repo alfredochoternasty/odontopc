@@ -17,6 +17,21 @@ class listaActions extends autoListaActions
     $this->redirect( 'detlis/index?lid='.$this->getRequestParameter('id'));
   }
   
+  public function executeListImprimir(sfWebRequest $request){
+		$consulta = Doctrine_Query::create()
+			->from('ListaPrecioDetalle')
+			->where('lista_id = ?', $this->getRequestParameter('id'));
+			//->orderBy('grupo_nombre asc, grupo_producto_nombre asc, producto_nombre asc');
+    $listas = $consulta->execute();
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("imprimir", array("listas" => $listas)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("lista.pdf");    
+    return sfView::NONE;
+  }
+	
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

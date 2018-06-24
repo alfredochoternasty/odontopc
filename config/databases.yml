@@ -3,6 +3,7 @@ dev:
     class: sfDoctrineDatabase
     param:
       dsn: 'mysql:host=localhost;dbname=ventas'
+      #dsn: 'mysql:host=localhost;dbname=ntiimplantes_db'
       username: root
       password: 
       attributes:
