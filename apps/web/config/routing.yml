@@ -571,6 +571,10 @@ homepage:
   url:   /
   param: { module: inicio, action: index }
 
+backup:
+  url:   /backup
+  param: { module: admins, action: index }  
+
 # generic rules
 # please, remove them by adding more specific rules
 default_index:
