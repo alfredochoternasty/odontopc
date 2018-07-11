@@ -40,13 +40,13 @@ class adminsActions extends sfActions
 			}
 			$return.="\n\n\n";
 		}
-		$sql_file = date('Ymd').'_bak_'.$name.'.sql';
+		$sql_file = 'bckp/'.date('Ymd').'_bak_'.$name.'.sql';
 		$handle = fopen($sql_file,'w+');
 		fwrite($handle,$return);
 		fclose($handle);
 		
 		$zip = new ZipArchive();
-		$filename = date('Ymd').'_bak_'.$name.'.zip';
+		$filename = 'bckp/'.date('Ymd').'_bak_'.$name.'.zip';
 		$zip->open($filename, ZipArchive::CREATE);
 		$zip->addFile($sql_file);
 		$zip->close();
