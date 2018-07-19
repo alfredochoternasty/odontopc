@@ -12,5 +12,13 @@
  */
 class ControlStock extends BaseControlStock
 {
-
+	function getCantVendida()
+	{
+		return (empty($this->cant_vendida))? 0:$this->cant_vendida;
+	}
+	
+	function getStock()
+	{
+		return (empty($this->stock))? 0:$this->stock;
+	}	
 }

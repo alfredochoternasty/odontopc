@@ -32,6 +32,7 @@ class detpedActions extends autoDetpedActions
       $q = Doctrine_Query::create()
           ->from('lote l')
           ->where('l.producto_id = ?', $prod)
+					->andWhere("l.nro_lote not like 'er%'")
           ->andWhere('l.stock > 0')
           ->andWhere('l.fecha_vto > ?', date("Y-m-d"))
           ->orderBy('fecha_vto desc');

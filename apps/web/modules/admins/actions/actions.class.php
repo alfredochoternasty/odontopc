@@ -71,18 +71,25 @@ class adminsActions extends sfActions
 			'producto_traza', 
 			'vta_fact'
 		);
-				
-		//$filename_1 = $this->backup_tables('localhost','odosis','maf/2826','ntiimplantes_db', $tbl_excluir);
-		$filename_1 = $this->backup_tables('localhost','root','','ntiimplantes_db', $tbl_excluir);
-		//$filename_2 = $this->backup_tables('localhost','ventas','maf/2826','ventas', $tbl_excluir);
-		$filename_2 = $this->backup_tables('localhost','root','','ventas', $tbl_excluir);
+
+    $entorno = sfConfig::get('sf_environment');
+    if ($entorno == 'dev') {
+			$filename = $this->backup_tables('localhost','root','','ntiimplantes_db', $tbl_excluir);
+		} else {			
+			$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
+			list($host, $db) = explode(';', $oCurrentConnection->getOption('dsn'));
+			list($aux, $sdb) = explode('=', $db);
+			$user = $oCurrentConnection->getOption('username');
+			$pwd = $oCurrentConnection->getOption('password');
+			
+			$filename = $this->backup_tables('localhost',$user,$pwd,$sdb, $tbl_excluir);
+		}
 		
 		$mensaje = Swift_Message::newInstance();
 		$mensaje->setFrom(array('alfredochoternasty@gmail.com' => 'NTI implantes'));
 		$mensaje->setTo(array('alfredochoternasty@gmail.com' => 'Backup Sistema'));
 		$mensaje->setBody('aca esta el backup');
-		$mensaje->attach(Swift_Attachment::fromPath($filename_1));
-		$mensaje->attach(Swift_Attachment::fromPath($filename_2));
+		$mensaje->attach(Swift_Attachment::fromPath($filename));
 		$mensaje->setContentType("text/html");
 		$this->getMailer()->send($mensaje);
   }

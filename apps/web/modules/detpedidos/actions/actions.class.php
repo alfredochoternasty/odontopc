@@ -50,6 +50,7 @@ class detpedidosActions extends autoDetpedidosActions
       ->from('Lote l')
       ->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
       ->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
+			->andWhere("l.nro_lote not like 'er%'")
       ->andWhere('l.stock > 0 ')
       ->andWhere('l.fecha_vto > '.date('Y-m-d'));
      

@@ -58,6 +58,7 @@ class detresActions extends autoDetresActions
       $q = Doctrine_Query::create()
           ->from('lote l')
           ->where('l.producto_id = ?', $prod)
+          ->andWhere("l.nro_lote not like 'er%'")
           ->andWhere('l.stock > 0')
           ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null")
           ->orderBy('fecha_vto desc');
@@ -157,6 +158,7 @@ class detresActions extends autoDetresActions
       ->select('l.nro_lote, l.fecha_vto, l.stock')
       ->from('Lote l')
       ->where('l.producto_id = '.$request->getparameter('pid'))
+			->andWhere("l.nro_lote not like 'er%'")
       ->andWhere('l.stock > 0 ')
       ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null")
       ->orderBy('l.fecha_vto asc');
@@ -184,6 +186,7 @@ class detresActions extends autoDetresActions
       ->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
       ->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
       ->andWhere('l.stock > 0 ')
+			->andWhere("l.nro_lote not like 'er%'")
       ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
      
     $lotes = $q->fetchArray();  
