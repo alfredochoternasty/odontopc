@@ -69,7 +69,8 @@ class adminsActions extends sfActions
 			'listado_compras', 
 			'listado_ventas', 
 			'producto_traza', 
-			'vta_fact'
+			'vta_fact',
+			'lista_precio_detalle'
 		);
 
     $entorno = sfConfig::get('sf_environment');
@@ -92,5 +93,6 @@ class adminsActions extends sfActions
 		$mensaje->attach(Swift_Attachment::fromPath($filename));
 		$mensaje->setContentType("text/html");
 		$this->getMailer()->send($mensaje);
+		unlink($filename);
   }
 }
