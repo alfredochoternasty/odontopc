@@ -15,9 +15,9 @@
   <tr>
     <td><?php echo $fila->getProducto() ?></td>
     <td><?php echo $fila->getNroLote() ?></td>
-    <td><?php echo $fila->getCantVendida() ?></td>
-    <td><?php echo $fila->getCantComprada() ?></td>
-    <td><?php echo $fila->getStock() ?></td>
+    <td><?php echo $fila->getVendidos() ?></td>
+    <td><?php echo $fila->getComprados() ?></td>
+    <td><?php echo $fila->getStockActual() ?></td>
   </tr>
   <?php endforeach;?>
 </table>
