@@ -63,7 +63,7 @@ class listvtaActions extends autoListvtaActions
     }
 
     $this->pager = $this->getPager();
-		if ($this->pager->count() > 150) {
+		if ($this->pager->count() > 500) {
 			$this->getUser()->setFlash('error', 'El listado es demasiado grande! por favor seleccione otro filtro para achicar la cantidad de resultados');
 			$this->redirect('@listado_ventas');
 		}

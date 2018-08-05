@@ -31,7 +31,7 @@
     <td><?php echo $fila->getBonificados() ?></td>
     <td><?php echo $fila->getMoneda()->getSimbolo().' '.sprintf("%01.2f", $fila->getTotal()) ?></td>
     <td><?php echo $fila->getNroLote() ?></td>
-    <td><?php echo $fila->getFechaVto() ?></td>
+    <td><?php echo implode("/", array_reverse(explode("-", $fila->getFechaVto()))) ?></td>
   </tr>
   <?php endforeach;?> 
 </table>

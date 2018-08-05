@@ -98,7 +98,7 @@
           }
         }else{ ?>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-            <td><?php echo $listado_ventas->getResumenId() ?></td>
+            <td><?php echo $listado_ventas->getResId() ?></td>
             <td><?php echo false !== strtotime($listado_ventas->getFecha()) ? format_date($listado_ventas->getFecha(), "dd/MM/yyyy") : '&nbsp;' ?></td>
             <td><?php echo $listado_ventas->getMoneda() ?></td>
             <td><?php echo $listado_ventas->getClienteApellido() ?></td>
@@ -111,7 +111,7 @@
             <td><?php echo $listado_ventas->getBonificados() ?></td>
             <td><?php echo $listado_ventas->TotalFormato() ?></td>
             <td><?php echo $listado_ventas->getNroLote() ?></td>
-            <td><?php echo $listado_ventas->getFechaVto() ?></td>
+            <td><?php echo false !== strtotime($listado_ventas->getFechaVto()) ? format_date($listado_ventas->getFechaVto(), "dd/MM/yyyy") : '&nbsp;' ?></td>
           </tr>
         <?php 
         }

@@ -16,6 +16,7 @@ generator:
       fields:
         resumen_id: { label: Venta}
         fecha: { date_format: dd/MM/yyyy }
+        fecha_vto: { date_format: dd/MM/yyyy }
         cliente_apellido: { label: Apellido}
         cliente_nombre: { label: Nombre}
         tipo_cliente_nombre: { label: Tipo}

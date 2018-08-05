@@ -15,6 +15,7 @@ generator:
       actions: ~
       fields:
         Grupo: { label: Grupo}
+        grupoprod_id: { label: Grupo}
         Producto: { label: Producto}
         nro_lote: { label: Lote}
         cant_comprada: { label:  Comprados}
@@ -22,7 +23,7 @@ generator:
         stock: { label: Stock }
       list:
         title: Listado de Control de Stock
-        display: [Grupo, Producto, nro_lote, cant_comprada, cant_vendida, stock]
+        display: [Grupo, Producto, nro_lote, comprados, vendidos, stock_actual]
         object_actions: []
         batch_actions: []
         actions:

@@ -39,26 +39,32 @@ class adminsActions extends sfActions
 				}
 			}
 			$return.="\n\n\n";
-		}
-		$sql_file = 'bckp/'.date('Ymd').'_bak_'.$name.'.sql';
+		}		
+		
+		$fecha_actual = date('Ymd');
+		
+		$sql_file = 'bckp/'.$fecha_actual.'_bak_'.$name.'.sql';
 		$handle = fopen($sql_file,'w+');
 		fwrite($handle,$return);
 		fclose($handle);
 		
+		// borro el .zip anterior
+		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
+    unlink('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip');		
+		
 		$zip = new ZipArchive();
-		$filename = 'bckp/'.date('Ymd').'_bak_'.$name.'.zip';
+		$filename = 'bckp/'.$fecha_actual.'_bak_'.$name.'.zip';
 		$zip->open($filename, ZipArchive::CREATE);
 		$zip->addFile($sql_file);
 		$zip->close();
 		
-		unlink($sql_file);
+		unlink($sql_file);		
 		
 		return $filename;
 	}	
 	
   public function executeIndex(sfWebRequest $request)
-  {
-    //$this->forward('default', 'module');
+  {		
 		$tbl_excluir = array(
 			'cliente_saldo', 
 			'cliente_ultima_compra', 
@@ -76,23 +82,27 @@ class adminsActions extends sfActions
     $entorno = sfConfig::get('sf_environment');
     if ($entorno == 'dev') {
 			$filename = $this->backup_tables('localhost','root','','ntiimplantes_db', $tbl_excluir);
-		} else {			
+		} else {
 			$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
 			list($host, $db) = explode(';', $oCurrentConnection->getOption('dsn'));
 			list($aux, $sdb) = explode('=', $db);
 			$user = $oCurrentConnection->getOption('username');
 			$pwd = $oCurrentConnection->getOption('password');
 			
-			$filename = $this->backup_tables('localhost',$user,$pwd,$sdb, $tbl_excluir);
+			$filename = $this->backup_tables('localhost', $user, $pwd, $sdb, $tbl_excluir);
 		}
 		
 		$mensaje = Swift_Message::newInstance();
 		$mensaje->setFrom(array('alfredochoternasty@gmail.com' => 'NTI implantes'));
 		$mensaje->setTo(array('alfredochoternasty@gmail.com' => 'Backup Sistema'));
 		$mensaje->setBody('aca esta el backup');
+		if ($sdb == 'ventas') {
+			$mensaje->setSubject('backup blanco NTI');
+		} else {
+			$mensaje->setSubject('backup negro NTI');
+		}
 		$mensaje->attach(Swift_Attachment::fromPath($filename));
 		$mensaje->setContentType("text/html");
 		$this->getMailer()->send($mensaje);
-		unlink($filename);
   }
 }

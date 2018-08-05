@@ -450,6 +450,7 @@ ListadoVentas:
     nro_lote: {type: string(50)}
     grupo2: {type: integer(4)}
     grupo3: {type: integer(4)}
+    fecha_vto: {type: date(25), notnull: true}
   relations:
     Detalle: {type: one, class: DetalleResumen, local: resumen_id}
     Cliente: {type: one, class: Cliente, local: cliente_id}
@@ -704,9 +705,9 @@ ControlStock:
     grupoprod_id: {type: integer(4)}
     producto_id: {type: string(50)}
     nro_lote: {type: string(50)}
-    cant_comprada: {type: integer(4)}
-    cant_vendida: {type: integer(4)}
-    stock: {type: integer(4)}
+    comprados: {type: integer(4)}
+    vendidos: {type: integer(4)}
+    stock_actual: {type: integer(4)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}

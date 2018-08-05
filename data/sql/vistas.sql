@@ -177,7 +177,7 @@ select
   FLOOR(1+(RAND()*999999999999)),
   resumen.id,
   resumen.fecha,
-  resumen.moneda_id,
+  detalle_resumen.moneda_id,
   tipo_moneda.nombre,
   resumen.cliente_id,
   cliente.apellido,
@@ -255,9 +255,9 @@ CREATE VIEW control_stock (
  producto_id,
  producto_nombre,
  nro_lote,
- cant_comprada,
- cant_vendida,
- stock
+ comprados,
+ vendidos,
+ stock_actual
 ) AS
 SELECT
    FLOOR(1+(RAND()*999999999999)),
