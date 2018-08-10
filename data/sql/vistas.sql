@@ -255,9 +255,9 @@ CREATE VIEW control_stock (
  producto_id,
  producto_nombre,
  nro_lote,
- comprados,
- vendidos,
- stock_actual
+ cant_comprada,
+ cant_vendida,
+ stock
 ) AS
 SELECT
    FLOOR(1+(RAND()*999999999999)),
