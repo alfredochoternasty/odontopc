@@ -23,7 +23,7 @@ generator:
         stock: { label: Stock }
       list:
         title: Listado de Control de Stock
-        display: [Grupo, Producto, nro_lote, comprados, vendidos, stock_actual]
+        display: [Grupo, Producto, nro_lote, comprados, _vendidos, _stock_actual]
         object_actions: []
         batch_actions: []
         actions:

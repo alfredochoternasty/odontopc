@@ -20,7 +20,7 @@ generator:
         precio: {help: Precio para el producto o grupo}
       list:
         title: Detalle de Lista de Precios
-        display: [Lista, _producto, _grupo, aumento, descuento, _precio]
+        display: [Lista, _producto, _grupo, _aumento, _descuento, _precio]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}

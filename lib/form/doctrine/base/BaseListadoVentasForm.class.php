@@ -39,6 +39,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'nro_lote'                 => new sfWidgetFormInputText(),
       'grupo2'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'add_empty' => true)),
       'grupo3'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'add_empty' => true)),
+      'fecha_vto'                => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
@@ -66,6 +67,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'nro_lote'                 => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'grupo2'                   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'required' => false)),
       'grupo3'                   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'required' => false)),
+      'fecha_vto'                => new sfValidatorDate(),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas[%s]');

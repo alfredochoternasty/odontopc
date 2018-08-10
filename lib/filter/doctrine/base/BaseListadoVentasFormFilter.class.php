@@ -36,6 +36,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'nro_lote'                 => new sfWidgetFormFilterInput(),
       'grupo2'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'add_empty' => true)),
       'grupo3'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'add_empty' => true)),
+      'fecha_vto'                => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -62,6 +63,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'nro_lote'                 => new sfValidatorPass(array('required' => false)),
       'grupo2'                   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('GrupoDos'), 'column' => 'id')),
       'grupo3'                   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('GrupoTres'), 'column' => 'id')),
+      'fecha_vto'                => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas_filters[%s]');
@@ -105,6 +107,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'nro_lote'                 => 'Text',
       'grupo2'                   => 'ForeignKey',
       'grupo3'                   => 'ForeignKey',
+      'fecha_vto'                => 'Date',
     );
   }
 }

@@ -169,7 +169,7 @@ Producto:
     activo: {type: boolean, default: 1}
     grupo2: {type: integer(4)}
     grupo3: {type: integer(4)}
-    lista_id: {type: integer(4), notnull: true}
+    lista_id: {type: integer(4)}
   relations:
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
     GrupoDos: {type: one, class: Grupoprod, local: grupo2, foreign: id, onDelete: RESTRICT}

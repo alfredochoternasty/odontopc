@@ -197,7 +197,6 @@ abstract class BaseProducto extends sfDoctrineRecord
              ));
         $this->hasColumn('lista_id', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
              'length' => 4,
              ));
     }

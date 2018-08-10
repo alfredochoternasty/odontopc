@@ -31,7 +31,9 @@
     </caption>
 
     <thead class="ui-widget-header">
-      <tr>        
+      <tr><td colspan="4">
+			</td></tr>
+      <tr>
         <?php 
 				$ver_solo_totales = $sf_user->getAttribute('totales', true);
 				include_partial('listvta/list_th_tabular', array('sort' => $sort)); 
