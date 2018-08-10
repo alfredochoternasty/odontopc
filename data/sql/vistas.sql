@@ -1,13 +1,26 @@
+/*
 DROP VIEW cta_cte;
+DROP VIEW listado_cobros;
+DROP VIEW cta_cte_prov;
+DROP VIEW vta_fact;
+DROP VIEW comp_fact;
+DROP VIEW producto_traza;
+DROP VIEW cliente_ultima_compra;
+DROP VIEW listado_ventas;
+DROP VIEW listado_compras;
+DROP VIEW control_stock;
+DROP VIEW cliente_saldo;
+*/
+
 CREATE VIEW cta_cte (
   id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
 ) AS 
 select
   FLOOR(1+(RAND()*999999999999)), 
   'Venta',
-  r.id, 
+  r.id as res_id, 
   r.fecha, 
-  c.id, 
+  c.id as compra_id, 
   d.moneda_id, 
   sum( d.total ) AS debe, 
   '0' AS haber,
@@ -20,9 +33,9 @@ UNION
 SELECT 
   FLOOR(1+(RAND()*999999999999)), 
   if(c.devprod_id is null, 'Cobro', 'Devolución'),
-  c.id, 
+  c.id as compra_id, 
   c.fecha, 
-  cl.id, 
+  cl.id as cli_id, 
   c.moneda_id, 
   '0' AS debe, 
   sum( c.monto ) AS haber, 
@@ -32,7 +45,7 @@ FROM cobro c
 GROUP BY c.id, c.moneda_id
 ORDER BY fecha ASC;
 
-DROP VIEW listado_cobros;    
+
 CREATE VIEW listado_cobros (
   id,fecha,cliente,tipo_cliente,tipo_cobro,moneda,cli_gen_comis,monto
 ) AS 
@@ -48,16 +61,16 @@ SELECT
 FROM cobro
 JOIN cliente ON cobro.cliente_id = cliente.id;
 
-DROP VIEW cta_cte_prov;
+
 CREATE VIEW cta_cte_prov (
   id,concepto,numero,fecha,proveedor_id,cuenta_id, moneda_id,debe,haber,observacion
 ) AS 
 select
   FLOOR(1+(RAND()*999999999999)), 
   'Compra',
-  r.id, 
+  r.id as res_id, 
   r.fecha, 
-  c.id,
+  c.id as prov_id,
   cu.id, 
   r.moneda_id, 
   '0' AS debe,
@@ -72,9 +85,9 @@ UNION
 SELECT 
   FLOOR(1+(RAND()*999999999999)), 
   'Pago',
-  c.id, 
+  c.id as pago_id, 
   c.fecha, 
-  cl.id, 
+  cl.id as prov_id, 
   cu.id, 
   c.moneda_id, 
   sum( c.monto ) AS debe, 
@@ -86,7 +99,7 @@ FROM pago c
 GROUP BY c.id
 ORDER BY fecha ASC; 
 
-DROP VIEW vta_fact;
+
 CREATE VIEW vta_fact 
 AS 
   select detalle_venta.id AS id,venta.fecha AS fecha,producto.id AS producto_id,producto.nombre AS nombre_prod,detalle_venta.cantidad AS cantidad 
@@ -94,7 +107,7 @@ AS
   join venta on detalle_venta.venta_id = venta.id
   join producto on detalle_venta.producto_id = producto.id;
 
-DROP VIEW comp_fact;  
+
 CREATE VIEW comp_fact 
 AS 
   select det_fact_compra.id AS id,fact_compra.fecha AS fecha,producto.id AS producto_id, producto.nombre AS nombre_prod,det_fact_compra.cantidad AS cantidad 
@@ -102,7 +115,7 @@ AS
   join fact_compra on det_fact_compra.factcompra_id = fact_compra.id 
   join producto on det_fact_compra.producto_id = producto.id;
   
-DROP VIEW producto_traza; 
+
 CREATE VIEW producto_traza 
 AS
 select distinct
@@ -134,7 +147,7 @@ where
 having 
 	cant_vendida > 0;
 
-DROP VIEW cliente_ultima_compra;
+
 CREATE VIEW cliente_ultima_compra AS select 
 	id, 
 	apellido, 
@@ -145,7 +158,7 @@ CREATE VIEW cliente_ultima_compra AS select
 	(select max(fecha) from resumen where cliente_id = cliente.id) as fecha
 from cliente ;
 
-DROP VIEW listado_ventas;
+
 CREATE VIEW listado_ventas (
   id, 
   res_id, 
@@ -214,7 +227,7 @@ where
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   
-DROP VIEW listado_compras;
+
 CREATE VIEW listado_compras (
   id, compra_id, numero, fecha, moneda_id, moneda_nombre, prov_id, prov_raz_soc, producto_id, precio, cantidad, total, producto_nombre, grupoprod_id, grupo_nombre, nro_lote, grupo2, grupo3
 ) AS 
@@ -247,7 +260,7 @@ from
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   
-DROP VIEW control_stock;
+
 CREATE VIEW control_stock (
  id,
  grupoprod_id,
@@ -255,9 +268,9 @@ CREATE VIEW control_stock (
  producto_id,
  producto_nombre,
  nro_lote,
- cant_comprada,
- cant_vendida,
- stock
+ comprados,
+ vendidos,
+ stock_actual
 ) AS
 SELECT
    FLOOR(1+(RAND()*999999999999)),
@@ -287,7 +300,7 @@ GROUP BY
 ORDER BY
 	p.orden_grupo, p.nombre, dc.nro_lote;
 
-DROP VIEW cliente_saldo;
+
 CREATE VIEW cliente_saldo AS
 SELECT 
 	FLOOR(1+(RAND()*999999999999)),

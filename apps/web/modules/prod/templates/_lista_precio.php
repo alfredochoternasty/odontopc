@@ -79,8 +79,8 @@ hr {
 </div>
 
 <div id="footer">
-  <div>www.ntiimplantes.com.ar</div>
-  <div class="page-number"></div>
+  <div style="float:left;">Todos los precios incluyen IVA</div>
+  <div style="float:right;text-align:right;" class="page-number"></div>
 </div>
 
 <table width="100%" class="lista_precios">  
@@ -102,7 +102,14 @@ hr {
   <tr>
     <td width="20%"><?php echo $producto->getCodigo() ?></td>
     <td width="65%"><?php echo $producto->getNombre() ?></td>
-    <td width="15%"><?php echo '$ '.sprintf("%01.2f", $producto->getPrecioVta()) ?></td>
+    <td width="15%">
+			<?php 
+				$precio = $producto->getPrecioVta();
+				$iva = $precio * 0.21;
+				$total = $precio + $iva;
+				echo '$ '.sprintf("%01.2f", $total);
+			?>
+		</td>
   </tr>
   <?php 
     if($count >= 36){
