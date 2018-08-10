@@ -25,7 +25,7 @@ body {
 
 #header {
 	top: 0;
-	color: #0086b3;
+	color: #3D6092;
 	font-weight: bold;
 }
 
@@ -61,7 +61,7 @@ hr {
 
 .lista_precios,
 .lista_precios td{
-	border: 1px solid #0086b3;
+	border: 1px solid #3D6092;
 }
 
 </style>
@@ -94,7 +94,7 @@ hr {
       $count++;
       ?>
         <tr>
-          <td colspan="3" style="background-color:#0086b3;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
+          <td colspan="3" style="background-color:#3D6092;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
         </tr>            
       <?php
     }
@@ -116,7 +116,7 @@ hr {
       $count = 1;
       ?>
         <tr>
-          <td colspan="3" style="background-color:#0086b3;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
+          <td colspan="3" style="background-color:#3D6092;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
         </tr>            
       <?php
     }

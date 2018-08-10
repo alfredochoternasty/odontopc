@@ -50,7 +50,7 @@ class adminsActions extends sfActions
 		
 		// borro el .zip anterior
 		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
-    unlink('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip');		
+    if(file_exists('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip');		
 		
 		$zip = new ZipArchive();
 		$filename = 'bckp/'.$fecha_actual.'_bak_'.$name.'.zip';
@@ -58,7 +58,7 @@ class adminsActions extends sfActions
 		$zip->addFile($sql_file);
 		$zip->close();
 		
-		unlink($sql_file);		
+		if(file_exists($sql_file)) unlink($sql_file);		
 		
 		return $filename;
 	}	
@@ -95,13 +95,19 @@ class adminsActions extends sfActions
 		$mensaje = Swift_Message::newInstance();
 		$mensaje->setFrom(array('alfredochoternasty@gmail.com' => 'NTI implantes'));
 		$mensaje->setTo(array('alfredochoternasty@gmail.com' => 'Backup Sistema'));
-		$mensaje->setBody('aca esta el backup');
-		if ($sdb == 'ventas') {
-			$mensaje->setSubject('backup blanco NTI');
+		if(file_exists($filename)){
+			$mensaje->attach(Swift_Attachment::fromPath($filename));
+			if ($sdb == 'ventas') {
+				$mensaje->setSubject('backup blanco NTI');
+				$mensaje->setBody('aca esta el backup blanco');
+			} else {
+				$mensaje->setSubject('backup negro NTI');
+				$mensaje->setBody('aca esta el backup negro');
+			}
 		} else {
-			$mensaje->setSubject('backup negro NTI');
+				$mensaje->setSubject('error en backup NTI');
+				$mensaje->setBody('no se hizo el backup de '.$sdb);
 		}
-		$mensaje->attach(Swift_Attachment::fromPath($filename));
 		$mensaje->setContentType("text/html");
 		$this->getMailer()->send($mensaje);
   }
