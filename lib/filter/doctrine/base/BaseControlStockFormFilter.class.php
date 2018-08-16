@@ -17,9 +17,9 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'producto_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
       'producto_nombre' => new sfWidgetFormFilterInput(),
       'nro_lote'        => new sfWidgetFormFilterInput(),
-      'cant_comprada'   => new sfWidgetFormFilterInput(),
-      'cant_vendida'    => new sfWidgetFormFilterInput(),
-      'stock'           => new sfWidgetFormFilterInput(),
+      'comprados'       => new sfWidgetFormFilterInput(),
+      'vendidos'        => new sfWidgetFormFilterInput(),
+      'stock_actual'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -27,9 +27,9 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'producto_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
       'producto_nombre' => new sfValidatorPass(array('required' => false)),
       'nro_lote'        => new sfValidatorPass(array('required' => false)),
-      'cant_comprada'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'cant_vendida'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'stock'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'comprados'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'vendidos'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'stock_actual'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock_filters[%s]');
@@ -54,9 +54,9 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'producto_id'     => 'ForeignKey',
       'producto_nombre' => 'Text',
       'nro_lote'        => 'Text',
-      'cant_comprada'   => 'Number',
-      'cant_vendida'    => 'Number',
-      'stock'           => 'Number',
+      'comprados'       => 'Number',
+      'vendidos'        => 'Number',
+      'stock_actual'    => 'Number',
     );
   }
 }

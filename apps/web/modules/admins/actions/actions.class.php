@@ -43,17 +43,17 @@ class adminsActions extends sfActions
 		
 		$fecha_actual = date('Ymd');
 		
-		$sql_file = 'bckp/'.$fecha_actual.'_bak_'.$name.'.sql';
+		$sql_file = $fecha_actual.'_bak_'.$name.'.sql';
 		$handle = fopen($sql_file,'w+');
 		fwrite($handle,$return);
 		fclose($handle);
 		
 		// borro el .zip anterior
 		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
-    if(file_exists('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip');		
+    if(file_exists('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink($fecha_backup_anterior.'_bak_'.$name.'.zip');		
 		
 		$zip = new ZipArchive();
-		$filename = 'bckp/'.$fecha_actual.'_bak_'.$name.'.zip';
+		$filename = $fecha_actual.'_bak_'.$name.'.zip';
 		$zip->open($filename, ZipArchive::CREATE);
 		$zip->addFile($sql_file);
 		$zip->close();

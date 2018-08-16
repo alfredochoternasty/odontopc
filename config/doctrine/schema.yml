@@ -699,16 +699,16 @@ Parametros:
     valor: {type: string(100)}
 ControlStock:
   connection: doctrine
-  tableName: listado_control_stock
+  tableName: control_stock
   columns:
     id: {type: integer(4), primary: true}
     grupoprod_id: {type: integer(4)}
     producto_id: {type: string(50)}
     producto_nombre: {type: string(50)}
     nro_lote: {type: string(50)}
-    cant_comprada: {type: integer(4)}
-    cant_vendida: {type: integer(4)}
-    stock: {type: integer(4)}
+    comprados: {type: integer(4)}
+    vendidos: {type: integer(4)}
+    stock_actual: {type: integer(4)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}

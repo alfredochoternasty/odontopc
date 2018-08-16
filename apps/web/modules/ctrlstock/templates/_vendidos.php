@@ -1,6 +1,6 @@
 <?php
-if(!empty($control_stock->cant_vendida))
-	echo $control_stock->getCantVendida();
+if($control_stock->vendidos != '' || $control_stock->vendidos != null)
+	echo $control_stock->getVendidos();
 else 
-	echo '-';
+	echo '0';
 ?>

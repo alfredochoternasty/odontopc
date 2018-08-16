@@ -18,12 +18,12 @@ generator:
         grupoprod_id: { label: Grupo}
         Producto: { label: Producto}
         nro_lote: { label: Lote}
-        cant_comprada: { label:  Comprados}
-        cant_vendida: { label: Vendidos }
-        stock: { label: Stock }
+        comprados: { label:  Comprados}
+        vendidos: { label: Vendidos }
+        stock_actual: { label: Stock }
       list:
         title: Listado de Control de Stock
-        display: [Grupo, Producto, nro_lote, cant_comprada, _vendidos, _stock]
+        display: [Grupo, Producto, nro_lote, comprados, _vendidos, _stock_actual]
         object_actions: []
         batch_actions: []
         actions:

@@ -20,9 +20,9 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'producto_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
       'producto_nombre' => new sfWidgetFormInputText(),
       'nro_lote'        => new sfWidgetFormInputText(),
-      'cant_comprada'   => new sfWidgetFormInputText(),
-      'cant_vendida'    => new sfWidgetFormInputText(),
-      'stock'           => new sfWidgetFormInputText(),
+      'comprados'       => new sfWidgetFormInputText(),
+      'vendidos'        => new sfWidgetFormInputText(),
+      'stock_actual'    => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -31,9 +31,9 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'producto_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'required' => false)),
       'producto_nombre' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'nro_lote'        => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'cant_comprada'   => new sfValidatorInteger(array('required' => false)),
-      'cant_vendida'    => new sfValidatorInteger(array('required' => false)),
-      'stock'           => new sfValidatorInteger(array('required' => false)),
+      'comprados'       => new sfValidatorInteger(array('required' => false)),
+      'vendidos'        => new sfValidatorInteger(array('required' => false)),
+      'stock_actual'    => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock[%s]');

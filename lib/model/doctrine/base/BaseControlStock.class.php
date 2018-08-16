@@ -12,9 +12,9 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @property string $producto_id
  * @property string $producto_nombre
  * @property string $nro_lote
- * @property integer $cant_comprada
- * @property integer $cant_vendida
- * @property integer $stock
+ * @property integer $comprados
+ * @property integer $vendidos
+ * @property integer $stock_actual
  * @property Producto $Producto
  * @property Grupoprod $Grupo
  * 
@@ -23,9 +23,9 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method string       getProductoId()      Returns the current record's "producto_id" value
  * @method string       getProductoNombre()  Returns the current record's "producto_nombre" value
  * @method string       getNroLote()         Returns the current record's "nro_lote" value
- * @method integer      getCantComprada()    Returns the current record's "cant_comprada" value
- * @method integer      getCantVendida()     Returns the current record's "cant_vendida" value
- * @method integer      getStock()           Returns the current record's "stock" value
+ * @method integer      getComprados()       Returns the current record's "comprados" value
+ * @method integer      getVendidos()        Returns the current record's "vendidos" value
+ * @method integer      getStockActual()     Returns the current record's "stock_actual" value
  * @method Producto     getProducto()        Returns the current record's "Producto" value
  * @method Grupoprod    getGrupo()           Returns the current record's "Grupo" value
  * @method ControlStock setId()              Sets the current record's "id" value
@@ -33,9 +33,9 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method ControlStock setProductoId()      Sets the current record's "producto_id" value
  * @method ControlStock setProductoNombre()  Sets the current record's "producto_nombre" value
  * @method ControlStock setNroLote()         Sets the current record's "nro_lote" value
- * @method ControlStock setCantComprada()    Sets the current record's "cant_comprada" value
- * @method ControlStock setCantVendida()     Sets the current record's "cant_vendida" value
- * @method ControlStock setStock()           Sets the current record's "stock" value
+ * @method ControlStock setComprados()       Sets the current record's "comprados" value
+ * @method ControlStock setVendidos()        Sets the current record's "vendidos" value
+ * @method ControlStock setStockActual()     Sets the current record's "stock_actual" value
  * @method ControlStock setProducto()        Sets the current record's "Producto" value
  * @method ControlStock setGrupo()           Sets the current record's "Grupo" value
  * 
@@ -70,15 +70,15 @@ abstract class BaseControlStock extends sfDoctrineRecord
              'type' => 'string',
              'length' => 50,
              ));
-        $this->hasColumn('cant_comprada', 'integer', 4, array(
+        $this->hasColumn('comprados', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('cant_vendida', 'integer', 4, array(
+        $this->hasColumn('vendidos', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('stock', 'integer', 4, array(
+        $this->hasColumn('stock_actual', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

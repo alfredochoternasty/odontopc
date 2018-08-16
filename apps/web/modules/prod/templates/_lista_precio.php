@@ -105,8 +105,12 @@ hr {
     <td width="15%">
 			<?php 
 				$precio = $producto->getPrecioVta();
-				$iva = $precio * 0.21;
-				$total = $precio + $iva;
+				if($sf_user->hasGroup('Blanco')) {
+					$iva = $precio * 0.21;
+					$total = $precio + $iva;
+				} else {
+					$total = $precio;
+				}
 				echo '$ '.sprintf("%01.2f", $total);
 			?>
 		</td>
