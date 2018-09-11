@@ -131,13 +131,15 @@ class cliActions extends autoCliActions
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ClienteFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
+	$consulta->andWhere('activo = 1');
+	$consulta->addOrderBy('apellido');
     $clientes = $consulta->execute();
     
     header("Content-Disposition: attachment; filename=\"clientes.xls\"");
     header("Content-Type: application/vnd.ms-excel");
     
-    echo 'Listado de Clientes' . "\r\n";
-    $titulos = array('Tipo', 'Apellido', 'Nombre', 'Teléfono', 'Celular', 'Email', 'Localidad');
+    echo 'Listado de Clientes Activos' . "\r\n";
+    $titulos = array('Tipo', 'Apellido', 'Nombre', 'Tel.', 'Celular', 'Email', 'Localidad');
     $flag = false;
     foreach($clientes as $cliente):
           if (!$flag) {

@@ -70,7 +70,7 @@ class ctacteActions extends autoCtacteActions
     
     if($cta_cte[0]->getCliente()->getEmail() != ''){
       $mensaje = Swift_Message::newInstance();
-      $mensaje->setFrom(array('info@odontovta.net23.net' => 'NTI implantes'));
+	  $mensaje->setFrom(array('ntiimplantes@gmail.com' => 'NTI implantes'));
       $mensaje->setTo($cta_cte[0]->getCliente()->getEmail());
       $mensaje->setSubject('Detalle Cuenta Corriente');
       $mensaje->setBody($this->getPartial("imprimir", array("cta_cte" => $cta_cte)));

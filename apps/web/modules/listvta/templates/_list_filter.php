@@ -108,10 +108,10 @@
             <td><?php echo $listado_ventas->getTipoClienteNombre() ?></td>
             <td><?php echo $listado_ventas->getGrupoNombre() ?></td>
             <td><?php echo $listado_ventas->getProductoNombre() ?></td>
-            <td><?php echo $listado_ventas->PrecioFormato() ?></td>
+            <td><?php echo $listado_ventas->getPrecio(); //PrecioFormato() ?></td>
             <td><?php echo $listado_ventas->getCantidad() ?></td>
             <td><?php echo $listado_ventas->getBonificados() ?></td>
-            <td><?php echo $listado_ventas->TotalFormato() ?></td>
+            <td><?php echo $listado_ventas->getTotal(); //TotalFormato() ?></td>
             <td><?php echo $listado_ventas->getNroLote() ?></td>
             <td><?php echo false !== strtotime($listado_ventas->getFechaVto()) ? format_date($listado_ventas->getFechaVto(), "dd/MM/yyyy") : '&nbsp;' ?></td>
           </tr>

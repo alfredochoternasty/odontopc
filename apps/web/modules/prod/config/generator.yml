@@ -20,7 +20,7 @@ generator:
         grupoprod_id: { label: Grupo}
         minimo_stock: { label: Stock Minimo}
         ctr_fact_grupo: { label: Control Fact. Grupo, help: Indica si controla lo facturado según el grupo}
-        orden_grupo: { label: Orden en Grupo, help: Es un numero para que los productos se vean ordendos en el grupo}
+        orden_grupo: { label: Orden, help: Es un numero para los productos se vean ordendos en el grupo}
         activo: { label: Activo, help: Indica si el producto se puede utilizar o no}
       list:
         table_method: retrieveProdConGrupo

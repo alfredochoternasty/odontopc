@@ -72,7 +72,7 @@ hr {
 <div id="header">
   <table>
     <tr>
-      <td>Listado de Precios - <?php echo date("m/d/Y"); ?></td>
+      <td>Listado de Precios - <?php echo date("d/m/Y"); ?></td>
       <td style="text-align: right;">NTI Implantes</td>
     </tr>
   </table>
@@ -105,12 +105,8 @@ hr {
     <td width="15%">
 			<?php 
 				$precio = $producto->getPrecioVta();
-				if($sf_user->hasGroup('Blanco')) {
-					$iva = $precio * 0.21;
-					$total = $precio + $iva;
-				} else {
-					$total = $precio;
-				}
+				$iva = $precio * 0.21;
+				$total = $precio + $iva;
 				echo '$ '.sprintf("%01.2f", $total);
 			?>
 		</td>

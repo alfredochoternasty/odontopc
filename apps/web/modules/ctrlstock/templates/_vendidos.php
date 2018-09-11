@@ -1,5 +1,5 @@
 <?php
-if($control_stock->vendidos != '' || $control_stock->vendidos != null)
+if(!empty($control_stock->vendidos))
 	echo $control_stock->getVendidos();
 else 
 	echo '0';

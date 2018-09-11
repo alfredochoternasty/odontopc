@@ -10,7 +10,6 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @property integer $id
  * @property integer $grupoprod_id
  * @property string $producto_id
- * @property string $producto_nombre
  * @property string $nro_lote
  * @property integer $comprados
  * @property integer $vendidos
@@ -18,26 +17,24 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @property Producto $Producto
  * @property Grupoprod $Grupo
  * 
- * @method integer      getId()              Returns the current record's "id" value
- * @method integer      getGrupoprodId()     Returns the current record's "grupoprod_id" value
- * @method string       getProductoId()      Returns the current record's "producto_id" value
- * @method string       getProductoNombre()  Returns the current record's "producto_nombre" value
- * @method string       getNroLote()         Returns the current record's "nro_lote" value
- * @method integer      getComprados()       Returns the current record's "comprados" value
- * @method integer      getVendidos()        Returns the current record's "vendidos" value
- * @method integer      getStockActual()     Returns the current record's "stock_actual" value
- * @method Producto     getProducto()        Returns the current record's "Producto" value
- * @method Grupoprod    getGrupo()           Returns the current record's "Grupo" value
- * @method ControlStock setId()              Sets the current record's "id" value
- * @method ControlStock setGrupoprodId()     Sets the current record's "grupoprod_id" value
- * @method ControlStock setProductoId()      Sets the current record's "producto_id" value
- * @method ControlStock setProductoNombre()  Sets the current record's "producto_nombre" value
- * @method ControlStock setNroLote()         Sets the current record's "nro_lote" value
- * @method ControlStock setComprados()       Sets the current record's "comprados" value
- * @method ControlStock setVendidos()        Sets the current record's "vendidos" value
- * @method ControlStock setStockActual()     Sets the current record's "stock_actual" value
- * @method ControlStock setProducto()        Sets the current record's "Producto" value
- * @method ControlStock setGrupo()           Sets the current record's "Grupo" value
+ * @method integer      getId()           Returns the current record's "id" value
+ * @method integer      getGrupoprodId()  Returns the current record's "grupoprod_id" value
+ * @method string       getProductoId()   Returns the current record's "producto_id" value
+ * @method string       getNroLote()      Returns the current record's "nro_lote" value
+ * @method integer      getComprados()    Returns the current record's "comprados" value
+ * @method integer      getVendidos()     Returns the current record's "vendidos" value
+ * @method integer      getStockActual()  Returns the current record's "stock_actual" value
+ * @method Producto     getProducto()     Returns the current record's "Producto" value
+ * @method Grupoprod    getGrupo()        Returns the current record's "Grupo" value
+ * @method ControlStock setId()           Sets the current record's "id" value
+ * @method ControlStock setGrupoprodId()  Sets the current record's "grupoprod_id" value
+ * @method ControlStock setProductoId()   Sets the current record's "producto_id" value
+ * @method ControlStock setNroLote()      Sets the current record's "nro_lote" value
+ * @method ControlStock setComprados()    Sets the current record's "comprados" value
+ * @method ControlStock setVendidos()     Sets the current record's "vendidos" value
+ * @method ControlStock setStockActual()  Sets the current record's "stock_actual" value
+ * @method ControlStock setProducto()     Sets the current record's "Producto" value
+ * @method ControlStock setGrupo()        Sets the current record's "Grupo" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -59,10 +56,6 @@ abstract class BaseControlStock extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('producto_id', 'string', 50, array(
-             'type' => 'string',
-             'length' => 50,
-             ));
-        $this->hasColumn('producto_nombre', 'string', 50, array(
              'type' => 'string',
              'length' => 50,
              ));
