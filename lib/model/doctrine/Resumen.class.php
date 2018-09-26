@@ -30,6 +30,24 @@ class Resumen extends BaseResumen
     return $suma;
   }
 
+  public function getSubTotalResumen()
+  {
+    $suma = 0;
+    foreach($this->getDetalle() as $det){
+      $suma += $det->getSubTotal();
+    }
+    return $suma;
+  }
+  
+  public function getIVATotalResumen()
+  {
+    $suma = 0;
+    foreach($this->getDetalle() as $det){
+      $suma += $det->getIva();
+    }
+    return $suma;
+  }
+  
   public function getTotalResumenFormato(){
     return sprintf($this->SimboloMoneda()." %01.2f", $this->getTotalResumen());
   }   
@@ -54,4 +72,13 @@ class Resumen extends BaseResumen
     }
     return $suma;
   }
+  
+  public function getCuitCliente(){
+	  return str_replace('-', '', $this->getCliente()->cuit);
+  }
+	
+  public function getDescRemito(){
+    $val = $this->getFecha().' - '.$this->getNroFactura().' - '.$this->getCliente();
+    return empty($val)? '' : $val;
+  }	
 }

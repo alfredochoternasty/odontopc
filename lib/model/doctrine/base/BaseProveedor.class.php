@@ -24,6 +24,7 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @property Doctrine_Collection $CtaCteProv
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ListadoCompras
+ * @property Doctrine_Collection $ControlStock
  * @property Doctrine_Collection $Traza2
  * @property Doctrine_Collection $compra2
  * 
@@ -44,6 +45,7 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Doctrine_Collection getCtaCteProv()         Returns the current record's "CtaCteProv" collection
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
+ * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
  * @method Doctrine_Collection getTraza2()             Returns the current record's "Traza2" collection
  * @method Doctrine_Collection getCompra2()            Returns the current record's "compra2" collection
  * @method Proveedor           setId()                 Sets the current record's "id" value
@@ -63,6 +65,7 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Proveedor           setCtaCteProv()         Sets the current record's "CtaCteProv" collection
  * @method Proveedor           setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Proveedor           setListadoCompras()     Sets the current record's "ListadoCompras" collection
+ * @method Proveedor           setControlStock()       Sets the current record's "ControlStock" collection
  * @method Proveedor           setTraza2()             Sets the current record's "Traza2" collection
  * @method Proveedor           setCompra2()            Sets the current record's "compra2" collection
  * 
@@ -154,6 +157,10 @@ abstract class BaseProveedor extends sfDoctrineRecord
         $this->hasMany('ListadoCompras', array(
              'local' => 'id',
              'foreign' => 'prov_id'));
+
+        $this->hasMany('ControlStock', array(
+             'local' => 'id',
+             'foreign' => 'proveedor_id'));
 
         $this->hasMany('Traza2', array(
              'local' => 'id',

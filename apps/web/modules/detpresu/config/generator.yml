@@ -16,7 +16,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Detalle del presupuesto
-        display: [Producto, _precio, cantidad, _total]
+        display: [Producto, _precio, cantidad, _iva, _total]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}

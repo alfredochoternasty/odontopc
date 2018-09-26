@@ -13,4 +13,9 @@ require_once dirname(__FILE__).'/../lib/bancoGeneratorHelper.class.php';
  */
 class bancoActions extends autoBancoActions
 {
+	public function executeCargar(sfWebRequest $request){
+    $this->form = new BancoForm();
+    $this->banco = $this->form->getObject();    
+    $this->setTemplate('new_banco');
+  }
 }

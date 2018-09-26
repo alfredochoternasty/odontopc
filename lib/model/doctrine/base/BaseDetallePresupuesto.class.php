@@ -13,6 +13,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @property integer $cantidad
  * @property decimal $precio
  * @property decimal $total
+ * @property decimal $iva
  * @property Producto $Producto
  * @property Presupuesto $Presupuesto
  * 
@@ -22,6 +23,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @method integer            getCantidad()       Returns the current record's "cantidad" value
  * @method decimal            getPrecio()         Returns the current record's "precio" value
  * @method decimal            getTotal()          Returns the current record's "total" value
+ * @method decimal            getIva()            Returns the current record's "iva" value
  * @method Producto           getProducto()       Returns the current record's "Producto" value
  * @method Presupuesto        getPresupuesto()    Returns the current record's "Presupuesto" value
  * @method DetallePresupuesto setId()             Sets the current record's "id" value
@@ -30,6 +32,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @method DetallePresupuesto setCantidad()       Sets the current record's "cantidad" value
  * @method DetallePresupuesto setPrecio()         Sets the current record's "precio" value
  * @method DetallePresupuesto setTotal()          Sets the current record's "total" value
+ * @method DetallePresupuesto setIva()            Sets the current record's "iva" value
  * @method DetallePresupuesto setProducto()       Sets the current record's "Producto" value
  * @method DetallePresupuesto setPresupuesto()    Sets the current record's "Presupuesto" value
  * 
@@ -72,6 +75,12 @@ abstract class BaseDetallePresupuesto extends sfDoctrineRecord
              ));
         $this->hasColumn('total', 'decimal', 10, array(
              'type' => 'decimal',
+             'length' => 10,
+             'scale' => '2',
+             ));
+        $this->hasColumn('iva', 'decimal', 10, array(
+             'type' => 'decimal',
+             'default' => 0,
              'length' => 10,
              'scale' => '2',
              ));

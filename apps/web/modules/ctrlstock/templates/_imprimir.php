@@ -5,6 +5,7 @@
 <h2>Listado detallado para Control de Stock</h2>
 <table border="1" cellspacing="0" cellpadding="1">
   <tr>
+    <th style="background: #CCC;">Proveedor</th>
     <th style="background: #CCC;">Producto</th>
     <th style="background: #CCC;">Lote</th>
     <th style="background: #CCC;">Cant. Comprados</th>
@@ -15,6 +16,7 @@
 	foreach($listado as $fila):
 	?>
   <tr>
+    <td><?php echo $fila->getProveedor() ?></td>
     <td><?php echo $fila->getProducto() ?></td>
     <td><?php echo $fila->getNroLote() ?></td>
 	<td><?php echo $fila->getComprados() ?></td>

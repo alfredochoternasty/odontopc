@@ -1,67 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
 <html>
 <head>
+	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 6.0.6.2 (Linux)"/>
+	<meta name="author" content="www.todoexcel.com"/>
+	<meta name="created" content="2010-04-15T00:15:23"/>
+	<meta name="changedby" content="casa"/>
+	<meta name="changed" content="2018-09-17T19:00:20"/>
+	
+	<style type="text/css">
+		body{font-family:Verdana; font-size:12px}
+		.titulo{font-weight:bold; background-color:#CCCCCC}
+		.alinear-izq{text-align:left}
+		.alinear-der{text-align:right}
+		.centrar{text-align:center}
+		.tipo_fact{
+			font-weight:bold; 
+			font-size:30px; 
+			border: 1px solid #000; 
+			padding:10px;
+			padding-left: 15px;
+			background-color:#CCC;
+			
+		}
+	</style>
+	
 </head>
+
 <body>
-<h2>Detalle</h2>
-<p><b>Nombre y Apellido:</b>&nbsp;&nbsp;<?php echo $resumen->getCliente() ?></p>
-<p><b>Nro:</b>&nbsp;&nbsp;<?php echo $resumen->getId() ?></p>
-<?php 
-$ped = $resumen->getPedidoId();
-if(!empty($ped)){ ?>
-  <p><b>N� de Pedido:</b>&nbsp;&nbsp;<?php echo $ped; ?></p>
-<?php 
-}
-?>
-<p><b>Fecha :</b>&nbsp;&nbsp;<?php echo date("d/m/Y", strtotime($resumen->getFecha())) ?></p>
-<table border="1" cellspacing="0" cellpadding="1">
-  <tr>
-    <th style="background: #CCC;">Producto</th>
-    <th style="background: #CCC;">Cantidad</th>
-    <th style="background: #CCC;">Precio Unitario</th>
-    <?php if($sf_user->hasGroup('Blanco')): ?>    
-      <th style="background: #CCC;">Sub Total</th>
-      <th style="background: #CCC;">Iva</th>
-    <?php endif; ?>    
-    <th style="background: #CCC;">Total</th>
-    <th style="background: #CCC;">Bonificados</th>
-    <th style="background: #CCC;">Lote</th>
-    <th style="background: #CCC;">Fecha Vto</th>
-  </tr>
-  <?php 
-  foreach($resumen->getDetalle() as $detalle):
-	$moneda = $resumen->getLista()->getMoneda()->getSimbolo()
-  ?>
-  <tr>
-    <td><?php
-      $iva = $detalle->getObservacion();
-      if(!empty($iva)) $iva .= " - ";
-      echo  $iva.$detalle->getProducto();
-    ?></td>
-    <td><?php echo $detalle->getCantidad() ?></td>
-    <td><?php echo $detalle->PrecioFormato() ?></td>
-    <?php if($sf_user->hasGroup('Blanco')): ?>    
-      <td><?php echo $detalle->SubTotalFormato() ?></td>
-      <td><?php echo $detalle->IvaFormato() ?></td>      
-    <?php endif; ?>
-    <td><?php echo $detalle->TotalFormato() ?></td>
-    <td><?php echo $detalle->getBonificados() ?></td>
-    <td><?php echo $detalle->getNroLote() ?></td>
-    <td><?php echo implode('/', array_reverse(explode('-', $detalle->getLote()->getFechaVto()))) ?></td>
-  </tr>
-  <?php endforeach;?>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <?php if($sf_user->hasGroup('Blanco')): ?>    
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    <?php endif; ?>
-    <td style="background: #CCC;">Total:&nbsp;</td>
-    <td><?php echo $resumen->getTotalResumenFormato() ?></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+
+<table cellpadding="10" cellspacing="0" border="0" width="100%">
+	<tr>
+		<td width="45%">
+			<img src="images/logo_nti.png" width=204 height=77>
+			<p>
+				<b>Razon Social: </b>NTI Implantes<br>
+				<b>Domicilio: </b>Feliciano 581 - Paraná (Entre Ríos)<br>
+				<b>Tel: </b>(0343) 4235207 / 154 645140<br>
+				<b>C.U.I.T.: </b>30-71227246-1<br>
+				<b>Ingresos Brutos: </b>30-71227246-1<br>
+				<b>Inicio de Actividades: </b>01/05/2012
+			</p>			
+		</td>
+		<td width="10%" valign="top">
+			<div class="tipo_fact">
+				<?php 
+					$letra_fact = trim(substr($resumen->getTipoFactura(), -1, 1));
+					echo $letra_fact;
+				?>
+			</div>
+		</td>
+		<td width="45%">
+			<div style="margin-bottom: 40px; width:100%; font-weight:bold; font-size:14px; text-align:right;">ORIGINAL</div>
+			<span style="font-weight:bold; font-size: 22px;">Factura</span><br>
+			<span style="font-size: 14px;">
+				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
+				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
+				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
+				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
+			</span>
+			</b>
+		</td>
+	</tr>
 </table>
+<table cellpadding="2" cellspacing="0" border="1" width="100%">	
+	<tr>
+		<td align="left"><b>Razón Social: </b><?php echo $resumen->getCliente() ?></td>
+		<td align="left"><b>Domicilio: </b><?php echo $resumen->getCliente()->getDomicilio() ?> - <?php echo $resumen->getCliente()->getLocalidad() ?></td>
+	</tr>
+	<tr>
+		<td align="left"><b>C.U.I.T. : </b><?php echo $resumen->getCliente()->getCuit() ?></td>
+		<td align="left"><b>Condición frente al I.V.A. : </b><?php echo $resumen->getCliente()->getCondfiscal() ?></td>
+	</tr>
+	<tr><td colspan=2 align="left"><b>Condición de Venta : </b>Cuenta Corriente</td></tr>	
+</table>
+<br>
+<table cellpadding="2" cellspacing="0" border="1" width="100%">	
+	<tr class="titulo">
+		<td><b>Artículo</b></td>
+		<td><b>Cantidad</b></td>
+		<td><b>Precio Un.</b></td>
+		<td><b>Subtotal</b></td>
+		<?php if ($letra_fact == 'A'): ?>
+		<td><b>% IVA</b></td>
+		<td><b>Total con IVA</b></td>
+		<?php endif;?>
+	</tr>
+	<?php foreach($resumen->getDetalle() as $detalle):?>
+	<tr>
+		<td><?php echo $detalle->getProducto() .' - '. $detalle->getNroLote()?></td>
+		<td><?php echo $detalle->getCantidad() ?></td>
+		<td><?php echo $detalle->PrecioFormato() ?></td>
+		<td><?php echo $detalle->SubTotalFormato() ?></td>
+		<?php if ($letra_fact == 'A'): ?>
+		<td><?php echo $detalle->IvaFormato() ?></td>
+		<td><?php echo $detalle->TotalFormato() ?></td>
+		<?php endif;?>
+	</tr>
+	<?php endforeach;?>	
+	<tr><td colspan="<?php echo ($letra_fact == 'A')?6:4; ?>"><br></td></tr>
+	<tr>
+		<td colspan="<?php echo ($letra_fact == 'A')?5:3; ?>" align="right"><b>Total</b></td>
+		<td><b><?php echo $resumen->getSubTotalResumen() ?></b></td>
+	</tr>
+</table>
+
 </body>
-<html>
+
+</html>

@@ -2,6 +2,8 @@
 
 require_once dirname(__FILE__).'/../lib/detresGeneratorConfiguration.class.php';
 require_once dirname(__FILE__).'/../lib/detresGeneratorHelper.class.php';
+require_once dirname(__FILE__).'/afipfe/wsaa.class.php';
+require_once dirname(__FILE__).'/afipfe/wsfev1.class.php';
 
 /**
  * detres actions.
@@ -75,18 +77,23 @@ class detresActions extends autoDetresActions
   
   public function executeNew(sfWebRequest $request)
   {
-    $detres = new DetalleResumen();
     if($request->hasParameter('rid')){
       $rid = $request->getParameter('rid');
       $this->getUser()->setAttribute('rid', $rid);
     }else{
       $rid = $this->getUser()->getAttribute('rid');
     }
+	
+    $detres = new DetalleResumen();
     $detres->setResumenId($rid);
-    $this->form = new DetalleResumenForm($detres);
-    $this->detalle_resumen = $this->form->getObject();
-    
-    $this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
+	if ($detres->getResumen()->afip_estado == 1) {
+		$this->getUser()->setFlash('error', 'Esta venta ya fue enviada a la AFIP y no se puede modificar');
+		$this->redirect( 'detres/index?rid='.$rid);
+	} else {
+		$this->form = new DetalleResumenForm($detres);
+		$this->detalle_resumen = $this->form->getObject();  
+		$this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
+	}
   }
   
   public function executeIndex(sfWebRequest $request){
@@ -95,7 +102,7 @@ class detresActions extends autoDetresActions
       $this->getUser()->setAttribute('rid', $rid);
     }else{
       $rid = $this->getUser()->getAttribute('rid');
-    } 
+    }
     $this->setFilters(array("resumen_id" => $rid));
     parent::executeIndex($request);
   }
@@ -143,12 +150,12 @@ class detresActions extends autoDetresActions
   public function executeListImprimir(sfWebRequest $request){
     $rid = $this->getUser()->getAttribute('rid', 1);
     $resumen = Doctrine::getTable('Resumen')->find($rid);
-    
     $dompdf = new DOMPDF();
     $dompdf->load_html($this->getPartial("imprimir", array("resumen" => $resumen)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream("reporte.pdf");    
+	$this->forward('resumen', 'index');
     return sfView::NONE;
   }
   
@@ -209,5 +216,90 @@ class detresActions extends autoDetresActions
     $dompdf->render();
     $dompdf->stream("remito.pdf");    
     return sfView::NONE;
+  }  
+  
+  public function executeCae(sfWebRequest $request){
+    if($request->hasParameter('rid')){
+      $rid = $request->getParameter('rid');
+      $this->getUser()->setAttribute('rid', $rid);
+    }else{
+      $rid = $this->getUser()->getAttribute('rid');
+    }
+
+	if (!empty($rid)) {
+		$wsaa = new WSAA(dirname(__FILE__)); 
+		$dt_expira = new DateTime($wsaa->get_expiration());
+		$dt_actual = new DateTime(date("Y-m-d h:m:i"));
+		if($dt_expira < $dt_actual) {
+			if (!$wsaa->generar_TA()) {
+				die('<br>'.$wsaa->error.'<br>');
+			}
+		}
+		
+		$ptovta = '0004';
+		
+		$resumen = Doctrine::getTable('Resumen')->find($rid);
+		$regfe['ImpTotal'] = $resumen->getTotalResumen();
+		$regfe['ImpOpEx'] = 0;
+		$regfe['ImpIVA'] = $resumen->getIVATotalResumen();
+		$regfe['ImpTrib'] = 0;
+		$regfe['ImpTotConc'] = 0;
+		$regfe['ImpNeto'] = $resumen->getSubTotalResumen();
+		$regfeasoc = '';
+		$regfetrib = '';
+		$regfeiva[] = array(
+			'Id' => 5, 
+			'BaseImp' => $resumen->getSubTotalResumen(), 
+			'Importe' => $resumen->getIVATotalResumen()
+		);
+		
+		$regfe['CbteTipo'] = $resumen->getTipoFactura()->getCodTipoAfip();
+		$regfe['Concepto'] = 1;
+		$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
+		$regfe['DocNro'] = $resumen->getCuitCliente();
+		$regfe['CbteFch'] = date('Ymd');
+		$regfe['MonId'] = 'PES';
+		$regfe['MonCotiz'] = 1;
+		
+		$wsfev1 = new WSFEV1(dirname(__FILE__));
+		
+		$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
+		$nuevo_nro = $nro+1;
+
+		$res = '';//$wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+		$tipo_msj = 'error';
+		if (is_soap_fault($res)) {
+			$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
+			$afip_estado = 0;
+		} else {
+			if(empty($res) || $res == false || $res['cae'] <= 0) {
+				for ($i=0;$i < count($wsfev1->Code);$i++) {
+					$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+				}
+				$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
+				$afip_estado = 0;
+				$tipo_msj = 'error';
+			} else {
+			  if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
+					$msj = 'CAE no obtenido';
+					$afip_estado = 0;
+					$tipo_msj = 'error';
+			  } else {
+					$msj = $res['cae'];
+					$afip_estado = 1;
+					$resumen->setNroFactura($nuevo_nro);
+					$resumen->setAfipVtoCae($res['fec_vto']);
+					$tipo_msj = 'notice';
+			  }
+			}
+		}
+		$resumen->setPtoVta($ptovta);
+		$resumen->setAfipEstado($afip_estado);
+		$resumen->setAfipMensaje($msj);
+		$resumen->save();
+	}
+
+	$this->getUser()->setFlash($tipo_msj, $msj);
+	$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
   }  
 }

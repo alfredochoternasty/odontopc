@@ -21,7 +21,7 @@ abstract class BaseBancoForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'     => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'nombre' => new sfValidatorString(array('max_length' => 50)),
+      'nombre' => new sfValidatorString(array('max_length' => 250)),
     ));
 
     $this->widgetSchema->setNameFormat('banco[%s]');

@@ -37,10 +37,10 @@ abstract class BaseBanco extends sfDoctrineRecord
              'autoincrement' => true,
              'length' => 4,
              ));
-        $this->hasColumn('nombre', 'string', 50, array(
+        $this->hasColumn('nombre', 'string', 250, array(
              'type' => 'string',
              'notnull' => true,
-             'length' => 50,
+             'length' => 250,
              ));
     }
 

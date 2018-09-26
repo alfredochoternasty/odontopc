@@ -263,6 +263,7 @@ order by
 
 CREATE VIEW control_stock (
  id,
+ proveedor_id,
  grupoprod_id,
  grupo_nombre,
  producto_id,
@@ -274,6 +275,7 @@ CREATE VIEW control_stock (
 ) AS
 SELECT
    FLOOR(1+(RAND()*999999999999)),
+	c.proveedor_id, 
 	p.grupoprod_id,
 	gp.nombre,
 	p.id,
@@ -291,6 +293,7 @@ WHERE dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLAT
 	) AS stock
 FROM
 	detalle_compra dc
+JOIN compra c ON dc.compra_id = c.id
 JOIN producto p ON dc.producto_id = p.id
 JOIN grupoprod gp ON p.grupoprod_id = gp.id
 WHERE

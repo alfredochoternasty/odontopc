@@ -50,7 +50,7 @@ class adminsActions extends sfActions
 		
 		// borro el .zip anterior
 		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
-    if(file_exists('bckp/'.$fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink($fecha_backup_anterior.'_bak_'.$name.'.zip');		
+    if(file_exists($fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink($fecha_backup_anterior.'_bak_'.$name.'.zip');		
 		
 		$zip = new ZipArchive();
 		$filename = $fecha_actual.'_bak_'.$name.'.zip';

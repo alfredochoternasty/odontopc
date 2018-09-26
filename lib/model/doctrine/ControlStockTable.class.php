@@ -16,4 +16,12 @@ class ControlStockTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ControlStock');
     }
+		
+    public function retrieveConJoins(Doctrine_Query $q){
+      $rootAlias = $q->getRootAlias();
+      $q->leftJoin($rootAlias . '.Producto p');
+      $q->leftJoin($rootAlias . '.Grupo g');
+      $q->leftJoin($rootAlias . '.Proveedor pv');
+      return $q;
+    }		
 }

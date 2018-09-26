@@ -23,11 +23,8 @@ class CompraTable extends Doctrine_Table
     public function retrieveConJoins(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Proveedor p');
-      $q->leftJoin($rootAlias . '.Detalles d');
-      $q->leftJoin($rootAlias . '.Pagos pg');
       $q->leftJoin($rootAlias . '.Tipofactura tf');
-      $q->leftJoin($rootAlias . '.Cuenta c');
-      $q->leftJoin($rootAlias . '.Moneda m');
+      $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }
 }

@@ -1,52 +1,59 @@
-/*
-insert into producto
-select 
-id + 300,
-'',
-concat('NTI - ', nombre),
-grupoprod_id,
-precio_vta,
-moneda_id,
-genera_comision,
-mueve_stock,
-minimo_stock,
-stock_actual,
-ctr_fact_grupo,
-orden_grupo,
-activo,
-grupo2,
-grupo3,
-lista_id
-from producto;
-*/
+ALTER TABLE tipo_factura
+	ADD COLUMN cod_tipo_afip SMALLINT NULL;
 
-ALTER TABLE detalle_compra CHANGE COLUMN sin_vto tiene_vto TINYINT(4) NULL DEFAULT NULL;
-UPDATE detalle_compra SET tiene_vto = 1;
+UPDATE tipo_factura SET cod_tipo_afip='1' WHERE  id=1;
+UPDATE tipo_factura SET cod_tipo_afip='6' WHERE  id=2;
+UPDATE tipo_factura SET cod_tipo_afip='11' WHERE  id=3;
+INSERT INTO tipo_factura (nombre, cod_tipo_afip) VALUES ('NOTA DE DEBITO A', '2');
+INSERT INTO tipo_factura (nombre, cod_tipo_afip) VALUES ('NOTA DE CREDITO A', '3');
+INSERT INTO tipo_factura (nombre, cod_tipo_afip) VALUES ('NOTA DE DEBITO B', '7');
+INSERT INTO tipo_factura (nombre, cod_tipo_afip) VALUES ('NOTA DE CREDITO B', '8');
+INSERT INTO tipo_factura (nombre, cod_tipo_afip) VALUES ('NOTA DE DEBITO C', '12');
+INSERT INTO tipo_factura (nombre, cod_tipo_afip) VALUES ('NOTA DE CREDITO C', '13');
 
-create view lista_precio_detalle as 
-select
-	FLOOR(1+(RAND()*999999999999)) as id,
-	dlp.lista_id,
-	lp.nombre,
-	lp.moneda_id,
-	dlp.grupoprod_id as grupo_id,
-	g_p.id as producto_grupo_id,
-	dlp.producto_id as producto_id,
-	case when dlp.aumento is not null
-		then g_p.precio_vta + (g_p.precio_vta/(dlp.aumento*100))
-		else case when dlp.descuento is not null
-					then g_p.precio_vta - (g_p.precio_vta / (dlp.descuento * 100))
-					else case when dlp.precio is not null
-								then dlp.precio
-								else 0
-							end
-				end
-	end as precio
-from
-	lista_precio lp
-		join det_lis_precio dlp on lp.id = dlp.lista_id
-		left outer join grupoprod gp on dlp.grupoprod_id = gp.id
-		left outer join producto g_p on gp.id = g_p.grupoprod_id
-		left outer join producto p on dlp.producto_id = p.id
-where 
-	lp.activo = 1
+
+ALTER TABLE condicion_fiscal
+	ADD COLUMN cod_tipo_afip SMALLINT NULL;	
+	
+UPDATE condicion_fiscal SET cod_tipo_afip='80' WHERE  id=1;
+UPDATE condicion_fiscal SET cod_tipo_afip='80' WHERE  id=2;
+UPDATE condicion_fiscal SET cod_tipo_afip='80' WHERE  id=3;
+UPDATE condicion_fiscal SET cod_tipo_afip='96' WHERE  id=4;
+
+ALTER TABLE dev_producto
+	ADD COLUMN afip_vto_cae DATE NULL;
+	
+ALTER TABLE dev_producto
+	ADD COLUMN pto_vta CHAR(4) NULL;
+
+ALTER TABLE resumen
+	ADD COLUMN pto_vta CHAR(4) NULL;
+	
+ALTER TABLE dev_producto
+	ADD COLUMN tipofactura_id INT NULL;
+
+ALTER TABLE dev_producto
+	ADD COLUMN nro_factura INT NULL;	
+	
+ALTER TABLE detalle_presupuesto
+	ADD COLUMN iva DECIMAL(10,2) NULL ;
+	
+ALTER TABLE banco
+	ALTER nombre DROP DEFAULT;
+ALTER TABLE banco
+	CHANGE COLUMN nombre nombre VARCHAR(255) NOT NULL;
+	
+CREATE TABLE tipo_venta (
+	id INT NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+ALTER TABLE resumen
+	ADD COLUMN tipo_venta_id INT NOT NULL DEFAULT '1';
+	
+INSERT INTO ventas.tipo_venta (id, nombre) VALUES ('1', 'Cuenta Corriente');
+INSERT INTO ventas.tipo_venta (id, nombre) VALUES ('2', 'Contado/Efectivo');
+
+ALTER TABLE resumen
+	ADD COLUMN remito_id INT NULL;

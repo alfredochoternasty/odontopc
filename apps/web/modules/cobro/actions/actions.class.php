@@ -139,4 +139,15 @@ return $this->renderText($resultado);
     $dompdf->stream("cobros.pdf");    
     return sfView::NONE;
   }
+	
+  public function executeGuardarnuevobanco(sfWebRequest $request){
+    $objProd = new Banco();
+    $datos = $request->getParameter('banco');
+    
+    $objProd->setNombre($datos['nombre']);
+    $objProd->save();
+    
+    return $this->renderText(json_encode($objProd->getId()));
+  }
+ 	
 }

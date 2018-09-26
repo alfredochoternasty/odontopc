@@ -14,7 +14,9 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'fecha'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'tipo_venta_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoVenta'), 'add_empty' => true)),
       'cliente_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
+      'remito_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Remito'), 'add_empty' => true)),
       'lista_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
       'moneda_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'observacion'    => new sfWidgetFormFilterInput(),
@@ -23,11 +25,17 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'nro_factura'    => new sfWidgetFormFilterInput(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'afip_estado'    => new sfWidgetFormFilterInput(),
+      'afip_mensaje'   => new sfWidgetFormFilterInput(),
+      'afip_vto_cae'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'pto_vta'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'fecha'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'tipo_venta_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoVenta'), 'column' => 'id')),
       'cliente_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
+      'remito_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Remito'), 'column' => 'id')),
       'lista_id'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lista'), 'column' => 'id')),
       'moneda_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
       'observacion'    => new sfValidatorPass(array('required' => false)),
@@ -36,6 +44,10 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'nro_factura'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
       'usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
+      'afip_estado'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'afip_mensaje'   => new sfValidatorPass(array('required' => false)),
+      'afip_vto_cae'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'pto_vta'        => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen_filters[%s]');
@@ -57,7 +69,9 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'             => 'Number',
       'fecha'          => 'Date',
+      'tipo_venta_id'  => 'ForeignKey',
       'cliente_id'     => 'ForeignKey',
+      'remito_id'      => 'ForeignKey',
       'lista_id'       => 'ForeignKey',
       'moneda_id'      => 'ForeignKey',
       'observacion'    => 'Text',
@@ -66,6 +80,10 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'nro_factura'    => 'Number',
       'tipofactura_id' => 'ForeignKey',
       'usuario'        => 'ForeignKey',
+      'afip_estado'    => 'Number',
+      'afip_mensaje'   => 'Text',
+      'afip_vto_cae'   => 'Date',
+      'pto_vta'        => 'Text',
     );
   }
 }

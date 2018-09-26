@@ -14,8 +14,16 @@
     </tbody>
   </table>
 
-  <?php else: ?>
+  <?php else: 
 
+	$detalle = $pager->getResults();
+	if ($detalle[0]->getResumen()->afip_estado == 0) {
+		echo link_to('OBTENER AUTORIZACION AFIP', 'detres/cae?rid='.$detalle[0]->resumen_id, array(
+			'class'  => 'fg-button fg-button-mini ui-state-default fg-button-icon-left',
+			'style' => 'float: right; margin-top: 10px;'
+		));
+	}
+?>	
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
             <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Detalle de la Venta', array(), 'messages') ?></h1>

@@ -21,6 +21,7 @@ abstract class BaseDetallePresupuestoForm extends BaseFormDoctrine
       'cantidad'       => new sfWidgetFormInputText(),
       'precio'         => new sfWidgetFormInputText(),
       'total'          => new sfWidgetFormInputText(),
+      'iva'            => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseDetallePresupuestoForm extends BaseFormDoctrine
       'cantidad'       => new sfValidatorInteger(array('required' => false)),
       'precio'         => new sfValidatorNumber(array('required' => false)),
       'total'          => new sfValidatorNumber(array('required' => false)),
+      'iva'            => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_presupuesto[%s]');

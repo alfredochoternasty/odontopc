@@ -13,11 +13,13 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'nombre' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'nombre'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'cod_tipo_afip' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'nombre' => new sfValidatorPass(array('required' => false)),
+      'nombre'        => new sfValidatorPass(array('required' => false)),
+      'cod_tipo_afip' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_factura_filters[%s]');
@@ -37,8 +39,9 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'     => 'Number',
-      'nombre' => 'Text',
+      'id'            => 'Number',
+      'nombre'        => 'Text',
+      'cod_tipo_afip' => 'Number',
     );
   }
 }

@@ -12,6 +12,12 @@ TipoMoneda:
     Compras: {type: many, class: Compra, local: id, foreign: moneda_id}
     FactCompra: {type: many, class: FactCompra, local: id, foreign: moneda_id}
     Pagos: {type: many, class: Pago, local: id, foreign: moneda_id}
+TipoVenta:
+  connection: doctrine
+  tableName: tipo_venta
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(255), notnull: true}
 Cuenta:
   connection: doctrine
   tableName: cuenta_compras
@@ -33,7 +39,7 @@ Banco:
   tableName: banco
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
-    nombre: {type: string(50), notnull: true}
+    nombre: {type: string(250), notnull: true}
   relations:
     Cobros: {type: many, class: Cobro, local: id, foreign: banco_id}
     pagos: {type: many, class: Pago, local: id, foreign: banco_id}
@@ -52,6 +58,7 @@ TipoFactura:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}
+    cod_tipo_afip: {type: integer(4)}
   relations:
     Ventas: {type: many, class: Venta, local: id, foreign: tipofactura_id}
     Compras: {type: many, class: Compra, local: id, foreign: tipofactura_id}
@@ -61,6 +68,7 @@ CondicionFiscal:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}
+    cod_tipo_afip: {type: integer(4)}
   relations:
     Clientes: {type: many, class: Cliente, local: id, foreign: condicionfiscal_id}
     Proveedores: {type: many, class: Proveedor, local: id, foreign: condicionfiscal_id}
@@ -234,7 +242,9 @@ Resumen:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     fecha: {type: date(25), notnull: true}
+    tipo_venta_id: {type: integer(4), notnull: true}
     cliente_id: {type: integer(4), notnull: true}
+    remito_id: {type: integer(4), notnull: true}
     lista_id: {type: integer(4), notnull: true}
     moneda_id: {type: integer(4), notnull: true}
     observacion: {type: string(200)}
@@ -243,13 +253,19 @@ Resumen:
     nro_factura: {type: integer(4)}
     tipofactura_id: {type: integer(4), notnull: true}
     usuario: {type: integer(4)}
+    afip_estado: {type: integer(4)}
+    afip_mensaje: {type: string(255)}
+    afip_vto_cae: {type: date(25)}
+    pto_vta: {type: string(4)}
   relations:
     Detalle: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
+    Remito: {type: many, class: Resumen, local: remito_id, foreign: id}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Venta: {type: one, class: Venta, local: id, foreign: resumen_id}
     Cobros: {type: many, class: Cobro, local: id, foreign: resumen_id}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
+    TipoVenta: {type: one, class: TipoVenta, local: tipo_venta_id, foreign: id, onDelete: RESTRICT}
     Pedido: {type: one, class: Pedido, local: pedido_id, foreign: id, onDelete: RESTRICT}
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
@@ -493,10 +509,17 @@ DevProducto:
     nro_lote: {type: string(50)}
     iva: {type: 'decimal(10, 2)'}
     usuario: {type: integer(4)}
+    afip_estado: {type: integer(4)}
+    afip_mensaje: {type: string(255)}
+    afip_vto_cae: {type: date(25)}
+    pto_vta: {type: string(4)}
+    tipofactura_id: {type: integer(4)}
+    nro_factura: {type: integer(4)}
   relations:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 Presupuesto:
   connection: doctrine
@@ -518,6 +541,7 @@ DetallePresupuesto:
     cantidad: {type: integer(4), notnull: true, default: 1}
     precio: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
+    iva: {type: 'decimal(10, 2)', default: 0}
   relations:
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     Presupuesto: {type: one, class: Presupuesto, local: presupuesto_id, onDelete: RESTRICT}
@@ -702,6 +726,7 @@ ControlStock:
   tableName: control_stock
   columns:
     id: {type: integer(4), primary: true}
+    proveedor_id: {type: integer(4)}
     grupoprod_id: {type: integer(4)}
     producto_id: {type: string(50)}
     producto_nombre: {type: string(50)}
@@ -711,6 +736,7 @@ ControlStock:
     stock_actual: {type: integer(4)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
+    Proveedor: {type: one, class: Proveedor, local: proveedor_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
 ClienteSeguimiento:
   connection: doctrine

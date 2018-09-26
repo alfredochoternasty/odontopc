@@ -99,6 +99,7 @@ class Producto extends BaseProducto
 		if (!empty($prod_lista)) {
 			$p_lis = $prod_lista;
 		} 
+
 		return Doctrine::getTable('ListaPrecio')->find($p_lis)->getPrecioLista($this->getId(), $this->getPrecioVta());
   }
    

@@ -17,7 +17,9 @@ abstract class BaseResumenForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
       'fecha'          => new sfWidgetFormDate(),
+      'tipo_venta_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoVenta'), 'add_empty' => false)),
       'cliente_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => false)),
+      'remito_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Remito'), 'add_empty' => false)),
       'lista_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => false)),
       'moneda_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => false)),
       'observacion'    => new sfWidgetFormInputText(),
@@ -26,12 +28,18 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'nro_factura'    => new sfWidgetFormInputText(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false)),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'afip_estado'    => new sfWidgetFormInputText(),
+      'afip_mensaje'   => new sfWidgetFormInputText(),
+      'afip_vto_cae'   => new sfWidgetFormDate(),
+      'pto_vta'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'fecha'          => new sfValidatorDate(),
+      'tipo_venta_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoVenta'))),
       'cliente_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'))),
+      'remito_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Remito'))),
       'lista_id'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'))),
       'moneda_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'))),
       'observacion'    => new sfValidatorString(array('max_length' => 200, 'required' => false)),
@@ -40,6 +48,10 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'nro_factura'    => new sfValidatorInteger(array('required' => false)),
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'))),
       'usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
+      'afip_estado'    => new sfValidatorInteger(array('required' => false)),
+      'afip_mensaje'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'afip_vto_cae'   => new sfValidatorDate(array('required' => false)),
+      'pto_vta'        => new sfValidatorString(array('max_length' => 4, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen[%s]');

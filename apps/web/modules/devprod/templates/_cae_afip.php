@@ -1,0 +1,1 @@
+<?php	if ($dev_producto->afip_estado == 1) echo $dev_producto->afip_mensaje; ?>

@@ -1,0 +1,1 @@
+<?php	if ($resumen->afip_estado == 1) echo $resumen->afip_mensaje; ?>

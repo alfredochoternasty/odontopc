@@ -2,6 +2,8 @@
 
 require_once dirname(__FILE__).'/../lib/devprodGeneratorConfiguration.class.php';
 require_once dirname(__FILE__).'/../lib/devprodGeneratorHelper.class.php';
+require_once dirname(__FILE__).'../../../detres/actions/afipfe/wsaa.class.php';
+require_once dirname(__FILE__).'../../../detres/actions/afipfe/wsfev1.class.php';
 
 /**
  * devprod actions.
@@ -126,9 +128,101 @@ class devprodActions extends autoDevprodActions
     return sfView::NONE;
   }
   
-    public function executeGet_lote(sfWebRequest $request){
+  public function executeGet_lote(sfWebRequest $request){
     $prods = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
     echo $prods[0]['nro_lote'];
     return sfView::NONE;
   }
+	
+	public function executeListFactura(sfWebRequest $request){
+    if($request->hasParameter('id')){
+      $did = $request->getParameter('id');
+      $this->getUser()->setAttribute('did', $did);
+    }else{
+      $did = $this->getUser()->getAttribute('did');
+    }
+
+		if (!empty($did)) {
+			$wsaa = new WSAA(dirname(__FILE__).'../../../detres/actions'); 
+			$dt_expira = new DateTime($wsaa->get_expiration());
+			$dt_actual = new DateTime(date("Y-m-d h:m:i"));
+			if($dt_expira < $dt_actual) {
+				if (!$wsaa->generar_TA()) {
+					die('<br>'.$wsaa->error.'<br>');
+				}
+			}
+			
+			$ptovta = '4';
+			
+			$dev = Doctrine::getTable('DevProducto')->find($did);
+			$rid = $dev->getResumenId();
+			$resumen = Doctrine::getTable('Resumen')->find($rid);
+			
+			$regfe['ImpTotal'] = $dev->getTotal();
+			$regfe['ImpOpEx'] = 0;
+			$regfe['ImpIVA'] = $dev->getIva();
+			$regfe['ImpTrib'] = 0;
+			$regfe['ImpTotConc'] = 0;
+			$regfe['ImpNeto'] = $dev->getPrecio();
+			$regfeiva[] = array(
+				'Id' => 5, 
+				'BaseImp' => $dev->getPrecio(),
+				'Importe' => $dev->getIva(),
+			);
+			$regfetrib = '';
+			$regfeasoc[] = array(
+				'Tipo' => $resumen->getTipoFactura()->getCodTipoAfip(), 
+				'PtoVta' => '4',//$resumen->getPtoVta(), 
+				'Nro' => $resumen->getNroFactura()
+			);
+			
+			$regfe['CbteTipo'] = 8; //$dev->getTipoFactura()->getCodTipoAfip();
+			$regfe['Concepto'] = 1;
+			$regfe['DocTipo'] = $dev->getCliente()->getCondfiscal()->getCodTipoAfip();
+			$regfe['DocNro'] = $dev->getResumen()->getCuitCliente();
+			$regfe['CbteFch'] = date('Ymd');
+			$regfe['MonId'] = 'PES';
+			$regfe['MonCotiz'] = 1;
+			
+			$wsfev1 = new WSFEV1(dirname(__FILE__).'../../../detres/actions');
+			
+			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
+			$nuevo_nro = $nro+1;
+
+			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+			$tipo_msj = 'error';
+			if (is_soap_fault($res)) {
+				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
+				$afip_estado = 0;
+			} else {
+				if(empty($res) || $res == false || $res['cae'] <= 0) {
+					for ($i=0;$i < count($wsfev1->Code);$i++) {
+						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+					}
+					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
+					$afip_estado = 0;
+					$tipo_msj = 'error';
+				} else {
+					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
+						$msj = 'CAE no obtenido';
+						$afip_estado = 0;
+						$tipo_msj = 'error';
+					} else {
+						$msj = $res['cae'];
+						$afip_estado = 1;
+						$dev->setNroFactura($nuevo_nro);
+						$dev->setAfipVtoCae($res['fec_vto']);
+						$tipo_msj = 'notice';
+					}
+				}
+			}
+			$dev->setAfipEstado($afip_estado);
+			$dev->setAfipMensaje($msj);
+			$dev->save();
+		}
+
+		$this->getUser()->setFlash($tipo_msj, $msj);
+		$this->redirect('devprod/index');
+	}
+	
 }

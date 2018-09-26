@@ -9,17 +9,20 @@ Doctrine_Manager::getInstance()->bindComponent('CondicionFiscal', 'doctrine');
  * 
  * @property integer $id
  * @property string $nombre
+ * @property integer $cod_tipo_afip
  * @property Doctrine_Collection $Clientes
  * @property Doctrine_Collection $Proveedores
  * 
- * @method integer             getId()          Returns the current record's "id" value
- * @method string              getNombre()      Returns the current record's "nombre" value
- * @method Doctrine_Collection getClientes()    Returns the current record's "Clientes" collection
- * @method Doctrine_Collection getProveedores() Returns the current record's "Proveedores" collection
- * @method CondicionFiscal     setId()          Sets the current record's "id" value
- * @method CondicionFiscal     setNombre()      Sets the current record's "nombre" value
- * @method CondicionFiscal     setClientes()    Sets the current record's "Clientes" collection
- * @method CondicionFiscal     setProveedores() Sets the current record's "Proveedores" collection
+ * @method integer             getId()            Returns the current record's "id" value
+ * @method string              getNombre()        Returns the current record's "nombre" value
+ * @method integer             getCodTipoAfip()   Returns the current record's "cod_tipo_afip" value
+ * @method Doctrine_Collection getClientes()      Returns the current record's "Clientes" collection
+ * @method Doctrine_Collection getProveedores()   Returns the current record's "Proveedores" collection
+ * @method CondicionFiscal     setId()            Sets the current record's "id" value
+ * @method CondicionFiscal     setNombre()        Sets the current record's "nombre" value
+ * @method CondicionFiscal     setCodTipoAfip()   Sets the current record's "cod_tipo_afip" value
+ * @method CondicionFiscal     setClientes()      Sets the current record's "Clientes" collection
+ * @method CondicionFiscal     setProveedores()   Sets the current record's "Proveedores" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -41,6 +44,10 @@ abstract class BaseCondicionFiscal extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'length' => 50,
+             ));
+        $this->hasColumn('cod_tipo_afip', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
     }
 

@@ -19,43 +19,64 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property string $nro_lote
  * @property decimal $iva
  * @property integer $usuario
+ * @property integer $afip_estado
+ * @property string $afip_mensaje
+ * @property date $afip_vto_cae
+ * @property string $pto_vta
+ * @property integer $tipofactura_id
+ * @property integer $nro_factura
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property Producto $Producto
+ * @property TipoFactura $TipoFactura
  * @property sfGuardUser $sfGuardUser
  * 
- * @method integer     getId()          Returns the current record's "id" value
- * @method date        getFecha()       Returns the current record's "fecha" value
- * @method integer     getClienteId()   Returns the current record's "cliente_id" value
- * @method integer     getResumenId()   Returns the current record's "resumen_id" value
- * @method integer     getProductoId()  Returns the current record's "producto_id" value
- * @method integer     getCantidad()    Returns the current record's "cantidad" value
- * @method decimal     getPrecio()      Returns the current record's "precio" value
- * @method decimal     getTotal()       Returns the current record's "total" value
- * @method string      getObservacion() Returns the current record's "observacion" value
- * @method string      getNroLote()     Returns the current record's "nro_lote" value
- * @method decimal     getIva()         Returns the current record's "iva" value
- * @method integer     getUsuario()     Returns the current record's "usuario" value
- * @method Cliente     getCliente()     Returns the current record's "Cliente" value
- * @method Resumen     getResumen()     Returns the current record's "Resumen" value
- * @method Producto    getProducto()    Returns the current record's "Producto" value
- * @method sfGuardUser getSfGuardUser() Returns the current record's "sfGuardUser" value
- * @method DevProducto setId()          Sets the current record's "id" value
- * @method DevProducto setFecha()       Sets the current record's "fecha" value
- * @method DevProducto setClienteId()   Sets the current record's "cliente_id" value
- * @method DevProducto setResumenId()   Sets the current record's "resumen_id" value
- * @method DevProducto setProductoId()  Sets the current record's "producto_id" value
- * @method DevProducto setCantidad()    Sets the current record's "cantidad" value
- * @method DevProducto setPrecio()      Sets the current record's "precio" value
- * @method DevProducto setTotal()       Sets the current record's "total" value
- * @method DevProducto setObservacion() Sets the current record's "observacion" value
- * @method DevProducto setNroLote()     Sets the current record's "nro_lote" value
- * @method DevProducto setIva()         Sets the current record's "iva" value
- * @method DevProducto setUsuario()     Sets the current record's "usuario" value
- * @method DevProducto setCliente()     Sets the current record's "Cliente" value
- * @method DevProducto setResumen()     Sets the current record's "Resumen" value
- * @method DevProducto setProducto()    Sets the current record's "Producto" value
- * @method DevProducto setSfGuardUser() Sets the current record's "sfGuardUser" value
+ * @method integer     getId()             Returns the current record's "id" value
+ * @method date        getFecha()          Returns the current record's "fecha" value
+ * @method integer     getClienteId()      Returns the current record's "cliente_id" value
+ * @method integer     getResumenId()      Returns the current record's "resumen_id" value
+ * @method integer     getProductoId()     Returns the current record's "producto_id" value
+ * @method integer     getCantidad()       Returns the current record's "cantidad" value
+ * @method decimal     getPrecio()         Returns the current record's "precio" value
+ * @method decimal     getTotal()          Returns the current record's "total" value
+ * @method string      getObservacion()    Returns the current record's "observacion" value
+ * @method string      getNroLote()        Returns the current record's "nro_lote" value
+ * @method decimal     getIva()            Returns the current record's "iva" value
+ * @method integer     getUsuario()        Returns the current record's "usuario" value
+ * @method integer     getAfipEstado()     Returns the current record's "afip_estado" value
+ * @method string      getAfipMensaje()    Returns the current record's "afip_mensaje" value
+ * @method date        getAfipVtoCae()     Returns the current record's "afip_vto_cae" value
+ * @method string      getPtoVta()         Returns the current record's "pto_vta" value
+ * @method integer     getTipofacturaId()  Returns the current record's "tipofactura_id" value
+ * @method integer     getNroFactura()     Returns the current record's "nro_factura" value
+ * @method Cliente     getCliente()        Returns the current record's "Cliente" value
+ * @method Resumen     getResumen()        Returns the current record's "Resumen" value
+ * @method Producto    getProducto()       Returns the current record's "Producto" value
+ * @method TipoFactura getTipoFactura()    Returns the current record's "TipoFactura" value
+ * @method sfGuardUser getSfGuardUser()    Returns the current record's "sfGuardUser" value
+ * @method DevProducto setId()             Sets the current record's "id" value
+ * @method DevProducto setFecha()          Sets the current record's "fecha" value
+ * @method DevProducto setClienteId()      Sets the current record's "cliente_id" value
+ * @method DevProducto setResumenId()      Sets the current record's "resumen_id" value
+ * @method DevProducto setProductoId()     Sets the current record's "producto_id" value
+ * @method DevProducto setCantidad()       Sets the current record's "cantidad" value
+ * @method DevProducto setPrecio()         Sets the current record's "precio" value
+ * @method DevProducto setTotal()          Sets the current record's "total" value
+ * @method DevProducto setObservacion()    Sets the current record's "observacion" value
+ * @method DevProducto setNroLote()        Sets the current record's "nro_lote" value
+ * @method DevProducto setIva()            Sets the current record's "iva" value
+ * @method DevProducto setUsuario()        Sets the current record's "usuario" value
+ * @method DevProducto setAfipEstado()     Sets the current record's "afip_estado" value
+ * @method DevProducto setAfipMensaje()    Sets the current record's "afip_mensaje" value
+ * @method DevProducto setAfipVtoCae()     Sets the current record's "afip_vto_cae" value
+ * @method DevProducto setPtoVta()         Sets the current record's "pto_vta" value
+ * @method DevProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
+ * @method DevProducto setNroFactura()     Sets the current record's "nro_factura" value
+ * @method DevProducto setCliente()        Sets the current record's "Cliente" value
+ * @method DevProducto setResumen()        Sets the current record's "Resumen" value
+ * @method DevProducto setProducto()       Sets the current record's "Producto" value
+ * @method DevProducto setTipoFactura()    Sets the current record's "TipoFactura" value
+ * @method DevProducto setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -126,6 +147,30 @@ abstract class BaseDevProducto extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('afip_estado', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('afip_mensaje', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('afip_vto_cae', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
+             ));
+        $this->hasColumn('pto_vta', 'string', 4, array(
+             'type' => 'string',
+             'length' => 4,
+             ));
+        $this->hasColumn('tipofactura_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('nro_factura', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -143,6 +188,11 @@ abstract class BaseDevProducto extends sfDoctrineRecord
 
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('TipoFactura', array(
+             'local' => 'tipofactura_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

@@ -9,23 +9,29 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * 
  * @property integer $id
  * @property string $nombre
+ * @property integer $cod_tipo_afip
  * @property Doctrine_Collection $Ventas
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Resumen
  * @property Doctrine_Collection $FactCompra
+ * @property Doctrine_Collection $DevProducto
  * 
- * @method integer             getId()         Returns the current record's "id" value
- * @method string              getNombre()     Returns the current record's "nombre" value
- * @method Doctrine_Collection getVentas()     Returns the current record's "Ventas" collection
- * @method Doctrine_Collection getCompras()    Returns the current record's "Compras" collection
- * @method Doctrine_Collection getResumen()    Returns the current record's "Resumen" collection
- * @method Doctrine_Collection getFactCompra() Returns the current record's "FactCompra" collection
- * @method TipoFactura         setId()         Sets the current record's "id" value
- * @method TipoFactura         setNombre()     Sets the current record's "nombre" value
- * @method TipoFactura         setVentas()     Sets the current record's "Ventas" collection
- * @method TipoFactura         setCompras()    Sets the current record's "Compras" collection
- * @method TipoFactura         setResumen()    Sets the current record's "Resumen" collection
- * @method TipoFactura         setFactCompra() Sets the current record's "FactCompra" collection
+ * @method integer             getId()            Returns the current record's "id" value
+ * @method string              getNombre()        Returns the current record's "nombre" value
+ * @method integer             getCodTipoAfip()   Returns the current record's "cod_tipo_afip" value
+ * @method Doctrine_Collection getVentas()        Returns the current record's "Ventas" collection
+ * @method Doctrine_Collection getCompras()       Returns the current record's "Compras" collection
+ * @method Doctrine_Collection getResumen()       Returns the current record's "Resumen" collection
+ * @method Doctrine_Collection getFactCompra()    Returns the current record's "FactCompra" collection
+ * @method Doctrine_Collection getDevProducto()   Returns the current record's "DevProducto" collection
+ * @method TipoFactura         setId()            Sets the current record's "id" value
+ * @method TipoFactura         setNombre()        Sets the current record's "nombre" value
+ * @method TipoFactura         setCodTipoAfip()   Sets the current record's "cod_tipo_afip" value
+ * @method TipoFactura         setVentas()        Sets the current record's "Ventas" collection
+ * @method TipoFactura         setCompras()       Sets the current record's "Compras" collection
+ * @method TipoFactura         setResumen()       Sets the current record's "Resumen" collection
+ * @method TipoFactura         setFactCompra()    Sets the current record's "FactCompra" collection
+ * @method TipoFactura         setDevProducto()   Sets the current record's "DevProducto" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -48,6 +54,10 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
              'notnull' => true,
              'length' => 50,
              ));
+        $this->hasColumn('cod_tipo_afip', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -66,6 +76,10 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
              'foreign' => 'tipofactura_id'));
 
         $this->hasMany('FactCompra', array(
+             'local' => 'id',
+             'foreign' => 'tipofactura_id'));
+
+        $this->hasMany('DevProducto', array(
              'local' => 'id',
              'foreign' => 'tipofactura_id'));
     }

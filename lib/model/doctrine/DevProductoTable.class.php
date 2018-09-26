@@ -22,7 +22,7 @@ class DevProductoTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Cliente c');
       $q->leftJoin($rootAlias . '.Resumen res');
       $q->leftJoin($rootAlias . '.Producto p');
-      //$q->orderBy($rootAlias . '.fecha desc');
+      $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }
 }

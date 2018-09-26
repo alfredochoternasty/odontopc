@@ -49,7 +49,7 @@ if($name == 'nro_factura'){
 		<?php echo $form[$name]->render($attributes instanceof sfOutputEscaper ? $attributes->getRawValue() : $attributes);
 		if($name == 'cliente_id'){
 		  //position: relative; top: -8px; para firefox
-		  echo '<button id="boton_resumen_cliente_id" style="margin-left: 10px;" class="fg-button ui-state-default fg-button-icon-left ui-state-hover" type="button"><span class="ui-icon ui-icon-document"></span>Agregar Nuevo Cliente</button>';
+		  echo '<button id="boton_resumen_cliente_id" style="margin-left: 10px" class="fg-button ui-state-default ui-state-hover" type="button">Agregar Nuevo Cliente</button>';
 		}
 
 		if ($form[$name]->hasError()): ?>

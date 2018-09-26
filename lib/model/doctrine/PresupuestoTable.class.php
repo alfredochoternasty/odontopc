@@ -14,6 +14,6 @@ class PresupuestoTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('Presupuesto');
+        return Doctrine_Core::getTable('Presupuesto')->orderBy('fecha desc');
     }
 }

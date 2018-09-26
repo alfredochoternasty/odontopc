@@ -16,25 +16,27 @@ generator:
       fields:
         id:    { label: Numero }
         fecha: { date_format: dd/MM/yyyy }
-        lista_id: { label: Lista de Precios }
-        nro_factura: { label: Numero de Factura }
-        tipofactura_id: { label: Tipo de Factura }
+        lista_id: { label: Lista Precio }
+        nro_factura: { label: Numero }
+        tipofactura_id: { label: Factura }
+        tipo_venta_id: { label: Tipo Venta }
+        remito_id: { label: Remito }
       list:
         max_per_page: 10
         table_method: retrieveConJoins
         title: Ventas realizadas
-        display: [id, fecha, nro_factura, TipoFactura, Cliente, _total, Pedido, Usuario]
+        display: [TipoFactura, TipoVenta, nro_factura, fecha, Cliente, _total, _cae_afip, Usuario]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
           detalle: {label: Detalle}
-          mail: {label: Email}          
-          factura: {label: Factura}          
+          mail: {label: Email}
+          factura: {label: Obtener CAE}
         batch_actions:
           _delete: {label: Eliminar}
       filter: ~
       form:
-        display: [tipofactura_id, fecha, cliente_id, lista_id, nro_factura, cuit, afip, saldo_pesos, saldo_dolar, observacion]
+        display: [tipofactura_id, tipo_venta_id, fecha, cliente_id, lista_id, remito_id, nro_factura, cuit, afip, saldo_pesos, saldo_dolar, observacion]
         actions:
           _list: {label: Volver}
           _save: {label: 'Guardar y Agregar Detalle'}

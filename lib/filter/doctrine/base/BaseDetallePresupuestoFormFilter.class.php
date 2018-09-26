@@ -18,6 +18,7 @@ abstract class BaseDetallePresupuestoFormFilter extends BaseFormFilterDoctrine
       'cantidad'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'precio'         => new sfWidgetFormFilterInput(),
       'total'          => new sfWidgetFormFilterInput(),
+      'iva'            => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ abstract class BaseDetallePresupuestoFormFilter extends BaseFormFilterDoctrine
       'cantidad'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'precio'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total'          => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'iva'            => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_presupuesto_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BaseDetallePresupuestoFormFilter extends BaseFormFilterDoctrine
       'cantidad'       => 'Number',
       'precio'         => 'Number',
       'total'          => 'Number',
+      'iva'            => 'Number',
     );
   }
 }

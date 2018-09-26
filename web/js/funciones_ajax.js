@@ -91,7 +91,10 @@ $(document).ready(function(){
           $("#detalle_presupuesto_precio").attr('value', data);
           var cantidad = $("#detalle_presupuesto_cantidad").val();
           var total = data * cantidad;
+          var iva = total * 0.21;
+          var total = total + 0.21;
           $("#detalle_presupuesto_total").attr('value', total.toFixed(2));
+          $("#detalle_presupuesto_iva").attr('value', iva.toFixed(2));
         }
       });
   });
@@ -100,14 +103,20 @@ $(document).ready(function(){
     var precio = $("#detalle_presupuesto_precio").val();
     var cantidad = $("#detalle_presupuesto_cantidad").val();
     var total = cantidad * precio;
-    $("#detalle_presupuesto_total").attr('value', total.toFixed(2));
+		var iva = total * 0.21;
+		var total = total + 0.21;
+		$("#detalle_presupuesto_total").attr('value', total.toFixed(2));
+		$("#detalle_presupuesto_iva").attr('value', iva.toFixed(2));
   });
   
   $("#detalle_presupuesto_cantidad").bind("propertychange keyup input paste", function(event){
     var precio = $("#detalle_presupuesto_precio").val();
     var cantidad = $("#detalle_presupuesto_cantidad").val();
     var total = cantidad * precio;
-    $("#detalle_presupuesto_total").attr('value', total.toFixed(2));
+		var iva = total * 0.21;
+		var total = total + 0.21;
+		$("#detalle_presupuesto_total").attr('value', total.toFixed(2));
+		$("#detalle_presupuesto_iva").attr('value', iva.toFixed(2));
   });  
 });
 
@@ -519,6 +528,48 @@ $(document).ready(function() {
 
   $('#boton_resumen_cliente_id').click(function() { 
     $('#dialogo_resumen_cliente').dialog('open'); 
+    return false; 
+    });
+}); 
+
+$(document).ready(function() { 
+    $('#dialogo_cobro_banco').dialog({
+    autoOpen: false,
+    modal: true,
+    height: 500,
+    width: 600,
+    open: function(evt,ui){
+        $.ajax({
+          url: $('.sf_admin_action_list a').attr('href')+'/../banco/cargar',
+          success: function(data){
+            $('#dialogo_cobro_banco').html(data);
+            $(".chzn-select").chosen();
+          }
+        });    
+    },    
+    buttons: {
+      "Guardar": function() { 
+        $.ajax({
+          type: "POST",
+          url: $('.sf_admin_action_list a').attr('href')+'/../cobro/guardarnuevobanco?'+$('#form_banco').serialize(),
+          dataType: "json",
+          success: function(data){
+            $('#cobro_banco_id').append('<option value="'+data+'" selected="selected">'+$("#banco_nombre").val()+'</option>');
+            $("#cobro_banco_id_chzn").remove();
+            $("#cobro_banco_id").removeClass('chzn-done');
+            $(".chzn-select").chosen();
+            $('#dialogo_cobro_banco').dialog("close"); 
+          }
+        });
+      }, 
+      "Cerrar": function() { 
+        $(this).dialog("close");
+      } 
+    }
+  });
+
+  $('#boton_cobro_banco_id').click(function() { 
+    $('#dialogo_cobro_banco').dialog('open'); 
     return false; 
     });
 }); 

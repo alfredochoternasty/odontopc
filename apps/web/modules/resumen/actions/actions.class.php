@@ -18,7 +18,7 @@ class resumenActions extends autoResumenActions
   }
   
   public function executeListFactura(sfWebRequest $request){
-    $this->redirect( 'vta/index?rid='.$this->getRequestParameter('id'));
+    $this->redirect( 'detres/cae?rid='.$this->getRequestParameter('id'));
   }    
   
   public function executeListMail(sfWebRequest $request){
