@@ -72,9 +72,9 @@ abstract class Basecompra2 extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('nro_lote', 'string', 50, array(
+        $this->hasColumn('nro_lote', 'string', 255, array(
              'type' => 'string',
-             'length' => 50,
+             'length' => 255,
              ));
     }
 

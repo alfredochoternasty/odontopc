@@ -138,7 +138,7 @@ DetalleCompra:
     cantidad: {type: integer(4), notnull: true, default: 1}
     total: {type: 'decimal(10, 2)'}
     observacion: {type: string(200)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     fecha_vto: {type: date(25), notnull: true}
     iva: {type: 'decimal(10, 2)'}
     sub_total: {type: 'decimal(10, 2)'}
@@ -281,13 +281,14 @@ DetalleResumen:
     total: {type: 'decimal(10, 2)', notnull: true, default: 0}
     bonificados: {type: integer(1), notnull: true, default: 0}
     observacion: {type: string(200)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     fecha_vto: {type: date(25), notnull: true}
     iva: {type: 'decimal(10, 2)', default: 0}
     sub_total: {type: 'decimal(10, 2)', default: 0}
     usuario: {type: integer(4)}
     lista_id: {type: integer(4), notnull: true}
     moneda_id: {type: integer(4), notnull: true}
+    cant_vend_remito: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -387,7 +388,7 @@ DetFactCompra:
     subtotal: {type: 'decimal(10, 2)', notnull: true}
     iva: {type: 'decimal(10, 2)', notnull: true}    
     total: {type: 'decimal(10, 2)'}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
   relations:
     Factura: {type: one, class: FactCompra, local: factcompra_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -463,7 +464,7 @@ ListadoVentas:
     producto_genera_comision: {type: boolean}
     grupoprod_id: {type: integer(4)}
     grupo_nombre: {type: string(50)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     grupo2: {type: integer(4)}
     grupo3: {type: integer(4)}
     fecha_vto: {type: date(25), notnull: true}
@@ -506,7 +507,7 @@ DevProducto:
     precio: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
     observacion: {type: string(200)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     iva: {type: 'decimal(10, 2)'}
     usuario: {type: integer(4)}
     afip_estado: {type: integer(4)}
@@ -632,7 +633,7 @@ DetallePedido:
     cantidad: {type: integer(4), notnull: true, default: 1}
     total: {type: 'decimal(10, 2)', notnull: true, default: 0}
     observacion: {type: string(200)}
-    nro_lote: {type: string(50)}    
+    nro_lote: {type: string(255)}
   relations:
     Pedido: {type: one, local: pedido_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -663,7 +664,7 @@ Lote:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     producto_id: {type: integer(4)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     stock: {type: integer(4)}
     fecha_vto: {type: date(25)}
     compra_id: {type: integer(4)}
@@ -673,6 +674,7 @@ Lote:
     Compra: {type: one, local: compra_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    DetalleResumen: {type: many, class: DetalleResumen, local: nro_lote, foreign: nro_lote}
 ClienteUltimaCompra:
   connection: doctrine
   tableName: cliente_ultima_compra
@@ -703,7 +705,7 @@ ListadoCompras:
     producto_nombre: {type: string(100)}
     grupoprod_id: {type: integer(4)}
     grupo_nombre: {type: string(50)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     grupo2: {type: integer(4)}
     grupo3: {type: integer(4)}
   relations:
@@ -730,7 +732,7 @@ ControlStock:
     grupoprod_id: {type: integer(4)}
     producto_id: {type: string(50)}
     producto_nombre: {type: string(50)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     comprados: {type: integer(4)}
     vendidos: {type: integer(4)}
     stock_actual: {type: integer(4)}
@@ -873,7 +875,7 @@ Traza2:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     producto_id: {type: integer(4)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
     nro_venta: {type: integer(4)}
     fecha_venta: {type: date(25)}
     cliente_id: {type: integer(4)}
@@ -896,7 +898,7 @@ compra2:
     fecha: {type: date(25)}
     producto_id: {type: integer(4)}
     cantidad: {type: integer(4)}
-    nro_lote: {type: string(50)}
+    nro_lote: {type: string(255)}
   relations:
     Proveedor: {type: one, local: proveedor_id, onDelete: RESTRICT}
     Producto2: {type: one, local: producto_id, onDelete: RESTRICT}

@@ -22,6 +22,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property integer $usuario
  * @property integer $lista_id
  * @property integer $moneda_id
+ * @property integer $cant_vend_remito
  * @property Resumen $Resumen
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
@@ -30,50 +31,52 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property TipoMoneda $Moneda
  * @property Doctrine_Collection $ListadoVentas
  * 
- * @method integer             getId()            Returns the current record's "id" value
- * @method integer             getResumenId()     Returns the current record's "resumen_id" value
- * @method integer             getProductoId()    Returns the current record's "producto_id" value
- * @method decimal             getPrecio()        Returns the current record's "precio" value
- * @method integer             getCantidad()      Returns the current record's "cantidad" value
- * @method decimal             getTotal()         Returns the current record's "total" value
- * @method integer             getBonificados()   Returns the current record's "bonificados" value
- * @method string              getObservacion()   Returns the current record's "observacion" value
- * @method string              getNroLote()       Returns the current record's "nro_lote" value
- * @method date                getFechaVto()      Returns the current record's "fecha_vto" value
- * @method decimal             getIva()           Returns the current record's "iva" value
- * @method decimal             getSubTotal()      Returns the current record's "sub_total" value
- * @method integer             getUsuario()       Returns the current record's "usuario" value
- * @method integer             getListaId()       Returns the current record's "lista_id" value
- * @method integer             getMonedaId()      Returns the current record's "moneda_id" value
- * @method Resumen             getResumen()       Returns the current record's "Resumen" value
- * @method Producto            getProducto()      Returns the current record's "Producto" value
- * @method sfGuardUser         getSfGuardUser()   Returns the current record's "sfGuardUser" value
- * @method Lote                getLote()          Returns the current record's "Lote" value
- * @method ListaPrecio         getLista()         Returns the current record's "Lista" value
- * @method TipoMoneda          getMoneda()        Returns the current record's "Moneda" value
- * @method Doctrine_Collection getListadoVentas() Returns the current record's "ListadoVentas" collection
- * @method DetalleResumen      setId()            Sets the current record's "id" value
- * @method DetalleResumen      setResumenId()     Sets the current record's "resumen_id" value
- * @method DetalleResumen      setProductoId()    Sets the current record's "producto_id" value
- * @method DetalleResumen      setPrecio()        Sets the current record's "precio" value
- * @method DetalleResumen      setCantidad()      Sets the current record's "cantidad" value
- * @method DetalleResumen      setTotal()         Sets the current record's "total" value
- * @method DetalleResumen      setBonificados()   Sets the current record's "bonificados" value
- * @method DetalleResumen      setObservacion()   Sets the current record's "observacion" value
- * @method DetalleResumen      setNroLote()       Sets the current record's "nro_lote" value
- * @method DetalleResumen      setFechaVto()      Sets the current record's "fecha_vto" value
- * @method DetalleResumen      setIva()           Sets the current record's "iva" value
- * @method DetalleResumen      setSubTotal()      Sets the current record's "sub_total" value
- * @method DetalleResumen      setUsuario()       Sets the current record's "usuario" value
- * @method DetalleResumen      setListaId()       Sets the current record's "lista_id" value
- * @method DetalleResumen      setMonedaId()      Sets the current record's "moneda_id" value
- * @method DetalleResumen      setResumen()       Sets the current record's "Resumen" value
- * @method DetalleResumen      setProducto()      Sets the current record's "Producto" value
- * @method DetalleResumen      setSfGuardUser()   Sets the current record's "sfGuardUser" value
- * @method DetalleResumen      setLote()          Sets the current record's "Lote" value
- * @method DetalleResumen      setLista()         Sets the current record's "Lista" value
- * @method DetalleResumen      setMoneda()        Sets the current record's "Moneda" value
- * @method DetalleResumen      setListadoVentas() Sets the current record's "ListadoVentas" collection
+ * @method integer             getId()               Returns the current record's "id" value
+ * @method integer             getResumenId()        Returns the current record's "resumen_id" value
+ * @method integer             getProductoId()       Returns the current record's "producto_id" value
+ * @method decimal             getPrecio()           Returns the current record's "precio" value
+ * @method integer             getCantidad()         Returns the current record's "cantidad" value
+ * @method decimal             getTotal()            Returns the current record's "total" value
+ * @method integer             getBonificados()      Returns the current record's "bonificados" value
+ * @method string              getObservacion()      Returns the current record's "observacion" value
+ * @method string              getNroLote()          Returns the current record's "nro_lote" value
+ * @method date                getFechaVto()         Returns the current record's "fecha_vto" value
+ * @method decimal             getIva()              Returns the current record's "iva" value
+ * @method decimal             getSubTotal()         Returns the current record's "sub_total" value
+ * @method integer             getUsuario()          Returns the current record's "usuario" value
+ * @method integer             getListaId()          Returns the current record's "lista_id" value
+ * @method integer             getMonedaId()         Returns the current record's "moneda_id" value
+ * @method integer             getCantVendRemito()   Returns the current record's "cant_vend_remito" value
+ * @method Resumen             getResumen()          Returns the current record's "Resumen" value
+ * @method Producto            getProducto()         Returns the current record's "Producto" value
+ * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
+ * @method Lote                getLote()             Returns the current record's "Lote" value
+ * @method ListaPrecio         getLista()            Returns the current record's "Lista" value
+ * @method TipoMoneda          getMoneda()           Returns the current record's "Moneda" value
+ * @method Doctrine_Collection getListadoVentas()    Returns the current record's "ListadoVentas" collection
+ * @method DetalleResumen      setId()               Sets the current record's "id" value
+ * @method DetalleResumen      setResumenId()        Sets the current record's "resumen_id" value
+ * @method DetalleResumen      setProductoId()       Sets the current record's "producto_id" value
+ * @method DetalleResumen      setPrecio()           Sets the current record's "precio" value
+ * @method DetalleResumen      setCantidad()         Sets the current record's "cantidad" value
+ * @method DetalleResumen      setTotal()            Sets the current record's "total" value
+ * @method DetalleResumen      setBonificados()      Sets the current record's "bonificados" value
+ * @method DetalleResumen      setObservacion()      Sets the current record's "observacion" value
+ * @method DetalleResumen      setNroLote()          Sets the current record's "nro_lote" value
+ * @method DetalleResumen      setFechaVto()         Sets the current record's "fecha_vto" value
+ * @method DetalleResumen      setIva()              Sets the current record's "iva" value
+ * @method DetalleResumen      setSubTotal()         Sets the current record's "sub_total" value
+ * @method DetalleResumen      setUsuario()          Sets the current record's "usuario" value
+ * @method DetalleResumen      setListaId()          Sets the current record's "lista_id" value
+ * @method DetalleResumen      setMonedaId()         Sets the current record's "moneda_id" value
+ * @method DetalleResumen      setCantVendRemito()   Sets the current record's "cant_vend_remito" value
+ * @method DetalleResumen      setResumen()          Sets the current record's "Resumen" value
+ * @method DetalleResumen      setProducto()         Sets the current record's "Producto" value
+ * @method DetalleResumen      setSfGuardUser()      Sets the current record's "sfGuardUser" value
+ * @method DetalleResumen      setLote()             Sets the current record's "Lote" value
+ * @method DetalleResumen      setLista()            Sets the current record's "Lista" value
+ * @method DetalleResumen      setMoneda()           Sets the current record's "Moneda" value
+ * @method DetalleResumen      setListadoVentas()    Sets the current record's "ListadoVentas" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -131,9 +134,9 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'type' => 'string',
              'length' => 200,
              ));
-        $this->hasColumn('nro_lote', 'string', 50, array(
+        $this->hasColumn('nro_lote', 'string', 255, array(
              'type' => 'string',
-             'length' => 50,
+             'length' => 255,
              ));
         $this->hasColumn('fecha_vto', 'date', 25, array(
              'type' => 'date',
@@ -164,6 +167,10 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
         $this->hasColumn('moneda_id', 'integer', 4, array(
              'type' => 'integer',
              'notnull' => true,
+             'length' => 4,
+             ));
+        $this->hasColumn('cant_vend_remito', 'integer', 4, array(
+             'type' => 'integer',
              'length' => 4,
              ));
     }

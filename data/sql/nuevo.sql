@@ -20,6 +20,9 @@ UPDATE condicion_fiscal SET cod_tipo_afip='80' WHERE  id=2;
 UPDATE condicion_fiscal SET cod_tipo_afip='80' WHERE  id=3;
 UPDATE condicion_fiscal SET cod_tipo_afip='96' WHERE  id=4;
 
+ALTER TABLE resumen
+	ADD COLUMN afip_vto_cae DATE NULL;
+
 ALTER TABLE dev_producto
 	ADD COLUMN afip_vto_cae DATE NULL;
 	
@@ -57,3 +60,6 @@ INSERT INTO ventas.tipo_venta (id, nombre) VALUES ('2', 'Contado/Efectivo');
 
 ALTER TABLE resumen
 	ADD COLUMN remito_id INT NULL;
+	
+ALTER TABLE detalle_resumen
+	ADD COLUMN cant_vend_remito SMALLINT NULL DEFAULT 0;

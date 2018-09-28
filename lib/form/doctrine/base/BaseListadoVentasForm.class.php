@@ -64,7 +64,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'producto_genera_comision' => new sfValidatorBoolean(array('required' => false)),
       'grupoprod_id'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'required' => false)),
       'grupo_nombre'             => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'nro_lote'                 => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'                 => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'grupo2'                   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'required' => false)),
       'grupo3'                   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'required' => false)),
       'fecha_vto'                => new sfValidatorDate(),

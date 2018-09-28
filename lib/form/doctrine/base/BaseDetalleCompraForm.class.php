@@ -39,7 +39,7 @@ abstract class BaseDetalleCompraForm extends BaseFormDoctrine
       'cantidad'    => new sfValidatorInteger(array('required' => false)),
       'total'       => new sfValidatorNumber(array('required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
-      'nro_lote'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'    => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'fecha_vto'   => new sfValidatorDate(),
       'iva'         => new sfValidatorNumber(array('required' => false)),
       'sub_total'   => new sfValidatorNumber(array('required' => false)),

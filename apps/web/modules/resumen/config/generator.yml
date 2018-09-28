@@ -34,7 +34,8 @@ generator:
           factura: {label: Obtener CAE}
         batch_actions:
           _delete: {label: Eliminar}
-      filter: ~
+      filter:
+        display: [tipofactura_id, tipo_venta_id, fecha, cliente_id, remito_id, nro_factura]
       form:
         display: [tipofactura_id, tipo_venta_id, fecha, cliente_id, lista_id, remito_id, nro_factura, cuit, afip, saldo_pesos, saldo_dolar, observacion]
         actions:

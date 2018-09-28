@@ -45,7 +45,7 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'precio'         => new sfValidatorNumber(array('required' => false)),
       'total'          => new sfValidatorNumber(array('required' => false)),
       'observacion'    => new sfValidatorString(array('max_length' => 200, 'required' => false)),
-      'nro_lote'       => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'iva'            => new sfValidatorNumber(array('required' => false)),
       'usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
       'afip_estado'    => new sfValidatorInteger(array('required' => false)),

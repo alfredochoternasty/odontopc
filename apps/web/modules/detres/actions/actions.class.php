@@ -41,14 +41,27 @@ class detresActions extends autoDetresActions
   }
     
   public function executeActprecio(sfWebRequest $request){
-    $producto = $request->getParameter('pid');
+    $pid = $request->getParameter('pid');
     $rid = $request->getParameter('rid');
     if(empty($rid)){
       $rid = $this->getUser()->getAttribute('rid');
     }
     $resumen = Doctrine::getTable('Resumen')->find($rid);
+		/*
+		if (!empty($resumen->remito_id)) {
+			$remito = Doctrine::getTable('Resumen')->find($resumen->remito_id);
+			$det = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($resumen->remito_id, $pid);
+			if (!empty($det[0])) {
+				$precio = $det[0]->precio;
+				$moneda = $det[0]->moneda_id;
+			} else { 
+				$precio = 0;
+				$moneda = 0;
+			}
+		}
+		*/
     $lis = $resumen->getCliente()->getListaPrecio();
-    $prec_prod = Doctrine::getTable('Producto')->find($producto)->getPrecioFinal($lis);
+    $prec_prod = Doctrine::getTable('Producto')->find($pid)->getPrecioFinal($lis);
 		list($precio, $moneda) = explode('##', $prec_prod);
     return $this->renderText(json_encode(sprintf("%01.2f", $precio).'=='.$moneda));
   }
@@ -132,9 +145,18 @@ class detresActions extends autoDetresActions
 			}
 			$detalle_resumen->setListaId($lista_id);
 			$detalle_resumen->setMonedaId($moneda_id);
+			if (!empty($detalle_resumen->getResumen()->remito_id)) {
+				$descontar_stock = false;
+				$detalle_resumen->setCantVendRemito($detalle_resumen->cantidad);
+			} else {
+				$descontar_stock = true;
+			}
 			$detalle_resumen->save();
 			
-      $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+			//if ($descontar_stock) {
+			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+			//}
+			
       if ($request->hasParameter('_save_and_add')) {
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
         $this->redirect('detres/new?rid='.$detalle_resumen->getResumenId());
@@ -160,44 +182,69 @@ class detresActions extends autoDetresActions
   }
   
   public function executeGet_lotes_producto(sfWebRequest $request){
-  
-    $q = Doctrine_Query::create()
-      ->select('l.nro_lote, l.fecha_vto, l.stock')
-      ->from('Lote l')
-      ->where('l.producto_id = '.$request->getparameter('pid'))
-			->andWhere("l.nro_lote not like 'er%'")
-      ->andWhere('l.stock > 0 ')
-      ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null")
-      ->orderBy('l.fecha_vto asc');
+    $pid = $request->getParameter('pid');
+    $rid = $request->getParameter('rid');
+    if(empty($rid)){
+      $rid = $this->getUser()->getAttribute('rid');
+    }
+		$resumen = Doctrine::getTable('Resumen')->find($rid);
+		
+    $q = Doctrine_Query::create();    
+    $q->from('Lote l');
+    $q->where('l.producto_id = '.$pid);
+		$q->andWhere("l.nro_lote not like 'er%'");
+    $q->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
+		if (!empty($resumen->remito_id)) {
+			$q->select('l.nro_lote, (dr.cantidad - dr.cant_vend_remito) as vend_remito');
+			$q->leftJoin("l.DetalleResumen dr");
+			$q->andWhere("dr.resumen_id = ".$resumen->remito_id);
+		} else {
+			$q->select('l.nro_lote, l.fecha_vto, l.stock');
+			$q->andWhere('l.stock > 0 ');
+		}		
+    $q->orderBy('l.fecha_vto asc');
      
     $lotes = $q->fetchArray();  
   
     $options[] = '<option value=""></option>';
     foreach($lotes as $lote){
-			if (empty($lote['fecha_vto'])) {
-				$fec_vto = 'Sin Fecha';
-			} else {
-				$fec_vto = implode('/', array_reverse(explode('-', $lote['fecha_vto'])));
-			}
-      $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].' - Vto: '.$fec_vto.' - Stock: '.$lote['stock'].'</option>';
+			if (!empty($lote['fecha_vto'])) $fec_vto = ' - Vto: '.implode('/', array_reverse(explode('-', $lote['fecha_vto'])));
+			if (!empty($lote['stock'])) $stock = ' - Stock: '.$lote['stock'];
+			if (!empty($lote['vend_remito'])) $stock = ' - Disponible Remito: '.$lote['vend_remito'];
+      $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
     }
     echo implode($options);
     return sfView::NONE;
   }
   
   public function executeGet_cantidad_lote(sfWebRequest $request){
-  
-    $q = Doctrine_Query::create()
-      ->select('l.stock')
-      ->from('Lote l')
-      ->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
-      ->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
-      ->andWhere('l.stock > 0 ')
-			->andWhere("l.nro_lote not like 'er%'")
-      ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
-     
-    $lotes = $q->fetchArray();  
-    $cantidad = $lotes[0]['stock'];
+    $lid = $request->getParameter('lid');
+    $rid = $request->getParameter('rid');
+    if(empty($rid)){
+      $rid = $this->getUser()->getAttribute('rid');
+    }
+		$resumen = Doctrine::getTable('Resumen')->find($rid);  
+		if (!empty($resumen->remito_id)) {
+			$remito = Doctrine::getTable('Resumen')->find($resumen->remito_id);
+			$det = Doctrine::getTable('DetalleResumen')->findByResumenIdAndNroLote($resumen->remito_id, $lid);
+			if (!empty($det[0])) {
+				$cantidad = $det[0]->cantidad - $det[0]->cant_vend_remito;
+			} else { 
+				$cantidad = 0;
+			}
+		} else {
+			$q = Doctrine_Query::create()
+				->select('l.stock')
+				->from('Lote l')
+				->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
+				->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
+				->andWhere('l.stock > 0 ')
+				->andWhere("l.nro_lote not like 'er%'")
+				->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
+			$lotes = $q->fetchArray();  
+			$cantidad = $lotes[0]['stock'];
+		}
+		
     $options[] = '<option value="0">0</option>';
     for($i = 1; $i <= $cantidad; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';

@@ -44,12 +44,13 @@ class Producto extends BaseProducto
 
   public static function AumentarStock(sfEvent $event){
     $prod = $event['object']->getProductoId();
-    $cant_cmp = $event['object']->getCantidad();
     $lote = $event['object']->getNroLote();   
     $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote);
     $cant_prod = null;
 		if (!empty($prods[0])) {
 			$lote = Doctrine::getTable('Lote')->find($prods[0]->getId());
+			$cant_cmp = $event['object']->getCantidad();
+			if (!empty($event['object']->bonificados)) $cant_cmp += $event['object']->bonificados;
 			$cant_prod = $lote->getStock();
 			$lote->setStock($cant_prod + $cant_cmp);
 			$lote->save();

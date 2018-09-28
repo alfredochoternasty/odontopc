@@ -37,7 +37,7 @@ abstract class BaseDetFactCompraForm extends BaseFormDoctrine
       'subtotal'      => new sfValidatorNumber(),
       'iva'           => new sfValidatorNumber(),
       'total'         => new sfValidatorNumber(array('required' => false)),
-      'nro_lote'      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('det_fact_compra[%s]');

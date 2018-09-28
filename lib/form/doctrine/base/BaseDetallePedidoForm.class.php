@@ -33,7 +33,7 @@ abstract class BaseDetallePedidoForm extends BaseFormDoctrine
       'cantidad'    => new sfValidatorInteger(array('required' => false)),
       'total'       => new sfValidatorNumber(array('required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
-      'nro_lote'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'    => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_pedido[%s]');

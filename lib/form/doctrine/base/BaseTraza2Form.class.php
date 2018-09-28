@@ -31,7 +31,7 @@ abstract class BaseTraza2Form extends BaseFormDoctrine
     $this->setValidators(array(
       'id'            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'producto_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto2'), 'required' => false)),
-      'nro_lote'      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'nro_venta'     => new sfValidatorInteger(array('required' => false)),
       'fecha_venta'   => new sfValidatorDate(array('required' => false)),
       'cliente_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'required' => false)),

@@ -76,9 +76,9 @@ abstract class BaseControlStock extends sfDoctrineRecord
              'type' => 'string',
              'length' => 50,
              ));
-        $this->hasColumn('nro_lote', 'string', 50, array(
+        $this->hasColumn('nro_lote', 'string', 255, array(
              'type' => 'string',
-             'length' => 50,
+             'length' => 255,
              ));
         $this->hasColumn('comprados', 'integer', 4, array(
              'type' => 'integer',

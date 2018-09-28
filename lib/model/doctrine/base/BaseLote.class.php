@@ -65,9 +65,9 @@ abstract class BaseLote extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('nro_lote', 'string', 50, array(
+        $this->hasColumn('nro_lote', 'string', 255, array(
              'type' => 'string',
-             'length' => 50,
+             'length' => 255,
              ));
         $this->hasColumn('stock', 'integer', 4, array(
              'type' => 'integer',
@@ -110,7 +110,7 @@ abstract class BaseLote extends sfDoctrineRecord
              'onDelete' => 'RESTRICT'));
 
         $this->hasMany('DetalleResumen', array(
-             'local' => 'id',
+             'local' => 'nro_lote',
              'foreign' => 'nro_lote'));
     }
 }

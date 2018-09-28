@@ -139,10 +139,10 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   $("#detalle_resumen_producto_id").change(function(event){
-    var id = $("#detalle_resumen_producto_id").find(':selected').val();
+    var pid = $("#detalle_resumen_producto_id").find(':selected').val();
     var rid = $("#detalle_resumen_resumen_id").val();
     $.ajax({
-        url: 'actprecio?pid='+id+'&rid='+rid,
+        url: 'actprecio?pid='+pid+'&rid='+rid,
         dataType: "json",
         success: function(data) {
 					var valor = data.split('=');
@@ -171,8 +171,9 @@ $(document).ready(function(){
   
   $("#detalle_resumen_producto_id").change(function(event){
       var pid = $("#detalle_resumen_producto_id").find(':selected').val();
+			var rid = $("#detalle_resumen_resumen_id").val();
       $.ajax({
-          url: 'get_lotes_producto?pid='+pid,
+          url: 'get_lotes_producto?pid='+pid+'&rid='+rid,
           success: function(data) {
             $("#detalle_resumen_nro_lote").html('');
             $("#detalle_resumen_nro_lote").html(data);
@@ -183,8 +184,9 @@ $(document).ready(function(){
   $("#detalle_resumen_nro_lote").change(function(event){
       var lid = $("#detalle_resumen_nro_lote").find(':selected').val();
       var pid = $("#detalle_resumen_producto_id").find(':selected').val();
+			var rid = $("#detalle_resumen_resumen_id").val();
       $.ajax({
-          url: 'get_cantidad_lote?lid='+lid+'&pid='+pid,
+          url: 'get_cantidad_lote?lid='+lid+'&pid='+pid+'&rid='+rid,
           success: function(data) {
             $("#detalle_resumen_cantidad").html('');
             $("#detalle_resumen_cantidad").html(data);

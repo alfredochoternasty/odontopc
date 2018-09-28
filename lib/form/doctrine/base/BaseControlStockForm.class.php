@@ -32,7 +32,7 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'grupoprod_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'required' => false)),
       'producto_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'required' => false)),
       'producto_nombre' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'nro_lote'        => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'nro_lote'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'comprados'       => new sfValidatorInteger(array('required' => false)),
       'vendidos'        => new sfValidatorInteger(array('required' => false)),
       'stock_actual'    => new sfValidatorInteger(array('required' => false)),
