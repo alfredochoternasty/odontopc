@@ -5,6 +5,7 @@
 <h2>Presupuesto</h2>
 <p><b>Descripcion:</b>&nbsp;&nbsp;<?php echo $presupuesto->getDescripcion() ?></p>
 <p><b>Fecha:</b>&nbsp;&nbsp;<?php echo date("d/m/Y", strtotime($presupuesto->getFecha())) ?></p>
+<p>Los precios tienen IVA incluido</p>
 <?php $moneda = $presupuesto->getLista()->getMoneda()->getSimbolo(); ?>
 <table border="1" cellspacing="0" cellpadding="1">
   <tr>
@@ -18,7 +19,7 @@
   foreach($presupuesto->getDetallePresupuesto() as $detalle):
   ?>
   <tr>
-    <td><?php echo $detalle->getProducto() ?></td>
+    <td><?php echo utf8_decode($detalle->getProducto()) ?></td>
     <td><?php echo $detalle->getCantidad() ?></td>
     <td><?php echo $moneda.' '.sprintf("%01.2f", $detalle->getPrecio()) ?></td>
     <td><?php echo $moneda.' '.sprintf("%01.2f", $detalle->getTotal()) ?></td>

@@ -3,7 +3,6 @@ dev:
     class: sfDoctrineDatabase
     param:
       dsn: 'mysql:host=localhost;dbname=ventas'
-      #dsn: 'mysql:host=localhost;dbname=ntiimplantes_db'
       username: root
       password: 
       attributes:
@@ -14,8 +13,8 @@ prod:
   doctrine:
     class: sfDoctrineDatabase
     param:
-      dsn: 'mysql:host=localhost;dbname=ntiimplantes_db'
-      username: odosis
+      dsn: 'mysql:host=localhost;dbname=ventas'
+      username: ntisis
       password: maf/2826
       attributes:
         default_table_type:    MyISAM
