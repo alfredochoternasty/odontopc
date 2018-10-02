@@ -10,4 +10,8 @@
  */
 class prodGeneratorConfiguration extends BaseProdGeneratorConfiguration
 {
+	public function getFilterDefaults()
+	{    
+			return array('activo' => 1);
+	}
 }

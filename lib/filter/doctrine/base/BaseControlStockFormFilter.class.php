@@ -20,7 +20,8 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'nro_lote'        => new sfWidgetFormFilterInput(),
       'comprados'       => new sfWidgetFormFilterInput(),
       'vendidos'        => new sfWidgetFormFilterInput(),
-      'stock_actual'    => new sfWidgetFormFilterInput(),
+      'stock_calculado' => new sfWidgetFormFilterInput(),
+      'stock_guardado'  => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -31,7 +32,8 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'nro_lote'        => new sfValidatorPass(array('required' => false)),
       'comprados'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'vendidos'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'stock_actual'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'stock_calculado' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'stock_guardado'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock_filters[%s]');
@@ -59,7 +61,8 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'nro_lote'        => 'Text',
       'comprados'       => 'Number',
       'vendidos'        => 'Number',
-      'stock_actual'    => 'Number',
+      'stock_calculado' => 'Number',
+      'stock_guardado'  => 'Number',
     );
   }
 }

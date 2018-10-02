@@ -20,11 +20,12 @@ generator:
         nro_lote: { label: Lote}
         cant_comprada: { label:  Comprados}
         cant_vendida: { label: Vendidos }
-        stock: { label: Stock }
+        stock_calculado: { label: Stock Calculado}
+        stock_guardado: { label: Stock Guardado}
       list:
         table_method: retrieveConJoins
         title: Listado de Control de Stock
-        display: [Proveedor, Grupo, Producto, nro_lote, comprados, _vendidos, _stock_actual]
+        display: [Proveedor, Grupo, Producto, nro_lote, comprados, _vendidos, _stock_calculado, stock_guardado]
         object_actions: []
         batch_actions: []
         actions:

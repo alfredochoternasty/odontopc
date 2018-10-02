@@ -21,7 +21,7 @@
     <td><?php echo $fila->getNroLote() ?></td>
 	<td><?php echo $fila->getComprados() ?></td>
     <td><?php echo (!empty($fila->vendidos))?$fila->getVendidos():'0'; //echo $fila->getVendidos() ?></td>
-    <td><?php echo ($fila->stock_actual != '' || $fila->stock_actual != null)?$fila->getStockActual():$fila->getComprados(); //echo $fila->getStockActual() ?></td>
+    <td><?php echo ($fila->stock_calculado != '' || $fila->stock_calculado != null)?$fila->getStockCalculado():$fila->getComprados(); //echo $fila->getStockcalculado() ?></td>
   </tr>
   <?php endforeach;?>
 </table>

@@ -153,9 +153,9 @@ class detresActions extends autoDetresActions
 			}
 			$detalle_resumen->save();
 			
-			//if ($descontar_stock) {
-			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
-			//}
+			if ($descontar_stock) {
+				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+			}
 			
       if ($request->hasParameter('_save_and_add')) {
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');

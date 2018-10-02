@@ -21,7 +21,6 @@ class ClienteTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Tipo t');
       $q->leftJoin($rootAlias . '.Localidad l');
-			$q->where($rootAlias . '.activo = 1');
       return $q;
     }
     

@@ -59,6 +59,7 @@ TipoFactura:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}
     cod_tipo_afip: {type: integer(4)}
+    letra: {type: string(50), notnull: true}
   relations:
     Ventas: {type: many, class: Venta, local: id, foreign: tipofactura_id}
     Compras: {type: many, class: Compra, local: id, foreign: tipofactura_id}
@@ -735,7 +736,8 @@ ControlStock:
     nro_lote: {type: string(255)}
     comprados: {type: integer(4)}
     vendidos: {type: integer(4)}
-    stock_actual: {type: integer(4)}
+    stock_calculado: {type: integer(4)}
+    stock_guardado: {type: integer(4)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
     Proveedor: {type: one, class: Proveedor, local: proveedor_id}

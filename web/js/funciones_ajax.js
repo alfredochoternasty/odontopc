@@ -10,6 +10,15 @@ $("#curso_mail_enviado_tipo_envio").change(function(event){
 		alert('Seguro que desea enviar información del curso a TODOS LOS CLIENTES ??');
 	}
 });
+$("#resumen_tipofactura_id").change(function(event){
+	var id = $("#resumen_tipofactura_id").find(':selected').val();
+	if (id == 4) {
+		$('#resumen_remito_id').attr('disabled', true);
+	} else {
+		$('#resumen_remito_id').attr('value', '');
+		$('#resumen_remito_id').attr('disabled', false);
+	}
+});
 
 });
 

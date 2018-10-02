@@ -23,7 +23,8 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'nro_lote'        => new sfWidgetFormInputText(),
       'comprados'       => new sfWidgetFormInputText(),
       'vendidos'        => new sfWidgetFormInputText(),
-      'stock_actual'    => new sfWidgetFormInputText(),
+      'stock_calculado' => new sfWidgetFormInputText(),
+      'stock_guardado'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -35,7 +36,8 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'nro_lote'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'comprados'       => new sfValidatorInteger(array('required' => false)),
       'vendidos'        => new sfValidatorInteger(array('required' => false)),
-      'stock_actual'    => new sfValidatorInteger(array('required' => false)),
+      'stock_calculado' => new sfValidatorInteger(array('required' => false)),
+      'stock_guardado'  => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock[%s]');

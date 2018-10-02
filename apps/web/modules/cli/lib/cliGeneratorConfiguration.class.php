@@ -10,4 +10,8 @@
  */
 class cliGeneratorConfiguration extends BaseCliGeneratorConfiguration
 {
+	public function getFilterDefaults()
+	{    
+			return array('activo' => 1);
+	}	
 }

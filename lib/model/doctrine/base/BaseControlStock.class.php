@@ -15,7 +15,8 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @property string $nro_lote
  * @property integer $comprados
  * @property integer $vendidos
- * @property integer $stock_actual
+ * @property integer $stock_calculado
+ * @property integer $stock_guardado
  * @property Producto $Producto
  * @property Proveedor $Proveedor
  * @property Grupoprod $Grupo
@@ -28,7 +29,8 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method string       getNroLote()         Returns the current record's "nro_lote" value
  * @method integer      getComprados()       Returns the current record's "comprados" value
  * @method integer      getVendidos()        Returns the current record's "vendidos" value
- * @method integer      getStockActual()     Returns the current record's "stock_actual" value
+ * @method integer      getStockCalculado()  Returns the current record's "stock_calculado" value
+ * @method integer      getStockGuardado()   Returns the current record's "stock_guardado" value
  * @method Producto     getProducto()        Returns the current record's "Producto" value
  * @method Proveedor    getProveedor()       Returns the current record's "Proveedor" value
  * @method Grupoprod    getGrupo()           Returns the current record's "Grupo" value
@@ -40,7 +42,8 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method ControlStock setNroLote()         Sets the current record's "nro_lote" value
  * @method ControlStock setComprados()       Sets the current record's "comprados" value
  * @method ControlStock setVendidos()        Sets the current record's "vendidos" value
- * @method ControlStock setStockActual()     Sets the current record's "stock_actual" value
+ * @method ControlStock setStockCalculado()  Sets the current record's "stock_calculado" value
+ * @method ControlStock setStockGuardado()   Sets the current record's "stock_guardado" value
  * @method ControlStock setProducto()        Sets the current record's "Producto" value
  * @method ControlStock setProveedor()       Sets the current record's "Proveedor" value
  * @method ControlStock setGrupo()           Sets the current record's "Grupo" value
@@ -88,7 +91,11 @@ abstract class BaseControlStock extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('stock_actual', 'integer', 4, array(
+        $this->hasColumn('stock_calculado', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('stock_guardado', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

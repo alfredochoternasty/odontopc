@@ -48,14 +48,13 @@
 		<td width="10%" valign="top">
 			<div class="tipo_fact">
 				<?php 
-					$letra_fact = trim(substr($resumen->getTipoFactura(), -1, 1));
-					echo $letra_fact;
+					echo $resumen->getTipoFactura()->getLetra();
 				?>
 			</div>
 		</td>
 		<td width="45%">
 			<div style="margin-bottom: 40px; width:100%; font-weight:bold; font-size:14px; text-align:right;">ORIGINAL</div>
-			<span style="font-weight:bold; font-size: 22px;">Factura</span><br>
+			<span style="font-weight:bold; font-size: 22px;"><?php echo substr($resumen->getTipoFactura(), 0, -2) ?></span><br>
 			<span style="font-size: 14px;">
 				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
 				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
@@ -84,7 +83,7 @@
 		<td><b>Cantidad</b></td>
 		<td><b>Precio Un.</b></td>
 		<td><b>Subtotal</b></td>
-		<?php if ($letra_fact == 'A'): ?>
+		<?php if ($resumen->getTipoFactura()->letra == 'A'): ?>
 		<td><b>% IVA</b></td>
 		<td><b>Total con IVA</b></td>
 		<?php endif;?>
@@ -95,15 +94,15 @@
 		<td><?php echo $detalle->getCantidad() ?></td>
 		<td><?php echo $detalle->PrecioFormato() ?></td>
 		<td><?php echo $detalle->SubTotalFormato() ?></td>
-		<?php if ($letra_fact == 'A'): ?>
+		<?php if ($resumen->getTipoFactura()->letra == 'A'): ?>
 		<td><?php echo $detalle->IvaFormato() ?></td>
 		<td><?php echo $detalle->TotalFormato() ?></td>
 		<?php endif;?>
 	</tr>
 	<?php endforeach;?>	
-	<tr><td colspan="<?php echo ($letra_fact == 'A')?6:4; ?>"><br></td></tr>
+	<tr><td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>"><br></td></tr>
 	<tr>
-		<td colspan="<?php echo ($letra_fact == 'A')?5:3; ?>" align="right"><b>Total</b></td>
+		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?5:3; ?>" align="right"><b>Total</b></td>
 		<td><b><?php echo $resumen->getSubTotalResumen() ?></b></td>
 	</tr>
 </table>
