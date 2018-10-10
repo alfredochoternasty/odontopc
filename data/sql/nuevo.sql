@@ -25,6 +25,12 @@ ALTER TABLE resumen
 
 ALTER TABLE dev_producto
 	ADD COLUMN afip_vto_cae DATE NULL;
+
+ALTER TABLE dev_producto
+	ADD COLUMN afip_estado SMALLINT NULL;
+
+ALTER TABLE dev_producto
+	ADD COLUMN afip_mensaje TEXT NULL;
 	
 ALTER TABLE dev_producto
 	ADD COLUMN pto_vta CHAR(4) NULL;
@@ -112,7 +118,15 @@ ORDER BY
 	p.orden_grupo, p.nombre, dc.nro_lote;
 	
 ALTER TABLE tipo_factura
-	ADD COLUMN letra VARCHAR(50) NULL AFTER;
+	ADD COLUMN letra VARCHAR(50) NULL;
 	
 update tipo_factura set letra = substr(nombre, -1, 1);
-UPDATE tipo_factura SET letra='X' WHERE id=4;	
+UPDATE tipo_factura SET letra='X' WHERE id=4;
+ALTER TABLE tipo_factura	ADD COLUMN id_fact_cancela INT NULL;
+
+UPDATE tipo_factura SET id_fact_cancela='6' WHERE  id=1;
+UPDATE tipo_factura SET id_fact_cancela='8' WHERE  id=2;
+UPDATE tipo_factura SET id_fact_cancela='10' WHERE  id=3;
+UPDATE tipo_factura SET id_fact_cancela='1' WHERE  id=6;
+UPDATE tipo_factura SET id_fact_cancela='2' WHERE  id=8;
+UPDATE tipo_factura SET id_fact_cancela='3' WHERE  id=10;

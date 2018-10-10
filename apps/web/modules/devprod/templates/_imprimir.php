@@ -48,18 +48,18 @@
 		<td width="10%" valign="top">
 			<div class="tipo_fact">
 				<?php 
-					echo $resumen->getTipoFactura()->getLetra();
+					echo $dev_producto->getTipoFactura()->getLetra();
 				?>
 			</div>
 		</td>
 		<td width="45%">
 			<div style="margin-bottom: 40px; width:100%; font-weight:bold; font-size:14px; text-align:right;">SIN VALIDEZ</div>
-			<span style="font-weight:bold; font-size: 22px;"><?php echo substr($resumen->getTipoFactura(), 0, -2) ?></span><br>
+			<span style="font-weight:bold; font-size: 22px;"><?php echo substr($dev_producto->getTipoFactura(), 0, -2) ?></span><br>
 			<span style="font-size: 14px;">
-				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
-				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
-				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
-				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
+				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($dev_producto->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
+				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $dev_producto->getFecha()))) ?><br>
+				<b>CAE: </b><?php echo $dev_producto->getAfipMensaje() ?><br>
+				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $dev_producto->getAfipVtoCae()))) ?>
 			</span>
 			</b>
 		</td>
@@ -67,12 +67,12 @@
 </table>
 <table cellpadding="2" cellspacing="0" border="1" width="100%">	
 	<tr>
-		<td align="left"><b>Razón Social: </b><?php echo $resumen->getCliente() ?></td>
-		<td align="left"><b>Domicilio: </b><?php echo $resumen->getCliente()->getDomicilio() ?> - <?php echo $resumen->getCliente()->getLocalidad() ?></td>
+		<td align="left"><b>Razón Social: </b><?php echo $dev_producto->getCliente() ?></td>
+		<td align="left"><b>Domicilio: </b><?php echo $dev_producto->getCliente()->getDomicilio() ?> - <?php echo $dev_producto->getCliente()->getLocalidad() ?></td>
 	</tr>
 	<tr>
-		<td align="left"><b>C.U.I.T. : </b><?php echo $resumen->getCliente()->getCuit() ?></td>
-		<td align="left"><b>Condición frente al I.V.A. : </b><?php echo $resumen->getCliente()->getCondfiscal() ?></td>
+		<td align="left"><b>C.U.I.T. : </b><?php echo $dev_producto->getCliente()->getCuit() ?></td>
+		<td align="left"><b>Condición frente al I.V.A. : </b><?php echo $dev_producto->getCliente()->getCondfiscal() ?></td>
 	</tr>
 	<tr><td colspan=2 align="left"><b>Condición de Venta : </b>Cuenta Corriente</td></tr>	
 </table>
@@ -83,27 +83,25 @@
 		<td><b>Cantidad</b></td>
 		<td><b>Precio Un.</b></td>
 		<td><b>Subtotal</b></td>
-		<?php if ($resumen->getTipoFactura()->letra == 'A'): ?>
+		<?php if ($dev_producto->getTipoFactura()->letra == 'A'): ?>
 		<td><b>% IVA</b></td>
 		<td><b>Total con IVA</b></td>
 		<?php endif;?>
 	</tr>
-	<?php foreach($resumen->getDetalle() as $detalle):?>
 	<tr>
-		<td><?php echo $detalle->getProducto() .' - '. $detalle->getNroLote()?></td>
-		<td><?php echo $detalle->getCantidad() ?></td>
-		<td><?php echo $detalle->PrecioFormato() ?></td>
-		<td><?php echo $detalle->SubTotalFormato() ?></td>
-		<?php if ($resumen->getTipoFactura()->letra == 'A'): ?>
-		<td><?php echo $detalle->IvaFormato() ?></td>
-		<td><?php echo $detalle->TotalFormato() ?></td>
+		<td><?php echo $dev_producto->getProducto() .' - '. $dev_producto->getNroLote()?></td>
+		<td><?php echo $dev_producto->getCantidad() ?></td>
+		<td><?php echo $dev_producto->getPrecio() ?></td>
+		<td><?php echo 0 ?></td>
+		<?php if ($dev_producto->getTipoFactura()->letra == 'A'): ?>
+		<td><?php echo $dev_producto->getIva() ?></td>
+		<td><?php echo $dev_producto->getTotal() ?></td>
 		<?php endif;?>
 	</tr>
-	<?php endforeach;?>	
-	<tr><td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>"><br></td></tr>
+	<tr><td colspan="<?php echo ($dev_producto->getTipoFactura()->letra == 'A')?6:4; ?>"><br></td></tr>
 	<tr>
-		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?5:3; ?>" align="right"><b>Total</b></td>
-		<td><b><?php echo $resumen->getSubTotalResumen() ?></b></td>
+		<td colspan="<?php echo ($dev_producto->getTipoFactura()->letra == 'A')?5:3; ?>" align="right"><b>Total</b></td>
+		<td><b><?php echo 0 ?></b></td>
 	</tr>
 </table>
 

@@ -283,7 +283,7 @@ class detresActions extends autoDetresActions
 			}
 		}
 		
-		$ptovta = '0004';
+		$ptovta = '9';
 		
 		$resumen = Doctrine::getTable('Resumen')->find($rid);
 		$regfe['ImpTotal'] = $resumen->getTotalResumen();
@@ -313,7 +313,7 @@ class detresActions extends autoDetresActions
 		$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
 		$nuevo_nro = $nro+1;
 
-		$res = '';//$wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+		$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 		$tipo_msj = 'error';
 		if (is_soap_fault($res)) {
 			$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');

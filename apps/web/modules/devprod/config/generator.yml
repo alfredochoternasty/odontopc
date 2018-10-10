@@ -24,7 +24,8 @@ generator:
         display: [fecha, Cliente, _fact_asoc, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip, sfGuardUser]
         object_actions:
           _delete: {label: Eliminar}
-          factura: {label: Obtener CAE}
+          factura: {label: Enviar AFIP}
+          imprimir: {label: Imprimir}
       filter:
         display: [fecha, cliente_id, producto_id, usuario]
       form:    ~

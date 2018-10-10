@@ -134,6 +134,18 @@ class devprodActions extends autoDevprodActions
     return sfView::NONE;
   }
 	
+  public function executeListImprimir(sfWebRequest $request){
+    $rid = $request->getParameter('id');
+    $dev_producto = Doctrine::getTable('DevProducto')->find($rid);
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("imprimir", array("dev_producto" => $dev_producto)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("nota_debito.pdf");    
+		$this->forward('dev_producto', 'index');
+    return sfView::NONE;
+  }
+	
 	public function executeListFactura(sfWebRequest $request){
     if($request->hasParameter('id')){
       $did = $request->getParameter('id');
@@ -151,8 +163,6 @@ class devprodActions extends autoDevprodActions
 					die('<br>'.$wsaa->error.'<br>');
 				}
 			}
-			
-			$ptovta = '4';
 			
 			$dev = Doctrine::getTable('DevProducto')->find($did);
 			$rid = $dev->getResumenId();
@@ -172,13 +182,13 @@ class devprodActions extends autoDevprodActions
 			$regfetrib = '';
 			$regfeasoc[] = array(
 				'Tipo' => $resumen->getTipoFactura()->getCodTipoAfip(), 
-				'PtoVta' => '4',//$resumen->getPtoVta(), 
+				'PtoVta' => $resumen->pto_vta, 
 				'Nro' => $resumen->getNroFactura()
 			);
 			
-			$regfe['CbteTipo'] = 8; //$dev->getTipoFactura()->getCodTipoAfip();
+			$regfe['CbteTipo'] = $resumen->getTipoFactura()->id_fact_cancela;
 			$regfe['Concepto'] = 1;
-			$regfe['DocTipo'] = $dev->getCliente()->getCondfiscal()->getCodTipoAfip();
+			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
 			$regfe['DocNro'] = $dev->getResumen()->getCuitCliente();
 			$regfe['CbteFch'] = date('Ymd');
 			$regfe['MonId'] = 'PES';
@@ -186,10 +196,10 @@ class devprodActions extends autoDevprodActions
 			
 			$wsfev1 = new WSFEV1(dirname(__FILE__).'../../../detres/actions');
 			
-			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
+			$nro = $wsfev1->FECompUltimoAutorizado($resumen->pto_vta, $regfe['CbteTipo']);
 			$nuevo_nro = $nro+1;
 
-			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+			$res = $wsfev1->FECAESolicitar($nuevo_nro, $resumen->pto_vta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';
 			if (is_soap_fault($res)) {
 				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
@@ -211,6 +221,8 @@ class devprodActions extends autoDevprodActions
 						$msj = $res['cae'];
 						$afip_estado = 1;
 						$dev->setNroFactura($nuevo_nro);
+						$dev->setPtoVta($resumen->pto_vta);
+						$dev->setTipofacturaId($resumen->getTipoFactura()->id_fact_cancela);
 						$dev->setAfipVtoCae($res['fec_vto']);
 						$tipo_msj = 'notice';
 					}

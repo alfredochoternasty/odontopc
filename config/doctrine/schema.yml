@@ -60,6 +60,7 @@ TipoFactura:
     nombre: {type: string(50), notnull: true}
     cod_tipo_afip: {type: integer(4)}
     letra: {type: string(50), notnull: true}
+    id_fact_cancela: {type: integer(4)}
   relations:
     Ventas: {type: many, class: Venta, local: id, foreign: tipofactura_id}
     Compras: {type: many, class: Compra, local: id, foreign: tipofactura_id}
