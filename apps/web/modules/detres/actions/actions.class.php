@@ -334,7 +334,7 @@ class detresActions extends autoDetresActions
 			  } else {
 					$msj = $res['cae'];
 					$afip_estado = 1;
-					$resumen->setNroFactura($nuevo_nro);
+					//$resumen->setNroFactura($nuevo_nro);
 					$resumen->setAfipVtoCae($res['fec_vto']);
 					$tipo_msj = 'notice';
 			  }

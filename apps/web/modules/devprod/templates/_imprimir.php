@@ -39,7 +39,7 @@
 			<p>
 				<b>Razon Social: </b>NTI Implantes<br>
 				<b>Domicilio: </b>Feliciano 581 - Paraná (Entre Ríos)<br>
-				<b>Tel: </b>(0343) 4235207 / 154 645140<br>
+				<b>Tel: </b>(0343) 4235207 / 155 094802<br>
 				<b>C.U.I.T.: </b>30-71227246-1<br>
 				<b>Ingresos Brutos: </b>30-71227246-1<br>
 				<b>Inicio de Actividades: </b>01/05/2012

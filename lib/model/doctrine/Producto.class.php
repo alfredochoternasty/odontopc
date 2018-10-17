@@ -58,6 +58,7 @@ class Producto extends BaseProducto
 			$usuario = $event['object']->getUsuario();
 			$fec_vto = $event['object']->getFechaVto();
 			$compra = $event['object']->getCompraId();
+			$cant_cmp = $event['object']->getCantidad();
       $obj_lote = new Lote();
       $obj_lote->setProductoId($prod);
       $obj_lote->setNroLote($lote);

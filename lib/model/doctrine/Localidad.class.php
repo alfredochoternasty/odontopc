@@ -15,11 +15,12 @@ class Localidad extends BaseLocalidad
 	public function __toString()
 	{
 		$val = $this->getNombre();
+		if (!empty($this->provincia_id)) $val .= ' ('.$this->getProvincia().')';
 		return empty($val)? '' : $val;
 	}
   
   public function getLocConProvincia()
   {
-        return $this->getProvincia().' - '.$this->getNombre();
-  }  
+    return $this->getProvincia().' - '.$this->getNombre();
+  }
 }

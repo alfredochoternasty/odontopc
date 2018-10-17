@@ -31,4 +31,5 @@ class loteActions extends autoLoteActions
     $dompdf->stream("stock.pdf");    
     return sfView::NONE;
   }
+	
 }

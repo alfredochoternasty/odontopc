@@ -1,1 +1,1 @@
-<?php echo $cliente->getDomicilio() . ' - '. $cliente->getLocalidad(); ?>
+<?php echo $cliente->getDomicilio() . ' - '. $cliente->getLocalidad() ?>

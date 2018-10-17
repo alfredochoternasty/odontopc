@@ -136,12 +136,12 @@ DetalleCompra:
     id: {type: integer(4), primary: true, autoincrement: true}
     compra_id: {type: integer(4), notnull: true}
     producto_id: {type: integer(4), notnull: true}
-    precio: {type: 'decimal(10, 2)', notnull: true}
+    precio: {type: 'decimal(10, 2)'}
     cantidad: {type: integer(4), notnull: true, default: 1}
     total: {type: 'decimal(10, 2)'}
     observacion: {type: string(200)}
     nro_lote: {type: string(255)}
-    fecha_vto: {type: date(25), notnull: true}
+    fecha_vto: {type: date(25)}
     iva: {type: 'decimal(10, 2)'}
     sub_total: {type: 'decimal(10, 2)'}
     trazable: {type: boolean}
@@ -246,11 +246,11 @@ Resumen:
     fecha: {type: date(25), notnull: true}
     tipo_venta_id: {type: integer(4), notnull: true}
     cliente_id: {type: integer(4), notnull: true}
-    remito_id: {type: integer(4), notnull: true}
-    lista_id: {type: integer(4), notnull: true}
-    moneda_id: {type: integer(4), notnull: true}
+    remito_id: {type: integer(4)}
+    lista_id: {type: integer(4)}
+    moneda_id: {type: integer(4)}
     observacion: {type: string(200)}
-    pagado: {type: integer(1), notnull: true, default: 0}
+    pagado: {type: integer(1)}
     pedido_id: {type: integer(4)}
     nro_factura: {type: integer(4)}
     tipofactura_id: {type: integer(4), notnull: true}

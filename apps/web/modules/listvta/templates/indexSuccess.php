@@ -30,6 +30,4 @@
       </ul>
 
       </div>
-
-  <?php include_partial('listvta/themeswitcher') ?>
 </div>

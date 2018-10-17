@@ -16,7 +16,11 @@ class ClienteTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Cliente');
     }
-    
+
+    function construct(){
+        $this->setOption('orderBy','apellido, nombre');
+    }
+		
     public function retrieveConJoins(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Tipo t');
