@@ -16,6 +16,10 @@ class ProductoTrazaTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ProductoTraza');
     }
+
+    function construct(){
+        $this->setOption('orderBy','fecha_venta DESC');
+    }
     
     public function retrieveConJoins(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();

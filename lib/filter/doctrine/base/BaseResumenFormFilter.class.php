@@ -20,7 +20,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'lista_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
       'moneda_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'observacion'    => new sfWidgetFormFilterInput(),
-      'pagado'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'pagado'         => new sfWidgetFormFilterInput(),
       'pedido_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pedido'), 'add_empty' => true)),
       'nro_factura'    => new sfWidgetFormFilterInput(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),

@@ -15,6 +15,8 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * @property integer $nro_venta
  * @property date $fecha_venta
  * @property integer $cliente_id
+ * @property string $apellido
+ * @property string $nombre
  * @property date $fecha_compra
  * @property integer $proveedor_id
  * @property integer $numero
@@ -32,6 +34,8 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * @method integer       getNroVenta()      Returns the current record's "nro_venta" value
  * @method date          getFechaVenta()    Returns the current record's "fecha_venta" value
  * @method integer       getClienteId()     Returns the current record's "cliente_id" value
+ * @method string        getApellido()      Returns the current record's "apellido" value
+ * @method string        getNombre()        Returns the current record's "nombre" value
  * @method date          getFechaCompra()   Returns the current record's "fecha_compra" value
  * @method integer       getProveedorId()   Returns the current record's "proveedor_id" value
  * @method integer       getNumero()        Returns the current record's "numero" value
@@ -48,6 +52,8 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * @method ProductoTraza setNroVenta()      Sets the current record's "nro_venta" value
  * @method ProductoTraza setFechaVenta()    Sets the current record's "fecha_venta" value
  * @method ProductoTraza setClienteId()     Sets the current record's "cliente_id" value
+ * @method ProductoTraza setApellido()      Sets the current record's "apellido" value
+ * @method ProductoTraza setNombre()        Sets the current record's "nombre" value
  * @method ProductoTraza setFechaCompra()   Sets the current record's "fecha_compra" value
  * @method ProductoTraza setProveedorId()   Sets the current record's "proveedor_id" value
  * @method ProductoTraza setNumero()        Sets the current record's "numero" value
@@ -100,6 +106,14 @@ abstract class BaseProductoTraza extends sfDoctrineRecord
         $this->hasColumn('cliente_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('apellido', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
+        $this->hasColumn('nombre', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
              ));
         $this->hasColumn('fecha_compra', 'date', 25, array(
              'type' => 'date',

@@ -22,6 +22,7 @@
  * @property Doctrine_Collection $sfGuardUserGroup
  * @property sfGuardRememberKey $RememberKeys
  * @property sfGuardForgotPassword $ForgotPassword
+ * @property Doctrine_Collection $Cliente
  * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $Resumen
@@ -48,6 +49,7 @@
  * @method Doctrine_Collection   getSfGuardUserGroup()      Returns the current record's "sfGuardUserGroup" collection
  * @method sfGuardRememberKey    getRememberKeys()          Returns the current record's "RememberKeys" value
  * @method sfGuardForgotPassword getForgotPassword()        Returns the current record's "ForgotPassword" value
+ * @method Doctrine_Collection   getCliente()               Returns the current record's "Cliente" collection
  * @method Doctrine_Collection   getCompra()                Returns the current record's "Compra" collection
  * @method Doctrine_Collection   getDetalleCompra()         Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection   getResumen()               Returns the current record's "Resumen" collection
@@ -73,6 +75,7 @@
  * @method sfGuardUser           setSfGuardUserGroup()      Sets the current record's "sfGuardUserGroup" collection
  * @method sfGuardUser           setRememberKeys()          Sets the current record's "RememberKeys" value
  * @method sfGuardUser           setForgotPassword()        Sets the current record's "ForgotPassword" value
+ * @method sfGuardUser           setCliente()               Sets the current record's "Cliente" collection
  * @method sfGuardUser           setCompra()                Sets the current record's "Compra" collection
  * @method sfGuardUser           setDetalleCompra()         Sets the current record's "DetalleCompra" collection
  * @method sfGuardUser           setResumen()               Sets the current record's "Resumen" collection
@@ -179,6 +182,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasOne('sfGuardForgotPassword as ForgotPassword', array(
              'local' => 'id',
              'foreign' => 'user_id'));
+
+        $this->hasMany('Cliente', array(
+             'local' => 'id',
+             'foreign' => 'usuario_id'));
 
         $this->hasMany('Compra', array(
              'local' => 'id',

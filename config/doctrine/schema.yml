@@ -107,6 +107,7 @@ Cliente:
     Cuenta: {type: many, class: CtaCte, local: id, foreign: cliente_id}
     Tipo: {type: one, class: TipoCliente, local: tipo_id, onDelete: RESTRICT}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
+    Usuario: {type: one, class: sfGuardUser, local: usuario_id}
 Compra:
   connection: doctrine
   tableName: compra
@@ -651,6 +652,8 @@ ProductoTraza:
     nro_venta: {type: integer(4)}
     fecha_venta: {type: date(25)}
     cliente_id: {type: integer(4)}
+    apellido: {type: string(250)}
+    nombre: {type: string(250)}
     fecha_compra: {type: date(25)}
     proveedor_id: {type: integer(4)}
     numero: {type: integer(4)}

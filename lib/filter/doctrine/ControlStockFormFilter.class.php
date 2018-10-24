@@ -22,6 +22,9 @@ class ControlStockFormFilter extends BaseControlStockFormFilter
     $choices = ProductoTable::getArrayActivos();
     $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));            
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));		
+
+	$this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
+	$this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
   }
 	
 }

@@ -10,4 +10,5 @@
  */
 abstract class PluginsfGuardUserForm extends BasesfGuardUserForm
 {
+	
 }

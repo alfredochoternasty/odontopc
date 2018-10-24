@@ -33,21 +33,21 @@ class DetallePedidoForm extends BaseDetallePedidoForm
     foreach($lotes as $lote){
       $choices2[$lote['nro_lote']] = $lote['nro_lote'].' - Vto: '.implode('/', array_reverse(explode('-', $lote['fecha_vto']))).' - Stock: '.$lote['stock'];  
     }
-
+		
     
     if(!$this->isNew()) {
       $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => $choices2));
       $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
     }
-    
+
     $this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
     $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
     
-    if(sfContext::getInstance()->getUser()->hasGroup('Cliente')){
+    //if(sfContext::getInstance()->getUser()->hasGroup('Cliente')){
       $this->widgetSchema['cantidad'] = new sfWidgetFormInput();
-    }else{
+    //}else{
       $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
-    }
+    //}
     
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();  
     

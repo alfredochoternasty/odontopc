@@ -127,6 +127,8 @@ select distinct
 	r.id as nro_venta,
 	r.fecha as fecha_venta,
 	c.id as cliente_id,
+	c.apellido as apellido,
+	c.nombre as nombre,
 	com.fecha as fecha_compra,
 	prov.id as proveedor_id,
 	com.numero,
@@ -271,7 +273,8 @@ CREATE VIEW control_stock (
  nro_lote,
  comprados,
  vendidos,
- stock_actual
+ stock_calculado,
+ stock_guardado
 ) AS
 SELECT
    FLOOR(1+(RAND()*999999999999)),
@@ -280,22 +283,25 @@ SELECT
 	gp.nombre,
 	p.id,
 	p.nombre,
-	dc.nro_lote, SUM(dc.cantidad) AS cant_comprada,
+	dc.nro_lote, 
+	SUM(dc.cantidad) AS cant_comprada,
 	(
-SELECT SUM(dr.cantidad + dr.bonificados)
-FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
-WHERE dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
+		SELECT SUM(dr.cantidad + dr.bonificados)
+		FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
+		WHERE r.remito_id is null and dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
 	) AS cant_vendida, 
 	(
-SELECT (SUM(dc.cantidad) - SUM(dr.cantidad + dr.bonificados))
-FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
-WHERE dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
-	) AS stock
+		SELECT (SUM(dc.cantidad) - SUM(dr.cantidad + dr.bonificados))
+		FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
+		WHERE r.remito_id is null and dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
+	) AS stock_calculado,
+	l.stock stock_guardado
 FROM
 	detalle_compra dc
 JOIN compra c ON dc.compra_id = c.id
 JOIN producto p ON dc.producto_id = p.id
 JOIN grupoprod gp ON p.grupoprod_id = gp.id
+JOIN lote l ON dc.producto_id = l.producto_id and CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(l.nro_lote USING utf8) COLLATE utf8_spanish_ci
 WHERE
 	p.grupoprod_id NOT IN (1,15) AND p.activo = 1
 GROUP BY

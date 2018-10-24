@@ -42,6 +42,7 @@ class compraActions extends autoCompraActions
     }
     $proveedor = Doctrine::getTable('Proveedor')->find($pid);
     $nro = $proveedor->getProxRemito();
-    return $this->renderText(json_encode($nro+1));
+    $nro += 1;
+    return $this->renderText(json_encode($nro));
   }
 }

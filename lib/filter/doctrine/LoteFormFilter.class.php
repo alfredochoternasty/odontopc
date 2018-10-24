@@ -32,7 +32,7 @@ class LoteFormFilter extends BaseLoteFormFilter
     $this->validatorSchema['grupo'] = new sfValidatorPass(array('required' => false));
     $this->validatorSchema['grupo2'] = new sfValidatorPass(array('required' => false));
     $this->validatorSchema['grupo3'] = new sfValidatorPass(array('required' => false));
-    $this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));	
+    $this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
   }
   
 	public function addUsuarioColumnQuery(Doctrine_Query $query, $field, $values)

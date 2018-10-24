@@ -30,32 +30,31 @@ class cliActions extends autoCliActions
   {
     $cliente = Doctrine::getTable('Cliente')->find($request->getParameter('id'));
     $correo = trim($cliente->getEmail());
-		if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
-				$this->getUser()->setFlash('error', 'El usuario no posee Email correcto - '.$correo);
-				$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));		
+		$usuario = $cliente->dni;
+		$clave = 'abc123456';
+    if(empty($usuario)){
+      $this->getUser()->setFlash('error', 'El cliente debe tener cargado un DNI');
+      $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
 		}
+		
+		if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
+			$this->getUser()->setFlash('error', 'El usuario no posee Email correcto - '.$correo);
+			$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));		
+		}
+		
     if(empty($correo)){
       $this->getUser()->setFlash('error', 'El usuario no posee Email');
       $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
     }else{
-      $usuario = $cliente->getUsuarioId();
-      $nombres = explode(' ', $cliente->getNombre()); // exploto x si tiene 2 nombres cargado
-      $clave = strtolower($nombres[0]).rand(1, 9999); //para la clave uso el primer nombre que tenga guardado	
-			$nom_usuario = strtolower(str_replace(' ', '', substr($cliente->getNombre(), 0, 2).$cliente->getApellido()));//para el usuario, uso las 2 primeras letras del nombre y el apellido, todo junto y en minuscula
-			$usuario_existe = Doctrine::getTable('sfGuardUser')->findByUsername($nom_usuario);
-			if (!empty($usuario_existe)) {
-				$nom_usuario = strtolower(str_replace(' ', '', substr($cliente->getNombre(), 0, 3).$cliente->getApellido()));
-			}
-			
       if(empty($usuario)){
         $user = new sfGuardUser();
         $accion = 'generado';
         $user->setEmailAddress($correo);				
-        $user->setUsername($nom_usuario); 
+        $user->setUsername($usuario); 
         $user->setIsActive(true);
         $user->setIsSuperAdmin(false);
-        $user->setFirstName($cliente->getNombre());
-        $user->setLastName($cliente->getApellido());
+        $user->setFirstName($cliente->nombre);
+        $user->setLastName($cliente->apellido);
         $user->setPassword($clave);
         $user->save();      
 
@@ -63,39 +62,54 @@ class cliActions extends autoCliActions
         $perfil->setUserId($user->getId());
         $perfil->setGroupId(4);
         $perfil->save();
+				
+        $perfil = new sfGuardUserGroup();
+        $perfil->setUserId($user->getId());
+        $perfil->setGroupId(7);
+        $perfil->save();
+				
+        $permiso = new sfGuardUserPermission();
+        $permiso->setUserId($user->getId());
+        $permiso->setPermissionId(81);
+        $permiso->save();
+				
+				$permiso = new sfGuardUserPermission();
+        $permiso->setUserId($user->getId());
+        $permiso->setPermissionId(82);
+        $permiso->save();
+				
+				$permiso = new sfGuardUserPermission();
+        $permiso->setUserId($user->getId());
+        $permiso->setPermissionId(83);
+        $permiso->save();
+				
+				$cliente->setUsuarioId($user->getId());
+				$cliente->save();
       }else{
-        $user = Doctrine::getTable('sfGuardUser')->find($usuario);
-        $usuario = $user->getUsername();
+        $user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
         $accion = 'actualizado';
+				$user->setUsername($usuario); 
         $user->setPassword($clave);
         $user->save();      	  
       }
-      
-      $cliente->setUsuarioId($user->getId());
-      $cliente->save();
 
       $mensaje = Swift_Message::newInstance();
       $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
       $mensaje->setTo($correo);
       $mensaje->setSubject('NTI Sistema de Pedidos');
       $headers = $mensaje->getHeaders();
-      $headers->addTextHeader('Content-Type', 'text/html');    
-      $msj = '<html><head><meta http-equiv="content-type" content="text/html; charset=WINDOWS-1252"></head><body>';
-      $msj .= "<b>Nuevo Sistema para realizar pedidos de productos</b> </br>";
-      $msj .= "Para ingresar a este sistema haga click en el siguiente enlace <a href=\"sistema.ntiimplantes.com.ar/web\">sistema.ntiimplantes.com.ar/web</a> </br>";
-      $msj .= "<b>USUARIO: </b> ".$usuario." <br>";
-      $msj .= "<b>CLAVE: </b> ".$clave." <br>";
-      $msj .= "</body></html>";
+      $headers->addTextHeader('Content-Type', 'text/html');
+			$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente));			
       $mensaje->setBody($msj, "text/html");
+      $this->getMailer()->send($mensaje);    
       
       $entorno = sfConfig::get('sf_environment');
-      echo $entorno;
       if($entorno != 'dev'){
-        $this->getMailer()->send($mensaje);            
         $this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
       }else{
         $this->getUser()->setFlash('notice', $accion.' - Usuario: '.$usuario.' - Clave: '.$clave );
       }
+			$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
     }
   }
 
@@ -131,8 +145,8 @@ class cliActions extends autoCliActions
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ClienteFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
-	$consulta->andWhere('activo = 1');
-	$consulta->addOrderBy('apellido');
+		$consulta->andWhere('activo = 1');
+		$consulta->addOrderBy('apellido');
     $clientes = $consulta->execute();
     
     header("Content-Disposition: attachment; filename=\"clientes.xls\"");

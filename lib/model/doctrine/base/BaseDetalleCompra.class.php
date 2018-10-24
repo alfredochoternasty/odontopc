@@ -91,7 +91,6 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
              ));
         $this->hasColumn('precio', 'decimal', 10, array(
              'type' => 'decimal',
-             'notnull' => true,
              'length' => 10,
              'scale' => '2',
              ));
@@ -116,7 +115,6 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
              ));
         $this->hasColumn('fecha_vto', 'date', 25, array(
              'type' => 'date',
-             'notnull' => true,
              'length' => 25,
              ));
         $this->hasColumn('iva', 'decimal', 10, array(

@@ -135,17 +135,14 @@ abstract class BaseResumen extends sfDoctrineRecord
              ));
         $this->hasColumn('remito_id', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
              'length' => 4,
              ));
         $this->hasColumn('lista_id', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
              'length' => 4,
              ));
         $this->hasColumn('moneda_id', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
              'length' => 4,
              ));
         $this->hasColumn('observacion', 'string', 200, array(
@@ -154,8 +151,6 @@ abstract class BaseResumen extends sfDoctrineRecord
              ));
         $this->hasColumn('pagado', 'integer', 1, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              'length' => 1,
              ));
         $this->hasColumn('pedido_id', 'integer', 4, array(

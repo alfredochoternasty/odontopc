@@ -62,8 +62,8 @@
 							}
 						}
 					}
-					echo "</ul></li>";
-					echo "<li>".link_to("Salir", "sf_guard_signout")."</li>";
+					echo $bandera?"</ul></li>":"";
+					echo "<li>".link_to("Salir", "sf_guard_signout")."</li></ul>";
 				?>    	
       </center>
     </div>

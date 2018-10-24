@@ -31,7 +31,7 @@ generator:
           _edit: {label: Modificar}
           detalle: {label: Detalle}
           mail: {label: Email}
-          factura: {label: Obtener CAE}
+          factura: {label: Enviar AFIP}
         batch_actions:
           _delete: {label: Eliminar}
       filter:

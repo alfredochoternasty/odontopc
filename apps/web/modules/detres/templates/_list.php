@@ -19,6 +19,7 @@
 	$detalle = $pager->getResults();
 	if ($detalle[0]->getResumen()->afip_estado == 0) {
 		echo link_to('Enviar AFIP', 'detres/cae?rid='.$detalle[0]->resumen_id, array(
+			'confirm' => 'Seguro que quiere ENVIAR A AFIP',
 			'class'  => 'fg-button fg-button-mini ui-state-default fg-button-icon-left',
 			'style' => 'float: right; margin-top: 10px;'
 		));

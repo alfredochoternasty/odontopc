@@ -36,7 +36,8 @@ class Proveedor extends BaseProveedor
           ->select('max(numero) as prox')
           ->from('Compra c')
           ->where('proveedor_id = ?', $this->getId())
-          ->andWhere('tipofactura_id = 4');
+          ->andWhere('tipofactura_id = 4')
+          ->andWhere('id > 100');
     $rs = $q->execute();
     return $rs[0]['prox'];
 	}

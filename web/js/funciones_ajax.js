@@ -36,31 +36,6 @@ $(document).ready(function(){
           $("#detalle_pedido_total").attr('value', total.toFixed(2));
         },
       });
-  });  
-  
-  $("#detalle_pedido_producto_id").change(function(event){
-      var pid = $("#detalle_pedido_producto_id").find(':selected').val();
-      $.ajax({
-          url: 'get_lotes_producto?pid='+pid,
-          //dataType: "json",
-          success: function(data) {
-            $("#detalle_resumen_nro_lote").html('');
-            $("#detalle_resumen_nro_lote").html(data);
-          }
-        });                  
-  });
-  
-  $("#detalle_pedido_nro_lote").change(function(event){
-      var lid = $("#detalle_pedido_nro_lote").find(':selected').val();
-      var pid = $("#detalle_pedido_producto_id").find(':selected').val();
-      $.ajax({
-          url: 'get_cantidad_lote?lid='+lid+'&pid='+pid,
-          //dataType: "json",
-          success: function(data) {
-            $("#detalle_pedido_cantidad").html('');
-            $("#detalle_pedido_cantidad").html(data);
-          }
-        });                  
   });
   
   $("#detalle_pedido_cantidad").change(function(event){

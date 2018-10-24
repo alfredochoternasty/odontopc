@@ -25,7 +25,7 @@ class detpedActions extends autoDetpedActions
     return $this->renderText(json_encode(sprintf("%01.2f", $prec_prod)));
   }
   
-  public function executeLote(sfWebRequest $request){
+  public function executeLotes(sfWebRequest $request){
     $prod = null;
     $prod = $request->getParameter('pid');
     if(!empty($prod)){
@@ -38,9 +38,7 @@ class detpedActions extends autoDetpedActions
           ->orderBy('fecha_vto desc');
       $lotes = $q->execute();
       $nro_lote = '#';
-      foreach($lotes as $lote){
-        $nro_lote = $lote->getNroLote().' == '.$lote->getStock();
-      }
+			if (!empty($lotes)) $nro_lote = $lotes[0]->getNroLote().' == '.$lotes[0]->getStock();
     }else{
       $nro_lote = '#';
     }

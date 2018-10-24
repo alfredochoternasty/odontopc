@@ -35,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Doctrine_Collection $Cuenta
  * @property TipoCliente $Tipo
  * @property ListaPrecio $Lista
+ * @property sfGuardUser $Usuario
  * @property Doctrine_Collection $Venta
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $ListadoCobros
@@ -73,6 +74,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Doctrine_Collection getCuenta()             Returns the current record's "Cuenta" collection
  * @method TipoCliente         getTipo()               Returns the current record's "Tipo" value
  * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
+ * @method sfGuardUser         getUsuario()            Returns the current record's "Usuario" value
  * @method Doctrine_Collection getVenta()              Returns the current record's "Venta" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
@@ -110,6 +112,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setCuenta()             Sets the current record's "Cuenta" collection
  * @method Cliente             setTipo()               Sets the current record's "Tipo" value
  * @method Cliente             setLista()              Sets the current record's "Lista" value
+ * @method Cliente             setUsuario()            Sets the current record's "Usuario" value
  * @method Cliente             setVenta()              Sets the current record's "Venta" collection
  * @method Cliente             setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Cliente             setListadoCobros()      Sets the current record's "ListadoCobros" collection
@@ -256,6 +259,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'local' => 'lista_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser as Usuario', array(
+             'local' => 'usuario_id',
+             'foreign' => 'id'));
 
         $this->hasMany('Venta', array(
              'local' => 'id',
