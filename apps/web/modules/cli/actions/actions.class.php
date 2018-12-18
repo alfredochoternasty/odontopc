@@ -29,10 +29,12 @@ class cliActions extends autoCliActions
   private function GenerarUsuario(sfWebRequest $request)
   {
     $cliente = Doctrine::getTable('Cliente')->find($request->getParameter('id'));
-    $correo = trim($cliente->getEmail());
+    
+		$correo = trim($cliente->email);
 		$usuario = $cliente->dni;
 		$clave = 'abc123456';
-    if(empty($usuario)){
+    
+		if(empty($usuario)){
       $this->getUser()->setFlash('error', 'El cliente debe tener cargado un DNI');
       $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
 		}
@@ -45,72 +47,74 @@ class cliActions extends autoCliActions
     if(empty($correo)){
       $this->getUser()->setFlash('error', 'El usuario no posee Email');
       $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
-    }else{
-      if(empty($usuario)){
-        $user = new sfGuardUser();
-        $accion = 'generado';
-        $user->setEmailAddress($correo);				
-        $user->setUsername($usuario); 
-        $user->setIsActive(true);
-        $user->setIsSuperAdmin(false);
-        $user->setFirstName($cliente->nombre);
-        $user->setLastName($cliente->apellido);
-        $user->setPassword($clave);
-        $user->save();      
-
-        $perfil = new sfGuardUserGroup();
-        $perfil->setUserId($user->getId());
-        $perfil->setGroupId(4);
-        $perfil->save();
-				
-        $perfil = new sfGuardUserGroup();
-        $perfil->setUserId($user->getId());
-        $perfil->setGroupId(7);
-        $perfil->save();
-				
-        $permiso = new sfGuardUserPermission();
-        $permiso->setUserId($user->getId());
-        $permiso->setPermissionId(81);
-        $permiso->save();
-				
-				$permiso = new sfGuardUserPermission();
-        $permiso->setUserId($user->getId());
-        $permiso->setPermissionId(82);
-        $permiso->save();
-				
-				$permiso = new sfGuardUserPermission();
-        $permiso->setUserId($user->getId());
-        $permiso->setPermissionId(83);
-        $permiso->save();
-				
-				$cliente->setUsuarioId($user->getId());
-				$cliente->save();
-      }else{
-        $user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
-        $accion = 'actualizado';
-				$user->setUsername($usuario); 
-        $user->setPassword($clave);
-        $user->save();      	  
-      }
-
-      $mensaje = Swift_Message::newInstance();
-      $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
-      $mensaje->setTo($correo);
-      $mensaje->setSubject('NTI Sistema de Pedidos');
-      $headers = $mensaje->getHeaders();
-      $headers->addTextHeader('Content-Type', 'text/html');
-			$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente));			
-      $mensaje->setBody($msj, "text/html");
-      $this->getMailer()->send($mensaje);    
-      
-      $entorno = sfConfig::get('sf_environment');
-      if($entorno != 'dev'){
-        $this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
-      }else{
-        $this->getUser()->setFlash('notice', $accion.' - Usuario: '.$usuario.' - Clave: '.$clave );
-      }
-			$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
     }
+		
+		if(empty($cliente->usuario_id)){
+			$user = new sfGuardUser();
+			$accion = 'generado';
+			$user->setEmailAddress($correo);				
+			$user->setUsername($usuario); 
+			$user->setIsActive(true);
+			$user->setIsSuperAdmin(false);
+			$user->setFirstName($cliente->nombre);
+			$user->setLastName($cliente->apellido);
+			$user->setPassword($clave);
+			$user->setEsCliente(true);
+			$user->save();      
+
+			$perfil = new sfGuardUserGroup();
+			$perfil->setUserId($user->getId());
+			$perfil->setGroupId(4);
+			$perfil->save();
+			
+			$perfil = new sfGuardUserGroup();
+			$perfil->setUserId($user->getId());
+			$perfil->setGroupId(7);
+			$perfil->save();
+			
+			$permiso = new sfGuardUserPermission();
+			$permiso->setUserId($user->getId());
+			$permiso->setPermissionId(81);
+			$permiso->save();
+			
+			$permiso = new sfGuardUserPermission();
+			$permiso->setUserId($user->getId());
+			$permiso->setPermissionId(82);
+			$permiso->save();
+			
+			$permiso = new sfGuardUserPermission();
+			$permiso->setUserId($user->getId());
+			$permiso->setPermissionId(83);
+			$permiso->save();
+			
+			$cliente->setUsuarioId($user->getId());
+			$cliente->save();
+			
+		}else{
+			$user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
+			$accion = 'actualizado';
+			$user->setPassword($clave);
+			$user->save();      	  
+		}
+
+		$mensaje = Swift_Message::newInstance();
+		$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+		$mensaje->setTo($correo);
+		$mensaje->setSubject('NTI Sistema de Pedidos');
+		$headers = $mensaje->getHeaders();
+		$headers->addTextHeader('Content-Type', 'text/html');
+		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente));			
+		$mensaje->setBody($msj, "text/html");
+		$this->getMailer()->send($mensaje);    
+		
+		$entorno = sfConfig::get('sf_environment');
+		if($entorno != 'dev'){
+			$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
+		}else{
+			$this->getUser()->setFlash('notice', $accion.' - Usuario: '.$usuario.' - Clave: '.$clave );
+		}
+		$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
+		
   }
 
   public function executeAutocomplete(sfWebRequest $request){

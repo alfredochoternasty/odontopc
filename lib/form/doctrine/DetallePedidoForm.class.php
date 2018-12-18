@@ -40,14 +40,14 @@ class DetallePedidoForm extends BaseDetallePedidoForm
       $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
     }
 
-    $this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+    $this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('size' => 10, 'readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('size' => 10, 'readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
     
-    //if(sfContext::getInstance()->getUser()->hasGroup('Cliente')){
-      $this->widgetSchema['cantidad'] = new sfWidgetFormInput();
+    //if(sfContext::getInstance()->getUser()->getGuardUser()->es_cliente){
+      $this->widgetSchema['cantidad'] = new sfWidgetFormInput(array(), array('size' => 5));
     //}else{
-      $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
-    //}
+    //  $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
+   // }
     
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();  
     
