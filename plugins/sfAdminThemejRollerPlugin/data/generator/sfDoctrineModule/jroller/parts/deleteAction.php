@@ -6,12 +6,15 @@
 
     $obj = $this->getRoute()->getObject();
     $relations = $obj->getTable()->getRelations();
-    
+
     $borrar = true;
+	$rel = array();
     foreach ($relations as $name => $relation) {
-        if($relation->getType() == 1){
-          $rel = $relation->getTable()->findOneBy($relation->getForeign(), $obj->get($relation->getLocal()));
-          if($rel){
+		$valor = $obj->get($relation->getLocal());
+		$campo = $relation->getForeign();
+        if($relation->getType() == 1 && !empty($valor)){
+          $rel = $relation->getTable()->findOneBy($campo, $valor);
+          if(!empty($rel)){
             $borrar = false;
             break;
           }

@@ -25,7 +25,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Listado de Control de Stock
-        display: [Proveedor, Grupo, Producto, nro_lote, comprados, _vendidos, _stock_calculado, stock_guardado]
+        display: [Proveedor, Grupo, Producto, nro_lote, comprados, _vendidos, stock_guardado]
         object_actions: []
         batch_actions: []
         actions:

@@ -44,8 +44,8 @@
       <?php 
       $suma_total = 0;
       foreach ($pager->getResults() as $i => $detalle_presupuesto): 
-        $odd = fmod(++$i, 2) ? ' odd' : ''; 
-        $suma_total += $detalle_presupuesto->getTotal();
+        $odd = fmod(++$i, 2) ? ' odd' : '';
+        $suma_total += ($detalle_presupuesto->precio * 0.21 + $detalle_presupuesto->precio) * $detalle_presupuesto->cantidad ;
       ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
         <?php include_partial('detpresu/list_td_batch_actions', array('detalle_presupuesto' => $detalle_presupuesto, 'helper' => $helper)) ?>
@@ -57,7 +57,7 @@
       <?php endforeach; ?>
       
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-      <td colspan="3" class="sf_admin_text">&nbsp;</td>
+      <td colspan="4" class="sf_admin_text">&nbsp;</td>
       <td style="text-align: right;" class="sf_admin_text">Total:</td>
       <td class="sf_admin_text">
         <?php echo sprintf("$ "."%01.2f", $suma_total) ?>

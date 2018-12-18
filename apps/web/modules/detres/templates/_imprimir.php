@@ -3,7 +3,7 @@
 <html>
 <head>
 	
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 	<title></title>
 	<meta name="generator" content="LibreOffice 6.0.6.2 (Linux)"/>
 	<meta name="author" content="www.todoexcel.com"/>
@@ -115,7 +115,7 @@
 		<td><?php echo $detalle->IvaFormato() ?></td>
 		<td><?php echo $detalle->TotalFormato() ?></td>
 		<?php else: ?>
-		<td><?php echo sprintf($detalle->SimboloMoneda()." %01.2f", $detalle->total/$detalle->cantidad) ?></td>
+		<td><?php echo sprintf($detalle->SimboloMoneda()." %01.2f", $detalle->total/$detalle->cantidad)?></td>
 		<td><?php echo $detalle->TotalFormato() ?></td>
 		<?php endif; 
 				$total_con_iva += $detalle->total;
@@ -130,7 +130,7 @@
 	<tr><td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>"><br></td></tr>
 	<tr>
 		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?5:3; ?>" align="right"><b>Total:&nbsp;&nbsp;</b></td>
-		<td><b><?php echo ($resumen->getTipoFactura()->letra == 'A')?sprintf($detalle->SimboloMoneda()." %01.2f", $total_con_iva):sprintf($detalle->SimboloMoneda()." %01.2f", $total_sin_iva) ?></b></td>
+		<td><b><?php echo ($resumen->getTipoFactura()->letra == 'A')?sprintf($detalle->SimboloMoneda()." %01.2f", $total_con_iva):sprintf($detalle->SimboloMoneda()." %01.2f", $total_con_iva) ?></b></td>
 	</tr>
 	<?php endif; ?>
 </table>

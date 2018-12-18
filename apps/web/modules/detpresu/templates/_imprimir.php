@@ -21,11 +21,12 @@
   <tr>
     <td><?php echo utf8_decode($detalle->getProducto()) ?></td>
     <td><?php echo $detalle->getCantidad() ?></td>
-    <td><?php echo $moneda.' '.sprintf("%01.2f", $detalle->getPrecio()) ?></td>
-    <td><?php echo $moneda.' '.sprintf("%01.2f", $detalle->getTotal()) ?></td>
+	  <?php $precio = $detalle->precio + ($detalle->precio * 0.21) ?>
+    <td><?php echo $moneda.' '.sprintf("%01.2f", $precio) ?></td>
+    <td><?php echo $moneda.' '.sprintf("%01.2f", $precio * $detalle->cantidad) ?></td>
   </tr>
   <?php 
-	$total += $detalle->getTotal();
+	$total += $precio * $detalle->cantidad;
   endforeach;
   ?>
   <tr>
