@@ -27,7 +27,7 @@ generator:
           factura: {label: Enviar AFIP}
           imprimir: {label: Imprimir}
       filter:
-        display: [fecha, cliente_id, producto_id, usuario]
+        display: [fecha, cliente_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:

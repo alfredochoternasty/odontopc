@@ -286,12 +286,12 @@ SELECT
 	dc.nro_lote, 
 	SUM(dc.cantidad) AS cant_comprada,
 	(
-		SELECT SUM(dr.cantidad + dr.bonificados)
+		SELECT SUM(dr.cantidad + dr.bonificados) - ifnull((select sum(cantidad) from dev_producto dp where dp.producto_id = dr.producto_id and CONVERT(dp.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci),0)
 		FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
 		WHERE r.remito_id is null and dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
 	) AS cant_vendida, 
 	(
-		SELECT (SUM(dc.cantidad) - SUM(dr.cantidad + dr.bonificados))
+		SELECT (SUM(dc.cantidad) - SUM(dr.cantidad + dr.bonificados)) + ifnull((select sum(cantidad) from dev_producto dp where dp.producto_id = dr.producto_id and CONVERT(dp.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci),0)
 		FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
 		WHERE r.remito_id is null and dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
 	) AS stock_calculado,

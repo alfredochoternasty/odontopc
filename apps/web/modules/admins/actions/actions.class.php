@@ -32,7 +32,7 @@ class adminsActions extends sfActions
 					{
 						$row[$j] = addslashes($row[$j]);
 						$row[$j] = str_replace("\n","\\n",$row[$j]);
-						if (isset($row[$j])) { $return.= '"'.$row[$j].'"' ; } else { $return.= '""'; }
+						if (isset($row[$j]) && $row[$j] != "") { $return.= '"'.$row[$j].'"' ; } else { $return.= 'null'; }
 						if ($j < ($num_fields-1)) { $return.= ','; }
 					}
 					$return.= ");\n";
