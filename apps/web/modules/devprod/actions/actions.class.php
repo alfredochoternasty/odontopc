@@ -168,6 +168,8 @@ class devprodActions extends autoDevprodActions
 			$rid = $dev->getResumenId();
 			$resumen = Doctrine::getTable('Resumen')->find($rid);
 			
+			$ptovta = '0005';
+			
 			$regfe['ImpTotal'] = $dev->getTotal();
 			$regfe['ImpOpEx'] = 0;
 			$regfe['ImpIVA'] = $dev->getIva();
@@ -182,7 +184,7 @@ class devprodActions extends autoDevprodActions
 			$regfetrib = '';
 			$regfeasoc[] = array(
 				'Tipo' => $resumen->getTipoFactura()->getCodTipoAfip(), 
-				'PtoVta' => $resumen->pto_vta, 
+				'PtoVta' => $ptovta, //$resumen->pto_vta, 
 				'Nro' => $resumen->getNroFactura()
 			);
 			
@@ -196,10 +198,10 @@ class devprodActions extends autoDevprodActions
 			
 			$wsfev1 = new WSFEV1(dirname(__FILE__).'../../../detres/actions');
 			
-			$nro = $wsfev1->FECompUltimoAutorizado($resumen->pto_vta, $regfe['CbteTipo']);
+			$nro = $wsfev1->FECompUltimoAutorizado($ptovta/*$resumen->pto_vta*/, $regfe['CbteTipo']);
 			$nuevo_nro = $nro+1;
 
-			$res = $wsfev1->FECAESolicitar($nuevo_nro, $resumen->pto_vta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+			//$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta/*$resumen->pto_vta*/, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';
 			if (is_soap_fault($res)) {
 				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
@@ -221,7 +223,8 @@ class devprodActions extends autoDevprodActions
 						$msj = $res['cae'];
 						$afip_estado = 1;
 						$dev->setNroFactura($nuevo_nro);
-						$dev->setPtoVta($resumen->pto_vta);
+						//$dev->setPtoVta($resumen->pto_vta);
+						$dev->setPtoVta($ptovta);
 						$dev->setTipofacturaId($resumen->getTipoFactura()->id_fact_cancela);
 						$dev->setAfipVtoCae($res['fec_vto']);
 						$tipo_msj = 'notice';
@@ -230,6 +233,8 @@ class devprodActions extends autoDevprodActions
 			}
 			$dev->setAfipEstado($afip_estado);
 			$dev->setAfipMensaje($msj);
+			$dev->setAfipEnvio($wsfev1->client->__getLastRequest());
+			$dev->setAfipRespuesta($wsfev1->client->__getLastResponse());
 			$dev->save();
 		}
 

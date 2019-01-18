@@ -30,6 +30,8 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'pto_vta'        => new sfWidgetFormFilterInput(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'nro_factura'    => new sfWidgetFormFilterInput(),
+      'afip_envio'     => new sfWidgetFormFilterInput(),
+      'afip_respuesta' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -50,6 +52,8 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'pto_vta'        => new sfValidatorPass(array('required' => false)),
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
       'nro_factura'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'afip_envio'     => new sfValidatorPass(array('required' => false)),
+      'afip_respuesta' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto_filters[%s]');
@@ -87,6 +91,8 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'pto_vta'        => 'Text',
       'tipofactura_id' => 'ForeignKey',
       'nro_factura'    => 'Number',
+      'afip_envio'     => 'Text',
+      'afip_respuesta' => 'Text',
     );
   }
 }

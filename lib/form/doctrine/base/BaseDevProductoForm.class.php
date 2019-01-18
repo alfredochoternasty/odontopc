@@ -33,6 +33,8 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'pto_vta'        => new sfWidgetFormInputText(),
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'nro_factura'    => new sfWidgetFormInputText(),
+      'afip_envio'     => new sfWidgetFormTextarea(),
+      'afip_respuesta' => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -54,6 +56,8 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'pto_vta'        => new sfValidatorString(array('max_length' => 4, 'required' => false)),
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'required' => false)),
       'nro_factura'    => new sfValidatorInteger(array('required' => false)),
+      'afip_envio'     => new sfValidatorString(array('required' => false)),
+      'afip_respuesta' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto[%s]');

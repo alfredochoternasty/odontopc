@@ -2,6 +2,11 @@ ALTER TABLE `resumen`
 	ADD COLUMN `afip_envio` TEXT NULL AFTER `remito_id`,
 	ADD COLUMN `afip_respuesta` TEXT NULL AFTER `afip_envio`;
 	
+ALTER TABLE `dev_producto`
+	ADD COLUMN `afip_envio` TEXT NULL,
+	ADD COLUMN `afip_respuesta` TEXT NULL;
+	
+DROP VIEW cta_cte;
 CREATE VIEW cta_cte (
   id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
 ) AS 

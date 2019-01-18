@@ -25,6 +25,8 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property string $pto_vta
  * @property integer $tipofactura_id
  * @property integer $nro_factura
+ * @property string $afip_envio
+ * @property string $afip_respuesta
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property Producto $Producto
@@ -49,6 +51,8 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method string      getPtoVta()         Returns the current record's "pto_vta" value
  * @method integer     getTipofacturaId()  Returns the current record's "tipofactura_id" value
  * @method integer     getNroFactura()     Returns the current record's "nro_factura" value
+ * @method string      getAfipEnvio()      Returns the current record's "afip_envio" value
+ * @method string      getAfipRespuesta()  Returns the current record's "afip_respuesta" value
  * @method Cliente     getCliente()        Returns the current record's "Cliente" value
  * @method Resumen     getResumen()        Returns the current record's "Resumen" value
  * @method Producto    getProducto()       Returns the current record's "Producto" value
@@ -72,6 +76,8 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method DevProducto setPtoVta()         Sets the current record's "pto_vta" value
  * @method DevProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
  * @method DevProducto setNroFactura()     Sets the current record's "nro_factura" value
+ * @method DevProducto setAfipEnvio()      Sets the current record's "afip_envio" value
+ * @method DevProducto setAfipRespuesta()  Sets the current record's "afip_respuesta" value
  * @method DevProducto setCliente()        Sets the current record's "Cliente" value
  * @method DevProducto setResumen()        Sets the current record's "Resumen" value
  * @method DevProducto setProducto()       Sets the current record's "Producto" value
@@ -170,6 +176,12 @@ abstract class BaseDevProducto extends sfDoctrineRecord
         $this->hasColumn('nro_factura', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('afip_envio', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('afip_respuesta', 'string', null, array(
+             'type' => 'string',
              ));
     }
 
