@@ -4,18 +4,20 @@ class WSAA {
   const TA = "/afipfe/xml/TA.xml"; 
   const TRA = "/afipfe/xml/TRA.xml";
   const TRATMP = "/afipfe/xml/tra.tmp";         # Archivo con el Token y Sign
-  const CERT = "/afipfe/keys/prueba_nti.crt";        # The X.509 certificate in PEM format
-  const PRIVATEKEY = "/afipfe/keys/prueba_nti.key";  # The private key correspoding to CERT (PEM)
+  //const CERT = "/afipfe/keys/prueba_nti.crt";        # The X.509 certificate in PEM format
+  const CERT = "/afipfe/keys/ntiimplantes.crt";        # The X.509 certificate in PEM format
+  //const PRIVATEKEY = "/afipfe/keys/prueba_nti.key";  # The private key correspoding to CERT (PEM)
+  const PRIVATEKEY = "/afipfe/keys/ntiimplantes.key";  # The private key correspoding to CERT (PEM)
   const PASSPHRASE = "";         # The passphrase (if any) to sign
   const PROXY_ENABLE = false;
   const LOG_DIR = '/afipfe/'; // Para debug, genera unos xml con la respuesta del web service
   const LOG_XMLS = true; // Para debug, genera unos xml con la respuesta del web service
 
   const WSDL = "/afipfe/wsaa.wsdl";      # The WSDL corresponding to WSAA
-  const URL = "https://wsaahomo.afip.gov.ar/ws/services/LoginCms"; // testing
+  //const URL = "https://wsaahomo.afip.gov.ar/ws/services/LoginCms"; // testing
   
 	//const WSDL = "wsdl_afip.xml";      # The WSDL corresponding to WSAA
-  //CONST URL = "https://wsaa.afip.gov.ar/ws/services/LoginCms"; // produccion  
+  CONST URL = "https://wsaa.afip.gov.ar/ws/services/LoginCms"; // produccion  
   
   private $path = './'; //el path relativo, terminado en /
   public $error = '';//manejo de errores

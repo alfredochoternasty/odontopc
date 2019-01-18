@@ -29,6 +29,8 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'afip_mensaje'   => new sfWidgetFormFilterInput(),
       'afip_vto_cae'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'pto_vta'        => new sfWidgetFormFilterInput(),
+      'afip_envio'     => new sfWidgetFormFilterInput(),
+      'afip_respuesta' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -48,6 +50,8 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'afip_mensaje'   => new sfValidatorPass(array('required' => false)),
       'afip_vto_cae'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'pto_vta'        => new sfValidatorPass(array('required' => false)),
+      'afip_envio'     => new sfValidatorPass(array('required' => false)),
+      'afip_respuesta' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen_filters[%s]');
@@ -84,6 +88,8 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'afip_mensaje'   => 'Text',
       'afip_vto_cae'   => 'Date',
       'pto_vta'        => 'Text',
+      'afip_envio'     => 'Text',
+      'afip_respuesta' => 'Text',
     );
   }
 }

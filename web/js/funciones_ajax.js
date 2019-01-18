@@ -119,6 +119,17 @@ $(document).ready(function(){
         },
       });
   });
+	
+	$("#resumen_tipofactura_id").change(function(event){
+    var fid = $("#resumen_tipofactura_id").find(':selected').val();
+		if (fid == 4) {
+				$("#resumen_remito_id").attr('value', '');
+        $(".sf_admin_form_field_remito_id").hide();
+		} else {
+			$(".sf_admin_form_field_remito_id").show();
+		}
+  });
+	
 })
 
 $(document).ready(function(){

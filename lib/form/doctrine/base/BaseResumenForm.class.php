@@ -32,6 +32,8 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'afip_mensaje'   => new sfWidgetFormInputText(),
       'afip_vto_cae'   => new sfWidgetFormDate(),
       'pto_vta'        => new sfWidgetFormInputText(),
+      'afip_envio'     => new sfWidgetFormTextarea(),
+      'afip_respuesta' => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -52,6 +54,8 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'afip_mensaje'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'afip_vto_cae'   => new sfValidatorDate(array('required' => false)),
       'pto_vta'        => new sfValidatorString(array('max_length' => 4, 'required' => false)),
+      'afip_envio'     => new sfValidatorString(array('required' => false)),
+      'afip_respuesta' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen[%s]');

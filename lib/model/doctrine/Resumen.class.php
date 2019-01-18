@@ -81,4 +81,14 @@ class Resumen extends BaseResumen
     $val = $this->getFecha().' - '.$this->getNroFactura().' - '.$this->getCliente();
     return empty($val)? '' : $val;
   }	
+	
+	public function getDatosRemito(){
+		$remito = Doctrine::getTable('Resumen')->find($this->remito_id);
+		$val = empty($remito)?'':$remito->getNroFactura().' - '.$remito->getFechaDMY();
+    return $val;
+	}
+	
+	public function getFechaDMY(){
+		return implode('/', array_reverse(explode('-', $this->getFecha())));
+	}
 }

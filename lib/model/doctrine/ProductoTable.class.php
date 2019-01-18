@@ -40,14 +40,15 @@ class ProductoTable extends Doctrine_Table
     public function ProdutosSinStock(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->addSelect('r.nombre');
-      $q->addSelect('l.nro_lote');
-      $q->addSelect('l.stock');
       $q->addSelect('r.minimo_stock');
-      $q->leftJoin($rootAlias . '.Lote l');
+      $q->addSelect('sum(cs.stock_guardado) as stock');
+      $q->leftJoin($rootAlias . '.ControlStock cs');
       $q->where('grupoprod_id <> 1');
       $q->andWhere('grupoprod_id <> 15');            
-      $q->andWhere('stock <= minimo_stock');
 			$q->andWhere('activo = 1');
+			$q->groupBy('r.nombre, r.minimo_stock');
+			$q->having('sum(stock_guardado) <= r.minimo_stock and sum(stock_guardado) > 0');
+			
       return $q;
     }
 

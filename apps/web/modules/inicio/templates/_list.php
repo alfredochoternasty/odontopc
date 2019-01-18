@@ -15,7 +15,7 @@
   </table>
 
   <?php else: ?>
-  <?php if($sf_user->hasPermission('admin')): ?>
+  <?php if($sf_user->hasPermission('ventas')): ?>
   <div style="position:absolute;top:0; right:0; width:45%;">
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
@@ -32,13 +32,10 @@
           
           <?php //include_partial('inicio/list_td_tabular', array('producto' => $producto)) ?>
           <td class="sf_admin_text sf_admin_list_td_nombre">
-            <?php echo $producto->getNombre() ?>
-          </td>
-          <td class="sf_admin_text sf_admin_list_td_nombre">
-            <?php echo ""; ?>
+            <?php echo $producto['nombre'] ?>
           </td>
           <td class="sf_admin_text sf_admin_list_td_stock_actual">
-            <?php echo $producto->getStockActual() ?>
+            <?php echo $producto['stock'] ?>
           </td>
           <td class="sf_admin_text sf_admin_list_td_minimo_stock">
             <?php echo $producto->getMinimoStock() ?>

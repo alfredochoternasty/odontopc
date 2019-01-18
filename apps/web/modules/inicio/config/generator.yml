@@ -14,13 +14,13 @@ generator:
     config:
       actions: ~
       fields:
-        minimo_stock: {label: Mínimo}
-        stock_actual: {label: Stock}
+        minimo_stock: {label: Stock Mínimo}
+        stock_guardado: {label: Stock Actual}
       list:
         title: Productos con Stock por debajo del Mínimo
         table_method: ProdutosSinStock
         max_per_page: 20
-        display: [nombre, nro_lote, stock, minimo_stock]
+        display: [nombre, stock_guardado, minimo_stock]
         object_actions: {}
         batch_actions: {}
         actions: {}

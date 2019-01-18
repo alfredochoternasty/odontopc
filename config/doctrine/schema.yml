@@ -260,6 +260,8 @@ Resumen:
     afip_mensaje: {type: string(255)}
     afip_vto_cae: {type: date(25)}
     pto_vta: {type: string(4)}
+    afip_envio: {type: string}
+    afip_respuesta: {type: string}
   relations:
     Detalle: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
     Remito: {type: many, class: Resumen, local: remito_id, foreign: id}

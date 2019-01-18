@@ -24,6 +24,8 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property string $afip_mensaje
  * @property date $afip_vto_cae
  * @property string $pto_vta
+ * @property string $afip_envio
+ * @property string $afip_respuesta
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
@@ -56,6 +58,8 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method string              getAfipMensaje()    Returns the current record's "afip_mensaje" value
  * @method date                getAfipVtoCae()     Returns the current record's "afip_vto_cae" value
  * @method string              getPtoVta()         Returns the current record's "pto_vta" value
+ * @method string              getAfipEnvio()      Returns the current record's "afip_envio" value
+ * @method string              getAfipRespuesta()  Returns the current record's "afip_respuesta" value
  * @method Doctrine_Collection getDetalle()        Returns the current record's "Detalle" collection
  * @method Doctrine_Collection getRemito()         Returns the current record's "Remito" collection
  * @method Cliente             getCliente()        Returns the current record's "Cliente" value
@@ -87,6 +91,8 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setAfipMensaje()    Sets the current record's "afip_mensaje" value
  * @method Resumen             setAfipVtoCae()     Sets the current record's "afip_vto_cae" value
  * @method Resumen             setPtoVta()         Sets the current record's "pto_vta" value
+ * @method Resumen             setAfipEnvio()      Sets the current record's "afip_envio" value
+ * @method Resumen             setAfipRespuesta()  Sets the current record's "afip_respuesta" value
  * @method Resumen             setDetalle()        Sets the current record's "Detalle" collection
  * @method Resumen             setRemito()         Sets the current record's "Remito" collection
  * @method Resumen             setCliente()        Sets the current record's "Cliente" value
@@ -185,6 +191,12 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasColumn('pto_vta', 'string', 4, array(
              'type' => 'string',
              'length' => 4,
+             ));
+        $this->hasColumn('afip_envio', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('afip_respuesta', 'string', null, array(
+             'type' => 'string',
              ));
     }
 

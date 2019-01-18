@@ -1,20 +1,21 @@
 <?php
 class WSFEV1 {
-	const CUIT 	= 20135893901; // CUIT del emisor de las facturas. Solo numeros sin comillas.
+	//const CUIT 	= 20135893901; // CUIT del emisor de las facturas. Solo numeros sin comillas.
+	const CUIT 	= 30712272461; // CUIT del emisor de las facturas. Solo numeros sin comillas.
 	const TA 	= "/afipfe/xml/TA.xml"; // Archivo con el Token y Sign
 	const WSDL = "/afipfe/wsfev1.wsdl"; //Archivo WSDL del web service, se puede obtener de https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL
 	const LOGS_DIR = "/afipfe/xml/"; //Archivo WSDL del web service, se puede obtener de https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL
 	const LOG_XMLS = true; // Para debug, genera unos xml con la respuesta del web service
 
 
-	//const WSFEURL = "https://servicios1.afip.gov.ar/wsfev1/service.asmx"; // produccion
-	const WSFEURL = "https://wswhomo.afip.gov.ar/wsfev1/service.asmx"; // homologacion
+	const WSFEURL = "https://servicios1.afip.gov.ar/wsfev1/service.asmx"; // produccion
+	//const WSFEURL = "https://wswhomo.afip.gov.ar/wsfev1/service.asmx"; // homologacion
 	
 	
 	const Obligatorios = '';
   
 	private $path = './'; // path real del directorio principal terminado en /
-	private $client; // Cliente SOAP
+	public $client; // Cliente SOAP
 	private $TA; // objeto que va a contener el xml de TA
   
 	// manejo de errores

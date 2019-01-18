@@ -123,7 +123,16 @@ class detresActions extends autoDetresActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-    $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $this->getRoute()->getObject())));
+		$detalle_resumen = $this->getRoute()->getObject();
+		if (!empty($detalle_resumen->getResumen()->remito_id)) {
+			$remito_id = $detalle_resumen->getResumen()->remito_id;
+			$detalles_remitos = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($remito_id, $detalle_resumen->producto_id, $detalle_resumen->nro_lote);
+			$detalle_remito = $detalles_remitos[0];
+			$detalle_remito->cant_vend_remito -= $detalle_resumen->cantidad;
+			$detalle_remito->save();
+		} else {
+			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $this->getRoute()->getObject())));
+		}
     $rid = $this->getRoute()->getObject()->getResumenId();
     $this->getRoute()->getObject()->delete();
     $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
@@ -136,7 +145,7 @@ class detresActions extends autoDetresActions
     if ($form->isValid()) {
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $detalle_resumen = $form->save();
-			
+
 			$lista_id = $detalle_resumen->getProducto()->getListaId();
 			$moneda_id = $detalle_resumen->getProducto()->getLista()->getMonedaId();
 			if (empty($lista_id)) {
@@ -145,15 +154,25 @@ class detresActions extends autoDetresActions
 			}
 			$detalle_resumen->setListaId($lista_id);
 			$detalle_resumen->setMonedaId($moneda_id);
-			if (!empty($detalle_resumen->getResumen()->remito_id)) {
-				$descontar_stock = false;
-				$detalle_resumen->setCantVendRemito($detalle_resumen->cantidad);
-			} else {
-				$descontar_stock = true;
-			}
-			$detalle_resumen->save();
 			
-			if ($descontar_stock) {
+			/*
+			if ($detalle_resumen->getResumen()->tipofactura_id == 4) {
+				$detalle_resumen->setPrecio(0);
+				$detalle_resumen->setSubTotal(0);
+				$detalle_resumen->setIva(0);
+				$detalle_resumen->setTotal(0);
+			}
+			*/
+			
+			$detalle_resumen->save();
+					
+			if (!empty($detalle_resumen->getResumen()->remito_id)) {
+				$remito_id = $detalle_resumen->getResumen()->remito_id;
+				$detalles_remitos = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($remito_id, $detalle_resumen->producto_id, $detalle_resumen->nro_lote);
+				$detalle_remito = $detalles_remitos[0];
+				$detalle_remito->cant_vend_remito += $detalle_resumen->cantidad;
+				$detalle_remito->save();
+			} else {
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
 			}
 			
@@ -273,80 +292,84 @@ class detresActions extends autoDetresActions
       $rid = $this->getUser()->getAttribute('rid');
     }
 
-	if (!empty($rid)) {
-		$wsaa = new WSAA(dirname(__FILE__)); 
-		$dt_expira = new DateTime($wsaa->get_expiration());
-		$dt_actual = new DateTime(date("Y-m-d h:m:i"));
-		if($dt_expira < $dt_actual) {
-			if (!$wsaa->generar_TA()) {
-				die('<br>'.$wsaa->error.'<br>');
-			}
-		}
-		
-		$ptovta = '9';
-		
-		$resumen = Doctrine::getTable('Resumen')->find($rid);
-		$regfe['ImpTotal'] = $resumen->getTotalResumen();
-		$regfe['ImpOpEx'] = 0;
-		$regfe['ImpIVA'] = $resumen->getIVATotalResumen();
-		$regfe['ImpTrib'] = 0;
-		$regfe['ImpTotConc'] = 0;
-		$regfe['ImpNeto'] = $resumen->getSubTotalResumen();
-		$regfeasoc = '';
-		$regfetrib = '';
-		$regfeiva[] = array(
-			'Id' => 5, 
-			'BaseImp' => $resumen->getSubTotalResumen(), 
-			'Importe' => $resumen->getIVATotalResumen()
-		);
-		
-		$regfe['CbteTipo'] = $resumen->getTipoFactura()->getCodTipoAfip();
-		$regfe['Concepto'] = 1;
-		$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
-		$regfe['DocNro'] = $resumen->getCuitCliente();
-		$regfe['CbteFch'] = date('Ymd');
-		$regfe['MonId'] = 'PES';
-		$regfe['MonCotiz'] = 1;
-		
-		$wsfev1 = new WSFEV1(dirname(__FILE__));
-		
-		$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
-		$nuevo_nro = $nro+1;
-
-		$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
-		$tipo_msj = 'error';
-		if (is_soap_fault($res)) {
-			$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
-			$afip_estado = 0;
-		} else {
-			if(empty($res) || $res == false || $res['cae'] <= 0) {
-				for ($i=0;$i < count($wsfev1->Code);$i++) {
-					$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+		if (!empty($rid)) {
+			$wsaa = new WSAA(dirname(__FILE__)); 
+			$dt_expira = new DateTime($wsaa->get_expiration());
+			$dt_actual = new DateTime(date("Y-m-d h:m:i"));
+			if($dt_expira < $dt_actual) {
+				if (!$wsaa->generar_TA()) {
+					die('<br>'.$wsaa->error.'<br>');
 				}
-				$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
+			}
+			
+			$ptovta = '0005';
+			
+			$resumen = Doctrine::getTable('Resumen')->find($rid);
+			$regfe['ImpTotal'] = $resumen->getTotalResumen();
+			$regfe['ImpOpEx'] = 0;
+			$regfe['ImpIVA'] = $resumen->getIVATotalResumen();
+			$regfe['ImpTrib'] = 0;
+			$regfe['ImpTotConc'] = 0;
+			$regfe['ImpNeto'] = $resumen->getSubTotalResumen();
+			$regfeasoc = '';
+			$regfetrib = '';
+			$regfeiva[] = array(
+				'Id' => 5, 
+				'BaseImp' => $resumen->getSubTotalResumen(), 
+				'Importe' => $resumen->getIVATotalResumen()
+			);
+			
+			$regfe['CbteTipo'] = $resumen->getTipoFactura()->getCodTipoAfip();
+			$regfe['Concepto'] = 1;
+			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
+			$regfe['DocNro'] = $resumen->getCuitCliente();
+			$regfe['CbteFch'] = date('Ymd');
+			$regfe['MonId'] = 'PES';
+			$regfe['MonCotiz'] = 1;
+			
+			$wsfev1 = new WSFEV1(dirname(__FILE__));
+			
+			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
+			$nuevo_nro = $nro+1;
+
+			//$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+			$tipo_msj = 'error';
+			if (is_soap_fault($res)) {
+				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
 				$afip_estado = 0;
-				$tipo_msj = 'error';
 			} else {
-			  if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
-					$msj = 'CAE no obtenido';
+				if(empty($res) || $res == false || $res['cae'] <= 0) {
+					for ($i=0;$i < count($wsfev1->Code);$i++) {
+						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+					}
+					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
 					$afip_estado = 0;
 					$tipo_msj = 'error';
-			  } else {
-					$msj = $res['cae'];
-					$afip_estado = 1;
-					//$resumen->setNroFactura($nuevo_nro);
-					$resumen->setAfipVtoCae($res['fec_vto']);
-					$tipo_msj = 'notice';
-			  }
+				} else {
+					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
+						$msj = 'CAE no obtenido';
+						$afip_estado = 0;
+						$tipo_msj = 'error';
+					} else {
+						$msj = $res['cae'];
+						$afip_estado = 1;
+						//$resumen->setNroFactura($nuevo_nro);
+						//$resumen->setPtoVta($ptovta);
+						$resumen->setAfipVtoCae($res['fec_vto']);
+						$tipo_msj = 'notice';
+					}
+				}
 			}
-		}
-		$resumen->setPtoVta($ptovta);
-		$resumen->setAfipEstado($afip_estado);
-		$resumen->setAfipMensaje($msj);
-		$resumen->save();
-	}
 
-	$this->getUser()->setFlash($tipo_msj, $msj);
-	$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
+			$resumen->setAfipEstado($afip_estado);
+			$resumen->setAfipMensaje($msj);
+			$resumen->setAfipEnvio($wsfev1->client->__getLastRequest());
+			$resumen->setAfipRespuesta($wsfev1->client->__getLastResponse());
+			
+			$resumen->save();
+		}
+
+		$this->getUser()->setFlash($tipo_msj, $msj);
+		$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
   }  
 }

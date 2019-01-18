@@ -1,4 +1,17 @@
 /*
+
+select sum(cantidad) from detalle_resumen where nro_lote = '0103501000002A/18'
+
+select * from control_stock cs where (comprados - vendidos) <> stock_guardado 
+and exists (
+	select producto_id 
+	from detalle_resumen dr 
+		join resumen r on dr.resumen_id = r.id
+	where r.fecha > '2018-06-01'
+		and cs.producto_id = dr.producto_id
+		and cs.nro_lote = dr.nro_lote
+)
+
 DROP VIEW cta_cte;
 DROP VIEW listado_cobros;
 DROP VIEW cta_cte_prov;
@@ -28,6 +41,7 @@ select
 FROM resumen r
   JOIN detalle_resumen d ON r.id = d.resumen_id
   JOIN cliente c ON r.cliente_id = c.id
+WHERE r.tipofactura_id <> 4
 GROUP BY r.id, d.moneda_id
 UNION
 SELECT 
