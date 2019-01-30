@@ -23,7 +23,7 @@ generator:
         actions:
           imprimir: {label: Imprimir página}
       filter:
-        display: [apellido, nombre]
+        display: [apellido, nombre, moneda, mayor]
       form:    ~
       edit:    ~
       new:     ~

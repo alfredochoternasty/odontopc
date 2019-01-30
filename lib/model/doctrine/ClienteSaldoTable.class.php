@@ -16,4 +16,11 @@ class ClienteSaldoTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ClienteSaldo');
     }
+		
+  static public function applyMayorFilter($query, $value)
+  {
+    $rootAlias = $query->getRootAlias();
+    $query->where($rootAlias.'.saldo > '.$value);
+    return $query;
+  }		
 }

@@ -23,6 +23,7 @@ DROP VIEW listado_ventas;
 DROP VIEW listado_compras;
 DROP VIEW control_stock;
 DROP VIEW cliente_saldo;
+DROP VIEW lista_precio_detalle;
 */
 
 CREATE VIEW cta_cte (
@@ -56,6 +57,8 @@ SELECT
   c.observacion
 FROM cobro c
   JOIN cliente cl ON c.cliente_id = cl.id
+	left outer join resumen r ON c.resumen_id = r.id
+WHERE r.tipofactura_id <> 4 or c.resumen_id = 0
 GROUP BY c.id, c.moneda_id
 ORDER BY fecha ASC;
 
@@ -71,10 +74,11 @@ SELECT
   cobro.tipo_id, 
   cobro.moneda_id, 
   cliente.genera_comision, 
-  cobro.monto 
+  cobro.monto
 FROM cobro
-JOIN cliente ON cobro.cliente_id = cliente.id;
-
+	JOIN cliente ON cobro.cliente_id = cliente.id
+	left outer join resumen r ON cobro.resumen_id = r.id
+WHERE r.tipofactura_id <> 4 or cobro.resumen_id = 0;
 
 CREATE VIEW cta_cte_prov (
   id,concepto,numero,fecha,proveedor_id,cuenta_id, moneda_id,debe,haber,observacion
@@ -240,6 +244,7 @@ from
 	 	and CONVERT(detalle_resumen.nro_lote using utf8) collate utf8_spanish_ci = CONVERT(lote.nro_lote using utf8) collate utf8_spanish_ci
 where
   producto.grupoprod_id not in (1, 15)
+  and resumen.remito_id is null
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   

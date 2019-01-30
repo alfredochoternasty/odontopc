@@ -12,5 +12,20 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 {
   public function configure()
   {
+		parent::configure();
+		$this->widgetSchema ['mayor'] = new sfWidgetFormInputText();
+    $this->validatorSchema ['mayor'] = new sfValidatorNumber();
   }
+	
+	public function getFields()
+	{
+		$fields = parent::getFields();
+		$fields['mayor'] = 'mayor';
+		return $fields;
+	}	
+	
+	public function addMayorColumnQuery($query, $field, $value)
+	{
+		Doctrine::getTable('ClienteSaldo')->applyMayorFilter($query, $value);
+	}
 }

@@ -1,11 +1,3 @@
-ALTER TABLE `resumen`
-	ADD COLUMN `afip_envio` TEXT NULL AFTER `remito_id`,
-	ADD COLUMN `afip_respuesta` TEXT NULL AFTER `afip_envio`;
-	
-ALTER TABLE `dev_producto`
-	ADD COLUMN `afip_envio` TEXT NULL,
-	ADD COLUMN `afip_respuesta` TEXT NULL;
-	
 DROP VIEW cta_cte;
 CREATE VIEW cta_cte (
   id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
@@ -38,5 +30,25 @@ SELECT
   c.observacion
 FROM cobro c
   JOIN cliente cl ON c.cliente_id = cl.id
+	left outer join resumen r ON c.resumen_id = r.id
+WHERE r.tipofactura_id <> 4 or c.resumen_id = 0
 GROUP BY c.id, c.moneda_id
 ORDER BY fecha ASC;
+
+DROP VIEW listado_cobros;
+CREATE VIEW listado_cobros (
+  id,fecha,cliente,tipo_cliente,tipo_cobro,moneda,cli_gen_comis,monto
+) AS 
+SELECT 
+  cobro.id, 
+  cobro.fecha, 
+  cobro.cliente_id, 
+  cliente.tipo_id, 
+  cobro.tipo_id, 
+  cobro.moneda_id, 
+  cliente.genera_comision, 
+  cobro.monto
+FROM cobro
+	JOIN cliente ON cobro.cliente_id = cliente.id
+	left outer join resumen r ON cobro.resumen_id = r.id
+WHERE r.tipofactura_id <> 4 or c.resumen_id = 0;
