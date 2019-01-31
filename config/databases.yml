@@ -2,6 +2,7 @@ dev:
   doctrine:
     class: sfDoctrineDatabase
     param:
+#      dsn: 'mysql:host=localhost;dbname=ntiimplantes_db'
       dsn: 'mysql:host=localhost;dbname=ventas'
       username: root
       password: 

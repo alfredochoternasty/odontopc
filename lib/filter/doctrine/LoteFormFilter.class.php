@@ -32,7 +32,6 @@ class LoteFormFilter extends BaseLoteFormFilter
 	public function addLoteNroColumnQuery(Doctrine_Query $query, $field, $values)
 	{
 		if (!empty($values['text'])) {
-			var_dump($values['text']);
 			$query->andWhere("nro_lote = ?", $values['text']);
 		}
 	}  
