@@ -22,27 +22,22 @@ class LoteFormFilter extends BaseLoteFormFilter
     $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));        
     
     $this->widgetSchema['fecha_vto'] = new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true)), 'to_date' => new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true)), 'with_empty' => false, 'template' => 'desde %from_date%<br />hasta %to_date%'));
-    $this->widgetSchema['grupo'] = new sfWidgetFormDoctrineChoice(array('model' => 'Grupoprod', 'add_empty' => true));
-    $this->widgetSchema['grupo2'] = new sfWidgetFormDoctrineChoice(array('model' => 'Grupoprod', 'add_empty' => true));
-    $this->widgetSchema['grupo3'] = new sfWidgetFormDoctrineChoice(array('model' => 'Grupoprod', 'add_empty' => true));
-    $this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
+    $this->widgetSchema['lote_nro'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
 
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
     $this->validatorSchema['fecha_vto'] = new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~')), 'to_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'))));    
-    $this->validatorSchema['grupo'] = new sfValidatorPass(array('required' => false));
-    $this->validatorSchema['grupo2'] = new sfValidatorPass(array('required' => false));
-    $this->validatorSchema['grupo3'] = new sfValidatorPass(array('required' => false));
-    $this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
+    $this->validatorSchema['lote_nro'] = new sfValidatorPass(array('required' => false));
   }
   
-	public function addUsuarioColumnQuery(Doctrine_Query $query, $field, $values)
+	public function addLoteNroColumnQuery(Doctrine_Query $query, $field, $values)
 	{
-		if (!empty($values)) {
-			$query->andWhere("usuario = ?", $values);
+		if (!empty($values['text'])) {
+			var_dump($values['text']);
+			$query->andWhere("nro_lote = ?", $values['text']);
 		}
 	}  
 	
-	public function addProductoIdColumnQuery(Doctrine_Query $query, $field, $values)
+/*	public function addProductoIdColumnQuery(Doctrine_Query $query, $field, $values)
 	{
 		if (!empty($values)) {
 			$query->andWhere("producto_id = ?", $values);
@@ -69,9 +64,10 @@ class LoteFormFilter extends BaseLoteFormFilter
 			$query->andWhere('p.grupo3 = ?', $values);
 		}    
 	}
-	
+	*/
 	public function getFields()
 	{
-	  return parent::getFields() + array('Grupo' => 'custom', 'Grupo2' => 'custom','Grupo3' => 'custom', 'usuario' => 'Number');
-	}  
+	  return parent::getFields() + array('lote_nro' => 'custom');
+	} 
+	
 }
