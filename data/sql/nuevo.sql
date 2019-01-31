@@ -52,3 +52,55 @@ FROM cobro
 	JOIN cliente ON cobro.cliente_id = cliente.id
 	left outer join resumen r ON cobro.resumen_id = r.id
 WHERE r.tipofactura_id <> 4 or c.resumen_id = 0;
+
+ALTER TABLE detalle_resumen	ADD COLUMN lote_id INT NULL;
+ALTER TABLE detalle_compra	ADD COLUMN lote_id INT NULL;
+ALTER TABLE dev_producto	ADD COLUMN lote_id INT NULL;
+
+delete from lote where nro_lote = '270/B021/16' AND compra_id = 40;
+delete from lote WHERE id IN (107, 216, 196, 178, 263, 80, 217, 218)
+
+UPDATE detalle_compra 
+SET lote_id = (
+	SELECT id 
+	FROM lote 
+	WHERE detalle_compra.nro_lote = lote.nro_lote 
+	AND detalle_compra.producto_id = lote.producto_id
+	
+);
+
+UPDATE detalle_resumen
+SET lote_id = (
+	SELECT id 
+	FROM lote 
+	WHERE detalle_resumen.nro_lote = lote.nro_lote 
+	AND detalle_resumen.producto_id = lote.producto_id
+);
+
+UPDATE dev_producto
+SET lote_id = (
+	SELECT id 
+	FROM lote 
+	WHERE dev_producto.nro_lote = lote.nro_lote 
+	AND dev_producto.producto_id = lote.producto_id
+);
+
+CREATE TABLE compra_lote (
+	id INT NOT NULL AUTO_INCREMENT,
+	compra_id INT NOT NULL,
+	lote_id INT NOT NULL,
+	PRIMARY KEY (id)
+);
+
+/*
+DROP TABLE 
+	producto2, 
+	traza2, 
+	grupoprod2, 
+	det_fact_compra, 
+	venta, 
+	detalle_venta, 
+	detalle_resumen_antes_er, 
+	cuenta_compras, 
+	compra2;
+*/
