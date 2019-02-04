@@ -17,7 +17,7 @@
 	$detalle = $pager->getResults();
 	$resumen = $detalle[0]->getResumen() ?>
 <?php 
-	if ($detalle[0]->getResumen()->afip_estado == 0 && $detalle[0]->getResumen()->tipofactura_id != 4) {
+	if ($detalle[0]->getResumen()->afip_estado == 0 && $detalle[0]->getResumen()->tipofactura_id != 4 && $resumen->fecha > '20190204') {
 		echo link_to('Enviar AFIP', 'detres/cae?rid='.$detalle[0]->resumen_id, array(
 			'confirm' => 'Seguro que quiere ENVIAR A AFIP',
 			'class'  => 'fg-button fg-button-mini ui-state-default fg-button-icon-left',

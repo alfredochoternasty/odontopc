@@ -167,3 +167,6 @@ DROP TABLE
 
 DROP VIEW vta_fact, comp_fact, cta_cte_prov
 */
+
+
+UPDATE resumen SET afip_mensaje = NULL, afip_nro_comp = NULL, afip_vto_cae = NULL; 
