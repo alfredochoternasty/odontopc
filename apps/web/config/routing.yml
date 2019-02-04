@@ -575,6 +575,14 @@ backup:
   url:   /backup
   param: { module: admins, action: index }  
 
+log:
+  url:   /log
+  param: { module: admins, action: log }  
+
+Triggers:
+  url:   /triggers
+  param: { module: admins, action: triggers }  
+
 # generic rules
 # please, remove them by adding more specific rules
 default_index:

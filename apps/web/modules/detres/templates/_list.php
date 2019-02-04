@@ -13,10 +13,10 @@
       </tr>
     </tbody>
   </table>
-
   <?php else: 
-
 	$detalle = $pager->getResults();
+	$resumen = $detalle[0]->getResumen() ?>
+<?php 
 	if ($detalle[0]->getResumen()->afip_estado == 0 && $detalle[0]->getResumen()->tipofactura_id != 4) {
 		echo link_to('Enviar AFIP', 'detres/cae?rid='.$detalle[0]->resumen_id, array(
 			'confirm' => 'Seguro que quiere ENVIAR A AFIP',
@@ -25,6 +25,34 @@
 		));
 	}
 ?>	
+	<table>
+	  <caption class="fg-toolbar ui-widget-header ui-corner-top">
+            <h1><span class="ui-icon ui-icon-triangle-1-s"></span>Venta</h1>
+    </caption>
+		<tbody>
+		<tr>
+		<td>
+			<span style="font-size: 14px;">
+				<?php echo $resumen->getTipoFactura(); ?><br>
+				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
+				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
+				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
+				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
+			</span>
+		</td>
+		<td>
+			<span style="font-size: 14px;">
+			<b>Razón Social: </b><?php echo $resumen->getCliente() ?><br>
+			<b>Domicilio: </b><?php echo $resumen->getCliente()->getDomicilio() ?> - <?php echo $resumen->getCliente()->getLocalidad() ?><br>
+			<b>C.U.I.T. : </b><?php echo $resumen->getCliente()->getCuit() ?><br>
+			<b>Condición frente al I.V.A. : </b><?php echo $resumen->getCliente()->getCondfiscal() ?><br>
+			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
+				<b>Condición de Venta : </b>Cuenta Corriente
+			<?php endif;?>
+			</span>
+		</td>
+		</tbody>
+	</table>
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
             <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Detalle de la Venta', array(), 'messages') ?></h1>

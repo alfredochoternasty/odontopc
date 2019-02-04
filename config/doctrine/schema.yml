@@ -148,9 +148,11 @@ DetalleCompra:
     trazable: {type: boolean}
     usuario: {type: integer(4)}
     tiene_vto: {type: boolean}
+    lote_id: {type: integer(4)}
   relations:
     Compra: {type: one, local: compra_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+    Lote: {type: one, local: lote_id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
 Grupoprod:
   connection: doctrine
@@ -294,6 +296,7 @@ DetalleResumen:
     lista_id: {type: integer(4), notnull: true}
     moneda_id: {type: integer(4), notnull: true}
     cant_vend_remito: {type: integer(4)}
+    lote_id: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -301,6 +304,7 @@ DetalleResumen:
     Lote: {type: one, local: nro_lote, onDelete: RESTRICT}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
+    Lote: {type: one, local: lote_id, onDelete: RESTRICT}
 Localidad:
   connection: doctrine
   tableName: localidad
@@ -342,63 +346,7 @@ Cobro:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Banco: {type: one, local: banco_id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
-Pago:
-  connection: doctrine
-  tableName: pago
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    fecha: {type: date(25), notnull: true}
-    proveedor_id: {type: integer(4), notnull: true}
-    cuenta_id: {type: integer(4), notnull: true}
-    compra_id: {type: integer(4), notnull: true}
-    moneda_id: {type: integer(4), notnull: true}
-    monto: {type: 'decimal(10, 2)', notnull: true}
-    tipo_id: {type: integer(4), notnull: true}
-    banco_id: {type: integer(4)}
-    numero: {type: integer(4)}
-    observacion: {type: string(200)}
-  relations:
-    Compra: {type: one, local: compra_id, onDelete: CASCADE}
-    Proveedor: {type: one, class: Proveedor, local: proveedor_id}
-    Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
-    Cuenta: {type: one, class: Cuenta, local: cuenta_id, onDelete: RESTRICT}
-    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
-    Banco: {type: one, local: banco_id, onDelete: RESTRICT}
-FactCompra:
-  connection: doctrine
-  tableName: fact_compra
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    proveedor_id: {type: integer(4), notnull: true}
-    numero: {type: integer(4), notnull: true}
-    tipofactura_id: {type: integer(4), notnull: true}
-    fecha: {type: date(25), notnull: true}    
-    moneda_id: {type: integer(4), notnull: true}
-    observacion: {type: string(200)}
-  relations:
-    Proveedor: {type: one, class: Proveedor, local: proveedor_id}
-    Detalle: {type: many, class: DetFactCompra, local: id, foreign: factcompra_id}
-    Tipofactura: {type: one, class: TipoFactura, local: tipofactura_id, onDelete: RESTRICT}
-    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
-DetFactCompra:
-  connection: doctrine
-  tableName: det_fact_compra
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    factcompra_id: {type: integer(4)}
-    producto_id: {type: integer(4)}
-    grupoprod_id: {type: integer(4)}
-    precio: {type: 'decimal(10, 2)', notnull: true}
-    cantidad: {type: integer(4), notnull: true, default: 1}
-    subtotal: {type: 'decimal(10, 2)', notnull: true}
-    iva: {type: 'decimal(10, 2)', notnull: true}    
-    total: {type: 'decimal(10, 2)'}
-    nro_lote: {type: string(255)}
-  relations:
-    Factura: {type: one, class: FactCompra, local: factcompra_id, onDelete: CASCADE}
-    Producto: {type: one, local: producto_id, onDelete: RESTRICT}
-    Grupoprod: {type: one, local: grupoprod_id, onDelete: RESTRICT}
-CtaCte:
+ CtaCte:
   connection: doctrine
   tableName: cta_cte
   columns:
@@ -523,12 +471,14 @@ DevProducto:
     nro_factura: {type: integer(4)}
     afip_envio: {type: string}
     afip_respuesta: {type: string}
+    lote_id: {type: integer(4)}
   relations:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    Lote: {type: one, local: lote_id, onDelete: RESTRICT}
 Presupuesto:
   connection: doctrine
   tableName: presupuesto
@@ -563,56 +513,6 @@ CobroResumen:
   relations:
     Cobro: {type: one, local: cobro_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
-PagoCompra:
-  connection: doctrine
-  tableName: pago_compra
-  columns:
-    pago_id: {type: integer(4), primary: true}
-    compra_id: {type: integer(4), primary: true}
-    monto: {type: 'decimal(10, 2)'}
-  relations:
-    Pago: {type: one, local: pago_id, onDelete: RESTRICT}
-    Compra: {type: one, local: compra_id, onDelete: RESTRICT}
-CtaCteProv:
-  connection: doctrine
-  tableName: cta_cte_prov
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    concepto: {type: string(200)}
-    numero: {type: integer(4)}
-    fecha: {type: date(25), notnull: true}    
-    proveedor_id: {type: integer(4), notnull: true}
-    cuenta_id: {type: integer(4), notnull: true}
-    moneda_id: {type: integer(4)}
-    debe: {type: 'decimal(10, 2)', notnull: true}
-    haber: {type: 'decimal(10, 2)', notnull: true}
-    observacion: {type: string(200)}
-  relations:
-    Proveedor: {type: one, class: Proveedor, local: proveedor_id, onDelete: RESTRICT}
-    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
-    Cuenta: {type: one, class: Cuenta, local: cuenta_id, onDelete: RESTRICT}
-VtaFact:
-  connection: doctrine
-  tableName: vta_fact
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    fecha: {type: date(25)}
-    producto_id: {type: integer(4)}
-    nombre_prod: {type: string(200)}
-    cantidad: {type: integer(4)}
-  relations:
-    Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
-CompFact:
-  connection: doctrine
-  tableName: comp_fact
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    fecha: {type: date(25)}
-    producto_id: {type: integer(4)}
-    nombre_prod: {type: string(200)}
-    cantidad: {type: integer(4)}
-  relations:
-    Producto: {type: one, local: producto_id, onDelete: RESTRICT}
 Pedido:
   connection: doctrine
   tableName: pedido
@@ -863,55 +763,6 @@ CursoMailEnviado:
     observacion: {type: string(255)}
   relations:
     Curso: {type: one, class: Curso, local: curso_id}
-Grupoprod2:
-  connection: doctrine
-  tableName: grupoprod2
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    nombre: {type: string(50), notnull: true}
-Producto2:
-  connection: doctrine
-  tableName: producto2
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    codigo: {type: string(50)}
-    nombre: {type: string(100), notnull: true}
-    grupoprod_id: {type: integer(4)}
-  relations:
-    Grupo: {type: one, class: Grupoprod2, local: grupoprod_id, onDelete: RESTRICT}
-Traza2:
-  connection: doctrine
-  tableName: traza2
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    producto_id: {type: integer(4)}
-    nro_lote: {type: string(255)}
-    nro_venta: {type: integer(4)}
-    fecha_venta: {type: date(25)}
-    cliente_id: {type: integer(4)}
-    fecha_compra: {type: date(25)}
-    proveedor_id: {type: integer(4)}
-    numero_compra: {type: integer(4)}
-    cant_vendida: {type: integer(4)}
-    cant_comprada: {type: integer(4)}
-  relations:
-    Proveedor: {type: one, local: proveedor_id, onDelete: RESTRICT}
-    Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
-    Producto2: {type: one, local: producto_id, onDelete: RESTRICT}
-compra2:
-  connection: doctrine
-  tableName: compra2
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    numero_compra: {type: integer(4)}
-    proveedor_id: {type: integer(4)}
-    fecha: {type: date(25)}
-    producto_id: {type: integer(4)}
-    cantidad: {type: integer(4)}
-    nro_lote: {type: string(255)}
-  relations:
-    Proveedor: {type: one, local: proveedor_id, onDelete: RESTRICT}
-    Producto2: {type: one, local: producto_id, onDelete: RESTRICT}
 ClienteSaldo:
   connection: doctrine
   tableName: cliente_saldo

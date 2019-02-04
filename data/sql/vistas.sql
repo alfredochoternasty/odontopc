@@ -1,5 +1,4 @@
 /*
-
 select sum(cantidad) from detalle_resumen where nro_lote = '0103501000002A/18'
 
 select * from control_stock cs where (comprados - vendidos) <> stock_guardado 
@@ -14,9 +13,6 @@ and exists (
 
 DROP VIEW cta_cte;
 DROP VIEW listado_cobros;
-DROP VIEW cta_cte_prov;
-DROP VIEW vta_fact;
-DROP VIEW comp_fact;
 DROP VIEW producto_traza;
 DROP VIEW cliente_ultima_compra;
 DROP VIEW listado_ventas;
@@ -79,60 +75,6 @@ FROM cobro
 	JOIN cliente ON cobro.cliente_id = cliente.id
 	left outer join resumen r ON cobro.resumen_id = r.id
 WHERE r.tipofactura_id <> 4 or cobro.resumen_id = 0;
-
-CREATE VIEW cta_cte_prov (
-  id,concepto,numero,fecha,proveedor_id,cuenta_id, moneda_id,debe,haber,observacion
-) AS 
-select
-  FLOOR(1+(RAND()*999999999999)), 
-  'Compra',
-  r.id as res_id, 
-  r.fecha, 
-  c.id as prov_id,
-  cu.id, 
-  r.moneda_id, 
-  '0' AS debe,
-  sum( d.total ) AS haber,   
-  r.observacion
-FROM compra r
-  JOIN detalle_compra d ON r.id = d.compra_id
-  JOIN proveedor c ON r.proveedor_id = c.id
-  JOIN cuenta_compras cu ON r.cuenta_id = cu.id
-GROUP BY r.id
-UNION
-SELECT 
-  FLOOR(1+(RAND()*999999999999)), 
-  'Pago',
-  c.id as pago_id, 
-  c.fecha, 
-  cl.id as prov_id, 
-  cu.id, 
-  c.moneda_id, 
-  sum( c.monto ) AS debe, 
-  '0' AS haber, 
-  c.observacion
-FROM pago c
-  JOIN proveedor cl ON c.proveedor_id = cl.id
-  JOIN cuenta_compras cu ON c.cuenta_id = cu.id
-GROUP BY c.id
-ORDER BY fecha ASC; 
-
-
-CREATE VIEW vta_fact 
-AS 
-  select detalle_venta.id AS id,venta.fecha AS fecha,producto.id AS producto_id,producto.nombre AS nombre_prod,detalle_venta.cantidad AS cantidad 
-  from detalle_venta 
-  join venta on detalle_venta.venta_id = venta.id
-  join producto on detalle_venta.producto_id = producto.id;
-
-
-CREATE VIEW comp_fact 
-AS 
-  select det_fact_compra.id AS id,fact_compra.fecha AS fecha,producto.id AS producto_id, producto.nombre AS nombre_prod,det_fact_compra.cantidad AS cantidad 
-  from det_fact_compra 
-  join fact_compra on det_fact_compra.factcompra_id = fact_compra.id 
-  join producto on det_fact_compra.producto_id = producto.id;
-  
 
 CREATE VIEW producto_traza 
 AS
