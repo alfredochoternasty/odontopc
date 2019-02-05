@@ -15,7 +15,7 @@
   </table>
 
   <?php else: ?>
-  <?php if($sf_user->hasPermission('ventas')): ?>
+  <?php //if($sf_user->hasPermission('ventas')): ?>
   <div style="position:absolute;top:0; right:0; width:45%;">
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
@@ -45,7 +45,7 @@
     </tbody>
   </table>
   </div>
-  <?php endif; //del permiso?> 
+  <?php //endif; //del permiso?> 
   
   <div style="position:absolute;top:0; left:0; width:45%;">
   <table>

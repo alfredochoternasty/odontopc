@@ -10,7 +10,8 @@ body
 }
 
 #img_nti_header{
-  text-align: left; 
+  text-align: right;
+	font-family: monospace;
   width:90%; 
   height: 62px;
   background: url(../images/nti-header.jpg) no-repeat left;

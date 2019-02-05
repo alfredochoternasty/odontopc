@@ -31,7 +31,12 @@
 		if($sf_user->hasGroup('Blanco')){ ?>
 			<div id="nti_header">
 				<center>
-				<div id="img_nti_header"></div>
+				<div id="img_nti_header">
+					<br>
+					<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
+					<b>Versión del Sistema: 2.0</b><br>
+					Fecha Actualización: 04/02/2019
+				</div>
 				</center>
 			</div>
 		<?php 
