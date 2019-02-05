@@ -34,7 +34,7 @@ class ResumenTable extends Doctrine_Table
 			$query = Doctrine_Core::getTable('Resumen')
 			->createQuery('q')
 			->where('q.tipofactura_id = 4')
-			->andWhere('not exists(select id from resumen where resumen.remito_id = r.id)')
+			//->andWhere('not exists(select id from resumen where resumen.remito_id = r.id)')
 			->orderBy('fecha desc, nro_factura desc');
 			$result = $query->execute();
 			return $result;

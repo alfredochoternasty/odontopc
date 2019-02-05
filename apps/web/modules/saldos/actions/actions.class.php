@@ -14,6 +14,19 @@ require_once dirname(__FILE__).'/../lib/saldosGeneratorHelper.class.php';
 class saldosActions extends autoSaldosActions
 {
   public function executeListImprimir(sfWebRequest $request){
+    $filtro = new ClienteSaldoFormFilter();
+    $consulta = $filtro->buildQuery($this->getFilters());
+    if ($this->getSort()) $consulta->orderBy(implode(' ', $this->getSort()));
+    $listado = $consulta->execute();
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial('imprimir' , array('saldos' => $listado)));
+    $dompdf->set_paper('A4','landscape');
+    $dompdf->render();
+    $dompdf->stream("saldos.pdf");    
+	
+	/*
+	  
     $filtro = new ClienteFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
 		$pagina = $this->getUser()->getAttribute('saldos.page', '1', 'admin_module')-1;
@@ -26,7 +39,7 @@ class saldosActions extends autoSaldosActions
     $dompdf->render();
     $dompdf->stream("saldos.pdf");
 		
-		/*
+	
     header("Content-Disposition: attachment; filename=\"clientes.xls\"");
     header("Content-Type: application/vnd.ms-excel");
     

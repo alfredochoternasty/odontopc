@@ -89,7 +89,7 @@ hr {
     <td><?php echo $saldo->getDni(); ?></td>
     <td><?php echo $saldo->getApellido() ?></td>
     <td><?php echo $saldo->getNombre() ?></td>
-    <td><?php echo '$ '.sprintf("%01.2f", $saldo->getSaldoCtaCte()) ?></td>
+    <td><?php echo $saldo->getSimbolo().' '.number_format($saldo->saldo, 2, ',', '.') ?></td>
   </tr>
   <?php 
   endforeach;

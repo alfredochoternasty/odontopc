@@ -12,5 +12,7 @@
  */
 class DevProducto extends BaseDevProducto
 {
-
+	public function getFechaYMD(){
+		return str_replace('-', '', $this->fecha);
+	}
 }

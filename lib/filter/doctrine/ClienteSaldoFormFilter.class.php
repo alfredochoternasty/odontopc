@@ -14,7 +14,7 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
   {
 		parent::configure();
 		$this->widgetSchema ['mayor'] = new sfWidgetFormInputText();
-    $this->validatorSchema ['mayor'] = new sfValidatorNumber();
+		$this->validatorSchema ['mayor'] = new sfValidatorNumber();
   }
 	
 	public function getFields()

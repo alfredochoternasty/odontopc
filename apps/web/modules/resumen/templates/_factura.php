@@ -1,0 +1,1 @@
+<?php	echo $resumen->getFactura(); ?>

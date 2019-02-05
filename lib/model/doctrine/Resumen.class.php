@@ -17,6 +17,11 @@ class Resumen extends BaseResumen
     return $this->getId();
   }
 
+  public function getFactura()
+  {
+    return $this->getTipoFactura().' - '.str_pad($this->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->nro_factura, 8, 0, STR_PAD_LEFT);
+  }
+
   public function SimboloMoneda(){
     return $this->getCliente()->getLista()->getMoneda()->getSimbolo();
   }
@@ -91,4 +96,8 @@ class Resumen extends BaseResumen
 	public function getFechaDMY(){
 		return implode('/', array_reverse(explode('-', $this->getFecha())));
 	}
+	
+	public function getFechaYMD(){
+		return str_replace('-', '', $this->fecha);
+	}	
 }

@@ -53,7 +53,7 @@
 			</div>
 		</td>
 		<td width="45%">
-			<div style="margin-bottom: 40px; width:100%; font-weight:bold; font-size:14px; text-align:right;">SIN VALIDEZ</div>
+			<div style="margin-bottom: 40px; width:100%; font-weight:bold; font-size:14px; text-align:right;"></div>
 			<span style="font-weight:bold; font-size: 22px;">
 				<?php 
 					if ($resumen->getTipoFactura()->letra == 'X') 
@@ -63,7 +63,7 @@
 				?>
 			</span><br>
 			<span style="font-size: 14px;">
-				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
+				<b>Punto de Venta: </b><?php echo str_pad($resumen->getPtoVta(), 4, 0,STR_PAD_LEFT) ?><b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
 				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
 				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
 				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>

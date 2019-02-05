@@ -17,7 +17,7 @@
 	$detalle = $pager->getResults();
 	$resumen = $detalle[0]->getResumen() ?>
 <?php 
-	if ($detalle[0]->getResumen()->afip_estado == 0 && $detalle[0]->getResumen()->tipofactura_id != 4 && $resumen->fecha > '20190204') {
+	if ($detalle[0]->getResumen()->afip_estado == 0 && $detalle[0]->getResumen()->tipofactura_id != 4 && $resumen->fecha >= '2019-02-01') {
 		echo link_to('Enviar AFIP', 'detres/cae?rid='.$detalle[0]->resumen_id, array(
 			'confirm' => 'Seguro que quiere ENVIAR A AFIP',
 			'class'  => 'fg-button fg-button-mini ui-state-default fg-button-icon-left',
@@ -27,17 +27,18 @@
 ?>	
 	<table>
 	  <caption class="fg-toolbar ui-widget-header ui-corner-top">
-            <h1><span class="ui-icon ui-icon-triangle-1-s"></span>Venta</h1>
+            <h1>Venta</h1>
     </caption>
 		<tbody>
 		<tr>
 		<td>
 			<span style="font-size: 14px;">
-				<?php echo $resumen->getTipoFactura(); ?><br>
-				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
+				<b><?php echo $resumen->getTipoFactura(); ?><b><br>
+				<b>Punto de Venta: </b><?php echo str_pad($resumen->getPtoVta(), 4, 0,STR_PAD_LEFT) ?><b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
 				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
 				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
 				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
+				<br><br>
 			</span>
 		</td>
 		<td>
@@ -49,6 +50,7 @@
 			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
 				<b>Condición de Venta : </b>Cuenta Corriente
 			<?php endif;?>
+			<br><br>
 			</span>
 		</td>
 		</tbody>

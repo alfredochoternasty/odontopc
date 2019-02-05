@@ -25,7 +25,7 @@ generator:
         max_per_page: 10
         table_method: retrieveConJoins
         title: Ventas realizadas
-        display: [TipoVenta, TipoFactura, nro_factura, fecha, _remito, Cliente, _cae_afip]
+        display: [_factura, fecha, TipoVenta,Cliente, _remito, _cae_afip]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}

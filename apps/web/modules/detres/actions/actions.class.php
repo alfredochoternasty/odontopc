@@ -323,7 +323,7 @@ class detresActions extends autoDetresActions
 			$regfe['Concepto'] = 1;
 			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
 			$regfe['DocNro'] = $resumen->getCuitCliente();
-			$regfe['CbteFch'] = date('Ymd');
+			$regfe['CbteFch'] = $resumen->getFechaYMD(); //date('Ymd');
 			$regfe['MonId'] = 'PES';
 			$regfe['MonCotiz'] = 1;
 			
@@ -332,29 +332,26 @@ class detresActions extends autoDetresActions
 			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
 			$nuevo_nro = $nro+1;
 
-			//$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';
+			$afip_estado = 0;
 			if (is_soap_fault($res)) {
 				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
-				$afip_estado = 0;
 			} else {
 				if(empty($res) || $res == false || $res['cae'] <= 0) {
 					for ($i=0;$i < count($wsfev1->Code);$i++) {
 						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
 					}
 					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
-					$afip_estado = 0;
-					$tipo_msj = 'error';
 				} else {
 					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
-						$msj = 'CAE no obtenido';
-						$afip_estado = 0;
-						$tipo_msj = 'error';
+						$msj = 'Falló el envió de la información a ala AFIP, CAE no obtenido';
 					} else {
-						$msj = $res['cae'];
+						$msj = 'La venta se informó correctamen a la AFIP, CAE: '.$res['cae'];
 						$afip_estado = 1;
-						//$resumen->setNroFactura($nuevo_nro);
-						//$resumen->setPtoVta($ptovta);
+						//$resumen->setFecha(date('Ymd'));
+						$resumen->setNroFactura($nuevo_nro);
+						$resumen->setPtoVta($ptovta);
 						$resumen->setAfipVtoCae($res['fec_vto']);
 						$tipo_msj = 'notice';
 					}

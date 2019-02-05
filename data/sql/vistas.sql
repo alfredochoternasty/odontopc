@@ -270,29 +270,24 @@ GROUP BY
 ORDER BY
 	p.orden_grupo, p.nombre, dc.nro_lote;
 
-
+DROP VIEW cliente_saldo;
 CREATE VIEW cliente_saldo AS
 SELECT 
-	FLOOR(1+(RAND()*999999999999)),
+	FLOOR(1+(RAND()*999999999999)) as id,
 	c.dni, 
 	c.apellido, 
 	c.nombre, 
-	cta.id, 
-	tc.nombre as tipo_cliente, 
 	tm.simbolo, 
 	tm.nombre as moneda, 
-	FORMAT(SUM(cta.debe - cta.haber), 2) AS saldo, 
-	MAX(fecha) AS fecha,
-	cta.concepto
+	SUM(cta.debe - cta.haber) AS saldo
 FROM 
 	cliente c 
 		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
-		LEFT JOIN tipo_cliente tc ON c.tipo_id = tc.id 
 		LEFT JOIN tipo_moneda tm ON cta.moneda_id = tm.id 
 WHERE 
 	c.activo = 1
 GROUP BY 
-	tc.nombre, tm.nombre, c.dni, c.apellido, c.nombre 
+	tm.nombre, tm.simbolo, c.dni, c.apellido, c.nombre
 ORDER BY 
 	c.apellido asc;
 
