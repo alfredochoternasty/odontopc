@@ -1,7 +1,11 @@
 /*
 select sum(cantidad) from detalle_resumen where nro_lote = '0103501000002A/18'
 
-select * from control_stock cs where (comprados - vendidos) <> stock_guardado 
+select nro_lote #*, case when (comprados - vendidos) = stock_calculado then 1 else 0 end as cal
+from control_stock cs 
+where 
+cs.nro_lote not in (select nro_lote from lotes_romi) 
+and (comprados - vendidos) <> stock_guardado 
 and exists (
 	select producto_id 
 	from detalle_resumen dr 
@@ -20,8 +24,8 @@ DROP VIEW listado_compras;
 DROP VIEW control_stock;
 DROP VIEW cliente_saldo;
 DROP VIEW lista_precio_detalle;
-*/
 
+*/
 CREATE VIEW cta_cte (
   id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
 ) AS 
@@ -105,7 +109,9 @@ from
 		join proveedor prov on com.proveedor_id = prov.id
 		left outer join dev_producto dp on dr.resumen_id = dp.resumen_id and dr.producto_id = dp.producto_id and dr.nro_lote and dp.nro_lote
 where 
-	dc.trazable = 1
+	dc.trazable = 1 
+	and dr.nro_lote not in (select nro_lote from lotes_romi) 
+	and dc.nro_lote not in (select nro_lote from lotes_romi)
 having 
 	cant_vendida > 0;
 
@@ -119,7 +125,6 @@ CREATE VIEW cliente_ultima_compra AS select
 	celular,
 	(select max(fecha) from resumen where cliente_id = cliente.id) as fecha
 from cliente ;
-
 
 CREATE VIEW listado_ventas (
   id, 
@@ -187,10 +192,10 @@ from
 where
   producto.grupoprod_id not in (1, 15)
   and resumen.remito_id is null
+  and detalle_resumen.nro_lote not in (select nro_lote from lotes_romi)
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   
-
 CREATE VIEW listado_compras (
   id, compra_id, numero, fecha, moneda_id, moneda_nombre, prov_id, prov_raz_soc, producto_id, precio, cantidad, total, producto_nombre, grupoprod_id, grupo_nombre, nro_lote, grupo2, grupo3
 ) AS 
@@ -220,10 +225,10 @@ from
     left join detalle_compra on compra.id = detalle_compra.compra_id
     left join producto on detalle_compra.producto_id = producto.id
     left join grupoprod on producto.grupoprod_id = grupoprod.id
+where  detalle_compra.nro_lote not in (select nro_lote from lotes_romi)
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   
-
 CREATE VIEW control_stock (
  id,
  proveedor_id,
@@ -264,7 +269,7 @@ JOIN producto p ON dc.producto_id = p.id
 JOIN grupoprod gp ON p.grupoprod_id = gp.id
 JOIN lote l ON dc.producto_id = l.producto_id and CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(l.nro_lote USING utf8) COLLATE utf8_spanish_ci
 WHERE
-	p.grupoprod_id NOT IN (1,15) AND p.activo = 1
+	p.grupoprod_id NOT IN (1,15) AND p.activo = 1 and dc.nro_lote not in (select nro_lote from lotes_romi)
 GROUP BY
 	p.id, p.nombre, dc.nro_lote
 ORDER BY
