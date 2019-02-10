@@ -270,7 +270,6 @@ GROUP BY
 ORDER BY
 	p.orden_grupo, p.nombre, dc.nro_lote;
 
-DROP VIEW cliente_saldo;
 CREATE VIEW cliente_saldo AS
 SELECT 
 	FLOOR(1+(RAND()*999999999999)) as id,

@@ -32,6 +32,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'nro_factura'    => new sfWidgetFormFilterInput(),
       'afip_envio'     => new sfWidgetFormFilterInput(),
       'afip_respuesta' => new sfWidgetFormFilterInput(),
+      'lote_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -54,6 +55,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'nro_factura'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'afip_envio'     => new sfValidatorPass(array('required' => false)),
       'afip_respuesta' => new sfValidatorPass(array('required' => false)),
+      'lote_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lote'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto_filters[%s]');
@@ -93,6 +95,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'nro_factura'    => 'Number',
       'afip_envio'     => 'Text',
       'afip_respuesta' => 'Text',
+      'lote_id'        => 'ForeignKey',
     );
   }
 }

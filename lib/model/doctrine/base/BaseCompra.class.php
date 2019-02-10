@@ -19,12 +19,10 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property integer $usuario
  * @property Proveedor $Proveedor
  * @property Doctrine_Collection $Detalles
- * @property Doctrine_Collection $Pagos
  * @property TipoFactura $Tipofactura
  * @property Cuenta $Cuenta
  * @property TipoMoneda $Moneda
  * @property sfGuardUser $sfGuardUser
- * @property Doctrine_Collection $PagoCompra
  * @property Doctrine_Collection $Lote
  * 
  * @method integer             getId()             Returns the current record's "id" value
@@ -39,12 +37,10 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method Proveedor           getProveedor()      Returns the current record's "Proveedor" value
  * @method Doctrine_Collection getDetalles()       Returns the current record's "Detalles" collection
- * @method Doctrine_Collection getPagos()          Returns the current record's "Pagos" collection
  * @method TipoFactura         getTipofactura()    Returns the current record's "Tipofactura" value
  * @method Cuenta              getCuenta()         Returns the current record's "Cuenta" value
  * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
- * @method Doctrine_Collection getPagoCompra()     Returns the current record's "PagoCompra" collection
  * @method Doctrine_Collection getLote()           Returns the current record's "Lote" collection
  * @method Compra              setId()             Sets the current record's "id" value
  * @method Compra              setCuentaId()       Sets the current record's "cuenta_id" value
@@ -58,12 +54,10 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setUsuario()        Sets the current record's "usuario" value
  * @method Compra              setProveedor()      Sets the current record's "Proveedor" value
  * @method Compra              setDetalles()       Sets the current record's "Detalles" collection
- * @method Compra              setPagos()          Sets the current record's "Pagos" collection
  * @method Compra              setTipofactura()    Sets the current record's "Tipofactura" value
  * @method Compra              setCuenta()         Sets the current record's "Cuenta" value
  * @method Compra              setMoneda()         Sets the current record's "Moneda" value
  * @method Compra              setSfGuardUser()    Sets the current record's "sfGuardUser" value
- * @method Compra              setPagoCompra()     Sets the current record's "PagoCompra" collection
  * @method Compra              setLote()           Sets the current record's "Lote" collection
  * 
  * @package    odontopc
@@ -139,10 +133,6 @@ abstract class BaseCompra extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'compra_id'));
 
-        $this->hasMany('Pago as Pagos', array(
-             'local' => 'id',
-             'foreign' => 'compra_id'));
-
         $this->hasOne('TipoFactura as Tipofactura', array(
              'local' => 'tipofactura_id',
              'foreign' => 'id',
@@ -162,10 +152,6 @@ abstract class BaseCompra extends sfDoctrineRecord
              'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
-
-        $this->hasMany('PagoCompra', array(
-             'local' => 'id',
-             'foreign' => 'compra_id'));
 
         $this->hasMany('Lote', array(
              'local' => 'id',

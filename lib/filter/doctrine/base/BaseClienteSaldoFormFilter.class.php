@@ -13,27 +13,17 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'dni'          => new sfWidgetFormFilterInput(),
-      'apellido'     => new sfWidgetFormFilterInput(),
-      'nombre'       => new sfWidgetFormFilterInput(),
-      'tipo_cliente' => new sfWidgetFormFilterInput(),
-      'simbolo'      => new sfWidgetFormFilterInput(),
-      'moneda'       => new sfWidgetFormFilterInput(),
-      'saldo'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'fecha'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'concepto'     => new sfWidgetFormFilterInput(),
+      'apellido'  => new sfWidgetFormFilterInput(),
+      'nombre'    => new sfWidgetFormFilterInput(),
+      'moneda_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
+      'saldo'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'dni'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'apellido'     => new sfValidatorPass(array('required' => false)),
-      'nombre'       => new sfValidatorPass(array('required' => false)),
-      'tipo_cliente' => new sfValidatorPass(array('required' => false)),
-      'simbolo'      => new sfValidatorPass(array('required' => false)),
-      'moneda'       => new sfValidatorPass(array('required' => false)),
-      'saldo'        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'fecha'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
-      'concepto'     => new sfValidatorPass(array('required' => false)),
+      'apellido'  => new sfValidatorPass(array('required' => false)),
+      'nombre'    => new sfValidatorPass(array('required' => false)),
+      'moneda_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
+      'saldo'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_saldo_filters[%s]');
@@ -53,16 +43,11 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'           => 'Number',
-      'dni'          => 'Number',
-      'apellido'     => 'Text',
-      'nombre'       => 'Text',
-      'tipo_cliente' => 'Text',
-      'simbolo'      => 'Text',
-      'moneda'       => 'Text',
-      'saldo'        => 'Number',
-      'fecha'        => 'Date',
-      'concepto'     => 'Text',
+      'id'        => 'Number',
+      'apellido'  => 'Text',
+      'nombre'    => 'Text',
+      'moneda_id' => 'ForeignKey',
+      'saldo'     => 'Number',
     );
   }
 }

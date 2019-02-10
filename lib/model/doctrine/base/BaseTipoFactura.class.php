@@ -15,7 +15,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @property Doctrine_Collection $Ventas
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Resumen
- * @property Doctrine_Collection $FactCompra
  * @property Doctrine_Collection $DevProducto
  * 
  * @method integer             getId()              Returns the current record's "id" value
@@ -26,7 +25,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method Doctrine_Collection getVentas()          Returns the current record's "Ventas" collection
  * @method Doctrine_Collection getCompras()         Returns the current record's "Compras" collection
  * @method Doctrine_Collection getResumen()         Returns the current record's "Resumen" collection
- * @method Doctrine_Collection getFactCompra()      Returns the current record's "FactCompra" collection
  * @method Doctrine_Collection getDevProducto()     Returns the current record's "DevProducto" collection
  * @method TipoFactura         setId()              Sets the current record's "id" value
  * @method TipoFactura         setNombre()          Sets the current record's "nombre" value
@@ -36,7 +34,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method TipoFactura         setVentas()          Sets the current record's "Ventas" collection
  * @method TipoFactura         setCompras()         Sets the current record's "Compras" collection
  * @method TipoFactura         setResumen()         Sets the current record's "Resumen" collection
- * @method TipoFactura         setFactCompra()      Sets the current record's "FactCompra" collection
  * @method TipoFactura         setDevProducto()     Sets the current record's "DevProducto" collection
  * 
  * @package    odontopc
@@ -87,10 +84,6 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
              'foreign' => 'tipofactura_id'));
 
         $this->hasMany('Resumen', array(
-             'local' => 'id',
-             'foreign' => 'tipofactura_id'));
-
-        $this->hasMany('FactCompra', array(
              'local' => 'id',
              'foreign' => 'tipofactura_id'));
 

@@ -10,19 +10,13 @@ Doctrine_Manager::getInstance()->bindComponent('Cuenta', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property Doctrine_Collection $Compra
- * @property Doctrine_Collection $Pago
- * @property Doctrine_Collection $CtaCteProv
  * 
- * @method integer             getId()         Returns the current record's "id" value
- * @method string              getNombre()     Returns the current record's "nombre" value
- * @method Doctrine_Collection getCompra()     Returns the current record's "Compra" collection
- * @method Doctrine_Collection getPago()       Returns the current record's "Pago" collection
- * @method Doctrine_Collection getCtaCteProv() Returns the current record's "CtaCteProv" collection
- * @method Cuenta              setId()         Sets the current record's "id" value
- * @method Cuenta              setNombre()     Sets the current record's "nombre" value
- * @method Cuenta              setCompra()     Sets the current record's "Compra" collection
- * @method Cuenta              setPago()       Sets the current record's "Pago" collection
- * @method Cuenta              setCtaCteProv() Sets the current record's "CtaCteProv" collection
+ * @method integer             getId()     Returns the current record's "id" value
+ * @method string              getNombre() Returns the current record's "nombre" value
+ * @method Doctrine_Collection getCompra() Returns the current record's "Compra" collection
+ * @method Cuenta              setId()     Sets the current record's "id" value
+ * @method Cuenta              setNombre() Sets the current record's "nombre" value
+ * @method Cuenta              setCompra() Sets the current record's "Compra" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -51,14 +45,6 @@ abstract class BaseCuenta extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Compra', array(
-             'local' => 'id',
-             'foreign' => 'cuenta_id'));
-
-        $this->hasMany('Pago', array(
-             'local' => 'id',
-             'foreign' => 'cuenta_id'));
-
-        $this->hasMany('CtaCteProv', array(
              'local' => 'id',
              'foreign' => 'cuenta_id'));
     }

@@ -27,11 +27,13 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property integer $nro_factura
  * @property string $afip_envio
  * @property string $afip_respuesta
+ * @property integer $lote_id
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property Producto $Producto
  * @property TipoFactura $TipoFactura
  * @property sfGuardUser $sfGuardUser
+ * @property Lote $Lote
  * 
  * @method integer     getId()             Returns the current record's "id" value
  * @method date        getFecha()          Returns the current record's "fecha" value
@@ -53,11 +55,13 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method integer     getNroFactura()     Returns the current record's "nro_factura" value
  * @method string      getAfipEnvio()      Returns the current record's "afip_envio" value
  * @method string      getAfipRespuesta()  Returns the current record's "afip_respuesta" value
+ * @method integer     getLoteId()         Returns the current record's "lote_id" value
  * @method Cliente     getCliente()        Returns the current record's "Cliente" value
  * @method Resumen     getResumen()        Returns the current record's "Resumen" value
  * @method Producto    getProducto()       Returns the current record's "Producto" value
  * @method TipoFactura getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method sfGuardUser getSfGuardUser()    Returns the current record's "sfGuardUser" value
+ * @method Lote        getLote()           Returns the current record's "Lote" value
  * @method DevProducto setId()             Sets the current record's "id" value
  * @method DevProducto setFecha()          Sets the current record's "fecha" value
  * @method DevProducto setClienteId()      Sets the current record's "cliente_id" value
@@ -78,11 +82,13 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method DevProducto setNroFactura()     Sets the current record's "nro_factura" value
  * @method DevProducto setAfipEnvio()      Sets the current record's "afip_envio" value
  * @method DevProducto setAfipRespuesta()  Sets the current record's "afip_respuesta" value
+ * @method DevProducto setLoteId()         Sets the current record's "lote_id" value
  * @method DevProducto setCliente()        Sets the current record's "Cliente" value
  * @method DevProducto setResumen()        Sets the current record's "Resumen" value
  * @method DevProducto setProducto()       Sets the current record's "Producto" value
  * @method DevProducto setTipoFactura()    Sets the current record's "TipoFactura" value
  * @method DevProducto setSfGuardUser()    Sets the current record's "sfGuardUser" value
+ * @method DevProducto setLote()           Sets the current record's "Lote" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -183,6 +189,10 @@ abstract class BaseDevProducto extends sfDoctrineRecord
         $this->hasColumn('afip_respuesta', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('lote_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -210,6 +220,11 @@ abstract class BaseDevProducto extends sfDoctrineRecord
 
         $this->hasOne('sfGuardUser', array(
              'local' => 'usuario',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Lote', array(
+             'local' => 'lote_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

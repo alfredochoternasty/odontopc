@@ -21,8 +21,10 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @property boolean $trazable
  * @property integer $usuario
  * @property boolean $tiene_vto
+ * @property integer $lote_id
  * @property Compra $Compra
  * @property Producto $Producto
+ * @property Lote $Lote
  * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $ListadoCompras
  * 
@@ -40,8 +42,10 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @method boolean             getTrazable()       Returns the current record's "trazable" value
  * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method boolean             getTieneVto()       Returns the current record's "tiene_vto" value
+ * @method integer             getLoteId()         Returns the current record's "lote_id" value
  * @method Compra              getCompra()         Returns the current record's "Compra" value
  * @method Producto            getProducto()       Returns the current record's "Producto" value
+ * @method Lote                getLote()           Returns the current record's "Lote" value
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getListadoCompras() Returns the current record's "ListadoCompras" collection
  * @method DetalleCompra       setId()             Sets the current record's "id" value
@@ -58,8 +62,10 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleCompra', 'doctrine');
  * @method DetalleCompra       setTrazable()       Sets the current record's "trazable" value
  * @method DetalleCompra       setUsuario()        Sets the current record's "usuario" value
  * @method DetalleCompra       setTieneVto()       Sets the current record's "tiene_vto" value
+ * @method DetalleCompra       setLoteId()         Sets the current record's "lote_id" value
  * @method DetalleCompra       setCompra()         Sets the current record's "Compra" value
  * @method DetalleCompra       setProducto()       Sets the current record's "Producto" value
+ * @method DetalleCompra       setLote()           Sets the current record's "Lote" value
  * @method DetalleCompra       setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method DetalleCompra       setListadoCompras() Sets the current record's "ListadoCompras" collection
  * 
@@ -137,6 +143,10 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
         $this->hasColumn('tiene_vto', 'boolean', null, array(
              'type' => 'boolean',
              ));
+        $this->hasColumn('lote_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -149,6 +159,11 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
 
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Lote', array(
+             'local' => 'lote_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

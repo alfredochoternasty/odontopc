@@ -44,7 +44,6 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ClienteSeguimiento
  * @property Doctrine_Collection $CursoInscripcion
- * @property Doctrine_Collection $Traza2
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method integer             getTipoId()             Returns the current record's "tipo_id" value
@@ -83,7 +82,6 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getClienteSeguimiento() Returns the current record's "ClienteSeguimiento" collection
  * @method Doctrine_Collection getCursoInscripcion()   Returns the current record's "CursoInscripcion" collection
- * @method Doctrine_Collection getTraza2()             Returns the current record's "Traza2" collection
  * @method Cliente             setId()                 Sets the current record's "id" value
  * @method Cliente             setTipoId()             Sets the current record's "tipo_id" value
  * @method Cliente             setDni()                Sets the current record's "dni" value
@@ -121,7 +119,6 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Cliente             setClienteSeguimiento() Sets the current record's "ClienteSeguimiento" collection
  * @method Cliente             setCursoInscripcion()   Sets the current record's "CursoInscripcion" collection
- * @method Cliente             setTraza2()             Sets the current record's "Traza2" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -293,10 +290,6 @@ abstract class BaseCliente extends sfDoctrineRecord
              'foreign' => 'cliente_id'));
 
         $this->hasMany('CursoInscripcion', array(
-             'local' => 'id',
-             'foreign' => 'cliente_id'));
-
-        $this->hasMany('Traza2', array(
              'local' => 'id',
              'foreign' => 'cliente_id'));
     }

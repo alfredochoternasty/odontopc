@@ -346,7 +346,7 @@ Cobro:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Banco: {type: one, local: banco_id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
- CtaCte:
+CtaCte:
   connection: doctrine
   tableName: cta_cte
   columns:
@@ -768,15 +768,12 @@ ClienteSaldo:
   tableName: cliente_saldo
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
-    dni: {type: integer(4)}
     apellido: {type: string(50)}
     nombre: {type: string(50)}
-    tipo_cliente: {type: string(50)}
-    simbolo: {type: string(50)}
-    moneda: {type: string(50)}
+    moneda_id: {type: integer(4)}
     saldo: {type: 'decimal(10, 2)', notnull: true}
-    fecha: {type: date(25), notnull: true}
-    concepto: {type: string(50)}
+  relations:
+    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
 ListaPrecioDetalle:
   connection: doctrine
   tableName: lista_precio_detalle

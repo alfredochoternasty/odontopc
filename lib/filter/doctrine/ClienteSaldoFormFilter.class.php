@@ -10,22 +10,25 @@
  */
 class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 {
+	
   public function configure()
   {
 		parent::configure();
 		$this->widgetSchema ['mayor'] = new sfWidgetFormInputText();
 		$this->validatorSchema ['mayor'] = new sfValidatorNumber();
   }
-	
+	/*
 	public function getFields()
 	{
-		$fields = parent::getFields();
-		$fields['mayor'] = 'mayor';
-		return $fields;
+		return array_merge(parent::getFields(), array('mayor' => 'Number'));
 	}	
-	
-	public function addMayorColumnQuery($query, $field, $value)
+	*/
+	public function addMayorQuery($query, $field, $value)
 	{
-		Doctrine::getTable('ClienteSaldo')->applyMayorFilter($query, $value);
+		//return Doctrine::getTable('ClienteSaldo')->applyMayorFilter($query, $value);
+    $rootAlias = $query->getRootAlias();
+    $query->andWhere($rootAlias.'.saldo > '.$value);
+    return $query;		
 	}
+	
 }

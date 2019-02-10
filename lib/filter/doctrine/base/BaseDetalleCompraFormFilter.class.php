@@ -26,6 +26,7 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'trazable'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'tiene_vto'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'lote_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -42,6 +43,7 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'trazable'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
       'tiene_vto'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'lote_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lote'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_compra_filters[%s]');
@@ -75,6 +77,7 @@ abstract class BaseDetalleCompraFormFilter extends BaseFormFilterDoctrine
       'trazable'    => 'Boolean',
       'usuario'     => 'ForeignKey',
       'tiene_vto'   => 'Boolean',
+      'lote_id'     => 'ForeignKey',
     );
   }
 }

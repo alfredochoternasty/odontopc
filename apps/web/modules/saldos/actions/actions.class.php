@@ -24,39 +24,6 @@ class saldosActions extends autoSaldosActions
     $dompdf->set_paper('A4','landscape');
     $dompdf->render();
     $dompdf->stream("saldos.pdf");    
-	
-	/*
-	  
-    $filtro = new ClienteFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-		$pagina = $this->getUser()->getAttribute('saldos.page', '1', 'admin_module')-1;
-		$consulta->orderBy('apellido, nombre')->limit(50)->offset($pagina * 50);
-    $saldos = $consulta->execute();
-		
-		$dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("saldos" => $saldos)));
-    $dompdf->set_paper('A4','portrait');
-    $dompdf->render();
-    $dompdf->stream("saldos.pdf");
-		
-	
-    header("Content-Disposition: attachment; filename=\"clientes.xls\"");
-    header("Content-Type: application/vnd.ms-excel");
-    
-    echo 'Listado de Saldos' . "\r\n";
-    $titulos = array('Tipo', 'Apellido', 'Nombre', 'Saldo');
-    $flag = false;
-
-    foreach($saldos as $saldo):
-          if (!$flag) {
-              echo implode("\t", $titulos) . "\r\n";
-              $flag = true;
-          }  
-          $fila = array($saldo->getTipo(), $saldo->getApellido(), $saldo->getNombre(), '$ '.sprintf("%01.2f", $saldo->getSaldoCtaCte()));
-          $string = implode("\t", array_values($fila));
-          echo utf8_decode($string)."\r\n"; 
-    endforeach;
-		*/
     
 		return sfView::NONE;
   }

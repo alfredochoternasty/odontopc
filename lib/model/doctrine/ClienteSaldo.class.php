@@ -14,6 +14,6 @@ class ClienteSaldo extends BaseClienteSaldo
 {
 	public function getSaldoColor() {
 		$color = $this->saldo > 5000 ? ' style="font-weight:bold; color:#f00"' : '';
-		echo '<span '.$color.'>'.$this->getSimbolo().' '.number_format($this->saldo, 2, ',', '.').'</span>'; 
+		echo '<span '.$color.'>'.$this->getMoneda()->simbolo.' '.number_format($this->saldo, 2, ',', '.').'</span>'; 
 	}
 }

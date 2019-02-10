@@ -23,6 +23,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property integer $lista_id
  * @property integer $moneda_id
  * @property integer $cant_vend_remito
+ * @property integer $lote_id
  * @property Resumen $Resumen
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
@@ -47,6 +48,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method integer             getListaId()          Returns the current record's "lista_id" value
  * @method integer             getMonedaId()         Returns the current record's "moneda_id" value
  * @method integer             getCantVendRemito()   Returns the current record's "cant_vend_remito" value
+ * @method integer             getLoteId()           Returns the current record's "lote_id" value
  * @method Resumen             getResumen()          Returns the current record's "Resumen" value
  * @method Producto            getProducto()         Returns the current record's "Producto" value
  * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
@@ -70,6 +72,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setListaId()          Sets the current record's "lista_id" value
  * @method DetalleResumen      setMonedaId()         Sets the current record's "moneda_id" value
  * @method DetalleResumen      setCantVendRemito()   Sets the current record's "cant_vend_remito" value
+ * @method DetalleResumen      setLoteId()           Sets the current record's "lote_id" value
  * @method DetalleResumen      setResumen()          Sets the current record's "Resumen" value
  * @method DetalleResumen      setProducto()         Sets the current record's "Producto" value
  * @method DetalleResumen      setSfGuardUser()      Sets the current record's "sfGuardUser" value
@@ -173,6 +176,10 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('lote_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -194,7 +201,7 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'onDelete' => 'RESTRICT'));
 
         $this->hasOne('Lote', array(
-             'local' => 'nro_lote',
+             'local' => 'lote_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

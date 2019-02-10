@@ -17,13 +17,13 @@ generator:
       list:
         max_per_page: 50
         title: Listado de Saldos  
-        display: [tipo_cliente, apellido, nombre, moneda, _saldo]
+        display: [apellido, nombre, Moneda, _saldo]
         object_actions: []
         batch_actions: []
         actions:
           imprimir: {label: Imprimir página}
       filter:
-        display: [apellido, nombre, moneda, mayor]
+        display: [apellido, moneda_id, mayor]
       form:    ~
       edit:    ~
       new:     ~

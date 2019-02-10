@@ -31,13 +31,10 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $DetalleVenta
  * @property Doctrine_Collection $DetalleResumen
- * @property Doctrine_Collection $DetFactCompra
  * @property Doctrine_Collection $DetLisPrecio
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $DetallePresupuesto
- * @property Doctrine_Collection $VtaFact
- * @property Doctrine_Collection $CompFact
  * @property Doctrine_Collection $DetallePedido
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $Lote
@@ -69,13 +66,10 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Doctrine_Collection getDetalleCompra()      Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection getDetalleVenta()       Returns the current record's "DetalleVenta" collection
  * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
- * @method Doctrine_Collection getDetFactCompra()      Returns the current record's "DetFactCompra" collection
  * @method Doctrine_Collection getDetLisPrecio()       Returns the current record's "DetLisPrecio" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getDetallePresupuesto() Returns the current record's "DetallePresupuesto" collection
- * @method Doctrine_Collection getVtaFact()            Returns the current record's "VtaFact" collection
- * @method Doctrine_Collection getCompFact()           Returns the current record's "CompFact" collection
  * @method Doctrine_Collection getDetallePedido()      Returns the current record's "DetallePedido" collection
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getLote()               Returns the current record's "Lote" collection
@@ -106,13 +100,10 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setDetalleCompra()      Sets the current record's "DetalleCompra" collection
  * @method Producto            setDetalleVenta()       Sets the current record's "DetalleVenta" collection
  * @method Producto            setDetalleResumen()     Sets the current record's "DetalleResumen" collection
- * @method Producto            setDetFactCompra()      Sets the current record's "DetFactCompra" collection
  * @method Producto            setDetLisPrecio()       Sets the current record's "DetLisPrecio" collection
  * @method Producto            setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Producto            setDevProducto()        Sets the current record's "DevProducto" collection
  * @method Producto            setDetallePresupuesto() Sets the current record's "DetallePresupuesto" collection
- * @method Producto            setVtaFact()            Sets the current record's "VtaFact" collection
- * @method Producto            setCompFact()           Sets the current record's "CompFact" collection
  * @method Producto            setDetallePedido()      Sets the current record's "DetallePedido" collection
  * @method Producto            setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Producto            setLote()               Sets the current record's "Lote" collection
@@ -241,10 +232,6 @@ abstract class BaseProducto extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'producto_id'));
 
-        $this->hasMany('DetFactCompra', array(
-             'local' => 'id',
-             'foreign' => 'producto_id'));
-
         $this->hasMany('DetLisPrecio', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
@@ -258,14 +245,6 @@ abstract class BaseProducto extends sfDoctrineRecord
              'foreign' => 'producto_id'));
 
         $this->hasMany('DetallePresupuesto', array(
-             'local' => 'id',
-             'foreign' => 'producto_id'));
-
-        $this->hasMany('VtaFact', array(
-             'local' => 'id',
-             'foreign' => 'producto_id'));
-
-        $this->hasMany('CompFact', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
 

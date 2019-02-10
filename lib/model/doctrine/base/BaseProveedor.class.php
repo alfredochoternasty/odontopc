@@ -19,14 +19,9 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @property Localidad $Localidad
  * @property Doctrine_Collection $Compras
  * @property CondicionFiscal $Condfiscal
- * @property Doctrine_Collection $Pago
- * @property Doctrine_Collection $FactCompra
- * @property Doctrine_Collection $CtaCteProv
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
- * @property Doctrine_Collection $Traza2
- * @property Doctrine_Collection $compra2
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getCuit()               Returns the current record's "cuit" value
@@ -40,14 +35,9 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
- * @method Doctrine_Collection getPago()               Returns the current record's "Pago" collection
- * @method Doctrine_Collection getFactCompra()         Returns the current record's "FactCompra" collection
- * @method Doctrine_Collection getCtaCteProv()         Returns the current record's "CtaCteProv" collection
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
- * @method Doctrine_Collection getTraza2()             Returns the current record's "Traza2" collection
- * @method Doctrine_Collection getCompra2()            Returns the current record's "compra2" collection
  * @method Proveedor           setId()                 Sets the current record's "id" value
  * @method Proveedor           setCuit()               Sets the current record's "cuit" value
  * @method Proveedor           setCondicionfiscalId()  Sets the current record's "condicionfiscal_id" value
@@ -60,14 +50,9 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Proveedor           setLocalidad()          Sets the current record's "Localidad" value
  * @method Proveedor           setCompras()            Sets the current record's "Compras" collection
  * @method Proveedor           setCondfiscal()         Sets the current record's "Condfiscal" value
- * @method Proveedor           setPago()               Sets the current record's "Pago" collection
- * @method Proveedor           setFactCompra()         Sets the current record's "FactCompra" collection
- * @method Proveedor           setCtaCteProv()         Sets the current record's "CtaCteProv" collection
  * @method Proveedor           setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Proveedor           setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method Proveedor           setControlStock()       Sets the current record's "ControlStock" collection
- * @method Proveedor           setTraza2()             Sets the current record's "Traza2" collection
- * @method Proveedor           setCompra2()            Sets the current record's "compra2" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -138,18 +123,6 @@ abstract class BaseProveedor extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
-        $this->hasMany('Pago', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
-
-        $this->hasMany('FactCompra', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
-
-        $this->hasMany('CtaCteProv', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
-
         $this->hasMany('ProductoTraza', array(
              'local' => 'id',
              'foreign' => 'proveedor_id'));
@@ -159,14 +132,6 @@ abstract class BaseProveedor extends sfDoctrineRecord
              'foreign' => 'prov_id'));
 
         $this->hasMany('ControlStock', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
-
-        $this->hasMany('Traza2', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
-
-        $this->hasMany('compra2', array(
              'local' => 'id',
              'foreign' => 'proveedor_id'));
     }

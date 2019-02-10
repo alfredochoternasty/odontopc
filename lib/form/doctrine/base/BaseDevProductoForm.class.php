@@ -35,6 +35,7 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'nro_factura'    => new sfWidgetFormInputText(),
       'afip_envio'     => new sfWidgetFormTextarea(),
       'afip_respuesta' => new sfWidgetFormTextarea(),
+      'lote_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -58,6 +59,7 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'nro_factura'    => new sfValidatorInteger(array('required' => false)),
       'afip_envio'     => new sfValidatorString(array('required' => false)),
       'afip_respuesta' => new sfValidatorString(array('required' => false)),
+      'lote_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto[%s]');
