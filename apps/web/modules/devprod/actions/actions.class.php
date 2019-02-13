@@ -155,7 +155,7 @@ class devprodActions extends autoDevprodActions
     }
 
 		if (!empty($did)) {
-			$wsaa = new WSAA(dirname(__FILE__).'../../../detres/actions'); 
+			$wsaa = new WSAA(dirname(__FILE__).'../../detres/actions'); 
 			$dt_expira = new DateTime($wsaa->get_expiration());
 			$dt_actual = new DateTime(date("Y-m-d h:m:i"));
 			if($dt_expira < $dt_actual) {
@@ -196,7 +196,7 @@ class devprodActions extends autoDevprodActions
 			$regfe['MonId'] = 'PES';
 			$regfe['MonCotiz'] = 1;
 			
-			$wsfev1 = new WSFEV1(dirname(__FILE__).'../../../detres/actions');
+			$wsfev1 = new WSFEV1(dirname(__FILE__).'../../detres/actions');
 			
 			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
 			$nuevo_nro = $nro+1;

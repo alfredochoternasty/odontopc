@@ -14,7 +14,8 @@
 		</li>
 		<li class="sf_admin_action_factura">
 			<?php 
-				if ($resumen->afip_estado == 0 && $resumen->tipofactura_id != 4 && $resumen->fecha >= '2019-02-01') echo link_to(__('Enviar AFIP', array(), 'messages'), 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere ENVIAR A AFIP', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')) 
+			    $entorno = sfConfig::get('sf_environment');
+				if ($entorno != 'dev' && $resumen->afip_estado == 0 && $resumen->tipofactura_id != 4 && $resumen->fecha >= '2019-02-01') echo link_to(__('Enviar AFIP', array(), 'messages'), 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere ENVIAR A AFIP', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')) 
 			?>
 		</li>
 	</ul>

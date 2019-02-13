@@ -23,7 +23,8 @@ class ListaPrecio extends BaseListaPrecio
     $detlis = Doctrine::getTable('DetLisPrecio')->findByListaIdAndProductoId($this->getId(), $p_pid);
     if($detlis[0] == ''){//si no hay precio definido para ese producto, busco para su grupo
       $objprod = Doctrine::getTable('Producto')->find($p_pid);
-      $detlis = Doctrine::getTable('DetLisPrecio')->findByListaIdAndGrupoprodId($this->getId(), $objprod->getGrupoprodId());
+	  $grupo = empty($objprod)?'':$objprod->getGrupoprodId();
+      $detlis = Doctrine::getTable('DetLisPrecio')->findByListaIdAndGrupoprodId($this->getId(), $grupo);
     }
     
     if($detlis[0] != ''){// aca viene con el objeto del producto o si no tiene, con el del grupo.

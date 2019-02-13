@@ -399,11 +399,17 @@ $(document).ready(function(){
   });
 
   $("#dev_producto_cantidad").change(function(event){
-      var cantidad = $("#dev_producto_cantidad").find(':selected').val();
-      var precio = $("#dev_producto_precio").val();
-      var iva = $("#dev_producto_iva").val();
-      var total = cantidad * (parseFloat(precio) + parseFloat(iva));
-      $("#dev_producto_total").attr('value', total.toFixed(2));                
+	  if (typeof precio_u === 'undefined' || precio_u === null) {
+		var precio_u = $("#dev_producto_precio").val();	
+		var iva_u = $("#dev_producto_iva").val();
+	  }
+      var cantidad = $("#dev_producto_cantidad").find(':selected').val();      
+	  var precio = precio_u * cantidad;
+	  var iva = iva_u * cantidad;
+      var total = parseFloat(precio) + parseFloat(iva);
+      $("#dev_producto_total").attr('value', total.toFixed(2));
+	  $("#dev_producto_precio").attr('value', precio.toFixed(2));
+      $("#dev_producto_iva").attr('value', iva.toFixed(2));   
   });   
   
 });

@@ -105,7 +105,10 @@ hr {
       $prec = $producto->getProducto()->getPrecioFinal($lista);
     }
     ?>
-      <td><?php echo is_numeric($prec)? $moneda.' '.sprintf("%01.2f", $prec) : $prec; ?></td>
+		<td><?php 
+			//if (!is_numeric($prec)) echo $prec; //list($prec, $aux) = explode('##', $prec);
+			echo $moneda.' '.sprintf("%01.2f", $prec)
+		?></td>
     </tr>
     <?php 
     if($count == 500){

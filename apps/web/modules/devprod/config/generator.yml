@@ -21,9 +21,10 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
-        display: [fecha, Cliente, _fact_asoc, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip, sfGuardUser]
+        display: [fecha, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
         object_actions:
           _delete: {label: Eliminar}
+          asociada: {label: Ver Fact}
           factura: {label: Enviar AFIP}
           imprimir: {label: Imprimir}
       filter:
