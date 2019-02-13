@@ -155,7 +155,7 @@ class devprodActions extends autoDevprodActions
     }
 
 		if (!empty($did)) {
-			$wsaa = new WSAA(dirname(__FILE__).'../../detres/actions'); 
+			$wsaa = new WSAA(dirname(__FILE__).'/../../detres/actions'); 
 			$dt_expira = new DateTime($wsaa->get_expiration());
 			$dt_actual = new DateTime(date("Y-m-d h:m:i"));
 			if($dt_expira < $dt_actual) {
@@ -184,7 +184,7 @@ class devprodActions extends autoDevprodActions
 			$regfetrib = '';
 			$regfeasoc[] = array(
 				'Tipo' => $resumen->getTipoFactura()->getCodTipoAfip(), 
-				'PtoVta' => $resumen->pto_vta, 
+				'PtoVta' => $ptovta, //$resumen->pto_vta, 
 				'Nro' => $resumen->getNroFactura()
 			);
 			
@@ -192,34 +192,38 @@ class devprodActions extends autoDevprodActions
 			$regfe['Concepto'] = 1;
 			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
 			$regfe['DocNro'] = $dev->getResumen()->getCuitCliente();
-			$regfe['CbteFch'] = $this->getFechaYMD();
+			$regfe['CbteFch'] = date('Ymd');
 			$regfe['MonId'] = 'PES';
 			$regfe['MonCotiz'] = 1;
 			
-			$wsfev1 = new WSFEV1(dirname(__FILE__).'../../detres/actions');
+			$wsfev1 = new WSFEV1(dirname(__FILE__).'/../../detres/actions');
 			
-			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
+			$nro = $wsfev1->FECompUltimoAutorizado($ptovta/*$resumen->pto_vta*/, $regfe['CbteTipo']);
 			$nuevo_nro = $nro+1;
 
-			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta/*$resumen->pto_vta*/, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';
-			$afip_estado = 0;
 			if (is_soap_fault($res)) {
 				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
+				$afip_estado = 0;
 			} else {
 				if(empty($res) || $res == false || $res['cae'] <= 0) {
 					for ($i=0;$i < count($wsfev1->Code);$i++) {
 						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
 					}
 					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
+					$afip_estado = 0;
+					$tipo_msj = 'error';
 				} else {
 					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
-						$msj = 'Falló el envió de la información a ala AFIP, CAE no obtenido';
+						$msj = 'CAE no obtenido';
+						$afip_estado = 0;
+						$tipo_msj = 'error';
 					} else {
 						$msj = $res['cae'];
-						$msj = 'La devolución (Nota Crédito) se informó correctamen a la AFIP, CAE: '.$res['cae'];
 						$afip_estado = 1;
 						$dev->setNroFactura($nuevo_nro);
+						$dev->setPtoVta($resumen->pto_vta);
 						$dev->setPtoVta($ptovta);
 						$dev->setTipofacturaId($resumen->getTipoFactura()->id_fact_cancela);
 						$dev->setAfipVtoCae($res['fec_vto']);
