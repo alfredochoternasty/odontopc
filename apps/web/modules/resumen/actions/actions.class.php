@@ -147,5 +147,18 @@ public function executeNew(sfWebRequest $request){
     $datos['saldo_pesos'] = $cliente->getSaldoCtaCte(1);
     $datos['saldo_dolar'] = $cliente->getSaldoCtaCte(2);
     return $this->renderText(json_encode($datos));
+  }
+	
+  public function executeGetnroremito(sfWebRequest $request){
+    $q = Doctrine_Query::create()
+          ->select('r.nro_factura, r.id, r.fecha')
+          ->from('resumen r')
+          ->where('r.tipofactura_id = 4')
+          ->groupBy('r.id, r.fecha')
+          ->limit('1');
+		$max_nro_remito = $q->execute();
+    $nro = $max_nro_remito[0]['nro_factura'];
+    $nro += 1;
+    return $this->renderText(json_encode($nro));
   }	
 }

@@ -1,4 +1,27 @@
 /*
+
+SELECT tables.TABLE_NAME, CONCAT(
+	'insert into ', 
+	tables.TABLE_NAME, 
+	'(log_fecha, log_operacion', 
+	GROUP_CONCAT(COLUMN_NAME), 
+	')', 
+	' select now(), ''aca arregle los trigger'', ',GROUP_CONCAT(COLUMN_NAME),' from ', 
+	SUBSTRING(tables.TABLE_NAME, 5), 
+	' where id in (select distinct id from ', tables.TABLE_NAME,') ',
+	';'
+) 
+FROM tables 
+	JOIN columns ON tables.TABLE_NAME = columns.TABLE_NAME AND tables.table_schema = columns.table_schema
+WHERE 
+	tables.table_schema = 'ventas' 
+	AND tables.TABLE_NAME LIKE 'log_%' 
+	AND table_rows > 0  
+	AND COLUMN_NAME NOT IN  ('log_id', 'log_fecha', 'log_operacion')
+GROUP BY tables.TABLE_NAME
+ORDER BY ORDINAL_POSITION
+
+#SELECT COLUMN_NAME FROM columns WHERE TABLE_NAME = 'lote' AND table_schema = 'ventas'
 select sum(cantidad) from detalle_resumen where nro_lote = '0103501000002A/18'
 
 select nro_lote #*, case when (comprados - vendidos) = stock_calculado then 1 else 0 end as cal

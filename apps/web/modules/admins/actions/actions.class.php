@@ -102,6 +102,7 @@ class adminsActions extends sfActions
 			}
 			
 			$sql = "
+				DROP TRIGGER IF EXISTS {{nom_trigger}};
 				CREATE TRIGGER {{nom_trigger}} AFTER {{operacion}} ON {{tabla}}
 				FOR EACH ROW
 				BEGIN
@@ -109,14 +110,13 @@ class adminsActions extends sfActions
 					VALUES(NOW(), '{{operacion}}', {{valores}});
 				END;
 			";
-			
+
 			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
 			$reemplazar = array('ti_'.$table, 'INSERT', $table, implode(', ', $campos), 'NEW.'.implode(', NEW.', $campos));
-
 			$result = mysql_query(str_replace($buscar, $reemplazar, $sql));
 			
 			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
-			$reemplazar = array('tu_'.$table, 'UPDATE', $table, implode(', ', $campos), 'OLD.'.implode(', OLD.', $campos));
+			$reemplazar = array('tu_'.$table, 'UPDATE', $table, implode(', ', $campos), 'NEW.'.implode(', NEW.', $campos));
 			$result = mysql_query(str_replace($buscar, $reemplazar, $sql));
 			
 			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');

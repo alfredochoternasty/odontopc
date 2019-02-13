@@ -16,11 +16,12 @@ class stockActions extends autoStockActions
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ProductoFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
-	$consulta->leftJoin('r.Grupo gr');
-	$consulta->andWhere('r.activo = 1');
+		$consulta->leftJoin('r.Grupo gr');
+		$consulta->andWhere('r.activo = 1');
+		$consulta->andWhere('r.stock_guardado <> 0');
     $consulta->andWhere('r.grupoprod_id <> 1');
     $consulta->andWhere('r.grupoprod_id <> 15');
-	$consulta->orderBy('gr.nombre asc, r.orden_grupo asc, r.nombre asc');
+		$consulta->orderBy('gr.nombre asc, r.orden_grupo asc, r.nombre asc');
     $stock = $consulta->execute();
     
     $dompdf = new DOMPDF();

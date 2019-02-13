@@ -13,11 +13,14 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        apellido: {label: Apellido}
+        nombre: {label: Nombre}
+        mayor: {label: Saldo mayor que}
       list:
         max_per_page: 50
         title: Listado de Saldos  
-        display: [apellido, nombre, Moneda, _saldo]
+        display: [apellido, nombre, _saldo]
         object_actions: []
         batch_actions: []
         actions:

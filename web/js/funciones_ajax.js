@@ -125,7 +125,17 @@ $(document).ready(function(){
 		if (fid == 4) {
 				$("#resumen_remito_id").attr('value', '');
         $(".sf_admin_form_field_remito_id").hide();
+				$(".sf_admin_form_field_nro_factura").show();
+				$.ajax({
+						url: 'getnroremito',
+						dataType: "json",
+						success: function(data) {
+							$("#resumen_nro_factura").attr('value', data);
+						}
+					});
 		} else {
+			$("#resumen_nro_factura").attr('value', '');
+      $(".sf_admin_form_field_nro_factura").hide();
 			$(".sf_admin_form_field_remito_id").show();
 		}
   });
