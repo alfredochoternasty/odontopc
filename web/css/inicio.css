@@ -158,3 +158,6 @@ background-image: url('error.png');
 {
     background: #ccc;
 }
+.sf_admin_form_field_precio_unitario, .sf_admin_form_field_iva_unitario {
+	display: none;
+}

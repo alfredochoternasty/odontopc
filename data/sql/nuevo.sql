@@ -118,3 +118,20 @@ CREATE TABLE log_sf_guard_user_permission (
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB
 ;
+
+
+DELETE FROM sf_guard_user WHERE es_cliente = 1 OR id = 150;
+
+INSERT INTO sf_guard_user(username, last_name, first_name, email_address, `algorithm`, salt, `password`)
+SELECT DISTINCT 
+	dni, 
+	apellido, 
+	nombre, 
+	email, 
+	'sha1', 
+	'a5c4a851c035633549bd88866b4400eb', 
+	'f971bc78bbc9d723c5632a43bc2a2473ff4d4a98'
+FROM cliente 
+WHERE trim(dni) <> '';
+
+SELECT dni, COUNT(*) FROM cliente GROUP BY dni HAVING COUNT(*) > 1

@@ -36,7 +36,11 @@ class DevProductoForm extends BaseDevProductoForm
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
-	
+
+		$this->widgetSchema['precio_unitario'] = new sfWidgetFormInput(array(), array());
+		$this->widgetSchema['iva_unitario'] = new sfWidgetFormInput(array(), array());
+		$this->validatorSchema->setOption('allow_extra_fields', true);
+		
     //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
   }

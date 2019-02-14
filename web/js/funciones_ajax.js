@@ -361,7 +361,9 @@ $(document).ready(function(){
           dataType: "json",
           success: function(data) {
             $("#dev_producto_precio").attr('value', data.precio);
+            $("#dev_producto_precio_unitario").attr('value', data.precio);
             $("#dev_producto_iva").attr('value', data.iva);
+            $("#dev_producto_iva_unitario").attr('value', data.iva);
             $("#dev_producto_total").attr('value', data.total);
           }
         });                  
@@ -399,17 +401,17 @@ $(document).ready(function(){
   });
 
   $("#dev_producto_cantidad").change(function(event){
-	  if (typeof precio_u === 'undefined' || precio_u === null) {
-		var precio_u = $("#dev_producto_precio").val();	
-		var iva_u = $("#dev_producto_iva").val();
-	  }
-      var cantidad = $("#dev_producto_cantidad").find(':selected').val();      
+		var precio_u = $("#dev_producto_precio_unitario").val();	
+		var iva_u = $("#dev_producto_iva_unitario").val();
+    
+		var cantidad = $("#dev_producto_cantidad").find(':selected').val();      
 	  var precio = precio_u * cantidad;
 	  var iva = iva_u * cantidad;
-      var total = parseFloat(precio) + parseFloat(iva);
-      $("#dev_producto_total").attr('value', total.toFixed(2));
+    var total = parseFloat(precio) + parseFloat(iva);
+    
+		$("#dev_producto_total").attr('value', total.toFixed(2));
 	  $("#dev_producto_precio").attr('value', precio.toFixed(2));
-      $("#dev_producto_iva").attr('value', iva.toFixed(2));   
+    $("#dev_producto_iva").attr('value', iva.toFixed(2));   
   });   
   
 });
