@@ -59,6 +59,16 @@
     </tfoot>
 
     <tbody>
+				<tr><td>
+				[?php 
+					echo 'Filtro utilizado: ';
+					foreach ($configuration->getFormFilterFields($filters) as $name => $field):
+						$valor = $hasFilters->getRaw($name);
+						if (!empty($valor)) echo $field->getConfig('label').': '.$valor;
+						print_r($valor);
+					endforeach;
+				?]
+				</td></tr>
       [?php foreach ($pager->getResults() as $i => $<?php echo $this->getSingularName() ?>): $odd = fmod(++$i, 2) ? ' odd' : '' ?]
         <tr class="sf_admin_row ui-widget-content [?php echo $odd ?]">
           <?php if ($this->configuration->getValue('list.batch_actions')): ?>

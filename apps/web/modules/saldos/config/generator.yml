@@ -16,7 +16,7 @@ generator:
       fields:
         apellido: {label: Apellido}
         nombre: {label: Nombre}
-        mayor: {label: Saldo mayor que}
+        mayor: {label: Saldo mayor que (numero sin puntos ni comas)}
       list:
         max_per_page: 50
         title: Listado de Saldos  
