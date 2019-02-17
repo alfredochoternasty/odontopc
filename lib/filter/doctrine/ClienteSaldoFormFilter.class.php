@@ -19,13 +19,13 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 		
 		$this->setDefault('mayor', '0');
   }
-	/*
+	
 	public function getFields()
 	{
 		return array_merge(parent::getFields(), array('mayor' => 'Number'));
 	}	
-	*/
-	public function addMayorQuery($query, $field, $value)
+	
+	public function addMayorColumnQuery($query, $field, $value)
 	{
 		//return Doctrine::getTable('ClienteSaldo')->applyMayorFilter($query, $value);
     $rootAlias = $query->getRootAlias();
