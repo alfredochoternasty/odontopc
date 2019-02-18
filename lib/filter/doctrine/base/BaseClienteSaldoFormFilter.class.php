@@ -20,8 +20,8 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'apellido'  => new sfValidatorString(array('required' => false)),
-      'nombre'    => new sfValidatorString(array('required' => false)),
+      'apellido'  => new sfValidatorPass(array('required' => false)),
+      'nombre'    => new sfValidatorPass(array('required' => false)),
       'moneda_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
       'saldo'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
