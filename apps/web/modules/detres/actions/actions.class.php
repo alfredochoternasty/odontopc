@@ -347,7 +347,7 @@ class detresActions extends autoDetresActions
 					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
 						$msj = 'Falló el envió de la información a ala AFIP, CAE no obtenido';
 					} else {
-						$msj = 'La venta se informó correctamen a la AFIP, CAE: '.$res['cae'];
+						$msj = $res['cae'];
 						$afip_estado = 1;
 						//$resumen->setFecha(date('Ymd'));
 						$resumen->setNroFactura($nuevo_nro);
@@ -365,8 +365,8 @@ class detresActions extends autoDetresActions
 			
 			$resumen->save();
 		}
-
-		$this->getUser()->setFlash($tipo_msj, $msj);
+		$msj_mostrar = 'La venta se informó correctamen a la AFIP, CAE: '.$res['cae'];
+		$this->getUser()->setFlash($tipo_msj, $msj_mostrar);
 		$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
   }  
 }

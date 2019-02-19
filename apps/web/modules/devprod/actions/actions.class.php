@@ -238,7 +238,8 @@ class devprodActions extends autoDevprodActions
 			$dev->save();
 		}
 
-		$this->getUser()->setFlash($tipo_msj, $msj);
+		$msj_mostrar = 'La venta se informó correctamen a la AFIP, CAE: '.$res['cae'];
+		$this->getUser()->setFlash($tipo_msj, $msj_mostrar);
 		$this->redirect('devprod/index');
 	}
 	
