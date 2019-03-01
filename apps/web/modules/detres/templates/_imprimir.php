@@ -132,6 +132,12 @@
 		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?5:3; ?>" align="right"><b>Total:&nbsp;&nbsp;</b></td>
 		<td><b><?php echo ($resumen->getTipoFactura()->letra == 'A')?sprintf($detalle->SimboloMoneda()." %01.2f", $total_con_iva):sprintf($detalle->SimboloMoneda()." %01.2f", $total_con_iva) ?></b></td>
 	</tr>
+	<tr>
+		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>">&nbsp;</td>
+	</tr>		
+	<tr>
+		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>"><i>Los cambios y devoluciones se aceptaran hasta 4 meses posteriores a la venta, caso contrario la empresa no recibira los productos facturados<i></td>
+	</tr>	
 	<?php endif; ?>
 </table>
 

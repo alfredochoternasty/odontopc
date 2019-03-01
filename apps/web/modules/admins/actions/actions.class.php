@@ -1,52 +1,59 @@
 <?php
-
+	
 class adminsActions extends sfActions
 {
 	
-	private function backup_tables($host,$user,$pass,$name,$tables_exclude='')
+	private function backup_tables($host,$user,$pass,$name,$tablas_excluir='')
 	{
 		$link = mysql_connect($host,$user,$pass);
 		mysql_select_db($name,$link);
 		
-		$tables = array();
-		$result = mysql_query('SHOW TABLES');
-		while($row = mysql_fetch_row($result))
-			if (!in_array($row[0], $tables_exclude) ) 
-				$tables[] = $row[0];
-		
-		$return = '';
-		foreach($tables as $table)
-		{
-			$result = mysql_query('SELECT * FROM '.$table);
-			$num_fields = mysql_num_fields($result);
-			
-			$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
-			$return.= "\n\n".$row2[1].";\n\n";
-			
-			for ($i = 0; $i < $num_fields; $i++) 
-			{
-				while($row = mysql_fetch_row($result))
-				{
-					$return.= 'INSERT INTO '.$table.' VALUES(';
-					for($j=0; $j < $num_fields; $j++) 
-					{
-						$row[$j] = addslashes($row[$j]);
-						$row[$j] = str_replace("\n","\\n",$row[$j]);
-						if (isset($row[$j]) && $row[$j] != "") { $return.= '"'.$row[$j].'"' ; } else { $return.= 'null'; }
-						if ($j < ($num_fields-1)) { $return.= ','; }
-					}
-					$return.= ");\n";
-				}
-			}
-			$return.="\n\n\n";
-		}		
-		
 		$fecha_actual = date('Ymd');
-		
 		$sql_file = $fecha_actual.'_bak_'.$name.'.sql';
-		$handle = fopen($sql_file,'w+');
-		fwrite($handle,$return);
-		fclose($handle);
+			
+		$tablas = array();
+		$result = mysql_query('SHOW TABLES');
+		while($fila = mysql_fetch_row($result))
+			if (!in_array($fila[0], $tablas_excluir) ) 
+				$tablas[] = $fila[0];
+		
+		foreach ($tablas as $tabla) {
+			$filas = mysql_query('SELECT * FROM '.$tabla);
+			$cantidad = mysql_num_rows($filas);
+			$campos = mysql_num_fields($filas);
+			
+			$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$tabla));
+			file_put_contents($sql_file, $row2[1].";\n\n", FILE_APPEND);
+			if ($cantidad > 0) {
+				file_put_contents($sql_file, 'INSERT INTO '.$tabla.' VALUES '."\n", FILE_APPEND);
+				$s_valores = '';
+				for ($i = 0; $i < $cantidad; $i++)	{
+						$valores = '';
+						$fila = mysql_fetch_row($filas);
+						for($j=0; $j < $campos; $j++) {
+							$fila[$j] = addslashes($fila[$j]);
+							$fila[$j] = str_replace("\n","\\n",$fila[$j]);
+							if (isset($fila[$j]) && $fila[$j] != "") { 
+								$valores[] = '"'.$fila[$j].'"'; 
+							} else { 
+								$valores[] = 'null'; 
+							}
+						}
+						
+						$s_valores .= "(".implode(',', $valores).")";
+						
+						if ($i == ($cantidad-1)) {
+							$s_valores .= ';'."\n\n";
+						} elseif (($i > 0) && ($i % 500) == 0) {
+							$s_valores .= ';'."\n";
+							$s_valores .= 'INSERT INTO '.$tabla.' VALUES '."\n";
+						} else {
+							$s_valores .= ','."\n";
+						}
+				}
+				file_put_contents($sql_file, $s_valores, FILE_APPEND);
+			}
+		}
 		
 		// borro el .zip anterior
 		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
@@ -63,7 +70,7 @@ class adminsActions extends sfActions
 		return $filename;
 	}	
 	
-	private function crear_log($host,$user,$pass,$name,$tables_exclude='')
+	private function crear_log($host,$user,$pass,$name,$tablas_excluir='')
 	{
 		$link = mysql_connect($host,$user,$pass);
 		mysql_select_db($name,$link);
@@ -72,7 +79,7 @@ class adminsActions extends sfActions
 		$result = mysql_query('SHOW TABLES');
 		
 		while($row = mysql_fetch_row($result))
-			if (!in_array($row[0], $tables_exclude) && substr($row[0], 0, 4) != 'log_' )
+			if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
 				$tables[] = $row[0];
 		
 		foreach ($tables as $table) {
@@ -82,7 +89,7 @@ class adminsActions extends sfActions
 		}
 	}
 	
-	private function crear_triggers($host,$user,$pass,$name,$tables_exclude='')
+	private function crear_triggers($host,$user,$pass,$name,$tablas_excluir='')
 	{
 		$link = mysql_connect($host,$user,$pass);
 		mysql_select_db($name,$link);
@@ -91,7 +98,7 @@ class adminsActions extends sfActions
 		$result = mysql_query('SHOW TABLES');
 		
 		while($row = mysql_fetch_row($result))
-			if (!in_array($row[0], $tables_exclude) && substr($row[0], 0, 4) != 'log_' )
+			if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
 				$tables[] = $row[0];
 		
 		foreach ($tables as $table) {
@@ -141,16 +148,16 @@ class adminsActions extends sfActions
 			'lista_precio_detalle'
 		);
 
+		$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
+		list($host, $db) = explode(';', $oCurrentConnection->getOption('dsn'));
+		list($aux, $sdb) = explode('=', $db);
+		$user = $oCurrentConnection->getOption('username');
+		$pwd = $oCurrentConnection->getOption('password');
+		
     $entorno = sfConfig::get('sf_environment');
     if ($entorno == 'dev') {
-			$filename = $this->backup_tables('localhost','root','','ntiimplantes_db', $tbl_excluir);
+			$filename = $this->backup_tables('localhost','root','','ventas', $tbl_excluir);
 		} else {
-			$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
-			list($host, $db) = explode(';', $oCurrentConnection->getOption('dsn'));
-			list($aux, $sdb) = explode('=', $db);
-			$user = $oCurrentConnection->getOption('username');
-			$pwd = $oCurrentConnection->getOption('password');
-			
 			$filename = $this->backup_tables('localhost', $user, $pwd, $sdb, $tbl_excluir);
 		}
 		
