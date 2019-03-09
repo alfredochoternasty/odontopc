@@ -406,7 +406,7 @@ class sfDoctrineFormGenerator extends sfGenerator
         $validatorSubclass = 'Choice';
         break;
       default:
-        $validatorSubclass = 'String';
+        $validatorSubclass = 'Pass';
     }
 
     if ($column->isForeignKey())

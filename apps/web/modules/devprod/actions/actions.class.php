@@ -188,7 +188,8 @@ class devprodActions extends autoDevprodActions
 				'Nro' => $resumen->getNroFactura()
 			);
 			
-			$regfe['CbteTipo'] = $resumen->getTipoFactura()->id_fact_cancela;
+			$factura_cancela = Doctrine::getTable('TipoFactura')->find($resumen->getTipoFactura()->id_fact_cancela);
+			$regfe['CbteTipo'] = $factura_cancela->cod_tipo_afip;
 			$regfe['Concepto'] = 1;
 			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
 			$regfe['DocNro'] = $dev->getResumen()->getCuitCliente();
