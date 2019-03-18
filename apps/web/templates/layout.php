@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Odonto Venta</title>
-		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
     <?php use_helper('Date') ?>
@@ -35,8 +35,8 @@
 				<div id="img_nti_header">
 					<br>
 					<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-					<b>Versión del Sistema: 2.0</b><br>
-					Fecha Actualización: 04/02/2019
+					<b>Versión del Sistema: 2.3</b><br>
+					Fecha Actualización: 17/03/2019
 				</div>
 				</center>
 			</div>
