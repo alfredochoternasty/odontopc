@@ -20,6 +20,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @property integer $devprod_id
  * @property string $observacion
  * @property integer $usuario
+ * @property integer $nro_recibo
  * @property Resumen $Resumen
  * @property Cliente $Cliente
  * @property TipoCobroPago $Tipo
@@ -41,6 +42,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method integer             getDevprodId()    Returns the current record's "devprod_id" value
  * @method string              getObservacion()  Returns the current record's "observacion" value
  * @method integer             getUsuario()      Returns the current record's "usuario" value
+ * @method integer             getNroRecibo()    Returns the current record's "nro_recibo" value
  * @method Resumen             getResumen()      Returns the current record's "Resumen" value
  * @method Cliente             getCliente()      Returns the current record's "Cliente" value
  * @method TipoCobroPago       getTipo()         Returns the current record's "Tipo" value
@@ -61,6 +63,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method Cobro               setDevprodId()    Sets the current record's "devprod_id" value
  * @method Cobro               setObservacion()  Sets the current record's "observacion" value
  * @method Cobro               setUsuario()      Sets the current record's "usuario" value
+ * @method Cobro               setNroRecibo()    Sets the current record's "nro_recibo" value
  * @method Cobro               setResumen()      Sets the current record's "Resumen" value
  * @method Cobro               setCliente()      Sets the current record's "Cliente" value
  * @method Cobro               setTipo()         Sets the current record's "Tipo" value
@@ -139,6 +142,10 @@ abstract class BaseCobro extends sfDoctrineRecord
              'length' => 200,
              ));
         $this->hasColumn('usuario', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('nro_recibo', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

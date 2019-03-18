@@ -158,9 +158,9 @@ abstract class BaseProducto extends sfDoctrineRecord
              'type' => 'boolean',
              'default' => 1,
              ));
-        $this->hasColumn('minimo_stock', 'integer', 1, array(
+        $this->hasColumn('minimo_stock', 'integer', 4, array(
              'type' => 'integer',
-             'length' => 1,
+             'length' => 4,
              ));
         $this->hasColumn('stock_actual', 'integer', 4, array(
              'type' => 'integer',

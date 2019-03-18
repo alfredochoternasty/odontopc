@@ -100,9 +100,9 @@ hr {
     }
   ?>
   <tr>
-    <td width="20%"><?php echo $producto->getCodigo() ?></td>
-    <td width="65%"><?php echo $producto->getNombre() ?></td>
-    <td width="15%">
+    <td><?php echo $producto->getCodigo() ?></td>
+    <td><?php echo $producto->getNombre() ?></td>
+    <td>
 			<?php 
 				$precio = $producto->getPrecioVta();
 				$iva = $precio * 0.21;
@@ -124,6 +124,7 @@ hr {
   endforeach;
   ?>
 </table>
+<p><b>Por compras superiores a 10-20-50-100 consultar promociones</b></p>
 
 </body>
 <html>

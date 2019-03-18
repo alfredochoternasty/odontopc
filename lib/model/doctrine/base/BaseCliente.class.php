@@ -44,6 +44,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ClienteSeguimiento
  * @property Doctrine_Collection $CursoInscripcion
+ * @property Doctrine_Collection $FacturasAfip
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method integer             getTipoId()             Returns the current record's "tipo_id" value
@@ -82,6 +83,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getClienteSeguimiento() Returns the current record's "ClienteSeguimiento" collection
  * @method Doctrine_Collection getCursoInscripcion()   Returns the current record's "CursoInscripcion" collection
+ * @method Doctrine_Collection getFacturasAfip()       Returns the current record's "FacturasAfip" collection
  * @method Cliente             setId()                 Sets the current record's "id" value
  * @method Cliente             setTipoId()             Sets the current record's "tipo_id" value
  * @method Cliente             setDni()                Sets the current record's "dni" value
@@ -119,6 +121,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Cliente             setClienteSeguimiento() Sets the current record's "ClienteSeguimiento" collection
  * @method Cliente             setCursoInscripcion()   Sets the current record's "CursoInscripcion" collection
+ * @method Cliente             setFacturasAfip()       Sets the current record's "FacturasAfip" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -290,6 +293,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'foreign' => 'cliente_id'));
 
         $this->hasMany('CursoInscripcion', array(
+             'local' => 'id',
+             'foreign' => 'cliente_id'));
+
+        $this->hasMany('FacturasAfip', array(
              'local' => 'id',
              'foreign' => 'cliente_id'));
     }

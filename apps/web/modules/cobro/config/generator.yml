@@ -20,17 +20,20 @@ generator:
         monto: {help: Monto a cobrar}
         tipo_id: {help: Forma en que se efectua el pago}
         numero: {help: "Numero del deposito, cheque o transferencia" }
-        fecha_vto: {label: Fecha de Vto., help: Fecha de vencimiento del cheque}
+        fecha_vto: {label: Fecha Cobro., help: Fecha de cobro del cheque}
         Resumen: {label: Venta}
       list:
         table_method: retrieveConJoins
         title: Cobros Realizados
         display: [Cliente, fecha, _monto, Tipo, Banco, numero, observacion]
         object_actions:
+          _edit: ~
           _delete: ~
+          recibo: {label: Imp. Recibo}
+          mail: {label: Env. Recibo}
         actions:
           _new: ~
-          imprimir: {label: Imprimir}
+          imprimir: {label: Imprimir Listado}
       filter:  ~
       form:    ~
       edit:

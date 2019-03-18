@@ -47,7 +47,7 @@ DROP VIEW listado_compras;
 DROP VIEW control_stock;
 DROP VIEW cliente_saldo;
 DROP VIEW lista_precio_detalle;
-
+DROP VIEW facturas_afip;
 */
 CREATE VIEW cta_cte (
   id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
@@ -344,4 +344,27 @@ from
 		left outer join producto g_p on gp.id = g_p.grupoprod_id
 		left outer join producto p on dlp.producto_id = p.id
 where 
-	lp.activo = 1
+	lp.activo = 1;
+	
+CREATE VIEW facturas_afip as
+SELECT
+	r.id,
+	r.tipofactura_id, 
+	r.pto_vta, 
+	r.nro_factura,
+	fecha, 
+	r.cliente_id,
+	r.afip_mensaje AS cae,
+	SUM(dr.iva) AS iva,
+	SUM(dr.sub_total) AS neto,
+	SUM(dr.total) AS total
+FROM resumen r
+	JOIN detalle_resumen dr ON r.id = dr.resumen_id
+WHERE afip_estado = 1
+GROUP BY 
+	r.id,
+	r.pto_vta,
+	r.nro_factura,
+	fecha,
+	r.cliente_id,
+	r.afip_mensaje;

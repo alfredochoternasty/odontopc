@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Resumen
  * @property Doctrine_Collection $DevProducto
+ * @property Doctrine_Collection $FacturasAfip
  * 
  * @method integer             getId()              Returns the current record's "id" value
  * @method string              getNombre()          Returns the current record's "nombre" value
@@ -26,6 +27,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method Doctrine_Collection getCompras()         Returns the current record's "Compras" collection
  * @method Doctrine_Collection getResumen()         Returns the current record's "Resumen" collection
  * @method Doctrine_Collection getDevProducto()     Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getFacturasAfip()    Returns the current record's "FacturasAfip" collection
  * @method TipoFactura         setId()              Sets the current record's "id" value
  * @method TipoFactura         setNombre()          Sets the current record's "nombre" value
  * @method TipoFactura         setCodTipoAfip()     Sets the current record's "cod_tipo_afip" value
@@ -35,6 +37,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method TipoFactura         setCompras()         Sets the current record's "Compras" collection
  * @method TipoFactura         setResumen()         Sets the current record's "Resumen" collection
  * @method TipoFactura         setDevProducto()     Sets the current record's "DevProducto" collection
+ * @method TipoFactura         setFacturasAfip()    Sets the current record's "FacturasAfip" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -88,6 +91,10 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
              'foreign' => 'tipofactura_id'));
 
         $this->hasMany('DevProducto', array(
+             'local' => 'id',
+             'foreign' => 'tipofactura_id'));
+
+        $this->hasMany('FacturasAfip', array(
              'local' => 'id',
              'foreign' => 'tipofactura_id'));
     }

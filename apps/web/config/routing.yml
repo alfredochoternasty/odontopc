@@ -1,3 +1,12 @@
+facturas_afip:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                FacturasAfip
+    module:               facafip
+    prefix_path:          /facafip
+    column:               id
+    with_wildcard_routes: true
+
 compra2:
   class: sfDoctrineRouteCollection
   options:

@@ -71,7 +71,13 @@ return $this->renderText($resultado);
     {
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
 
-      $cobro = $form->save(); //$request->getParameter('cobro');
+      $cobro = $form->save();
+			
+			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
+			$max_nro = $q->execute();
+			$nro = $max_nro[0]['nro'];
+			$cobro->setNroRecibo($nro+1);
+			$cobro->save();
       $monto = $cobro->getMonto();
       
       $Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagado($cobro['cliente_id'], 0);  
@@ -149,5 +155,43 @@ return $this->renderText($resultado);
     
     return $this->renderText(json_encode($objProd->getId()));
   }
- 	
+	
+	
+ 	public function executeListRecibo(sfWebRequest $request){
+    if($request->hasParameter('id')){
+      $cid = $request->getParameter('id');
+      $this->getUser()->setAttribute('cid', $cid);
+    }else{
+      $cid = $this->getUser()->getAttribute('cid');
+    }
+		$cobro = Doctrine::getTable('Cobro')->find($cid);
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("recibo", array("cobro" => $cobro)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("recibo.pdf");    
+    return sfView::NONE;
+  }
+
+  public function executeListMail(sfWebRequest $request){
+    if($request->hasParameter('id')){
+      $cid = $request->getParameter('id');
+      $this->getUser()->setAttribute('cid', $cid);
+    }else{
+      $cid = $this->getUser()->getAttribute('cid');
+    }
+		$cobro = Doctrine::getTable('Cobro')->find($cid);
+    
+    $mensaje = Swift_Message::newInstance();
+    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+    $mensaje->setTo($cobro->getCliente()->getEmail());
+    $mensaje->setSubject('Recibo de pago');
+    $mensaje->setBody($this->getPartial("recibo", array("cobro" => $cobro)));
+    $mensaje->setContentType("text/html");
+    $this->getMailer()->send($mensaje);
+    
+    $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$cobro->getCliente()->getEmail());
+    $this->redirect('@cobro');
+  }
 }

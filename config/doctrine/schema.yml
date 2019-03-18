@@ -175,7 +175,7 @@ Producto:
     moneda_id: {type: integer(4), notnull: true}
     genera_comision: {type: boolean, default: 0}
     mueve_stock: {type: boolean, default: 1}
-    minimo_stock: {type: integer(1)}
+    minimo_stock: {type: integer(4)}
     stock_actual: {type: integer(4)}
     ctr_fact_grupo: {type: boolean, default: 1}
     orden_grupo: {type: integer(4)}
@@ -339,6 +339,7 @@ Cobro:
     devprod_id: {type: integer(4)}
     observacion: {type: string(200)}
     usuario: {type: integer(4)}
+    nro_recibo: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
@@ -791,3 +792,21 @@ ListaPrecioDetalle:
     ProductoGrupo: {type: one, class: Producto, local: producto_grupo_id, onDelete: RESTRICT}
     Grupo: {type: one, class: Grupoprod, local: grupo_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, onDelete: RESTRICT}
+FacturasAfip:
+  connection: doctrine
+  tableName: facturas_afip
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    tipofactura_id: {type: integer(4)}
+    pto_vta: {type: string(255)}
+    nro_factura: {type: integer(4)}
+    fecha: {type: date(25)}
+    cliente_id: {type: integer(4)}
+    cae: {type: string(255)}
+    iva: {type: 'decimal(10, 2)'}
+    neto: {type: 'decimal(10, 2)'}
+    total: {type: 'decimal(10, 2)'}
+  relations:
+    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, onDelete: RESTRICT}
+    Cliente: {type: one, class: Cliente, local: cliente_id, onDelete: RESTRICT}
+    Resumen: {type: one, class: Resumen, local: id, onDelete: RESTRICT}

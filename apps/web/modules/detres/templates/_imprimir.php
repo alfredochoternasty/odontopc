@@ -137,6 +137,9 @@
 	</tr>		
 	<tr>
 		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>"><i>Los cambios y devoluciones se aceptaran hasta 4 meses posteriores a la venta, caso contrario la empresa no recibira los productos facturados<i></td>
+	</tr>
+	<tr>
+		<td colspan="<?php echo ($resumen->getTipoFactura()->letra == 'A')?6:4; ?>"><i>Por compras superiores a 10-20-50-100 consultar promociones<i></td>
 	</tr>	
 	<?php endif; ?>
 </table>

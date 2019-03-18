@@ -28,6 +28,7 @@ abstract class BaseCobroForm extends BaseFormDoctrine
       'devprod_id'  => new sfWidgetFormInputText(),
       'observacion' => new sfWidgetFormInputText(),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'nro_recibo'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -44,6 +45,7 @@ abstract class BaseCobroForm extends BaseFormDoctrine
       'devprod_id'  => new sfValidatorInteger(array('required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
+      'nro_recibo'  => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cobro[%s]');

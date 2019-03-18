@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           FacturasAfip
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          facturas_afip
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+      list:
+        title: Listado de Facturas Enviadas a la Afip
+        display: [_comprobante, fecha, _cliente, _iva, _neto, _total]
+        max_per_page: 50
+        object_actions: []
+        batch_actions: []
+        actions:       
+          exportar: {label: Exportar a Excel}
+      filter:
+        display: [tipofactura_id, nro_factura, fecha]
+      form:    ~
+      edit:    ~
+      new:     ~
