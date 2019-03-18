@@ -25,6 +25,9 @@ GROUP BY
 
 ALTER TABLE productoCHANGE COLUMN minimo_stock minimo_stock INT NULL DEFAULT NULL AFTER mueve_stock;
 
+INSERT INTO ventas.sf_guard_permission (id, name, description, padre) 
+VALUES ('51', 'Facturas Afip', '@facturas_afip', '10');
+
 
 /*
 DROP TABLE 
@@ -45,7 +48,7 @@ DROP VIEW vta_fact, comp_fact, cta_cte_prov;
 
 DELETE FROM sf_guard_user WHERE es_cliente = 1 OR id = 150;
 
-INSERT INTO sf_guard_user(username, last_name, first_name, email_address, `algorithm`, salt, `password`)
+INSERT INTO sf_guard_user(username, last_name, first_name, email_address, algorithm, salt, password)
 SELECT DISTINCT 
 	dni, 
 	apellido, 
