@@ -144,6 +144,22 @@ class devprodActions extends autoDevprodActions
     $dompdf->stream("nota_debito.pdf");    
 		$this->forward('dev_producto', 'index');
     return sfView::NONE;
+  }  
+	
+	public function executeListListado(sfWebRequest $request){
+    $filtro = new DevProductoFormFilter();
+    $consulta = $filtro->buildQuery($this->getFilters());
+		$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
+		$consulta->limit(30)->offset($pagina * 30);		
+    $listado = $consulta->execute();
+	
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("listado", array("dev_productos" => $listado)));
+    $dompdf->set_paper('A4','landscape');
+    $dompdf->render();
+    $dompdf->stream("productos_devueltos.pdf");    
+		$this->forward('dev_producto', 'index');
+    return sfView::NONE;
   }
 	
 	public function executeListFactura(sfWebRequest $request){

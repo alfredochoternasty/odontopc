@@ -14,7 +14,7 @@ class Resumen extends BaseResumen
 {
   public function __toString()
   {
-    return $this->getId();
+    return $this->getTipoFactura().' - '.str_pad($this->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->nro_factura, 8, 0, STR_PAD_LEFT);
   }
 
   public function getFactura()
@@ -32,7 +32,7 @@ class Resumen extends BaseResumen
     foreach($this->getDetalle() as $det){
       $suma += $det->getTotal();
     }
-    return $suma;
+    return sprintf($this->SimboloMoneda()." %01.2f", $suma);;
   }
 
   public function getSubTotalResumen()
@@ -99,5 +99,29 @@ class Resumen extends BaseResumen
 	
 	public function getFechaYMD(){
 		return str_replace('-', '', $this->fecha);
-	}	
+	}
+	
+	public function vendidos_remito() {
+		$sql = "
+			select sum(total) as monto
+			from detalle_resumen dr join resumen r on dr.resumen_id = r.id
+			where 
+				remito_id =".$this->id;
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetchAll();
+		return sprintf($this->SimboloMoneda()." %01.2f", $resultado[0]['monto']);
+	}
+	
+	public function devueltos_remito() {
+		$sql = "
+			select sum(total) as monto
+			from dev_producto dr join resumen r on dr.resumen_id = r.id
+			where 
+				resumen_id =".$this->id;
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetchAll();
+		return sprintf($this->SimboloMoneda()." %01.2f", $resultado[0]['monto']);
+	}
 }

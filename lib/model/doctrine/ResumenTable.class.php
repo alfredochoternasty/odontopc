@@ -39,4 +39,13 @@ class ResumenTable extends Doctrine_Table
 			$result = $query->execute();
 			return $result;
 		}
+		
+		public function getRemitos(){
+			$query = Doctrine_Core::getTable('Resumen')
+			->createQuery('q')
+			->where('q.tipofactura_id = 4')
+			->orderBy('fecha desc, nro_factura desc');
+			$result = $query->execute();
+			return $result;
+		}		
 }

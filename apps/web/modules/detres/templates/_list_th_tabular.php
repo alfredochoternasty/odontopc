@@ -181,7 +181,7 @@
   <?php endif; ?>
 </th>
 <th class="sf_admin_text sf_admin_list_th_bonificados ui-state-default ui-th-column">
-      <?php echo __('Bonificados', array(), 'messages') ?>
+      <?php echo __('Observaciones', array(), 'messages') ?>
 </th>
 <?php end_slot(); ?>
 <?php include_slot('sf_admin.current_header') ?>

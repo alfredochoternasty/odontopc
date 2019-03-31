@@ -37,8 +37,14 @@
 				<b><?php echo $resumen->getTipoFactura(); ?><b><br>
 				<b>Punto de Venta: </b><?php echo str_pad($resumen->getPtoVta(), 4, 0,STR_PAD_LEFT) ?><b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
 				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
-				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
-				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
+				<?php if ($resumen->tipofactura_id != 4 ) { ?>
+					<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
+					<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
+				<?php } else {?>
+					<b>Total del Remito: </b><?php echo $resumen->getTotalResumen() ?><br>
+					<b>Total Vendidos del Remito: </b><?php echo $resumen->vendidos_remito() ?><br>
+					<b>Total Devueltos del Remito: </b><?php echo $resumen->devueltos_remito() ?><br>
+				<?php } ?>
 				<br><br>
 			</span>
 		</td>

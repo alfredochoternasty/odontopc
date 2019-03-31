@@ -145,6 +145,7 @@ class adminsActions extends sfActions
 			'listado_ventas', 
 			'producto_traza', 
 			'vta_fact',
+			'facturas_afip',
 			'lista_precio_detalle'
 		);
 

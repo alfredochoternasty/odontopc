@@ -21,14 +21,17 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
-        display: [fecha, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
+        display: [fecha, Resumen, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
+        actions:
+          _new: {label: Agregar Producto}
+          listado: ~        
         object_actions:
           _delete: {label: Eliminar}
           asociada: {label: Ver Fact}
           factura: {label: Enviar AFIP}
           imprimir: {label: Imprimir}
       filter:
-        display: [fecha, cliente_id, producto_id, nro_lote]
+        display: [fecha, cliente_id, producto_id, nro_lote, resumen_id]
       form:    ~
       edit:    ~
       new:

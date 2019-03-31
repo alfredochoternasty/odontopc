@@ -1,32 +1,20 @@
-ALTER TABLE cobro	ADD COLUMN nro_recibo INT NULL AFTER usuario;
-
-CREATE VIEW facturas_afip as
-SELECT
-	r.id,
-	r.tipofactura_id, 
-	r.pto_vta, 
-	r.nro_factura,
-	fecha, 
-	r.cliente_id,
-	r.afip_mensaje AS cae,
-	SUM(dr.iva) AS iva,
-	SUM(dr.sub_total) AS neto,
-	SUM(dr.total) AS total
-FROM resumen r
-	JOIN detalle_resumen dr ON r.id = dr.resumen_id
-WHERE afip_estado = 1
+DROP VIEW cliente_saldo;
+CREATE VIEW cliente_saldo AS
+SELECT 
+	c.id as id, 
+	c.apellido, 
+	c.nombre, 
+	cta.moneda_id, 
+	SUM(cta.debe - cta.haber) AS saldo
+FROM 
+	cliente c 
+		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
+WHERE 
+	c.activo = 1
 GROUP BY 
-	r.id,
-	r.pto_vta,
-	r.nro_factura,
-	fecha,
-	r.cliente_id,
-	r.afip_mensaje;
-
-ALTER TABLE productoCHANGE COLUMN minimo_stock minimo_stock INT NULL DEFAULT NULL AFTER mueve_stock;
-
-INSERT INTO ventas.sf_guard_permission (id, name, description, padre) 
-VALUES ('51', 'Facturas Afip', '@facturas_afip', '10');
+	c.id, cta.moneda_id
+ORDER BY 
+	c.apellido, c.nombre;
 
 
 /*

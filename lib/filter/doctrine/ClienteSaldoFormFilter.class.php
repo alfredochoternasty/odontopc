@@ -27,9 +27,11 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 	public function addMayorColumnQuery($query, $field, $value)
 	{
     $rootAlias = $query->getRootAlias();
-		$value = (empty($value)|| !is_numeric($value))? 0 : str_replace(array('.', ','), array('', ''), $value);
-    $query->andWhere($rootAlias.'.saldo > '.$value);
-    return $query;		
+		if (!empty($value) && is_numeric($value)) {
+			$value = str_replace(array('.', ','), array('', ''), $value);
+			$query->andWhere($rootAlias.'.saldo > '.$value);
+		}
+		return $query;
 	}
 	
 }

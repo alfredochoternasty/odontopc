@@ -300,23 +300,20 @@ ORDER BY
 
 CREATE VIEW cliente_saldo AS
 SELECT 
-	FLOOR(1+(RAND()*999999999999)) as id,
-	c.dni, 
+	c.id as id, 
 	c.apellido, 
 	c.nombre, 
-	tm.simbolo, 
-	tm.nombre as moneda, 
+	cta.moneda_id, 
 	SUM(cta.debe - cta.haber) AS saldo
 FROM 
 	cliente c 
 		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
-		LEFT JOIN tipo_moneda tm ON cta.moneda_id = tm.id 
 WHERE 
 	c.activo = 1
 GROUP BY 
-	tm.nombre, tm.simbolo, c.dni, c.apellido, c.nombre
+	c.id, cta.moneda_id
 ORDER BY 
-	c.apellido asc;
+	c.apellido, c.nombre;
 
 create view lista_precio_detalle as 
 select
