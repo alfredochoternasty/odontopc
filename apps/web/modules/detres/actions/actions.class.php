@@ -234,6 +234,56 @@ class detresActions extends autoDetresActions
     }
     echo implode($options);
     return sfView::NONE;
+  }  
+  
+  public function executeGet_prod_remito(sfWebRequest $request){
+    $pid = $request->getParameter('pid');
+    $lid = $request->getParameter('lid');
+
+		$q = Doctrine_Query::create();    
+		$q->select('dr.id, concat(c.apellido, c.nombre) as cliente, r.fecha as fec, r.nro_factura as nro');
+		$q->from('DetalleResumen dr');
+		$q->leftJoin("dr.Resumen r");
+		$q->leftJoin("r.Cliente c");
+		$q->where('dr.producto_id = '.$pid);
+		$q->andWhere("dr.nro_lote = '$lid'");
+		$q->andWhere("r.tipofactura_id = 4");
+		$q->orderBy('r.fecha desc');     
+    $remitos = $q->fetchArray();
+  
+    $options[] = '<option value=""></option>';
+    foreach($remitos as $remito){
+		$fec = ' - Fecha: '.implode('/', array_reverse(explode('-', $remito['fec'])));
+		$options[] = '<option value="'.$remito['id'].'">'.$remito['cliente'].$fec.' - Nro: '.$remito['nro'].'</option>';
+    }
+    echo implode($options);
+    return sfView::NONE;
+  }
+
+  public function executeGet_stock_remito(sfWebRequest $request){
+    $drid = $request->getParameter('drid');
+
+		$q = Doctrine_Query::create();
+		$q->select('sum(cantidad) as cant_vend');
+		$q->from('DetalleResumen dr');
+		$q->where('dr.det_remito_id = '.$drid);
+    $remitos = $q->fetchArray();
+		$cant_vend = $remitos[0]['cant_vend'];		
+		
+		$q = Doctrine_Query::create();
+		$q->select('dr.cantidad');
+		$q->from('DetalleResumen dr');
+		$q->where('dr.id = '.$drid);
+    $remitos = $q->fetchArray();
+		$cantidad = $remitos[0]['cantidad'];		
+		
+		$stock = $cantidad - $cant_vend;
+    $options[] = '<option value="0">0</option>';
+    for($i = 1; $i <= $stock; $i++){
+      $options[] = '<option value="'.$i.'">'.$i.'</option>';
+    }
+    echo implode($options);
+    return sfView::NONE;
   }
   
   public function executeGet_cantidad_lote(sfWebRequest $request){

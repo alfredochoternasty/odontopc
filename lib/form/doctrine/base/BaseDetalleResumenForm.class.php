@@ -32,6 +32,7 @@ abstract class BaseDetalleResumenForm extends BaseFormDoctrine
       'moneda_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => false)),
       'cant_vend_remito' => new sfWidgetFormInputText(),
       'lote_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
+      'det_remito_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DetalleRemito'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -52,6 +53,7 @@ abstract class BaseDetalleResumenForm extends BaseFormDoctrine
       'moneda_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'))),
       'cant_vend_remito' => new sfValidatorInteger(array('required' => false)),
       'lote_id'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'required' => false)),
+      'det_remito_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('DetalleRemito'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_resumen[%s]');

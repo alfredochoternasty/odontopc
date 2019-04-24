@@ -297,6 +297,7 @@ DetalleResumen:
     moneda_id: {type: integer(4), notnull: true}
     cant_vend_remito: {type: integer(4)}
     lote_id: {type: integer(4)}
+    det_remito_id: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -305,6 +306,7 @@ DetalleResumen:
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Lote: {type: one, local: lote_id, onDelete: RESTRICT}
+    DetalleRemito: {type: one, class: DetalleResumen, local: det_remito_id, foreign: id, onDelete: RESTRICT}
 Localidad:
   connection: doctrine
   tableName: localidad

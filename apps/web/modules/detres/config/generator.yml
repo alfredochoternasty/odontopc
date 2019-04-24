@@ -15,6 +15,7 @@ generator:
       fields:
         precio: {label: Precio Unitario, help: Muestra automáticamente el precio de venta del producto o lo calcula según la lista de precio seleccionada en la venta}
         bonificados: {help: Cantidad productos bonificados aparte de la cantidad vendida.}
+        det_remito_id: {label: Remito, help: Dejar vacio si no corresponde a un remito}
       list:
         table_method: retrieveConJoins
         title: Detalle de la Venta
@@ -32,4 +33,4 @@ generator:
         title: Modificar Detalle
       new:
         title: Nuevo Detalle
-        display: [producto_id, nro_lote, precio, cantidad, sub_total, iva, total, bonificados, observacion]
+        display: [producto_id, nro_lote, det_remito_id, precio, cantidad, sub_total, iva, total, bonificados, observacion]

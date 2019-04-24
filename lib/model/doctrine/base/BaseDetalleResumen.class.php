@@ -24,12 +24,15 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property integer $moneda_id
  * @property integer $cant_vend_remito
  * @property integer $lote_id
+ * @property integer $det_remito_id
  * @property Resumen $Resumen
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
  * @property Lote $Lote
  * @property ListaPrecio $Lista
  * @property TipoMoneda $Moneda
+ * @property DetalleResumen $DetalleRemito
+ * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $ListadoVentas
  * 
  * @method integer             getId()               Returns the current record's "id" value
@@ -49,12 +52,15 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method integer             getMonedaId()         Returns the current record's "moneda_id" value
  * @method integer             getCantVendRemito()   Returns the current record's "cant_vend_remito" value
  * @method integer             getLoteId()           Returns the current record's "lote_id" value
+ * @method integer             getDetRemitoId()      Returns the current record's "det_remito_id" value
  * @method Resumen             getResumen()          Returns the current record's "Resumen" value
  * @method Producto            getProducto()         Returns the current record's "Producto" value
  * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
  * @method Lote                getLote()             Returns the current record's "Lote" value
  * @method ListaPrecio         getLista()            Returns the current record's "Lista" value
  * @method TipoMoneda          getMoneda()           Returns the current record's "Moneda" value
+ * @method DetalleResumen      getDetalleRemito()    Returns the current record's "DetalleRemito" value
+ * @method Doctrine_Collection getDetalleResumen()   Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getListadoVentas()    Returns the current record's "ListadoVentas" collection
  * @method DetalleResumen      setId()               Sets the current record's "id" value
  * @method DetalleResumen      setResumenId()        Sets the current record's "resumen_id" value
@@ -73,12 +79,15 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setMonedaId()         Sets the current record's "moneda_id" value
  * @method DetalleResumen      setCantVendRemito()   Sets the current record's "cant_vend_remito" value
  * @method DetalleResumen      setLoteId()           Sets the current record's "lote_id" value
+ * @method DetalleResumen      setDetRemitoId()      Sets the current record's "det_remito_id" value
  * @method DetalleResumen      setResumen()          Sets the current record's "Resumen" value
  * @method DetalleResumen      setProducto()         Sets the current record's "Producto" value
  * @method DetalleResumen      setSfGuardUser()      Sets the current record's "sfGuardUser" value
  * @method DetalleResumen      setLote()             Sets the current record's "Lote" value
  * @method DetalleResumen      setLista()            Sets the current record's "Lista" value
  * @method DetalleResumen      setMoneda()           Sets the current record's "Moneda" value
+ * @method DetalleResumen      setDetalleRemito()    Sets the current record's "DetalleRemito" value
+ * @method DetalleResumen      setDetalleResumen()   Sets the current record's "DetalleResumen" collection
  * @method DetalleResumen      setListadoVentas()    Sets the current record's "ListadoVentas" collection
  * 
  * @package    odontopc
@@ -180,6 +189,10 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('det_remito_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -214,6 +227,15 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'local' => 'moneda_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('DetalleResumen as DetalleRemito', array(
+             'local' => 'det_remito_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('DetalleResumen', array(
+             'local' => 'id',
+             'foreign' => 'det_remito_id'));
 
         $this->hasMany('ListadoVentas', array(
              'local' => 'id',

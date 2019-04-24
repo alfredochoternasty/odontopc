@@ -39,7 +39,11 @@ abstract class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
     parent::setup();
   }
 
-  public function addGroupsListColumnQuery(Doctrine_Query $query, $field, $values)
+  public function add
+Deprecated: preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead in C:\xampp_5_6\htdocs\odontopc\lib\util\sfToolkit.class.php on line 362
+
+Deprecated: preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead in C:\xampp_5_6\htdocs\odontopc\lib\util\sfToolkit.class.php on line 362
+GroupsListColumnQuery(Doctrine_Query $query, $field, $values)
   {
     if (!is_array($values))
     {
@@ -57,7 +61,11 @@ abstract class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
     ;
   }
 
-  public function addUsersListColumnQuery(Doctrine_Query $query, $field, $values)
+  public function add
+Deprecated: preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead in C:\xampp_5_6\htdocs\odontopc\lib\util\sfToolkit.class.php on line 362
+
+Deprecated: preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead in C:\xampp_5_6\htdocs\odontopc\lib\util\sfToolkit.class.php on line 362
+UsersListColumnQuery(Doctrine_Query $query, $field, $values)
   {
     if (!is_array($values))
     {

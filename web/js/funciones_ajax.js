@@ -187,9 +187,9 @@ $(document).ready(function(){
   });
   
   $("#detalle_resumen_nro_lote").change(function(event){
-      var lid = $("#detalle_resumen_nro_lote").find(':selected').val();
-      var pid = $("#detalle_resumen_producto_id").find(':selected').val();
-			var rid = $("#detalle_resumen_resumen_id").val();
+    var lid = $("#detalle_resumen_nro_lote").find(':selected').val();
+    var pid = $("#detalle_resumen_producto_id").find(':selected').val();
+		var rid = $("#detalle_resumen_resumen_id").val();
       $.ajax({
           url: 'get_cantidad_lote?lid='+lid+'&pid='+pid+'&rid='+rid,
           success: function(data) {
@@ -198,9 +198,32 @@ $(document).ready(function(){
             $("#detalle_resumen_bonificados").html('');
             $("#detalle_resumen_bonificados").html(data);
           }
-        });                  
+        });
+
+      $.ajax({
+          url: 'get_prod_remito?lid='+lid+'&pid='+pid,
+          success: function(data) {
+            $("#detalle_resumen_det_remito_id").html('');
+            $("#detalle_resumen_det_remito_id").html(data);
+          }
+        });
+			
   });
   
+  $("#detalle_resumen_det_remito_id").change(function(event){
+		var drid = $("#detalle_resumen_det_remito_id").val();
+      $.ajax({
+          url: 'get_stock_remito?drid='+drid,
+          success: function(data) {
+            $("#detalle_resumen_cantidad").html('');
+            $("#detalle_resumen_cantidad").html(data);
+            $("#detalle_resumen_bonificados").html('');
+            $("#detalle_resumen_bonificados").html(data);
+          }
+        });	
+  });
+
+
   $("#detalle_resumen_cantidad").change(function(event){
       var cantidad = $("#detalle_resumen_cantidad").find(':selected').val();
       var precio = $("#detalle_resumen_precio").val();

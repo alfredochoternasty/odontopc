@@ -16,6 +16,7 @@ GROUP BY
 ORDER BY 
 	c.apellido, c.nombre;
 
+ALTER TABLE detalle_resumen	ADD COLUMN det_remito_id INT NULL AFTER lote_id;
 
 /*
 DROP TABLE 

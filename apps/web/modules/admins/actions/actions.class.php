@@ -100,14 +100,14 @@ class adminsActions extends sfActions
 		while($row = mysql_fetch_row($result))
 			if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
 				$tables[] = $row[0];
-		
+
 		foreach ($tables as $table) {
 			$result = mysql_query('DESCRIBE '.$table.';');
 			$campos = '';
 			while($row = mysql_fetch_row($result)) {
 				$campos[] = $row[0];
 			}
-			
+						
 			$sql = "
 				DROP TRIGGER IF EXISTS {{nom_trigger}};
 				CREATE TRIGGER {{nom_trigger}} AFTER {{operacion}} ON {{tabla}}
@@ -120,7 +120,8 @@ class adminsActions extends sfActions
 
 			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
 			$reemplazar = array('ti_'.$table, 'INSERT', $table, implode(', ', $campos), 'NEW.'.implode(', NEW.', $campos));
-			$result = mysql_query(str_replace($buscar, $reemplazar, $sql));
+			$sql = str_replace($buscar, $reemplazar, $sql);
+			$result = mysql_query($sql);
 			
 			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
 			$reemplazar = array('tu_'.$table, 'UPDATE', $table, implode(', ', $campos), 'NEW.'.implode(', NEW.', $campos));

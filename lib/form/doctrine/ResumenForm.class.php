@@ -16,11 +16,8 @@ class ResumenForm extends BaseResumenForm
   {
     parent::configure();
     
-    //unset($this['pagado'], $this['lista_id'], $this['moneda_id']);
-    
     $this->widgetSchema['cliente_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Cliente', 'table_method' => 'getActivos', 'method' => 'getDescAfip', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->widgetSchema['remito_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Resumen', 'table_method' => 'getRemitosVta', 'method' => 'getDescRemito', 'add_empty' => true, 'order_by' => array('fecha', 'desc')), array('style' => 'width:250px;'));
-    //$this->widgetSchema['pedido_id'] = new sfWidgetFormInputHidden();    
     $this->widgetSchema['fecha'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
     $this->validatorSchema['fecha'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
 		
@@ -28,6 +25,7 @@ class ResumenForm extends BaseResumenForm
 
     if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
       $this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
+      $this->widgetSchema['pto_vta'] = new sfWidgetFormChoice(array('choices' => array('', '4', '5')));
       $this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false));
 			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInputHidden();
 			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger();
@@ -49,7 +47,6 @@ class ResumenForm extends BaseResumenForm
 		
 		$this->validatorSchema->setOption('allow_extra_fields', true);		    
 		
-		//$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	sfGuardSecurityUser
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
   }
 }
