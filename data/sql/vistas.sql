@@ -304,7 +304,8 @@ SELECT
 	c.apellido, 
 	c.nombre, 
 	cta.moneda_id, 
-	SUM(cta.debe - cta.haber) AS saldo
+	SUM(cta.debe - cta.haber) AS saldo,
+	zona_id
 FROM 
 	cliente c 
 		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 

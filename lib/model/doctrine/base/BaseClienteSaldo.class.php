@@ -12,20 +12,26 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSaldo', 'doctrine');
  * @property string $nombre
  * @property integer $moneda_id
  * @property decimal $saldo
+ * @property integer $zona_id
  * @property TipoMoneda $Moneda
+ * @property Zona $Zona
  * 
  * @method integer      getId()        Returns the current record's "id" value
  * @method string       getApellido()  Returns the current record's "apellido" value
  * @method string       getNombre()    Returns the current record's "nombre" value
  * @method integer      getMonedaId()  Returns the current record's "moneda_id" value
  * @method decimal      getSaldo()     Returns the current record's "saldo" value
+ * @method integer      getZonaId()    Returns the current record's "zona_id" value
  * @method TipoMoneda   getMoneda()    Returns the current record's "Moneda" value
+ * @method Zona         getZona()      Returns the current record's "Zona" value
  * @method ClienteSaldo setId()        Sets the current record's "id" value
  * @method ClienteSaldo setApellido()  Sets the current record's "apellido" value
  * @method ClienteSaldo setNombre()    Sets the current record's "nombre" value
  * @method ClienteSaldo setMonedaId()  Sets the current record's "moneda_id" value
  * @method ClienteSaldo setSaldo()     Sets the current record's "saldo" value
+ * @method ClienteSaldo setZonaId()    Sets the current record's "zona_id" value
  * @method ClienteSaldo setMoneda()    Sets the current record's "Moneda" value
+ * @method ClienteSaldo setZona()      Sets the current record's "Zona" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -61,6 +67,10 @@ abstract class BaseClienteSaldo extends sfDoctrineRecord
              'length' => 10,
              'scale' => '2',
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -68,6 +78,11 @@ abstract class BaseClienteSaldo extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('TipoMoneda as Moneda', array(
              'local' => 'moneda_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

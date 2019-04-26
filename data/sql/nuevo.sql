@@ -18,6 +18,51 @@ ORDER BY
 
 ALTER TABLE detalle_resumen	ADD COLUMN det_remito_id INT NULL AFTER lote_id;
 
+CREATE TABLE zona (
+	id INT NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)
+)
+COLLATE='latin1_swedish_ci'
+;
+
+CREATE TABLE usuario_zona (
+	id INT NOT NULL AUTO_INCREMENT,
+	zona_id INT NOT NULL,
+	usuario INT NOT NULL,
+	PRIMARY KEY (id)
+)
+COLLATE='latin1_swedish_ci'
+;
+
+INSERT INTO zona (nombre) VALUES ('Central');
+INSERT INTO zona (nombre) VALUES ('Sur');
+INSERT INTO zona (nombre) VALUES ('Norte');
+
+ALTER TABLE cliente	ADD COLUMN zona_id TINYINT(4) NOT NULL DEFAULT '1' AFTER recibir_curso;
+
+DROP VIEW cliente_saldo;
+CREATE VIEW cliente_saldo AS
+SELECT 
+	c.id as id, 
+	c.apellido, 
+	c.nombre, 
+	cta.moneda_id, 
+	SUM(cta.debe - cta.haber) AS saldo,
+	zona_id
+FROM 
+	cliente c 
+		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
+WHERE 
+	c.activo = 1
+GROUP BY 
+	c.id, cta.moneda_id
+ORDER BY 
+	c.apellido, c.nombre;
+	
+ALTER TABLE compra	ADD COLUMN zona_id INT NOT NULL DEFAULT '1';
+ALTER TABLE lote	ADD COLUMN zona_id INT NOT NULL DEFAULT '1';
+
 /*
 DROP TABLE 
 	producto2, 

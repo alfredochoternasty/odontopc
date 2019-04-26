@@ -22,9 +22,13 @@ class ClienteTable extends Doctrine_Table
     }
 		
     public function retrieveConJoins(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Tipo t');
       $q->leftJoin($rootAlias . '.Localidad l');
+			$q->leftJoin($rootAlias . '.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');
+			$q->andWhere('uz.usuario = '.$id);	
       return $q;
     }
     
@@ -67,9 +71,13 @@ class ClienteTable extends Doctrine_Table
     }
 	
 	public function getActivos(){
+		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 		$query = Doctrine_Core::getTable('Cliente')
 		->createQuery('q')
+		->leftJoin('q.Zona z')
+		->leftJoin('z.UsuarioZona uz')
 		->where('q.activo = 1')
+		->andWhere('uz.usuario = '.$id)
 		->orderBy('apellido ASC, nombre ASC');
 		$result = $query->execute();
 		return $result;

@@ -17,12 +17,14 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property string $observacion
  * @property integer $pagado
  * @property integer $usuario
+ * @property integer $zona_id
  * @property Proveedor $Proveedor
  * @property Doctrine_Collection $Detalles
  * @property TipoFactura $Tipofactura
  * @property Cuenta $Cuenta
  * @property TipoMoneda $Moneda
  * @property sfGuardUser $sfGuardUser
+ * @property Zona $Zona
  * @property Doctrine_Collection $Lote
  * 
  * @method integer             getId()             Returns the current record's "id" value
@@ -35,12 +37,14 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method string              getObservacion()    Returns the current record's "observacion" value
  * @method integer             getPagado()         Returns the current record's "pagado" value
  * @method integer             getUsuario()        Returns the current record's "usuario" value
+ * @method integer             getZonaId()         Returns the current record's "zona_id" value
  * @method Proveedor           getProveedor()      Returns the current record's "Proveedor" value
  * @method Doctrine_Collection getDetalles()       Returns the current record's "Detalles" collection
  * @method TipoFactura         getTipofactura()    Returns the current record's "Tipofactura" value
  * @method Cuenta              getCuenta()         Returns the current record's "Cuenta" value
  * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
+ * @method Zona                getZona()           Returns the current record's "Zona" value
  * @method Doctrine_Collection getLote()           Returns the current record's "Lote" collection
  * @method Compra              setId()             Sets the current record's "id" value
  * @method Compra              setCuentaId()       Sets the current record's "cuenta_id" value
@@ -52,12 +56,14 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setObservacion()    Sets the current record's "observacion" value
  * @method Compra              setPagado()         Sets the current record's "pagado" value
  * @method Compra              setUsuario()        Sets the current record's "usuario" value
+ * @method Compra              setZonaId()         Sets the current record's "zona_id" value
  * @method Compra              setProveedor()      Sets the current record's "Proveedor" value
  * @method Compra              setDetalles()       Sets the current record's "Detalles" collection
  * @method Compra              setTipofactura()    Sets the current record's "Tipofactura" value
  * @method Compra              setCuenta()         Sets the current record's "Cuenta" value
  * @method Compra              setMoneda()         Sets the current record's "Moneda" value
  * @method Compra              setSfGuardUser()    Sets the current record's "sfGuardUser" value
+ * @method Compra              setZona()           Sets the current record's "Zona" value
  * @method Compra              setLote()           Sets the current record's "Lote" collection
  * 
  * @package    odontopc
@@ -120,6 +126,10 @@ abstract class BaseCompra extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -150,6 +160,11 @@ abstract class BaseCompra extends sfDoctrineRecord
 
         $this->hasOne('sfGuardUser', array(
              'local' => 'usuario',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

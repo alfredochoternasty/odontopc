@@ -17,10 +17,25 @@ class ClienteSaldoTable extends Doctrine_Table
         return Doctrine_Core::getTable('ClienteSaldo');
     }
 		
+    public function retrieveConJoins(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+      $rootAlias = $q->getRootAlias();
+			$q->leftJoin($rootAlias.'.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');	
+			$q->andWhere('uz.usuario = '.$id);
+      $q->orderBy($rootAlias . '.apellido');
+      return $q;
+    }    
+		
   static public function applyMayorFilter($query, $value)
   {
+		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
     $rootAlias = $query->getRootAlias();
+		$query->leftJoin($rootAlias.'Zona z');
+		$query->leftJoin('z.UsuarioZona uz');	
     $query->where($rootAlias.'.saldo > '.$value);
+		$query->andWhere('uz.usuario = '.$id);
+		$query->orderBy($rootAlias . '.apellido');
     return $query;
   }		
 }

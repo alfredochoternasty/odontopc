@@ -189,7 +189,7 @@ class cliActions extends autoCliActions
     $es_nuevo = $form->getObject()->isNew();
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-      $cliente = $form->save();
+      $cliente = $form->save();		
       
       /* esto es para enviar al otro sistema*/
       $a_cliente['tipo_id'] = $cliente->tipo_id;

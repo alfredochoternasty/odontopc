@@ -36,6 +36,7 @@ abstract class BaseClienteForm extends BaseFormDoctrine
       'lista_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => false)),
       'activo'             => new sfWidgetFormInputCheckbox(),
       'recibir_curso'      => new sfWidgetFormInputCheckbox(),
+      'zona_id'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -60,6 +61,7 @@ abstract class BaseClienteForm extends BaseFormDoctrine
       'lista_id'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'))),
       'activo'             => new sfValidatorBoolean(array('required' => false)),
       'recibir_curso'      => new sfValidatorBoolean(array('required' => false)),
+      'zona_id'            => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'))),
     ));
 
     $this->widgetSchema->setNameFormat('cliente[%s]');

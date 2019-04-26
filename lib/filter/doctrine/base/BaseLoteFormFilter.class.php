@@ -20,6 +20,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
       'compra_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'), 'add_empty' => true)),
       'observacion' => new sfWidgetFormFilterInput(),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'zona_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
       'compra_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Compra'), 'column' => 'id')),
       'observacion' => new sfValidatorPass(array('required' => false)),
       'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
+      'zona_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('lote_filters[%s]');
@@ -57,6 +59,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
       'compra_id'   => 'ForeignKey',
       'observacion' => 'Text',
       'usuario'     => 'ForeignKey',
+      'zona_id'     => 'ForeignKey',
     );
   }
 }

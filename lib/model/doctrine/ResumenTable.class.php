@@ -22,10 +22,14 @@ class ResumenTable extends Doctrine_Table
     }    
     
     public function retrieveConJoins(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Cliente c');
+			$q->leftJoin('c.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');
       $q->leftJoin($rootAlias . '.TipoVenta tv');
       $q->leftJoin($rootAlias . '.TipoFactura tf');
+			$q->andWhere('uz.usuario = '.$id);
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     } 

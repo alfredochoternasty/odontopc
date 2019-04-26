@@ -22,6 +22,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'observacion'    => new sfWidgetFormFilterInput(),
       'pagado'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'observacion'    => new sfValidatorPass(array('required' => false)),
       'pagado'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('compra_filters[%s]');
@@ -63,6 +65,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'observacion'    => 'Text',
       'pagado'         => 'Number',
       'usuario'        => 'ForeignKey',
+      'zona_id'        => 'ForeignKey',
     );
   }
 }

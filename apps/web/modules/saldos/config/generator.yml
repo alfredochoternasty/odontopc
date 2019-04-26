@@ -18,6 +18,7 @@ generator:
         nombre: {label: Nombre}
         mayor: {label: Saldo mayor que, help: numero sin puntos ni comas por ej 5000}
       list:
+        table_method: retrieveConJoins
         max_per_page: 50
         title: Listado de Saldos  
         display: [apellido, nombre, _saldo]

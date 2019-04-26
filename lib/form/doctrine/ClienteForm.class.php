@@ -22,6 +22,7 @@ class ClienteForm extends BaseClienteForm
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
     $this->widgetSchema['lista_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true));
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
 		
     $this->validatorSchema['genera_comision'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));    
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));    

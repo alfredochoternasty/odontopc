@@ -207,10 +207,12 @@ class detresActions extends autoDetresActions
       $rid = $this->getUser()->getAttribute('rid');
     }
 		$resumen = Doctrine::getTable('Resumen')->find($rid);
+		$zona = $resumen->getCliente()->getZonaId();
 		
     $q = Doctrine_Query::create();    
     $q->from('Lote l');
     $q->where('l.producto_id = '.$pid);
+		$q->andWhere("l.zona_id = $zona");
 		$q->andWhere("l.nro_lote not like 'er%'");
     $q->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
 		if (!empty($resumen->remito_id)) {
@@ -292,7 +294,10 @@ class detresActions extends autoDetresActions
     if(empty($rid)){
       $rid = $this->getUser()->getAttribute('rid');
     }
-		$resumen = Doctrine::getTable('Resumen')->find($rid);  
+		
+		$resumen = Doctrine::getTable('Resumen')->find($rid);
+		$zona = $resumen->getCliente()->getZonaId();
+		
 		if (!empty($resumen->remito_id)) {
 			$remito = Doctrine::getTable('Resumen')->find($resumen->remito_id);
 			$det = Doctrine::getTable('DetalleResumen')->findByResumenIdAndNroLote($resumen->remito_id, $lid);
@@ -306,6 +311,7 @@ class detresActions extends autoDetresActions
 				->select('l.stock')
 				->from('Lote l')
 				->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
+				->andWhere('l.zona_id = '.$zona)
 				->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
 				->andWhere('l.stock > 0 ')
 				->andWhere("l.nro_lote not like 'er%'")

@@ -17,6 +17,7 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
       'nombre'    => new sfWidgetFormFilterInput(),
       'moneda_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'saldo'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'zona_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -24,6 +25,7 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
       'nombre'    => new sfValidatorPass(array('required' => false)),
       'moneda_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
       'saldo'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'zona_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_saldo_filters[%s]');
@@ -48,6 +50,7 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
       'nombre'    => 'Text',
       'moneda_id' => 'ForeignKey',
       'saldo'     => 'Number',
+      'zona_id'   => 'ForeignKey',
     );
   }
 }

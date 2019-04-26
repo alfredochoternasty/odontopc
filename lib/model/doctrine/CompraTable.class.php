@@ -21,9 +21,13 @@ class CompraTable extends Doctrine_Table
         $this->setOption('orderBy','fecha DESC');
     }    
     public function retrieveConJoins(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Proveedor p');
       $q->leftJoin($rootAlias . '.Tipofactura tf');
+			$q->leftJoin($rootAlias . '.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');
+			$q->andWhere('uz.usuario = '.$id);
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }

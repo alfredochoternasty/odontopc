@@ -99,6 +99,7 @@ Cliente:
     lista_id: {type: integer(4), notnull: true}
     activo: {type: boolean, default: 1}
     recibir_curso: {type: boolean, default: 1}
+    zona_id: {type: integer(4), notnull: true}
   relations:
     Resumenes: {type: many, class: Resumen, local: id, foreign: cliente_id}
     Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
@@ -108,6 +109,7 @@ Cliente:
     Tipo: {type: one, class: TipoCliente, local: tipo_id, onDelete: RESTRICT}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Usuario: {type: one, class: sfGuardUser, local: usuario_id}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 Compra:
   connection: doctrine
   tableName: compra
@@ -122,6 +124,7 @@ Compra:
     observacion: {type: string(200)}
     pagado: {type: integer(1), notnull: true, default: 0}
     usuario: {type: integer(4)}
+    zona_id: {type: integer(4)}
   relations:
     Proveedor: {type: one, class: Proveedor, local: proveedor_id}
     Detalles: {type: many, class: DetalleCompra, local: id, foreign: compra_id}
@@ -130,6 +133,7 @@ Compra:
     Cuenta: {type: one, class: Cuenta, local: cuenta_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 DetalleCompra:
   connection: doctrine
   tableName: detalle_compra
@@ -582,11 +586,13 @@ Lote:
     compra_id: {type: integer(4)}
     observacion: {type: string(255)}
     usuario: {type: integer(4)}
+    zona_id: {type: integer(4)}
   relations:
     Compra: {type: one, local: compra_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
     DetalleResumen: {type: many, class: DetalleResumen, local: nro_lote, foreign: nro_lote}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 ClienteUltimaCompra:
   connection: doctrine
   tableName: cliente_ultima_compra
@@ -775,8 +781,10 @@ ClienteSaldo:
     nombre: {type: string(50)}
     moneda_id: {type: integer(4)}
     saldo: {type: 'decimal(10, 2)', notnull: true}
+    zona_id: {type: integer(4)}
   relations:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 ListaPrecioDetalle:
   connection: doctrine
   tableName: lista_precio_detalle
@@ -812,3 +820,20 @@ FacturasAfip:
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, onDelete: RESTRICT}
     Cliente: {type: one, class: Cliente, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, class: Resumen, local: id, onDelete: RESTRICT}
+Zona:
+  connection: doctrine
+  tableName: zona
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(255)}
+UsuarioZona:
+  connection: doctrine
+  tableName: usuario_zona
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    zona_id: {type: integer(4)}
+    usuario: {type: integer(4)}
+  relations:
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
+    Usuario: {type: one, local: usuario, onDelete: RESTRICT}
+

@@ -33,6 +33,7 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'lista_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
       'activo'             => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'recibir_curso'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'zona_id'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -56,6 +57,7 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'lista_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lista'), 'column' => 'id')),
       'activo'             => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'recibir_curso'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'zona_id'            => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_filters[%s]');
@@ -96,6 +98,7 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'lista_id'           => 'ForeignKey',
       'activo'             => 'Boolean',
       'recibir_curso'      => 'Boolean',
+      'zona_id'            => 'ForeignKey',
     );
   }
 }

@@ -28,6 +28,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property integer $lista_id
  * @property boolean $activo
  * @property boolean $recibir_curso
+ * @property integer $zona_id
  * @property Doctrine_Collection $Resumenes
  * @property Localidad $Localidad
  * @property CondicionFiscal $Condfiscal
@@ -36,6 +37,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property TipoCliente $Tipo
  * @property ListaPrecio $Lista
  * @property sfGuardUser $Usuario
+ * @property Zona $Zona
  * @property Doctrine_Collection $Venta
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $ListadoCobros
@@ -67,6 +69,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method integer             getListaId()            Returns the current record's "lista_id" value
  * @method boolean             getActivo()             Returns the current record's "activo" value
  * @method boolean             getRecibirCurso()       Returns the current record's "recibir_curso" value
+ * @method integer             getZonaId()             Returns the current record's "zona_id" value
  * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
@@ -75,6 +78,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method TipoCliente         getTipo()               Returns the current record's "Tipo" value
  * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
  * @method sfGuardUser         getUsuario()            Returns the current record's "Usuario" value
+ * @method Zona                getZona()               Returns the current record's "Zona" value
  * @method Doctrine_Collection getVenta()              Returns the current record's "Venta" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
@@ -105,6 +109,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setListaId()            Sets the current record's "lista_id" value
  * @method Cliente             setActivo()             Sets the current record's "activo" value
  * @method Cliente             setRecibirCurso()       Sets the current record's "recibir_curso" value
+ * @method Cliente             setZonaId()             Sets the current record's "zona_id" value
  * @method Cliente             setResumenes()          Sets the current record's "Resumenes" collection
  * @method Cliente             setLocalidad()          Sets the current record's "Localidad" value
  * @method Cliente             setCondfiscal()         Sets the current record's "Condfiscal" value
@@ -113,6 +118,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setTipo()               Sets the current record's "Tipo" value
  * @method Cliente             setLista()              Sets the current record's "Lista" value
  * @method Cliente             setUsuario()            Sets the current record's "Usuario" value
+ * @method Cliente             setZona()               Sets the current record's "Zona" value
  * @method Cliente             setVenta()              Sets the current record's "Venta" collection
  * @method Cliente             setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Cliente             setListadoCobros()      Sets the current record's "ListadoCobros" collection
@@ -223,6 +229,11 @@ abstract class BaseCliente extends sfDoctrineRecord
              'type' => 'boolean',
              'default' => 1,
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -263,6 +274,11 @@ abstract class BaseCliente extends sfDoctrineRecord
         $this->hasOne('sfGuardUser as Usuario', array(
              'local' => 'usuario_id',
              'foreign' => 'id'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
 
         $this->hasMany('Venta', array(
              'local' => 'id',

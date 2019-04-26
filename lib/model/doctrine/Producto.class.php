@@ -23,13 +23,19 @@ class Producto extends BaseProducto
     $cant_vta = $event['object']->getCantidad();
     $lote = $event['object']->getNroLote();
     
+		if (!empty($event['object']->resumen_id)) {
+			$zona = $event['object']->getResumen()->getCliente()->getZonaId();; //venta
+		} else {
+			$zona = $event['object']->getCompra()->getZonaId(); //compra - borrar
+		}		
+    
     if(isset($event['object']->bonificados)){
       $cant_bono = $event['object']->getBonificados();
     }else{
       $cant_bono = 0;
     }
     
-    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote);
+    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote, $zona);
     foreach($prods as $producto){
       $cant_prod = $producto->getStock();
     }
@@ -38,14 +44,24 @@ class Producto extends BaseProducto
         ->update('lote l')
         ->set('l.stock', '?', $cant_prod - $cant_vta - $cant_bono)
         ->where('l.producto_id = ?', $prod)
-        ->andWhere('l.nro_lote = ?', $lote);
+        ->andWhere('l.nro_lote = ?', $lote)
+        ->andWhere('l.zona_id = ?', $zona);
     $q->execute();    
   }
 
   public static function AumentarStock(sfEvent $event){
     $prod = $event['object']->getProductoId();
-    $lote = $event['object']->getNroLote();   
-    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote);
+    $lote = $event['object']->getNroLote();
+		if (!empty($event['object']->compra_id)) {
+			$zona = $event['object']->getCompra()->getZonaId(); //compra
+		} elseif (!empty($event['object']->resumen_id)) {
+			$zona = $event['object']->getResumen()->getCliente()->getZonaId(); // venta - borrar
+		} else {
+			$zona = $event['object']->getCliente()->getZonaId(); //devolucion
+		}
+    
+		
+    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLoteAndZonaId($prod, $lote, $zona);
     $cant_prod = null;
 		if (!empty($prods[0])) {
 			$lote = Doctrine::getTable('Lote')->find($prods[0]->getId());
@@ -58,6 +74,7 @@ class Producto extends BaseProducto
 			$usuario = $event['object']->getUsuario();
 			$fec_vto = $event['object']->getFechaVto();
 			$compra = $event['object']->getCompraId();
+			$zona = $event['object']->getCompra()->getZonaId();
 			$cant_cmp = $event['object']->getCantidad();
       $obj_lote = new Lote();
       $obj_lote->setProductoId($prod);
@@ -66,6 +83,7 @@ class Producto extends BaseProducto
       $obj_lote->setFechaVto($fec_vto);
       $obj_lote->setCompraId($compra);
       $obj_lote->setUsuario($usuario);
+      $obj_lote->setZonaId($zona);
       $obj_lote->save();			
 		}
   }
