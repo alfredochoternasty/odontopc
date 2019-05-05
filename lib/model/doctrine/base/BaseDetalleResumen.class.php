@@ -34,6 +34,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property DetalleResumen $DetalleRemito
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $ListadoVentas
+ * @property Doctrine_Collection $VentasZona
  * 
  * @method integer             getId()               Returns the current record's "id" value
  * @method integer             getResumenId()        Returns the current record's "resumen_id" value
@@ -62,6 +63,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      getDetalleRemito()    Returns the current record's "DetalleRemito" value
  * @method Doctrine_Collection getDetalleResumen()   Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getListadoVentas()    Returns the current record's "ListadoVentas" collection
+ * @method Doctrine_Collection getVentasZona()       Returns the current record's "VentasZona" collection
  * @method DetalleResumen      setId()               Sets the current record's "id" value
  * @method DetalleResumen      setResumenId()        Sets the current record's "resumen_id" value
  * @method DetalleResumen      setProductoId()       Sets the current record's "producto_id" value
@@ -89,6 +91,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setDetalleRemito()    Sets the current record's "DetalleRemito" value
  * @method DetalleResumen      setDetalleResumen()   Sets the current record's "DetalleResumen" collection
  * @method DetalleResumen      setListadoVentas()    Sets the current record's "ListadoVentas" collection
+ * @method DetalleResumen      setVentasZona()       Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -240,5 +243,9 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
         $this->hasMany('ListadoVentas', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
+
+        $this->hasMany('VentasZona', array(
+             'local' => 'id',
+             'foreign' => 'detalle_resumen_id'));
     }
 }

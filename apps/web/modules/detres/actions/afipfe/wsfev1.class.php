@@ -83,17 +83,17 @@ class WSFEV1 {
           $this->Code[] = $results->$x->FeDetResp->FECAEDetResponse->Observaciones->Obs->Code;
           $this->Msg[] = $results->$x->FeDetResp->FECAEDetResponse->Observaciones->Obs->Msg;
         }
-        return true;
+        //return true;
       }
     }
-    
+/*    
     if (!empty($results->$x->Errors)) {
       $this->Error = 'Error en '.$method.'<br>';
       $this->Code[] = $results->$x->Errors->Err->Code;
       $this->Msg[] = $results->$x->Errors->Err->Msg;
       return true;
     }
-
+*/
     return false;
 	}
 

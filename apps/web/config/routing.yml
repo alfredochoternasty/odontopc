@@ -1,3 +1,21 @@
+ventas_zona:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                VentasZona
+    module:               vta_zona
+    prefix_path:          /vta_zona
+    column:               id
+    with_wildcard_routes: true
+
+descuento_zona:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                DescuentoZona
+    module:               desc_zona
+    prefix_path:          /desc_zona
+    column:               id
+    with_wildcard_routes: true
+
 facturas_afip:
   class: sfDoctrineRouteCollection
   options:

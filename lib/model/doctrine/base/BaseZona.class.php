@@ -14,21 +14,27 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ClienteSaldo
  * @property Doctrine_Collection $UsuarioZona
+ * @property Doctrine_Collection $DescuentoZona
+ * @property Doctrine_Collection $VentasZona
  * 
- * @method integer             getId()           Returns the current record's "id" value
- * @method string              getNombre()       Returns the current record's "nombre" value
- * @method Doctrine_Collection getCliente()      Returns the current record's "Cliente" collection
- * @method Doctrine_Collection getCompra()       Returns the current record's "Compra" collection
- * @method Doctrine_Collection getLote()         Returns the current record's "Lote" collection
- * @method Doctrine_Collection getClienteSaldo() Returns the current record's "ClienteSaldo" collection
- * @method Doctrine_Collection getUsuarioZona()  Returns the current record's "UsuarioZona" collection
- * @method Zona                setId()           Sets the current record's "id" value
- * @method Zona                setNombre()       Sets the current record's "nombre" value
- * @method Zona                setCliente()      Sets the current record's "Cliente" collection
- * @method Zona                setCompra()       Sets the current record's "Compra" collection
- * @method Zona                setLote()         Sets the current record's "Lote" collection
- * @method Zona                setClienteSaldo() Sets the current record's "ClienteSaldo" collection
- * @method Zona                setUsuarioZona()  Sets the current record's "UsuarioZona" collection
+ * @method integer             getId()            Returns the current record's "id" value
+ * @method string              getNombre()        Returns the current record's "nombre" value
+ * @method Doctrine_Collection getCliente()       Returns the current record's "Cliente" collection
+ * @method Doctrine_Collection getCompra()        Returns the current record's "Compra" collection
+ * @method Doctrine_Collection getLote()          Returns the current record's "Lote" collection
+ * @method Doctrine_Collection getClienteSaldo()  Returns the current record's "ClienteSaldo" collection
+ * @method Doctrine_Collection getUsuarioZona()   Returns the current record's "UsuarioZona" collection
+ * @method Doctrine_Collection getDescuentoZona() Returns the current record's "DescuentoZona" collection
+ * @method Doctrine_Collection getVentasZona()    Returns the current record's "VentasZona" collection
+ * @method Zona                setId()            Sets the current record's "id" value
+ * @method Zona                setNombre()        Sets the current record's "nombre" value
+ * @method Zona                setCliente()       Sets the current record's "Cliente" collection
+ * @method Zona                setCompra()        Sets the current record's "Compra" collection
+ * @method Zona                setLote()          Sets the current record's "Lote" collection
+ * @method Zona                setClienteSaldo()  Sets the current record's "ClienteSaldo" collection
+ * @method Zona                setUsuarioZona()   Sets the current record's "UsuarioZona" collection
+ * @method Zona                setDescuentoZona() Sets the current record's "DescuentoZona" collection
+ * @method Zona                setVentasZona()    Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -72,6 +78,14 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('UsuarioZona', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('DescuentoZona', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('VentasZona', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
     }

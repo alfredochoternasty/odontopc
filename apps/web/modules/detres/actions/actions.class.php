@@ -394,15 +394,12 @@ class detresActions extends autoDetresActions
 			if (is_soap_fault($res)) {
 				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
 			} else {
-				if(empty($res) || $res == false || $res['cae'] <= 0) {
+				if(empty($res) || $res == false) {
 					for ($i=0;$i < count($wsfev1->Code);$i++) {
 						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
 					}
 					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
 				} else {
-					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
-						$msj = 'Falló el envió de la información a ala AFIP, CAE no obtenido';
-					} else {
 						$msj = $res['cae'];
 						$afip_estado = 1;
 						//$resumen->setFecha(date('Ymd'));

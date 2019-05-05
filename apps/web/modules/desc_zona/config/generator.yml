@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DescuentoZona
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          descuento_zona
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        grupoprod_id: {label: Grupo}
+        Grupoprod: {label: Grupo}
+        porc_desc: {label: Porcentaje}
+        precio_desc: {label: Precio}
+        zona_id: {label: Zona}
+        Zona: {label: Zona}
+      list:
+        title: Descuento x Zona
+        display: [Producto, Grupoprod, porc_desc, Zona]
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar
+      new:
+        title: Nuevo

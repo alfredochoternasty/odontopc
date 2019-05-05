@@ -24,6 +24,9 @@ class ClienteFormFilter extends BaseClienteFormFilter
 		$this->widgetSchema['moneda'] = new sfWidgetFormDoctrineChoice(array('model' => 'TipoMoneda', 'add_empty' => true));
 		$this->validatorSchema['moneda'] = new sfValidatorPass(array('required' => false));
 		
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true));
+		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));		
+		
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));        
 		

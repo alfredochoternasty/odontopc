@@ -48,6 +48,8 @@ DROP VIEW control_stock;
 DROP VIEW cliente_saldo;
 DROP VIEW lista_precio_detalle;
 DROP VIEW facturas_afip;
+DROP VIEW ventas_zona;
+
 */
 CREATE VIEW cta_cte (
   id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
@@ -366,3 +368,14 @@ GROUP BY
 	fecha,
 	r.cliente_id,
 	r.afip_mensaje;
+
+CREATE VIEW ventas_zona as
+SELECT 
+	dr.id, 
+	dr.resumen_id, 
+	dr.producto_id, 
+	r.cliente_id, 
+	c.zona_id
+FROM resumen r
+	JOIN detalle_resumen dr ON r.id = dr.resumen_id
+	JOIN cliente c ON r.cliente_id = c.id;

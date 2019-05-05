@@ -1,3 +1,14 @@
+function valida_vta_zona(f) {
+  var ok = true;
+  if(f.ventas_zona_filters_fecha_from.value == "" || f.ventas_zona_filters_fecha_to.value == "")
+  {
+		alert("Los campos de fecha no pueden estar vacios");
+    ok = false;
+  } 
+  return ok;
+}
+
+
 jQuery(function($){
 $("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});

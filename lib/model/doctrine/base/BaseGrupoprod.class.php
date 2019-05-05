@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
  * @property Doctrine_Collection $ListaPrecioDetalle
+ * @property Doctrine_Collection $DescuentoZona
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getNombre()             Returns the current record's "nombre" value
@@ -26,6 +27,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
  * @method Doctrine_Collection getListaPrecioDetalle() Returns the current record's "ListaPrecioDetalle" collection
+ * @method Doctrine_Collection getDescuentoZona()      Returns the current record's "DescuentoZona" collection
  * @method Grupoprod           setId()                 Sets the current record's "id" value
  * @method Grupoprod           setNombre()             Sets the current record's "nombre" value
  * @method Grupoprod           setColor()              Sets the current record's "color" value
@@ -35,6 +37,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @method Grupoprod           setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method Grupoprod           setControlStock()       Sets the current record's "ControlStock" collection
  * @method Grupoprod           setListaPrecioDetalle() Sets the current record's "ListaPrecioDetalle" collection
+ * @method Grupoprod           setDescuentoZona()      Sets the current record's "DescuentoZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -89,5 +92,9 @@ abstract class BaseGrupoprod extends sfDoctrineRecord
         $this->hasMany('ListaPrecioDetalle', array(
              'local' => 'id',
              'foreign' => 'grupo_id'));
+
+        $this->hasMany('DescuentoZona', array(
+             'local' => 'id',
+             'foreign' => 'grupoprod_id'));
     }
 }

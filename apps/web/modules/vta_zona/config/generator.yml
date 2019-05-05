@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           VentasZona
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          ventas_zona
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+      list:
+        max_per_page: 9999
+        title: Ventas por Zona
+        display: [fecha, Resumen, Cliente, Producto, Zona]
+        object_actions: []
+        batch_actions: []
+        actions:
+          excel: ~
+      filter:
+        display: [fecha, cliente_id, producto_id, zona_id]
+      form:    ~
+      edit:    ~
+      new:     ~

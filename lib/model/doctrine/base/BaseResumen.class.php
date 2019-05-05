@@ -41,6 +41,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $CobroResumen
  * @property Doctrine_Collection $FacturasAfip
+ * @property Doctrine_Collection $VentasZona
  * 
  * @method integer             getId()             Returns the current record's "id" value
  * @method date                getFecha()          Returns the current record's "fecha" value
@@ -76,6 +77,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getCobroResumen()   Returns the current record's "CobroResumen" collection
  * @method Doctrine_Collection getFacturasAfip()   Returns the current record's "FacturasAfip" collection
+ * @method Doctrine_Collection getVentasZona()     Returns the current record's "VentasZona" collection
  * @method Resumen             setId()             Sets the current record's "id" value
  * @method Resumen             setFecha()          Sets the current record's "fecha" value
  * @method Resumen             setTipoVentaId()    Sets the current record's "tipo_venta_id" value
@@ -110,6 +112,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setDevProducto()    Sets the current record's "DevProducto" collection
  * @method Resumen             setCobroResumen()   Sets the current record's "CobroResumen" collection
  * @method Resumen             setFacturasAfip()   Sets the current record's "FacturasAfip" collection
+ * @method Resumen             setVentasZona()     Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -272,5 +275,9 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasMany('FacturasAfip', array(
              'local' => 'id',
              'foreign' => 'id'));
+
+        $this->hasMany('VentasZona', array(
+             'local' => 'id',
+             'foreign' => 'resumen_id'));
     }
 }
