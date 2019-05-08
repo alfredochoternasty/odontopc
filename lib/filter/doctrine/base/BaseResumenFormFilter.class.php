@@ -26,11 +26,12 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'afip_estado'    => new sfWidgetFormFilterInput(),
-      'afip_mensaje'   => new sfWidgetFormFilterInput(),
+      'afip_cae'       => new sfWidgetFormFilterInput(),
       'afip_vto_cae'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'pto_vta'        => new sfWidgetFormFilterInput(),
       'afip_envio'     => new sfWidgetFormFilterInput(),
       'afip_respuesta' => new sfWidgetFormFilterInput(),
+      'afip_mensaje'   => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -47,11 +48,12 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
       'usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
       'afip_estado'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'afip_mensaje'   => new sfValidatorPass(array('required' => false)),
+      'afip_cae'       => new sfValidatorPass(array('required' => false)),
       'afip_vto_cae'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'pto_vta'        => new sfValidatorPass(array('required' => false)),
       'afip_envio'     => new sfValidatorPass(array('required' => false)),
       'afip_respuesta' => new sfValidatorPass(array('required' => false)),
+      'afip_mensaje'   => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen_filters[%s]');
@@ -85,11 +87,12 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'tipofactura_id' => 'ForeignKey',
       'usuario'        => 'ForeignKey',
       'afip_estado'    => 'Number',
-      'afip_mensaje'   => 'Text',
+      'afip_cae'       => 'Text',
       'afip_vto_cae'   => 'Date',
       'pto_vta'        => 'Text',
       'afip_envio'     => 'Text',
       'afip_respuesta' => 'Text',
+      'afip_mensaje'   => 'Text',
     );
   }
 }

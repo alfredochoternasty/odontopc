@@ -1,3 +1,8 @@
+SELECT * FROM detalle_resumen WHERE det_remito_id IN (
+SELECT id FROM detalle_resumen WHERE resumen_id = 3282
+)
+
+
 SELECT 
 	r.id, r.fecha,
 	dr.producto_id, 

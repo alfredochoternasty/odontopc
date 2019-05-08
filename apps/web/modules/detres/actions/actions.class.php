@@ -400,13 +400,21 @@ class detresActions extends autoDetresActions
 					}
 					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
 				} else {
-						$msj = $res['cae'];
-						$afip_estado = 1;
-						//$resumen->setFecha(date('Ymd'));
-						$resumen->setNroFactura($nuevo_nro);
-						$resumen->setPtoVta($ptovta);
-						$resumen->setAfipVtoCae($res['fec_vto']);
-						$tipo_msj = 'notice';
+					$afip_estado = 1;
+					$resumen->setAfipCae($res['cae']);
+					$resumen->setNroFactura($nuevo_nro);
+					$resumen->setPtoVta($ptovta);
+					$resumen->setAfipVtoCae($res['fec_vto']);
+					
+					$msj = 'La venta fue informada correctamen a la AFIP, CAE: '.$res['cae'];
+					$tipo_msj = 'notice';
+					
+					for ($i=0;$i < count($wsfev1->Code);$i++) {
+						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+					}
+					if (!empty($a_msj)) {
+						$afip_estado = 2;
+						$msj .= '<br>Se encontraron los siguientes mensajes: '.str_replace('\'', '\'\'', implode('//', $a_msj));
 					}
 				}
 			}
@@ -418,8 +426,8 @@ class detresActions extends autoDetresActions
 			
 			$resumen->save();
 		}
-		$msj_mostrar = 'La venta se informó correctamen a la AFIP, CAE: '.$res['cae'];
-		$this->getUser()->setFlash($tipo_msj, $msj_mostrar);
+		
+		$this->getUser()->setFlash($tipo_msj, $msj);
 		$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
   }  
 }

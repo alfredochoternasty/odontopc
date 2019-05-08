@@ -836,7 +836,7 @@ UsuarioZona:
     usuario: {type: integer(4)}
   relations:
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
-    Usuario: {type: one, local: usuario, onDelete: RESTRICT}
+    Usuario: {type: one, class: sfGuardUser, local: usuario}
 DescuentoZona:
   connection: doctrine
   tableName: descuento_zona

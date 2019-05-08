@@ -1,3 +1,21 @@
+usuario_zona:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                UsuarioZona
+    module:               user_zona
+    prefix_path:          /user_zona
+    column:               id
+    with_wildcard_routes: true
+
+zona:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Zona
+    module:               zona
+    prefix_path:          /zona
+    column:               id
+    with_wildcard_routes: true
+
 ventas_zona:
   class: sfDoctrineRouteCollection
   options:

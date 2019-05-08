@@ -12,5 +12,8 @@
  */
 class sfGuardUser extends PluginsfGuardUser
 {
-
+	public function __toString()
+	{
+		return $this->last_name.' '.$this->first_name;
+	}
 }

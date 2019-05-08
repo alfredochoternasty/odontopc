@@ -35,9 +35,8 @@ CREATE TABLE usuario_zona (
 COLLATE='latin1_swedish_ci'
 ;
 
-INSERT INTO zona (nombre) VALUES ('Central');
-INSERT INTO zona (nombre) VALUES ('Sur');
-INSERT INTO zona (nombre) VALUES ('Norte');
+INSERT INTO zona (id, nombre) VALUES (1, 'Casa Central');
+INSERT INTO zona (id, nombre) VALUES (2, 'Zona Sur');
 
 ALTER TABLE cliente	ADD COLUMN zona_id TINYINT(4) NOT NULL DEFAULT '1' AFTER recibir_curso;
 
@@ -95,14 +94,22 @@ FROM resumen r
 	left outer JOIN descuento_zona dzg ON p.grupoprod_id = dzg.grupoprod_id AND c.zona_id = dzg.zona_id;
 
 INSERT INTO sf_guard_permission (id, name, description, created_at, updated_at, padre) VALUES 
-('52', 'Descuento x Zona', '@desc_zona', '2019-04-30 15:42:22', '2019-04-30 15:42:22', '10'),
-('53', 'Ventas x Zona', '@vta_zona', '2019-04-30 15:44:03', '2019-04-30 15:44:03', '10');
+('52', 'Descuento x Zona', '@descuento_zona', '2019-04-30 15:42:22', '2019-04-30 15:42:22', '10'),
+('53', 'Ventas x Zona', '@ventas_zona', '2019-04-30 15:44:03', '2019-04-30 15:44:03', '10'),
+('491', 'Zona', '@zona', '2019-04-30 15:44:03', '2019-04-30 15:44:03', '360'),
+('492', 'Usuarios Zona', '@usuario_zona', '2019-04-30 15:44:03', '2019-04-30 15:44:03', '360');
 
 
 ALTER TABLE resumen
 	CHANGE COLUMN afip_mensaje afip_cae TEXT NULL AFTER afip_estado,
 	ADD COLUMN afip_mensaje TEXT NULL AFTER afip_respuesta;
-	
+
+INSERT INTO usuario_zona(zona_id, usuario) VALUES 
+(1, 1),(1, 2),(1, 126),(1, 140),(1, 146),(1, 148);
+
+
+
+
 /*
 DROP TABLE 
 	producto2, 

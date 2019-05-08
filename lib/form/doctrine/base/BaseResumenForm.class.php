@@ -29,11 +29,12 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false)),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'afip_estado'    => new sfWidgetFormInputText(),
-      'afip_mensaje'   => new sfWidgetFormInputText(),
+      'afip_cae'       => new sfWidgetFormInputText(),
       'afip_vto_cae'   => new sfWidgetFormDate(),
       'pto_vta'        => new sfWidgetFormInputText(),
       'afip_envio'     => new sfWidgetFormTextarea(),
       'afip_respuesta' => new sfWidgetFormTextarea(),
+      'afip_mensaje'   => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -51,11 +52,12 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'))),
       'usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
       'afip_estado'    => new sfValidatorInteger(array('required' => false)),
-      'afip_mensaje'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'afip_cae'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'afip_vto_cae'   => new sfValidatorDate(array('required' => false)),
       'pto_vta'        => new sfValidatorString(array('max_length' => 4, 'required' => false)),
       'afip_envio'     => new sfValidatorString(array('required' => false)),
       'afip_respuesta' => new sfValidatorString(array('required' => false)),
+      'afip_mensaje'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen[%s]');

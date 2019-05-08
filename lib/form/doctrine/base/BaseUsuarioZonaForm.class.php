@@ -17,13 +17,13 @@ abstract class BaseUsuarioZonaForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'      => new sfWidgetFormInputHidden(),
       'zona_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
-      'usuario' => new sfWidgetFormInputText(),
+      'usuario' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
       'id'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'zona_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
-      'usuario' => new sfValidatorInteger(array('required' => false)),
+      'usuario' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('usuario_zona[%s]');

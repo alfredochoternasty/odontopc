@@ -21,11 +21,12 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property integer $tipofactura_id
  * @property integer $usuario
  * @property integer $afip_estado
- * @property string $afip_mensaje
+ * @property string $afip_cae
  * @property date $afip_vto_cae
  * @property string $pto_vta
  * @property string $afip_envio
  * @property string $afip_respuesta
+ * @property string $afip_mensaje
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
@@ -57,11 +58,12 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method integer             getTipofacturaId()  Returns the current record's "tipofactura_id" value
  * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method integer             getAfipEstado()     Returns the current record's "afip_estado" value
- * @method string              getAfipMensaje()    Returns the current record's "afip_mensaje" value
+ * @method string              getAfipCae()        Returns the current record's "afip_cae" value
  * @method date                getAfipVtoCae()     Returns the current record's "afip_vto_cae" value
  * @method string              getPtoVta()         Returns the current record's "pto_vta" value
  * @method string              getAfipEnvio()      Returns the current record's "afip_envio" value
  * @method string              getAfipRespuesta()  Returns the current record's "afip_respuesta" value
+ * @method string              getAfipMensaje()    Returns the current record's "afip_mensaje" value
  * @method Doctrine_Collection getDetalle()        Returns the current record's "Detalle" collection
  * @method Doctrine_Collection getRemito()         Returns the current record's "Remito" collection
  * @method Cliente             getCliente()        Returns the current record's "Cliente" value
@@ -92,11 +94,12 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setTipofacturaId()  Sets the current record's "tipofactura_id" value
  * @method Resumen             setUsuario()        Sets the current record's "usuario" value
  * @method Resumen             setAfipEstado()     Sets the current record's "afip_estado" value
- * @method Resumen             setAfipMensaje()    Sets the current record's "afip_mensaje" value
+ * @method Resumen             setAfipCae()        Sets the current record's "afip_cae" value
  * @method Resumen             setAfipVtoCae()     Sets the current record's "afip_vto_cae" value
  * @method Resumen             setPtoVta()         Sets the current record's "pto_vta" value
  * @method Resumen             setAfipEnvio()      Sets the current record's "afip_envio" value
  * @method Resumen             setAfipRespuesta()  Sets the current record's "afip_respuesta" value
+ * @method Resumen             setAfipMensaje()    Sets the current record's "afip_mensaje" value
  * @method Resumen             setDetalle()        Sets the current record's "Detalle" collection
  * @method Resumen             setRemito()         Sets the current record's "Remito" collection
  * @method Resumen             setCliente()        Sets the current record's "Cliente" value
@@ -186,7 +189,7 @@ abstract class BaseResumen extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('afip_mensaje', 'string', 255, array(
+        $this->hasColumn('afip_cae', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
              ));
@@ -203,6 +206,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              ));
         $this->hasColumn('afip_respuesta', 'string', null, array(
              'type' => 'string',
+             ));
+        $this->hasColumn('afip_mensaje', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 

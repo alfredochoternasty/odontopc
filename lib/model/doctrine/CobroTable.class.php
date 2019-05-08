@@ -20,7 +20,7 @@ class CobroTable extends Doctrine_Table
     public function retrieveConJoins(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Resumen res');
+      //$q->leftJoin($rootAlias . '.Resumen res');
       $q->leftJoin($rootAlias . '.Cliente c');
 			$q->leftJoin('c.Zona z');
 			$q->leftJoin('z.UsuarioZona uz');	

@@ -31,6 +31,7 @@
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ClienteSeguimiento
+ * @property Doctrine_Collection $UsuarioZona
  * 
  * @method string                getFirstName()             Returns the current record's "first_name" value
  * @method string                getLastName()              Returns the current record's "last_name" value
@@ -58,6 +59,7 @@
  * @method Doctrine_Collection   getDevProducto()           Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection   getLote()                  Returns the current record's "Lote" collection
  * @method Doctrine_Collection   getClienteSeguimiento()    Returns the current record's "ClienteSeguimiento" collection
+ * @method Doctrine_Collection   getUsuarioZona()           Returns the current record's "UsuarioZona" collection
  * @method sfGuardUser           setFirstName()             Sets the current record's "first_name" value
  * @method sfGuardUser           setLastName()              Sets the current record's "last_name" value
  * @method sfGuardUser           setEmailAddress()          Sets the current record's "email_address" value
@@ -84,6 +86,7 @@
  * @method sfGuardUser           setDevProducto()           Sets the current record's "DevProducto" collection
  * @method sfGuardUser           setLote()                  Sets the current record's "Lote" collection
  * @method sfGuardUser           setClienteSeguimiento()    Sets the current record's "ClienteSeguimiento" collection
+ * @method sfGuardUser           setUsuarioZona()           Sets the current record's "UsuarioZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -216,6 +219,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'foreign' => 'usuario'));
 
         $this->hasMany('ClienteSeguimiento', array(
+             'local' => 'id',
+             'foreign' => 'usuario'));
+
+        $this->hasMany('UsuarioZona', array(
              'local' => 'id',
              'foreign' => 'usuario'));
 

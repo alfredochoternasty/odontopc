@@ -17,7 +17,7 @@ class CobroFormFilter extends BaseCobroFormFilter
   public function configure()
   {
 		
-    unset($this['monto'], $this['observacion'], $this['devprod_id']);
+    unset($this['monto'], $this['observacion'], $this['devprod_id'], $this['resumen_id'], $this['usuario']);
     
     $this->widgetSchema['cliente_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));
     $this->validatorSchema['cliente_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'))); 

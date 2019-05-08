@@ -14,12 +14,12 @@ abstract class BaseUsuarioZonaFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'zona_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
-      'usuario' => new sfWidgetFormFilterInput(),
+      'usuario' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
       'zona_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
-      'usuario' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'usuario' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Usuario'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('usuario_zona_filters[%s]');
@@ -41,7 +41,7 @@ abstract class BaseUsuarioZonaFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'      => 'Number',
       'zona_id' => 'ForeignKey',
-      'usuario' => 'Number',
+      'usuario' => 'ForeignKey',
     );
   }
 }

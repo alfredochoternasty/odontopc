@@ -11,15 +11,18 @@ Doctrine_Manager::getInstance()->bindComponent('UsuarioZona', 'doctrine');
  * @property integer $zona_id
  * @property integer $usuario
  * @property Zona $Zona
+ * @property sfGuardUser $Usuario
  * 
  * @method integer     getId()      Returns the current record's "id" value
  * @method integer     getZonaId()  Returns the current record's "zona_id" value
  * @method integer     getUsuario() Returns the current record's "usuario" value
  * @method Zona        getZona()    Returns the current record's "Zona" value
+ * @method sfGuardUser getUsuario() Returns the current record's "Usuario" value
  * @method UsuarioZona setId()      Sets the current record's "id" value
  * @method UsuarioZona setZonaId()  Sets the current record's "zona_id" value
  * @method UsuarioZona setUsuario() Sets the current record's "usuario" value
  * @method UsuarioZona setZona()    Sets the current record's "Zona" value
+ * @method UsuarioZona setUsuario() Sets the current record's "Usuario" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -54,5 +57,9 @@ abstract class BaseUsuarioZona extends sfDoctrineRecord
              'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('sfGuardUser as Usuario', array(
+             'local' => 'usuario',
+             'foreign' => 'id'));
     }
 }
