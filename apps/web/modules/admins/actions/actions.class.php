@@ -75,9 +75,10 @@ class adminsActions extends sfActions
 		$link = mysql_connect($host,$user,$pass);
 		mysql_select_db($name,$link);
 		
-		$tables = array();
-		$result = mysql_query('SHOW TABLES');
-		
+		// $tables = array();
+		// $result = mysql_query('SHOW TABLES');
+
+		$tables = array('zona', 'usuario_zona', 'descuento_zona');
 		while($row = mysql_fetch_row($result))
 			if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
 				$tables[] = $row[0];
@@ -94,13 +95,14 @@ class adminsActions extends sfActions
 		$link = mysql_connect($host,$user,$pass);
 		mysql_select_db($name,$link);
 		
-		$tables = array();
-		$result = mysql_query('SHOW TABLES');
+		// $tables = array();
+		// $result = mysql_query('SHOW TABLES');
 		
-		while($row = mysql_fetch_row($result))
-			if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
-				$tables[] = $row[0];
+		// while($row = mysql_fetch_row($result))
+			// if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
+				// $tables[] = $row[0];
 
+		$tables = array('cliente', 'resumen', 'detalle_resumen', 'zona', 'usuario_zona', 'descuento_zona', 'lote', 'compra');
 		foreach ($tables as $table) {
 			$result = mysql_query('DESCRIBE '.$table.';');
 			$campos = '';
@@ -145,6 +147,7 @@ class adminsActions extends sfActions
 			'listado_compras', 
 			'listado_ventas', 
 			'producto_traza', 
+			'ventas_zona',
 			'vta_fact',
 			'facturas_afip',
 			'lista_precio_detalle'
@@ -195,7 +198,9 @@ class adminsActions extends sfActions
 			'listado_compras', 
 			'listado_ventas', 
 			'producto_traza', 
+			'ventas_zona',
 			'vta_fact',
+			'facturas_afip',
 			'lista_precio_detalle'
 		);
 
@@ -225,7 +230,9 @@ class adminsActions extends sfActions
 			'listado_compras', 
 			'listado_ventas', 
 			'producto_traza', 
+			'ventas_zona',
 			'vta_fact',
+			'facturas_afip',
 			'lista_precio_detalle'
 		);
 

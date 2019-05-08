@@ -16,8 +16,6 @@ GROUP BY
 ORDER BY 
 	c.apellido, c.nombre;
 
-ALTER TABLE detalle_resumen	ADD COLUMN det_remito_id INT NULL AFTER lote_id;
-
 CREATE TABLE zona (
 	id INT NOT NULL AUTO_INCREMENT,
 	nombre VARCHAR(255) NOT NULL,
@@ -39,6 +37,7 @@ INSERT INTO zona (id, nombre) VALUES (1, 'Casa Central');
 INSERT INTO zona (id, nombre) VALUES (2, 'Zona Sur');
 
 ALTER TABLE cliente	ADD COLUMN zona_id TINYINT(4) NOT NULL DEFAULT '1' AFTER recibir_curso;
+ALTER TABLE log_cliente	ADD COLUMN zona_id TINYINT(4) NOT NULL DEFAULT '1' AFTER recibir_curso;
 
 DROP VIEW cliente_saldo;
 CREATE VIEW cliente_saldo AS
@@ -60,7 +59,10 @@ ORDER BY
 	c.apellido, c.nombre;
 	
 ALTER TABLE compra	ADD COLUMN zona_id INT NOT NULL DEFAULT '1';
+ALTER TABLE log_compra	ADD COLUMN zona_id INT NOT NULL DEFAULT '1';
+
 ALTER TABLE lote	ADD COLUMN zona_id INT NOT NULL DEFAULT '1';
+ALTER TABLE log_lote	ADD COLUMN zona_id INT NOT NULL DEFAULT '1';
 
 CREATE TABLE descuento_zona (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -104,10 +106,12 @@ ALTER TABLE resumen
 	CHANGE COLUMN afip_mensaje afip_cae TEXT NULL AFTER afip_estado,
 	ADD COLUMN afip_mensaje TEXT NULL AFTER afip_respuesta;
 
+ALTER TABLE log_resumen
+	CHANGE COLUMN afip_mensaje afip_cae TEXT NULL AFTER afip_estado,
+	ADD COLUMN afip_mensaje TEXT NULL AFTER afip_respuesta;
+
 INSERT INTO usuario_zona(zona_id, usuario) VALUES 
 (1, 1),(1, 2),(1, 126),(1, 140),(1, 146),(1, 148);
-
-
 
 
 /*
