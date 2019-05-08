@@ -24,7 +24,7 @@ class Producto extends BaseProducto
     $lote = $event['object']->getNroLote();
     
 		if (!empty($event['object']->resumen_id)) {
-			$zona = $event['object']->getResumen()->getCliente()->getZonaId();; //venta
+			$zona = $event['object']->getResumen()->getCliente()->getZonaId(); //venta
 		} else {
 			$zona = $event['object']->getCompra()->getZonaId(); //compra - borrar
 		}		
@@ -35,7 +35,7 @@ class Producto extends BaseProducto
       $cant_bono = 0;
     }
     
-    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLote($prod, $lote, $zona);
+    $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLoteAndZonaId($prod, $lote, $zona);
     foreach($prods as $producto){
       $cant_prod = $producto->getStock();
     }
