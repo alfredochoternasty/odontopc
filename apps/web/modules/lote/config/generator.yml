@@ -22,7 +22,7 @@ generator:
       list:
         title: Stock por Lote
         table_method: retrieveConJoins
-        display: [Producto, nro_lote, stock, fecha_vto]
+        display: [Producto, nro_lote, Zona, stock, fecha_vto]
         object_actions:
           _edit: {label: Modificar}
           _delete: {label: Eliminar}
@@ -30,7 +30,7 @@ generator:
         actions:
           imprimir: ~
       filter:
-        display: [producto_id, lote_nro, fecha_vto]
+        display: [producto_id, lote_nro, fecha_vto, zona_id]
       form:    ~
       edit:
         title: Modificar lote

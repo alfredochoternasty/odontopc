@@ -37,12 +37,16 @@ class compraActions extends autoCompraActions
 	
   public function executeGetnroremito(sfWebRequest $request){
     $pid = $request->getParameter('pid');
-    if(empty($pid)){
-      $pid = $this->getUser()->getAttribute('pid');
-    }
-    $proveedor = Doctrine::getTable('Proveedor')->find($pid);
-    $nro = $proveedor->getProxRemito();
-    $nro += 1;
+		if ($pid != 99) {
+			if(empty($pid)){
+				$pid = $this->getUser()->getAttribute('pid');
+			}
+			$proveedor = Doctrine::getTable('Proveedor')->find($pid);
+			$nro = $proveedor->getProxRemito();
+			$nro += 1;
+		} else {
+			$nro = '0';
+		}
     return $this->renderText(json_encode($nro));
   }
 }

@@ -394,12 +394,12 @@ class detresActions extends autoDetresActions
 			if (is_soap_fault($res)) {
 				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
 			} else {
-				if(empty($res) || $res == false) {
+				if (empty($res) || $res == false || $res['resultado'] == 'R') {
 					for ($i=0;$i < count($wsfev1->Code);$i++) {
 						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
 					}
 					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
-				} else {
+				} elseif ($res['resultado'] == 'A') {
 					$afip_estado = 1;
 					$resumen->setAfipCae($res['cae']);
 					$resumen->setNroFactura($nuevo_nro);

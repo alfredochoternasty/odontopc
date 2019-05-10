@@ -23,7 +23,7 @@ class ClienteSaldoTable extends Doctrine_Table
 			$q->leftJoin($rootAlias.'.Zona z');
 			$q->leftJoin('z.UsuarioZona uz');	
 			$q->andWhere('uz.usuario = '.$id);
-      $q->orderBy($rootAlias . '.apellido');
+      //$q->orderBy('apellido');
       return $q;
     }    
 		
@@ -35,7 +35,7 @@ class ClienteSaldoTable extends Doctrine_Table
 		$query->leftJoin('z.UsuarioZona uz');	
     $query->where($rootAlias.'.saldo > '.$value);
 		$query->andWhere('uz.usuario = '.$id);
-		$query->orderBy($rootAlias . '.apellido');
+		//$query->orderBy('apellido');
     return $query;
   }		
 }

@@ -472,7 +472,7 @@ DevProducto:
     iva: {type: 'decimal(10, 2)'}
     usuario: {type: integer(4)}
     afip_estado: {type: integer(4)}
-    afip_mensaje: {type: string(255)}
+    afip_cae: {type: string(255)}
     afip_vto_cae: {type: date(25)}
     pto_vta: {type: string(4)}
     tipofactura_id: {type: integer(4)}
@@ -480,6 +480,7 @@ DevProducto:
     afip_envio: {type: string}
     afip_respuesta: {type: string}
     lote_id: {type: integer(4)}
+    afip_mensaje: {type: string(255)}
   relations:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}

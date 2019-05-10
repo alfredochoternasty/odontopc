@@ -8,6 +8,7 @@
     <th style="background: #CCC;">Grupo</th>
     <th style="background: #CCC;">Nombre</th>
     <th style="background: #CCC;">Lote</th>
+    <th style="background: #CCC;">Zona</th>
     <th style="background: #CCC;">Stock Actual</th>
     <th style="background: #CCC;">Stock M&iacute;nimo</th>
   </tr>
@@ -17,6 +18,7 @@
     <td><?php echo $prod->getProducto()->getGrupo() ?></td>
     <td><?php echo $prod->getProducto() ?></td>
     <td><?php echo $prod->getNroLote() ?></td>
+    <td><?php echo $prod->getZona() ?></td>
     <td><?php echo $prod->getStock() ?></td>
     <td><?php echo $prod->getProducto()->getMinimoStock() ?></td>
   </tr>

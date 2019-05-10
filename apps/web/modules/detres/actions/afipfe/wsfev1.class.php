@@ -169,7 +169,8 @@ class WSFEV1 {
 		if ($e == false) {
 			$resp_cae = $results->FECAESolicitarResult->FeDetResp->FECAEDetResponse->CAE;
 			$resp_caefvto = $results->FECAESolicitarResult->FeDetResp->FECAEDetResponse->CAEFchVto;
-			return Array( 'cae' => $resp_cae, 'fec_vto' => $resp_caefvto );
+			$resp_resultado = $results->FECAESolicitarResult->FeDetResp->FECAEDetResponse->Resultado;
+			return array( 'cae' => $resp_cae, 'fec_vto' => $resp_caefvto, 'resultado' => $resp_resultado);
 		} else {
 			return false;
 		}

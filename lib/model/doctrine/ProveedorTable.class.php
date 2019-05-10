@@ -16,4 +16,12 @@ class ProveedorTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Proveedor');
     }
+		
+    public function ProveedorZona(){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$q = Doctrine_Core::getTable('Proveedor')->createQuery('q');
+      $q->where('id <> 99 and exists(select 1 from usuario_zona where zona_id = 1 and usuario = '.$id.')');
+      $q->orWhere('id = 99 and not exists(select 1 from usuario_zona where zona_id = 1 and usuario = '.$id.')');			
+      return $q;
+    }		
 }

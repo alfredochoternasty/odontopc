@@ -20,7 +20,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property decimal $iva
  * @property integer $usuario
  * @property integer $afip_estado
- * @property string $afip_mensaje
+ * @property string $afip_cae
  * @property date $afip_vto_cae
  * @property string $pto_vta
  * @property integer $tipofactura_id
@@ -28,6 +28,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property string $afip_envio
  * @property string $afip_respuesta
  * @property integer $lote_id
+ * @property string $afip_mensaje
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property Producto $Producto
@@ -48,7 +49,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method decimal     getIva()            Returns the current record's "iva" value
  * @method integer     getUsuario()        Returns the current record's "usuario" value
  * @method integer     getAfipEstado()     Returns the current record's "afip_estado" value
- * @method string      getAfipMensaje()    Returns the current record's "afip_mensaje" value
+ * @method string      getAfipCae()        Returns the current record's "afip_cae" value
  * @method date        getAfipVtoCae()     Returns the current record's "afip_vto_cae" value
  * @method string      getPtoVta()         Returns the current record's "pto_vta" value
  * @method integer     getTipofacturaId()  Returns the current record's "tipofactura_id" value
@@ -56,6 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method string      getAfipEnvio()      Returns the current record's "afip_envio" value
  * @method string      getAfipRespuesta()  Returns the current record's "afip_respuesta" value
  * @method integer     getLoteId()         Returns the current record's "lote_id" value
+ * @method string      getAfipMensaje()    Returns the current record's "afip_mensaje" value
  * @method Cliente     getCliente()        Returns the current record's "Cliente" value
  * @method Resumen     getResumen()        Returns the current record's "Resumen" value
  * @method Producto    getProducto()       Returns the current record's "Producto" value
@@ -75,7 +77,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method DevProducto setIva()            Sets the current record's "iva" value
  * @method DevProducto setUsuario()        Sets the current record's "usuario" value
  * @method DevProducto setAfipEstado()     Sets the current record's "afip_estado" value
- * @method DevProducto setAfipMensaje()    Sets the current record's "afip_mensaje" value
+ * @method DevProducto setAfipCae()        Sets the current record's "afip_cae" value
  * @method DevProducto setAfipVtoCae()     Sets the current record's "afip_vto_cae" value
  * @method DevProducto setPtoVta()         Sets the current record's "pto_vta" value
  * @method DevProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
@@ -83,6 +85,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @method DevProducto setAfipEnvio()      Sets the current record's "afip_envio" value
  * @method DevProducto setAfipRespuesta()  Sets the current record's "afip_respuesta" value
  * @method DevProducto setLoteId()         Sets the current record's "lote_id" value
+ * @method DevProducto setAfipMensaje()    Sets the current record's "afip_mensaje" value
  * @method DevProducto setCliente()        Sets the current record's "Cliente" value
  * @method DevProducto setResumen()        Sets the current record's "Resumen" value
  * @method DevProducto setProducto()       Sets the current record's "Producto" value
@@ -163,7 +166,7 @@ abstract class BaseDevProducto extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('afip_mensaje', 'string', 255, array(
+        $this->hasColumn('afip_cae', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
              ));
@@ -192,6 +195,10 @@ abstract class BaseDevProducto extends sfDoctrineRecord
         $this->hasColumn('lote_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('afip_mensaje', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 

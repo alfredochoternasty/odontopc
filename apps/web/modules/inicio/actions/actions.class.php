@@ -97,6 +97,7 @@ class inicioActions extends autoInicioActions
       $id_cliente = $clientes[0]->getId();	
       $q->andWhere('p.cliente_id = ?', $id_cliente);
     }else{
+			
       $this->pager = $this->getPager();
       $this->sort = $this->getSort();
       $q2 = Doctrine::getTable('ClienteSeguimiento')->createQuery('cs')->where('cs.prox_contac_fecha >= \''.date("Y-m-d").'\'')->orderBy('cs.prox_contac_fecha DESC')->limit('20');

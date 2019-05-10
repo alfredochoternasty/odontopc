@@ -27,6 +27,9 @@ class LoteFormFilter extends BaseLoteFormFilter
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
     $this->validatorSchema['fecha_vto'] = new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~')), 'to_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'))));    
     $this->validatorSchema['lote_nro'] = new sfValidatorPass(array('required' => false));
+		
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true));
+		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));			
   }
   
 	public function addLoteNroColumnQuery(Doctrine_Query $query, $field, $values)

@@ -26,13 +26,16 @@ class Resumen extends BaseResumen
     return $this->getCliente()->getLista()->getMoneda()->getSimbolo();
   }
   
-  public function getTotalResumen()
+  public function getTotalResumen($formato=false)
   {
     $suma = 0;
     foreach($this->getDetalle() as $det){
       $suma += $det->getTotal();
     }
-    return sprintf($this->SimboloMoneda()." %01.2f", $suma);;
+		if ($formato)
+			return sprintf($this->SimboloMoneda()." %01.2f", $suma);
+		else
+			return $suma;
   }
 
   public function getSubTotalResumen()
