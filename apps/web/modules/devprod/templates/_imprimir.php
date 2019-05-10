@@ -58,7 +58,7 @@
 			<span style="font-size: 14px;">
 				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($dev_producto->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
 				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $dev_producto->getFecha()))) ?><br>
-				<b>CAE: </b><?php echo $dev_producto->getAfipMensaje() ?><br>
+				<b>CAE: </b><?php echo $dev_producto->getAfipCae() ?><br>
 				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $dev_producto->getAfipVtoCae()))) ?>
 			</span>
 			</b>

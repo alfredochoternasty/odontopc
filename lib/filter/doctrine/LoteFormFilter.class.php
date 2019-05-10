@@ -29,7 +29,7 @@ class LoteFormFilter extends BaseLoteFormFilter
     $this->validatorSchema['lote_nro'] = new sfValidatorPass(array('required' => false));
 		
 		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true));
-		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));			
+		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));				
   }
   
 	public function addLoteNroColumnQuery(Doctrine_Query $query, $field, $values)
