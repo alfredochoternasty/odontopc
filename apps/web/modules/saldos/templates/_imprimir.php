@@ -77,19 +77,19 @@ hr {
 
 <table border="1" cellspacing="0" cellpadding="1" width="100%">
   <tr>
-    <th style="background: #CCC;">Dni</th>
     <th style="background: #CCC;">Apellido</th>
     <th style="background: #CCC;">Nombres</th>
     <th style="background: #CCC;">Saldo</th>
+    <th style="background: #CCC;">Zona</th>
   </tr>
   <?php
   foreach($saldos as $saldo):
   ?>
   <tr>
-    <td><?php echo $saldo->getDni(); ?></td>
     <td><?php echo $saldo->getApellido() ?></td>
     <td><?php echo $saldo->getNombre() ?></td>
-    <td><?php echo $saldo->getSimbolo().' '.number_format($saldo->saldo, 2, ',', '.') ?></td>
+    <td><?php echo $saldo->getSaldoColor(); ?></td>
+		<td><?php echo $saldo->getZona() ?></td>
   </tr>
   <?php 
   endforeach;

@@ -30,5 +30,16 @@ class DetalleResumen extends BaseDetalleResumen
   
   public function SubTotalFormato(){
     return sprintf($this->SimboloMoneda()." %01.2f", $this->getSubTotal());
-  }   
+  }
+	
+	public function RemitoProductoCantVend(){
+		$sql = "
+			select sum(cantidad)+sum(bonificados) as total
+			from detalle_resumen
+			where det_remito_id =".$this->id;
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetchAll();
+		return $resultado[0]['total'];
+	}
 }

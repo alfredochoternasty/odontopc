@@ -16,12 +16,13 @@ class saldosActions extends autoSaldosActions
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ClienteSaldoFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
-    if ($this->getSort()) $consulta->orderBy(implode(' ', $this->getSort()));
+		$pagina = $this->getUser()->getAttribute('saldo.page', '1', 'admin_module')-1;
+		$consulta->limit(50)->offset($pagina * 50);
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
     $dompdf->load_html($this->getPartial('imprimir' , array('saldos' => $listado)));
-    $dompdf->set_paper('A4','landscape');
+    $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream("saldos.pdf");    
     

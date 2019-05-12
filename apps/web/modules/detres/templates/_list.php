@@ -40,12 +40,8 @@
 				<?php if ($resumen->tipofactura_id != 4 ) { ?>
 					<b>CAE: </b><?php echo $resumen->getAfipCae() ?><br>
 					<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
-				<?php } else {?>
-					<b>Total del Remito: </b><?php echo $resumen->getTotalResumen() ?><br>
-					<b>Total Vendidos del Remito: </b><?php echo $resumen->vendidos_remito() ?><br>
-					<b>Total Devueltos del Remito: </b><?php echo $resumen->devueltos_remito() ?><br>
 				<?php } ?>
-				<br><br>
+				<br>
 			</span>
 		</td>
 		<td>
@@ -57,7 +53,6 @@
 			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
 				<b>Condición de Venta : </b>Cuenta Corriente
 			<?php endif;?>
-			<br><br>
 			</span>
 		</td>
 		</tbody>
@@ -69,11 +64,9 @@
 
     <thead class="ui-widget-header">
       <tr>
-        
-        <?php include_partial('detres/list_th_tabular', array('sort' => $sort)) ?>
-
-                  <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
-              </tr>
+        <?php include_partial('detres/list_th_tabular', array('sort' => $sort, 'res_tipo_factura' => $resumen->tipofactura_id)) ?>
+				<th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
+      </tr>
     </thead>
 
     <tbody>
@@ -92,8 +85,9 @@
         </tr>
       <?php endforeach; 
 			
+			if ($resumen->tipofactura_id != 4):
         foreach ($suma_total as $i => $suma): 
-			?>      
+			?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
         <td colspan="<?php echo $sf_user->hasGroup('Blanco')? 7 : 3; ?>" style="text-align: right;" class="sf_admin_text">Total en <?php echo $suma['moneda'] ?>:</td>
         <td class="sf_admin_text">
@@ -101,7 +95,10 @@
         </td>
         <td colspan="2" class="sf_admin_text">&nbsp;</td>
       </tr>
-			<?php endforeach; ?>
+			<?php 
+				endforeach; 
+			endif
+			?>
     </tbody>
   </table>
 

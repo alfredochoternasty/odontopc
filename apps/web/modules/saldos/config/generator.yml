@@ -27,7 +27,7 @@ generator:
         actions:
           imprimir: {label: Imprimir página}
       filter:
-        display: [apellido, moneda_id, mayor]
+        display: [apellido, moneda_id, zona_id, mayor]
       form:    ~
       edit:    ~
       new:     ~

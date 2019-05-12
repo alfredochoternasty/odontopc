@@ -99,14 +99,15 @@ class detresActions extends autoDetresActions
 	
     $detres = new DetalleResumen();
     $detres->setResumenId($rid);
-	if ($detres->getResumen()->afip_estado == 1) {
-		$this->getUser()->setFlash('error', 'Esta venta ya fue enviada a la AFIP y no se puede modificar');
-		$this->redirect( 'detres/index?rid='.$rid);
-	} else {
-		$this->form = new DetalleResumenForm($detres);
-		$this->detalle_resumen = $this->form->getObject();  
-		$this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
-	}
+		if ($detres->getResumen()->afip_estado == 1) {
+			$this->getUser()->setFlash('error', 'Esta venta ya fue enviada a la AFIP y no se puede modificar');
+			$this->redirect( 'detres/index?rid='.$rid);
+		} else {
+			$this->getUser()->setAttribute('tipofactura', $detres->getResumen()->tipofactura_id);
+			$this->form = new DetalleResumenForm($detres);
+			$this->detalle_resumen = $this->form->getObject();  
+			$this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
+		}
   }
   
   public function executeIndex(sfWebRequest $request){
