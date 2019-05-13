@@ -1,3 +1,4 @@
+<?php $resumen = $pager2[0]->getResumen() ?>
   <div class="sf_admin_list ui-grid-table ui-widget ui-corner-all ui-helper-reset ui-helper-clearfix">
     <table style="border-collapse:separate;">
       <caption class="fg-toolbar ui-widget-header">
@@ -5,11 +6,10 @@
       </caption>    
       <thead class="ui-widget-header">
         <tr>
-           <?php include_partial('detres/list_th_tabular', array('sort' => $sort)) ?>  
+           <?php include_partial('detres/list_th_tabular', array('sort' => $sort, 'res_tipo_factura' => $resumen->tipofactura_id)) ?>
           <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
         </tr>
-      </thead>          
-    <tbody>
+      </thead>
     <tbody>
       <?php 
         $suma_total = array();
@@ -23,9 +23,9 @@
             include_partial('detres/list_td_actions', array('detalle_resumen' => $detalle_resumen, 'helper' => $helper));
           ?>
         </tr>
-      <?php endforeach; ?>
-		
-      <?php 
+      <?php endforeach; 
+			
+			if ($resumen->tipofactura_id != 4):
         foreach ($suma_total as $i => $suma): 
 			?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
@@ -36,7 +36,9 @@
         </td>
         <td colspan="2" class="sf_admin_text">&nbsp;</td>
       </tr>
-      <?php endforeach; ?>
+      <?php endforeach; 
+			endif;
+			?>
       
     </tbody>
     </table>
