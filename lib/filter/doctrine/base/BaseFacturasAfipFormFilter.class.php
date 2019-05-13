@@ -22,6 +22,8 @@ abstract class BaseFacturasAfipFormFilter extends BaseFormFilterDoctrine
       'iva'            => new sfWidgetFormFilterInput(),
       'neto'           => new sfWidgetFormFilterInput(),
       'total'          => new sfWidgetFormFilterInput(),
+      'cliente'        => new sfWidgetFormFilterInput(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +36,8 @@ abstract class BaseFacturasAfipFormFilter extends BaseFormFilterDoctrine
       'iva'            => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'neto'           => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total'          => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'cliente'        => new sfValidatorPass(array('required' => false)),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('facturas_afip_filters[%s]');
@@ -63,6 +67,8 @@ abstract class BaseFacturasAfipFormFilter extends BaseFormFilterDoctrine
       'iva'            => 'Number',
       'neto'           => 'Number',
       'total'          => 'Number',
+      'cliente'        => 'Text',
+      'zona_id'        => 'ForeignKey',
     );
   }
 }

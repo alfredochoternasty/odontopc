@@ -23,6 +23,7 @@ abstract class BaseVentasZonaFormFilter extends BaseFormFilterDoctrine
       'grupo_porc_desc'    => new sfWidgetFormFilterInput(),
       'prod_precio_desc'   => new sfWidgetFormFilterInput(),
       'grupo_precio_desc'  => new sfWidgetFormFilterInput(),
+      'pagado'             => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -36,6 +37,7 @@ abstract class BaseVentasZonaFormFilter extends BaseFormFilterDoctrine
       'grupo_porc_desc'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'prod_precio_desc'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'grupo_precio_desc'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'pagado'             => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('ventas_zona_filters[%s]');
@@ -66,6 +68,7 @@ abstract class BaseVentasZonaFormFilter extends BaseFormFilterDoctrine
       'grupo_porc_desc'    => 'Number',
       'prod_precio_desc'   => 'Number',
       'grupo_precio_desc'  => 'Number',
+      'pagado'             => 'Boolean',
     );
   }
 }

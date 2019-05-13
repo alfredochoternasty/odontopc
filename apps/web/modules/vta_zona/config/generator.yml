@@ -18,13 +18,13 @@ generator:
       list:
         max_per_page: 9999
         title: Ventas por Zona
-        display: [fecha, Resumen, Cliente, Producto, Zona]
+        display: [fecha, Resumen, Cliente, Producto, Zona, pagado]
         object_actions: []
         batch_actions: []
         actions:
           excel: ~
       filter:
-        display: [fecha, cliente_id, producto_id, zona_id]
+        display: [fecha, cliente_id, producto_id, zona_id, pagado]
       form:    ~
       edit:    ~
       new:     ~

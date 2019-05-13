@@ -27,11 +27,13 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property string $afip_envio
  * @property string $afip_respuesta
  * @property string $afip_mensaje
+ * @property integer $pago_comision_id
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
  * @property Venta $Venta
  * @property Doctrine_Collection $Cobros
+ * @property Doctrine_Collection $PagoComision
  * @property ListaPrecio $Lista
  * @property TipoMoneda $Moneda
  * @property TipoVenta $TipoVenta
@@ -44,78 +46,82 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $VentasZona
  * 
- * @method integer             getId()             Returns the current record's "id" value
- * @method date                getFecha()          Returns the current record's "fecha" value
- * @method integer             getTipoVentaId()    Returns the current record's "tipo_venta_id" value
- * @method integer             getClienteId()      Returns the current record's "cliente_id" value
- * @method integer             getRemitoId()       Returns the current record's "remito_id" value
- * @method integer             getListaId()        Returns the current record's "lista_id" value
- * @method integer             getMonedaId()       Returns the current record's "moneda_id" value
- * @method string              getObservacion()    Returns the current record's "observacion" value
- * @method integer             getPagado()         Returns the current record's "pagado" value
- * @method integer             getPedidoId()       Returns the current record's "pedido_id" value
- * @method integer             getNroFactura()     Returns the current record's "nro_factura" value
- * @method integer             getTipofacturaId()  Returns the current record's "tipofactura_id" value
- * @method integer             getUsuario()        Returns the current record's "usuario" value
- * @method integer             getAfipEstado()     Returns the current record's "afip_estado" value
- * @method string              getAfipCae()        Returns the current record's "afip_cae" value
- * @method date                getAfipVtoCae()     Returns the current record's "afip_vto_cae" value
- * @method string              getPtoVta()         Returns the current record's "pto_vta" value
- * @method string              getAfipEnvio()      Returns the current record's "afip_envio" value
- * @method string              getAfipRespuesta()  Returns the current record's "afip_respuesta" value
- * @method string              getAfipMensaje()    Returns the current record's "afip_mensaje" value
- * @method Doctrine_Collection getDetalle()        Returns the current record's "Detalle" collection
- * @method Doctrine_Collection getRemito()         Returns the current record's "Remito" collection
- * @method Cliente             getCliente()        Returns the current record's "Cliente" value
- * @method Venta               getVenta()          Returns the current record's "Venta" value
- * @method Doctrine_Collection getCobros()         Returns the current record's "Cobros" collection
- * @method ListaPrecio         getLista()          Returns the current record's "Lista" value
- * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
- * @method TipoVenta           getTipoVenta()      Returns the current record's "TipoVenta" value
- * @method Pedido              getPedido()         Returns the current record's "Pedido" value
- * @method TipoFactura         getTipoFactura()    Returns the current record's "TipoFactura" value
- * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
- * @method Resumen             getResumen()        Returns the current record's "Resumen" value
- * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
- * @method Doctrine_Collection getCobroResumen()   Returns the current record's "CobroResumen" collection
- * @method Doctrine_Collection getFacturasAfip()   Returns the current record's "FacturasAfip" collection
- * @method Doctrine_Collection getVentasZona()     Returns the current record's "VentasZona" collection
- * @method Resumen             setId()             Sets the current record's "id" value
- * @method Resumen             setFecha()          Sets the current record's "fecha" value
- * @method Resumen             setTipoVentaId()    Sets the current record's "tipo_venta_id" value
- * @method Resumen             setClienteId()      Sets the current record's "cliente_id" value
- * @method Resumen             setRemitoId()       Sets the current record's "remito_id" value
- * @method Resumen             setListaId()        Sets the current record's "lista_id" value
- * @method Resumen             setMonedaId()       Sets the current record's "moneda_id" value
- * @method Resumen             setObservacion()    Sets the current record's "observacion" value
- * @method Resumen             setPagado()         Sets the current record's "pagado" value
- * @method Resumen             setPedidoId()       Sets the current record's "pedido_id" value
- * @method Resumen             setNroFactura()     Sets the current record's "nro_factura" value
- * @method Resumen             setTipofacturaId()  Sets the current record's "tipofactura_id" value
- * @method Resumen             setUsuario()        Sets the current record's "usuario" value
- * @method Resumen             setAfipEstado()     Sets the current record's "afip_estado" value
- * @method Resumen             setAfipCae()        Sets the current record's "afip_cae" value
- * @method Resumen             setAfipVtoCae()     Sets the current record's "afip_vto_cae" value
- * @method Resumen             setPtoVta()         Sets the current record's "pto_vta" value
- * @method Resumen             setAfipEnvio()      Sets the current record's "afip_envio" value
- * @method Resumen             setAfipRespuesta()  Sets the current record's "afip_respuesta" value
- * @method Resumen             setAfipMensaje()    Sets the current record's "afip_mensaje" value
- * @method Resumen             setDetalle()        Sets the current record's "Detalle" collection
- * @method Resumen             setRemito()         Sets the current record's "Remito" collection
- * @method Resumen             setCliente()        Sets the current record's "Cliente" value
- * @method Resumen             setVenta()          Sets the current record's "Venta" value
- * @method Resumen             setCobros()         Sets the current record's "Cobros" collection
- * @method Resumen             setLista()          Sets the current record's "Lista" value
- * @method Resumen             setMoneda()         Sets the current record's "Moneda" value
- * @method Resumen             setTipoVenta()      Sets the current record's "TipoVenta" value
- * @method Resumen             setPedido()         Sets the current record's "Pedido" value
- * @method Resumen             setTipoFactura()    Sets the current record's "TipoFactura" value
- * @method Resumen             setSfGuardUser()    Sets the current record's "sfGuardUser" value
- * @method Resumen             setResumen()        Sets the current record's "Resumen" value
- * @method Resumen             setDevProducto()    Sets the current record's "DevProducto" collection
- * @method Resumen             setCobroResumen()   Sets the current record's "CobroResumen" collection
- * @method Resumen             setFacturasAfip()   Sets the current record's "FacturasAfip" collection
- * @method Resumen             setVentasZona()     Sets the current record's "VentasZona" collection
+ * @method integer             getId()               Returns the current record's "id" value
+ * @method date                getFecha()            Returns the current record's "fecha" value
+ * @method integer             getTipoVentaId()      Returns the current record's "tipo_venta_id" value
+ * @method integer             getClienteId()        Returns the current record's "cliente_id" value
+ * @method integer             getRemitoId()         Returns the current record's "remito_id" value
+ * @method integer             getListaId()          Returns the current record's "lista_id" value
+ * @method integer             getMonedaId()         Returns the current record's "moneda_id" value
+ * @method string              getObservacion()      Returns the current record's "observacion" value
+ * @method integer             getPagado()           Returns the current record's "pagado" value
+ * @method integer             getPedidoId()         Returns the current record's "pedido_id" value
+ * @method integer             getNroFactura()       Returns the current record's "nro_factura" value
+ * @method integer             getTipofacturaId()    Returns the current record's "tipofactura_id" value
+ * @method integer             getUsuario()          Returns the current record's "usuario" value
+ * @method integer             getAfipEstado()       Returns the current record's "afip_estado" value
+ * @method string              getAfipCae()          Returns the current record's "afip_cae" value
+ * @method date                getAfipVtoCae()       Returns the current record's "afip_vto_cae" value
+ * @method string              getPtoVta()           Returns the current record's "pto_vta" value
+ * @method string              getAfipEnvio()        Returns the current record's "afip_envio" value
+ * @method string              getAfipRespuesta()    Returns the current record's "afip_respuesta" value
+ * @method string              getAfipMensaje()      Returns the current record's "afip_mensaje" value
+ * @method integer             getPagoComisionId()   Returns the current record's "pago_comision_id" value
+ * @method Doctrine_Collection getDetalle()          Returns the current record's "Detalle" collection
+ * @method Doctrine_Collection getRemito()           Returns the current record's "Remito" collection
+ * @method Cliente             getCliente()          Returns the current record's "Cliente" value
+ * @method Venta               getVenta()            Returns the current record's "Venta" value
+ * @method Doctrine_Collection getCobros()           Returns the current record's "Cobros" collection
+ * @method Doctrine_Collection getPagoComision()     Returns the current record's "PagoComision" collection
+ * @method ListaPrecio         getLista()            Returns the current record's "Lista" value
+ * @method TipoMoneda          getMoneda()           Returns the current record's "Moneda" value
+ * @method TipoVenta           getTipoVenta()        Returns the current record's "TipoVenta" value
+ * @method Pedido              getPedido()           Returns the current record's "Pedido" value
+ * @method TipoFactura         getTipoFactura()      Returns the current record's "TipoFactura" value
+ * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
+ * @method Resumen             getResumen()          Returns the current record's "Resumen" value
+ * @method Doctrine_Collection getDevProducto()      Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getCobroResumen()     Returns the current record's "CobroResumen" collection
+ * @method Doctrine_Collection getFacturasAfip()     Returns the current record's "FacturasAfip" collection
+ * @method Doctrine_Collection getVentasZona()       Returns the current record's "VentasZona" collection
+ * @method Resumen             setId()               Sets the current record's "id" value
+ * @method Resumen             setFecha()            Sets the current record's "fecha" value
+ * @method Resumen             setTipoVentaId()      Sets the current record's "tipo_venta_id" value
+ * @method Resumen             setClienteId()        Sets the current record's "cliente_id" value
+ * @method Resumen             setRemitoId()         Sets the current record's "remito_id" value
+ * @method Resumen             setListaId()          Sets the current record's "lista_id" value
+ * @method Resumen             setMonedaId()         Sets the current record's "moneda_id" value
+ * @method Resumen             setObservacion()      Sets the current record's "observacion" value
+ * @method Resumen             setPagado()           Sets the current record's "pagado" value
+ * @method Resumen             setPedidoId()         Sets the current record's "pedido_id" value
+ * @method Resumen             setNroFactura()       Sets the current record's "nro_factura" value
+ * @method Resumen             setTipofacturaId()    Sets the current record's "tipofactura_id" value
+ * @method Resumen             setUsuario()          Sets the current record's "usuario" value
+ * @method Resumen             setAfipEstado()       Sets the current record's "afip_estado" value
+ * @method Resumen             setAfipCae()          Sets the current record's "afip_cae" value
+ * @method Resumen             setAfipVtoCae()       Sets the current record's "afip_vto_cae" value
+ * @method Resumen             setPtoVta()           Sets the current record's "pto_vta" value
+ * @method Resumen             setAfipEnvio()        Sets the current record's "afip_envio" value
+ * @method Resumen             setAfipRespuesta()    Sets the current record's "afip_respuesta" value
+ * @method Resumen             setAfipMensaje()      Sets the current record's "afip_mensaje" value
+ * @method Resumen             setPagoComisionId()   Sets the current record's "pago_comision_id" value
+ * @method Resumen             setDetalle()          Sets the current record's "Detalle" collection
+ * @method Resumen             setRemito()           Sets the current record's "Remito" collection
+ * @method Resumen             setCliente()          Sets the current record's "Cliente" value
+ * @method Resumen             setVenta()            Sets the current record's "Venta" value
+ * @method Resumen             setCobros()           Sets the current record's "Cobros" collection
+ * @method Resumen             setPagoComision()     Sets the current record's "PagoComision" collection
+ * @method Resumen             setLista()            Sets the current record's "Lista" value
+ * @method Resumen             setMoneda()           Sets the current record's "Moneda" value
+ * @method Resumen             setTipoVenta()        Sets the current record's "TipoVenta" value
+ * @method Resumen             setPedido()           Sets the current record's "Pedido" value
+ * @method Resumen             setTipoFactura()      Sets the current record's "TipoFactura" value
+ * @method Resumen             setSfGuardUser()      Sets the current record's "sfGuardUser" value
+ * @method Resumen             setResumen()          Sets the current record's "Resumen" value
+ * @method Resumen             setDevProducto()      Sets the current record's "DevProducto" collection
+ * @method Resumen             setCobroResumen()     Sets the current record's "CobroResumen" collection
+ * @method Resumen             setFacturasAfip()     Sets the current record's "FacturasAfip" collection
+ * @method Resumen             setVentasZona()       Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -211,6 +217,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
+        $this->hasColumn('pago_comision_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -236,6 +246,10 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasMany('Cobro as Cobros', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
+
+        $this->hasMany('PagoComision', array(
+             'local' => 'pago_comision_id',
+             'foreign' => 'id'));
 
         $this->hasOne('ListaPrecio as Lista', array(
              'local' => 'lista_id',

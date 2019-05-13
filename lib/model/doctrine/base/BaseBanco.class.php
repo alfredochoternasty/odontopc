@@ -10,13 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('Banco', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property Doctrine_Collection $Cobros
+ * @property Doctrine_Collection $PagoComision
  * 
- * @method integer             getId()     Returns the current record's "id" value
- * @method string              getNombre() Returns the current record's "nombre" value
- * @method Doctrine_Collection getCobros() Returns the current record's "Cobros" collection
- * @method Banco               setId()     Sets the current record's "id" value
- * @method Banco               setNombre() Sets the current record's "nombre" value
- * @method Banco               setCobros() Sets the current record's "Cobros" collection
+ * @method integer             getId()           Returns the current record's "id" value
+ * @method string              getNombre()       Returns the current record's "nombre" value
+ * @method Doctrine_Collection getCobros()       Returns the current record's "Cobros" collection
+ * @method Doctrine_Collection getPagoComision() Returns the current record's "PagoComision" collection
+ * @method Banco               setId()           Sets the current record's "id" value
+ * @method Banco               setNombre()       Sets the current record's "nombre" value
+ * @method Banco               setCobros()       Sets the current record's "Cobros" collection
+ * @method Banco               setPagoComision() Sets the current record's "PagoComision" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -45,6 +48,10 @@ abstract class BaseBanco extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Cobro as Cobros', array(
+             'local' => 'id',
+             'foreign' => 'banco_id'));
+
+        $this->hasMany('PagoComision', array(
              'local' => 'id',
              'foreign' => 'banco_id'));
     }

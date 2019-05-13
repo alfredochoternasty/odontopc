@@ -94,14 +94,14 @@
 				</tr>
       <?php endforeach; ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-					<td colspan="7" style="font-size:14px; text-align:right;" class="sf_admin_text"><b>Total: </b></td>
+					<td colspan="8" style="font-size:14px; text-align:right;" class="sf_admin_text"><b>Total: </b></td>
 					<td class="sf_admin_text"><b style="color:red; font-size:14px;"><?php echo sprintf("$ %01.2f", $tot_descuento); ?></b></td>
 				</tr>
     </tbody>
 
     <tfoot>
       <tr>
-        <th colspan="8">
+        <th colspan="9">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('vta_zona/pagination', array('pager' => $pager)) ?>
           </div>

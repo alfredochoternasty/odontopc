@@ -18,6 +18,7 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @property integer $grupo_porc_desc
  * @property integer $prod_precio_desc
  * @property integer $grupo_precio_desc
+ * @property boolean $pagado
  * @property Zona $Zona
  * @property Producto $Producto
  * @property Cliente $Cliente
@@ -35,6 +36,7 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @method integer        getGrupoPorcDesc()      Returns the current record's "grupo_porc_desc" value
  * @method integer        getProdPrecioDesc()     Returns the current record's "prod_precio_desc" value
  * @method integer        getGrupoPrecioDesc()    Returns the current record's "grupo_precio_desc" value
+ * @method boolean        getPagado()             Returns the current record's "pagado" value
  * @method Zona           getZona()               Returns the current record's "Zona" value
  * @method Producto       getProducto()           Returns the current record's "Producto" value
  * @method Cliente        getCliente()            Returns the current record's "Cliente" value
@@ -51,6 +53,7 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @method VentasZona     setGrupoPorcDesc()      Sets the current record's "grupo_porc_desc" value
  * @method VentasZona     setProdPrecioDesc()     Sets the current record's "prod_precio_desc" value
  * @method VentasZona     setGrupoPrecioDesc()    Sets the current record's "grupo_precio_desc" value
+ * @method VentasZona     setPagado()             Sets the current record's "pagado" value
  * @method VentasZona     setZona()               Sets the current record's "Zona" value
  * @method VentasZona     setProducto()           Sets the current record's "Producto" value
  * @method VentasZona     setCliente()            Sets the current record's "Cliente" value
@@ -112,6 +115,10 @@ abstract class BaseVentasZona extends sfDoctrineRecord
         $this->hasColumn('grupo_precio_desc', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('pagado', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => 1,
              ));
     }
 

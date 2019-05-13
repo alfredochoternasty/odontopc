@@ -12,7 +12,7 @@ class VentasZonaFormFilter extends BaseVentasZonaFormFilter
 {
   public function configure()
   {
-		parent::configure();
+		//parent::configure();
 		
     $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));		
@@ -25,6 +25,9 @@ class VentasZonaFormFilter extends BaseVentasZonaFormFilter
 		
 		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true));
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));	
+
+    $this->widgetSchema['pagado'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
+    $this->validatorSchema['pagado'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));        
 		
   }
 }

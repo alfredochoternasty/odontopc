@@ -1,10 +1,57 @@
-ALTER TABLE dev_producto
-	CHANGE COLUMN afip_mensaje afip_cae TEXT NULL AFTER afip_estado,
-	ADD COLUMN afip_mensaje TEXT NULL AFTER afip_respuesta;
+DROP VIEW ventas_zona;
+CREATE VIEW ventas_zona as
+SELECT 
+	dr.id,
+	dr.id AS detalle_resumen_id,
+	dr.resumen_id,
+	r.fecha, 
+	dr.producto_id, 
+	r.cliente_id, 
+	c.zona_id,
+	dzp.porc_desc AS prod_porc_desc,
+	dzg.porc_desc AS grupo_porc_desc,
+	dzp.precio_desc AS prod_precio_desc,
+	dzg.precio_desc AS grupo_precio_desc,
+	r.pagado
+FROM resumen r
+	JOIN detalle_resumen dr ON r.id = dr.resumen_id
+	JOIN cliente c ON r.cliente_id = c.id
+	JOIN producto p ON dr.producto_id = p.id
+	left outer JOIN descuento_zona dzp ON dr.producto_id = dzp.producto_id AND c.zona_id = dzp.zona_id
+	left outer JOIN descuento_zona dzg ON p.grupoprod_id = dzg.grupoprod_id AND c.zona_id = dzg.zona_id
+where
+	r.tipofactura_id <> 4
+;
 
-ALTER TABLE log_dev_producto
-	CHANGE COLUMN afip_mensaje afip_cae TEXT NULL AFTER afip_estado,
-	ADD COLUMN afip_mensaje TEXT NULL AFTER afip_respuesta;
+DROP VIEW facturas_afip;
+CREATE VIEW facturas_afip as
+SELECT
+	r.id,
+	r.tipofactura_id, 
+	r.pto_vta, 
+	r.nro_factura,
+	fecha, 
+	r.cliente_id,
+	r.afip_cae AS cae,
+	SUM(dr.iva) AS iva,
+	SUM(dr.sub_total) AS neto,
+	SUM(dr.total) AS total,
+	concat(c.apellido, ' ', c.nombre) as cliente,
+	c.zona_id
+FROM resumen r
+	JOIN detalle_resumen dr ON r.id = dr.resumen_id
+	join cliente c ON r.cliente_id = c.id
+WHERE afip_estado = 1
+GROUP BY 
+	r.id,
+	r.pto_vta,
+	r.nro_factura,
+	fecha,
+	r.cliente_id,
+	r.afip_mensaje;
+
+ALTER TABLE resumen
+	ADD COLUMN pago_comision_id INT NULL AFTER afip_mensaje;
 
 /*
 DROP TABLE 

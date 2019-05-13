@@ -17,14 +17,14 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
       list:
         title: Listado de Facturas Enviadas a la Afip
-        display: [_comprobante, fecha, _cliente, _iva, _neto, _total]
+        display: [_comprobante, fecha, _cliente, _iva, _neto, _total, Zona]
         max_per_page: 50
         object_actions: []
         batch_actions: []
         actions:       
           exportar: {label: Exportar a Excel}
       filter:
-        display: [tipofactura_id, nro_factura, fecha]
+        display: [tipofactura_id, nro_factura, fecha, zona_id]
       form:    ~
       edit:    ~
       new:     ~

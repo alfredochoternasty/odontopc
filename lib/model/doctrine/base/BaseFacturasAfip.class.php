@@ -17,9 +17,12 @@ Doctrine_Manager::getInstance()->bindComponent('FacturasAfip', 'doctrine');
  * @property decimal $iva
  * @property decimal $neto
  * @property decimal $total
+ * @property string $cliente
+ * @property integer $zona_id
  * @property TipoFactura $TipoFactura
  * @property Cliente $Cliente
  * @property Resumen $Resumen
+ * @property Zona $Zona
  * 
  * @method integer      getId()             Returns the current record's "id" value
  * @method integer      getTipofacturaId()  Returns the current record's "tipofactura_id" value
@@ -31,9 +34,12 @@ Doctrine_Manager::getInstance()->bindComponent('FacturasAfip', 'doctrine');
  * @method decimal      getIva()            Returns the current record's "iva" value
  * @method decimal      getNeto()           Returns the current record's "neto" value
  * @method decimal      getTotal()          Returns the current record's "total" value
+ * @method string       getCliente()        Returns the current record's "cliente" value
+ * @method integer      getZonaId()         Returns the current record's "zona_id" value
  * @method TipoFactura  getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method Cliente      getCliente()        Returns the current record's "Cliente" value
  * @method Resumen      getResumen()        Returns the current record's "Resumen" value
+ * @method Zona         getZona()           Returns the current record's "Zona" value
  * @method FacturasAfip setId()             Sets the current record's "id" value
  * @method FacturasAfip setTipofacturaId()  Sets the current record's "tipofactura_id" value
  * @method FacturasAfip setPtoVta()         Sets the current record's "pto_vta" value
@@ -44,9 +50,12 @@ Doctrine_Manager::getInstance()->bindComponent('FacturasAfip', 'doctrine');
  * @method FacturasAfip setIva()            Sets the current record's "iva" value
  * @method FacturasAfip setNeto()           Sets the current record's "neto" value
  * @method FacturasAfip setTotal()          Sets the current record's "total" value
+ * @method FacturasAfip setCliente()        Sets the current record's "cliente" value
+ * @method FacturasAfip setZonaId()         Sets the current record's "zona_id" value
  * @method FacturasAfip setTipoFactura()    Sets the current record's "TipoFactura" value
  * @method FacturasAfip setCliente()        Sets the current record's "Cliente" value
  * @method FacturasAfip setResumen()        Sets the current record's "Resumen" value
+ * @method FacturasAfip setZona()           Sets the current record's "Zona" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -103,6 +112,14 @@ abstract class BaseFacturasAfip extends sfDoctrineRecord
              'length' => 10,
              'scale' => '2',
              ));
+        $this->hasColumn('cliente', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -120,6 +137,11 @@ abstract class BaseFacturasAfip extends sfDoctrineRecord
 
         $this->hasOne('Resumen', array(
              'local' => 'id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

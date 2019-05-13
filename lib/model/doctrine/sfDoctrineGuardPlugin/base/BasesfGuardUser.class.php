@@ -27,7 +27,6 @@
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $Resumen
  * @property Doctrine_Collection $DetalleResumen
- * @property Doctrine_Collection $Cobro
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ClienteSeguimiento
@@ -55,7 +54,6 @@
  * @method Doctrine_Collection   getDetalleCompra()         Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection   getResumen()               Returns the current record's "Resumen" collection
  * @method Doctrine_Collection   getDetalleResumen()        Returns the current record's "DetalleResumen" collection
- * @method Doctrine_Collection   getCobro()                 Returns the current record's "Cobro" collection
  * @method Doctrine_Collection   getDevProducto()           Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection   getLote()                  Returns the current record's "Lote" collection
  * @method Doctrine_Collection   getClienteSeguimiento()    Returns the current record's "ClienteSeguimiento" collection
@@ -82,7 +80,6 @@
  * @method sfGuardUser           setDetalleCompra()         Sets the current record's "DetalleCompra" collection
  * @method sfGuardUser           setResumen()               Sets the current record's "Resumen" collection
  * @method sfGuardUser           setDetalleResumen()        Sets the current record's "DetalleResumen" collection
- * @method sfGuardUser           setCobro()                 Sets the current record's "Cobro" collection
  * @method sfGuardUser           setDevProducto()           Sets the current record's "DevProducto" collection
  * @method sfGuardUser           setLote()                  Sets the current record's "Lote" collection
  * @method sfGuardUser           setClienteSeguimiento()    Sets the current record's "ClienteSeguimiento" collection
@@ -203,10 +200,6 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'foreign' => 'usuario'));
 
         $this->hasMany('DetalleResumen', array(
-             'local' => 'id',
-             'foreign' => 'usuario'));
-
-        $this->hasMany('Cobro', array(
              'local' => 'id',
              'foreign' => 'usuario'));
 

@@ -25,6 +25,8 @@ abstract class BaseFacturasAfipForm extends BaseFormDoctrine
       'iva'            => new sfWidgetFormInputText(),
       'neto'           => new sfWidgetFormInputText(),
       'total'          => new sfWidgetFormInputText(),
+      'cliente'        => new sfWidgetFormInputText(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -38,6 +40,8 @@ abstract class BaseFacturasAfipForm extends BaseFormDoctrine
       'iva'            => new sfValidatorNumber(array('required' => false)),
       'neto'           => new sfValidatorNumber(array('required' => false)),
       'total'          => new sfValidatorNumber(array('required' => false)),
+      'cliente'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('facturas_afip[%s]');

@@ -33,7 +33,6 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Localidad $Localidad
  * @property CondicionFiscal $Condfiscal
  * @property Doctrine_Collection $Cobros
- * @property Doctrine_Collection $Cuenta
  * @property TipoCliente $Tipo
  * @property ListaPrecio $Lista
  * @property sfGuardUser $Usuario
@@ -48,6 +47,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Doctrine_Collection $CursoInscripcion
  * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $VentasZona
+ * @property Doctrine_Collection $PagoComision
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method integer             getTipoId()             Returns the current record's "tipo_id" value
@@ -75,7 +75,6 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
  * @method Doctrine_Collection getCobros()             Returns the current record's "Cobros" collection
- * @method Doctrine_Collection getCuenta()             Returns the current record's "Cuenta" collection
  * @method TipoCliente         getTipo()               Returns the current record's "Tipo" value
  * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
  * @method sfGuardUser         getUsuario()            Returns the current record's "Usuario" value
@@ -90,6 +89,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Doctrine_Collection getCursoInscripcion()   Returns the current record's "CursoInscripcion" collection
  * @method Doctrine_Collection getFacturasAfip()       Returns the current record's "FacturasAfip" collection
  * @method Doctrine_Collection getVentasZona()         Returns the current record's "VentasZona" collection
+ * @method Doctrine_Collection getPagoComision()       Returns the current record's "PagoComision" collection
  * @method Cliente             setId()                 Sets the current record's "id" value
  * @method Cliente             setTipoId()             Sets the current record's "tipo_id" value
  * @method Cliente             setDni()                Sets the current record's "dni" value
@@ -116,7 +116,6 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setLocalidad()          Sets the current record's "Localidad" value
  * @method Cliente             setCondfiscal()         Sets the current record's "Condfiscal" value
  * @method Cliente             setCobros()             Sets the current record's "Cobros" collection
- * @method Cliente             setCuenta()             Sets the current record's "Cuenta" collection
  * @method Cliente             setTipo()               Sets the current record's "Tipo" value
  * @method Cliente             setLista()              Sets the current record's "Lista" value
  * @method Cliente             setUsuario()            Sets the current record's "Usuario" value
@@ -131,6 +130,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setCursoInscripcion()   Sets the current record's "CursoInscripcion" collection
  * @method Cliente             setFacturasAfip()       Sets the current record's "FacturasAfip" collection
  * @method Cliente             setVentasZona()         Sets the current record's "VentasZona" collection
+ * @method Cliente             setPagoComision()       Sets the current record's "PagoComision" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -260,10 +260,6 @@ abstract class BaseCliente extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'cliente_id'));
 
-        $this->hasMany('CtaCte as Cuenta', array(
-             'local' => 'id',
-             'foreign' => 'cliente_id'));
-
         $this->hasOne('TipoCliente as Tipo', array(
              'local' => 'tipo_id',
              'foreign' => 'id',
@@ -320,6 +316,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'foreign' => 'cliente_id'));
 
         $this->hasMany('VentasZona', array(
+             'local' => 'id',
+             'foreign' => 'cliente_id'));
+
+        $this->hasMany('PagoComision', array(
              'local' => 'id',
              'foreign' => 'cliente_id'));
     }

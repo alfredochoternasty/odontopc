@@ -26,6 +26,7 @@ abstract class BaseVentasZonaForm extends BaseFormDoctrine
       'grupo_porc_desc'    => new sfWidgetFormInputText(),
       'prod_precio_desc'   => new sfWidgetFormInputText(),
       'grupo_precio_desc'  => new sfWidgetFormInputText(),
+      'pagado'             => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -40,6 +41,7 @@ abstract class BaseVentasZonaForm extends BaseFormDoctrine
       'grupo_porc_desc'    => new sfValidatorInteger(array('required' => false)),
       'prod_precio_desc'   => new sfValidatorInteger(array('required' => false)),
       'grupo_precio_desc'  => new sfValidatorInteger(array('required' => false)),
+      'pagado'             => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('ventas_zona[%s]');

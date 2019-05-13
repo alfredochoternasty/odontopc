@@ -11,15 +11,18 @@ Doctrine_Manager::getInstance()->bindComponent('TipoCobroPago', 'doctrine');
  * @property string $nombre
  * @property Doctrine_Collection $Cobros
  * @property Doctrine_Collection $ListadoCobros
+ * @property Doctrine_Collection $PagoComision
  * 
  * @method integer             getId()            Returns the current record's "id" value
  * @method string              getNombre()        Returns the current record's "nombre" value
  * @method Doctrine_Collection getCobros()        Returns the current record's "Cobros" collection
  * @method Doctrine_Collection getListadoCobros() Returns the current record's "ListadoCobros" collection
+ * @method Doctrine_Collection getPagoComision()  Returns the current record's "PagoComision" collection
  * @method TipoCobroPago       setId()            Sets the current record's "id" value
  * @method TipoCobroPago       setNombre()        Sets the current record's "nombre" value
  * @method TipoCobroPago       setCobros()        Sets the current record's "Cobros" collection
  * @method TipoCobroPago       setListadoCobros() Sets the current record's "ListadoCobros" collection
+ * @method TipoCobroPago       setPagoComision()  Sets the current record's "PagoComision" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -54,5 +57,9 @@ abstract class BaseTipoCobroPago extends sfDoctrineRecord
         $this->hasMany('ListadoCobros', array(
              'local' => 'id',
              'foreign' => 'tipo_cobro'));
+
+        $this->hasMany('PagoComision', array(
+             'local' => 'id',
+             'foreign' => 'tipo_id'));
     }
 }
