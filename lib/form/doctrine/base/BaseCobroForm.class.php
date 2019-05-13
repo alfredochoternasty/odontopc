@@ -16,26 +16,36 @@ abstract class BaseCobroForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'concepto'    => new sfWidgetFormInputText(),
-      'numero'      => new sfWidgetFormInputText(),
       'fecha'       => new sfWidgetFormDate(),
       'cliente_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => false)),
-      'moneda_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
-      'debe'        => new sfWidgetFormInputText(),
-      'haber'       => new sfWidgetFormInputText(),
+      'resumen_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'), 'add_empty' => false)),
+      'moneda_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => false)),
+      'monto'       => new sfWidgetFormInputText(),
+      'tipo_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Tipo'), 'add_empty' => false)),
+      'banco_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Banco'), 'add_empty' => true)),
+      'numero'      => new sfWidgetFormInputText(),
+      'fecha_vto'   => new sfWidgetFormDate(),
+      'devprod_id'  => new sfWidgetFormInputText(),
       'observacion' => new sfWidgetFormInputText(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'nro_recibo'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'concepto'    => new sfValidatorString(array('max_length' => 200, 'required' => false)),
-      'numero'      => new sfValidatorInteger(array('required' => false)),
       'fecha'       => new sfValidatorDate(),
       'cliente_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'))),
+      'resumen_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'))),
       'moneda_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'required' => false)),
-      'debe'        => new sfValidatorNumber(),
-      'haber'       => new sfValidatorNumber(),
+      'monto'       => new sfValidatorNumber(array('required' => false)),
+      'tipo_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Tipo'))),
+      'banco_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Banco'), 'required' => false)),
+      'numero'      => new sfValidatorInteger(array('required' => false)),
+      'fecha_vto'   => new sfValidatorDate(array('required' => false)),
+      'devprod_id'  => new sfValidatorInteger(array('required' => false)),
       'observacion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+      'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
+      'nro_recibo'  => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cobro[%s]');

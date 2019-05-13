@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Producto
  * @property Doctrine_Collection $DetalleResumen
+ * @property Doctrine_Collection $CtaCte
  * @property Doctrine_Collection $ListaPrecio
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $ListadoCobros
@@ -33,6 +34,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method Doctrine_Collection getProducto()           Returns the current record's "Producto" collection
  * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
+ * @method Doctrine_Collection getCtaCte()             Returns the current record's "CtaCte" collection
  * @method Doctrine_Collection getListaPrecio()        Returns the current record's "ListaPrecio" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
@@ -49,6 +51,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method TipoMoneda          setCompras()            Sets the current record's "Compras" collection
  * @method TipoMoneda          setProducto()           Sets the current record's "Producto" collection
  * @method TipoMoneda          setDetalleResumen()     Sets the current record's "DetalleResumen" collection
+ * @method TipoMoneda          setCtaCte()             Sets the current record's "CtaCte" collection
  * @method TipoMoneda          setListaPrecio()        Sets the current record's "ListaPrecio" collection
  * @method TipoMoneda          setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method TipoMoneda          setListadoCobros()      Sets the current record's "ListadoCobros" collection
@@ -108,6 +111,10 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
              'foreign' => 'moneda_id'));
 
         $this->hasMany('DetalleResumen', array(
+             'local' => 'id',
+             'foreign' => 'moneda_id'));
+
+        $this->hasMany('CtaCte', array(
              'local' => 'id',
              'foreign' => 'moneda_id'));
 

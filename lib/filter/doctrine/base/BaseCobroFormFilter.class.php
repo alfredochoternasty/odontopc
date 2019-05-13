@@ -13,25 +13,35 @@ abstract class BaseCobroFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'concepto'    => new sfWidgetFormFilterInput(),
-      'numero'      => new sfWidgetFormFilterInput(),
       'fecha'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'cliente_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
+      'resumen_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'), 'add_empty' => true)),
       'moneda_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
-      'debe'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'haber'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'monto'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'tipo_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Tipo'), 'add_empty' => true)),
+      'banco_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Banco'), 'add_empty' => true)),
+      'numero'      => new sfWidgetFormFilterInput(),
+      'fecha_vto'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'devprod_id'  => new sfWidgetFormFilterInput(),
       'observacion' => new sfWidgetFormFilterInput(),
+      'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
+      'nro_recibo'  => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'concepto'    => new sfValidatorPass(array('required' => false)),
-      'numero'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'fecha'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'cliente_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
+      'resumen_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Resumen'), 'column' => 'id')),
       'moneda_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
-      'debe'        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'haber'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'monto'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'tipo_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Tipo'), 'column' => 'id')),
+      'banco_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Banco'), 'column' => 'id')),
+      'numero'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'fecha_vto'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'devprod_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'observacion' => new sfValidatorPass(array('required' => false)),
+      'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
+      'nro_recibo'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('cobro_filters[%s]');
@@ -52,14 +62,19 @@ abstract class BaseCobroFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'          => 'Number',
-      'concepto'    => 'Text',
-      'numero'      => 'Number',
       'fecha'       => 'Date',
       'cliente_id'  => 'ForeignKey',
+      'resumen_id'  => 'ForeignKey',
       'moneda_id'   => 'ForeignKey',
-      'debe'        => 'Number',
-      'haber'       => 'Number',
+      'monto'       => 'Number',
+      'tipo_id'     => 'ForeignKey',
+      'banco_id'    => 'ForeignKey',
+      'numero'      => 'Number',
+      'fecha_vto'   => 'Date',
+      'devprod_id'  => 'Number',
       'observacion' => 'Text',
+      'usuario'     => 'ForeignKey',
+      'nro_recibo'  => 'Number',
     );
   }
 }

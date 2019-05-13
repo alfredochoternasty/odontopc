@@ -355,7 +355,8 @@ Cobro:
     Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Banco: {type: one, local: banco_id, onDelete: RESTRICT}
-    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}CtaCte:
+    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+CtaCte:
   connection: doctrine
   tableName: cta_cte
   columns:
