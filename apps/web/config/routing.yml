@@ -1,3 +1,12 @@
+pago_comision:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                PagoComision
+    module:               pagocomis
+    prefix_path:          /pagocomis
+    column:               id
+    with_wildcard_routes: true
+
 usuario_zona:
   class: sfDoctrineRouteCollection
   options:

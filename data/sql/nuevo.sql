@@ -52,6 +52,30 @@ GROUP BY
 
 ALTER TABLE resumen
 	ADD COLUMN pago_comision_id INT NULL AFTER afip_mensaje;
+	
+	
+CREATE TABLE `pago_comision` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`fecha` DATE NOT NULL,
+	`cliente_id` INT(11) NOT NULL,
+	`moneda_id` INT(11) NOT NULL DEFAULT '1',
+	`monto` DECIMAL(10,2) NOT NULL DEFAULT '1.00',
+	`tipo_id` INT(11) NOT NULL,
+	`banco_id` INT(11) NULL DEFAULT NULL,
+	`numero` INT(11) NULL DEFAULT NULL,
+	`fecha_vto` DATE NULL DEFAULT NULL,
+	`observacion` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	`nro_recibo` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `cliente_id_idx` (`cliente_id`),
+	INDEX `tipo_id_idx` (`tipo_id`),
+	INDEX `moneda_id_idx` (`moneda_id`),
+	INDEX `banco_id_idx` (`banco_id`)
+)
+COLLATE='utf8_unicode_ci'
+ENGINE=InnoDB;
+
+	
 
 /*
 DROP TABLE 
