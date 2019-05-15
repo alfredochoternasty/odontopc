@@ -71,46 +71,36 @@
       $ver_solo_totales = $sf_user->getAttribute('totales', true);      
       $suma_cant = 0;
       $suma_bon = 0;
-      $suma_precio = 0;
       $suma_total = 0;
       $suma_total_bon = 0;
-      $suma_total_precio = 0;
       $productos = $pager->getResults();
       $anterior = $productos[0];
       foreach ($pager->getResults() as $i => $listado_ventas): 
-						$actual = $listado_ventas;
-						if($actual->getProductoId() != $anterior->getProductoId()){
+        if($ver_solo_totales){
+          $actual = $listado_ventas;
+          if($actual->getProductoId() != $anterior->getProductoId()){
             ?>
             <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
               <td><?php echo $anterior->getGrupoNombre() ?></td>
               <td><?php echo $anterior->getProducto() ?></td>
               <td><?php echo $suma_cant ?></td>
               <td><?php echo $suma_bon ?></td>
-              <td><?php echo $suma_precio ?></td>
             </tr>
             <?php 
             $anterior = $actual;
             $suma_cant = $actual->getCantidad();
             $suma_bon = $actual->getBonificados();
-            
-						$suma_precio = $actual->getTotal();
             $suma_total += $actual->getCantidad();
             $suma_total_bon += $actual->getBonificados();
           }else{
             $suma_cant += $actual->getCantidad();
             $suma_bon += $actual->getBonificados();
-						$suma_precio += $actual->getTotal();
-            
-						$suma_total += $actual->getCantidad();
+            $suma_total += $actual->getCantidad();
             $suma_total_bon += $actual->getBonificados();
-            $suma_total_precio += $actual->getTotal();
           }
-        if(!$ver_solo_totales){ ?>
+        }else{ ?>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-            <td>
-						<?php echo link_to('Ver Detalle', '@detalle_resumen?rid='.$listado_ventas->getResId(), 'class="fg-button-mini fg-button ui-state-default fg-button-icon-left" target="blank"') ?>
-						</td>
-						
+            <td><?php echo $listado_ventas->getResId() ?></td>
             <td><?php echo false !== strtotime($listado_ventas->getFecha()) ? format_date($listado_ventas->getFecha(), "dd/MM/yyyy") : '&nbsp;' ?></td>
             <td><?php echo $listado_ventas->getMoneda() ?></td>
             <td><?php echo $listado_ventas->getClienteApellido() ?></td>
@@ -126,25 +116,23 @@
             <td><?php echo false !== strtotime($listado_ventas->getFechaVto()) ? format_date($listado_ventas->getFechaVto(), "dd/MM/yyyy") : '&nbsp;' ?></td>
           </tr>
         <?php 
-				}
+        }
       endforeach; 
-      $cols = (!$ver_solo_totales)? '<td colspan="6">':'';
+      if($ver_solo_totales){
           ?>
-          <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>"><?php echo $cols?>
+          <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
             <td><?php echo $anterior->getGrupoNombre() ?></td>
             <td><?php echo $anterior->getProducto() ?></td>
-            <?php echo (!$ver_solo_totales)? '<td>'.$suma_precio.'</td>':'' ?>
             <td><?php echo $suma_cant ?></td>
             <td><?php echo $suma_bon ?></td>
           </tr>
-          <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>"><?php echo $cols?>
+          <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
             <td colspan="2" style="text-align: right"><b>Total: </b> </td>
-						<?php echo (!$ver_solo_totales)? '<td>'.$suma_total_precio.'</td>':'' ?>
             <td><b><?php echo $suma_total ?></b></td>
             <td><b><?php echo $suma_total_bon ?></b></td>
           </tr>
           <?php 
-      //}
+      }
       ?>
     </tbody>
   </table>
