@@ -28,7 +28,7 @@ class ListadoVentasTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Producto p');
       $q->leftJoin($rootAlias . '.Grupo g');
       $q->leftJoin($rootAlias . '.Moneda m');
-			$q->andWhere('uz.usuario = '.$id);
+			$q->where('uz.usuario = '.$id);
       return $q;
     }
 }

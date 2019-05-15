@@ -6,7 +6,7 @@
     <?php echo $form->renderGlobalErrors() ?>
   <?php endif; ?>
 
-  <form action="<?php echo url_for('ventas_zona_collection', array('action' => 'filter')) ?>" method="post" onsubmit="return valida_vta_zona(this)">
+  <form action="<?php echo url_for('ventas_zona_collection', array('action' => 'filter')) ?>" method="post">
     <table>
       <tfoot>
         <tr>

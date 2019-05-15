@@ -242,15 +242,25 @@ class detresActions extends autoDetresActions
   public function executeGet_prod_remito(sfWebRequest $request){
     $pid = $request->getParameter('pid');
     $lid = $request->getParameter('lid');
+		
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine_Core::getTable('UsuarioZona')->findByUsuario($u_id);		
 
 		$q = Doctrine_Query::create();    
 		$q->select('dr.id, concat(c.apellido, c.nombre) as cliente, r.fecha as fec, r.nro_factura as nro');
 		$q->from('DetalleResumen dr');
 		$q->leftJoin("dr.Resumen r");
 		$q->leftJoin("r.Cliente c");
+		$q->leftJoin("c.Zona z");
 		$q->where('dr.producto_id = '.$pid);
 		$q->andWhere("dr.nro_lote = '$lid'");
 		$q->andWhere("r.tipofactura_id = 4");
+		
+		if ($uz[0]->zona_id != 1 ) {
+			$zona = Doctrine_Core::getTable('Zona')->find($uz[0]->zona_id);
+			$q->andWhere('r.cliente_id = '.$zona->cliente_id);
+		}
+		
 		$q->orderBy('r.fecha desc');     
     $remitos = $q->fetchArray();
   

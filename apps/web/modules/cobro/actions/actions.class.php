@@ -79,18 +79,21 @@ return $this->renderText($resultado);
 			$cobro->setNroRecibo($nro+1);
 			$cobro->save();
       $monto = $cobro->getMonto();
+			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false);
+			if ($saldo_cliente >= 0) $saldo_cliente = 0;
       
       $Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagado($cobro['cliente_id'], 0);  
       foreach($Resumenes as $resumen){
-        $saldo = $resumen->getTotalResumen() - $resumen->getTotalCobrado();
+        $saldo_resumen = $resumen->getTotalResumen() - ($resumen->getTotalCobrado() + $resumen->getTotalDevuelto() + $saldo_cliente);
         $objCobro = new CobroResumen();
         $objCobro->setCobroId($cobro->getId());
         $objCobro->setResumenId($resumen->getId());
         
-        if($monto >= $saldo){
-          $objCobro->setMonto($saldo);
-          $monto = $monto - $saldo;
+        if($monto >= $saldo_resumen){
+          $objCobro->setMonto($saldo_resumen);
+          $monto = $monto - $saldo_resumen;
           $resumen->pagado = 1;
+          $resumen->fecha_pagado = $cobro->fecha;
           $resumen->save();
           $objCobro->save();
         }else{

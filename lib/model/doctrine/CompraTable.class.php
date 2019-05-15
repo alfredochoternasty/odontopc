@@ -24,6 +24,8 @@ class CompraTable extends Doctrine_Table
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Proveedor p');
+      $q->leftJoin($rootAlias . '.Remito res');
+      $q->leftJoin('res.TipoFactura t');
       $q->leftJoin($rootAlias . '.Tipofactura tf');
 			$q->leftJoin($rootAlias . '.Zona z');
 			$q->leftJoin('z.UsuarioZona uz');

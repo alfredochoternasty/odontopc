@@ -328,6 +328,6 @@ abstract class BaseCliente extends sfDoctrineRecord
 
         $this->hasMany('PagoComision', array(
              'local' => 'id',
-             'foreign' => 'cliente_id'));
+             'foreign' => 'revendedor_id'));
     }
 }

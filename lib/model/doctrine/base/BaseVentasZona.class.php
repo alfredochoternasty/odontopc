@@ -12,12 +12,16 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @property integer $resumen_id
  * @property date $fecha
  * @property integer $producto_id
+ * @property string $nro_lote
  * @property integer $cliente_id
  * @property integer $zona_id
  * @property integer $prod_porc_desc
  * @property integer $grupo_porc_desc
  * @property integer $prod_precio_desc
  * @property integer $grupo_precio_desc
+ * @property boolean $cobrado
+ * @property date $fecha_cobrado
+ * @property integer $pago_comision_id
  * @property boolean $pagado
  * @property Zona $Zona
  * @property Producto $Producto
@@ -30,12 +34,16 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @method integer        getResumenId()          Returns the current record's "resumen_id" value
  * @method date           getFecha()              Returns the current record's "fecha" value
  * @method integer        getProductoId()         Returns the current record's "producto_id" value
+ * @method string         getNroLote()            Returns the current record's "nro_lote" value
  * @method integer        getClienteId()          Returns the current record's "cliente_id" value
  * @method integer        getZonaId()             Returns the current record's "zona_id" value
  * @method integer        getProdPorcDesc()       Returns the current record's "prod_porc_desc" value
  * @method integer        getGrupoPorcDesc()      Returns the current record's "grupo_porc_desc" value
  * @method integer        getProdPrecioDesc()     Returns the current record's "prod_precio_desc" value
  * @method integer        getGrupoPrecioDesc()    Returns the current record's "grupo_precio_desc" value
+ * @method boolean        getCobrado()            Returns the current record's "cobrado" value
+ * @method date           getFechaCobrado()       Returns the current record's "fecha_cobrado" value
+ * @method integer        getPagoComisionId()     Returns the current record's "pago_comision_id" value
  * @method boolean        getPagado()             Returns the current record's "pagado" value
  * @method Zona           getZona()               Returns the current record's "Zona" value
  * @method Producto       getProducto()           Returns the current record's "Producto" value
@@ -47,12 +55,16 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @method VentasZona     setResumenId()          Sets the current record's "resumen_id" value
  * @method VentasZona     setFecha()              Sets the current record's "fecha" value
  * @method VentasZona     setProductoId()         Sets the current record's "producto_id" value
+ * @method VentasZona     setNroLote()            Sets the current record's "nro_lote" value
  * @method VentasZona     setClienteId()          Sets the current record's "cliente_id" value
  * @method VentasZona     setZonaId()             Sets the current record's "zona_id" value
  * @method VentasZona     setProdPorcDesc()       Sets the current record's "prod_porc_desc" value
  * @method VentasZona     setGrupoPorcDesc()      Sets the current record's "grupo_porc_desc" value
  * @method VentasZona     setProdPrecioDesc()     Sets the current record's "prod_precio_desc" value
  * @method VentasZona     setGrupoPrecioDesc()    Sets the current record's "grupo_precio_desc" value
+ * @method VentasZona     setCobrado()            Sets the current record's "cobrado" value
+ * @method VentasZona     setFechaCobrado()       Sets the current record's "fecha_cobrado" value
+ * @method VentasZona     setPagoComisionId()     Sets the current record's "pago_comision_id" value
  * @method VentasZona     setPagado()             Sets the current record's "pagado" value
  * @method VentasZona     setZona()               Sets the current record's "Zona" value
  * @method VentasZona     setProducto()           Sets the current record's "Producto" value
@@ -92,6 +104,10 @@ abstract class BaseVentasZona extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('nro_lote', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
         $this->hasColumn('cliente_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
@@ -116,9 +132,19 @@ abstract class BaseVentasZona extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('cobrado', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('fecha_cobrado', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
+             ));
+        $this->hasColumn('pago_comision_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
         $this->hasColumn('pagado', 'boolean', null, array(
              'type' => 'boolean',
-             'default' => 1,
              ));
     }
 

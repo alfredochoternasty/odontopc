@@ -179,16 +179,16 @@ CREATE VIEW listado_ventas (
   fecha_vto
 ) AS 
 select
-  FLOOR(1+(RAND()*999999999999)),
-  resumen.id,
+	detalle_resumen.id AS id,
+  resumen.id AS res_id,
   resumen.fecha,
   detalle_resumen.moneda_id,
   tipo_moneda.nombre,
   resumen.cliente_id,
   cliente.apellido,
-  cliente.nombre,
+  cliente.nombre AS cliente_nombre,
   cliente.tipo_id,
-  tipo_cliente.nombre, 
+  tipo_cliente.nombre tipo_cliente_nombre, 
   cliente.genera_comision,
   detalle_resumen.resumen_id,
   detalle_resumen.producto_id,
@@ -196,10 +196,10 @@ select
   detalle_resumen.cantidad,
   detalle_resumen.bonificados,
   detalle_resumen.total,
-  producto.nombre,
+  producto.nombre AS producto_nombre,
   producto.genera_comision,
   producto.grupoprod_id,
-  grupoprod.nombre,
+  grupoprod.nombre AS grupo_nombre,
   detalle_resumen.nro_lote,
   producto.grupo2,
   producto.grupo3,
@@ -379,13 +379,17 @@ SELECT
 	dr.resumen_id,
 	r.fecha, 
 	dr.producto_id, 
+	dr.nro_lote,
 	r.cliente_id, 
 	c.zona_id,
 	dzp.porc_desc AS prod_porc_desc,
 	dzg.porc_desc AS grupo_porc_desc,
 	dzp.precio_desc AS prod_precio_desc,
 	dzg.precio_desc AS grupo_precio_desc,
-	r.pagado
+	r.pagado AS cobrado,
+	r.fecha_pagado as fecha_cobrado,
+	r.pago_comision_id,
+	case when r.pago_comision_id IS NOT NULL then 1 ELSE 0 END AS pagado
 FROM resumen r
 	JOIN detalle_resumen dr ON r.id = dr.resumen_id
 	JOIN cliente c ON r.cliente_id = c.id
@@ -393,5 +397,4 @@ FROM resumen r
 	left outer JOIN descuento_zona dzp ON dr.producto_id = dzp.producto_id AND c.zona_id = dzp.zona_id
 	left outer JOIN descuento_zona dzg ON p.grupoprod_id = dzg.grupoprod_id AND c.zona_id = dzg.zona_id
 where
-	r.tipofactura_id <> 4
-;
+	r.tipofactura_id <> 4;

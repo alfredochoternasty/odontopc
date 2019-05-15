@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property integer $moneda_id
  * @property string $observacion
  * @property integer $pagado
+ * @property date $fecha_pagado
  * @property integer $pedido_id
  * @property integer $nro_factura
  * @property integer $tipofactura_id
@@ -40,6 +41,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Pedido $Pedido
  * @property TipoFactura $TipoFactura
  * @property sfGuardUser $sfGuardUser
+ * @property Doctrine_Collection $Compra
  * @property Resumen $Resumen
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $CobroResumen
@@ -55,6 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method integer             getMonedaId()         Returns the current record's "moneda_id" value
  * @method string              getObservacion()      Returns the current record's "observacion" value
  * @method integer             getPagado()           Returns the current record's "pagado" value
+ * @method date                getFechaPagado()      Returns the current record's "fecha_pagado" value
  * @method integer             getPedidoId()         Returns the current record's "pedido_id" value
  * @method integer             getNroFactura()       Returns the current record's "nro_factura" value
  * @method integer             getTipofacturaId()    Returns the current record's "tipofactura_id" value
@@ -79,6 +82,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Pedido              getPedido()           Returns the current record's "Pedido" value
  * @method TipoFactura         getTipoFactura()      Returns the current record's "TipoFactura" value
  * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
+ * @method Doctrine_Collection getCompra()           Returns the current record's "Compra" collection
  * @method Resumen             getResumen()          Returns the current record's "Resumen" value
  * @method Doctrine_Collection getDevProducto()      Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getCobroResumen()     Returns the current record's "CobroResumen" collection
@@ -93,6 +97,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setMonedaId()         Sets the current record's "moneda_id" value
  * @method Resumen             setObservacion()      Sets the current record's "observacion" value
  * @method Resumen             setPagado()           Sets the current record's "pagado" value
+ * @method Resumen             setFechaPagado()      Sets the current record's "fecha_pagado" value
  * @method Resumen             setPedidoId()         Sets the current record's "pedido_id" value
  * @method Resumen             setNroFactura()       Sets the current record's "nro_factura" value
  * @method Resumen             setTipofacturaId()    Sets the current record's "tipofactura_id" value
@@ -117,6 +122,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setPedido()           Sets the current record's "Pedido" value
  * @method Resumen             setTipoFactura()      Sets the current record's "TipoFactura" value
  * @method Resumen             setSfGuardUser()      Sets the current record's "sfGuardUser" value
+ * @method Resumen             setCompra()           Sets the current record's "Compra" collection
  * @method Resumen             setResumen()          Sets the current record's "Resumen" value
  * @method Resumen             setDevProducto()      Sets the current record's "DevProducto" collection
  * @method Resumen             setCobroResumen()     Sets the current record's "CobroResumen" collection
@@ -173,6 +179,10 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasColumn('pagado', 'integer', 1, array(
              'type' => 'integer',
              'length' => 1,
+             ));
+        $this->hasColumn('fecha_pagado', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
              ));
         $this->hasColumn('pedido_id', 'integer', 4, array(
              'type' => 'integer',
@@ -280,6 +290,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('Compra', array(
+             'local' => 'id',
+             'foreign' => 'remito_id'));
 
         $this->hasOne('Resumen', array(
              'local' => 'id',

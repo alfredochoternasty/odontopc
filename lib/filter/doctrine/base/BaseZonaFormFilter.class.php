@@ -13,11 +13,13 @@ abstract class BaseZonaFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'nombre' => new sfWidgetFormFilterInput(),
+      'nombre'     => new sfWidgetFormFilterInput(),
+      'cliente_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'nombre' => new sfValidatorPass(array('required' => false)),
+      'nombre'     => new sfValidatorPass(array('required' => false)),
+      'cliente_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('zona_filters[%s]');
@@ -37,8 +39,9 @@ abstract class BaseZonaFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'     => 'Number',
-      'nombre' => 'Text',
+      'id'         => 'Number',
+      'nombre'     => 'Text',
+      'cliente_id' => 'ForeignKey',
     );
   }
 }

@@ -23,6 +23,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'pagado'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'remito_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Remito'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -36,6 +37,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'pagado'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
       'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
+      'remito_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Remito'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('compra_filters[%s]');
@@ -66,6 +68,7 @@ abstract class BaseCompraFormFilter extends BaseFormFilterDoctrine
       'pagado'         => 'Number',
       'usuario'        => 'ForeignKey',
       'zona_id'        => 'ForeignKey',
+      'remito_id'      => 'ForeignKey',
     );
   }
 }

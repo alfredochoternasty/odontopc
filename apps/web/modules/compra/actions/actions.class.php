@@ -23,8 +23,24 @@ class compraActions extends autoCompraActions
     if ($form->isValid()){
       $compra = $form->save();
       $this->getUser()->setFlash('notice', $notice);
+			
       if ($request->hasParameter('_save_and_add')){
-        $this->redirect('detcomp/new?cid='.$compra->getId());
+			
+				if (!empty($compra->remito_id)) {
+					
+					$det_remito = Doctrine::getTable('DetalleResumen')->findByResumenId($compra->remito_id);					
+					foreach ($det_remito as $det) {
+						$det_compra = new DetalleCompra();
+						$det_compra->compra_id = $compra->id;
+						$det_compra->producto_id = $det->producto_id;
+						$det_compra->cantidad = $det->cantidad;
+						$det_compra->nro_lote = $det->nro_lote;
+						$det_compra->fecha_vto = $det->fecha_vto;
+						$det_compra->save();
+						$this->dispatcher->notify(new sfEvent($this, 'detalle_compra.save', array('object' => $det_compra)));
+					}
+				}
+        $this->redirect('detcomp/index?cid='.$compra->getId());
       }else{
         $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
         $this->getUser()->setFlash('notice', $notice);

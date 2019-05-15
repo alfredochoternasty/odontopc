@@ -51,5 +51,20 @@ class ResumenTable extends Doctrine_Table
 			->orderBy('fecha desc, nro_factura desc');
 			$result = $query->execute();
 			return $result;
+		}	
+		
+		public function getRemitosParaCompra(){
+			$usuario = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$uz = Doctrine_Core::getTable('UsuarioZona')->findByUsuario($usuario);
+			$zona = Doctrine_Core::getTable('Zona')->find($uz[0]->zona_id);
+			
+			$query = Doctrine_Core::getTable('Resumen')
+			->createQuery('q')
+			->leftJoin('q.Cliente c')
+			->where('q.tipofactura_id = 4')
+			->andWhere('cliente_id = '.$zona->cliente_id)
+			->orderBy('fecha desc, nro_factura desc');
+			$result = $query->execute();
+			return $result;
 		}		
 }

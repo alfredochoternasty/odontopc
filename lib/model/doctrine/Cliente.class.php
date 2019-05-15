@@ -31,7 +31,7 @@ class Cliente extends BaseCliente
 	return $lista;
   }
 	
-  public function getSaldoCtaCte($moneda = 0, $fecha_fin = null){
+  public function getSaldoCtaCte($moneda = 0, $fecha_fin = null, $formato=true){
     $q = Doctrine_Query::create()
           ->select('sum(debe - haber) as saldo')
           ->from('CtaCte c')
@@ -44,8 +44,10 @@ class Cliente extends BaseCliente
     
     if($saldo[0]['saldo'] == '')
       return 0;
-    else
+    elseif($formato)
       return sprintf(" %01.2f", $saldo[0]['saldo']);
+		else
+			return $saldo[0]['saldo'];
   }
 
 }

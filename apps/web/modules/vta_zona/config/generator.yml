@@ -15,16 +15,18 @@ generator:
       actions: ~
       fields:
         fecha: { date_format: dd/MM/yyyy }
+        fecha_cobrado: { date_format: dd/MM/yyyy }
       list:
         max_per_page: 9999
         title: Ventas por Zona
-        display: [fecha, Resumen, Cliente, Producto, Zona, pagado]
+        display: [fecha, Resumen, Cliente, Producto, Zona, cobrado, fecha_cobrado, pagado]
         object_actions: []
-        batch_actions: []
+        batch_actions:
+           pagar: ~
         actions:
           excel: ~
       filter:
-        display: [fecha, cliente_id, producto_id, zona_id, pagado]
+        display: [fecha, cliente_id, producto_id, nro_lote, zona_id, cobrado, fecha_cobrado, pagado]
       form:    ~
       edit:    ~
       new:     ~

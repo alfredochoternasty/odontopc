@@ -26,6 +26,7 @@ abstract class BaseCompraForm extends BaseFormDoctrine
       'pagado'         => new sfWidgetFormInputText(),
       'usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'remito_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Remito'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -40,6 +41,7 @@ abstract class BaseCompraForm extends BaseFormDoctrine
       'pagado'         => new sfValidatorInteger(array('required' => false)),
       'usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
       'zona_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
+      'remito_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Remito'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('compra[%s]');

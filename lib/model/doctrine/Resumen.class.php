@@ -63,6 +63,14 @@ class Resumen extends BaseResumen
   public function getTotalFacturado(){
     return $this->getVenta()->getTotal();
   }
+
+  public function getTotalDevuelto(){
+    $suma = 0;
+    foreach($this->getCobros() as $dev){
+      $suma += $dev->getMonto();
+    }
+    return $suma;
+  }
   
   public function getTotalCobrado(){
     $suma = 0;

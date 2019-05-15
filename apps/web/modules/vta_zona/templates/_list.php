@@ -33,7 +33,9 @@
 
     <thead class="ui-widget-header">
       <tr>
-        
+				<th id="sf_admin_list_batch_actions"  class="ui-state-default ui-th-column">
+					<input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" />
+				</th>
         <?php	include_partial('vta_zona/list_th_tabular', array('sort' => $sort)) ?>
 				<th class="sf_admin_text sf_admin_list_th_SubTotal ui-state-default ui-th-column">
 					<?php echo __('Neto', array(), 'messages') ?>
@@ -50,8 +52,10 @@
     <tbody>
       <?php 
 				$tot_descuento = 0;
+				$zona_id = 0;
 				foreach ($pager->getResults() as $i => $ventas_zona): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+					<?php include_partial('vta_zona/list_td_batch_actions', array('ventas_zona' => $ventas_zona, 'helper' => $helper)) ?>
           
           <?php include_partial('vta_zona/list_td_tabular', array('ventas_zona' => $ventas_zona)) ?>
 					
@@ -88,20 +92,24 @@
 								$descuento = 0;
 							}
 							echo sprintf("$ %01.2f", $descuento); 
-							$tot_descuento += $descuento
+							$tot_descuento += $descuento;
+							$zona_id = $ventas_zona->zona_id;
 						?>					
 					</td>
 				</tr>
-      <?php endforeach; ?>
+      <?php endforeach; 
+				$sf_user->setAttribute('comision_total', $tot_descuento);
+				$sf_user->setAttribute('comision_zona', $zona_id);
+			?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-					<td colspan="8" style="font-size:14px; text-align:right;" class="sf_admin_text"><b>Total: </b></td>
+					<td colspan="11" style="font-size:14px; text-align:right;" class="sf_admin_text"><b>Total: </b></td>
 					<td class="sf_admin_text"><b style="color:red; font-size:14px;"><?php echo sprintf("$ %01.2f", $tot_descuento); ?></b></td>
 				</tr>
     </tbody>
 
     <tfoot>
       <tr>
-        <th colspan="9">
+        <th colspan="12">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('vta_zona/pagination', array('pager' => $pager)) ?>
           </div>
@@ -111,3 +119,11 @@
 	</table>		
   <?php endif; ?>
 </div>
+<script type="text/javascript">
+/* <![CDATA[ */
+function checkAll()
+{
+  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
+}
+/* ]]> */
+</script>

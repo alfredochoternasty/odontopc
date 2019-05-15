@@ -125,6 +125,7 @@ Compra:
     pagado: {type: integer(1), notnull: true, default: 0}
     usuario: {type: integer(4)}
     zona_id: {type: integer(4)}
+    remito_id: {type: integer(4)}
   relations:
     Proveedor: {type: one, class: Proveedor, local: proveedor_id}
     Detalles: {type: many, class: DetalleCompra, local: id, foreign: compra_id}
@@ -134,6 +135,7 @@ Compra:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
+    Remito: {type: one, class: Resumen, local: remito_id}
 DetalleCompra:
   connection: doctrine
   tableName: detalle_compra
@@ -258,6 +260,7 @@ Resumen:
     moneda_id: {type: integer(4)}
     observacion: {type: string(200)}
     pagado: {type: integer(1)}
+    fecha_pagado: {type: date(25)}
     pedido_id: {type: integer(4)}
     nro_factura: {type: integer(4)}
     tipofactura_id: {type: integer(4), notnull: true}
@@ -833,6 +836,9 @@ Zona:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(255)}
+    cliente_id: {type: integer(4), notnull: true}
+  relations:
+    Cliente: {type: one, class: Cliente, local: cliente_id}
 UsuarioZona:
   connection: doctrine
   tableName: usuario_zona
@@ -866,13 +872,17 @@ VentasZona:
     resumen_id: {type: integer(4)}
     fecha: {type: date(25)}
     producto_id: {type: integer(4)}
+    nro_lote: {type: string(255)}
     cliente_id: {type: integer(4)}
     zona_id: {type: integer(4)}
     prod_porc_desc: {type: integer(4)}
     grupo_porc_desc: {type: integer(4)}
     prod_precio_desc: {type: integer(4)}
     grupo_precio_desc: {type: integer(4)}
-    pagado: {type: boolean, default: 1}
+    cobrado: {type: boolean}
+    fecha_cobrado: {type: date(25)}
+    pago_comision_id: {type: integer(4)}
+    pagado: {type: boolean}
   relations:
     Zona: {type: one, local: zona_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -885,7 +895,7 @@ PagoComision:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     fecha: {type: date(25), notnull: true}
-    cliente_id: {type: integer(4), notnull: true}
+    revendedor_id: {type: integer(4), notnull: true}
     moneda_id: {type: integer(4), notnull: true, default: 1}
     monto: {type: 'decimal(10, 2)', notnull: true, default: 1}
     tipo_id: {type: integer(4), notnull: true}
@@ -895,7 +905,7 @@ PagoComision:
     observacion: {type: string(200)}
     nro_recibo: {type: integer(4)}
   relations:
-    Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
+    Revendedor: {type: one, class: Cliente, local: revendedor_id}
     Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Banco: {type: one, local: banco_id, onDelete: RESTRICT}

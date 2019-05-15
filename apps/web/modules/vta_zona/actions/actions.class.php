@@ -56,4 +56,27 @@ class vta_zonaActions extends autoVta_zonaActions
     
     return sfView::NONE;	
 	}
+	
+  protected function executeBatchPagar(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+    $monto = $this->getUser()->getAttribute('comision_total');
+    $zona_id = $this->getUser()->getAttribute('comision_zona');
+		$zona = Doctrine::getTable('Zona')->find($zona_id);
+		$cliente = $zona->cliente_id;
+
+		$pago_comision = new PagoComision();
+		$pago_comision->setFecha(date('Y-m-d'));
+		$pago_comision->setRevendedorId($cliente);
+		$pago_comision->setMonedaId(1);
+		$pago_comision->setMonto($monto);
+		$pago_comision->save();
+
+    $count = Doctrine_Query::create()
+      ->update('resumen')
+			->set('pago_comision_id ', $pago_comision->id)
+      ->where('id in (select resumen_id from detalle_resumen where id in ('.implode(', ', $ids).'))')
+      ->execute();
+		$this->redirect('pagocomis/edit?id='.$pago_comision->id);
+  }	
 }

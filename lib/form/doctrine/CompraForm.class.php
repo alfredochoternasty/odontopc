@@ -25,8 +25,11 @@ class CompraForm extends BaseCompraForm
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
-	
+		
     $this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
+		
+		$this->widgetSchema['remito_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Resumen', 'table_method' => 'getRemitosParaCompra', 'method' => 'getDescRemito', 'add_empty' => true, 'order_by' => array('fecha', 'desc')), array('style' => 'width:250px;'));
+		$this->validatorSchema['remito_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Remito')));
 		
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
   }

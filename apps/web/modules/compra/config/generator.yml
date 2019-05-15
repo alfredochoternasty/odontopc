@@ -19,12 +19,13 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Compras Realizadas
-        display: [Proveedor, tipofactura, numero, fecha, _total, observacion]
+        display: [Proveedor, tipofactura, numero, Remito, fecha, _total, observacion]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
           detalle: {label: Ver Detalle}
-      filter:  ~
+      filter:
+        display: [fecha, proveedor_id, numero]
       form: ~
       edit:
         title: Modificar Compra
@@ -34,7 +35,7 @@ generator:
           _save_and_add: {label: Guardar y Agregar detalle}
       new:
         title: Nueva Compra
-        display: [fecha, proveedor_id, tipofactura_id, numero, zona_id, observacion]
+        display: [fecha, proveedor_id, tipofactura_id, remito_id, numero, zona_id, observacion]
         actions:
           _list: {label: Volver}
           _save_and_add: {label: Guardar y Agregar detalle}

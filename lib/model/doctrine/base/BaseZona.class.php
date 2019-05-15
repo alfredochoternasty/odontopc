@@ -9,7 +9,8 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * 
  * @property integer $id
  * @property string $nombre
- * @property Doctrine_Collection $Cliente
+ * @property integer $cliente_id
+ * @property Cliente $Cliente
  * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ClienteSaldo
@@ -20,7 +21,8 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * 
  * @method integer             getId()            Returns the current record's "id" value
  * @method string              getNombre()        Returns the current record's "nombre" value
- * @method Doctrine_Collection getCliente()       Returns the current record's "Cliente" collection
+ * @method integer             getClienteId()     Returns the current record's "cliente_id" value
+ * @method Cliente             getCliente()       Returns the current record's "Cliente" value
  * @method Doctrine_Collection getCompra()        Returns the current record's "Compra" collection
  * @method Doctrine_Collection getLote()          Returns the current record's "Lote" collection
  * @method Doctrine_Collection getClienteSaldo()  Returns the current record's "ClienteSaldo" collection
@@ -30,7 +32,8 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getVentasZona()    Returns the current record's "VentasZona" collection
  * @method Zona                setId()            Sets the current record's "id" value
  * @method Zona                setNombre()        Sets the current record's "nombre" value
- * @method Zona                setCliente()       Sets the current record's "Cliente" collection
+ * @method Zona                setClienteId()     Sets the current record's "cliente_id" value
+ * @method Zona                setCliente()       Sets the current record's "Cliente" value
  * @method Zona                setCompra()        Sets the current record's "Compra" collection
  * @method Zona                setLote()          Sets the current record's "Lote" collection
  * @method Zona                setClienteSaldo()  Sets the current record's "ClienteSaldo" collection
@@ -59,14 +62,19 @@ abstract class BaseZona extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
+        $this->hasColumn('cliente_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Cliente', array(
-             'local' => 'id',
-             'foreign' => 'zona_id'));
+        $this->hasOne('Cliente', array(
+             'local' => 'cliente_id',
+             'foreign' => 'id'));
 
         $this->hasMany('Compra', array(
              'local' => 'id',

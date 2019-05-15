@@ -18,6 +18,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property integer $pagado
  * @property integer $usuario
  * @property integer $zona_id
+ * @property integer $remito_id
  * @property Proveedor $Proveedor
  * @property Doctrine_Collection $Detalles
  * @property TipoFactura $Tipofactura
@@ -25,6 +26,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property TipoMoneda $Moneda
  * @property sfGuardUser $sfGuardUser
  * @property Zona $Zona
+ * @property Resumen $Remito
  * @property Doctrine_Collection $Lote
  * 
  * @method integer             getId()             Returns the current record's "id" value
@@ -38,6 +40,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method integer             getPagado()         Returns the current record's "pagado" value
  * @method integer             getUsuario()        Returns the current record's "usuario" value
  * @method integer             getZonaId()         Returns the current record's "zona_id" value
+ * @method integer             getRemitoId()       Returns the current record's "remito_id" value
  * @method Proveedor           getProveedor()      Returns the current record's "Proveedor" value
  * @method Doctrine_Collection getDetalles()       Returns the current record's "Detalles" collection
  * @method TipoFactura         getTipofactura()    Returns the current record's "Tipofactura" value
@@ -45,6 +48,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Zona                getZona()           Returns the current record's "Zona" value
+ * @method Resumen             getRemito()         Returns the current record's "Remito" value
  * @method Doctrine_Collection getLote()           Returns the current record's "Lote" collection
  * @method Compra              setId()             Sets the current record's "id" value
  * @method Compra              setCuentaId()       Sets the current record's "cuenta_id" value
@@ -57,6 +61,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setPagado()         Sets the current record's "pagado" value
  * @method Compra              setUsuario()        Sets the current record's "usuario" value
  * @method Compra              setZonaId()         Sets the current record's "zona_id" value
+ * @method Compra              setRemitoId()       Sets the current record's "remito_id" value
  * @method Compra              setProveedor()      Sets the current record's "Proveedor" value
  * @method Compra              setDetalles()       Sets the current record's "Detalles" collection
  * @method Compra              setTipofactura()    Sets the current record's "Tipofactura" value
@@ -64,6 +69,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setMoneda()         Sets the current record's "Moneda" value
  * @method Compra              setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method Compra              setZona()           Sets the current record's "Zona" value
+ * @method Compra              setRemito()         Sets the current record's "Remito" value
  * @method Compra              setLote()           Sets the current record's "Lote" collection
  * 
  * @package    odontopc
@@ -130,6 +136,10 @@ abstract class BaseCompra extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('remito_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -167,6 +177,10 @@ abstract class BaseCompra extends sfDoctrineRecord
              'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Resumen as Remito', array(
+             'local' => 'remito_id',
+             'foreign' => 'id'));
 
         $this->hasMany('Lote', array(
              'local' => 'id',

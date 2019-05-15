@@ -16,7 +16,7 @@ generator:
       fields:  ~
       list:
         title: ABM de Zonas
-        display: [nombre]
+        display: [nombre, Cliente]
       filter:  ~
       form:    ~
       edit:    ~

@@ -35,8 +35,8 @@
 				<div id="img_nti_header">
 					<br>
 					<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-					<b>Versión del Sistema: 2.3</b><br>
-					Fecha Actualización: 17/03/2019
+					<b>Versión del Sistema: 2.6</b><br>
+					Fecha Actualización: 15/05/2019
 				</div>
 				</center>
 			</div>

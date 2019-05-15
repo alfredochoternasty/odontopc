@@ -13,10 +13,19 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
       list:
         title: Pago de Comisiones
+        display: [fecha, Revendedor, monto, tipo]
+        actions: []
+        object_actions:
+            _delete: ~
+            _edit: ~
+            imprimir: ~
+        batch_actions: []            
       filter:  ~
       form:    ~
-      edit:    ~
+      edit:
+        title: Completar informacion del pago
       new:     ~
