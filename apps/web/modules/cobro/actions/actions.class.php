@@ -78,6 +78,7 @@ return $this->renderText($resultado);
 			$nro = $max_nro[0]['nro'];
 			$cobro->setNroRecibo($nro+1);
 			$cobro->save();
+			
       $monto = $cobro->getMonto();
 			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false);
 			if ($saldo_cliente >= 0) $saldo_cliente = 0;
@@ -104,6 +105,14 @@ return $this->renderText($resultado);
       }
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $objCobro)));
+			
+			$mensaje = Swift_Message::newInstance();
+			$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+			$mensaje->setTo($cobro->getCliente()->getEmail());
+			$mensaje->setSubject('Cobro realizado en '.$cobro->getCliente()->getZona());
+			$mensaje->setBody($this->getPartial("recibo", array("cobro" => $cobro)));
+			$mensaje->setContentType("text/html");
+			$this->getMailer()->send($mensaje);			
 
       if ($request->hasParameter('_save_and_add')){
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');

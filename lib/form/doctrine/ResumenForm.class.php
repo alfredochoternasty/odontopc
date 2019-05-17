@@ -24,8 +24,16 @@ class ResumenForm extends BaseResumenForm
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 
     if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
-      $this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
-      $this->widgetSchema['pto_vta'] = new sfWidgetFormChoice(array('choices' => array('', '4', '5')));
+			
+			$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+			if ($uz[0]->zona_id != 1) {
+				$this->widgetSchema['nro_factura'] = new sfWidgetFormInputHidden();
+				$this->widgetSchema['pto_vta'] = new sfWidgetFormInputHidden();
+			} else {
+				$this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
+				$this->widgetSchema['pto_vta'] = new sfWidgetFormChoice(array('choices' => array('', '4', '5')));				
+			}
       $this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false));
 			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInputHidden();
 			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger();

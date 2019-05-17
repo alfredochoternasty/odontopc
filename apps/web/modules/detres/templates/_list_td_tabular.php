@@ -24,6 +24,7 @@
 
 <?php if($detalle_resumen->getResumen()->tipofactura_id == 4): ?>
 	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $detalle_resumen->RemitoProductoCantVend() ?></td>
+	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $detalle_resumen->getCantidad() - $detalle_resumen->RemitoProductoCantVend()?></td>
 <?php endif;?>
 
 <?php if($detalle_resumen->getResumen()->tipofactura_id != 4): ?>

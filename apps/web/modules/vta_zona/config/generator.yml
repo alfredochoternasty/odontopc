@@ -19,7 +19,7 @@ generator:
       list:
         max_per_page: 9999
         title: Ventas por Zona
-        display: [fecha, Resumen, Cliente, Producto, Zona, cobrado, fecha_cobrado, pagado]
+        display: [fecha, Resumen, Zona, Cliente, Producto, _precio, _cantidad, _neto, _iva, _total, cobrado, fecha_cobrado, pagado]
         object_actions: []
         batch_actions:
            pagar: ~

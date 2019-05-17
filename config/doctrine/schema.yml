@@ -279,6 +279,7 @@ Resumen:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Venta: {type: one, class: Venta, local: id, foreign: resumen_id}
     Cobros: {type: many, class: Cobro, local: id, foreign: resumen_id}
+    Devueltos: {type: many, class: DevProducto, local: id, foreign: resumen_id}
     PagoComision: {type: many, class: PagoComision, local: pago_comision_id, foreign: id}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}

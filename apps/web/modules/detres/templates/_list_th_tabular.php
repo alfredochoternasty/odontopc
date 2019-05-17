@@ -55,6 +55,11 @@
 			<?php echo 'Cantidad Vendida'; ?>
 </th>
 <?php end_slot(); ?>
+<?php include_slot('sf_admin.current_header') ;  slot('sf_admin.current_header') ?>
+<th class="sf_admin_text sf_admin_list_th_cantidad ui-state-default ui-th-column">
+			<?php echo 'Stock Remito'; ?>
+</th>
+<?php end_slot(); ?>
 <?php endif; ?>
 
 <?php if($res_tipo_factura != 4): ?>

@@ -291,8 +291,8 @@ class detresActions extends autoDetresActions
 		$cantidad = $remitos[0]['cantidad'];		
 		
 		$stock = $cantidad - $cant_vend;
-    $options[] = '<option value="0">0</option>';
-    for($i = 1; $i <= $stock; $i++){
+    $options[] = '<option value="1">1</option>';
+    for($i = 2; $i <= $stock; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';
     }
     echo implode($options);
@@ -331,8 +331,8 @@ class detresActions extends autoDetresActions
 			$cantidad = $lotes[0]['stock'];
 		}
 		
-    $options[] = '<option value="0">0</option>';
-    for($i = 1; $i <= $cantidad; $i++){
+    $options[] = '<option value="1">1</option>';
+    for($i = 2; $i <= $cantidad; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';
     }
     echo implode($options);

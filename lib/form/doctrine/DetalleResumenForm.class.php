@@ -31,8 +31,7 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->validatorSchema['cantidad'] =  new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
     
-		if ($tipofactura != 4) {
-			
+		if ($tipofactura != 4) {		
 			$this->widgetSchema['bonificados'] = new sfWidgetFormChoice(array('choices' => array()));
 			$this->validatorSchema['bonificados'] =  new sfValidatorNumber(array('required' => true));
 
@@ -40,6 +39,11 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 			$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => false));
 			
 			if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
+				$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+				$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+				if ($uz[0]->zona_id != 1) {
+					$this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+				}
 				$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 				$this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 			}else{

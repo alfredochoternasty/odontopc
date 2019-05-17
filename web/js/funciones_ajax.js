@@ -207,7 +207,7 @@ $(document).ready(function(){
             $("#detalle_resumen_cantidad").html('');
             $("#detalle_resumen_cantidad").html(data);
             $("#detalle_resumen_bonificados").html('');
-            $("#detalle_resumen_bonificados").html(data);
+            $("#detalle_resumen_bonificados").html('<option value="0">0</option>'+data);
           }
         });
 
@@ -229,7 +229,7 @@ $(document).ready(function(){
             $("#detalle_resumen_cantidad").html('');
             $("#detalle_resumen_cantidad").html(data);
             $("#detalle_resumen_bonificados").html('');
-            $("#detalle_resumen_bonificados").html(data);
+            $("#detalle_resumen_bonificados").html('<option value="0">0</option>'+data);
           }
         });	
   });
