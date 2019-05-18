@@ -16,4 +16,16 @@ class TipoFacturaTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('TipoFactura');
     }
+		
+		public function TipoFactCompraZona(){
+			$usuario = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$uz = Doctrine_Core::getTable('UsuarioZona')->findByUsuario($usuario);
+			$zona = Doctrine_Core::getTable('Zona')->find($uz[0]->zona_id);
+			
+			$query = Doctrine_Core::getTable('TipoFactura')->createQuery('q');
+			if ($zona->id != 1) $query->where('id = 4');
+			$result = $query->execute();
+			
+			return $result;
+		}				
 }

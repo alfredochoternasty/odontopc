@@ -1,14 +1,3 @@
-function valida_vta_zona(f) {
-  var ok = true;
-  if(f.ventas_zona_filters_fecha_from.value == "" || f.ventas_zona_filters_fecha_to.value == "")
-  {
-		alert("Los campos de fecha no pueden estar vacios");
-    ok = false;
-  } 
-  return ok;
-}
-
-
 jQuery(function($){
 $("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
@@ -208,6 +197,7 @@ $(document).ready(function(){
             $("#detalle_resumen_cantidad").html(data);
             $("#detalle_resumen_bonificados").html('');
             $("#detalle_resumen_bonificados").html('<option value="0">0</option>'+data);
+						calcular_precio();
           }
         });
 
@@ -230,24 +220,30 @@ $(document).ready(function(){
             $("#detalle_resumen_cantidad").html(data);
             $("#detalle_resumen_bonificados").html('');
             $("#detalle_resumen_bonificados").html('<option value="0">0</option>'+data);
+						calcular_precio();
           }
         });	
   });
 
 
+	function calcular_precio() {
+		var cantidad = $("#detalle_resumen_cantidad").find(':selected').val();
+		var precio = $("#detalle_resumen_precio").val();
+		if ($('#detalle_resumen_iva').length){
+			var subtotal = cantidad * precio;
+			var iva = (subtotal * 21)/100;
+			var total = subtotal + iva;    
+			$("#detalle_resumen_iva").attr('value', iva.toFixed(2));
+			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
+		}else{
+			var total = cantidad * precio;
+		}
+		$("#detalle_resumen_total").attr('value', total.toFixed(2));		
+	}
+	
+	
   $("#detalle_resumen_cantidad").change(function(event){
-      var cantidad = $("#detalle_resumen_cantidad").find(':selected').val();
-      var precio = $("#detalle_resumen_precio").val();
-      if ($('#detalle_resumen_iva').length){
-        var subtotal = cantidad * precio;
-        var iva = (subtotal * 21)/100;
-        var total = subtotal + iva;    
-        $("#detalle_resumen_iva").attr('value', iva.toFixed(2));
-        $("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
-      }else{
-        var total = cantidad * precio;
-      }
-      $("#detalle_resumen_total").attr('value', total.toFixed(2));                
+		calcular_precio();
   });
     
 });
