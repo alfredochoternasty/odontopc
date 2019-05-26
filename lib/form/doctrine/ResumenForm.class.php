@@ -46,7 +46,9 @@ class ResumenForm extends BaseResumenForm
 
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
 	
     
 		$this->widgetSchema['cuit'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));		
@@ -56,5 +58,6 @@ class ResumenForm extends BaseResumenForm
 		$this->validatorSchema->setOption('allow_extra_fields', true);		    
 		
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		$this->setDefault ('zona_id', $uz[0]->zona_id);
   }
 }

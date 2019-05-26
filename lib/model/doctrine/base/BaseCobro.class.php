@@ -21,12 +21,14 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @property string $observacion
  * @property integer $usuario
  * @property integer $nro_recibo
+ * @property integer $zona_id
  * @property Resumen $Resumen
  * @property Cliente $Cliente
  * @property TipoCobroPago $Tipo
  * @property TipoMoneda $Moneda
  * @property Banco $Banco
  * @property sfGuardUser $sfGuardUser
+ * @property Zona $Zona
  * @property Doctrine_Collection $CobroResumen
  * 
  * @method integer             getId()           Returns the current record's "id" value
@@ -43,12 +45,14 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method string              getObservacion()  Returns the current record's "observacion" value
  * @method integer             getUsuario()      Returns the current record's "usuario" value
  * @method integer             getNroRecibo()    Returns the current record's "nro_recibo" value
+ * @method integer             getZonaId()       Returns the current record's "zona_id" value
  * @method Resumen             getResumen()      Returns the current record's "Resumen" value
  * @method Cliente             getCliente()      Returns the current record's "Cliente" value
  * @method TipoCobroPago       getTipo()         Returns the current record's "Tipo" value
  * @method TipoMoneda          getMoneda()       Returns the current record's "Moneda" value
  * @method Banco               getBanco()        Returns the current record's "Banco" value
  * @method sfGuardUser         getSfGuardUser()  Returns the current record's "sfGuardUser" value
+ * @method Zona                getZona()         Returns the current record's "Zona" value
  * @method Doctrine_Collection getCobroResumen() Returns the current record's "CobroResumen" collection
  * @method Cobro               setId()           Sets the current record's "id" value
  * @method Cobro               setFecha()        Sets the current record's "fecha" value
@@ -64,12 +68,14 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method Cobro               setObservacion()  Sets the current record's "observacion" value
  * @method Cobro               setUsuario()      Sets the current record's "usuario" value
  * @method Cobro               setNroRecibo()    Sets the current record's "nro_recibo" value
+ * @method Cobro               setZonaId()       Sets the current record's "zona_id" value
  * @method Cobro               setResumen()      Sets the current record's "Resumen" value
  * @method Cobro               setCliente()      Sets the current record's "Cliente" value
  * @method Cobro               setTipo()         Sets the current record's "Tipo" value
  * @method Cobro               setMoneda()       Sets the current record's "Moneda" value
  * @method Cobro               setBanco()        Sets the current record's "Banco" value
  * @method Cobro               setSfGuardUser()  Sets the current record's "sfGuardUser" value
+ * @method Cobro               setZona()         Sets the current record's "Zona" value
  * @method Cobro               setCobroResumen() Sets the current record's "CobroResumen" collection
  * 
  * @package    odontopc
@@ -149,6 +155,10 @@ abstract class BaseCobro extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -181,6 +191,11 @@ abstract class BaseCobro extends sfDoctrineRecord
 
         $this->hasOne('sfGuardUser', array(
              'local' => 'usuario',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

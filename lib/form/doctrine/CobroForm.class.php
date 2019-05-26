@@ -34,9 +34,15 @@ class CobroForm extends BaseCobroForm
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
-	$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
+
+    $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();		
 	
-    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		
+		$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+		$this->setDefault ('zona_id', $uz[0]->zona_id);
   }
 }

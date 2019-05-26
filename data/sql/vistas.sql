@@ -262,6 +262,7 @@ CREATE VIEW control_stock (
  producto_id,
  producto_nombre,
  nro_lote,
+ zona_id,
  comprados,
  vendidos,
  stock_calculado,
@@ -274,7 +275,8 @@ SELECT
 	gp.nombre,
 	p.id,
 	p.nombre,
-	dc.nro_lote, 
+	dc.nro_lote,
+	l.zona_id, 
 	SUM(dc.cantidad) AS cant_comprada,
 	(
 		SELECT SUM(dr.cantidad + dr.bonificados) - ifnull((select sum(cantidad) from dev_producto dp where dp.producto_id = dr.producto_id and CONVERT(dp.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci),0)
@@ -296,7 +298,7 @@ JOIN lote l ON dc.producto_id = l.producto_id and CONVERT(dc.nro_lote USING utf8
 WHERE
 	p.grupoprod_id NOT IN (1,15) AND p.activo = 1 and dc.nro_lote not in (select nro_lote from lotes_romi)
 GROUP BY
-	p.id, p.nombre, dc.nro_lote
+	p.id, p.nombre, dc.nro_lote, l.zona_id
 ORDER BY
 	p.orden_grupo, p.nombre, dc.nro_lote;
 

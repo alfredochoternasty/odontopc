@@ -118,6 +118,14 @@ $(document).ready(function(){
           $("#resumen_saldo_dolar").attr('value', data.saldo_dolar);
         },
       });
+			
+    $.ajax({
+        url: 'gettipofacli?cid='+id,
+        dataType: "json",
+        success: function(data) {
+          $("#resumen_tipofactura_id").html(data);
+        },
+      });			
   });
 	
 	$("#resumen_tipofactura_id").change(function(event){
@@ -316,30 +324,7 @@ $(document).ready(function(){
 });
 
 //COMPRAS - calcula el el total al cargar la cantidad
-$(document).ready(function(){
-  function calcular(){
-    var precio = $("#detalle_compra_precio").val();
-    var cantidad = $("#detalle_compra_cantidad").val();
-    if ($('#detalle_compra_iva').length){
-      var subtotal = cantidad * precio;
-      var iva = (subtotal * 21)/100;
-      var total = subtotal + iva;    
-      $("#detalle_compra_iva").attr('value', iva.toFixed(2));
-      $("#detalle_compra_sub_total").attr('value', subtotal.toFixed(2));
-    }else{
-      var total = cantidad * precio;
-    }
-    $("#detalle_compra_total").attr('value', parseFloat(total).toFixed(2));
-  }
-    
-  $("#detalle_compra_precio").bind("propertychange keyup input paste", function(event){
-    calcular()
-  });
-  
-  $("#detalle_compra_cantidad").bind("propertychange keyup input paste", function(event){
-    calcular()
-  });
-	
+$(document).ready(function(){	
 	$("#detalle_compra_tiene_vto").change(function(event){
       var valor = $("#detalle_compra_tiene_vto").find(':selected').val();
       if (valor == 1){

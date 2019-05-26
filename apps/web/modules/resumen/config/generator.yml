@@ -20,12 +20,13 @@ generator:
         nro_factura: { label: Numero, help: En caso de generar las factura desde afip cargar el numero en forma manual }
         tipofactura_id: { label: Factura }
         tipo_venta_id: { label: Tipo Venta }
+        afip_estado: { label: AFIP }
         pto_vta: { label: Punto de Venta, help: El punto 4 es para facturas generadas en afip y el punto 5 es para las facturas generadas por sistema}
       list:
         max_per_page: 10
         table_method: retrieveConJoins
         title: Ventas realizadas
-        display: [_factura, fecha, TipoVenta,Cliente, _remito, _cae_afip]
+        display: [_factura, fecha, TipoVenta,Cliente, _remito, _afip_estado]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -37,7 +38,7 @@ generator:
       filter:
         display: [tipofactura_id, tipo_venta_id, fecha, cliente_id, remito_id, nro_factura]
       form:
-        display: [fecha, tipofactura_id, pto_vta, nro_factura, tipo_venta_id, cliente_id, cuit, afip, saldo_pesos, saldo_dolar, observacion]
+        display: [fecha, cliente_id, tipofactura_id, pto_vta, nro_factura, tipo_venta_id, cuit, afip, saldo_pesos, saldo_dolar, observacion]
         actions:
           _list: {label: Volver}
           _save: {label: 'Guardar y Agregar Detalle'}

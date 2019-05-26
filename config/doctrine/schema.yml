@@ -273,12 +273,14 @@ Resumen:
     afip_respuesta: {type: string}
     afip_mensaje: {type: string(255)}
     pago_comision_id: {type: integer(4)}
+    zona_id: {type: integer(4)}
   relations:
     Detalle: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
     Remito: {type: many, class: Resumen, local: remito_id, foreign: id}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Venta: {type: one, class: Venta, local: id, foreign: resumen_id}
     Cobros: {type: many, class: Cobro, local: id, foreign: resumen_id}
+    Compra: {type: many, class: Compra, local: id, foreign: remito_id}
     Devueltos: {type: many, class: DevProducto, local: id, foreign: resumen_id}
     PagoComision: {type: many, class: PagoComision, local: pago_comision_id, foreign: id}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
@@ -287,6 +289,7 @@ Resumen:
     Pedido: {type: one, class: Pedido, local: pedido_id, foreign: id, onDelete: RESTRICT}
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    Zona: {type: one, local: zona_id, onDelete: RESTRICT}
 DetalleResumen:
   connection: doctrine
   tableName: detalle_resumen
@@ -353,6 +356,7 @@ Cobro:
     observacion: {type: string(200)}
     usuario: {type: integer(4)}
     nro_recibo: {type: integer(4)}
+    zona_id: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
@@ -360,6 +364,7 @@ Cobro:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Banco: {type: one, local: banco_id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 CtaCte:
   connection: doctrine
   tableName: cta_cte
@@ -487,6 +492,7 @@ DevProducto:
     afip_respuesta: {type: string}
     lote_id: {type: integer(4)}
     afip_mensaje: {type: string(255)}
+    zona_id: {type: integer(4)}
   relations:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
@@ -494,6 +500,7 @@ DevProducto:
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
     Lote: {type: one, local: lote_id, onDelete: RESTRICT}
+    Zona: {type: one, local: zona_id, onDelete: RESTRICT}
 Presupuesto:
   connection: doctrine
   tableName: presupuesto

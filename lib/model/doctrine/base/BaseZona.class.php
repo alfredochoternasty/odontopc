@@ -12,6 +12,9 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property integer $cliente_id
  * @property Cliente $Cliente
  * @property Doctrine_Collection $Compra
+ * @property Doctrine_Collection $Resumen
+ * @property Doctrine_Collection $Cobro
+ * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ClienteSaldo
  * @property Doctrine_Collection $FacturasAfip
@@ -24,6 +27,9 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method integer             getClienteId()     Returns the current record's "cliente_id" value
  * @method Cliente             getCliente()       Returns the current record's "Cliente" value
  * @method Doctrine_Collection getCompra()        Returns the current record's "Compra" collection
+ * @method Doctrine_Collection getResumen()       Returns the current record's "Resumen" collection
+ * @method Doctrine_Collection getCobro()         Returns the current record's "Cobro" collection
+ * @method Doctrine_Collection getDevProducto()   Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getLote()          Returns the current record's "Lote" collection
  * @method Doctrine_Collection getClienteSaldo()  Returns the current record's "ClienteSaldo" collection
  * @method Doctrine_Collection getFacturasAfip()  Returns the current record's "FacturasAfip" collection
@@ -35,6 +41,9 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setClienteId()     Sets the current record's "cliente_id" value
  * @method Zona                setCliente()       Sets the current record's "Cliente" value
  * @method Zona                setCompra()        Sets the current record's "Compra" collection
+ * @method Zona                setResumen()       Sets the current record's "Resumen" collection
+ * @method Zona                setCobro()         Sets the current record's "Cobro" collection
+ * @method Zona                setDevProducto()   Sets the current record's "DevProducto" collection
  * @method Zona                setLote()          Sets the current record's "Lote" collection
  * @method Zona                setClienteSaldo()  Sets the current record's "ClienteSaldo" collection
  * @method Zona                setFacturasAfip()  Sets the current record's "FacturasAfip" collection
@@ -77,6 +86,18 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'id'));
 
         $this->hasMany('Compra', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('Resumen', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('Cobro', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('DevProducto', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

@@ -60,9 +60,11 @@ class ResumenTable extends Doctrine_Table
 			
 			$query = Doctrine_Core::getTable('Resumen')
 			->createQuery('q')
-			->leftJoin('q.Cliente c')
+			->leftJoin('q.Compra c')
 			->where('q.tipofactura_id = 4')
-			->andWhere('cliente_id = '.$zona->cliente_id)
+			->andWhere('q.cliente_id = '.$zona->cliente_id)
+			->andWhere('c.remito_id is null')
+			->andWhere("c.fecha >  '2019-05-15'")
 			->orderBy('fecha desc, nro_factura desc');
 			$result = $query->execute();
 			return $result;

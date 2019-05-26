@@ -1,1 +1,0 @@
-<?php	if ($resumen->afip_estado > 0) echo $resumen->afip_cae; ?>

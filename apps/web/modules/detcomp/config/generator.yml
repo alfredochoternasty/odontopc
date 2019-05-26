@@ -20,7 +20,7 @@ generator:
       list:
         title: Detalle de Compra
         max_per_page: 999
-        display: [Compra, Producto, nro_lote, fecha_vto, _precio, cantidad, sub_total, iva, _total]
+        display: [Compra, Producto, nro_lote, fecha_vto, cantidad]
         object_actions:
           _delete: ~
         batch_actions: {}       
@@ -33,4 +33,4 @@ generator:
         title: Modificar Detalle de la compra %%Compra%%
       new:
         title: Nuevo Detalle de la compra %%Compra%%
-        display: [producto_id, trazable, nro_lote, tiene_vto, fecha_vto, precio, cantidad, sub_total, iva, total, observacion]
+        display: [producto_id, trazable, nro_lote, tiene_vto, fecha_vto, cantidad, observacion]

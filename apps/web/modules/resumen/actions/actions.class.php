@@ -152,6 +152,19 @@ class resumenActions extends autoResumenActions
     return $this->renderText(json_encode($datos));
   }
 	
+	public function executeGettipofacli(sfWebRequest $request){
+    $cliente_id = $request->getParameter('cid');
+    $cliente = Doctrine::getTable('Cliente')->find($cliente_id);
+		if ($cliente->condicionfiscal_id == 1) {
+			$options = '<option value="1">Factura A</option>'; 
+			$options .= '<option value="4">Remito</option>'; 
+		} else {
+			$options = '<option value="2">Factura B</option>'; 
+			$options .= '<option value="4">Remito</option>';
+		}
+		return $this->renderText(json_encode($options));
+	}
+	
   public function executeGetnroremito(sfWebRequest $request){
     $q = Doctrine_Query::create()
           ->select('r.nro_factura, r.id, r.fecha')

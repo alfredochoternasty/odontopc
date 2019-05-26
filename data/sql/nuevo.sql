@@ -1,111 +1,63 @@
-ALTER TABLE zona	ADD COLUMN encargado VARCHAR(255) NOT NULL AFTER nombre;
-ALTER TABLE zona ADD COLUMN cliente_id INT NOT NULL AFTER nombre, DROP COLUMN encargado;
-ALTER TABLE pago_comision	ALTER cliente_id DROP DEFAULT;
-ALTER TABLE pago_comision	CHANGE COLUMN cliente_id cliente VARCHAR(255) NOT NULL AFTER fecha;
-ALTER TABLE resumen	ADD COLUMN fecha_pagado DATE NULL AFTER pagado;
-ALTER TABLE pago_comision	ALTER cliente DROP DEFAULT; 
-ALTER TABLE pago_comision	CHANGE COLUMN cliente revendedor_id INT NOT NULL AFTER fecha;
-ALTER TABLE compra	ADD COLUMN remito_id INT(11) NULL AFTER zona_id;
-insert into proveedor(id, cuit, razon_social, condicionfiscal_id) values(99, '30-71227246-1', 'NTI - Parana', 1)
-	
-DROP VIEW listado_ventas;
-CREATE VIEW listado_ventas (
-  id, 
-  res_id, 
-  fecha, 
-  moneda_id, 
-  moneda_nombre, 
-  cliente_id, 
-  cliente_apellido, 
-  cliente_nombre, 
-  tipo_id, 
-  tipo_cliente_nombre, 
-  cliente_genera_comision, 
-  resumen_id, 
-  producto_id, 
-  precio, 
-  cantidad, 
-  bonificados, 
-  total, 
-  producto_nombre, 
-  producto_genera_comision, 
-  grupoprod_id, 
-  grupo_nombre, 
-  nro_lote,
-  grupo2,
-  grupo3,
-  fecha_vto
-) AS 
-select
-	detalle_resumen.id AS id,
-  resumen.id AS res_id,
-  resumen.fecha,
-  detalle_resumen.moneda_id,
-  tipo_moneda.nombre,
-  resumen.cliente_id,
-  cliente.apellido,
-  cliente.nombre AS cliente_nombre,
-  cliente.tipo_id,
-  tipo_cliente.nombre tipo_cliente_nombre, 
-  cliente.genera_comision,
-  detalle_resumen.resumen_id,
-  detalle_resumen.producto_id,
-  detalle_resumen.precio,
-  detalle_resumen.cantidad,
-  detalle_resumen.bonificados,
-  detalle_resumen.total,
-  producto.nombre AS producto_nombre,
-  producto.genera_comision,
-  producto.grupoprod_id,
-  grupoprod.nombre AS grupo_nombre,
-  detalle_resumen.nro_lote,
-  producto.grupo2,
-  producto.grupo3,
-  lote.fecha_vto
-from
-  resumen
-    left join tipo_moneda on resumen.moneda_id = tipo_moneda.id
-    left join cliente on resumen.cliente_id = cliente.id
-    left join tipo_cliente on cliente.tipo_id = tipo_cliente.id
-    left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
-    left join producto on detalle_resumen.producto_id = producto.id
-    left join grupoprod on producto.grupoprod_id = grupoprod.id
-    left join lote on detalle_resumen.producto_id = lote.producto_id 
-	 	and CONVERT(detalle_resumen.nro_lote using utf8) collate utf8_spanish_ci = CONVERT(lote.nro_lote using utf8) collate utf8_spanish_ci
-where
-  producto.grupoprod_id not in (1, 15)
-  and resumen.remito_id is null
-  and detalle_resumen.nro_lote not in (select nro_lote from lotes_romi)
-order by
-  producto.grupoprod_id, producto.orden_grupo, producto.nombre;
-	
-DROP VIEW ventas_zona;
-CREATE VIEW ventas_zona as
-SELECT 
-	dr.id,
-	dr.id AS detalle_resumen_id,
-	dr.resumen_id,
-	r.fecha, 
-	dr.producto_id, 
-	dr.nro_lote,
-	r.cliente_id, 
-	c.zona_id,
-	dzp.porc_desc AS prod_porc_desc,
-	dzg.porc_desc AS grupo_porc_desc,
-	dzp.precio_desc AS prod_precio_desc,
-	dzg.precio_desc AS grupo_precio_desc,
-	r.pagado AS cobrado,
-	r.fecha_pagado as fecha_cobrado,
-	r.pago_comision_id,
-	case when r.pago_comision_id IS NOT NULL then 1 ELSE 0 END AS pagado
-FROM resumen r
-	JOIN detalle_resumen dr ON r.id = dr.resumen_id
-	JOIN cliente c ON r.cliente_id = c.id
-	JOIN producto p ON dr.producto_id = p.id
-	left outer JOIN descuento_zona dzp ON dr.producto_id = dzp.producto_id AND c.zona_id = dzp.zona_id
-	left outer JOIN descuento_zona dzg ON p.grupoprod_id = dzg.grupoprod_id AND c.zona_id = dzg.zona_id
-where
-	r.tipofactura_id <> 4;
+ALTER TABLE dev_producto CHANGE COLUMN afip_estado afip_estado SMALLINT(6) NOT NULL DEFAULT '0';
+ALTER TABLE cobro CHANGE COLUMN afip_estado afip_estado SMALLINT(6) NOT NULL DEFAULT '0';
+ALTER TABLE resumen CHANGE COLUMN afip_estado afip_estado SMALLINT(6) NOT NULL DEFAULT '0';
+
+ALTER TABLE resumen	ADD COLUMN zona_id INT NULL AFTER pago_comision_id;
+ALTER TABLE dev_producto	ADD COLUMN zona_id INT NULL AFTER lote_id;
+ALTER TABLE cobro	ADD COLUMN zona_id INT NULL AFTER nro_recibo;
+
+update resumen set zona_id = (select zona_id from cliente where resumen.cliente_id = cliente.id);
+update dev_producto set zona_id = (select zona_id from cliente where dev_producto.cliente_id = cliente.id);
+update cobro set zona_id = (select zona_id from cliente where cobro.cliente_id = cliente.id);
+
+DROP VIEW control_stock;
+CREATE VIEW control_stock (
+ id,
+ proveedor_id,
+ grupoprod_id,
+ grupo_nombre,
+ producto_id,
+ producto_nombre,
+ nro_lote,
+ zona_id,
+ comprados,
+ vendidos,
+ stock_calculado,
+ stock_guardado
+) AS
+SELECT
+   FLOOR(1+(RAND()*999999999999)),
+	c.proveedor_id, 
+	p.grupoprod_id,
+	gp.nombre,
+	p.id,
+	p.nombre,
+	dc.nro_lote,
+	l.zona_id, 
+	SUM(dc.cantidad) AS cant_comprada,
+	(
+		SELECT SUM(dr.cantidad + dr.bonificados) - ifnull((select sum(cantidad) from dev_producto dp where dp.zona_id = 1 and dp.producto_id = dr.producto_id and CONVERT(dp.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci),0)
+		FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
+		WHERE r.zona_id = 1 and r.remito_id is null and dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
+	) AS cant_vendida, 
+	(
+		SELECT (SUM(dc.cantidad) - SUM(dr.cantidad + dr.bonificados)) + ifnull((select sum(cantidad) from dev_producto dp where dp.zona_id = 1 and dp.producto_id = dr.producto_id and CONVERT(dp.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci),0)
+		FROM detalle_resumen dr join resumen r on dr.resumen_id = r.id
+		WHERE r.zona_id = 1 and r.remito_id is null and dr.producto_id = dc.producto_id AND CONVERT(dr.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci
+	) AS stock_calculado,
+	l.stock stock_guardado
+FROM
+	detalle_compra dc
+JOIN compra c ON dc.compra_id = c.id
+JOIN producto p ON dc.producto_id = p.id
+JOIN grupoprod gp ON p.grupoprod_id = gp.id
+JOIN lote l ON dc.producto_id = l.producto_id and CONVERT(dc.nro_lote USING utf8) COLLATE utf8_spanish_ci = CONVERT(l.nro_lote USING utf8) COLLATE utf8_spanish_ci
+WHERE
+	p.grupoprod_id NOT IN (1,15) AND p.activo = 1 and l.zona_id = 1 and dc.nro_lote not in (select nro_lote from lotes_romi)
+GROUP BY
+	p.id, p.nombre, dc.nro_lote, l.zona_id
+ORDER BY
+	p.orden_grupo, p.nombre, dc.nro_lote;
 	
 
 /*

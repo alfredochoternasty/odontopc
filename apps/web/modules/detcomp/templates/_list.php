@@ -37,14 +37,6 @@
           <?php include_partial('detcomp/list_td_actions', array('detalle_compra' => $detalle_compra, 'helper' => $helper)) ?>
         </tr>
       <?php endforeach; ?>
-      <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-        <td colspan="<?php echo $sf_user->hasGroup('Blanco')? 7 : 5; ?>" class="sf_admin_text">&nbsp;</td>
-        <td style="text-align: right;" class="sf_admin_text">Total:</td>
-        <td class="sf_admin_text">
-          <?php echo $detalle_compra->getCompra()->TotalFormato(); ?>
-        </td>
-        <td class="sf_admin_text">&nbsp;</td>
-      </tr>
     </tbody>
     
     <tfoot>
@@ -59,12 +51,3 @@
 
   <?php endif; ?>
 </div>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-function checkAll()
-{
-  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
-}
-/* ]]> */
-</script>

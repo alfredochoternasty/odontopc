@@ -26,6 +26,7 @@ abstract class BaseCobroFormFilter extends BaseFormFilterDoctrine
       'observacion' => new sfWidgetFormFilterInput(),
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'nro_recibo'  => new sfWidgetFormFilterInput(),
+      'zona_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -42,6 +43,7 @@ abstract class BaseCobroFormFilter extends BaseFormFilterDoctrine
       'observacion' => new sfValidatorPass(array('required' => false)),
       'usuario'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
       'nro_recibo'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'zona_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('cobro_filters[%s]');
@@ -75,6 +77,7 @@ abstract class BaseCobroFormFilter extends BaseFormFilterDoctrine
       'observacion' => 'Text',
       'usuario'     => 'ForeignKey',
       'nro_recibo'  => 'Number',
+      'zona_id'     => 'ForeignKey',
     );
   }
 }

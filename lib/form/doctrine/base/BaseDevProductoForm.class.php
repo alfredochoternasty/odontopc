@@ -37,6 +37,7 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'afip_respuesta' => new sfWidgetFormTextarea(),
       'lote_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
       'afip_mensaje'   => new sfWidgetFormInputText(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -62,6 +63,7 @@ abstract class BaseDevProductoForm extends BaseFormDoctrine
       'afip_respuesta' => new sfValidatorString(array('required' => false)),
       'lote_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'required' => false)),
       'afip_mensaje'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto[%s]');

@@ -34,6 +34,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'afip_respuesta' => new sfWidgetFormFilterInput(),
       'lote_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lote'), 'add_empty' => true)),
       'afip_mensaje'   => new sfWidgetFormFilterInput(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -58,6 +59,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'afip_respuesta' => new sfValidatorPass(array('required' => false)),
       'lote_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lote'), 'column' => 'id')),
       'afip_mensaje'   => new sfValidatorPass(array('required' => false)),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('dev_producto_filters[%s]');
@@ -99,6 +101,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'afip_respuesta' => 'Text',
       'lote_id'        => 'ForeignKey',
       'afip_mensaje'   => 'Text',
+      'zona_id'        => 'ForeignKey',
     );
   }
 }

@@ -29,11 +29,13 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property string $afip_respuesta
  * @property string $afip_mensaje
  * @property integer $pago_comision_id
+ * @property integer $zona_id
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
  * @property Venta $Venta
  * @property Doctrine_Collection $Cobros
+ * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $Devueltos
  * @property Doctrine_Collection $PagoComision
  * @property ListaPrecio $Lista
@@ -42,7 +44,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Pedido $Pedido
  * @property TipoFactura $TipoFactura
  * @property sfGuardUser $sfGuardUser
- * @property Doctrine_Collection $Compra
+ * @property Zona $Zona
  * @property Resumen $Resumen
  * @property Doctrine_Collection $CobroResumen
  * @property Doctrine_Collection $FacturasAfip
@@ -70,11 +72,13 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method string              getAfipRespuesta()    Returns the current record's "afip_respuesta" value
  * @method string              getAfipMensaje()      Returns the current record's "afip_mensaje" value
  * @method integer             getPagoComisionId()   Returns the current record's "pago_comision_id" value
+ * @method integer             getZonaId()           Returns the current record's "zona_id" value
  * @method Doctrine_Collection getDetalle()          Returns the current record's "Detalle" collection
  * @method Doctrine_Collection getRemito()           Returns the current record's "Remito" collection
  * @method Cliente             getCliente()          Returns the current record's "Cliente" value
  * @method Venta               getVenta()            Returns the current record's "Venta" value
  * @method Doctrine_Collection getCobros()           Returns the current record's "Cobros" collection
+ * @method Doctrine_Collection getCompra()           Returns the current record's "Compra" collection
  * @method Doctrine_Collection getDevueltos()        Returns the current record's "Devueltos" collection
  * @method Doctrine_Collection getPagoComision()     Returns the current record's "PagoComision" collection
  * @method ListaPrecio         getLista()            Returns the current record's "Lista" value
@@ -83,7 +87,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Pedido              getPedido()           Returns the current record's "Pedido" value
  * @method TipoFactura         getTipoFactura()      Returns the current record's "TipoFactura" value
  * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
- * @method Doctrine_Collection getCompra()           Returns the current record's "Compra" collection
+ * @method Zona                getZona()             Returns the current record's "Zona" value
  * @method Resumen             getResumen()          Returns the current record's "Resumen" value
  * @method Doctrine_Collection getCobroResumen()     Returns the current record's "CobroResumen" collection
  * @method Doctrine_Collection getFacturasAfip()     Returns the current record's "FacturasAfip" collection
@@ -110,11 +114,13 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setAfipRespuesta()    Sets the current record's "afip_respuesta" value
  * @method Resumen             setAfipMensaje()      Sets the current record's "afip_mensaje" value
  * @method Resumen             setPagoComisionId()   Sets the current record's "pago_comision_id" value
+ * @method Resumen             setZonaId()           Sets the current record's "zona_id" value
  * @method Resumen             setDetalle()          Sets the current record's "Detalle" collection
  * @method Resumen             setRemito()           Sets the current record's "Remito" collection
  * @method Resumen             setCliente()          Sets the current record's "Cliente" value
  * @method Resumen             setVenta()            Sets the current record's "Venta" value
  * @method Resumen             setCobros()           Sets the current record's "Cobros" collection
+ * @method Resumen             setCompra()           Sets the current record's "Compra" collection
  * @method Resumen             setDevueltos()        Sets the current record's "Devueltos" collection
  * @method Resumen             setPagoComision()     Sets the current record's "PagoComision" collection
  * @method Resumen             setLista()            Sets the current record's "Lista" value
@@ -123,7 +129,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setPedido()           Sets the current record's "Pedido" value
  * @method Resumen             setTipoFactura()      Sets the current record's "TipoFactura" value
  * @method Resumen             setSfGuardUser()      Sets the current record's "sfGuardUser" value
- * @method Resumen             setCompra()           Sets the current record's "Compra" collection
+ * @method Resumen             setZona()             Sets the current record's "Zona" value
  * @method Resumen             setResumen()          Sets the current record's "Resumen" value
  * @method Resumen             setCobroResumen()     Sets the current record's "CobroResumen" collection
  * @method Resumen             setFacturasAfip()     Sets the current record's "FacturasAfip" collection
@@ -231,6 +237,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -256,6 +266,10 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasMany('Cobro as Cobros', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
+
+        $this->hasMany('Compra', array(
+             'local' => 'id',
+             'foreign' => 'remito_id'));
 
         $this->hasMany('DevProducto as Devueltos', array(
              'local' => 'id',
@@ -295,9 +309,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
-        $this->hasMany('Compra', array(
-             'local' => 'id',
-             'foreign' => 'remito_id'));
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
 
         $this->hasOne('Resumen', array(
              'local' => 'id',
