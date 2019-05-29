@@ -1,5 +1,4 @@
 ALTER TABLE dev_producto CHANGE COLUMN afip_estado afip_estado SMALLINT(6) NOT NULL DEFAULT '0';
-ALTER TABLE cobro CHANGE COLUMN afip_estado afip_estado SMALLINT(6) NOT NULL DEFAULT '0';
 ALTER TABLE resumen CHANGE COLUMN afip_estado afip_estado SMALLINT(6) NOT NULL DEFAULT '0';
 
 ALTER TABLE resumen	ADD COLUMN zona_id INT NULL AFTER pago_comision_id;

@@ -216,23 +216,38 @@ class detresActions extends autoDetresActions
 		$q->andWhere("l.zona_id = $zona");
 		$q->andWhere("l.nro_lote not like 'er%'");
     $q->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
-		if (!empty($resumen->remito_id)) {
-			$q->select('l.nro_lote, (dr.cantidad - dr.cant_vend_remito) as vend_remito');
-			$q->leftJoin("l.DetalleResumen dr");
-			$q->andWhere("dr.resumen_id = ".$resumen->remito_id);
-		} else {
-			$q->select('l.nro_lote, l.fecha_vto, l.stock');
-			$q->andWhere('l.stock > 0 ');
-		}		
+		$q->select('l.nro_lote, l.fecha_vto, l.stock');
+		$q->andWhere('l.stock > 0 ');
     $q->orderBy('l.fecha_vto asc');
      
-    $lotes = $q->fetchArray();  
+    $lotes = $q->fetchArray();
+		if (empty($lotes)){
+			$q = Doctrine_Query::create();
+			$q->select('dr.nro_lote, (dr.cantidad - sum(coalesce(dr2.cantidad, 0))+sum(coalesce(dr2.bonificados, 0))) vend_remito');
+			$q->from('DetalleResumen dr');
+			$q->leftJoin("dr.Resumen r");
+			$q->leftJoin("dr.DetalleRemito dr2");
+			$q->where('dr.producto_id = '.$pid);
+			$q->andWhere("r.tipofactura_id = 4");
+			$lotes = $q->fetchArray();
+		}
   
     $options[] = '<option value=""></option>';
     foreach($lotes as $lote){
-			if (!empty($lote['fecha_vto'])) $fec_vto = ' - Vto: '.implode('/', array_reverse(explode('-', $lote['fecha_vto'])));
-			if (!empty($lote['stock'])) $stock = ' - Stock: '.$lote['stock'];
-			if (!empty($lote['vend_remito'])) $stock = ' - Disponible Remito: '.$lote['vend_remito'];
+			if (!empty($lote['fecha_vto'])) {
+				$fec_vto = ' - Vto: '.implode('/', array_reverse(explode('-', $lote['fecha_vto'])));
+			} else {
+				$fec_vto = '';
+			}
+			
+			if (!empty($lote['stock'])) {
+				$stock = ' - Stock: '.$lote['stock'];
+			} elseif (!empty($lote['vend_remito']) || !empty($lote['d__0'])) {
+				$stock = ' - Disponible Remito: '.$lote['vend_remito'];
+			} else {
+				$stock = ' - Stock: -';
+			}
+
       $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
     }
     echo implode($options);
