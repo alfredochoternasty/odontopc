@@ -47,8 +47,9 @@ class detresActions extends autoDetresActions
       $rid = $this->getUser()->getAttribute('rid');
     }
     $resumen = Doctrine::getTable('Resumen')->find($rid);
+		
 		/*
-		if (!empty($resumen->remito_id)) {
+		if (!empty($resumen->det_remito_id)) {
 			$remito = Doctrine::getTable('Resumen')->find($resumen->remito_id);
 			$det = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($resumen->remito_id, $pid);
 			if (!empty($det[0])) {
@@ -125,10 +126,9 @@ class detresActions extends autoDetresActions
   {
     $request->checkCSRFProtection();
 		$detalle_resumen = $this->getRoute()->getObject();
-		if (!empty($detalle_resumen->getResumen()->remito_id)) {
-			$remito_id = $detalle_resumen->getResumen()->remito_id;
-			$detalles_remitos = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($remito_id, $detalle_resumen->producto_id, $detalle_resumen->nro_lote);
-			$detalle_remito = $detalles_remitos[0];
+		if (!empty($detalle_resumen->det_remito_id)) {
+			$det_remito_id = $detalle_resumen->det_remito_id;
+			$detalle_remito = Doctrine::getTable('DetalleResumen')->find($det_remito_id);
 			$detalle_remito->cant_vend_remito -= $detalle_resumen->cantidad;
 			$detalle_remito->save();
 		} else {
@@ -167,12 +167,13 @@ class detresActions extends autoDetresActions
 			
 			$detalle_resumen->save();
 					
-			if (!empty($detalle_resumen->getResumen()->remito_id)) {
-				$remito_id = $detalle_resumen->getResumen()->remito_id;
-				$detalles_remitos = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($remito_id, $detalle_resumen->producto_id, $detalle_resumen->nro_lote);
-				$detalle_remito = $detalles_remitos[0];
+			if (!empty($detalle_resumen->det_remito_id)) {
+				$det_remito_id = $detalle_resumen->det_remito_id;
+				$detalle_remito = Doctrine::getTable('DetalleResumen')->find($det_remito_id);
 				$detalle_remito->cant_vend_remito += $detalle_resumen->cantidad;
 				$detalle_remito->save();
+				if ($detalle_resumen->getResumen()->getCliente()->zona_id != 1)
+					$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
 			} else {
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
 			}
@@ -324,27 +325,17 @@ class detresActions extends autoDetresActions
 		$resumen = Doctrine::getTable('Resumen')->find($rid);
 		$zona = $resumen->getCliente()->getZonaId();
 		
-		if (!empty($resumen->remito_id)) {
-			$remito = Doctrine::getTable('Resumen')->find($resumen->remito_id);
-			$det = Doctrine::getTable('DetalleResumen')->findByResumenIdAndNroLote($resumen->remito_id, $lid);
-			if (!empty($det[0])) {
-				$cantidad = $det[0]->cantidad - $det[0]->cant_vend_remito;
-			} else { 
-				$cantidad = 0;
-			}
-		} else {
-			$q = Doctrine_Query::create()
-				->select('l.stock')
-				->from('Lote l')
-				->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
-				->andWhere('l.zona_id = '.$zona)
-				->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
-				->andWhere('l.stock > 0 ')
-				->andWhere("l.nro_lote not like 'er%'")
-				->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
-			$lotes = $q->fetchArray();  
-			$cantidad = $lotes[0]['stock'];
-		}
+		$q = Doctrine_Query::create()
+			->select('l.stock')
+			->from('Lote l')
+			->where('l.nro_lote = \''.$request->getparameter('lid').'\'')
+			->andWhere('l.zona_id = '.$zona)
+			->andWhere('l.producto_id = \''.$request->getparameter('pid').'\'')
+			->andWhere('l.stock > 0 ')
+			->andWhere("l.nro_lote not like 'er%'")
+			->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
+		$lotes = $q->fetchArray();  
+		$cantidad = $lotes[0]['stock'];
 		
     $options[] = '<option value="1">1</option>';
     for($i = 2; $i <= $cantidad; $i++){
