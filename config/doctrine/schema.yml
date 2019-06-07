@@ -661,19 +661,17 @@ ControlStock:
   tableName: control_stock
   columns:
     id: {type: integer(4), primary: true}
-    proveedor_id: {type: integer(4)}
-    grupoprod_id: {type: integer(4)}
     producto_id: {type: string(50)}
-    producto_nombre: {type: string(50)}
+    grupoprod_id: {type: integer(4)}
     nro_lote: {type: string(255)}
+    zona_id: {type: integer(4)}
     comprados: {type: integer(4)}
     vendidos: {type: integer(4)}
-    stock_calculado: {type: integer(4)}
     stock_guardado: {type: integer(4)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
-    Proveedor: {type: one, class: Proveedor, local: proveedor_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 ClienteSeguimiento:
   connection: doctrine
   tableName: cliente_seguimiento

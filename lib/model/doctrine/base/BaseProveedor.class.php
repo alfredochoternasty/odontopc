@@ -21,7 +21,6 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @property CondicionFiscal $Condfiscal
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ListadoCompras
- * @property Doctrine_Collection $ControlStock
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getCuit()               Returns the current record's "cuit" value
@@ -37,7 +36,6 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
- * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
  * @method Proveedor           setId()                 Sets the current record's "id" value
  * @method Proveedor           setCuit()               Sets the current record's "cuit" value
  * @method Proveedor           setCondicionfiscalId()  Sets the current record's "condicionfiscal_id" value
@@ -52,7 +50,6 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Proveedor           setCondfiscal()         Sets the current record's "Condfiscal" value
  * @method Proveedor           setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Proveedor           setListadoCompras()     Sets the current record's "ListadoCompras" collection
- * @method Proveedor           setControlStock()       Sets the current record's "ControlStock" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -130,9 +127,5 @@ abstract class BaseProveedor extends sfDoctrineRecord
         $this->hasMany('ListadoCompras', array(
              'local' => 'id',
              'foreign' => 'prov_id'));
-
-        $this->hasMany('ControlStock', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
     }
 }

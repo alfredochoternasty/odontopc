@@ -18,10 +18,15 @@ class ControlStockTable extends Doctrine_Table
     }
 		
     public function retrieveConJoins(Doctrine_Query $q){
-      $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Producto p');
-      $q->leftJoin($rootAlias . '.Grupo g');
-      $q->leftJoin($rootAlias . '.Proveedor pv');
-      return $q;
+		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+		
+		$rootAlias = $q->getRootAlias();
+		$q->leftJoin($rootAlias . '.Producto p');
+		$q->leftJoin($rootAlias . '.Grupo g');
+		$q->leftJoin($rootAlias . '.Zona z');
+		$q->leftJoin('z.UsuarioZona uz');
+		$q->andWhere('uz.usuario = '.$id);
+		
+		return $q;
     }		
 }

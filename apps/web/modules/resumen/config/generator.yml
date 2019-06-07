@@ -26,7 +26,7 @@ generator:
         max_per_page: 10
         table_method: retrieveConJoins
         title: Ventas realizadas
-        display: [_factura, fecha, TipoVenta,Cliente, _remito, _afip_estado]
+        display: [Zona, _factura, fecha, TipoVenta,Cliente, _afip_estado]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -36,7 +36,7 @@ generator:
         batch_actions:
           _delete: {label: Eliminar}
       filter:
-        display: [tipofactura_id, tipo_venta_id, fecha, cliente_id, nro_factura]
+        display: [tipofactura_id, zona_id, fecha, cliente_id, nro_factura]
       form:
         display: [fecha, cliente_id, tipofactura_id, pto_vta, nro_factura, tipo_venta_id, cuit, afip, saldo_pesos, saldo_dolar, observacion]
         actions:

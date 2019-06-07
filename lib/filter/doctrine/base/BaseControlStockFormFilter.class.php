@@ -13,27 +13,23 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'proveedor_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Proveedor'), 'add_empty' => true)),
-      'grupoprod_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true)),
-      'producto_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
-      'producto_nombre' => new sfWidgetFormFilterInput(),
-      'nro_lote'        => new sfWidgetFormFilterInput(),
-      'comprados'       => new sfWidgetFormFilterInput(),
-      'vendidos'        => new sfWidgetFormFilterInput(),
-      'stock_calculado' => new sfWidgetFormFilterInput(),
-      'stock_guardado'  => new sfWidgetFormFilterInput(),
+      'producto_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
+      'grupoprod_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true)),
+      'nro_lote'       => new sfWidgetFormFilterInput(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'comprados'      => new sfWidgetFormFilterInput(),
+      'vendidos'       => new sfWidgetFormFilterInput(),
+      'stock_guardado' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'proveedor_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Proveedor'), 'column' => 'id')),
-      'grupoprod_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Grupo'), 'column' => 'id')),
-      'producto_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
-      'producto_nombre' => new sfValidatorPass(array('required' => false)),
-      'nro_lote'        => new sfValidatorPass(array('required' => false)),
-      'comprados'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'vendidos'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'stock_calculado' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'stock_guardado'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'producto_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
+      'grupoprod_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Grupo'), 'column' => 'id')),
+      'nro_lote'       => new sfValidatorPass(array('required' => false)),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
+      'comprados'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'vendidos'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'stock_guardado' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock_filters[%s]');
@@ -53,16 +49,14 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'              => 'Number',
-      'proveedor_id'    => 'ForeignKey',
-      'grupoprod_id'    => 'ForeignKey',
-      'producto_id'     => 'ForeignKey',
-      'producto_nombre' => 'Text',
-      'nro_lote'        => 'Text',
-      'comprados'       => 'Number',
-      'vendidos'        => 'Number',
-      'stock_calculado' => 'Number',
-      'stock_guardado'  => 'Number',
+      'id'             => 'Number',
+      'producto_id'    => 'ForeignKey',
+      'grupoprod_id'   => 'ForeignKey',
+      'nro_lote'       => 'Text',
+      'zona_id'        => 'ForeignKey',
+      'comprados'      => 'Number',
+      'vendidos'       => 'Number',
+      'stock_guardado' => 'Number',
     );
   }
 }

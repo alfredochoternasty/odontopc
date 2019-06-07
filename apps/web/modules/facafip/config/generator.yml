@@ -24,7 +24,7 @@ generator:
         actions:       
           exportar: {label: Exportar a Excel}
       filter:
-        display: [tipofactura_id, nro_factura, fecha, zona_id]
+        display: [tipofactura_id, cliente_id, nro_factura, fecha, zona_id]
       form:    ~
       edit:    ~
       new:     ~

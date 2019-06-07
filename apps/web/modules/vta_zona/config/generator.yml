@@ -16,6 +16,7 @@ generator:
       fields:
         fecha: { date_format: dd/MM/yyyy }
         fecha_cobrado: { date_format: dd/MM/yyyy }
+        pagado: { label: Comision Pagada }
       list:
         max_per_page: 9999
         title: Ventas por Zona

@@ -16,7 +16,7 @@
 				<?php echo $resumen->getTipoFactura(); ?><br>
 				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
 				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
-				<b>CAE: </b><?php echo $resumen->getAfipMensaje() ?><br>
+				<b>CAE: </b><?php echo $resumen->getAfipCAE() ?><br>
 				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
 			</span>
 		</td>

@@ -25,6 +25,9 @@ class ControlStockFormFilter extends BaseControlStockFormFilter
 
 	$this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
 	$this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
+	
+	$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => false));
+	$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => true));		
   }
 	
 }

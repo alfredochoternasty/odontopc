@@ -100,7 +100,7 @@ class detresActions extends autoDetresActions
 	
     $detres = new DetalleResumen();
     $detres->setResumenId($rid);
-		if ($detres->getResumen()->afip_estado == 1) {
+		if ($detres->getResumen()->afip_estado > 0) {
 			$this->getUser()->setFlash('error', 'Esta venta ya fue enviada a la AFIP y no se puede modificar');
 			$this->redirect( 'detres/index?rid='.$rid);
 		} else {
@@ -119,6 +119,8 @@ class detresActions extends autoDetresActions
       $rid = $this->getUser()->getAttribute('rid');
     }
     $this->setFilters(array("resumen_id" => $rid));
+	$factura = Doctrine::getTable('Resumen')->find($rid);
+	if ($factura->afip_estado > 1) $this->getUser()->setFlash('notice', str_replace('<br>', '', $factura->afip_mensaje)); 
     parent::executeIndex($request);
   }
 
@@ -219,10 +221,10 @@ class detresActions extends autoDetresActions
     $q->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
 		$q->select('l.nro_lote, l.fecha_vto, l.stock');
 		$q->andWhere('l.stock > 0 ');
-    $q->orderBy('l.fecha_vto asc');
-     
-    $lotes = $q->fetchArray();
-		if (empty($lotes)){
+    $q->orderBy('l.fecha_vto asc');     
+    $lotes_stock = $q->fetchArray();
+	
+		if ($zona == 1 && $resumen->tipofactura_id != 4) {
 			$q = Doctrine_Query::create();
 			$q->select('dr.nro_lote, (dr.cantidad - sum(coalesce(dr2.cantidad, 0))+sum(coalesce(dr2.bonificados, 0))) vend_remito');
 			$q->from('DetalleResumen dr');
@@ -230,7 +232,11 @@ class detresActions extends autoDetresActions
 			$q->leftJoin("dr.DetalleRemito dr2");
 			$q->where('dr.producto_id = '.$pid);
 			$q->andWhere("r.tipofactura_id = 4");
-			$lotes = $q->fetchArray();
+			$q->groupBy("dr.nro_lote");
+			$lotes_remito = $q->fetchArray();
+			$lotes = array_merge($lotes_stock, $lotes_remito);
+		} else {
+			$lotes = $lotes_stock;
 		}
   
     $options[] = '<option value=""></option>';
@@ -244,7 +250,7 @@ class detresActions extends autoDetresActions
 			if (!empty($lote['stock'])) {
 				$stock = ' - Stock: '.$lote['stock'];
 			} elseif (!empty($lote['vend_remito']) || !empty($lote['d__0'])) {
-				$stock = ' - Disponible Remito: '.$lote['vend_remito'];
+				$stock = ' - Disponibles en Remito: '.$lote['vend_remito'];
 			} else {
 				$stock = ' - Stock: -';
 			}
@@ -263,7 +269,7 @@ class detresActions extends autoDetresActions
 		$uz = Doctrine_Core::getTable('UsuarioZona')->findByUsuario($u_id);		
 
 		$q = Doctrine_Query::create();    
-		$q->select('dr.id, concat(c.apellido, c.nombre) as cliente, r.fecha as fec, r.nro_factura as nro');
+		$q->select("dr.id, concat(c.apellido, ' ', c.nombre) as cliente, r.fecha as fec, r.nro_factura as nro");
 		$q->from('DetalleResumen dr');
 		$q->leftJoin("dr.Resumen r");
 		$q->leftJoin("r.Cliente c");
@@ -282,8 +288,8 @@ class detresActions extends autoDetresActions
   
     $options[] = '<option value=""></option>';
     foreach($remitos as $remito){
-		$fec = ' - Fecha: '.implode('/', array_reverse(explode('-', $remito['fec'])));
-		$options[] = '<option value="'.$remito['id'].'">'.$remito['cliente'].$fec.' - Nro: '.$remito['nro'].'</option>';
+			$fec = ' - Fecha: '.implode('/', array_reverse(explode('-', $remito['fec'])));
+			$options[] = '<option value="'.$remito['id'].'">'.$remito['cliente'].$fec.' - Nro: '.$remito['nro'].'</option>';
     }
     echo implode($options);
     return sfView::NONE;

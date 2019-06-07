@@ -25,35 +25,42 @@ class vta_zonaActions extends autoVta_zonaActions
     echo 'Listado de Ventas por zona' . "\r\n";
     $titulos = array('Fecha', 'Factura', 'Cliente', 'Producto', 'Zona', 'Neto', 'Descuento', 'Total');
     $flag = false;
+	$total_todo = 0;
     foreach($vtas as $vta):
           if (!$flag) {
               echo implode("\t", $titulos) . "\r\n";
               $flag = true;
           } 
 					
-					if (!empty($vta->grupo_porc_desc)) {
-						$descuento = $vta->grupo_porc_desc.' %';
-						$total = $vta->getDetalleResumen()->sub_total * $vta->grupo_porc_desc / 100;
-					} elseif (!empty($vta->prod_porc_desc)) {
-						$descuento = $vta->prod_porc_desc.' %';
-						$total = $vta->getDetalleResumen()->sub_total * $vta->prod_porc_desc / 100;
-					} elseif (!empty($vta->grupo_precio_desc)) {
-						$descuento = $vta->grupo_precio_desc;
-						$total = $vta->grupo_precio_desc;
-					} elseif (!empty($vta->prod_precio_desc)) {
-						$descuento = $vta->prod_precio_desc;
-						$total = $vta->prod_precio_desc;
-					} else {
-						$descuento = 0;
-						$total = 0;
-					}
-					$total = str_replace('.', ',', $total);					
+			if (!empty($vta->grupo_porc_desc)) {
+				$descuento = $vta->grupo_porc_desc.' %';
+				$total = $vta->getDetalleResumen()->sub_total * $vta->grupo_porc_desc / 100;
+			} elseif (!empty($vta->prod_porc_desc)) {
+				$descuento = $vta->prod_porc_desc.' %';
+				$total = $vta->getDetalleResumen()->sub_total * $vta->prod_porc_desc / 100;
+			} elseif (!empty($vta->grupo_precio_desc)) {
+				$descuento = $vta->grupo_precio_desc;
+				$total = $vta->grupo_precio_desc;
+			} elseif (!empty($vta->prod_precio_desc)) {
+				$descuento = $vta->prod_precio_desc;
+				$total = $vta->prod_precio_desc;
+			} else {
+				$descuento = 0;
+				$total = 0;
+			}
+			$total_fmt = str_replace('.', ',', $total);
 					
-          $fila = array($vta->getFecha(), $vta->getResumen(), $vta->getCliente(), $vta->getProducto(), $vta->getZona(), $vta->getDetalleResumen()->getSubTotal(), $descuento, $total);
+          $fila = array($vta->getFecha(), $vta->getResumen(), $vta->getCliente(), $vta->getProducto(), $vta->getZona(), $vta->getDetalleResumen()->getSubTotal(), $descuento, $total_fmt);
           $string = implode("\t", array_values($fila));
           echo utf8_decode($string)."\r\n"; 
+		  $total_todo += $total;
     endforeach;
-    
+	
+	$total_todo_fmt = str_replace('.', ',', $total_todo);
+    $fila = array('', '', '', '', '', '', '', $total_todo_fmt);
+    $string = implode("\t", array_values($fila));
+    echo utf8_decode($string)."\r\n";
+	
     return sfView::NONE;	
 	}
 	

@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $Cobro
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Lote
+ * @property Doctrine_Collection $ControlStock
  * @property Doctrine_Collection $ClienteSaldo
  * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $UsuarioZona
@@ -31,6 +32,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getCobro()         Returns the current record's "Cobro" collection
  * @method Doctrine_Collection getDevProducto()   Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getLote()          Returns the current record's "Lote" collection
+ * @method Doctrine_Collection getControlStock()  Returns the current record's "ControlStock" collection
  * @method Doctrine_Collection getClienteSaldo()  Returns the current record's "ClienteSaldo" collection
  * @method Doctrine_Collection getFacturasAfip()  Returns the current record's "FacturasAfip" collection
  * @method Doctrine_Collection getUsuarioZona()   Returns the current record's "UsuarioZona" collection
@@ -45,6 +47,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setCobro()         Sets the current record's "Cobro" collection
  * @method Zona                setDevProducto()   Sets the current record's "DevProducto" collection
  * @method Zona                setLote()          Sets the current record's "Lote" collection
+ * @method Zona                setControlStock()  Sets the current record's "ControlStock" collection
  * @method Zona                setClienteSaldo()  Sets the current record's "ClienteSaldo" collection
  * @method Zona                setFacturasAfip()  Sets the current record's "FacturasAfip" collection
  * @method Zona                setUsuarioZona()   Sets the current record's "UsuarioZona" collection
@@ -102,6 +105,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('Lote', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('ControlStock', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

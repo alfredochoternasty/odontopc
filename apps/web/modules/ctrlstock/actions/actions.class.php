@@ -35,7 +35,7 @@ class ctrlstockActions extends autoCtrlstockActions
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
-		$dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
+	$dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream("control_stock.pdf");    
