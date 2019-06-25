@@ -254,6 +254,7 @@ WHERE
 	p.grupoprod_id NOT IN (1,15) 
 	AND p.activo = 1 
 	and l.nro_lote not in (select nro_lote from lotes_romi)
+	and l.nro_lote not like 'er%'
 GROUP BY
    l.id, l.producto_id, p.grupoprod_id, l.nro_lote, l.zona_id, l.stock
 ORDER BY
