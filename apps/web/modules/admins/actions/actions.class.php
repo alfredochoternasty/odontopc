@@ -44,7 +44,7 @@ class adminsActions extends sfActions
 						
 						if ($i == ($cantidad-1)) {
 							$s_valores .= ';'."\n\n";
-						} elseif (($i > 0) && ($i % 500) == 0) {
+						} elseif (($i > 0) && ($i % 250) == 0) {
 							$s_valores .= ';'."\n";
 							$s_valores .= 'INSERT INTO '.$tabla.' VALUES '."\n";
 						} else {

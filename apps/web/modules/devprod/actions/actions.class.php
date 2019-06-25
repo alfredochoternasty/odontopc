@@ -220,43 +220,48 @@ class devprodActions extends autoDevprodActions
 
 			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta/*$resumen->pto_vta*/, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';
+			$afip_estado = 0;
+			$msj = '';
+			$msj2 = '';
 			if (is_soap_fault($res)) {
-				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
-				$afip_estado = 0;
+				$msj2 = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
 			} else {
-				if(empty($res) || $res == false || $res['cae'] <= 0) {
+				if (empty($res) || $res == false || $res['resultado'] == 'R') {
 					for ($i=0;$i < count($wsfev1->Code);$i++) {
 						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
 					}
-					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
-					$afip_estado = 0;
-					$tipo_msj = 'error';
-				} else {
-					if($res['cae'] <= 0 || $res['cae'] == '' || $res['cae'] == false){
-						$msj = 'CAE no obtenido';
-						$afip_estado = 0;
-						$tipo_msj = 'error';
-					} else {
-						$msj = $res['cae'];
+					$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
+				} elseif ($res['resultado'] == 'A') {
 						$afip_estado = 1;
+						$dev->setAfipCae($res['cae']);
 						$dev->setNroFactura($nuevo_nro);
 						$dev->setPtoVta($resumen->pto_vta);
-						$dev->setPtoVta($ptovta);
 						$dev->setTipofacturaId($resumen->getTipoFactura()->id_fact_cancela);
 						$dev->setAfipVtoCae($res['fec_vto']);
+						
+						$msj = 'La venta fue informada correctamen a la AFIP, CAE: '.$res['cae'];
 						$tipo_msj = 'notice';
+						
+					for ($i=0;$i < count($wsfev1->Code);$i++) {
+						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+					}
+					if (!empty($a_msj)) {
+						$afip_estado = 2;
+						$msj2 = '. Se encontraron los siguientes mensajes: '.str_replace('\'', '\'\'', implode('//', $a_msj));
 					}
 				}
 			}
+			
+			$msj .= $msj2;
 			$dev->setAfipEstado($afip_estado);
-			$dev->setAfipMensaje($msj);
+			$dev->setAfipMensaje($msj2);
 			$dev->setAfipEnvio($wsfev1->client->__getLastRequest());
 			$dev->setAfipRespuesta($wsfev1->client->__getLastResponse());
+			
 			$dev->save();
 		}
 
-		$msj_mostrar = 'La venta se informó correctamen a la AFIP, CAE: '.$res['cae'];
-		$this->getUser()->setFlash($tipo_msj, $msj_mostrar);
+		$this->getUser()->setFlash($tipo_msj, $msj);
 		$this->redirect('devprod/index');
 	}
 	

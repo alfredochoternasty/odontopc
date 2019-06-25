@@ -415,6 +415,7 @@ class detresActions extends autoDetresActions
 			$tipo_msj = 'error';
 			$afip_estado = 0;
 			$msj = '';
+			$msj2 = '';
 			if (is_soap_fault($res)) {
 				$msj2 = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
 			} else {
