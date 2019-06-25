@@ -253,7 +253,7 @@ EOF;
    *
    * @return string HTML code
    */
-  public function renderField($field)
+  public function renderField($field, $vista='list')
   {
     $html = $this->getColumnGetter($field->getName(), true);
 
@@ -267,11 +267,16 @@ EOF;
     }
     else if ($field->isPartial())
     {
-      return sprintf("get_partial('%s/%s', array('type' => 'list', '%s' => \$%s))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
+		if ($vista = 'list') {
+			return sprintf("get_partial('%s/%s', array('type' => '".$vista."', '%s' => \$%s))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
+		} else {
+			return sprintf("\$this->get_partial('%s', array('type' => '".$vista."', '%s' => \$%s))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
+		}
     }
     else if ('Date' == $field->getType())
     {
-      $html = sprintf("false !== strtotime($html) ? format_date(%s, \"%s\") : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
+      //$html = sprintf("false !== strtotime($html) ? format_date(%s, \"%s\") : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
+      $html = sprintf("false !== strtotime($html) ? implode('/', array_reverse(explode('-', %s))) : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
     }
     else if ('Boolean' == $field->getType())
     {

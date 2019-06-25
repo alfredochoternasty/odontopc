@@ -50,8 +50,9 @@ class WSFEV1 {
     }
     
     if (self::LOG_XMLS) {//guarda lo que se envía al web services y lo que responde, todo en xml
-      file_put_contents($this->path.self::LOGS_DIR."request-".$method.".xml",$this->client->__getLastRequest());
-      file_put_contents($this->path.self::LOGS_DIR."response-".$method.".xml",$this->client->__getLastResponse());
+			$fh = date('Ymd_his');
+      file_put_contents($this->path.self::LOGS_DIR.$fh."request-".$method.".xml",$this->client->__getLastRequest());
+      file_put_contents($this->path.self::LOGS_DIR.$fh."response-".$method.".xml",$this->client->__getLastResponse());
     }
     
     if (is_soap_fault($results)) {// chequea si es erro de conexion de SOAP
@@ -86,14 +87,20 @@ class WSFEV1 {
         //return true;
       }
     }
-/*    
+    
     if (!empty($results->$x->Errors)) {
       $this->Error = 'Error en '.$method.'<br>';
-      $this->Code[] = $results->$x->Errors->Err->Code;
-      $this->Msg[] = $results->$x->Errors->Err->Msg;
-      return true;
+	  if (is_array($results->$x->Errors->Err)) {
+		foreach ($results->$x->Errors->Err as $Err) {
+			$this->Code[] = $Err->Code;
+			$this->Msg[] = $Err->Msg;
+		}
+	  } else {
+		$this->Code[] = $results->$x->Errors->Err->Code;
+		$this->Msg[] = $results->$x->Errors->Err->Msg;
+	  }
+      //return true;
     }
-*/
     return false;
 	}
 

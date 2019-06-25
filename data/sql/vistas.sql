@@ -151,72 +151,32 @@ CREATE VIEW cliente_ultima_compra AS select
 	(select max(fecha) from resumen where cliente_id = cliente.id) as fecha
 from cliente ;
 
-CREATE VIEW listado_ventas (
-  id, 
-  res_id, 
-  fecha, 
-  moneda_id, 
-  moneda_nombre, 
-  cliente_id, 
-  cliente_apellido, 
-  cliente_nombre, 
-  tipo_id, 
-  tipo_cliente_nombre, 
-  cliente_genera_comision, 
-  resumen_id, 
-  producto_id, 
-  precio, 
-  cantidad, 
-  bonificados, 
-  total, 
-  producto_nombre, 
-  producto_genera_comision, 
-  grupoprod_id, 
-  grupo_nombre, 
-  nro_lote,
-  grupo2,
-  grupo3,
-  fecha_vto
-) AS 
+CREATE VIEW listado_ventas AS 
 select
-	detalle_resumen.id AS id,
-  resumen.id AS res_id,
+  detalle_resumen.id,
+  resumen.id as resumen_id,
   resumen.fecha,
-  detalle_resumen.moneda_id,
-  tipo_moneda.nombre,
   resumen.cliente_id,
-  cliente.apellido,
-  cliente.nombre AS cliente_nombre,
-  cliente.tipo_id,
-  tipo_cliente.nombre tipo_cliente_nombre, 
-  cliente.genera_comision,
-  detalle_resumen.resumen_id,
+  resumen.zona_id,
   detalle_resumen.producto_id,
-  detalle_resumen.precio,
+  producto.grupoprod_id, 
+  producto.orden_grupo, 
+  producto.nombre,
+  detalle_resumen.nro_lote,
   detalle_resumen.cantidad,
   detalle_resumen.bonificados,
+  detalle_resumen.precio,
+  detalle_resumen.iva,
+  detalle_resumen.sub_total,
   detalle_resumen.total,
-  producto.nombre AS producto_nombre,
-  producto.genera_comision,
-  producto.grupoprod_id,
-  grupoprod.nombre AS grupo_nombre,
-  detalle_resumen.nro_lote,
-  producto.grupo2,
-  producto.grupo3,
-  lote.fecha_vto
+  detalle_resumen.det_remito_id
 from
   resumen
-    left join tipo_moneda on resumen.moneda_id = tipo_moneda.id
-    left join cliente on resumen.cliente_id = cliente.id
-    left join tipo_cliente on cliente.tipo_id = tipo_cliente.id
     left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
     left join producto on detalle_resumen.producto_id = producto.id
-    left join grupoprod on producto.grupoprod_id = grupoprod.id
-    left join lote on detalle_resumen.producto_id = lote.producto_id 
-	 	and CONVERT(detalle_resumen.nro_lote using utf8) collate utf8_spanish_ci = CONVERT(lote.nro_lote using utf8) collate utf8_spanish_ci
 where
   producto.grupoprod_id not in (1, 15)
-  and resumen.remito_id is null
+  and resumen.tipofactura_id <> 4
   and detalle_resumen.nro_lote not in (select nro_lote from lotes_romi)
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;

@@ -18,10 +18,13 @@ generator:
         Resumen: {label: Venta}
         resumen_id: {label: Venta}
         sfGuardUser: {label: Usuario}
+        cae_afip: {label: CAE}
+        cantidad: {label: Cant}
+        nro_lote: {label: Lote}
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
-        display: [fecha, Resumen, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
+        display: [fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
         actions:
           _new: {label: Agregar Producto}
           listado: ~        

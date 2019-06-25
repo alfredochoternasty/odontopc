@@ -416,39 +416,28 @@ ListadoVentas:
   tableName: listado_ventas
   columns:
     id: {type: integer(4), primary: true}
-    res_id: {type: integer(4)}
-    fecha: {type: date(25), notnull: true}
-    moneda_id: {type: integer(4)}
-    moneda_nombre: {type: string(50)}
-    cliente_id: {type: integer(4)}
-    cliente_apellido: {type: string(50)}
-    cliente_nombre: {type: string(50)}
-    tipo_id: {type: integer(4)}
-    tipo_cliente_nombre: {type: string(20)}
-    cliente_genera_comision: {type: boolean}
     resumen_id: {type: integer(4)}
+    fecha: {type: date(25)}
+    cliente_id: {type: integer(4)}
+    zona_id: {type: integer(4)}
     producto_id: {type: integer(4)}
-    precio: {type: 'decimal(10, 2)'}
-    cantidad: {type: integer(4)}
-    bonificados: {type: integer(1)}
-    total: {type: 'decimal(10, 2)'}
-    producto_nombre: {type: string(100)}
-    producto_genera_comision: {type: boolean}
     grupoprod_id: {type: integer(4)}
-    grupo_nombre: {type: string(50)}
-    nro_lote: {type: string(255)}
-    grupo2: {type: integer(4)}
-    grupo3: {type: integer(4)}
-    fecha_vto: {type: date(25), notnull: true}
+    orden_grupo: {type: integer(4)}
+    nombre: {type: string(50)}
+    nro_lote: {type: string(50)}
+    cantidad: {type: 'decimal(10, 2)'}
+    bonificados: {type: 'decimal(10, 2)'}
+    precio: {type: 'decimal(10, 2)'}
+    iva: {type: 'decimal(10, 2)'}
+    sub_total: {type: 'decimal(10, 2)'}
+    total: {type: 'decimal(10, 2)'}
+    det_remito_id: {type: integer(4)}
   relations:
-    Detalle: {type: one, class: DetalleResumen, local: resumen_id}
+    DetalleResumen: {type: one, class: DetalleResumen, local: id}
+    Resumen: {type: one, class: Resumen, local: resumen_id}
     Cliente: {type: one, class: Cliente, local: cliente_id}
-    Tipo: {type: one, class: TipoCliente, local: tipo_id}
     Producto: {type: one, class: Producto, local: producto_id}
-    Grupo: {type: one, class: Grupoprod, local: grupoprod_id}
-    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}    
-    GrupoDos: {type: one, class: Grupoprod, local: grupo2, foreign: id}
-    GrupoTres: {type: one, class: Grupoprod, local: grupo3, foreign: id}
+    Zona: {type: one, class: Zona, local: zona_id}
 ListadoCobros:
   connection: doctrine
   tableName: listado_cobros

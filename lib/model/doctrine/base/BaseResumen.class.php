@@ -46,6 +46,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property sfGuardUser $sfGuardUser
  * @property Zona $Zona
  * @property Resumen $Resumen
+ * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $CobroResumen
  * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $VentasZona
@@ -89,6 +90,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
  * @method Zona                getZona()             Returns the current record's "Zona" value
  * @method Resumen             getResumen()          Returns the current record's "Resumen" value
+ * @method Doctrine_Collection getListadoVentas()    Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getCobroResumen()     Returns the current record's "CobroResumen" collection
  * @method Doctrine_Collection getFacturasAfip()     Returns the current record's "FacturasAfip" collection
  * @method Doctrine_Collection getVentasZona()       Returns the current record's "VentasZona" collection
@@ -131,6 +133,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setSfGuardUser()      Sets the current record's "sfGuardUser" value
  * @method Resumen             setZona()             Sets the current record's "Zona" value
  * @method Resumen             setResumen()          Sets the current record's "Resumen" value
+ * @method Resumen             setListadoVentas()    Sets the current record's "ListadoVentas" collection
  * @method Resumen             setCobroResumen()     Sets the current record's "CobroResumen" collection
  * @method Resumen             setFacturasAfip()     Sets the current record's "FacturasAfip" collection
  * @method Resumen             setVentasZona()       Sets the current record's "VentasZona" collection
@@ -317,6 +320,10 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasOne('Resumen', array(
              'local' => 'id',
              'foreign' => 'remito_id'));
+
+        $this->hasMany('ListadoVentas', array(
+             'local' => 'id',
+             'foreign' => 'resumen_id'));
 
         $this->hasMany('CobroResumen', array(
              'local' => 'id',

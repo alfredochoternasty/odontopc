@@ -27,9 +27,16 @@ class resumenActions extends autoResumenActions
     $mensaje = Swift_Message::newInstance();
     $mensaje->setFrom(array('info@odontovta.net23.net' => 'NTI implantes'));
     $mensaje->setTo($resumen->getCliente()->getEmail());
-    $mensaje->setSubject('Detalle Venta');
-    $mensaje->setBody($this->getPartial("detres/imprimir", array("resumen" => $resumen)));
-    $mensaje->setContentType("text/html");
+    $mensaje->setSubject('Factura - NTI Implantes');
+
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("detres/imprimir", array("resumen" => $resumen)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+	
+	$factura = $dompdf->output();
+	$adjunto = new Swift_Attachment($factura, $resumen->getFactura().'.pdf', 'application/pdf');
+	$mensaje->attach($adjunto);
     $this->getMailer()->send($mensaje);
     
     $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$resumen->getCliente()->getEmail());

@@ -28,19 +28,37 @@ class listvtaActions extends autoListvtaActions
     $this->redirect('listvta/filter');
   }
   
-  public function executeListImprimir(sfWebRequest $request){
+  public function executeListImprimirTodo(sfWebRequest $request){
     $filtro = new ListadoVentasFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+    //$dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+    $dompdf->load_html($this->getPartial("imprimir" , array("listado" => $listado)));
     $dompdf->set_paper('A4','landscape');
     $dompdf->render();
     $dompdf->stream("listado_ventas.pdf");    
     return sfView::NONE;
   }
   
+  public function executeListImprimirPagina(sfWebRequest $request){
+    $filtro = new ListadoVentasFormFilter();
+    $consulta = $filtro->buildQuery($this->getFilters());	
+	$pagina = $this->getUser()->getAttribute('listvta.page', '1', 'admin_module')-1;
+	$consulta->limit(50)->offset($pagina * 50);
+    $listado = $consulta->execute();
+    
+    $dompdf = new DOMPDF();
+    //$dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+    $dompdf->load_html($this->getPartial("imprimir" , array("listado" => $listado)));
+    $dompdf->set_paper('A4','landscape');
+    $dompdf->render();
+    $dompdf->stream("listado_ventas.pdf");    
+    return sfView::NONE;
+  }  
+  
+  /*
   public function executeFilter(sfWebRequest $request)
   {
     $this->setPage(1);  
@@ -72,11 +90,14 @@ class listvtaActions extends autoListvtaActions
   
   public function executeIndex(sfWebRequest $request)
   {
+	
     $this->filters = $this->configuration->getFilterForm($this->getFilters());
     $this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     if ($request->getParameter('sort')){
       $this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
       $this->redirect('listvta/filter');
-    }  
+    } 
+		
   }
+  */
 }

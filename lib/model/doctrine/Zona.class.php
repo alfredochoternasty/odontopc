@@ -14,7 +14,7 @@ class Zona extends BaseZona
 {	
 	public function __toString()
 	{
-		return $this->nombre;
+		return empty($this->nombre)? '':$this->nombre;
 	}
 	
   public function getNomZona(){

@@ -11,25 +11,30 @@
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 class ListadoVentas extends BaseListadoVentas
-{
-  public function SimboloMoneda(){
-    return $this->getMoneda()->getSimbolo();
+{ 
+/*
+  public function getPrecioUni() {
+    return sprintf('$ '." %01.2f", $this->precio);
+  }
+
+  public function getCantidad_(){
+	  if (empty($this->getBonificados())) {
+		  return $this->getCantidad();
+	  } else {
+		  return $this->getCantidad()+$this->getBonificados().' ('.$this->getBonificados().' Bono)';
+	  }
   }
   
-  public function PrecioFormato(){
-    return sprintf($this->SimboloMoneda()." %01.2f", $this->getPrecio());
+  public function getTotal_() {
+    return sprintf('$ '." %01.2f", $this->getTotal());
+  } 
+  
+  public function getIva_() {
+    return sprintf('$ '." %01.2f", $this->getIva());
+  } 
+  
+  public function getNeto_() {
+    return sprintf('$ '." %01.2f", $this->getSubTotal());
   }
-  
-  public function TotalFormato(){
-    return sprintf($this->SimboloMoneda()." %01.2f", $this->getTotal());
-  } 
-  /*
-  public function IvaFormato(){
-    return sprintf($this->SimboloMoneda()." %01.2f", $this->getIva());
-  } 
-  
-  public function SubTotalFormato(){
-    return sprintf($this->SimboloMoneda()." %01.2f", $this->getSubTotal());
-  } 
-*/  
+ */
 }

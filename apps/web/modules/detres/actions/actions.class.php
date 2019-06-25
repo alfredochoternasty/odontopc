@@ -119,8 +119,8 @@ class detresActions extends autoDetresActions
       $rid = $this->getUser()->getAttribute('rid');
     }
     $this->setFilters(array("resumen_id" => $rid));
-	$factura = Doctrine::getTable('Resumen')->find($rid);
-	if ($factura->afip_estado > 1) $this->getUser()->setFlash('notice', str_replace('<br>', '', $factura->afip_mensaje)); 
+		//$factura = Doctrine::getTable('Resumen')->find($rid);
+		//if ($factura->afip_estado > 1) $this->getUser()->setFlash('notice', str_replace('<br>', '', $factura->afip_mensaje)); 
     parent::executeIndex($request);
   }
 
@@ -414,14 +414,15 @@ class detresActions extends autoDetresActions
 			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';
 			$afip_estado = 0;
+			$msj = '';
 			if (is_soap_fault($res)) {
-				$msj = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
+				$msj2 = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
 			} else {
 				if (empty($res) || $res == false || $res['resultado'] == 'R') {
 					for ($i=0;$i < count($wsfev1->Code);$i++) {
 						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
 					}
-					$msj = str_replace('\'', '\'\'', implode('//', $a_msj));
+					$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
 				} elseif ($res['resultado'] == 'A') {
 					$afip_estado = 1;
 					$resumen->setAfipCae($res['cae']);
@@ -437,13 +438,14 @@ class detresActions extends autoDetresActions
 					}
 					if (!empty($a_msj)) {
 						$afip_estado = 2;
-						$msj .= '<br>Se encontraron los siguientes mensajes: '.str_replace('\'', '\'\'', implode('//', $a_msj));
+						$msj2 = '. Se encontraron los siguientes mensajes: '.str_replace('\'', '\'\'', implode('//', $a_msj));
 					}
 				}
 			}
-
+			
+			$msj .= $msj2;
 			$resumen->setAfipEstado($afip_estado);
-			$resumen->setAfipMensaje($msj);
+			$resumen->setAfipMensaje($msj2);
 			$resumen->setAfipEnvio($wsfev1->client->__getLastRequest());
 			$resumen->setAfipRespuesta($wsfev1->client->__getLastResponse());
 			

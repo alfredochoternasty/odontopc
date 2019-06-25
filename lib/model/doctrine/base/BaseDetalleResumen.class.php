@@ -242,7 +242,7 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
 
         $this->hasMany('ListadoVentas', array(
              'local' => 'id',
-             'foreign' => 'resumen_id'));
+             'foreign' => 'id'));
 
         $this->hasMany('VentasZona', array(
              'local' => 'id',

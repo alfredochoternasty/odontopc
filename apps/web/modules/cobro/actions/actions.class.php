@@ -67,62 +67,61 @@ return $this->renderText($resultado);
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     
-    if ($form->isValid())
-    {
-      $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+    if ($form->isValid()) {
+		$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
 
-      $cobro = $form->save();
-			
-			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
-			$max_nro = $q->execute();
-			$nro = $max_nro[0]['nro'];
-			$cobro->setNroRecibo($nro+1);
-			$cobro->save();
-			
-      $monto = $cobro->getMonto();
-			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false);
-			if ($saldo_cliente >= 0) $saldo_cliente = 0;
+		$cobro = $form->save();
+		
+		$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
+		$max_nro = $q->execute();
+		$nro = $max_nro[0]['nro'];
+		$cobro->setNroRecibo($nro+1);
+		$cobro->save();
+		
+		$monto = $cobro->getMonto();
+		$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false);
+		if ($saldo_cliente >= 0) $saldo_cliente = 0;
       
-      $Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagado($cobro['cliente_id'], 0);  
-      foreach($Resumenes as $resumen){
-        $saldo_resumen = $resumen->getTotalResumen() - ($resumen->getTotalCobrado() + $resumen->getTotalDevuelto() + $saldo_cliente);
-        $objCobro = new CobroResumen();
-        $objCobro->setCobroId($cobro->getId());
-        $objCobro->setResumenId($resumen->getId());
-        
-        if($monto >= $saldo_resumen){
-          $objCobro->setMonto($saldo_resumen);
-          $monto = $monto - $saldo_resumen;
-          $resumen->pagado = 1;
-          $resumen->fecha_pagado = $cobro->fecha;
-          $resumen->save();
-          $objCobro->save();
-        }else{
-          $objCobro->setMonto($monto);
-          $objCobro->save();
-          break;
-        }
-      }
-
-      $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $objCobro)));
+		$Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagado($cobro['cliente_id'], 0);  
+		foreach($Resumenes as $resumen){
+			$saldo_resumen = $resumen->getTotalResumen() - ($resumen->getTotalCobrado() + $resumen->getTotalDevuelto() + $saldo_cliente);
+			$objCobro = new CobroResumen();
+			$objCobro->setCobroId($cobro->getId());
+			$objCobro->setResumenId($resumen->getId());
 			
-			$mensaje = Swift_Message::newInstance();
-			$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
-			$mensaje->setTo($cobro->getCliente()->getEmail());
-			$mensaje->setSubject('Cobro realizado en '.$cobro->getCliente()->getZona());
-			$mensaje->setBody($this->getPartial("recibo", array("cobro" => $cobro)));
-			$mensaje->setContentType("text/html");
-			$this->getMailer()->send($mensaje);			
+			if($monto >= $saldo_resumen){
+			  $objCobro->setMonto($saldo_resumen);
+			  $monto = $monto - $saldo_resumen;
+			  $resumen->pagado = 1;
+			  $resumen->fecha_pagado = $cobro->fecha;
+			  $resumen->save();
+			  $objCobro->save();
+			}else{
+			  $objCobro->setMonto($monto);
+			  $objCobro->save();
+			  break;
+			}
+		}
 
-      if ($request->hasParameter('_save_and_add')){
-        $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
-        $this->redirect('@cobro_new');
-      }else{
-        $this->getUser()->setFlash('notice', $notice);
-        $this->redirect('cobro/index');
-      }
-    }else{
-      $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
+		$this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $objCobro)));
+			
+		$mensaje = Swift_Message::newInstance();
+		$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+		$mensaje->setTo($cobro->getCliente()->getEmail());
+		$mensaje->setSubject('Cobro realizado en '.$cobro->getCliente()->getZona());
+		$mensaje->setBody($this->getPartial("recibo", array("cobro" => $cobro)));
+		$mensaje->setContentType("text/html");
+		$this->getMailer()->send($mensaje);			
+
+		if ($request->hasParameter('_save_and_add')){
+			$this->getUser()->setFlash('notice', $notice.' You can add another one below.');
+			$this->redirect('@cobro_new');
+		} else {
+			$this->getUser()->setFlash('notice', $notice);
+			$this->redirect('cobro/index');
+		}
+    } else {
+		$this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
   

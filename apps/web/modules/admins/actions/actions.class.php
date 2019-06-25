@@ -57,7 +57,7 @@ class adminsActions extends sfActions
 		
 		// borro el .zip anterior
 		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
-    if(file_exists($fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink($fecha_backup_anterior.'_bak_'.$name.'.zip');		
+		if(file_exists($fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink($fecha_backup_anterior.'_bak_'.$name.'.zip');
 		
 		$zip = new ZipArchive();
 		$filename = $fecha_actual.'_bak_'.$name.'.zip';
@@ -135,8 +135,8 @@ class adminsActions extends sfActions
 		}
 	}	
 	
-  public function executeIndex(sfWebRequest $request)
-  {		
+	public function executeIndex(sfWebRequest $request)
+	{		
 		$tbl_excluir = array(
 			'cliente_saldo', 
 			'cliente_ultima_compra', 
@@ -159,8 +159,8 @@ class adminsActions extends sfActions
 		$user = $oCurrentConnection->getOption('username');
 		$pwd = $oCurrentConnection->getOption('password');
 		
-    $entorno = sfConfig::get('sf_environment');
-    if ($entorno == 'dev') {
+		$entorno = sfConfig::get('sf_environment');
+		if ($entorno == 'dev') {
 			$filename = $this->backup_tables('localhost','root','','ventas', $tbl_excluir);
 		} else {
 			$filename = $this->backup_tables('localhost', $user, $pwd, $sdb, $tbl_excluir);
@@ -184,10 +184,10 @@ class adminsActions extends sfActions
 		}
 		$mensaje->setContentType("text/html");
 		$this->getMailer()->send($mensaje);
-  }  
+	}  
 
 	public function executeLog(sfWebRequest $request)
-  {		
+	{		
 		$tbl_excluir = array(
 			'cliente_saldo', 
 			'cliente_ultima_compra', 
@@ -204,8 +204,8 @@ class adminsActions extends sfActions
 			'lista_precio_detalle'
 		);
 
-    $entorno = sfConfig::get('sf_environment');
-    if ($entorno == 'dev') {
+		$entorno = sfConfig::get('sf_environment');
+		if ($entorno == 'dev') {
 			$filename = $this->crear_log('localhost','root','','ventas', $tbl_excluir);
 		} else {
 			$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
@@ -216,10 +216,10 @@ class adminsActions extends sfActions
 			
 			$filename = $this->crear_log('localhost', $user, $pwd, $sdb, $tbl_excluir);
 		}
-  }
+	}
 	
 	public function executeTriggers(sfWebRequest $request)
-  {		
+	{		
 		$tbl_excluir = array(
 			'cliente_saldo', 
 			'cliente_ultima_compra', 
@@ -236,8 +236,8 @@ class adminsActions extends sfActions
 			'lista_precio_detalle'
 		);
 
-    $entorno = sfConfig::get('sf_environment');
-    if ($entorno == 'dev') {
+		$entorno = sfConfig::get('sf_environment');
+		if ($entorno == 'dev') {
 			$filename = $this->crear_triggers('localhost','root','','ventas', $tbl_excluir);
 		} else {
 			$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();

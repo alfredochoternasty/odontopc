@@ -89,19 +89,19 @@ class devprodActions extends autoDevprodActions
   public function executeGet_vtas_cliente(sfWebRequest $request){
   
     $q = Doctrine_Query::create()
-      ->select('res.id, res.fecha, dr.nro_lote')
+      ->select('res.id, t.nombre, res.pto_vta, res.nro_factura, res.fecha, dr.nro_lote')
       ->from('Resumen res')
       ->leftJoin('res.Detalle dr')
+      ->leftJoin('res.TipoFactura t')
       ->where('res.cliente_id = '.$request->getparameter('cid'))
       ->andWhere('dr.producto_id = '.$request->getparameter('pid'))
       ->orderBy('res.fecha desc');
      
     $vtas = $q->fetchArray();  
   
-    $options[] = '<option value=""></option>';
-    foreach($vtas as $vta){
-      //print_r($vta);
-      $options[] = '<option value="'.$vta['id'].'">Nro: '.$vta['id'].' - Fecha: '.implode('/', array_reverse(explode('-', $vta['fecha']))).' - Nro_lote:'.$vta['Detalle'][0]['nro_lote'].'</option>';
+    $options[] = '<option value=""></option>';	
+    foreach ($vtas as $vta) {
+      $options[] = '<option value="'.$vta['id'].'">'.$vta['TipoFactura']['nombre'].'-'.$vta['pto_vta'].'-'.str_pad($vta['nro_factura'], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta['fecha']))).' - Nro_lote:'.$vta['Detalle'][0]['nro_lote'].'</option>';
     }
     echo implode($options);
     return sfView::NONE;

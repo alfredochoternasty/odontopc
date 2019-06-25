@@ -14,6 +14,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $Resumen
  * @property Doctrine_Collection $Cobro
+ * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ControlStock
@@ -30,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getCompra()        Returns the current record's "Compra" collection
  * @method Doctrine_Collection getResumen()       Returns the current record's "Resumen" collection
  * @method Doctrine_Collection getCobro()         Returns the current record's "Cobro" collection
+ * @method Doctrine_Collection getListadoVentas() Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getDevProducto()   Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getLote()          Returns the current record's "Lote" collection
  * @method Doctrine_Collection getControlStock()  Returns the current record's "ControlStock" collection
@@ -45,6 +47,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setCompra()        Sets the current record's "Compra" collection
  * @method Zona                setResumen()       Sets the current record's "Resumen" collection
  * @method Zona                setCobro()         Sets the current record's "Cobro" collection
+ * @method Zona                setListadoVentas() Sets the current record's "ListadoVentas" collection
  * @method Zona                setDevProducto()   Sets the current record's "DevProducto" collection
  * @method Zona                setLote()          Sets the current record's "Lote" collection
  * @method Zona                setControlStock()  Sets the current record's "ControlStock" collection
@@ -97,6 +100,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('Cobro', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('ListadoVentas', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

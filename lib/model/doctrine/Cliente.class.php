@@ -50,4 +50,7 @@ class Cliente extends BaseCliente
 			return $saldo[0]['saldo'];
   }
 
+  function getTelefonos() {
+	  return trim($this->getTelefono()).'/'.trim($this->getCelular());
+  }
 }

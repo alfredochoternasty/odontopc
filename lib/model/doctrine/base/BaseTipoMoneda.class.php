@@ -18,7 +18,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $CtaCte
  * @property Doctrine_Collection $ListaPrecio
- * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ClienteSaldo
@@ -36,7 +35,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getCtaCte()             Returns the current record's "CtaCte" collection
  * @method Doctrine_Collection getListaPrecio()        Returns the current record's "ListaPrecio" collection
- * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getClienteSaldo()       Returns the current record's "ClienteSaldo" collection
@@ -53,7 +51,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method TipoMoneda          setDetalleResumen()     Sets the current record's "DetalleResumen" collection
  * @method TipoMoneda          setCtaCte()             Sets the current record's "CtaCte" collection
  * @method TipoMoneda          setListaPrecio()        Sets the current record's "ListaPrecio" collection
- * @method TipoMoneda          setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method TipoMoneda          setListadoCobros()      Sets the current record's "ListadoCobros" collection
  * @method TipoMoneda          setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method TipoMoneda          setClienteSaldo()       Sets the current record's "ClienteSaldo" collection
@@ -119,10 +116,6 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
              'foreign' => 'moneda_id'));
 
         $this->hasMany('ListaPrecio', array(
-             'local' => 'id',
-             'foreign' => 'moneda_id'));
-
-        $this->hasMany('ListadoVentas', array(
              'local' => 'id',
              'foreign' => 'moneda_id'));
 

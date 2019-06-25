@@ -10,18 +10,15 @@ Doctrine_Manager::getInstance()->bindComponent('TipoCliente', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property Doctrine_Collection $Clientes
- * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $ListadoCobros
  * 
  * @method integer             getId()            Returns the current record's "id" value
  * @method string              getNombre()        Returns the current record's "nombre" value
  * @method Doctrine_Collection getClientes()      Returns the current record's "Clientes" collection
- * @method Doctrine_Collection getListadoVentas() Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getListadoCobros() Returns the current record's "ListadoCobros" collection
  * @method TipoCliente         setId()            Sets the current record's "id" value
  * @method TipoCliente         setNombre()        Sets the current record's "nombre" value
  * @method TipoCliente         setClientes()      Sets the current record's "Clientes" collection
- * @method TipoCliente         setListadoVentas() Sets the current record's "ListadoVentas" collection
  * @method TipoCliente         setListadoCobros() Sets the current record's "ListadoCobros" collection
  * 
  * @package    odontopc
@@ -51,10 +48,6 @@ abstract class BaseTipoCliente extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Cliente as Clientes', array(
-             'local' => 'id',
-             'foreign' => 'tipo_id'));
-
-        $this->hasMany('ListadoVentas', array(
              'local' => 'id',
              'foreign' => 'tipo_id'));
 

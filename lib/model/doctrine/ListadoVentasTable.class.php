@@ -18,17 +18,15 @@ class ListadoVentasTable extends Doctrine_Table
     }
     
     public function retrieveConJoins(Doctrine_Query $q){
-			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-      $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Detalle d');
-      $q->leftJoin($rootAlias . '.Cliente c');
-			$q->leftJoin('c.Zona z');
-			$q->leftJoin('z.UsuarioZona uz');	
-      $q->leftJoin($rootAlias . '.Tipo t');
-      $q->leftJoin($rootAlias . '.Producto p');
-      $q->leftJoin($rootAlias . '.Grupo g');
-      $q->leftJoin($rootAlias . '.Moneda m');
-			$q->where('uz.usuario = '.$id);
-      return $q;
+		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+		
+		$rootAlias = $q->getRootAlias();
+		$q->leftJoin($rootAlias . '.Resumen res');
+		$q->leftJoin($rootAlias . '.Cliente c');
+		$q->leftJoin($rootAlias . '.Zona z');
+		$q->leftJoin('z.UsuarioZona uz');	
+		$q->leftJoin($rootAlias . '.Producto p');
+		$q->where('uz.usuario = '.$id);
+		return $q;
     }
 }

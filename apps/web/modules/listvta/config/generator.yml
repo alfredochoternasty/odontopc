@@ -14,31 +14,23 @@ generator:
     config:
       actions: ~
       fields:
-        resumen_id: { label: Venta}
         fecha: { date_format: dd/MM/yyyy }
-        fecha_vto: { date_format: dd/MM/yyyy }
-        cliente_apellido: { label: Apellido}
-        cliente_nombre: { label: Nombre}
-        tipo_cliente_nombre: { label: Tipo}
-        grupo_nombre: { label: Grupo}
-        cantidad: { label: Cant.}
-        producto_genera_comision: { label: Producto<br>Gen.Comis.}
-        producto_nombre: { label: Producto}
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
       list:
         table_method: retrieveConJoins
         title: Listado de Ventas
-        display: [resumen_id, fecha, Moneda, cliente_apellido, cliente_nombre, tipo_cliente_nombre, grupo_nombre, producto_nombre, _precio, cantidad, bonificados, _total, nro_lote, fecha_vto]
-        max_per_page: 99999
-        object_actions: []
+        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote]
+        max_per_page: 50
+        object_actions:
+          _factura: {label: Fact}
         batch_actions: []
         actions:
           ver_totales: ~
-          ver_detallado: ~
-          imprimir: ~
+          imprimir_pagina: ~
+          imprimir_todo: ~
       filter:
-        display: [fecha, moneda_id, cliente_id, tipo_id, grupoprod_id, producto_id, nro_lote, grupo2, grupo3]
+        display: [zona_id, fecha, cliente_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:     ~

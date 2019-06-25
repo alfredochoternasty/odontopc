@@ -46,4 +46,4 @@ all:
 
     secure_module:          sfGuardAuth
     secure_action:          secure
-    check_lock: true
+    check_lock: 			true

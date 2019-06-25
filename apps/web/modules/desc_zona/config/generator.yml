@@ -21,8 +21,11 @@ generator:
         zona_id: {label: Zona}
         Zona: {label: Zona}
       list:
-        title: Descuento x Zona
+        title: Descuentos x Zona
         display: [Producto, Grupoprod, porc_desc, Zona]
+        object_actions:
+            _edit: ~
+            _delete: ~
       filter:  ~
       form:    ~
       edit:

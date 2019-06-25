@@ -17,8 +17,8 @@ class trazaActions extends autoTrazaActions
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new ProductoTrazaFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
-		$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
-		$consulta->limit(50)->offset($pagina * 50);
+	$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
+	$consulta->limit(50)->offset($pagina * 50);
     $traza = $consulta->execute();
     
     $dompdf = new DOMPDF();
@@ -32,8 +32,8 @@ class trazaActions extends autoTrazaActions
   public function executeListExcel(sfWebRequest $request){
     $filtro = new ProductoTrazaFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
-		$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
-		$consulta->limit(50)->offset($pagina * 50);		
+	$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
+	$consulta->limit(50)->offset($pagina * 50);		
     $traza = $consulta->execute();
 			
     header("Content-Disposition: attachment; filename=\"traza_pagina.xls\"");
