@@ -12,6 +12,7 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @property integer $resumen_id
  * @property date $fecha
  * @property integer $producto_id
+ * @property integer $grupoprod_id
  * @property string $nro_lote
  * @property integer $cliente_id
  * @property integer $zona_id
@@ -28,12 +29,14 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property DetalleResumen $DetalleResumen
+ * @property Grupoprod $Grupo
  * 
  * @method integer        getId()                 Returns the current record's "id" value
  * @method integer        getDetalleResumenId()   Returns the current record's "detalle_resumen_id" value
  * @method integer        getResumenId()          Returns the current record's "resumen_id" value
  * @method date           getFecha()              Returns the current record's "fecha" value
  * @method integer        getProductoId()         Returns the current record's "producto_id" value
+ * @method integer        getGrupoprodId()        Returns the current record's "grupoprod_id" value
  * @method string         getNroLote()            Returns the current record's "nro_lote" value
  * @method integer        getClienteId()          Returns the current record's "cliente_id" value
  * @method integer        getZonaId()             Returns the current record's "zona_id" value
@@ -50,11 +53,13 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @method Cliente        getCliente()            Returns the current record's "Cliente" value
  * @method Resumen        getResumen()            Returns the current record's "Resumen" value
  * @method DetalleResumen getDetalleResumen()     Returns the current record's "DetalleResumen" value
+ * @method Grupoprod      getGrupo()              Returns the current record's "Grupo" value
  * @method VentasZona     setId()                 Sets the current record's "id" value
  * @method VentasZona     setDetalleResumenId()   Sets the current record's "detalle_resumen_id" value
  * @method VentasZona     setResumenId()          Sets the current record's "resumen_id" value
  * @method VentasZona     setFecha()              Sets the current record's "fecha" value
  * @method VentasZona     setProductoId()         Sets the current record's "producto_id" value
+ * @method VentasZona     setGrupoprodId()        Sets the current record's "grupoprod_id" value
  * @method VentasZona     setNroLote()            Sets the current record's "nro_lote" value
  * @method VentasZona     setClienteId()          Sets the current record's "cliente_id" value
  * @method VentasZona     setZonaId()             Sets the current record's "zona_id" value
@@ -71,6 +76,7 @@ Doctrine_Manager::getInstance()->bindComponent('VentasZona', 'doctrine');
  * @method VentasZona     setCliente()            Sets the current record's "Cliente" value
  * @method VentasZona     setResumen()            Sets the current record's "Resumen" value
  * @method VentasZona     setDetalleResumen()     Sets the current record's "DetalleResumen" value
+ * @method VentasZona     setGrupo()              Sets the current record's "Grupo" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -101,6 +107,10 @@ abstract class BaseVentasZona extends sfDoctrineRecord
              'length' => 25,
              ));
         $this->hasColumn('producto_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('grupoprod_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
@@ -173,6 +183,11 @@ abstract class BaseVentasZona extends sfDoctrineRecord
 
         $this->hasOne('DetalleResumen', array(
              'local' => 'detalle_resumen_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Grupoprod as Grupo', array(
+             'local' => 'grupoprod_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

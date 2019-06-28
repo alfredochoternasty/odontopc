@@ -21,7 +21,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'cliente_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
       'zona_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'producto_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
-      'grupoprod_id'  => new sfWidgetFormInputText(),
+      'grupoprod_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true)),
       'orden_grupo'   => new sfWidgetFormInputText(),
       'nombre'        => new sfWidgetFormInputText(),
       'nro_lote'      => new sfWidgetFormInputText(),
@@ -32,6 +32,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'sub_total'     => new sfWidgetFormInputText(),
       'total'         => new sfWidgetFormInputText(),
       'det_remito_id' => new sfWidgetFormInputText(),
+      'cant_dev'      => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -41,7 +42,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'cliente_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'required' => false)),
       'zona_id'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
       'producto_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'required' => false)),
-      'grupoprod_id'  => new sfValidatorInteger(array('required' => false)),
+      'grupoprod_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'required' => false)),
       'orden_grupo'   => new sfValidatorInteger(array('required' => false)),
       'nombre'        => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'nro_lote'      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
@@ -52,6 +53,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'sub_total'     => new sfValidatorNumber(array('required' => false)),
       'total'         => new sfValidatorNumber(array('required' => false)),
       'det_remito_id' => new sfValidatorInteger(array('required' => false)),
+      'cant_dev'      => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas[%s]');

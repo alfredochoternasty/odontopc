@@ -16,6 +16,7 @@ generator:
       fields:
         fecha: { date_format: dd/MM/yyyy }
       list:
+        table_method: retrieveConJoins
         title: Listado de Facturas Enviadas a la Afip
         display: [_comprobante, fecha, _cliente, _iva, _neto, _total, Zona]
         max_per_page: 50

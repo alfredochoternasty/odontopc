@@ -19,6 +19,7 @@ generator:
         pagado: { label: Comision Pagada }
       list:
         max_per_page: 9999
+        table_method: retrieveConJoins
         title: Ventas por Zona
         display: [fecha, Resumen, Zona, Cliente, Producto, _precio, _cantidad, _neto, _iva, _total, cobrado, fecha_cobrado, pagado]
         object_actions: []
@@ -27,7 +28,7 @@ generator:
         actions:
           excel: ~
       filter:
-        display: [fecha, cliente_id, producto_id, nro_lote, zona_id, cobrado, fecha_cobrado, pagado]
+        display: [fecha, cliente_id, grupoprod_id, producto_id, nro_lote, zona_id, cobrado, fecha_cobrado, pagado]
       form:    ~
       edit:    ~
       new:     ~

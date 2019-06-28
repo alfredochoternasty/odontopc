@@ -169,7 +169,8 @@ select
   detalle_resumen.iva,
   detalle_resumen.sub_total,
   detalle_resumen.total,
-  detalle_resumen.det_remito_id
+  detalle_resumen.det_remito_id,
+	(select sum(cantidad) 	from dev_producto where detalle_resumen.producto_id = dev_producto.producto_id and detalle_resumen.nro_lote and dev_producto.nro_lote and resumen.id = dev_producto.resumen_id) as cant_dev
 from
   resumen
     left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
@@ -225,8 +226,8 @@ CREATE VIEW control_stock (
  stock_guardado
 ) AS
 SELECT
-   l.id,
-   l.producto_id,
+	l.id,
+	l.producto_id,
 	p.grupoprod_id,
 	l.nro_lote,
 	l.zona_id, 
@@ -339,6 +340,7 @@ SELECT
 	dr.resumen_id,
 	r.fecha, 
 	dr.producto_id, 
+	p.grupoprod_id,
 	dr.nro_lote,
 	r.cliente_id, 
 	c.zona_id,

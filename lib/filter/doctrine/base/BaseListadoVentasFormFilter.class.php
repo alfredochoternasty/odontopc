@@ -18,7 +18,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'cliente_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
       'zona_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'producto_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
-      'grupoprod_id'  => new sfWidgetFormFilterInput(),
+      'grupoprod_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true)),
       'orden_grupo'   => new sfWidgetFormFilterInput(),
       'nombre'        => new sfWidgetFormFilterInput(),
       'nro_lote'      => new sfWidgetFormFilterInput(),
@@ -29,6 +29,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'sub_total'     => new sfWidgetFormFilterInput(),
       'total'         => new sfWidgetFormFilterInput(),
       'det_remito_id' => new sfWidgetFormFilterInput(),
+      'cant_dev'      => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -37,7 +38,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'cliente_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
       'zona_id'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
       'producto_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
-      'grupoprod_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'grupoprod_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Grupo'), 'column' => 'id')),
       'orden_grupo'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'nombre'        => new sfValidatorPass(array('required' => false)),
       'nro_lote'      => new sfValidatorPass(array('required' => false)),
@@ -48,6 +49,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'sub_total'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'det_remito_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'cant_dev'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas_filters[%s]');
@@ -73,7 +75,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'cliente_id'    => 'ForeignKey',
       'zona_id'       => 'ForeignKey',
       'producto_id'   => 'ForeignKey',
-      'grupoprod_id'  => 'Number',
+      'grupoprod_id'  => 'ForeignKey',
       'orden_grupo'   => 'Number',
       'nombre'        => 'Text',
       'nro_lote'      => 'Text',
@@ -84,6 +86,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'sub_total'     => 'Number',
       'total'         => 'Number',
       'det_remito_id' => 'Number',
+      'cant_dev'      => 'Number',
     );
   }
 }

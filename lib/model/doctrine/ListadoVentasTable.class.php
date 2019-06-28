@@ -14,19 +14,19 @@ class ListadoVentasTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('ListadoVentas');
+      return Doctrine_Core::getTable('ListadoVentas');
     }
     
     public function retrieveConJoins(Doctrine_Query $q){
-		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-		
-		$rootAlias = $q->getRootAlias();
-		$q->leftJoin($rootAlias . '.Resumen res');
-		$q->leftJoin($rootAlias . '.Cliente c');
-		$q->leftJoin($rootAlias . '.Zona z');
-		$q->leftJoin('z.UsuarioZona uz');	
-		$q->leftJoin($rootAlias . '.Producto p');
-		$q->where('uz.usuario = '.$id);
-		return $q;
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			
+			$rootAlias = $q->getRootAlias();
+			$q->leftJoin($rootAlias . '.Resumen res');
+			$q->leftJoin($rootAlias . '.Cliente c');
+			$q->leftJoin($rootAlias . '.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');	
+			$q->leftJoin($rootAlias . '.Producto p');
+			$q->where('uz.usuario = '.$id);
+			return $q;
     }
 }

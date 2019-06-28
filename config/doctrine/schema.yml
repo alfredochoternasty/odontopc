@@ -432,12 +432,14 @@ ListadoVentas:
     sub_total: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
     det_remito_id: {type: integer(4)}
+    cant_dev: {type: integer(4)}
   relations:
     DetalleResumen: {type: one, class: DetalleResumen, local: id}
     Resumen: {type: one, class: Resumen, local: resumen_id}
     Cliente: {type: one, class: Cliente, local: cliente_id}
     Producto: {type: one, class: Producto, local: producto_id}
     Zona: {type: one, class: Zona, local: zona_id}
+    Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
 ListadoCobros:
   connection: doctrine
   tableName: listado_cobros
@@ -867,6 +869,7 @@ VentasZona:
     resumen_id: {type: integer(4)}
     fecha: {type: date(25)}
     producto_id: {type: integer(4)}
+    grupoprod_id: {type: integer(4)}
     nro_lote: {type: string(255)}
     cliente_id: {type: integer(4)}
     zona_id: {type: integer(4)}
@@ -884,6 +887,7 @@ VentasZona:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
     DetalleResumen: {type: one, class: DetalleResumen, local: detalle_resumen_id, onDelete: RESTRICT}
+    Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
 PagoComision:
   connection: doctrine
   tableName: pago_comision

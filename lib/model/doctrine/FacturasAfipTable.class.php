@@ -16,4 +16,10 @@ class FacturasAfipTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('FacturasAfip');
     }
+		
+    public function retrieveConJoins(Doctrine_Query $q){
+      $rootAlias = $q->getRootAlias();
+      $q->orderBy($rootAlias . '.fecha desc');
+      return $q;
+    }
 }

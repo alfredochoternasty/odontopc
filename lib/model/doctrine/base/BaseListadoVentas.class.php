@@ -24,11 +24,13 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @property decimal $sub_total
  * @property decimal $total
  * @property integer $det_remito_id
+ * @property integer $cant_dev
  * @property DetalleResumen $DetalleResumen
  * @property Resumen $Resumen
  * @property Cliente $Cliente
  * @property Producto $Producto
  * @property Zona $Zona
+ * @property Grupoprod $Grupo
  * 
  * @method integer        getId()             Returns the current record's "id" value
  * @method integer        getResumenId()      Returns the current record's "resumen_id" value
@@ -47,11 +49,13 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method decimal        getSubTotal()       Returns the current record's "sub_total" value
  * @method decimal        getTotal()          Returns the current record's "total" value
  * @method integer        getDetRemitoId()    Returns the current record's "det_remito_id" value
+ * @method integer        getCantDev()        Returns the current record's "cant_dev" value
  * @method DetalleResumen getDetalleResumen() Returns the current record's "DetalleResumen" value
  * @method Resumen        getResumen()        Returns the current record's "Resumen" value
  * @method Cliente        getCliente()        Returns the current record's "Cliente" value
  * @method Producto       getProducto()       Returns the current record's "Producto" value
  * @method Zona           getZona()           Returns the current record's "Zona" value
+ * @method Grupoprod      getGrupo()          Returns the current record's "Grupo" value
  * @method ListadoVentas  setId()             Sets the current record's "id" value
  * @method ListadoVentas  setResumenId()      Sets the current record's "resumen_id" value
  * @method ListadoVentas  setFecha()          Sets the current record's "fecha" value
@@ -69,11 +73,13 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method ListadoVentas  setSubTotal()       Sets the current record's "sub_total" value
  * @method ListadoVentas  setTotal()          Sets the current record's "total" value
  * @method ListadoVentas  setDetRemitoId()    Sets the current record's "det_remito_id" value
+ * @method ListadoVentas  setCantDev()        Sets the current record's "cant_dev" value
  * @method ListadoVentas  setDetalleResumen() Sets the current record's "DetalleResumen" value
  * @method ListadoVentas  setResumen()        Sets the current record's "Resumen" value
  * @method ListadoVentas  setCliente()        Sets the current record's "Cliente" value
  * @method ListadoVentas  setProducto()       Sets the current record's "Producto" value
  * @method ListadoVentas  setZona()           Sets the current record's "Zona" value
+ * @method ListadoVentas  setGrupo()          Sets the current record's "Grupo" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -160,6 +166,10 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('cant_dev', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -184,5 +194,10 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
              'foreign' => 'id'));
+
+        $this->hasOne('Grupoprod as Grupo', array(
+             'local' => 'grupoprod_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
     }
 }

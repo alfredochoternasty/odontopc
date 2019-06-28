@@ -12,29 +12,35 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @property string $color
  * @property Doctrine_Collection $Productos
  * @property Doctrine_Collection $DetLisPrecio
+ * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
  * @property Doctrine_Collection $ListaPrecioDetalle
  * @property Doctrine_Collection $DescuentoZona
+ * @property Doctrine_Collection $VentasZona
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getNombre()             Returns the current record's "nombre" value
  * @method string              getColor()              Returns the current record's "color" value
  * @method Doctrine_Collection getProductos()          Returns the current record's "Productos" collection
  * @method Doctrine_Collection getDetLisPrecio()       Returns the current record's "DetLisPrecio" collection
+ * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
  * @method Doctrine_Collection getListaPrecioDetalle() Returns the current record's "ListaPrecioDetalle" collection
  * @method Doctrine_Collection getDescuentoZona()      Returns the current record's "DescuentoZona" collection
+ * @method Doctrine_Collection getVentasZona()         Returns the current record's "VentasZona" collection
  * @method Grupoprod           setId()                 Sets the current record's "id" value
  * @method Grupoprod           setNombre()             Sets the current record's "nombre" value
  * @method Grupoprod           setColor()              Sets the current record's "color" value
  * @method Grupoprod           setProductos()          Sets the current record's "Productos" collection
  * @method Grupoprod           setDetLisPrecio()       Sets the current record's "DetLisPrecio" collection
+ * @method Grupoprod           setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Grupoprod           setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method Grupoprod           setControlStock()       Sets the current record's "ControlStock" collection
  * @method Grupoprod           setListaPrecioDetalle() Sets the current record's "ListaPrecioDetalle" collection
  * @method Grupoprod           setDescuentoZona()      Sets the current record's "DescuentoZona" collection
+ * @method Grupoprod           setVentasZona()         Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -74,6 +80,10 @@ abstract class BaseGrupoprod extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'grupoprod_id'));
 
+        $this->hasMany('ListadoVentas', array(
+             'local' => 'id',
+             'foreign' => 'grupoprod_id'));
+
         $this->hasMany('ListadoCompras', array(
              'local' => 'id',
              'foreign' => 'grupoprod_id'));
@@ -87,6 +97,10 @@ abstract class BaseGrupoprod extends sfDoctrineRecord
              'foreign' => 'grupo_id'));
 
         $this->hasMany('DescuentoZona', array(
+             'local' => 'id',
+             'foreign' => 'grupoprod_id'));
+
+        $this->hasMany('VentasZona', array(
              'local' => 'id',
              'foreign' => 'grupoprod_id'));
     }
