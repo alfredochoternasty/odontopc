@@ -28,6 +28,7 @@ generator:
         batch_actions: []
         actions:
           ver_totales: ~
+          ver_detallado: ~
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:

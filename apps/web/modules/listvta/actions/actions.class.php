@@ -16,16 +16,16 @@ class listvtaActions extends autoListvtaActions
 
   public function executeListVerTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);
-    $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    $this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    $this->redirect('listvta/filter');
+    //$this->filters = $this->configuration->getFilterForm($this->getFilters());
+    //$this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $this->redirect('listvta/index');
   }  
   
   public function executeListVerDetallado(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', false);
-    $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    $this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    $this->redirect('listvta/filter');
+    //$this->filters = $this->configuration->getFilterForm($this->getFilters());
+    //$this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $this->redirect('listvta/index');
   }
   
   public function executeListImprimirTodo(sfWebRequest $request){
