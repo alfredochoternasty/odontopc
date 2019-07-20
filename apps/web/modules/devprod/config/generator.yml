@@ -18,7 +18,7 @@ generator:
         Resumen: {label: Venta}
         resumen_id: {label: Venta}
         sfGuardUser: {label: Usuario}
-        cae_afip: {label: CAE}
+        cae_afip: {label: AFIP}
         cantidad: {label: Cant}
         nro_lote: {label: Lote}
       list:
@@ -26,7 +26,7 @@ generator:
         title: Productos Devueltos
         display: [fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
         actions:
-          _new: {label: Agregar Producto}
+          _new: {label: Nuevo}
           listado: ~        
         object_actions:
           _delete: {label: Eliminar}
@@ -34,7 +34,7 @@ generator:
           factura: {label: Enviar AFIP}
           imprimir: {label: Imprimir}
       filter:
-        display: [fecha, cliente_id, producto_id, nro_lote, resumen_id]
+        display: [fecha, cliente_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:

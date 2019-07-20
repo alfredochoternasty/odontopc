@@ -12,7 +12,22 @@
  */
 class DevProducto extends BaseDevProducto
 {
+	public function __toString()
+  {
+    return $this->getTipoFactura().' - '.str_pad($this->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->nro_factura, 8, 0, STR_PAD_LEFT);
+  }
+	
 	public function getFechaYMD(){
 		return str_replace('-', '', $this->fecha);
 	}
+	
+	function getSubTotal()
+	{
+		return $this->getPrecio() * $this->getCantidad();
+	}
+		
+	function getIVATotal()
+	{
+		return $this->getIVA() * $this->getCantidad();
+	}	
 }

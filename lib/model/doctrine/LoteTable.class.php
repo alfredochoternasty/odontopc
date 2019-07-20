@@ -20,7 +20,7 @@ class LoteTable extends Doctrine_Table
     public function retrieveConJoins(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Producto p');
-      $q->leftJoin($rootAlias . '.Compra c');
+      $q->leftJoin($rootAlias . '.Zona z');
       $q->where($rootAlias . ".nro_lote not like 'er%'");
       return $q;      
     }

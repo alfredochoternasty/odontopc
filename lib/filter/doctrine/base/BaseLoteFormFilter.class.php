@@ -14,7 +14,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'producto_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
-      'nro_lote'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DetalleResumen'), 'add_empty' => true)),
+      'nro_lote'    => new sfWidgetFormFilterInput(),
       'stock'       => new sfWidgetFormFilterInput(),
       'fecha_vto'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'compra_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'), 'add_empty' => true)),
@@ -25,7 +25,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'producto_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
-      'nro_lote'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('DetalleResumen'), 'column' => 'id')),
+      'nro_lote'    => new sfValidatorPass(array('required' => false)),
       'stock'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'fecha_vto'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'compra_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Compra'), 'column' => 'id')),
@@ -53,7 +53,7 @@ abstract class BaseLoteFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'          => 'Number',
       'producto_id' => 'ForeignKey',
-      'nro_lote'    => 'ForeignKey',
+      'nro_lote'    => 'Text',
       'stock'       => 'Number',
       'fecha_vto'   => 'Date',
       'compra_id'   => 'ForeignKey',

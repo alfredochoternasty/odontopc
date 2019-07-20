@@ -170,15 +170,15 @@ select
   detalle_resumen.sub_total,
   detalle_resumen.total,
   detalle_resumen.det_remito_id,
-	(select sum(cantidad) 	from dev_producto where detalle_resumen.producto_id = dev_producto.producto_id and detalle_resumen.nro_lote and dev_producto.nro_lote and resumen.id = dev_producto.resumen_id) as cant_dev
+	(select sum(cantidad) from dev_producto where detalle_resumen.producto_id = dev_producto.producto_id and detalle_resumen.nro_lote and dev_producto.nro_lote and resumen.id = dev_producto.resumen_id) as cant_dev
 from
   resumen
     left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
     left join producto on detalle_resumen.producto_id = producto.id
 where
   producto.grupoprod_id not in (1, 15)
-  and resumen.tipofactura_id <> 4
   and detalle_resumen.nro_lote not in (select nro_lote from lotes_romi)
+	and ((detalle_resumen.det_remito_id is not null and resumen.zona_id <> 1) or (resumen.zona_id = 1))
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   

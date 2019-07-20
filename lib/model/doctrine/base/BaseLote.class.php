@@ -19,9 +19,9 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @property Compra $Compra
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
- * @property Doctrine_Collection $DetalleResumen
  * @property Zona $Zona
  * @property Doctrine_Collection $DetalleCompra
+ * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $DevProducto
  * 
  * @method integer             getId()             Returns the current record's "id" value
@@ -36,9 +36,9 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method Compra              getCompra()         Returns the current record's "Compra" value
  * @method Producto            getProducto()       Returns the current record's "Producto" value
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
- * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
  * @method Zona                getZona()           Returns the current record's "Zona" value
  * @method Doctrine_Collection getDetalleCompra()  Returns the current record's "DetalleCompra" collection
+ * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
  * @method Lote                setId()             Sets the current record's "id" value
  * @method Lote                setProductoId()     Sets the current record's "producto_id" value
@@ -52,9 +52,9 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method Lote                setCompra()         Sets the current record's "Compra" value
  * @method Lote                setProducto()       Sets the current record's "Producto" value
  * @method Lote                setSfGuardUser()    Sets the current record's "sfGuardUser" value
- * @method Lote                setDetalleResumen() Sets the current record's "DetalleResumen" collection
  * @method Lote                setZona()           Sets the current record's "Zona" value
  * @method Lote                setDetalleCompra()  Sets the current record's "DetalleCompra" collection
+ * @method Lote                setDetalleResumen() Sets the current record's "DetalleResumen" collection
  * @method Lote                setDevProducto()    Sets the current record's "DevProducto" collection
  * 
  * @package    odontopc
@@ -125,16 +125,16 @@ abstract class BaseLote extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
-        $this->hasMany('DetalleResumen', array(
-             'local' => 'nro_lote',
-             'foreign' => 'nro_lote'));
-
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
         $this->hasMany('DetalleCompra', array(
+             'local' => 'id',
+             'foreign' => 'lote_id'));
+
+        $this->hasMany('DetalleResumen', array(
              'local' => 'id',
              'foreign' => 'lote_id'));
 

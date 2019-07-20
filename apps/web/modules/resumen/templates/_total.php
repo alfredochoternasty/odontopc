@@ -1,3 +1,1 @@
-<?php
-//echo sprintf($resumen->getLista()->getMoneda()->getSimbolo()." %01.2f", $resumen->getTotalResumen());
-?>
+<?php echo '$ '. $resumen->getTotalResumen(); ?>

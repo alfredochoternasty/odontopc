@@ -29,6 +29,6 @@ class ListadoVentasFormFilter extends BaseListadoVentasFormFilter
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));	
 	
 		$this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
-		$this->validatorSchema['nro_lote'] = new sfValidatorString(array('required' => false));
+		$this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
   }
 }

@@ -89,7 +89,7 @@ return $this->renderText($resultado);
 				$objCobro->setCobroId($cobro->getId());
 				$objCobro->setResumenId($resumen->getId());
 				
-				if($monto >= $saldo_resumen){
+				if(($monto + 1) >= $saldo_resumen){
 					$objCobro->setMonto($saldo_resumen);
 					$monto = $monto - $saldo_resumen;
 					$resumen->pagado = 1;

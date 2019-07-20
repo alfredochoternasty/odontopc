@@ -141,7 +141,7 @@ class devprodActions extends autoDevprodActions
     $dompdf->load_html($this->getPartial("imprimir", array("dev_producto" => $dev_producto)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
-    $dompdf->stream("nota_debito.pdf");    
+    $dompdf->stream($dev_producto.".pdf");    
 		$this->forward('dev_producto', 'index');
     return sfView::NONE;
   }  

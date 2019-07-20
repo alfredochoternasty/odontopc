@@ -14,22 +14,26 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'producto_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
+      'nombre'         => new sfWidgetFormFilterInput(),
       'grupoprod_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true)),
       'nro_lote'       => new sfWidgetFormFilterInput(),
       'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'comprados'      => new sfWidgetFormFilterInput(),
       'vendidos'       => new sfWidgetFormFilterInput(),
       'stock_guardado' => new sfWidgetFormFilterInput(),
+      'minimo_stock'   => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'producto_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
+      'nombre'         => new sfValidatorPass(array('required' => false)),
       'grupoprod_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Grupo'), 'column' => 'id')),
       'nro_lote'       => new sfValidatorPass(array('required' => false)),
       'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
       'comprados'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'vendidos'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'stock_guardado' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'minimo_stock'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock_filters[%s]');
@@ -51,12 +55,14 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'             => 'Number',
       'producto_id'    => 'ForeignKey',
+      'nombre'         => 'Text',
       'grupoprod_id'   => 'ForeignKey',
       'nro_lote'       => 'Text',
       'zona_id'        => 'ForeignKey',
       'comprados'      => 'Number',
       'vendidos'       => 'Number',
       'stock_guardado' => 'Number',
+      'minimo_stock'   => 'Number',
     );
   }
 }

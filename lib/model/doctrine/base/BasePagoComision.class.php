@@ -14,7 +14,7 @@ Doctrine_Manager::getInstance()->bindComponent('PagoComision', 'doctrine');
  * @property decimal $monto
  * @property integer $tipo_id
  * @property integer $banco_id
- * @property integer $numero
+ * @property string $referencia
  * @property date $fecha_vto
  * @property string $observacion
  * @property integer $nro_recibo
@@ -31,7 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('PagoComision', 'doctrine');
  * @method decimal       getMonto()         Returns the current record's "monto" value
  * @method integer       getTipoId()        Returns the current record's "tipo_id" value
  * @method integer       getBancoId()       Returns the current record's "banco_id" value
- * @method integer       getNumero()        Returns the current record's "numero" value
+ * @method string        getReferencia()    Returns the current record's "referencia" value
  * @method date          getFechaVto()      Returns the current record's "fecha_vto" value
  * @method string        getObservacion()   Returns the current record's "observacion" value
  * @method integer       getNroRecibo()     Returns the current record's "nro_recibo" value
@@ -47,7 +47,7 @@ Doctrine_Manager::getInstance()->bindComponent('PagoComision', 'doctrine');
  * @method PagoComision  setMonto()         Sets the current record's "monto" value
  * @method PagoComision  setTipoId()        Sets the current record's "tipo_id" value
  * @method PagoComision  setBancoId()       Sets the current record's "banco_id" value
- * @method PagoComision  setNumero()        Sets the current record's "numero" value
+ * @method PagoComision  setReferencia()    Sets the current record's "referencia" value
  * @method PagoComision  setFechaVto()      Sets the current record's "fecha_vto" value
  * @method PagoComision  setObservacion()   Sets the current record's "observacion" value
  * @method PagoComision  setNroRecibo()     Sets the current record's "nro_recibo" value
@@ -105,9 +105,9 @@ abstract class BasePagoComision extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('numero', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
+        $this->hasColumn('referencia', 'string', 50, array(
+             'type' => 'string',
+             'length' => 50,
              ));
         $this->hasColumn('fecha_vto', 'date', 25, array(
              'type' => 'date',
@@ -128,7 +128,8 @@ abstract class BasePagoComision extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Cliente as Revendedor', array(
              'local' => 'revendedor_id',
-             'foreign' => 'id'));
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
 
         $this->hasOne('TipoCobroPago as Tipo', array(
              'local' => 'tipo_id',

@@ -17,7 +17,7 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
       list:
         title: Pago de Comisiones
-        display: [fecha, Revendedor, monto, tipo]
+        display: [fecha, Revendedor, _monto, Tipo, Banco, referencia, observacion]
         actions: []
         object_actions:
             _delete: ~
@@ -27,5 +27,6 @@ generator:
       filter:  ~
       form:    ~
       edit:
-        title: Completar informacion del pago
+        title: Completar informacion del pago a %%Revendedor%%
+        display: [fecha, monto, moneda_id, monto, tipo_id, banco_id, referencia, observacion]
       new:     ~

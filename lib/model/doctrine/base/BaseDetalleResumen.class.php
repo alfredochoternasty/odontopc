@@ -32,9 +32,9 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property ListaPrecio $Lista
  * @property TipoMoneda $Moneda
  * @property DetalleResumen $DetalleRemito
+ * @property VentasZona $VentasZona
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $ListadoVentas
- * @property Doctrine_Collection $VentasZona
  * 
  * @method integer             getId()               Returns the current record's "id" value
  * @method integer             getResumenId()        Returns the current record's "resumen_id" value
@@ -61,9 +61,9 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method ListaPrecio         getLista()            Returns the current record's "Lista" value
  * @method TipoMoneda          getMoneda()           Returns the current record's "Moneda" value
  * @method DetalleResumen      getDetalleRemito()    Returns the current record's "DetalleRemito" value
+ * @method VentasZona          getVentasZona()       Returns the current record's "VentasZona" value
  * @method Doctrine_Collection getDetalleResumen()   Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getListadoVentas()    Returns the current record's "ListadoVentas" collection
- * @method Doctrine_Collection getVentasZona()       Returns the current record's "VentasZona" collection
  * @method DetalleResumen      setId()               Sets the current record's "id" value
  * @method DetalleResumen      setResumenId()        Sets the current record's "resumen_id" value
  * @method DetalleResumen      setProductoId()       Sets the current record's "producto_id" value
@@ -89,9 +89,9 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setLista()            Sets the current record's "Lista" value
  * @method DetalleResumen      setMoneda()           Sets the current record's "Moneda" value
  * @method DetalleResumen      setDetalleRemito()    Sets the current record's "DetalleRemito" value
+ * @method DetalleResumen      setVentasZona()       Sets the current record's "VentasZona" value
  * @method DetalleResumen      setDetalleResumen()   Sets the current record's "DetalleResumen" collection
  * @method DetalleResumen      setListadoVentas()    Sets the current record's "ListadoVentas" collection
- * @method DetalleResumen      setVentasZona()       Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -236,6 +236,11 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
+        $this->hasOne('VentasZona', array(
+             'local' => 'id',
+             'foreign' => 'detalle_resumen_id',
+             'onDelete' => 'RESTRICT'));
+
         $this->hasMany('DetalleResumen', array(
              'local' => 'id',
              'foreign' => 'det_remito_id'));
@@ -243,9 +248,5 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
         $this->hasMany('ListadoVentas', array(
              'local' => 'id',
              'foreign' => 'id'));
-
-        $this->hasMany('VentasZona', array(
-             'local' => 'id',
-             'foreign' => 'detalle_resumen_id'));
     }
 }

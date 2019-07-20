@@ -16,7 +16,7 @@ generator:
       fields:
         fecha_vto: {label: Vto. Lote, help: Fecha de Vencimiento del lote, date_format: dd/MM/yyyy }
         compra_id: {label: Compra, help: La compra en la que ingreso este numero de lote}
-        lote_nro: {label: Lote}
+        nro_lote: {label: Lote}
         stock: {help: stock actual de lote}
         SfGuardUser: {label: Usuario}
       list:
@@ -27,11 +27,11 @@ generator:
           _edit: {label: Modificar}
           _delete: {label: Eliminar}
         batch_actions: []
-        actions:
-          imprimir: ~
+        actions: ~
       filter:
-        display: [producto_id, lote_nro, fecha_vto, zona_id]
+        display: [producto_id, nro_lote, fecha_vto, zona_id]
       form:    ~
       edit:
         title: Modificar lote
+        display: [producto_id, nro_lote, stock, fecha_vto, zona_id]
       new:     ~

@@ -42,15 +42,14 @@ class ProductoTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->addSelect('r.nombre');
       $q->addSelect('r.minimo_stock');
-      $q->addSelect('sum(cs.stock_guardado) as stock');
-      $q->leftJoin($rootAlias . '.ControlStock cs');
-      $q->where('grupoprod_id <> 1');
-      $q->andWhere('grupoprod_id <> 15');     
-			$q->andWhere('activo = 1');
-			$q->andWhere('zona_id = 1');
-			$q->andWhere('exists(select 1 from usuario_zona where zona_id = 1 and usuario = '.$id.')');
+      $q->addSelect('sum(l.stock) as stock');
+      $q->leftJoin($rootAlias . '.Lote l');
+			$q->leftJoin('l.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');
+      $q->where('activo = 1 and grupoprod_id not in (1,15)');
+			$q->andWhere('uz.usuario = '.$id);
 			$q->groupBy('r.nombre, r.minimo_stock');
-			$q->having('sum(stock_guardado) <= r.minimo_stock and sum(stock_guardado) > 0');
+			$q->having('sum(stock) <= r.minimo_stock and sum(stock) > 0');
 			
       return $q;
     }

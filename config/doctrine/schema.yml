@@ -321,6 +321,7 @@ DetalleResumen:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Lote: {type: one, local: lote_id, onDelete: RESTRICT}
     DetalleRemito: {type: one, class: DetalleResumen, local: det_remito_id, foreign: id, onDelete: RESTRICT}
+    VentasZona: {type: one, class: VentasZona, local: id, foreign: detalle_resumen_id, onDelete: RESTRICT}
 Localidad:
   connection: doctrine
   tableName: localidad
@@ -597,7 +598,6 @@ Lote:
     Compra: {type: one, local: compra_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
-    DetalleResumen: {type: many, class: DetalleResumen, local: nro_lote, foreign: nro_lote}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 ClienteUltimaCompra:
   connection: doctrine
@@ -652,13 +652,15 @@ ControlStock:
   tableName: control_stock
   columns:
     id: {type: integer(4), primary: true}
-    producto_id: {type: string(50)}
+    producto_id: {type: integer(4)}
+    nombre: {type: string(50)}
     grupoprod_id: {type: integer(4)}
     nro_lote: {type: string(255)}
     zona_id: {type: integer(4)}
     comprados: {type: integer(4)}
     vendidos: {type: integer(4)}
     stock_guardado: {type: integer(4)}
+    minimo_stock: {type: integer(4)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
@@ -899,12 +901,12 @@ PagoComision:
     monto: {type: 'decimal(10, 2)', notnull: true, default: 1}
     tipo_id: {type: integer(4), notnull: true}
     banco_id: {type: integer(4)}
-    numero: {type: integer(4)}
+    referencia: {type: string(50)}
     fecha_vto: {type: date(25)}
     observacion: {type: string(200)}
     nro_recibo: {type: integer(4)}
   relations:
-    Revendedor: {type: one, class: Cliente, local: revendedor_id}
+    Revendedor: {type: one, class: Cliente, local: revendedor_id, onDelete: RESTRICT}
     Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
-    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
-    Banco: {type: one, local: banco_id, onDelete: RESTRICT}
+    Moneda: {type: one, class: TipoMoneda, local: moneda_id, onDelete: RESTRICT}
+    Banco: {type: one, class: Banco, local: banco_id, onDelete: RESTRICT}

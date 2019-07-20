@@ -199,8 +199,8 @@ class detresActions extends autoDetresActions
     $dompdf->load_html($this->getPartial("imprimir", array("resumen" => $resumen)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
-    $dompdf->stream("reporte.pdf");    
-	$this->forward('resumen', 'index');
+    $dompdf->stream($resumen.".pdf");    
+		$this->forward('resumen', 'index');
     return sfView::NONE;
   }
   
