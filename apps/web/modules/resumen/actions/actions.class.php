@@ -25,7 +25,7 @@ class resumenActions extends autoResumenActions
     $resumen = Doctrine::getTable('Resumen')->find($this->getRequestParameter('id'));
     
     $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array('info@odontovta.net23.net' => 'NTI implantes'));
+    //$mensaje->setFrom(array('info@odontovta.net23.net' => 'NTI implantes'));
     $mensaje->setTo($resumen->getCliente()->getEmail());
     $mensaje->setSubject('Factura - NTI Implantes');
 
@@ -34,9 +34,9 @@ class resumenActions extends autoResumenActions
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
 	
-	$factura = $dompdf->output();
-	$adjunto = new Swift_Attachment($factura, $resumen->getFactura().'.pdf', 'application/pdf');
-	$mensaje->attach($adjunto);
+		$factura = $dompdf->output();
+		$adjunto = new Swift_Attachment($factura, $resumen->getFactura().'.pdf', 'application/pdf');
+		$mensaje->attach($adjunto);
     $this->getMailer()->send($mensaje);
     
     $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$resumen->getCliente()->getEmail());

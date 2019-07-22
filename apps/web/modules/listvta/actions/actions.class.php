@@ -45,8 +45,8 @@ class listvtaActions extends autoListvtaActions
   public function executeListImprimirPagina(sfWebRequest $request){
     $filtro = new ListadoVentasFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());	
-	$pagina = $this->getUser()->getAttribute('listvta.page', '1', 'admin_module')-1;
-	$consulta->limit(50)->offset($pagina * 50);
+		$pagina = $this->getUser()->getAttribute('listvta.page', '1', 'admin_module')-1;
+		$consulta->limit(50)->offset($pagina * 50);
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();

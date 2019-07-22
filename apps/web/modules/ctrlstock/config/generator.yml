@@ -28,7 +28,8 @@ generator:
         object_actions: []
         batch_actions: []
         actions:
-          imprimir: ~     
+          imprimir_todo: ~     
+          imprimir_pagina: ~     
       filter:
         display: [grupoprod_id, producto_id, nro_lote, zona_id]
       form:    ~
