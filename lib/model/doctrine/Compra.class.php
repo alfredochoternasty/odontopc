@@ -14,7 +14,7 @@ class Compra extends BaseCompra
 {
   public function __toString()
   {
-        return 'Nro: '.$this->getNumero().' - Fecha: '.$this->getFecha();
+        return 'Nro: '.$this->getNumero();//.' - Fecha: '.$this->getFecha();
   }
   
   public function SimboloMoneda(){

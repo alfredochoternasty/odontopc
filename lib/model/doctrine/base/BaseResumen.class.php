@@ -48,6 +48,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Resumen $Resumen
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $CobroResumen
+ * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $VentasZona
  * 
@@ -92,6 +93,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             getResumen()          Returns the current record's "Resumen" value
  * @method Doctrine_Collection getListadoVentas()    Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getCobroResumen()     Returns the current record's "CobroResumen" collection
+ * @method Doctrine_Collection getProductoTraza()    Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getFacturasAfip()     Returns the current record's "FacturasAfip" collection
  * @method Doctrine_Collection getVentasZona()       Returns the current record's "VentasZona" collection
  * @method Resumen             setId()               Sets the current record's "id" value
@@ -135,6 +137,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setResumen()          Sets the current record's "Resumen" value
  * @method Resumen             setListadoVentas()    Sets the current record's "ListadoVentas" collection
  * @method Resumen             setCobroResumen()     Sets the current record's "CobroResumen" collection
+ * @method Resumen             setProductoTraza()    Sets the current record's "ProductoTraza" collection
  * @method Resumen             setFacturasAfip()     Sets the current record's "FacturasAfip" collection
  * @method Resumen             setVentasZona()       Sets the current record's "VentasZona" collection
  * 
@@ -326,6 +329,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'foreign' => 'resumen_id'));
 
         $this->hasMany('CobroResumen', array(
+             'local' => 'id',
+             'foreign' => 'resumen_id'));
+
+        $this->hasMany('ProductoTraza', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
 

@@ -18,14 +18,14 @@ class listvtaActions extends autoListvtaActions
     $this->getUser()->setAttribute('totales', true);
     //$this->filters = $this->configuration->getFilterForm($this->getFilters());
     //$this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    $this->redirect('listvta/index');
+    $this->redirect('listvta/index?page=1');
   }  
   
   public function executeListVerDetallado(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', false);
     //$this->filters = $this->configuration->getFilterForm($this->getFilters());
     //$this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    $this->redirect('listvta/index');
+    $this->redirect('listvta/index?page=1');
   }
   
   public function executeListImprimirTodo(sfWebRequest $request){

@@ -3,7 +3,7 @@
 dev:
   mailer:
     param:      
-      delivery_strategy: single_address
+      delivery_strategy: realtime
       #delivery_strategy: none
       delivery_address:  alfredochoternasty@gmail.com
       transport:

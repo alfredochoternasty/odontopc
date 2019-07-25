@@ -15,15 +15,14 @@ generator:
       actions: ~
       fields:
         nro_lote: { label: lote }
-        nro_venta: { label: Venta }
-        numero: { label: Compra }
+        Resumen: { label: Venta }
         fecha_vto: { date_format: dd/MM/yyyy }
         fecha_venta: { date_format: dd/MM/yyyy }
         fecha_compra: { date_format: dd/MM/yyyy }
       list:
         table_method: retrieveConJoins
         title: Traza de Productos Vendidos
-        display: [codigo, Producto, cant_vendida, nro_lote, fecha_vto, nro_venta, fecha_venta, Cliente, fecha_compra, Proveedor, numero]
+        display: [codigo, Producto, cant_vendida, nro_lote, fecha_vto, Resumen, fecha_venta, Cliente, fecha_compra, Proveedor, Compra]
         max_per_page: 50
         object_actions: []
         batch_actions: []

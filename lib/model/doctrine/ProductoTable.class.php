@@ -38,20 +38,37 @@ class ProductoTable extends Doctrine_Table
     }
     
     public function ProdutosSinStock(Doctrine_Query $q){
+			// $id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+      // $rootAlias = $q->getRootAlias();
+      // $q->addSelect('r.nombre');
+      // $q->addSelect('r.minimo_stock');
+      // $q->addSelect('sum(l.stock) as stock');
+      // $q->leftJoin($rootAlias . '.Lote l');
+			// $q->leftJoin('l.Zona z');
+			// $q->leftJoin('z.UsuarioZona uz');
+      // $q->where('activo = 1 and grupoprod_id not in (1,15)');
+			// $q->andWhere('uz.usuario = '.$id);
+			// $q->groupBy('r.nombre, r.minimo_stock');
+			// $q->having('sum(stock) <= r.minimo_stock and sum(stock) > 0');
+			
+      // return $q;
+			
+			
+			
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
       $q->addSelect('r.nombre');
       $q->addSelect('r.minimo_stock');
       $q->addSelect('sum(l.stock) as stock');
       $q->leftJoin($rootAlias . '.Lote l');
-			$q->leftJoin('l.Zona z');
-			$q->leftJoin('z.UsuarioZona uz');
-      $q->where('activo = 1 and grupoprod_id not in (1,15)');
+      $q->leftJoin('l.Zona z');
+      $q->leftJoin('z.UsuarioZona uz');
+      $q->where('grupoprod_id <> 1 and grupoprod_id <> 15 and activo = 1');
 			$q->andWhere('uz.usuario = '.$id);
 			$q->groupBy('r.nombre, r.minimo_stock');
-			$q->having('sum(stock) <= r.minimo_stock and sum(stock) > 0');
+			$q->having('sum(l.stock) <= r.minimo_stock');
 			
-      return $q;
+      return $q;			
     }
 
     static public function getArrayActivos(){

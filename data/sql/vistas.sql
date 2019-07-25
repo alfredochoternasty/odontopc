@@ -182,38 +182,27 @@ where
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   
-CREATE VIEW listado_compras (
-  id, compra_id, numero, fecha, moneda_id, moneda_nombre, prov_id, prov_raz_soc, producto_id, precio, cantidad, total, producto_nombre, grupoprod_id, grupo_nombre, nro_lote, grupo2, grupo3
-) AS 
+CREATE VIEW listado_compras AS 
 select
-  FLOOR(1+(RAND()*999999999999)),
+  detalle_compra.id,
   compra.id,
-  compra.numero,
   compra.fecha,
-  compra.moneda_id,
-  tipo_moneda.nombre,
   proveedor.id,
-  proveedor.razon_social,
   detalle_compra.producto_id,
   detalle_compra.precio,
   detalle_compra.cantidad,
   detalle_compra.total,
-  producto.nombre,
   producto.grupoprod_id,
-  grupoprod.nombre,
   detalle_compra.nro_lote,
-  producto.grupo2,
-  producto.grupo3
+	compra.zona_id
 from
   compra
-    left join tipo_moneda on compra.moneda_id = tipo_moneda.id
-    left join proveedor on compra.proveedor_id = proveedor.id
     left join detalle_compra on compra.id = detalle_compra.compra_id
     left join producto on detalle_compra.producto_id = producto.id
-    left join grupoprod on producto.grupoprod_id = grupoprod.id
-where  detalle_compra.nro_lote not in (select nro_lote from lotes_romi)
+where
+	detalle_compra.nro_lote not in (select nro_lote from lotes_romi)
 order by
-  producto.grupoprod_id, producto.orden_grupo, producto.nombre;
+  producto.grupoprod_id, producto.orden_grupo;
 
 CREATE VIEW control_stock (
  id,

@@ -81,6 +81,8 @@
 					$suma_total_bon = 0;
 					$suma_total_dev = 0;
 					foreach ($pager->getResults() as $vtas) {
+						// $vtas = $pager->getNext();
+						//echo $vtas->producto_id.'xx<br>';
 						if (empty($ventas[$vtas->producto_id])) {
 							$ventas[$vtas->producto_id] = array(
 								'grupo' => $vtas->getGrupo(),
@@ -140,12 +142,3 @@
 
   <?php endif; ?>
 </div>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-function checkAll()
-{
-  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
-}
-/* ]]> */
-</script>

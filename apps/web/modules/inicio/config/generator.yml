@@ -19,7 +19,7 @@ generator:
       list:
         title: Productos con Stock por debajo del Mínimo
         table_method: ProdutosSinStock
-        max_per_page: 20
+        max_per_page: 10
         display: [nombre, stock_guardado, minimo_stock]
         object_actions: {}
         batch_actions: {}

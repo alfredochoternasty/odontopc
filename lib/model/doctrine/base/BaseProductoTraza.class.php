@@ -12,56 +12,62 @@ Doctrine_Manager::getInstance()->bindComponent('ProductoTraza', 'doctrine');
  * @property string $codigo
  * @property string $nro_lote
  * @property date $fecha_vto
- * @property integer $nro_venta
+ * @property integer $resumen_id
  * @property date $fecha_venta
  * @property integer $cliente_id
  * @property string $apellido
  * @property string $nombre
  * @property date $fecha_compra
  * @property integer $proveedor_id
- * @property integer $numero
+ * @property integer $compra_id
  * @property integer $cant_vendida
  * @property integer $cant_comprada
  * @property Proveedor $Proveedor
  * @property Cliente $Cliente
  * @property Producto $Producto
+ * @property Resumen $Resumen
+ * @property Compra $Compra
  * 
  * @method integer       getId()            Returns the current record's "id" value
  * @method integer       getProductoId()    Returns the current record's "producto_id" value
  * @method string        getCodigo()        Returns the current record's "codigo" value
  * @method string        getNroLote()       Returns the current record's "nro_lote" value
  * @method date          getFechaVto()      Returns the current record's "fecha_vto" value
- * @method integer       getNroVenta()      Returns the current record's "nro_venta" value
+ * @method integer       getResumenId()     Returns the current record's "resumen_id" value
  * @method date          getFechaVenta()    Returns the current record's "fecha_venta" value
  * @method integer       getClienteId()     Returns the current record's "cliente_id" value
  * @method string        getApellido()      Returns the current record's "apellido" value
  * @method string        getNombre()        Returns the current record's "nombre" value
  * @method date          getFechaCompra()   Returns the current record's "fecha_compra" value
  * @method integer       getProveedorId()   Returns the current record's "proveedor_id" value
- * @method integer       getNumero()        Returns the current record's "numero" value
+ * @method integer       getCompraId()      Returns the current record's "compra_id" value
  * @method integer       getCantVendida()   Returns the current record's "cant_vendida" value
  * @method integer       getCantComprada()  Returns the current record's "cant_comprada" value
  * @method Proveedor     getProveedor()     Returns the current record's "Proveedor" value
  * @method Cliente       getCliente()       Returns the current record's "Cliente" value
  * @method Producto      getProducto()      Returns the current record's "Producto" value
+ * @method Resumen       getResumen()       Returns the current record's "Resumen" value
+ * @method Compra        getCompra()        Returns the current record's "Compra" value
  * @method ProductoTraza setId()            Sets the current record's "id" value
  * @method ProductoTraza setProductoId()    Sets the current record's "producto_id" value
  * @method ProductoTraza setCodigo()        Sets the current record's "codigo" value
  * @method ProductoTraza setNroLote()       Sets the current record's "nro_lote" value
  * @method ProductoTraza setFechaVto()      Sets the current record's "fecha_vto" value
- * @method ProductoTraza setNroVenta()      Sets the current record's "nro_venta" value
+ * @method ProductoTraza setResumenId()     Sets the current record's "resumen_id" value
  * @method ProductoTraza setFechaVenta()    Sets the current record's "fecha_venta" value
  * @method ProductoTraza setClienteId()     Sets the current record's "cliente_id" value
  * @method ProductoTraza setApellido()      Sets the current record's "apellido" value
  * @method ProductoTraza setNombre()        Sets the current record's "nombre" value
  * @method ProductoTraza setFechaCompra()   Sets the current record's "fecha_compra" value
  * @method ProductoTraza setProveedorId()   Sets the current record's "proveedor_id" value
- * @method ProductoTraza setNumero()        Sets the current record's "numero" value
+ * @method ProductoTraza setCompraId()      Sets the current record's "compra_id" value
  * @method ProductoTraza setCantVendida()   Sets the current record's "cant_vendida" value
  * @method ProductoTraza setCantComprada()  Sets the current record's "cant_comprada" value
  * @method ProductoTraza setProveedor()     Sets the current record's "Proveedor" value
  * @method ProductoTraza setCliente()       Sets the current record's "Cliente" value
  * @method ProductoTraza setProducto()      Sets the current record's "Producto" value
+ * @method ProductoTraza setResumen()       Sets the current record's "Resumen" value
+ * @method ProductoTraza setCompra()        Sets the current record's "Compra" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -95,7 +101,7 @@ abstract class BaseProductoTraza extends sfDoctrineRecord
              'type' => 'date',
              'length' => 25,
              ));
-        $this->hasColumn('nro_venta', 'integer', 4, array(
+        $this->hasColumn('resumen_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
@@ -123,7 +129,7 @@ abstract class BaseProductoTraza extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('numero', 'integer', 4, array(
+        $this->hasColumn('compra_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
@@ -152,6 +158,16 @@ abstract class BaseProductoTraza extends sfDoctrineRecord
 
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Resumen', array(
+             'local' => 'resumen_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Compra', array(
+             'local' => 'compra_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }
