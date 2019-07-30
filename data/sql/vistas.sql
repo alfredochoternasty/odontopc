@@ -187,7 +187,7 @@ select
   detalle_compra.id,
   compra.id,
   compra.fecha,
-  proveedor.id,
+  compra.proveedor_id,
   detalle_compra.producto_id,
   detalle_compra.precio,
   detalle_compra.cantidad,

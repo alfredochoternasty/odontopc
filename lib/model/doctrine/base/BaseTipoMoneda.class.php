@@ -19,7 +19,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property Doctrine_Collection $CtaCte
  * @property Doctrine_Collection $ListaPrecio
  * @property Doctrine_Collection $ListadoCobros
- * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ClienteSaldo
  * @property Doctrine_Collection $ListaPrecioDetalle
  * @property Doctrine_Collection $PagoComision
@@ -36,7 +35,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method Doctrine_Collection getCtaCte()             Returns the current record's "CtaCte" collection
  * @method Doctrine_Collection getListaPrecio()        Returns the current record's "ListaPrecio" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
- * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getClienteSaldo()       Returns the current record's "ClienteSaldo" collection
  * @method Doctrine_Collection getListaPrecioDetalle() Returns the current record's "ListaPrecioDetalle" collection
  * @method Doctrine_Collection getPagoComision()       Returns the current record's "PagoComision" collection
@@ -52,7 +50,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method TipoMoneda          setCtaCte()             Sets the current record's "CtaCte" collection
  * @method TipoMoneda          setListaPrecio()        Sets the current record's "ListaPrecio" collection
  * @method TipoMoneda          setListadoCobros()      Sets the current record's "ListadoCobros" collection
- * @method TipoMoneda          setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method TipoMoneda          setClienteSaldo()       Sets the current record's "ClienteSaldo" collection
  * @method TipoMoneda          setListaPrecioDetalle() Sets the current record's "ListaPrecioDetalle" collection
  * @method TipoMoneda          setPagoComision()       Sets the current record's "PagoComision" collection
@@ -122,10 +119,6 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
         $this->hasMany('ListadoCobros', array(
              'local' => 'id',
              'foreign' => 'moneda'));
-
-        $this->hasMany('ListadoCompras', array(
-             'local' => 'id',
-             'foreign' => 'moneda_id'));
 
         $this->hasMany('ClienteSaldo', array(
              'local' => 'id',

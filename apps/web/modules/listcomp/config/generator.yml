@@ -16,22 +16,19 @@ generator:
       fields:
         compra_id: { label: compra}
         fecha: { date_format: dd/MM/yyyy }
-        prov_raz_soc: { label: Proveedor}
-        grupo_nombre: { label: Grupo}
         cantidad: { label: Cant.}
-        producto_nombre: { label: Producto}
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
       list:
         title: Listado de Compras
-        display: [compra_id, numero, fecha, Moneda, prov_raz_soc, grupo_nombre, producto_nombre, _precio, cantidad, _total, nro_lote]
-        max_per_page: 99999
+        display: [Zona, Proveedor, Compra, fecha, Producto, cantidad, nro_lote]
+        max_per_page: 50
         object_actions: []
         batch_actions: []
         actions:
           imprimir: ~        
       filter:
-        display: [numero, fecha, moneda_id, prov_id, grupoprod_id, producto_id, nro_lote, grupo2, grupo3]
+        display: [proveedor_id, fecha, producto_id, nro_lote, zona_id]
       form:    ~
       edit:    ~
       new:     ~

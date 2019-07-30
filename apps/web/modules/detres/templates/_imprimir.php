@@ -133,9 +133,8 @@
 		<tr><td colspan="3" style="text-align:center;"><b>Pág. <span class="pagenum"></span> de <?php echo floor(count($resumen->getDetalle())/15)+1 ?></b></td></tr>
 		<tr>
 			<td style="width:60%; text-align:center;">
-				<img src="http://localhost/odontopc/web/afip.png">
+				<img src="http://ventas.ntiimplantes.com.ar/web/afip.png">
 				<br>
-				&nbsp;&nbsp;&nbsp;<img src="http://localhost/odontopc/web/newsample.php">
 				<?php
 					$nro = '30712272461'.str_pad($resumen->getTipoFactura()->cod_tipo_afip, 2, "0", STR_PAD_LEFT).str_pad($resumen->pto_vta, 4, "0", STR_PAD_LEFT).$resumen->getAfipCae().implode('', explode('-', $resumen->getAfipVtoCae()));
 					$suma_par = $suma_impar = 0;
@@ -151,8 +150,9 @@
 					$total = $suma_par + $suma_impar;
 					$d_v = 10 - ($total % 10);
 					if ($d_v == 10) $d_v = 0;
-					echo $nro.$d_v;
 				?>
+				&nbsp;&nbsp;&nbsp;<img src="http://ventas.ntiimplantes.com.ar/web/codigo.php?nro=<?php echo echo $nro.$d_v; ?>">
+				<?php echo $nro.$d_v; ?>
 			</td>
 			<td style="width:40%; font-size:14px;">
 				<b>CAE N&ordm;: </b><?php echo $resumen->getAfipCae() ?><br>

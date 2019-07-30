@@ -126,6 +126,6 @@ abstract class BaseProveedor extends sfDoctrineRecord
 
         $this->hasMany('ListadoCompras', array(
              'local' => 'id',
-             'foreign' => 'prov_id'));
+             'foreign' => 'proveedor_id'));
     }
 }

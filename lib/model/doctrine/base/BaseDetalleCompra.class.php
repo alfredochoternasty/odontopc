@@ -174,6 +174,6 @@ abstract class BaseDetalleCompra extends sfDoctrineRecord
 
         $this->hasMany('ListadoCompras', array(
              'local' => 'id',
-             'foreign' => 'compra_id'));
+             'foreign' => 'id'));
     }
 }
