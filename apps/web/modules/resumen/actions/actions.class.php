@@ -25,7 +25,7 @@ class resumenActions extends autoResumenActions
     $resumen = Doctrine::getTable('Resumen')->find($this->getRequestParameter('id'));
     
     $mensaje = Swift_Message::newInstance();
-    //$mensaje->setFrom(array('info@odontovta.net23.net' => 'NTI implantes'));
+    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
     $mensaje->setTo($resumen->getCliente()->getEmail());
     $mensaje->setSubject('Factura - NTI Implantes');
 

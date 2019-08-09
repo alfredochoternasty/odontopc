@@ -151,7 +151,7 @@
 					$d_v = 10 - ($total % 10);
 					if ($d_v == 10) $d_v = 0;
 				?>
-				&nbsp;&nbsp;&nbsp;<img src="http://ventas.ntiimplantes.com.ar/web/codigo.php?nro=<?php echo echo $nro.$d_v; ?>">
+				&nbsp;&nbsp;&nbsp;<img src="http://ventas.ntiimplantes.com.ar/web/codigo.php?nro=<?php echo $nro.$d_v; ?>">
 				<?php echo $nro.$d_v; ?>
 			</td>
 			<td style="width:40%; font-size:14px;">

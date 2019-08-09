@@ -36,8 +36,7 @@ body{
 }
 .boxBody{
   background:#fefefe;
-  border-top:1px solid #dde0e8;
-  border-bottom:1px solid #dde0e8;
+  border:none;
   padding:10px 20px;
 }
 .error_list{

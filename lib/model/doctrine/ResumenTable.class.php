@@ -64,7 +64,7 @@ class ResumenTable extends Doctrine_Table
 			->where('q.tipofactura_id = 4')
 			->andWhere('q.cliente_id = '.$zona->cliente_id)
 			->andWhere('c.remito_id is null')
-			->andWhere("c.fecha >  '2019-05-15'")
+			->andWhere("q.fecha >  '2019-05-15'")
 			->orderBy('fecha desc, nro_factura desc');
 			$result = $query->execute();
 			return $result;
