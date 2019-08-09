@@ -26,6 +26,7 @@ class ControlStockTable extends Doctrine_Table
 		$q->leftJoin($rootAlias . '.Zona z');
 		$q->leftJoin('z.UsuarioZona uz');
 		$q->andWhere('uz.usuario = '.$id);
+		$q->orderBy('lower(p.nombre)');
 		
 		return $q;
     }		

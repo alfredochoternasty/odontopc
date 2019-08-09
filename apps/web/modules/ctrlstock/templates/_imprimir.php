@@ -15,7 +15,7 @@
 	foreach($listado as $fila):
 	?>
   <tr>
-    <td><?php echo $fila->getProducto() ?></td>
+    <td><?php echo utf8_decode($fila->getProducto()) ?></td>
     <td><?php echo $fila->getNroLote() ?></td>
 	<td><?php echo $fila->getComprados() ?></td>
     <td><?php echo (!empty($fila->vendidos))?$fila->getVendidos():'0'; ?></td>
