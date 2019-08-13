@@ -17,6 +17,7 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @property integer $vendidos
  * @property integer $stock_guardado
  * @property integer $minimo_stock
+ * @property date $ult_venta
  * @property Producto $Producto
  * @property Grupoprod $Grupo
  * @property Zona $Zona
@@ -31,6 +32,7 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method integer      getVendidos()       Returns the current record's "vendidos" value
  * @method integer      getStockGuardado()  Returns the current record's "stock_guardado" value
  * @method integer      getMinimoStock()    Returns the current record's "minimo_stock" value
+ * @method date         getUltVenta()       Returns the current record's "ult_venta" value
  * @method Producto     getProducto()       Returns the current record's "Producto" value
  * @method Grupoprod    getGrupo()          Returns the current record's "Grupo" value
  * @method Zona         getZona()           Returns the current record's "Zona" value
@@ -44,6 +46,7 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method ControlStock setVendidos()       Sets the current record's "vendidos" value
  * @method ControlStock setStockGuardado()  Sets the current record's "stock_guardado" value
  * @method ControlStock setMinimoStock()    Sets the current record's "minimo_stock" value
+ * @method ControlStock setUltVenta()       Sets the current record's "ult_venta" value
  * @method ControlStock setProducto()       Sets the current record's "Producto" value
  * @method ControlStock setGrupo()          Sets the current record's "Grupo" value
  * @method ControlStock setZona()           Sets the current record's "Zona" value
@@ -98,6 +101,10 @@ abstract class BaseControlStock extends sfDoctrineRecord
         $this->hasColumn('minimo_stock', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('ult_venta', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
              ));
     }
 

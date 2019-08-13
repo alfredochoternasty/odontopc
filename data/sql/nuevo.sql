@@ -1,63 +1,38 @@
-ALTER TABLE tipo_factura ADD COLUMN nombre_corto VARCHAR(50) NULL;
-ALTER TABLE producto ADD COLUMN nombre_corto VARCHAR(50) NULL;
-ALTER TABLE pago_comision	CHANGE COLUMN numero referencia VARCHAR(50) NULL DEFAULT NULL AFTER banco_id;
-
-CREATE VIEW listado_compras AS 
-select
-  detalle_compra.id,
-  compra.id,
-  compra.fecha,
-  proveedor.id,
-  detalle_compra.producto_id,
-  detalle_compra.precio,
-  detalle_compra.cantidad,
-  detalle_compra.total,
-  producto.grupoprod_id,
-  detalle_compra.nro_lote,
-	compra.zona_id
-from
-  compra
-    left join detalle_compra on compra.id = detalle_compra.compra_id
-    left join producto on detalle_compra.producto_id = producto.id
-where
-	detalle_compra.nro_lote not in (select nro_lote from lotes_romi)
-order by
-  producto.grupoprod_id, producto.orden_grupo;
-	
-DROP VIEW producto_traza;
-CREATE VIEW producto_traza AS
-select distinct
-	dr.id,
-	p.id as producto_id,
-	p.codigo, 
-	REPLACE(dc.nro_lote, 'T ', '') as nro_lote,
-	COALESCE(dc.fecha_vto, 'no tiene') AS fecha_vto, 
-	r.id as resumen_id,
-	r.fecha as fecha_venta,
-	c.id as cliente_id,
-	c.apellido as apellido,
-	c.nombre as nombre,
-	com.fecha as fecha_compra,
-	prov.id as proveedor_id,
-	com.id as compra_id,
-	case when dp.cantidad is null then dr.cantidad else (dr.cantidad - dp.cantidad) end as cant_vendida,
-	dc.cantidad as cant_comprada
+DROP VIEW control_stock;
+CREATE VIEW control_stock AS
+select 
+	l.id AS id,
+	l.producto_id AS producto_id,
+	p.nombre AS nombre,
+	p.grupoprod_id AS grupoprod_id,
+	l.nro_lote AS nro_lote,
+	l.zona_id AS zona_id,
+	(select sum(dc.cantidad) from (detalle_compra dc join compra on((dc.compra_id = compra.id))) where ((dc.nro_lote = l.nro_lote) and (l.zona_id = compra.zona_id))) AS comprados,
+	(select ((sum(lv.cantidad) + sum(lv.bonificados)) - coalesce(sum(lv.cant_dev),0)) from listado_ventas lv where ((lv.nro_lote = l.nro_lote) and (lv.producto_id = l.producto_id) and (lv.zona_id = l.zona_id))) AS vendidos,
+	l.stock AS stock_guardado,
+	p.minimo_stock AS minimo_stock,
+	(select max(r.fecha) from resumen r join detalle_resumen dr on r.id = dr.resumen_id where dr.producto_id = l.producto_id and dr.nro_lote = l.nro_lote) as ult_venta
 from 
-	producto p
-		join detalle_resumen dr on p.id = dr.producto_id
-		join resumen r on dr.resumen_id = r.id
-		join cliente c on r.cliente_id = c.id
-		join detalle_compra dc on dr.producto_id = dc.producto_id AND dr.nro_lote = dc.nro_lote
-		join compra com on dc.compra_id = com.id AND r.zona_id = com.zona_id
-		join proveedor prov on com.proveedor_id = prov.id
-		left outer join dev_producto dp on dr.resumen_id = dp.resumen_id and dr.producto_id = dp.producto_id and dr.nro_lote and dp.nro_lote
+	lote l 
+		join producto p on l.producto_id = p.id
+		join grupoprod gp on p.grupoprod_id = gp.id
 where 
-	dc.trazable = 1 
-	and dr.nro_lote not in (select nro_lote from lotes_romi) 
-	and dc.nro_lote not in (select nro_lote from lotes_romi)
-	and proveedor_id <> 13
-having 
-	cant_vendida > 0;
+		p.grupoprod_id not in (1,15)
+		and (p.activo = 1) 
+		and not (l.nro_lote in (select lotes_romi.nro_lote from lotes_romi))
+		and not (l.nro_lote like 'er%')
+		and exists (select 1 from detalle_compra dc where ((dc.nro_lote = l.nro_lote) and (dc.producto_id = l.producto_id)))
+group by 
+	l.id,
+	l.producto_id,
+	p.grupoprod_id,
+	l.nro_lote,
+	l.zona_id,
+	l.stock 
+order by 
+	p.orden_grupo,
+	p.nombre,
+	l.nro_lote
 
 
 /*

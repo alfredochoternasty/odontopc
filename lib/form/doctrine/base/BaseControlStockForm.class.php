@@ -25,6 +25,7 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'vendidos'       => new sfWidgetFormInputText(),
       'stock_guardado' => new sfWidgetFormInputText(),
       'minimo_stock'   => new sfWidgetFormInputText(),
+      'ult_venta'      => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
@@ -38,6 +39,7 @@ abstract class BaseControlStockForm extends BaseFormDoctrine
       'vendidos'       => new sfValidatorInteger(array('required' => false)),
       'stock_guardado' => new sfValidatorInteger(array('required' => false)),
       'minimo_stock'   => new sfValidatorInteger(array('required' => false)),
+      'ult_venta'      => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock[%s]');

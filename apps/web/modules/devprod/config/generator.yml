@@ -33,6 +33,7 @@ generator:
           asociada: {label: Ver Fact}
           factura: {label: Enviar AFIP}
           imprimir: {label: Imprimir}
+          mail: {label: Enviar Mail}
       filter:
         display: [fecha, cliente_id, producto_id, nro_lote]
       form:    ~

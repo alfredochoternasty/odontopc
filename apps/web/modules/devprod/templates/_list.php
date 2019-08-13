@@ -1,5 +1,5 @@
 <div class="sf_admin_list ui-grid-table ui-widget ui-corner-all ui-helper-reset ui-helper-clearfix">
-  <?php if (count($hasFilters) == 0):  ?>
+  <?php if (!$pager->getNbResults()): ?>
 
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">

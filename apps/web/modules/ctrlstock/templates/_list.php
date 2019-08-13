@@ -40,7 +40,7 @@
 
     <tfoot>
       <tr>
-        <th colspan="7">
+        <th colspan="8">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('ctrlstock/pagination', array('pager' => $pager)) ?>
           </div>

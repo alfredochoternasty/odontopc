@@ -162,6 +162,28 @@ class devprodActions extends autoDevprodActions
     return sfView::NONE;
   }
 	
+  public function executeListMail(sfWebRequest $request){
+    $dev_producto = Doctrine::getTable('DevProducto')->find($this->getRequestParameter('id'));
+    
+    $mensaje = Swift_Message::newInstance();
+    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
+    $mensaje->setTo($dev_producto->getCliente()->getEmail());
+    $mensaje->setSubject('Nota de Credito - NTI Implantes');
+
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("devprod/imprimir", array("dev_producto" => $dev_producto)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+	
+		$factura = $dompdf->output();
+		$adjunto = new Swift_Attachment($factura, $dev_producto->getFactura().'.pdf', 'application/pdf');
+		$mensaje->attach($adjunto);
+    $this->getMailer()->send($mensaje);
+    
+    $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$dev_producto->getCliente()->getEmail());
+    $this->redirect('dev_producto');    
+  }
+
 	public function executeListFactura(sfWebRequest $request){
     if($request->hasParameter('id')){
       $did = $request->getParameter('id');

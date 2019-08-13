@@ -22,6 +22,7 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'vendidos'       => new sfWidgetFormFilterInput(),
       'stock_guardado' => new sfWidgetFormFilterInput(),
       'minimo_stock'   => new sfWidgetFormFilterInput(),
+      'ult_venta'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'vendidos'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'stock_guardado' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'minimo_stock'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'ult_venta'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('control_stock_filters[%s]');
@@ -63,6 +65,7 @@ abstract class BaseControlStockFormFilter extends BaseFormFilterDoctrine
       'vendidos'       => 'Number',
       'stock_guardado' => 'Number',
       'minimo_stock'   => 'Number',
+      'ult_venta'      => 'Date',
     );
   }
 }

@@ -655,6 +655,7 @@ ControlStock:
     vendidos: {type: integer(4)}
     stock_guardado: {type: integer(4)}
     minimo_stock: {type: integer(4)}
+    ult_venta: {type: date(25)}
   relations:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}

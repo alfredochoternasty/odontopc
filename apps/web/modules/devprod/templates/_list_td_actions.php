@@ -13,6 +13,9 @@
 			<li class="sf_admin_action_imprimir">
 				<?php echo link_to('Imprimir', 'devprod/ListImprimir?id='.$dev_producto->getId(), 'class=fg-button-mini fg-button ui-state-default fg-button-icon-left ') ?>
 			</li>
+		<li class="sf_admin_action_mail">
+			<?php echo link_to(__('Email', array(), 'messages'), 'devprod/ListMail?id='.$dev_producto->getId(), 'class=fg-button-mini fg-button ui-state-default fg-button-icon-left ') ?>
+		</li>			
 		<?php } ?>
   </ul>
 </td>

@@ -21,17 +21,18 @@ generator:
         cant_comprada: { label:  Comprados}
         cant_vendida: { label: Vendidos }
         stock_guardado: { label: Stock Guardado}
+        ult_venta: {label: Ultima Venta}
       list:
         table_method: retrieveConJoins
         title: Listado de Control de Stock
-        display: [Grupo, Producto, Zona, nro_lote, comprados, _vendidos, stock_guardado]
+        display: [Grupo, Producto, Zona, nro_lote, comprados, _vendidos, stock_guardado, ult_venta]
         object_actions: []
         batch_actions: []
         actions:
           imprimir_todo: ~     
           imprimir_pagina: ~     
       filter:
-        display: [grupoprod_id, producto_id, nro_lote, zona_id]
+        display: [grupoprod_id, producto_id, nro_lote, zona_id, ult_venta]
       form:    ~
       edit:    ~
       new:     ~
