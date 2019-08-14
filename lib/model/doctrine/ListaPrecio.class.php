@@ -34,7 +34,6 @@ class ListaPrecio extends BaseListaPrecio
     }elseif($this->getAumento() != ''){
       $aumento = ($this->getAumento()*$p_precio_vta)/100;
       $precio_real = $p_precio_vta + $aumento;
-      echo  json_encode($precio_real);
     }elseif($this->getDescuento() != ''){
       $descuento = ($this->getDescuento()*$p_precio_vta)/100;
       $precio_real = $p_precio_vta - $descuento;
