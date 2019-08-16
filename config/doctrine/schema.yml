@@ -418,6 +418,7 @@ ListadoVentas:
   columns:
     id: {type: integer(4), primary: true}
     resumen_id: {type: integer(4)}
+    tipofactura_id: {type: integer(4)}
     fecha: {type: date(25)}
     cliente_id: {type: integer(4)}
     zona_id: {type: integer(4)}

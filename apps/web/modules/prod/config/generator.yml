@@ -38,6 +38,7 @@ generator:
           _delete: {label: Eliminar}
           desactivar: ~
           activar: ~
+          precio: (label: Cambiar Precio)
       filter:  ~
       form:    ~
       edit:

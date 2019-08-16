@@ -9,6 +9,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * 
  * @property integer $id
  * @property integer $resumen_id
+ * @property integer $tipofactura_id
  * @property date $fecha
  * @property integer $cliente_id
  * @property integer $zona_id
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * 
  * @method integer        getId()             Returns the current record's "id" value
  * @method integer        getResumenId()      Returns the current record's "resumen_id" value
+ * @method integer        getTipofacturaId()  Returns the current record's "tipofactura_id" value
  * @method date           getFecha()          Returns the current record's "fecha" value
  * @method integer        getClienteId()      Returns the current record's "cliente_id" value
  * @method integer        getZonaId()         Returns the current record's "zona_id" value
@@ -58,6 +60,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method Grupoprod      getGrupo()          Returns the current record's "Grupo" value
  * @method ListadoVentas  setId()             Sets the current record's "id" value
  * @method ListadoVentas  setResumenId()      Sets the current record's "resumen_id" value
+ * @method ListadoVentas  setTipofacturaId()  Sets the current record's "tipofactura_id" value
  * @method ListadoVentas  setFecha()          Sets the current record's "fecha" value
  * @method ListadoVentas  setClienteId()      Sets the current record's "cliente_id" value
  * @method ListadoVentas  setZonaId()         Sets the current record's "zona_id" value
@@ -97,6 +100,10 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('resumen_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('tipofactura_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

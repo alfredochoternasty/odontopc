@@ -23,10 +23,11 @@ class ListadoVentasTable extends Doctrine_Table
 			$rootAlias = $q->getRootAlias();
 			// $q->leftJoin($rootAlias . '.Resumen res');
 			// $q->leftJoin($rootAlias . '.Cliente c');
-			// $q->leftJoin($rootAlias . '.Zona z');
-			// $q->leftJoin('z.UsuarioZona uz');	
+			$q->leftJoin($rootAlias . '.Zona z');
+			 $q->leftJoin('z.UsuarioZona uz');	
 			// $q->leftJoin($rootAlias . '.Producto p');
-			// $q->where('uz.usuario = '.$id);
+			$q->where('uz.usuario = '.$id);
+			$q->andWhere($rootAlias . '.tipofactura_id <> 4');
 			return $q;
     }
 }

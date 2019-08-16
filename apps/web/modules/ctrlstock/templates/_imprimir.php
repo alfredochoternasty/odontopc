@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
-<h2>Listado detallado para Control de Stock</h2>
+<h2>Listado para Control de Stock - <?php echo $listado[0]->getZona() ?></h2>
 <table border="1" cellspacing="0" cellpadding="1" width="100%">
   <tr>
     <th style="background: #CCC;">Producto</th>

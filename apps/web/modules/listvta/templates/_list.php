@@ -114,17 +114,17 @@
 					}				
 				?>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-            <td colspan="2" style="text-align: right"><b>Subtotal: </b> </td>
-            <td><b><?php echo $suma_total ?></b></td>
-            <td><b><?php echo $suma_total_bon ?></b></td>
-            <td><b><?php echo $suma_total_dev ?></b></td>
+            <td colspan="2" style="text-align: right; font-size:20px;"><b>Subtotal: </b> </td>
+            <td style="font-size:20px;"><b><?php echo $suma_total ?></b></td>
+            <td style="font-size:20px;"><b><?php echo $suma_total_bon ?></b></td>
+            <td style="font-size:20px;"><b><?php echo $suma_total_dev ?></b></td>
           </tr>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 				<td colspan="5">&nbsp;</td>
           </tr>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-            <td><b>Total: </b> </td>
-            <td colspan="4"><b><?php echo $suma_total + $suma_total_bon - $suma_total_dev ?></b></td>
+            <td colspan="2" style="text-align: right; font-size:34px;"><b>Total: </b></td>
+            <td colspan="3" style="font-size:34px;"><b><?php echo $suma_total + $suma_total_bon - $suma_total_dev ?></b></td>
           </tr>
 				<?php
 				} else {

@@ -105,8 +105,7 @@ FROM cobro
 	left outer join resumen r ON cobro.resumen_id = r.id
 WHERE r.tipofactura_id <> 4 or cobro.resumen_id = 0;
 
-CREATE VIEW producto_traza 
-AS
+CREATE VIEW producto_traza AS
 select distinct
 	dr.id,
 	p.id as producto_id,
@@ -151,10 +150,12 @@ CREATE VIEW cliente_ultima_compra AS select
 	(select max(fecha) from resumen where cliente_id = cliente.id) as fecha
 from cliente ;
 
+DROP VIEW listado_ventas;
 CREATE VIEW listado_ventas AS 
 select
   detalle_resumen.id,
   resumen.id as resumen_id,
+  resumen.tipofactura_id,
   resumen.fecha,
   resumen.cliente_id,
   resumen.zona_id,
@@ -178,7 +179,6 @@ from
 where
   producto.grupoprod_id not in (1, 15)
   and detalle_resumen.nro_lote not in (select nro_lote from lotes_romi)
-	and ((detalle_resumen.det_remito_id is not null and resumen.zona_id <> 1) or (resumen.zona_id = 1))
 order by
   producto.grupoprod_id, producto.orden_grupo, producto.nombre;
   
@@ -204,51 +204,42 @@ where
 order by
   producto.grupoprod_id, producto.orden_grupo;
 
-CREATE VIEW control_stock (
- id,
- producto_id,
- grupoprod_id,
- nro_lote,
- zona_id,
- comprados,
- vendidos,
- stock_guardado
-) AS
-SELECT
+DROP VIEW control_stock;
+CREATE VIEW control_stock AS
+select 
+	l.id AS id,
+	l.producto_id AS producto_id,
+	p.nombre AS nombre,
+	p.grupoprod_id AS grupoprod_id,
+	l.nro_lote AS nro_lote,
+	l.zona_id AS zona_id,
+	(select sum(dc.cantidad) from (detalle_compra dc join compra on((dc.compra_id = compra.id))) where ((dc.nro_lote = l.nro_lote) and (l.zona_id = compra.zona_id))) AS comprados,
+	(
+		select ((sum(lv.cantidad) + sum(lv.bonificados)) - coalesce(sum(lv.cant_dev),0)) 
+		from listado_ventas lv 
+		where ((lv.nro_lote = l.nro_lote) and (lv.producto_id = l.producto_id) and (lv.zona_id = l.zona_id) and (lv.tipofactura_id <> 4))
+	) AS vendidos,
+	l.stock AS stock_guardado,
+	p.minimo_stock AS minimo_stock,
+	(select max(r.fecha) from (resumen r join detalle_resumen dr on((r.id = dr.resumen_id))) where ((dr.producto_id = l.producto_id) and (dr.nro_lote = l.nro_lote))) AS ult_venta 
+from 
+	((lote l 
+		join producto p on((l.producto_id = p.id))) 
+		join grupoprod gp on((p.grupoprod_id = gp.id))) 
+where 
+	((p.grupoprod_id not in (1,15)) 
+	and (p.activo = 1) 
+	and (not(l.nro_lote in (select lotes_romi.nro_lote from lotes_romi))) 
+	and (not((l.nro_lote like 'er%'))) and exists(select 1 from detalle_compra dc where ((dc.nro_lote = l.nro_lote) and (dc.producto_id = l.producto_id)))) 
+group by 
 	l.id,
 	l.producto_id,
 	p.grupoprod_id,
 	l.nro_lote,
-	l.zona_id, 
-	(	SELECT SUM(cantidad) 
-		from detalle_compra dc 
-			join compra on dc.compra_id = compra.id 
-		where dc.nro_lote = l.nro_lote 
-		and l.zona_id = compra.zona_id
-	) AS cant_comprada,
-	(
-		SELECT SUM(dr.cantidad + dr.bonificados) - COALESCE((select sum(cantidad) from dev_producto dp where dp.producto_id = dr.producto_id and l.zona_id = dp.zona_id and dp.nro_lote= dr.nro_lote), 0) 
-		FROM detalle_resumen dr 
-			join resumen r on dr.resumen_id = r.id 
-		WHERE r.remito_id is null 
-			and dr.producto_id = l.producto_id 
-			AND dr.nro_lote = l.nro_lote 
-			and r.zona_id = l.zona_id
-	) AS cant_vendida, 
-	l.stock AS stock_guardado
-FROM
-	lote l
-		JOIN producto p ON l.producto_id = p.id
-		JOIN grupoprod gp ON p.grupoprod_id = gp.id
-WHERE
-	p.grupoprod_id NOT IN (1,15) 
-	AND p.activo = 1 
-	and l.nro_lote not in (select nro_lote from lotes_romi)
-	and l.nro_lote not like 'er%'
-GROUP BY
-   l.id, l.producto_id, p.grupoprod_id, l.nro_lote, l.zona_id, l.stock
-ORDER BY
-	p.orden_grupo, p.nombre, l.nro_lote;
+	l.zona_id,
+	l.stock order by p.orden_grupo,
+	p.nombre,
+	l.nro_lote;
 
 CREATE VIEW cliente_saldo AS
 SELECT 
