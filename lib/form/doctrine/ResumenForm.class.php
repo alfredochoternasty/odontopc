@@ -22,10 +22,10 @@ class ResumenForm extends BaseResumenForm
 		
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 
-    if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
+		$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
 			
-			$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-			$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+    if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
 			if ($uz[0]->zona_id != 1) {
 				$this->widgetSchema['nro_factura'] = new sfWidgetFormInputHidden();
 				$this->widgetSchema['pto_vta'] = new sfWidgetFormInputHidden();
