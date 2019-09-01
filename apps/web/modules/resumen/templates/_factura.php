@@ -1,1 +1,1 @@
-<?php	echo $resumen->getFactura(); ?>
+<?php	echo ($sf_user->hasGroup('Blanco'))? $resumen->getFactura():$resumen->getTipoFactura().'-'.$resumen->nro_factura; ?>

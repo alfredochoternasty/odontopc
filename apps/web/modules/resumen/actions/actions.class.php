@@ -53,7 +53,9 @@ class resumenActions extends autoResumenActions
 			$resumen->setListaId(0);
 			//$resumen->setMonedaId($resumen->getLista()->getMonedaId());
 			$resumen->setMonedaId(0);
+
 			$resumen->save();
+			
       $id_pedido = $resumen->getPedidoId();
       if($id_pedido > 0){
         $detalle_pedido = Doctrine::getTable('DetallePedido')->findbyPedidoId($id_pedido);
