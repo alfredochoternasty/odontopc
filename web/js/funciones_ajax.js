@@ -384,11 +384,12 @@ $(document).ready(function(){
         });                  
   }); 
   
-  $("#dev_producto_resumen_id").change(function(event){
+  $("#dev_producto_nro_lote").change(function(event){
       var pid = $("#dev_producto_producto_id").find(':selected').val();
       var rid = $("#dev_producto_resumen_id").find(':selected').val();
+      var lid = $("#dev_producto_nro_lote").find(':selected').val();
       $.ajax({
-          url: 'get_vta_lotes?rid='+rid+'&pid='+pid,
+          url: 'get_vta_lotes?rid='+rid+'&pid='+pid+'&lid='+lid,
           //dataType: "json",
           success: function(data) {
             $("#dev_producto_cantidad").html('');
@@ -410,7 +411,7 @@ $(document).ready(function(){
           //dataType: "json",
           success: function(data) {
             $("#dev_producto_nro_lote").html('');
-            $("#dev_producto_nro_lote").attr('value', data);
+            $("#dev_producto_nro_lote").html(data);
           }
         });                  
   });

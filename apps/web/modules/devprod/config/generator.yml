@@ -40,4 +40,4 @@ generator:
       edit:    ~
       new:
         title: Devolver Producto
-        display: [fecha, cliente_id, producto_id, resumen_id, cantidad, nro_lote, precio, iva, total, precio_unitario, iva_unitario, observacion]
+        display: [fecha, cliente_id, producto_id, resumen_id, nro_lote, cantidad, precio, iva, total, precio_unitario, iva_unitario, observacion]

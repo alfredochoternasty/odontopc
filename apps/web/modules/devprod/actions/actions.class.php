@@ -89,7 +89,7 @@ class devprodActions extends autoDevprodActions
   public function executeGet_vtas_cliente(sfWebRequest $request){
   
     $q = Doctrine_Query::create()
-      ->select('res.id, t.nombre, res.pto_vta, res.nro_factura, res.fecha, dr.nro_lote')
+			->select('res.id, t.nombre, res.pto_vta, res.nro_factura, res.fecha, dr.nro_lote')
       ->from('Resumen res')
       ->leftJoin('res.Detalle dr')
       ->leftJoin('res.TipoFactura t')
@@ -97,11 +97,12 @@ class devprodActions extends autoDevprodActions
       ->andWhere('dr.producto_id = '.$request->getparameter('pid'))
       ->orderBy('res.fecha desc');
      
-    $vtas = $q->fetchArray();  
-  
+		$vtas = $q->execute(null, Doctrine::HYDRATE_NONE);
+		// $vtas = $q->fetchArray();  
     $options[] = '<option value=""></option>';	
     foreach ($vtas as $vta) {
-      $options[] = '<option value="'.$vta['id'].'">'.$vta['TipoFactura']['nombre'].'-'.$vta['pto_vta'].'-'.str_pad($vta['nro_factura'], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta['fecha']))).' - Nro_lote:'.$vta['Detalle'][0]['nro_lote'].'</option>';
+      // $options[] = '<option value="'.$vta['id'].'">'.$vta['TipoFactura']['nombre'].'-'.$vta['pto_vta'].'-'.str_pad($vta['nro_factura'], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta['fecha']))).' - Nro_lote:'.$vta['Detalle'][0]['nro_lote'].'</option>';
+      $options[] = '<option value="'.$vta[0].'">'.$vta[5].'-'.$vta[1].'-'.str_pad($vta[2], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta[3]))).' - Nro_lote:'.$vta[4].'</option>';
     }
     echo implode($options);
     return sfView::NONE;
@@ -118,7 +119,7 @@ class devprodActions extends autoDevprodActions
   }
   
   public function executeGet_vta_lotes(sfWebRequest $request){
-    $lotes = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
+    $lotes = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($request->getparameter('rid'), $request->getparameter('pid'), $request->getparameter('lid'));
     $cantidad = $lotes[0]['cantidad'];
     $options[] = '<option value="1" selected >1</option>';
     for($i = 2; $i <= $cantidad; $i++){
@@ -130,7 +131,11 @@ class devprodActions extends autoDevprodActions
   
   public function executeGet_lote(sfWebRequest $request){
     $prods = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
-    echo $prods[0]['nro_lote'];
+    // echo $prods[0]['nro_lote'];
+		foreach ($prods as $prod) {
+			$options[] = '<option value="'.$prod['nro_lote'].'">'.$prod['nro_lote'].'</option>';
+		}
+		echo implode($options);
     return sfView::NONE;
   }
 	
