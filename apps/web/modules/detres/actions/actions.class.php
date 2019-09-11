@@ -226,7 +226,8 @@ class detresActions extends autoDetresActions
 	
 		if ($zona == 1 && $resumen->tipofactura_id != 4) {
 			$q = Doctrine_Query::create();
-			$q->select('dr.nro_lote, (dr.cantidad - sum(coalesce(dr2.cantidad, 0))+sum(coalesce(dr2.bonificados, 0))) vend_remito');
+			// $q->select('dr.nro_lote, (dr.cantidad - sum(coalesce(dr2.cantidad, 0))+sum(coalesce(dr2.bonificados, 0))) vend_remito');
+			$q->select('dr.nro_lote, sum(dr.cantidad - dr.cant_vend_remito) vend_remito');
 			$q->from('DetalleResumen dr');
 			$q->leftJoin("dr.Resumen r");
 			$q->leftJoin("dr.DetalleRemito dr2");
@@ -276,6 +277,7 @@ class detresActions extends autoDetresActions
 		$q->leftJoin("c.Zona z");
 		$q->where('dr.producto_id = '.$pid);
 		$q->andWhere("dr.nro_lote = '$lid'");
+		$q->andWhere("dr.cant_vend_remito < dr.cantidad");
 		$q->andWhere("r.tipofactura_id = 4");
 		
 		if ($uz[0]->zona_id != 1 ) {

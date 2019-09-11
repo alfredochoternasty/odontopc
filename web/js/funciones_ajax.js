@@ -371,41 +371,7 @@ $(document).ready(function(){
   $("#dev_producto_resumen_id").change(function(event){
       var pid = $("#dev_producto_producto_id").find(':selected').val();
       var rid = $("#dev_producto_resumen_id").find(':selected').val();
-      $.ajax({
-          url: 'buscarprecio?rid='+rid+'&pid='+pid,
-          dataType: "json",
-          success: function(data) {
-            $("#dev_producto_precio").attr('value', data.precio);
-            $("#dev_producto_precio_unitario").attr('value', data.precio);
-            $("#dev_producto_iva").attr('value', data.iva);
-            $("#dev_producto_iva_unitario").attr('value', data.iva);
-            $("#dev_producto_total").attr('value', data.total);
-          }
-        });                  
-  }); 
-  
-  $("#dev_producto_nro_lote").change(function(event){
-      var pid = $("#dev_producto_producto_id").find(':selected').val();
-      var rid = $("#dev_producto_resumen_id").find(':selected').val();
-      var lid = $("#dev_producto_nro_lote").find(':selected').val();
-      $.ajax({
-          url: 'get_vta_lotes?rid='+rid+'&pid='+pid+'&lid='+lid,
-          //dataType: "json",
-          success: function(data) {
-            $("#dev_producto_cantidad").html('');
-            $("#dev_producto_cantidad").html(data);
-            var cantidad = 1;
-            var precio = $("#dev_producto_precio").val();
-						var iva = $("#dev_producto_iva").val();
-            var total = (cantidad * precio) + (cantidad * iva);
-            $("#dev_producto_total").attr('value', total.toFixed(2));                            
-          }
-        });                  
-  });
- 
-  $("#dev_producto_resumen_id").change(function(event){
-      var pid = $("#dev_producto_producto_id").find(':selected').val();
-      var rid = $("#dev_producto_resumen_id").find(':selected').val();
+			
       $.ajax({
           url: 'get_lote?rid='+rid+'&pid='+pid,
           //dataType: "json",
@@ -413,7 +379,37 @@ $(document).ready(function(){
             $("#dev_producto_nro_lote").html('');
             $("#dev_producto_nro_lote").html(data);
           }
-        });                  
+        });
+  }); 
+  
+  $("#dev_producto_nro_lote").change(function(event){
+      var pid = $("#dev_producto_producto_id").find(':selected').val();
+      var rid = $("#dev_producto_resumen_id").find(':selected').val();
+			var lid = $("#dev_producto_nro_lote").find(':selected').val();
+			
+      $.ajax({
+				url: 'get_vta_lotes?rid='+rid+'&pid='+pid+'&lid='+lid,
+				success: function(data) {
+					$("#dev_producto_cantidad").html('');
+					$("#dev_producto_cantidad").html(data);
+				}
+			});
+  });
+	
+	$("#dev_producto_nro_lote").change(function(event){
+      var pid = $("#dev_producto_producto_id").find(':selected').val();
+      var rid = $("#dev_producto_resumen_id").find(':selected').val();
+			$.ajax({
+				url: 'buscarprecio?rid='+rid+'&pid='+pid,
+				dataType: "json",
+				success: function(data) {
+					$("#dev_producto_precio").attr('value', data.precio);
+					$("#dev_producto_precio_unitario").attr('value', data.precio);
+					$("#dev_producto_iva").attr('value', data.iva);
+					$("#dev_producto_iva_unitario").attr('value', data.iva);
+					$("#dev_producto_total").attr('value', data.total);
+				}
+			});
   });
 
   $("#dev_producto_cantidad").change(function(event){

@@ -121,6 +121,7 @@ class devprodActions extends autoDevprodActions
   public function executeGet_vta_lotes(sfWebRequest $request){
     $lotes = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($request->getparameter('rid'), $request->getparameter('pid'), $request->getparameter('lid'));
     $cantidad = $lotes[0]['cantidad'];
+		echo $cantidad;
     $options[] = '<option value="1" selected >1</option>';
     for($i = 2; $i <= $cantidad; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';
@@ -131,7 +132,7 @@ class devprodActions extends autoDevprodActions
   
   public function executeGet_lote(sfWebRequest $request){
     $prods = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
-    // echo $prods[0]['nro_lote'];
+    $options[] = '<option value="" selected ></option>';
 		foreach ($prods as $prod) {
 			$options[] = '<option value="'.$prod['nro_lote'].'">'.$prod['nro_lote'].'</option>';
 		}
