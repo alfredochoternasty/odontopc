@@ -27,7 +27,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Administraci&oacute;n de Clientes
-        display: [_c_fiscal, apellido, nombre, _direccion, _telefonos, email, activo]
+        display: [Zona, _c_fiscal, apellido, nombre, _direccion, _telefonos, email, activo]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}

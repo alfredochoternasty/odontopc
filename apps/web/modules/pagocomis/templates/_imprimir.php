@@ -48,9 +48,12 @@
 							<?php $total_comis_fact += $comision; ?>
 						</tr>
 		<?php endforeach; ?>
-		<tr><td colspan="7" style="text-align:right;">Total Comisi&oacute;n&nbsp;</td><td>$ <?php echo $total_comis_fact ?></td></tr>
+		<tr><td colspan="7" style="text-align:right;">Total Comisi&oacute;n&nbsp;</td><td><b style="font-size:16px;">&nbsp;$ <?php echo $total_comis_fact ?></b></td></tr>
 	</table>
 	<br>
   <?php endforeach;?>
+	<table border="1" cellspacing="0" cellpadding="1" width="100%">
+		<tr><td style="text-align:right;"><b style="font-size:20px; color: #F00;">Total Comisi&oacute;n&nbsp; $ <?php echo $pago->monto ?></b></td></tr>
+	</table>
 </body>
 <html>

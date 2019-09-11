@@ -269,29 +269,28 @@ class detresActions extends autoDetresActions
 		$u_id = $this->getUser()->getGuardUser()->getId();
 		$uz = Doctrine_Core::getTable('UsuarioZona')->findByUsuario($u_id);		
 
-		$q = Doctrine_Query::create();    
-		$q->select("dr.id, concat(c.apellido, ' ', c.nombre) as cliente, r.fecha as fec, r.nro_factura as nro");
+		$q = Doctrine_Query::create();
 		$q->from('DetalleResumen dr');
 		$q->leftJoin("dr.Resumen r");
 		$q->leftJoin("r.Cliente c");
 		$q->leftJoin("c.Zona z");
 		$q->where('dr.producto_id = '.$pid);
 		$q->andWhere("dr.nro_lote = '$lid'");
-		$q->andWhere("dr.cant_vend_remito < dr.cantidad");
 		$q->andWhere("r.tipofactura_id = 4");
+		$q->orderBy('r.fecha desc');
 		
 		if ($uz[0]->zona_id != 1 ) {
 			$zona = Doctrine_Core::getTable('Zona')->find($uz[0]->zona_id);
 			$q->andWhere('r.cliente_id = '.$zona->cliente_id);
 		}
-		
-		$q->orderBy('r.fecha desc');     
-    $remitos = $q->fetchArray();
+    $remitos = $q->execute();
   
     $options[] = '<option value=""></option>';
     foreach($remitos as $remito){
-			$fec = ' - Fecha: '.implode('/', array_reverse(explode('-', $remito['fec'])));
-			$options[] = '<option value="'.$remito['id'].'">'.$remito['cliente'].$fec.' - Nro: '.$remito['nro'].'</option>';
+			if ($remito->RemitoProductoCantVend() < $remito->cantidad) {
+				$fecha = $remito->getResumen()->getFechaDMY();
+				$options[] = '<option value="'.$remito->id.'">'.$remito->getResumen()->getCliente().'- Fecha: '.$fecha.' - Nro: '.$remito->getResumen()->nro_factura.'</option>';
+			}
     }
     echo implode($options);
     return sfView::NONE;

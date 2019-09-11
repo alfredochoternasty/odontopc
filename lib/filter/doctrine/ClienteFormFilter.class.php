@@ -19,7 +19,7 @@ class ClienteFormFilter extends BaseClienteFormFilter
 		unset($this['cuit'], $this['fecha_nacimiento'], $this['domicilio'], $this['telefono'], $this['celular'], $this['fax'], $this['email'], $this['observacion']);
 
 		$this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Localidad'), 'add_empty' => true), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));    
-		$this->widgetSchema['sexo'] = new sfWidgetFormChoice(array('choices' => array('M' => 'Masculino', 'F' => 'Femenino', 'J' => 'Persona Juridica')));
+		$this->widgetSchema['sexo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'Masculino', 'F' => 'Femenino', 'J' => 'Persona Juridica')));
 
 		$this->widgetSchema['moneda'] = new sfWidgetFormDoctrineChoice(array('model' => 'TipoMoneda', 'add_empty' => true));
 		$this->validatorSchema['moneda'] = new sfValidatorPass(array('required' => false));

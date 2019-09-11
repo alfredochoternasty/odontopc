@@ -20,7 +20,7 @@ class cliActions extends autoCliActions
 		$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
 	}
 	
-	public function executeList_usuario(sfWebRequest $request)
+	public function executeListUsuario(sfWebRequest $request)
 	{
 		$this->GenerarUsuario($request);
 		$this->redirect(array('sf_route' => 'cliente'));
@@ -189,35 +189,16 @@ class cliActions extends autoCliActions
     $es_nuevo = $form->getObject()->isNew();
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-      $cliente = $form->save();		
+      $cliente = $form->save();
       
-      /* esto es para enviar al otro sistema*/
-      $a_cliente['tipo_id'] = $cliente->tipo_id;
-      $a_cliente['dni'] = $cliente->dni;
-      $a_cliente['cuit'] = $cliente->cuit;
-      $a_cliente['condicionfiscal_id'] = $cliente->condicionfiscal_id;
-      $a_cliente['sexo'] = $cliente->sexo;
-      $a_cliente['apellido'] = $cliente->apellido;
-      $a_cliente['nombre'] = $cliente->nombre;
-      $a_cliente['domicilio'] = $cliente->domicilio;
-      $a_cliente['localidad_id'] = $cliente->localidad_id;
-      $a_cliente['telefono'] = $cliente->telefono;
-      $a_cliente['celular'] = $cliente->celular;
-      $a_cliente['fax'] = $cliente->fax;
-      $a_cliente['email'] = $cliente->email;
-      $a_cliente['observacion'] = $cliente->observacion;
-      $a_cliente['lista_id'] = $cliente->lista_id;
-      $a_cliente['activo'] = $cliente->activo;
-      
-      if ($es_nuevo) {
-        $enviado = $this->enviar_cliente($a_cliente);
-        if($enviado == true){
-          $this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
-        } else {
-          $this->getUser()->setFlash('notice', 'Error: '.$enviado);
-        }
-      }
-      
+			$a_cliente = $cliente->toArray();
+			$enviado = $this->enviar_cliente($a_cliente);
+			if($enviado == true){
+				$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
+			} else {
+				$this->getUser()->setFlash('notice', 'Error: '.$enviado);
+			}
+     
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $cliente)));
       if ($request->hasParameter('generar_usuario')){
         $this->getUser()->setFlash('notice', ' Usuario.');
@@ -291,10 +272,11 @@ class cliActions extends autoCliActions
 		
 		if ($this->getUser()->hasGroup('Blanco')) {
 				$url = 'http://sistema.ntiimplantes.com.ar/web/cliente.php?'.implode('&', $vars);
+				// $url = 'http://localhost/odontopc/web/cliente.php?'.implode('&', $vars);
 		} else {
 				$url = 'http://ventas.ntiimplantes.com.ar/web/cliente.php?'.implode('&', $vars);
 		}
     
-    return file_get_contents($url);
+    echo file_get_contents($url);
   }
 }
