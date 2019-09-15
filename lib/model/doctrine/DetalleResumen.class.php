@@ -34,7 +34,14 @@ class DetalleResumen extends BaseDetalleResumen
 	
 	public function RemitoProductoCantVend(){
 		$sql = "
-			select sum(cantidad)+sum(bonificados) as total
+			select 
+				sum(cantidad)+
+				sum(bonificados)-
+				coalesce((select sum(cantidad) 
+				from dev_producto 
+				where dev_producto.resumen_id = detalle_resumen.resumen_id 
+					and dev_producto.producto_id = detalle_resumen.producto_id 
+					and dev_producto.nro_lote = detalle_resumen.nro_lote), 0) as total
 			from detalle_resumen
 			where det_remito_id =".$this->id;
 		$con = Doctrine_Manager::getInstance()->connection();

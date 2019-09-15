@@ -133,6 +133,9 @@ class detresActions extends autoDetresActions
 			$detalle_remito = Doctrine::getTable('DetalleResumen')->find($det_remito_id);
 			$detalle_remito->cant_vend_remito -= $detalle_resumen->cantidad;
 			$detalle_remito->save();
+			if ($detalle_resumen->getResumen()->getCliente()->zona_id > 1) {
+				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $this->getRoute()->getObject())));
+			}
 		} else {
 			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $this->getRoute()->getObject())));
 		}
@@ -279,9 +282,11 @@ class detresActions extends autoDetresActions
 		$q->andWhere("r.tipofactura_id = 4");
 		$q->orderBy('r.fecha desc');
 		
-		if ($uz[0]->zona_id != 1 ) {
+		if ($uz[0]->zona_id != 1) {
 			$zona = Doctrine_Core::getTable('Zona')->find($uz[0]->zona_id);
 			$q->andWhere('r.cliente_id = '.$zona->cliente_id);
+			$q->leftJoin('r.Compra');
+			$q->andWhere("r.Compra.remito_id is not null");
 		}
     $remitos = $q->execute();
   
@@ -298,13 +303,15 @@ class detresActions extends autoDetresActions
 
   public function executeGet_stock_remito(sfWebRequest $request){
     $drid = $request->getParameter('drid');
+		$dr = Doctrine_Core::getTable('DetalleResumen')->find($drid);
+		$cant_vend = $dr->RemitoProductoCantVend();
 
-		$q = Doctrine_Query::create();
-		$q->select('sum(cantidad) as cant_vend');
-		$q->from('DetalleResumen dr');
-		$q->where('dr.det_remito_id = '.$drid);
-    $remitos = $q->fetchArray();
-		$cant_vend = $remitos[0]['cant_vend'];		
+		// $q = Doctrine_Query::create();
+		// $q->select('sum(cantidad) as cant_vend');
+		// $q->from('DetalleResumen dr');
+		// $q->where('dr.det_remito_id = '.$drid);
+    // $remitos = $q->fetchArray();
+		// $cant_vend = $remitos[0]['cant_vend'];		
 		
 		$q = Doctrine_Query::create();
 		$q->select('dr.cantidad');

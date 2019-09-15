@@ -53,37 +53,33 @@ class Producto extends BaseProducto
     $prod = $event['object']->getProductoId();
     $lote = $event['object']->getNroLote();
 		if (!empty($event['object']->compra_id)) {
-			$zona = $event['object']->getCompra()->getZonaId(); //compra
+			$zona = $event['object']->getCompra()->zona_id; //compra
 		} elseif (!empty($event['object']->resumen_id)) {
-			$zona = $event['object']->getResumen()->getCliente()->getZonaId(); // venta - borrar
+			$zona = $event['object']->getResumen()->getCliente()->zona_id; // venta - borrar
 		} else {
-			$zona = $event['object']->getCliente()->getZonaId(); //devolucion
+			$zona = $event['object']->getCliente()->zona_id; //devolucion
 		}
     
-		
     $prods = Doctrine::getTable('Lote')->findByProductoIdAndNroLoteAndZonaId($prod, $lote, $zona);
     $cant_prod = null;
+		
 		if (!empty($prods[0])) {
-			$lote = Doctrine::getTable('Lote')->find($prods[0]->getId());
-			$cant_cmp = $event['object']->getCantidad();
-			if (!empty($event['object']->bonificados)) $cant_cmp += $event['object']->bonificados;
-			$cant_prod = $lote->getStock();
-			$lote->setStock($cant_prod + $cant_cmp);
+			$lote = Doctrine::getTable('Lote')->find($prods[0]->id);
+			if (!empty($event['object']->bonificados)) {
+				$lote->stock += $event['object']->cantidad + $event['object']->bonificados;
+			} else {
+				$lote->stock += $event['object']->cantidad;
+			}
 			$lote->save();
 		} else {
-			$usuario = $event['object']->getUsuario();
-			$fec_vto = $event['object']->getFechaVto();
-			$compra = $event['object']->getCompraId();
-			$zona = $event['object']->getCompra()->getZonaId();
-			$cant_cmp = $event['object']->getCantidad();
       $obj_lote = new Lote();
       $obj_lote->setProductoId($prod);
       $obj_lote->setNroLote($lote);
-      $obj_lote->setStock($cant_cmp);
-      $obj_lote->setFechaVto($fec_vto);
-      $obj_lote->setCompraId($compra);
-      $obj_lote->setUsuario($usuario);
-      $obj_lote->setZonaId($zona);
+      $obj_lote->setStock($event['object']->cantidad);
+      $obj_lote->setFechaVto($event['object']->fecha_vto);
+      $obj_lote->setCompraId($event['object']->compra_id);
+      $obj_lote->setUsuario($event['object']->usuario);
+      $obj_lote->setZonaId($event['object']->getCompra()->zona_id);
       $obj_lote->save();			
 		}
   }

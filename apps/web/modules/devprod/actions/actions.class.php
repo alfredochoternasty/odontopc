@@ -28,17 +28,30 @@ class devprodActions extends autoDevprodActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $dev_producto = $form->save();
-      $this->dispatcher->notify(new sfEvent($this, 'detalle_compra.save', array('object' => $dev_producto)));
-      $cobro = new Cobro();
-      $cobro->setFecha(date('Y-m-d'));
-      $cobro->setClienteId($dev_producto->getClienteId());
-      $cobro->setResumenId($dev_producto->getResumenId());			
-			$detalle_resumen = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($dev_producto->getResumenId(), $dev_producto->getProductoId());			
-      $cobro->setMonedaId($detalle_resumen[0]->getMonedaId());
-      $cobro->setMonto($dev_producto->getTotal());
-      $cobro->setTipoId(5);
-      $cobro->setDevprodId($dev_producto->getId());
-      $cobro->save();
+			
+			//solo aumento stock cuando sea de parana y no se este devolviendo de un remito
+			if ($dev_producto->zona_id > 1) {
+				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_producto)));
+			} else {
+				$det_res = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($dev_producto->resumen_id, $dev_producto->producto_id, $dev_producto->nro_lote);
+				if (empty($det_res[0]->det_remito_id)) {
+					$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_producto)));
+				}
+			}
+			
+			if ($dev_producto->getResumen()->tipofactura_id != 4) {
+				$cobro = new Cobro();
+				$cobro->setFecha(date('Y-m-d'));
+				$cobro->setClienteId($dev_producto->getClienteId());
+				$cobro->setResumenId($dev_producto->getResumenId());			
+				$detalle_resumen = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($dev_producto->getResumenId(), $dev_producto->getProductoId());			
+				$cobro->setMonedaId($detalle_resumen[0]->getMonedaId());
+				$cobro->setMonto($dev_producto->getTotal());
+				$cobro->setTipoId(5);
+				$cobro->setDevprodId($dev_producto->getId());
+				$cobro->save();
+			}
+			
       if ($request->hasParameter('_save_and_add')){
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
         $this->getUser()->setAttribute('cliente_id', $dev_producto->getClienteId());
@@ -60,14 +73,23 @@ class devprodActions extends autoDevprodActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-    
+    $dev_prod = $this->getRoute()->getObject();
+	
+		// solo aumento stock cuando sea de parana y no se este devolviendo de un remito
+		if ($dev_prod->getCliente()->zona_id > 1) {
+			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_prod)));
+		} elseif ($dev_prod->getResumen()->tipofactura_id != 4) {
+			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_prod)));
+		}
+		// echo '<pre>';
+				// print_r($dev_prod->toArray());
+				// die();
+		// echo '</pre>';
     $objid = $request->getParameter('id');
     $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
     $cobro = Doctrine::getTable('Cobro')->findByDevprodId($objid);
     $this->getRoute()->getObject()->delete();
     $cobro->delete();
-    $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $this->getRoute()->getObject())));
-
     $this->redirect('@dev_producto');
   }
   
