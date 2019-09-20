@@ -78,6 +78,21 @@
 		<?php endif; ?>
 	</th>
 	<?php end_slot(); ?>
+	<?php include_slot('sf_admin.current_header') ;  slot('sf_admin.current_header') ?>
+	<th class="sf_admin_text sf_admin_list_th_descuento ui-state-default ui-th-column">
+		<?php if ('descuento' == $sort[0]): ?>
+			<a href="<?php echo url_for('@detalle_resumen?sort=descuento&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')) ?>">
+				<span class="ui-icon <?php echo ($sort[1] == 'asc' ? 'ui-icon-circle-triangle-s' : 'ui-icon-circle-triangle-n') ?>"></span>
+				<?php echo __('Descuento', array(), 'messages') ?>
+			</a>
+		<?php else: ?>
+			<a href="<?php echo url_for('@detalle_resumen?sort=descuento&sort_type=asc') ?>">
+				<span class="ui-icon ui-icon-triangle-2-n-s"></span>
+				<?php echo __('Descuento', array(), 'messages') ?>
+			</a>
+		<?php endif; ?>
+	</th>
+	<?php end_slot(); ?>
 	<?php if($sf_user->hasGroup('Blanco')): ?>
 	<?php include_slot('sf_admin.current_header') ;  slot('sf_admin.current_header') ?>
 	<th class="sf_admin_text sf_admin_list_th_sub_total ui-state-default ui-th-column">
@@ -125,24 +140,9 @@
 		<?php endif; ?>
 	</th>
 	<?php end_slot(); ?>
-	<?php include_slot('sf_admin.current_header') ;  slot('sf_admin.current_header') ?>
-	<th class="sf_admin_text sf_admin_list_th_bonificados ui-state-default ui-th-column">
-		<?php if ('bonificados' == $sort[0]): ?>
-			<a href="<?php echo url_for('@detalle_resumen?sort=bonificados&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')) ?>">
-				<span class="ui-icon <?php echo ($sort[1] == 'asc' ? 'ui-icon-circle-triangle-s' : 'ui-icon-circle-triangle-n') ?>"></span>
-				<?php echo __('Bonificados', array(), 'messages') ?>
-			</a>
-		<?php else: ?>
-			<a href="<?php echo url_for('@detalle_resumen?sort=bonificados&sort_type=asc') ?>">
-				<span class="ui-icon ui-icon-triangle-2-n-s"></span>
-				<?php echo __('Bonificados', array(), 'messages') ?>
-			</a>
-		<?php endif; ?>
-	</th>
-	<?php end_slot(); ?>
 <?php endif; ?>
 <?php include_slot('sf_admin.current_header') ;  slot('sf_admin.current_header') ?>
-<th class="sf_admin_text sf_admin_list_th_bonificados ui-state-default ui-th-column">
+<th class="sf_admin_text sf_admin_list_th_descuento ui-state-default ui-th-column">
       <?php echo __('Observaciones', array(), 'messages') ?>
 </th>
 <?php end_slot(); ?>

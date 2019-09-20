@@ -15,7 +15,7 @@ class DetalleResumenForm extends BaseDetalleResumenForm
   {
     //parent::configure();
     
-    unset($this['fecha_vto'], $this['lista_id'], $this['moneda_id']);
+    unset($this['fecha_vto'], $this['lista_id'], $this['moneda_id'], $this['bonificados']);
 		
 		$tipofactura = sfContext::getInstance()->getUser()->getAttribute('tipofactura');
     
@@ -26,14 +26,35 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 	
     $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => array()));
     $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
+    $this->widgetSchema['descuento'] = new sfWidgetFormChoice(array('choices' => array(
+			0 => 'Sin Descuento',
+			5 => '5% de descuento',
+			10 => '10% de descuento',
+			15 => '15% de descuento',
+			20 => '20% de descuento',
+			25 => '25% de descuento',
+			30 => '30% de descuento',
+			35 => '35% de descuento',
+			40 => '40% de descuento',
+			45 => '45% de descuento',
+			50 => '50% de descuento',
+			55 => '55% de descuento',
+			60 => '60% de descuento',
+			65 => '65% de descuento',
+			70 => '70% de descuento',
+			75 => '75% de descuento',
+			80 => '80% de descuento',
+			85 => '85% de descuento',
+			90 => '90% de descuento',
+			95 => '95% de descuento',
+			100 => '100% de descuento'
+		)));
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 		
     $this->validatorSchema['cantidad'] =  new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
     
-		if ($tipofactura != 4) {		
-			$this->widgetSchema['bonificados'] = new sfWidgetFormChoice(array('choices' => array()));
-			$this->validatorSchema['bonificados'] =  new sfValidatorNumber(array('required' => true));
+		if ($tipofactura != 4) {
 
 			$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
 			$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => false));

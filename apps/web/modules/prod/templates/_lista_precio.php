@@ -112,15 +112,6 @@ hr {
 		</td>
   </tr>
   <?php 
-    if($count >= 36){
-      $count = 1;
-      ?>
-        <tr>
-          <td colspan="3" style="background-color:#3D6092;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
-        </tr>            
-      <?php
-    }
-	$count++;
   endforeach;
   ?>
 </table>

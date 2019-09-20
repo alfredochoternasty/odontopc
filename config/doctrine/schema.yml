@@ -312,6 +312,7 @@ DetalleResumen:
     cant_vend_remito: {type: integer(4)}
     lote_id: {type: integer(4)}
     det_remito_id: {type: integer(4)}
+    descuento: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
@@ -502,8 +503,11 @@ Presupuesto:
     fecha: {type: date(25), notnull: true}
     lista_id: {type: integer(4), notnull: true}
     descripcion: {type: text}
+    zona_id: {type: integer(4)}
+    email: {type: string(100)}
   relations:
     Lista: {type: one, class: ListaPrecio, local: lista_id, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 DetallePresupuesto:
   connection: doctrine
   tableName: detalle_presupuesto
@@ -515,6 +519,8 @@ DetallePresupuesto:
     precio: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
     iva: {type: 'decimal(10, 2)', default: 0}
+    descuento: {type: integer(4)}
+    sub_total: {type: 'decimal(10, 2)'}
   relations:
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     Presupuesto: {type: one, class: Presupuesto, local: presupuesto_id, onDelete: RESTRICT}

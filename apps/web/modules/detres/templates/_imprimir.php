@@ -194,6 +194,7 @@
 					<td><b>Cantidad</b></td>
 					<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
 						<td><b>Precio Un.</b></td>
+						<td><b>% Bonif.</b></td>
 						<td><b>Subtotal</b></td>
 						<?php if ($resumen->getTipoFactura()->letra == 'A'): ?>
 							<td><b>IVA</b></td>
@@ -210,11 +211,13 @@
 							if ($resumen->getTipoFactura()->letra == 'A'): 
 				?>
 							<td><?php echo $detalle->PrecioFormato() ?></td>
+							<td><?php echo $detalle->getDescuento() ?></td>
 							<td><?php echo $detalle->SubTotalFormato() ?></td>
 							<td><?php echo $detalle->IvaFormato() ?></td>
 							<td><?php echo $detalle->TotalFormato() ?></td>
 				<?php else: ?>
 								<td><?php echo sprintf($detalle->SimboloMoneda()." %01.2f", $detalle->total/$detalle->cantidad)?></td>
+								<td><?php echo $detalle->getDescuento() ?></td>
 								<td><?php echo $detalle->TotalFormato() ?></td>
 				<?php endif; 
 						$total_con_iva += $detalle->total;

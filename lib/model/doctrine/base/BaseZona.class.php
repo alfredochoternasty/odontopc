@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $Cobro
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $DevProducto
+ * @property Doctrine_Collection $Presupuesto
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getCobro()          Returns the current record's "Cobro" collection
  * @method Doctrine_Collection getListadoVentas()  Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getPresupuesto()    Returns the current record's "Presupuesto" collection
  * @method Doctrine_Collection getLote()           Returns the current record's "Lote" collection
  * @method Doctrine_Collection getListadoCompras() Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()   Returns the current record's "ControlStock" collection
@@ -51,6 +53,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setCobro()          Sets the current record's "Cobro" collection
  * @method Zona                setListadoVentas()  Sets the current record's "ListadoVentas" collection
  * @method Zona                setDevProducto()    Sets the current record's "DevProducto" collection
+ * @method Zona                setPresupuesto()    Sets the current record's "Presupuesto" collection
  * @method Zona                setLote()           Sets the current record's "Lote" collection
  * @method Zona                setListadoCompras() Sets the current record's "ListadoCompras" collection
  * @method Zona                setControlStock()   Sets the current record's "ControlStock" collection
@@ -111,6 +114,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('DevProducto', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('Presupuesto', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

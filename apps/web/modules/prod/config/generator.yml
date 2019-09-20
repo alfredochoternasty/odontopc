@@ -14,19 +14,17 @@ generator:
     config:
       actions: ~
       fields:
-        codigo: {label: Código, help: Código de barra}
-        genera_comision: {label: Genera Comisión, help: Indica si se obtiene una comisión por las ventas del producto}
+        codigo: {label: Codigo}
         precio_vta: { label: Precio de Venta, help: Es el precio de venta del producto y el que se toma como referencia en la lista de precio}
         grupoprod_id: { label: Grupo}
         minimo_stock: { label: Stock Minimo}
-        ctr_fact_grupo: { label: Control Fact. Grupo, help: Indica si controla lo facturado según el grupo}
         orden_grupo: { label: Orden, help: Es un numero para los productos se vean ordendos en el grupo}
         activo: { label: Activo, help: Indica si el producto se puede utilizar o no}
       list:
         table_method: retrieveProdConGrupo
         title: Administraci&oacute;n de Productos
         sort: [nombre, asc]
-        display: [Grupo, _nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id]
+        display: [Grupo, nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -38,7 +36,7 @@ generator:
           _delete: {label: Eliminar}
           desactivar: ~
           activar: ~
-          precio: (label: Cambiar Precio)
+          precio: {label: Cambiar Precio}
       filter:  ~
       form:    ~
       edit:

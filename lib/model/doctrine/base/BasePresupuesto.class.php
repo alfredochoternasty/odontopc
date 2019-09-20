@@ -11,20 +11,29 @@ Doctrine_Manager::getInstance()->bindComponent('Presupuesto', 'doctrine');
  * @property date $fecha
  * @property integer $lista_id
  * @property text $descripcion
+ * @property integer $zona_id
+ * @property string $email
  * @property ListaPrecio $Lista
+ * @property Zona $Zona
  * @property Doctrine_Collection $DetallePresupuesto
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method date                getFecha()              Returns the current record's "fecha" value
  * @method integer             getListaId()            Returns the current record's "lista_id" value
  * @method text                getDescripcion()        Returns the current record's "descripcion" value
+ * @method integer             getZonaId()             Returns the current record's "zona_id" value
+ * @method string              getEmail()              Returns the current record's "email" value
  * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
+ * @method Zona                getZona()               Returns the current record's "Zona" value
  * @method Doctrine_Collection getDetallePresupuesto() Returns the current record's "DetallePresupuesto" collection
  * @method Presupuesto         setId()                 Sets the current record's "id" value
  * @method Presupuesto         setFecha()              Sets the current record's "fecha" value
  * @method Presupuesto         setListaId()            Sets the current record's "lista_id" value
  * @method Presupuesto         setDescripcion()        Sets the current record's "descripcion" value
+ * @method Presupuesto         setZonaId()             Sets the current record's "zona_id" value
+ * @method Presupuesto         setEmail()              Sets the current record's "email" value
  * @method Presupuesto         setLista()              Sets the current record's "Lista" value
+ * @method Presupuesto         setZona()               Sets the current record's "Zona" value
  * @method Presupuesto         setDetallePresupuesto() Sets the current record's "DetallePresupuesto" collection
  * 
  * @package    odontopc
@@ -56,6 +65,14 @@ abstract class BasePresupuesto extends sfDoctrineRecord
         $this->hasColumn('descripcion', 'text', null, array(
              'type' => 'text',
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('email', 'string', 100, array(
+             'type' => 'string',
+             'length' => 100,
+             ));
     }
 
     public function setUp()
@@ -63,6 +80,11 @@ abstract class BasePresupuesto extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('ListaPrecio as Lista', array(
              'local' => 'lista_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

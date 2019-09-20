@@ -16,12 +16,15 @@ generator:
       fields:
         fecha: { date_format: dd/MM/yyyy }
       list:
+        table_method: retrieveConJoins
         title: Administracion Presupuestos
+        display: [fecha, descripcion, email]
         object_actions:
-          _delete: {label: Eliminar}
+          _delete: {label: Borrar}
           _edit: {label: Modificar}
-          detalle: ~
+          detalle: {label: Ver Detalle}
           imprimir: ~
+          mail: ~
       filter:  ~
       form:
         actions:

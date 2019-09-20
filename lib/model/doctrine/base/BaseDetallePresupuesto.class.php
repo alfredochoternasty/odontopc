@@ -14,6 +14,8 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @property decimal $precio
  * @property decimal $total
  * @property decimal $iva
+ * @property integer $descuento
+ * @property decimal $sub_total
  * @property Producto $Producto
  * @property Presupuesto $Presupuesto
  * 
@@ -24,6 +26,8 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @method decimal            getPrecio()         Returns the current record's "precio" value
  * @method decimal            getTotal()          Returns the current record's "total" value
  * @method decimal            getIva()            Returns the current record's "iva" value
+ * @method integer            getDescuento()      Returns the current record's "descuento" value
+ * @method decimal            getSubTotal()       Returns the current record's "sub_total" value
  * @method Producto           getProducto()       Returns the current record's "Producto" value
  * @method Presupuesto        getPresupuesto()    Returns the current record's "Presupuesto" value
  * @method DetallePresupuesto setId()             Sets the current record's "id" value
@@ -33,6 +37,8 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @method DetallePresupuesto setPrecio()         Sets the current record's "precio" value
  * @method DetallePresupuesto setTotal()          Sets the current record's "total" value
  * @method DetallePresupuesto setIva()            Sets the current record's "iva" value
+ * @method DetallePresupuesto setDescuento()      Sets the current record's "descuento" value
+ * @method DetallePresupuesto setSubTotal()       Sets the current record's "sub_total" value
  * @method DetallePresupuesto setProducto()       Sets the current record's "Producto" value
  * @method DetallePresupuesto setPresupuesto()    Sets the current record's "Presupuesto" value
  * 
@@ -81,6 +87,15 @@ abstract class BaseDetallePresupuesto extends sfDoctrineRecord
         $this->hasColumn('iva', 'decimal', 10, array(
              'type' => 'decimal',
              'default' => 0,
+             'length' => 10,
+             'scale' => '2',
+             ));
+        $this->hasColumn('descuento', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('sub_total', 'decimal', 10, array(
+             'type' => 'decimal',
              'length' => 10,
              'scale' => '2',
              ));

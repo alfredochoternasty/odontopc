@@ -5,7 +5,7 @@ mysql_select_db('ntiimplantes_db', $conn);
 
 $a = $_GET;
 
-$sql_existe = "select count(dni) as existe from cliente where dni = ",$a['dni'];
+$sql_existe = "select count(dni) as existe from cliente where dni = ".$a['dni'];
 $rs = mysql_query($sql_existe);
 $rs_existe = mysql_fetch_array($rs);
 

@@ -408,16 +408,31 @@ class detresActions extends autoDetresActions
 			
 			$regfe['CbteTipo'] = $resumen->getTipoFactura()->getCodTipoAfip();
 			$regfe['Concepto'] = 1;
-			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->getCodTipoAfip();
-			$regfe['DocNro'] = $resumen->getCuitCliente();
+			$regfe['DocTipo'] = $resumen->getCliente()->getCondfiscal()->cod_tipo_afip;
+			if ($regfe['DocTipo'] == '96') {
+				$regfe['DocNro'] = $resumen->getCliente()->dni;
+			} else {
+				$regfe['DocNro'] = $resumen->getCuitCliente();
+			}
 			$regfe['CbteFch'] = $resumen->getFechaYMD(); //date('Ymd');
 			$regfe['MonId'] = 'PES';
 			$regfe['MonCotiz'] = 1;
 			
 			$wsfev1 = new WSFEV1(dirname(__FILE__));
 			
-			$nro = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
-			$nuevo_nro = $nro+1;
+			$ultimo_nro_afip = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
+			$q = Doctrine_Query::create()
+			->select('max(nro_factura) as ultimo')
+			->from('Resumen')
+			->where('tipofactura_id = '.$resumen->tipofactura_id)
+			->andWhere('pto_vta = '.$pto_vta)
+			->andWhere('nro_factura not is null');
+			$ultimo_nro_sistema = $q->fetchArray();  
+			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
+				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip no coincide con el último número registrado en el sistema');
+			}
+
+			$nuevo_nro = $ultimo_nro_afip+1;
 
 			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
 			$tipo_msj = 'error';

@@ -32,7 +32,7 @@
 
     <tfoot>
       <tr>
-        <th colspan="6">
+        <th colspan="9">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('detpresu/pagination', array('pager' => $pager)) ?>
           </div>
@@ -45,7 +45,7 @@
       $suma_total = 0;
       foreach ($pager->getResults() as $i => $detalle_presupuesto): 
         $odd = fmod(++$i, 2) ? ' odd' : '';
-        $suma_total += ($detalle_presupuesto->precio * 0.21 + $detalle_presupuesto->precio) * $detalle_presupuesto->cantidad ;
+        $suma_total += $detalle_presupuesto->total;
       ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
         <?php include_partial('detpresu/list_td_batch_actions', array('detalle_presupuesto' => $detalle_presupuesto, 'helper' => $helper)) ?>
@@ -57,7 +57,7 @@
       <?php endforeach; ?>
       
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-      <td colspan="4" class="sf_admin_text">&nbsp;</td>
+      <td colspan="6" class="sf_admin_text">&nbsp;</td>
       <td style="text-align: right;" class="sf_admin_text">Total:</td>
       <td class="sf_admin_text">
         <?php echo sprintf("$ "."%01.2f", $suma_total) ?>

@@ -31,10 +31,32 @@ class presuActions extends autoPresuActions
     $presupuesto = Doctrine::getTable('Presupuesto')->find($pid);
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("presupuesto" => $presupuesto)));
+    $dompdf->load_html($this->getPartial("detpresu/imprimir", array("presupuesto" => $presupuesto)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream("presupuesto.pdf");    
     return sfView::NONE;
-  }  
+  }
+
+  public function executeListMail(sfWebRequest $request){
+    $presu = Doctrine::getTable('Presupuesto')->find($this->getRequestParameter('id'));
+    
+    $mensaje = Swift_Message::newInstance();
+    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
+    $mensaje->setTo($presu->email);
+    $mensaje->setSubject('Presupuesto - NTI Implantes');
+
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("detpresu/imprimir", array("presupuesto" => $presu)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+	
+		$presupuesto = $dompdf->output();
+		$adjunto = new Swift_Attachment($presupuesto, 'presupuesto.pdf', 'application/pdf');
+		$mensaje->attach($adjunto);
+    $this->getMailer()->send($mensaje);
+    
+    $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$presu->email);
+    $this->redirect('presupuesto');
+  }
 }

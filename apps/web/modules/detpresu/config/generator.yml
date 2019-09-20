@@ -16,7 +16,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Detalle del presupuesto
-        display: [Producto, _precio, cantidad, _iva, _total]
+        display: [Producto, _precio, cantidad, _descuento, _sub_total, _iva, _total]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -27,5 +27,7 @@ generator:
       form: ~
       edit:
         title: Modificar detalle del presupuesto
+        display: [producto_id, precio, cantidad, descuento, sub_total, iva, total]
       new:
         title: Nuevo detalle del presupuesto
+        display: [producto_id, precio, cantidad, descuento, sub_total, iva, total]

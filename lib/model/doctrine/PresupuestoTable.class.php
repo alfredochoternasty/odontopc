@@ -14,6 +14,16 @@ class PresupuestoTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('Presupuesto')->orderBy('fecha desc');
+        return Doctrine_Core::getTable('Presupuesto');
+    }
+    
+    public function retrieveConJoins(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+      $rootAlias = $q->getRootAlias();
+			$q->leftJoin($rootAlias.'.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');			
+			$q->andWhere('uz.usuario = '.$id);
+      $q->orderBy($rootAlias. '.fecha desc');
+      return $q;
     }
 }
