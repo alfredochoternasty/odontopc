@@ -16,6 +16,14 @@ class ProveedorTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Proveedor');
     }
+
+    public function retrieveConJoins(Doctrine_Query $q)
+    {
+      $rootAlias = $q->getRootAlias();
+      $q->leftJoin($rootAlias . '.Ciudad c');
+      $q->where($rootAlias . ".id not in(13, 99)");
+      return $q; 
+    }
 		
     public function ProveedorZona(){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();

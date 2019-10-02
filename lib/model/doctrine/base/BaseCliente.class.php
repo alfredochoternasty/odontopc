@@ -40,6 +40,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Zona $Zona
  * @property Doctrine_Collection $Venta
  * @property Doctrine_Collection $ListadoVentas
+ * @property Doctrine_Collection $MovimientoProducto
  * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Pedido
@@ -83,6 +84,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Zona                getZona()               Returns the current record's "Zona" value
  * @method Doctrine_Collection getVenta()              Returns the current record's "Venta" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
+ * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
  * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getPedido()             Returns the current record's "Pedido" collection
@@ -125,6 +127,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setZona()               Sets the current record's "Zona" value
  * @method Cliente             setVenta()              Sets the current record's "Venta" collection
  * @method Cliente             setListadoVentas()      Sets the current record's "ListadoVentas" collection
+ * @method Cliente             setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
  * @method Cliente             setListadoCobros()      Sets the current record's "ListadoCobros" collection
  * @method Cliente             setDevProducto()        Sets the current record's "DevProducto" collection
  * @method Cliente             setPedido()             Sets the current record's "Pedido" collection
@@ -291,6 +294,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'foreign' => 'cliente_id'));
 
         $this->hasMany('ListadoVentas', array(
+             'local' => 'id',
+             'foreign' => 'cliente_id'));
+
+        $this->hasMany('MovimientoProducto', array(
              'local' => 'id',
              'foreign' => 'cliente_id'));
 

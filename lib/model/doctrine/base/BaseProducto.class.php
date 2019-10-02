@@ -33,6 +33,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $DetLisPrecio
  * @property Doctrine_Collection $ListadoVentas
+ * @property Doctrine_Collection $MovimientoProducto
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $DetallePresupuesto
  * @property Doctrine_Collection $DetallePedido
@@ -70,6 +71,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getDetLisPrecio()       Returns the current record's "DetLisPrecio" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
+ * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
  * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getDetallePresupuesto() Returns the current record's "DetallePresupuesto" collection
  * @method Doctrine_Collection getDetallePedido()      Returns the current record's "DetallePedido" collection
@@ -106,6 +108,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setDetalleResumen()     Sets the current record's "DetalleResumen" collection
  * @method Producto            setDetLisPrecio()       Sets the current record's "DetLisPrecio" collection
  * @method Producto            setListadoVentas()      Sets the current record's "ListadoVentas" collection
+ * @method Producto            setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
  * @method Producto            setDevProducto()        Sets the current record's "DevProducto" collection
  * @method Producto            setDetallePresupuesto() Sets the current record's "DetallePresupuesto" collection
  * @method Producto            setDetallePedido()      Sets the current record's "DetallePedido" collection
@@ -243,6 +246,10 @@ abstract class BaseProducto extends sfDoctrineRecord
              'foreign' => 'producto_id'));
 
         $this->hasMany('ListadoVentas', array(
+             'local' => 'id',
+             'foreign' => 'producto_id'));
+
+        $this->hasMany('MovimientoProducto', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
 

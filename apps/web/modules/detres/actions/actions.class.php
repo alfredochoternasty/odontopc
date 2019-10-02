@@ -256,11 +256,11 @@ class detresActions extends autoDetresActions
 			} elseif (!empty($lote['vend_remito']) || !empty($lote['d__0'])) {
 				$stock = ' - Disponibles en Remito: '.$lote['vend_remito'];
 			} else {
-				$stock = ' - Stock: -';
+				$stock = '';
 			}
-
-      $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
+			if (!empty($stock)) $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
     }
+		
     echo implode($options);
     return sfView::NONE;
   }  

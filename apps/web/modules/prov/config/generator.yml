@@ -14,6 +14,7 @@ generator:
     config:
       actions: ~
       fields:
+        table_method: retrieveConJoins
         razon_social: {help: Nombre de la empresa o persona}
         cuit: {help: Número de CUIT sin guion '-'}
         telefono: {label: Teléfono., help: Se puede ingresar uno o varios números de teléfonos}
