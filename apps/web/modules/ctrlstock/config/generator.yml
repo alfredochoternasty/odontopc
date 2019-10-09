@@ -20,8 +20,8 @@ generator:
         nro_lote: { label: Lote}
         cant_comprada: { label:  Comprados}
         cant_vendida: { label: Vendidos }
-        stock_guardado: { label: Stock Guardado}
-        ult_venta: {label: Ultima Venta}
+        stock_guardado: { label: Stock}
+        ult_venta: {label: Ultimo Movimiento}
       list:
         table_method: retrieveConJoins
         title: Listado de Control de Stock
