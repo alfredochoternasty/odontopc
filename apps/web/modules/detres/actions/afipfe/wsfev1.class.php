@@ -84,22 +84,20 @@ class WSFEV1 {
           $this->Code[] = $results->$x->FeDetResp->FECAEDetResponse->Observaciones->Obs->Code;
           $this->Msg[] = $results->$x->FeDetResp->FECAEDetResponse->Observaciones->Obs->Msg;
         }
-        //return true;
       }
     }
     
     if (!empty($results->$x->Errors)) {
       $this->Error = 'Error en '.$method.'<br>';
-	  if (is_array($results->$x->Errors->Err)) {
-		foreach ($results->$x->Errors->Err as $Err) {
-			$this->Code[] = $Err->Code;
-			$this->Msg[] = $Err->Msg;
-		}
-	  } else {
-		$this->Code[] = $results->$x->Errors->Err->Code;
-		$this->Msg[] = $results->$x->Errors->Err->Msg;
-	  }
-      //return true;
+			if (is_array($results->$x->Errors->Err)) {
+				foreach ($results->$x->Errors->Err as $Err) {
+					$this->Code[] = $Err->Code;
+					$this->Msg[] = $Err->Msg;
+				}
+			} else {
+				$this->Code[] = $results->$x->Errors->Err->Code;
+				$this->Msg[] = $results->$x->Errors->Err->Msg;
+			}
     }
     return false;
 	}

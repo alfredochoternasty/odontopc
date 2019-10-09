@@ -27,7 +27,7 @@ class ListadoVentasTable extends Doctrine_Table
 			 $q->leftJoin('z.UsuarioZona uz');	
 			// $q->leftJoin($rootAlias . '.Producto p');
 			$q->where('uz.usuario = '.$id);
-			$q->andWhere($rootAlias . '.tipofactura_id <> 4');
+			//$q->andWhere($rootAlias . '.tipofactura_id <> 4');
 			return $q;
     }
 }

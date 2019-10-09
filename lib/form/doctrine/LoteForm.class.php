@@ -20,7 +20,7 @@ class LoteForm extends BaseLoteForm
 		$this->validatorSchema['nro_lote'] =  new sfValidatorPass();
     
     $this->widgetSchema['fecha_vto'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
-    $this->validatorSchema['fecha_vto'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));    
+    $this->validatorSchema['fecha_vto'] = new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));    
     
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 	

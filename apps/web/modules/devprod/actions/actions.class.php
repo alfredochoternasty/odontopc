@@ -78,13 +78,13 @@ class devprodActions extends autoDevprodActions
 		// solo aumento stock cuando sea de parana y no se este devolviendo de un remito
 		if ($dev_prod->getCliente()->zona_id > 1) {
 			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_prod)));
-		} elseif ($dev_prod->getResumen()->tipofactura_id != 4) {
-			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_prod)));
+		} else {
+			$det_res = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($dev_prod->resumen_id, $dev_prod->producto_id, $dev_prod->nro_lote);
+			if (empty($det_res[0]->det_remito_id)) {
+				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_prod)));
+			}
 		}
-		// echo '<pre>';
-				// print_r($dev_prod->toArray());
-				// die();
-		// echo '</pre>';
+		
     $objid = $request->getParameter('id');
     $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
     $cobro = Doctrine::getTable('Cobro')->findByDevprodId($objid);

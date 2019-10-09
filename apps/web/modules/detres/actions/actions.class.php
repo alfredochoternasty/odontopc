@@ -150,35 +150,39 @@ class detresActions extends autoDetresActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid()) {
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-      $detalle_resumen = $form->save();
+      
+      // si ya hay un producto igual en la factura, actualizar la cantidad
+      $detres = $request->getParameter($form->getName());
+      $existe = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($detres['resumen_id'], $detres['producto_id'], $detres['nro_lote']);
+      if (!empty($existe[0]->resumen_id)) {
+        $detalle_resumen = $existe[0];
+        $detalle_resumen->cantidad += $detres['cantidad'];
+        $detalle_resumen->save();
+      } else {
+        $detalle_resumen = $form->save();
 
-			$lista_id = $detalle_resumen->getProducto()->getListaId();
-			$moneda_id = $detalle_resumen->getProducto()->getLista()->getMonedaId();
-			if (empty($lista_id)) {
-				$lista_id = $detalle_resumen->getResumen()->getCliente()->getListaId();
-				$moneda_id = $detalle_resumen->getResumen()->getCliente()->getLista()->getMonedaId();
-			}
-			$detalle_resumen->setListaId($lista_id);
-			$detalle_resumen->setMonedaId($moneda_id);
+        $lista_id = $detalle_resumen->getProducto()->getListaId();
+        $moneda_id = $detalle_resumen->getProducto()->getLista()->getMonedaId();
+        if (empty($lista_id)) {
+          $lista_id = $detalle_resumen->getResumen()->getCliente()->getListaId();
+          $moneda_id = $detalle_resumen->getResumen()->getCliente()->getLista()->getMonedaId();
+        }
+        $detalle_resumen->setListaId($lista_id);
+        $detalle_resumen->setMonedaId($moneda_id);
+        $detalle_resumen->save();
+      }
 			
-			/*
-			if ($detalle_resumen->getResumen()->tipofactura_id == 4) {
-				$detalle_resumen->setPrecio(0);
-				$detalle_resumen->setSubTotal(0);
-				$detalle_resumen->setIva(0);
-				$detalle_resumen->setTotal(0);
-			}
-			*/
-			
-			$detalle_resumen->save();
-					
+      // si se vende de un remito sumar esa cantidad para el stock del remito
 			if (!empty($detalle_resumen->det_remito_id)) {
 				$det_remito_id = $detalle_resumen->det_remito_id;
 				$detalle_remito = Doctrine::getTable('DetalleResumen')->find($det_remito_id);
 				$detalle_remito->cant_vend_remito += $detalle_resumen->cantidad;
 				$detalle_remito->save();
-				if ($detalle_resumen->getResumen()->getCliente()->zona_id != 1)
+        
+        // si la venta es de una zona distinta a la casa central, descontar stock, si no ya se desconto cuando se hizo el remito
+				if ($detalle_resumen->getResumen()->getCliente()->zona_id != 1) {
 					$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+        }
 			} else {
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
 			}
@@ -420,6 +424,7 @@ class detresActions extends autoDetresActions
 			
 			$wsfev1 = new WSFEV1(dirname(__FILE__));
 			
+			// me fijo si vamos bien con los numeros de facturas
 			$ultimo_nro_afip = $wsfev1->FECompUltimoAutorizado($ptovta, $regfe['CbteTipo']);
 			$q = Doctrine_Query::create()
 			->select('max(nro_factura) as ultimo')
@@ -429,40 +434,44 @@ class detresActions extends autoDetresActions
 			->andWhere('nro_factura not is null');
 			$ultimo_nro_sistema = $q->fetchArray();  
 			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
-				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip no coincide con el último número registrado en el sistema');
+				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el último número registrado en el sistema (nro: '.$ultimo_nro_sistema.')');
+				$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
 			}
-
 			$nuevo_nro = $ultimo_nro_afip+1;
-
-			$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
-			$tipo_msj = 'error';
-			$afip_estado = 0;
-			$msj = '';
-			$msj2 = '';
-			if (is_soap_fault($res)) {
-				$msj2 = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
-			} else {
-				if (empty($res) || $res == false || $res['resultado'] == 'R') {
-					for ($i=0;$i < count($wsfev1->Code);$i++) {
-						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
-					}
-					$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
-				} elseif ($res['resultado'] == 'A') {
-					$afip_estado = 1;
-					$resumen->setAfipCae($res['cae']);
-					$resumen->setNroFactura($nuevo_nro);
-					$resumen->setPtoVta($ptovta);
-					$resumen->setAfipVtoCae($res['fec_vto']);
-					
-					$msj = 'La venta fue informada correctamen a la AFIP, CAE: '.$res['cae'];
-					$tipo_msj = 'notice';
-					
-					for ($i=0;$i < count($wsfev1->Code);$i++) {
-						$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
-					}
-					if (!empty($a_msj)) {
-						$afip_estado = 2;
-						$msj2 = '. Se encontraron los siguientes mensajes: '.str_replace('\'', '\'\'', implode('//', $a_msj));
+			
+			// esto xq aveces manda 2 veces el comprobante a la afip
+			$resumen2 = Doctrine::getTable('Resumen')->find($rid);
+			if (empty($resumen2->afip_estado) && empty($resumen2->afip_cae)) {
+				$res = $wsfev1->FECAESolicitar($nuevo_nro, $ptovta, $regfe, $regfeasoc, $regfetrib, $regfeiva);
+				$tipo_msj = 'error';
+				$afip_estado = 0;
+				$msj = '';
+				$msj2 = '';
+				if (is_soap_fault($res)) {
+					$msj2 = str_replace('\'', '\'\'', 'SOAP Fault: (faultcode: '.$res->faultcode.', faultstring: '.$res->faultstring.')');
+				} else {
+					if (empty($res) || $res == false || $res['resultado'] == 'R') {
+						for ($i=0;$i < count($wsfev1->Code);$i++) {
+							$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+						}
+						$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
+					} elseif ($res['resultado'] == 'A') {
+						$afip_estado = 1;
+						$resumen->setAfipCae($res['cae']);
+						$resumen->setNroFactura($nuevo_nro);
+						$resumen->setPtoVta($ptovta);
+						$resumen->setAfipVtoCae($res['fec_vto']);
+						
+						$msj = 'La venta fue informada correctamen a la AFIP, CAE: '.$res['cae'];
+						$tipo_msj = 'notice';
+						
+						for ($i=0;$i < count($wsfev1->Code);$i++) {
+							$a_msj[] = $wsfev1->Code[$i].' - '.$wsfev1->Msg[$i];
+						}
+						if (!empty($a_msj)) {
+							$afip_estado = 2;
+							$msj2 = '. Se encontraron los siguientes mensajes: '.str_replace('\'', '\'\'', implode('//', $a_msj));
+						}
 					}
 				}
 			}

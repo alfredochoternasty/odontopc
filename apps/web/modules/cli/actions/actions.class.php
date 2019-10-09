@@ -266,6 +266,7 @@ class cliActions extends autoCliActions
   
   protected function enviar_cliente($arr_datos)
   {
+		unset($arr_datos['id']);
     foreach($arr_datos as $k => $v){
       $vars[] = $k.'='.urlencode($v);
     }
