@@ -99,6 +99,7 @@ class resumenActions extends autoResumenActions
     $objProd->setFax($datos['fax']);
     $objProd->setEmail($datos['email']);
     $objProd->setObservacion($datos['observacion']);
+    $objProd->setZonaId($datos['zona_id']);
     
     $objProd->save();
     
