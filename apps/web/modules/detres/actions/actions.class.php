@@ -430,11 +430,11 @@ class detresActions extends autoDetresActions
 			->select('max(nro_factura) as ultimo')
 			->from('Resumen')
 			->where('tipofactura_id = '.$resumen->tipofactura_id)
-			->andWhere('pto_vta = '.$pto_vta)
-			->andWhere('nro_factura not is null');
-			$ultimo_nro_sistema = $q->fetchArray();  
+			->andWhere("pto_vta = '".$ptovta."'")
+			->andWhere('nro_factura is not null');
+			$ultimo_nro_sistema = $q->fetchArray();
 			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
-				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el último número registrado en el sistema (nro: '.$ultimo_nro_sistema.')');
+				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el último número registrado en el sistema (nro: '.$ultimo_nro_sistema[0]['ultimo'].')');
 				$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
 			}
 			$nuevo_nro = $ultimo_nro_afip+1;

@@ -12,5 +12,6 @@ class MovimientoProductoForm extends BaseMovimientoProductoForm
 {
   public function configure()
   {
+
   }
 }
