@@ -14,13 +14,13 @@ generator:
     config:
       actions: ~
       fields:
-        table_method: retrieveConJoins
         razon_social: {help: Nombre de la empresa o persona}
         cuit: {help: Número de CUIT sin guion '-'}
         telefono: {label: Teléfono., help: Se puede ingresar uno o varios números de teléfonos}
         condicionfiscal_id: {label: Cond. Fiscal}
         localidad_id: {label: Ciudad}
       list:
+        table_method: retrieveConJoins
         title: Administraci&oacute;n de Proveedores
         display: [cuit, razon_social, _ciudad, telefono, email]
         object_actions:

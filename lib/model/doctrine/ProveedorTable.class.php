@@ -20,15 +20,14 @@ class ProveedorTable extends Doctrine_Table
     public function retrieveConJoins(Doctrine_Query $q)
     {
       $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Ciudad c');
-      $q->where($rootAlias . ".id not in(13, 99)");
+      $q->where($rootAlias . ".id not in (13, 99)");
       return $q; 
     }
 		
     public function ProveedorZona(){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 			$q = Doctrine_Core::getTable('Proveedor')->createQuery('q');
-      $q->where('id <> 99 and exists(select 1 from usuario_zona where zona_id = 1 and usuario = '.$id.')');
+      $q->where('id not in (13, 99) and exists(select 1 from usuario_zona where zona_id = 1 and usuario = '.$id.')');
       $q->orWhere('id = 99 and not exists(select 1 from usuario_zona where zona_id = 1 and usuario = '.$id.')');			
       return $q;
     }		
