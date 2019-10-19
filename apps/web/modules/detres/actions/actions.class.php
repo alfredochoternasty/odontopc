@@ -152,13 +152,14 @@ class detresActions extends autoDetresActions
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       
       // si ya hay un producto igual en la factura, actualizar la cantidad
-      $detres = $request->getParameter($form->getName());
-      $existe = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($detres['resumen_id'], $detres['producto_id'], $detres['nro_lote']);
-      if (!empty($existe[0]->resumen_id)) {
-        $detalle_resumen = $existe[0];
-        $detalle_resumen->cantidad += $detres['cantidad'];
-        $detalle_resumen->save();
-      } else {
+      // $detres = $request->getParameter($form->getName());
+      // $existe = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($detres['resumen_id'], $detres['producto_id'], $detres['nro_lote']);
+      // if (!empty($existe[0]->resumen_id)) {
+        // $detalle_resumen = $existe[0];
+        // $detalle_resumen->cantidad += $detres['cantidad'];
+        // $detalle_resumen->save();
+				// $detalle_resumen->cantidad = $detres['cantidad'];
+      // } else {
         $detalle_resumen = $form->save();
 
         $lista_id = $detalle_resumen->getProducto()->getListaId();
@@ -170,7 +171,7 @@ class detresActions extends autoDetresActions
         $detalle_resumen->setListaId($lista_id);
         $detalle_resumen->setMonedaId($moneda_id);
         $detalle_resumen->save();
-      }
+      // }
 			
       // si se vende de un remito sumar esa cantidad para el stock del remito
 			if (!empty($detalle_resumen->det_remito_id)) {

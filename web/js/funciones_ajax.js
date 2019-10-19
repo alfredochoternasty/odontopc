@@ -47,6 +47,7 @@ $(document).ready(function(){
 });
 
 
+
 //Ventas
 $(document).ready(function(){
   $("#venta_cliente_id").change(function(event){

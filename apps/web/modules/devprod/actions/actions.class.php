@@ -124,7 +124,9 @@ class devprodActions extends autoDevprodActions
     $options[] = '<option value=""></option>';	
     foreach ($vtas as $vta) {
       // $options[] = '<option value="'.$vta['id'].'">'.$vta['TipoFactura']['nombre'].'-'.$vta['pto_vta'].'-'.str_pad($vta['nro_factura'], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta['fecha']))).' - Nro_lote:'.$vta['Detalle'][0]['nro_lote'].'</option>';
-      $options[] = '<option value="'.$vta[0].'">'.$vta[5].'-'.$vta[1].'-'.str_pad($vta[2], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta[3]))).' - Nro_lote:'.$vta[4].'</option>';
+			if (empty($options[$vta[0]])) {
+				$options[$vta[0]] = '<option value="'.$vta[0].'">'.$vta[5].'-'.$vta[1].'-'.str_pad($vta[2], 8, 0,STR_PAD_LEFT).' - Fecha: '.implode('/', array_reverse(explode('-', $vta[3]))).' - Nro_lote:'.$vta[4].'</option>';
+			}
     }
     echo implode($options);
     return sfView::NONE;
@@ -142,10 +144,11 @@ class devprodActions extends autoDevprodActions
   
   public function executeGet_vta_lotes(sfWebRequest $request){
     $lotes = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($request->getparameter('rid'), $request->getparameter('pid'), $request->getparameter('lid'));
-    $cantidad = $lotes[0]['cantidad'];
-		echo $cantidad;
-    $options[] = '<option value="1" selected >1</option>';
-    for($i = 2; $i <= $cantidad; $i++){
+		$cantidad = 0;
+		foreach ($lotes as $lote) 
+			$cantidad += $lote['cantidad'];
+    // $options[] = '<option value="1" selected >1</option>';
+    for($i = 1; $i <= $cantidad; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';
     }
     echo implode($options);
@@ -156,7 +159,9 @@ class devprodActions extends autoDevprodActions
     $prods = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($request->getparameter('rid'), $request->getparameter('pid'));  
     $options[] = '<option value="" selected ></option>';
 		foreach ($prods as $prod) {
-			$options[] = '<option value="'.$prod['nro_lote'].'">'.$prod['nro_lote'].'</option>';
+			if (empty($options[$prod['nro_lote']])) {
+				$options[$prod['nro_lote']] = '<option value="'.$prod['nro_lote'].'">'.$prod['nro_lote'].'</option>';
+			}
 		}
 		echo implode($options);
     return sfView::NONE;

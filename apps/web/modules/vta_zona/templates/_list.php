@@ -34,7 +34,7 @@
     <thead class="ui-widget-header">
       <tr>
 				<th id="sf_admin_list_batch_actions"  class="ui-state-default ui-th-column">
-					<input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" />
+					<input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();total_a_pagar();" />
 				</th>
         <?php	include_partial('vta_zona/list_th_tabular', array('sort' => $sort)) ?>
 				<th class="sf_admin_text ui-state-default ui-th-column">
@@ -105,16 +105,15 @@
 							echo sprintf("$ %01.2f", $descuento); 
 							$tot_descuento += $descuento;
 							$zona_id = $ventas_zona->zona_id;
+							$array_descuentos[$ventas_zona->id] = $descuento;
 						?>					
 					</td>
 				</tr>
-      <?php endforeach; 
-				$sf_user->setAttribute('comision_total', $tot_descuento);
+      <?php endforeach;
 				$sf_user->setAttribute('comision_zona', $zona_id);
 			?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-					<td colspan="16" style="font-size:14px; text-align:right;" class="sf_admin_text"><b>Total: </b></td>
-					<td class="sf_admin_text"><b style="color:red; font-size:14px;"><?php echo sprintf("$ %01.2f", $tot_descuento); ?></b></td>
+					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total: $ <span id="total_pagar" style="color:red;">0</span></b></td>
 				</tr>
     </tbody>
 
@@ -131,10 +130,34 @@
   <?php endif; ?>
 </div>
 <script type="text/javascript">
-/* <![CDATA[ */
+var descuentos = <?php echo json_encode($array_descuentos, JSON_PRETTY_PRINT) ?>;
+function total_a_pagar() 
+{
+	var total = 0;
+	var inputElements = $("input:checked");
+	for(var i=0; inputElements[i]; ++i){
+		if(inputElements[i].checked){
+			total += descuentos[inputElements[i].value];
+			if (isNaN(total)) 
+				total = 0;
+		}
+	}
+	$("#total_pagar").text(total.toFixed(2));
+}
+
 function checkAll()
 {
-  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
+  var boxes = document.getElementsByTagName('input'); 
+	for(var index = 0; index < boxes.length; index++) { 
+		box = boxes[index]; 
+		if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') {
+			box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked;
+		}
+	}
+	return true;
 }
-/* ]]> */
+
+$(document).ready(function(){
+	$( "input" ).on( "click", total_a_pagar);
+});
 </script>

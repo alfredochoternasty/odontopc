@@ -67,8 +67,7 @@ class vta_zonaActions extends autoVta_zonaActions
   protected function executeBatchPagar(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
-		
-    $monto = $this->getUser()->getAttribute('comision_total');
+
 		$q2 = Doctrine_Query::create()
 			->from('VentasZona')
 			->whereIn('id', $ids);
