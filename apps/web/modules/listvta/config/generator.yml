@@ -17,11 +17,10 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
-        cant_dev: {label: Devueltos}
       list:
         table_method: retrieveConJoins
         title: Listado de Ventas
-        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote, cant_dev]
+        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote]
         max_per_page: 9999
         object_actions:
           _factura: {label: Fact}

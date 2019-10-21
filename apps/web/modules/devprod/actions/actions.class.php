@@ -81,7 +81,7 @@ class devprodActions extends autoDevprodActions
 		} else {
 			$det_res = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($dev_prod->resumen_id, $dev_prod->producto_id, $dev_prod->nro_lote);
 			if (empty($det_res[0]->det_remito_id)) {
-				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_prod)));
+				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $dev_prod)));
 			}
 		}
 		

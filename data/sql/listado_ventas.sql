@@ -18,15 +18,7 @@ select
 	detalle_resumen.iva AS iva,
 	detalle_resumen.sub_total AS sub_total,
 	detalle_resumen.total AS total,
-	detalle_resumen.det_remito_id AS det_remito_id,
-	(
-		select sum(dev_producto.cantidad)
-		from dev_producto 
-		where 
-			dev_producto.producto_id = detalle_resumen.producto_id
-			and dev_producto.nro_lote <> detalle_resumen.nro_lote
-			and dev_producto.resumen_id = detalle_resumen.resumen_id
-	) AS cant_dev 
+	detalle_resumen.det_remito_id AS det_remito_id
 from 
 	resumen 
 		left join detalle_resumen on resumen.id = detalle_resumen.resumen_id

@@ -15,7 +15,7 @@ select
 		where dc.nro_lote = l.nro_lote and l.zona_id = compra.zona_id
 	) AS comprados,
 	(
-		select (sum(lv.cantidad) + sum(lv.bonificados)) - coalesce(sum(lv.cant_dev),0) 
+		select (sum(lv.cantidad) + sum(lv.bonificados))
 		from listado_ventas lv 
 		where 
 			lv.nro_lote = l.nro_lote 
@@ -26,28 +26,38 @@ select
 						or (lv.det_remito_id is not null and lv.zona_id <> 1)
 					)
 	) AS vendidos,
+	(
+		select sum(cantidad)
+		from dev_producto dp2
+			join cliente c on dp2.cliente_id = c.id
+		where 
+			c.zona_id = l.zona_id
+			and dp2.producto_id = l.producto_id
+			and dp2.nro_lote = l.nro_lote
+			and EXISTS(SELECT 1 FROM resumen r2 JOIN detalle_resumen dr2 ON r2.id = dr2.resumen_id WHERE dr2.det_remito_id IS NULL)
+	) AS cant_dev,
 	l.stock AS stock_guardado,
 	p.minimo_stock AS minimo_stock,
 	(
 		SELECT 
-			case when max(r.fecha) > max(d.fecha) 
-				then max(r.fecha) 
-				else max(d.fecha)
+			case when max(r1.fecha) > max(dp1.fecha) 
+				then max(r1.fecha) 
+				else max(dp1.fecha)
 			end
-		from resumen r 
-			join detalle_resumen dr on r.id = dr.resumen_id,
-			dev_producto d
+		from resumen r1 
+			join detalle_resumen dr on r1.id = dr.resumen_id,
+			dev_producto dp1
 		where dr.producto_id = l.producto_id
 				and dr.nro_lote = l.nro_lote
-				and d.producto_id = l.producto_id
-				and d.nro_lote = l.nro_lote
+				and dp1.producto_id = l.producto_id
+				and dp1.nro_lote = l.nro_lote
 	) AS ult_venta 
 from 
 	lote l 
 		join producto p on l.producto_id = p.id
 		join grupoprod gp on p.grupoprod_id = gp.id
 where 
-	p.grupoprod_id not in (1,15) 
+	p.grupoprod_id not in (1,15)
 	and p.activo = 1
 	and not(l.nro_lote in (select lotes_romi.nro_lote from lotes_romi))
 	and not(l.nro_lote like 'er%') 

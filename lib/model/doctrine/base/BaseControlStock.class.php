@@ -15,6 +15,7 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @property integer $zona_id
  * @property integer $comprados
  * @property integer $vendidos
+ * @property integer $cant_dev
  * @property integer $stock_guardado
  * @property integer $minimo_stock
  * @property date $ult_venta
@@ -30,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method integer      getZonaId()         Returns the current record's "zona_id" value
  * @method integer      getComprados()      Returns the current record's "comprados" value
  * @method integer      getVendidos()       Returns the current record's "vendidos" value
+ * @method integer      getCantDev()        Returns the current record's "cant_dev" value
  * @method integer      getStockGuardado()  Returns the current record's "stock_guardado" value
  * @method integer      getMinimoStock()    Returns the current record's "minimo_stock" value
  * @method date         getUltVenta()       Returns the current record's "ult_venta" value
@@ -44,6 +46,7 @@ Doctrine_Manager::getInstance()->bindComponent('ControlStock', 'doctrine');
  * @method ControlStock setZonaId()         Sets the current record's "zona_id" value
  * @method ControlStock setComprados()      Sets the current record's "comprados" value
  * @method ControlStock setVendidos()       Sets the current record's "vendidos" value
+ * @method ControlStock setCantDev()        Sets the current record's "cant_dev" value
  * @method ControlStock setStockGuardado()  Sets the current record's "stock_guardado" value
  * @method ControlStock setMinimoStock()    Sets the current record's "minimo_stock" value
  * @method ControlStock setUltVenta()       Sets the current record's "ult_venta" value
@@ -91,6 +94,10 @@ abstract class BaseControlStock extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('vendidos', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('cant_dev', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

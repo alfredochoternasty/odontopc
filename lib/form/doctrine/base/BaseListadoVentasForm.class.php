@@ -33,7 +33,6 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'sub_total'      => new sfWidgetFormInputText(),
       'total'          => new sfWidgetFormInputText(),
       'det_remito_id'  => new sfWidgetFormInputText(),
-      'cant_dev'       => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -55,7 +54,6 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'sub_total'      => new sfValidatorNumber(array('required' => false)),
       'total'          => new sfValidatorNumber(array('required' => false)),
       'det_remito_id'  => new sfValidatorInteger(array('required' => false)),
-      'cant_dev'       => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas[%s]');

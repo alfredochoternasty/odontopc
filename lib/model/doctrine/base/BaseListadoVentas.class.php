@@ -25,7 +25,6 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @property decimal $sub_total
  * @property decimal $total
  * @property integer $det_remito_id
- * @property integer $cant_dev
  * @property DetalleResumen $DetalleResumen
  * @property Resumen $Resumen
  * @property Cliente $Cliente
@@ -51,7 +50,6 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method decimal        getSubTotal()       Returns the current record's "sub_total" value
  * @method decimal        getTotal()          Returns the current record's "total" value
  * @method integer        getDetRemitoId()    Returns the current record's "det_remito_id" value
- * @method integer        getCantDev()        Returns the current record's "cant_dev" value
  * @method DetalleResumen getDetalleResumen() Returns the current record's "DetalleResumen" value
  * @method Resumen        getResumen()        Returns the current record's "Resumen" value
  * @method Cliente        getCliente()        Returns the current record's "Cliente" value
@@ -76,7 +74,6 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method ListadoVentas  setSubTotal()       Sets the current record's "sub_total" value
  * @method ListadoVentas  setTotal()          Sets the current record's "total" value
  * @method ListadoVentas  setDetRemitoId()    Sets the current record's "det_remito_id" value
- * @method ListadoVentas  setCantDev()        Sets the current record's "cant_dev" value
  * @method ListadoVentas  setDetalleResumen() Sets the current record's "DetalleResumen" value
  * @method ListadoVentas  setResumen()        Sets the current record's "Resumen" value
  * @method ListadoVentas  setCliente()        Sets the current record's "Cliente" value
@@ -170,10 +167,6 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
              'scale' => '2',
              ));
         $this->hasColumn('det_remito_id', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
-             ));
-        $this->hasColumn('cant_dev', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

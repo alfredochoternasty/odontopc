@@ -435,7 +435,6 @@ ListadoVentas:
     sub_total: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
     det_remito_id: {type: integer(4)}
-    cant_dev: {type: integer(4)}
   relations:
     DetalleResumen: {type: one, class: DetalleResumen, local: id}
     Resumen: {type: one, class: Resumen, local: resumen_id}
@@ -690,6 +689,7 @@ ControlStock:
     zona_id: {type: integer(4)}
     comprados: {type: integer(4)}
     vendidos: {type: integer(4)}
+    cant_dev: {type: integer(4)}
     stock_guardado: {type: integer(4)}
     minimo_stock: {type: integer(4)}
     ult_venta: {type: date(25)}

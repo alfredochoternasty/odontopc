@@ -41,7 +41,6 @@
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Producto</th>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Cantidad</th>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Bonificados</th>
-						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Devueltos</th>
 					<?php
 					} else {
 						include_partial('listvta/list_th_tabular', array('sort' => $sort));
