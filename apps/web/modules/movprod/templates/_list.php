@@ -89,16 +89,16 @@
 								'producto' => $vtas->getProducto(),
 								'cantidad' => $vtas->cantidad,
 								'bono' => $vtas->bonificados?:0,
-								'dev' => $vtas->cant_dev?:0,
+								//'dev' => $vtas->cant_dev?:0,
 							);
 						} else {
 							$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
 							$ventas[$vtas->producto_id]['bono'] += $vtas->bonificados;
-							$ventas[$vtas->producto_id]['dev'] += $vtas->cant_dev;
+							//$ventas[$vtas->producto_id]['dev'] += $vtas->cant_dev;
 						}
 						$suma_total += $vtas->cantidad;
 						$suma_total_bon += $vtas->bonificados;
-						$suma_total_dev += $vtas->cant_dev;
+						//$suma_total_dev += $vtas->cant_dev;
 					}
 					sort($ventas);
 					foreach ($ventas as $vta)	{
@@ -108,7 +108,7 @@
 								<td><?php echo $vta['producto'] ?></td>
 								<td><?php echo $vta['cantidad'] ?></td>
 								<td><?php echo $vta['bono'] ?></td>
-								<td><?php echo $vta['dev'] ?></td>
+								<td><?php //echo $vta['dev'] ?></td>
 							</tr>
 							<?php 
 					}				
@@ -117,7 +117,7 @@
             <td colspan="2" style="text-align: right; font-size:20px;"><b>Subtotal: </b> </td>
             <td style="font-size:20px;"><b><?php echo $suma_total ?></b></td>
             <td style="font-size:20px;"><b><?php echo $suma_total_bon ?></b></td>
-            <td style="font-size:20px;"><b><?php echo $suma_total_dev ?></b></td>
+            <td style="font-size:20px;"><b><?php //echo $suma_total_dev ?></b></td>
           </tr>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 				<td colspan="5">&nbsp;</td>

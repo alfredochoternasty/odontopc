@@ -45,7 +45,7 @@ body {
 }
 
 .page-number:before {
-	content: "Página " counter(page);
+	content: "P?gina " counter(page);
 }
 
 hr {
@@ -88,7 +88,7 @@ hr {
     <td><?php echo utf8_decode($fila->getProducto()->nombre) ?></td>
     <td><?php echo $fila->getNroLote() ?></td>
 		<td style="text-align:center;"><?php echo $fila->getComprados() ?></td>
-    <td style="text-align:center;"><?php echo (!empty($fila->vendidos))?$fila->getVendidos():'0'; ?></td>
+    <td style="text-align:center;"><?php echo (!empty($fila->vendidos))?$fila->vendidos - $fila->cant_dev:'0'; ?></td>
     <td style="text-align:center;"><?php echo $fila->stock_guardado ?></td>
     <td style="text-align:center;"><?php echo implode('/', array_reverse(explode('-', $fila->ult_venta))) ?></td>
   </tr>
