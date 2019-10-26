@@ -27,14 +27,21 @@ select
 					)
 	) AS vendidos,
 	(
-		select sum(cantidad)
-		from dev_producto dp2
-			join cliente c on dp2.cliente_id = c.id
+		select 
+			sum(dp2.cantidad) 
+		from 
+			dev_producto dp2 
+				join cliente c on dp2.cliente_id = c.id
 		where 
-			c.zona_id = l.zona_id
+			c.zona_id = l.zona_id 
 			and dp2.producto_id = l.producto_id
 			and dp2.nro_lote = l.nro_lote
-			and EXISTS(SELECT 1 FROM resumen r2 JOIN detalle_resumen dr2 ON r2.id = dr2.resumen_id WHERE dr2.det_remito_id IS NULL)
+			and exists(
+							select 1 
+							from resumen r2 
+								join detalle_resumen dr2 on r2.id = dr2.resumen_id
+							where r2.id = dp2.resumen_id
+										and isnull(dr2.det_remito_id)
 	) AS cant_dev,
 	l.stock AS stock_guardado,
 	p.minimo_stock AS minimo_stock,

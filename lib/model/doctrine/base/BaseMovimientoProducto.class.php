@@ -25,7 +25,6 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @property decimal $sub_total
  * @property decimal $total
  * @property integer $det_remito_id
- * @property integer $cant_dev
  * @property DetalleResumen $DetalleResumen
  * @property Resumen $Resumen
  * @property Cliente $Cliente
@@ -51,7 +50,6 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method decimal            getSubTotal()       Returns the current record's "sub_total" value
  * @method decimal            getTotal()          Returns the current record's "total" value
  * @method integer            getDetRemitoId()    Returns the current record's "det_remito_id" value
- * @method integer            getCantDev()        Returns the current record's "cant_dev" value
  * @method DetalleResumen     getDetalleResumen() Returns the current record's "DetalleResumen" value
  * @method Resumen            getResumen()        Returns the current record's "Resumen" value
  * @method Cliente            getCliente()        Returns the current record's "Cliente" value
@@ -76,7 +74,6 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method MovimientoProducto setSubTotal()       Sets the current record's "sub_total" value
  * @method MovimientoProducto setTotal()          Sets the current record's "total" value
  * @method MovimientoProducto setDetRemitoId()    Sets the current record's "det_remito_id" value
- * @method MovimientoProducto setCantDev()        Sets the current record's "cant_dev" value
  * @method MovimientoProducto setDetalleResumen() Sets the current record's "DetalleResumen" value
  * @method MovimientoProducto setResumen()        Sets the current record's "Resumen" value
  * @method MovimientoProducto setCliente()        Sets the current record's "Cliente" value
@@ -170,10 +167,6 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
              'scale' => '2',
              ));
         $this->hasColumn('det_remito_id', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
-             ));
-        $this->hasColumn('cant_dev', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

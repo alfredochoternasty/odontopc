@@ -30,7 +30,6 @@ abstract class BaseMovimientoProductoFormFilter extends BaseFormFilterDoctrine
       'sub_total'      => new sfWidgetFormFilterInput(),
       'total'          => new sfWidgetFormFilterInput(),
       'det_remito_id'  => new sfWidgetFormFilterInput(),
-      'cant_dev'       => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -51,7 +50,6 @@ abstract class BaseMovimientoProductoFormFilter extends BaseFormFilterDoctrine
       'sub_total'      => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total'          => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'det_remito_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'cant_dev'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('movimiento_producto_filters[%s]');
@@ -89,7 +87,6 @@ abstract class BaseMovimientoProductoFormFilter extends BaseFormFilterDoctrine
       'sub_total'      => 'Number',
       'total'          => 'Number',
       'det_remito_id'  => 'Number',
-      'cant_dev'       => 'Number',
     );
   }
 }
