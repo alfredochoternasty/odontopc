@@ -28,7 +28,19 @@ class ListadoVentasTable extends Doctrine_Table
 			// $q->leftJoin($rootAlias . '.Producto p');
 			$q->where('uz.usuario = '.$id);
 			$q->andWhere($rootAlias . '.tipofactura_id <> 4');
-			$q->andWhere($rootAlias . '.cantidad > 0');
+			// $q->andWhere($rootAlias . '.cantidad > 0');
+			return $q;
+    }
+		
+    public function retrieveCtrlvta(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			
+			$rootAlias = $q->getRootAlias();
+			$q->leftJoin($rootAlias . '.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');	
+			$q->where('uz.usuario = '.$id);
+			$q->andWhere($rootAlias . '.det_remito_id is null');
+			// $q->andWhere($rootAlias . '.cantidad > 0');
 			return $q;
     }
 }

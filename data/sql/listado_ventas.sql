@@ -47,7 +47,7 @@ select
 	dev_producto.iva * -1 AS iva,
 	0 AS sub_total,
 	dev_producto.total * -1 AS total,
-	0
+	null
 from 
 	dev_producto
 		left join producto on dev_producto.producto_id = producto.id

@@ -77,7 +77,7 @@ class detresActions extends autoDetresActions
           ->andWhere("l.nro_lote not like 'er%'")
           ->andWhere('l.stock > 0')
           ->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null")
-          ->orderBy('fecha_vto desc');
+          ->orderBy('fecha_vto desc, l.id asc');
       $lotes = $q->execute();
       $nro_lote = '#';
       foreach($lotes as $lote){
