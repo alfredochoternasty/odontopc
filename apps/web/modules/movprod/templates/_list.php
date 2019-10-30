@@ -76,7 +76,8 @@
 						echo '</td></tr>';
 					} */
 					
-        if ($ver_solo_totales) {
+        // if ($ver_solo_totales) {
+        if (1>2) {
 					$suma_total = 0;
 					$suma_total_bon = 0;
 					$suma_total_dev = 0;

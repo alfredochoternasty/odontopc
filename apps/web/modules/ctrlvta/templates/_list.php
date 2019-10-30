@@ -36,7 +36,7 @@
     <thead class="ui-widget-header">
       <tr>
         <?php 
-					if ($ver_solo_totales) { ?>
+					if ($ver_solo_totales=1) { ?>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Grupo</th>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Producto</th>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Vendidos</th>
