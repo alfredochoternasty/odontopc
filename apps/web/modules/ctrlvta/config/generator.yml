@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ListadoVentas
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          listado_ventas_ctrlvta
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        grupoprod_id: {label: Grupo}
+        nro_lote: {label: Lote}
+      list:
+        table_method: retrieveCtrlvta
+        title: Listado de Ventas Totalizado
+        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote]
+        max_per_page: 250
+        object_actions: []
+        batch_actions: []
+        actions:
+          imprimir_todo: ~
+      filter:
+        display: [zona_id, tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
+      form:    ~
+      edit:    ~
+      new:     ~
