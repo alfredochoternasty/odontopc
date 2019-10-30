@@ -31,7 +31,7 @@ generator:
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:
-        display: [zona_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
+        display: [zona_id, tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:     ~

@@ -14,7 +14,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'resumen_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'), 'add_empty' => true)),
-      'tipofactura_id' => new sfWidgetFormFilterInput(),
+      'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'fecha'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'cliente_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
       'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
@@ -34,7 +34,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'resumen_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Resumen'), 'column' => 'id')),
-      'tipofactura_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
       'fecha'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'cliente_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
       'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
@@ -71,7 +71,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'             => 'Number',
       'resumen_id'     => 'ForeignKey',
-      'tipofactura_id' => 'Number',
+      'tipofactura_id' => 'ForeignKey',
       'fecha'          => 'Date',
       'cliente_id'     => 'ForeignKey',
       'zona_id'        => 'ForeignKey',

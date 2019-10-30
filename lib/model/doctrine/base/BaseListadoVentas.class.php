@@ -31,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @property Producto $Producto
  * @property Zona $Zona
  * @property Grupoprod $Grupo
+ * @property TipoFactura $TipoFactura
  * 
  * @method integer        getId()             Returns the current record's "id" value
  * @method integer        getResumenId()      Returns the current record's "resumen_id" value
@@ -56,6 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method Producto       getProducto()       Returns the current record's "Producto" value
  * @method Zona           getZona()           Returns the current record's "Zona" value
  * @method Grupoprod      getGrupo()          Returns the current record's "Grupo" value
+ * @method TipoFactura    getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method ListadoVentas  setId()             Sets the current record's "id" value
  * @method ListadoVentas  setResumenId()      Sets the current record's "resumen_id" value
  * @method ListadoVentas  setTipofacturaId()  Sets the current record's "tipofactura_id" value
@@ -80,6 +82,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method ListadoVentas  setProducto()       Sets the current record's "Producto" value
  * @method ListadoVentas  setZona()           Sets the current record's "Zona" value
  * @method ListadoVentas  setGrupo()          Sets the current record's "Grupo" value
+ * @method ListadoVentas  setTipoFactura()    Sets the current record's "TipoFactura" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -197,6 +200,11 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
 
         $this->hasOne('Grupoprod as Grupo', array(
              'local' => 'grupoprod_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('TipoFactura', array(
+             'local' => 'tipofactura_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

@@ -17,7 +17,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
       'resumen_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'), 'add_empty' => true)),
-      'tipofactura_id' => new sfWidgetFormInputText(),
+      'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'fecha'          => new sfWidgetFormDate(),
       'cliente_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
       'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
@@ -38,7 +38,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'resumen_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'), 'required' => false)),
-      'tipofactura_id' => new sfValidatorInteger(array('required' => false)),
+      'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'required' => false)),
       'fecha'          => new sfValidatorDate(array('required' => false)),
       'cliente_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'required' => false)),
       'zona_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),

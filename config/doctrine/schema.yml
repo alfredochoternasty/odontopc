@@ -442,6 +442,7 @@ ListadoVentas:
     Producto: {type: one, class: Producto, local: producto_id}
     Zona: {type: one, class: Zona, local: zona_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
+    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
 MovimientoProducto:
   connection: doctrine
   tableName: listado_ventas
@@ -471,6 +472,7 @@ MovimientoProducto:
     Producto: {type: one, class: Producto, local: producto_id}
     Zona: {type: one, class: Zona, local: zona_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
+    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
 ListadoCobros:
   connection: doctrine
   tableName: listado_cobros

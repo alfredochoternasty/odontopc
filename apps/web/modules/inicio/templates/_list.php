@@ -1,5 +1,5 @@
 <div style="position:relative" class="sf_admin_list ui-grid-table ui-widget ui-corner-all ui-helper-reset ui-helper-clearfix">
-  <?php if (!in_array($sf_user->getGuardUser()->getId(), array(191, 188))) { ?>
+  <?php if (!in_array($sf_user->getGuardUser()->getId(), array(191, 188, 223, 224))) { ?>
 		<?php if (!$pager->getNbResults()) { ?>
 		<table>
 			<caption class="fg-toolbar ui-widget-header ui-corner-top">

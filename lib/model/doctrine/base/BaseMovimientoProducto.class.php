@@ -31,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @property Producto $Producto
  * @property Zona $Zona
  * @property Grupoprod $Grupo
+ * @property TipoFactura $TipoFactura
  * 
  * @method integer            getId()             Returns the current record's "id" value
  * @method integer            getResumenId()      Returns the current record's "resumen_id" value
@@ -56,6 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method Producto           getProducto()       Returns the current record's "Producto" value
  * @method Zona               getZona()           Returns the current record's "Zona" value
  * @method Grupoprod          getGrupo()          Returns the current record's "Grupo" value
+ * @method TipoFactura        getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method MovimientoProducto setId()             Sets the current record's "id" value
  * @method MovimientoProducto setResumenId()      Sets the current record's "resumen_id" value
  * @method MovimientoProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
@@ -80,6 +82,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method MovimientoProducto setProducto()       Sets the current record's "Producto" value
  * @method MovimientoProducto setZona()           Sets the current record's "Zona" value
  * @method MovimientoProducto setGrupo()          Sets the current record's "Grupo" value
+ * @method MovimientoProducto setTipoFactura()    Sets the current record's "TipoFactura" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -197,6 +200,11 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
 
         $this->hasOne('Grupoprod as Grupo', array(
              'local' => 'grupoprod_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('TipoFactura', array(
+             'local' => 'tipofactura_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }
