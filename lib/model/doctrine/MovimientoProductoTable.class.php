@@ -18,12 +18,12 @@ class MovimientoProductoTable extends Doctrine_Table
     }
     
     public function retrieveConJoins(Doctrine_Query $q){
-			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-			
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();			
 			$rootAlias = $q->getRootAlias();
 			$q->leftJoin($rootAlias . '.Zona z');
       $q->leftJoin('z.UsuarioZona uz');	
 			$q->where('uz.usuario = '.$id);
+			$q->andWhere($rootAlias . '.cantidad > 0');
 			return $q;
     }
 }

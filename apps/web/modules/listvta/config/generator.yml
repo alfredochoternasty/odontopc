@@ -21,7 +21,7 @@ generator:
         table_method: retrieveConJoins
         title: Listado de Ventas
         display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote]
-        max_per_page: 9999
+        max_per_page: 250
         object_actions:
           _factura: {label: Fact}
         batch_actions: []

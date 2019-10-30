@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
-<h2>Movimientos de Productos - <?php echo $listado[0]->getZona() ?></h2>
+<h2>Listado de Ventas (incluye remitos) - <?php echo $listado[0]->getZona() ?></h2>
 <table border="1" cellspacing="0" cellpadding="1">
   <tr>
     <th style="background: #CCC;">Venta</th>
@@ -15,10 +15,11 @@
     <th style="background: #CCC;">iva</th>
     <th style="background: #CCC;">Total</th>
     <th style="background: #CCC;">Lote</th>
-    <th style="background: #CCC;">Devueltos</th>
   </tr>
   <?php $suma_total = 0; ?>
-  <?php foreach($listado as $fila):?>
+  <?php foreach($listado as $fila):
+    if ($fila->cantidad > 0) :
+  ?>
   <tr>
     <?php $suma_total += $fila->getTotal(); ?>
     <td><?php echo $fila->getResumen() ?></td>
@@ -31,9 +32,9 @@
     <td><?php echo '$ '.sprintf("%01.2f", $fila->getIva()) ?></td>
     <td><?php echo '$ '.sprintf("%01.2f", $fila->getTotal()) ?></td>
     <td><?php echo $fila->getNroLote() ?></td>
-    <td><?php echo $fila->getCantDev() ?></td>
   </tr>
-  <?php endforeach;?> 
+  <?php endif; ?> 
+  <?php endforeach; ?> 
 </table>
 </body>
 <html>

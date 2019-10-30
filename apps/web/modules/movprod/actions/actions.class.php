@@ -30,7 +30,7 @@ class movprodActions extends autoMovprodActions
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+    $dompdf->load_html($this->getPartial('imprimir' , array('listado' => $listado)));
     $dompdf->set_paper('A4','landscape');
     $dompdf->render();
     $dompdf->stream("movimientos_producto.pdf");    
@@ -45,7 +45,8 @@ class movprodActions extends autoMovprodActions
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+    // $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
+    $dompdf->load_html($this->getPartial('imprimir' , array('listado' => $listado)));
     $dompdf->set_paper('A4','landscape');
     $dompdf->render();
     $dompdf->stream("movimientos_producto.pdf");    

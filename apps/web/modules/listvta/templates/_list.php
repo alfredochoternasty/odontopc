@@ -39,8 +39,9 @@
 					if ($ver_solo_totales) { ?>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Grupo</th>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Producto</th>
-						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Cantidad</th>
+						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Vendidos</th>
 						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Bonificados</th>
+						<th class="sf_admin_date sf_admin_list_th_fecha ui-state-default ui-th-column">Devueltos</th>
 					<?php
 					} else {
 						include_partial('listvta/list_th_tabular', array('sort' => $sort));
@@ -83,21 +84,37 @@
 						// $vtas = $pager->getNext();
 						//echo $vtas->producto_id.'xx<br>';
 						if (empty($ventas[$vtas->producto_id])) {
-							$ventas[$vtas->producto_id] = array(
-								'grupo' => $vtas->getGrupo(),
-								'producto' => $vtas->getProducto(),
-								'cantidad' => $vtas->cantidad,
-								'bono' => $vtas->bonificados?:0,
-								//'dev' => $vtas->cant_dev?:0,
-							);
+							if ($vtas->cantidad > 0) {
+								$ventas[$vtas->producto_id] = array(
+									'grupo' => $vtas->getGrupo(),
+									'producto' => $vtas->getProducto(),
+									'cantidad' => $vtas->cantidad,
+									'bono' => $vtas->bonificados?:0,
+									'dev' => 0,
+								);
+							} else {
+								$ventas[$vtas->producto_id] = array(
+									'grupo' => $vtas->getGrupo(),
+									'producto' => $vtas->getProducto(),
+									'cantidad' => 0,
+									'bono' => 0,
+									'dev' => ($vtas->cantidad * -1)?:0,
+								);								
+							}
 						} else {
-							$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
-							$ventas[$vtas->producto_id]['bono'] += $vtas->bonificados;
-							//$ventas[$vtas->producto_id]['dev'] += $vtas->cant_dev;
+							if ($vtas->cantidad > 0) {
+								$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
+								$ventas[$vtas->producto_id]['bono'] += $vtas->bonificados;
+							} else {
+								$ventas[$vtas->producto_id]['dev'] += $vtas->cantidad * -1;
+							}
 						}
-						$suma_total += $vtas->cantidad;
-						$suma_total_bon += $vtas->bonificados;
-						//$suma_total_dev += $vtas->cant_dev;
+						if ($vtas->cantidad > 0) {
+							$suma_total += $vtas->cantidad;
+							$suma_total_bon += $vtas->bonificados;
+						} else {
+							$suma_total_dev += $vtas->cantidad * -1;
+						}
 					}
 					sort($ventas);
 					foreach ($ventas as $vta)	{
@@ -107,7 +124,7 @@
 								<td><?php echo $vta['producto'] ?></td>
 								<td><?php echo $vta['cantidad'] ?></td>
 								<td><?php echo $vta['bono'] ?></td>
-								<td><?php //echo $vta['dev'] ?></td>
+								<td><?php echo $vta['dev'] ?></td>
 							</tr>
 							<?php 
 					}				
@@ -116,23 +133,26 @@
             <td colspan="2" style="text-align: right; font-size:20px;"><b>Subtotal: </b> </td>
             <td style="font-size:20px;"><b><?php echo $suma_total ?></b></td>
             <td style="font-size:20px;"><b><?php echo $suma_total_bon ?></b></td>
-            <td style="font-size:20px;"><b><?php //echo $suma_total_dev ?></b></td>
+            <td style="font-size:20px;"><b><?php echo $suma_total_dev ?></b></td>
           </tr>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 				<td colspan="5">&nbsp;</td>
           </tr>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
             <td colspan="2" style="text-align: right; font-size:34px;"><b>Total: </b></td>
-            <td colspan="3" style="font-size:34px;"><b><?php echo $suma_total + $suma_total_bon //- $suma_total_dev ?></b></td>
+            <td colspan="3" style="font-size:34px;"><b><?php echo $suma_total + $suma_total_bon - $suma_total_dev ?></b></td>
           </tr>
 				<?php
 				} else {
-					foreach ($pager->getResults() as $i => $listado_ventas): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
+					foreach ($pager->getResults() as $i => $listado_ventas): $odd = fmod(++$i, 2) ? ' odd' : '' ;
+						if ($listado_ventas->cantidad > 0):
+				?>
 					<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 						<?php include_partial('listvta/list_td_tabular', array('listado_ventas' => $listado_ventas)) ?>
 						<?php include_partial('listvta/list_td_actions', array('listado_ventas' => $listado_ventas, 'helper' => $helper)) ?>
 					</tr>
-					<?php 
+					<?php
+						endif;
 					endforeach; 
 				}
 			?>
