@@ -19,7 +19,7 @@ class FacturasAfipTable extends Doctrine_Table
 		
     public function retrieveConJoins(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
-      $q->orderBy($rootAlias . '.fecha desc');
+      $q->orderBy($rootAlias . '.nro_factura desc');
       return $q;
     }
 }

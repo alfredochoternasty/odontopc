@@ -19,6 +19,7 @@ select
 		from listado_ventas lv 
 		where 
 			lv.nro_lote = l.nro_lote 
+			and lv.cantidad >= 0
 			and lv.producto_id = l.producto_id
 			and lv.zona_id = l.zona_id 
 			and (
@@ -42,6 +43,7 @@ select
 								join detalle_resumen dr2 on r2.id = dr2.resumen_id
 							where r2.id = dp2.resumen_id
 										and isnull(dr2.det_remito_id)
+			)
 	) AS cant_dev,
 	l.stock AS stock_guardado,
 	p.minimo_stock AS minimo_stock,
