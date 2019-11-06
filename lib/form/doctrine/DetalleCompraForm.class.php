@@ -29,6 +29,7 @@ class DetalleCompraForm extends BaseDetalleCompraForm
 			$this->validatorSchema['trazable'] = new sfValidatorChoice(array('required' => true, 'choices' => array(1, 0)));    			
     }
 		
+		$this->widgetSchema['nro_lote'] = new sfWidgetFormInput(array(), array('style' => 'font-weight: bold; font-size:16px;', 'size' => 70));
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
    
     $this->validatorSchema['compra_id'] =  new sfValidatorNumber();

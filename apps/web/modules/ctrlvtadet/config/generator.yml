@@ -7,7 +7,7 @@ generator:
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          listado_ventas
+    route_prefix:          listado_ventas_ctrlvtadet
     with_doctrine_route:   true
     actions_base_class:    sfActions
 
@@ -17,22 +17,19 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
-        remito: {Label: De Rto.}
       list:
         table_method: retrieveConJoins
         title: Listado de Ventas
-        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote, _remito]
+        display: [Resumen, fecha, Cliente, Producto, _cantidad, nro_lote]
         max_per_page: 250
-        object_actions:
-          _factura: {label: Fact}
+        object_actions: []
         batch_actions: []
         actions:
-          ver_totales: ~
           ver_detallado: ~
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:
-        display: [zona_id, tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
+        display: [tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:     ~

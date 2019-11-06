@@ -38,10 +38,9 @@ generator:
           activar: ~
           precio: {label: Cambiar Precio}
       filter:  ~
-      form:    ~
+      form:
+        display: [grupoprod_id, codigo, nombre, precio_vta, iva, total, minimo_stock, orden_grupo, activo, lista_id]
       edit:
         title: Modificar Producto
-        display: [grupoprod_id, codigo, nombre, precio_vta, minimo_stock, orden_grupo, activo, lista_id]
       new:
         title: Nuevo Producto
-        display: [grupoprod_id, codigo, nombre, precio_vta, minimo_stock, orden_grupo, activo, lista_id]

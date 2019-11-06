@@ -64,6 +64,23 @@ $(document).ready(function(){
 });
 
 
+
+$(document).ready(function(){
+  
+  $("#producto_precio_vta").bind("propertychange keyup input paste", function(event){
+		var precio = $("#producto_precio_vta").val();
+		precio = precio * 1;
+		var iva = precio * 0.21;
+		var total = precio + iva;    
+		$("#producto_iva").attr('value', iva.toFixed(2));
+		$("#producto_total").attr('value', total.toFixed(2));
+	});
+});
+
+
+
+
+
 //PRESUPUESTO 
 $(document).ready(function(){
   $("#detalle_presupuesto_producto_id").change(function(event){

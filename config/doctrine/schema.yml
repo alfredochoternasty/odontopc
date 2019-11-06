@@ -600,26 +600,18 @@ ProductoTraza:
   tableName: producto_traza
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
-    producto_id: {type: integer(4)}
-    codigo: {type: string(50)}
-    nro_lote: {type: string(50)}
-    fecha_vto: {type: date(25)}
     resumen_id: {type: integer(4)}
     fecha_venta: {type: date(25)}
     cliente_id: {type: integer(4)}
-    apellido: {type: string(250)}
-    nombre: {type: string(250)}
-    fecha_compra: {type: date(25)}
-    proveedor_id: {type: integer(4)}
-    compra_id: {type: integer(4)}
-    cant_vendida: {type: integer(4)}
-    cant_comprada: {type: integer(4)}
+    producto_id: {type: integer(4)}
+    nro_lote: {type: string(50)}
+    fecha_vto: {type: date(25)}
+    vendidos: {type: integer(4)}
+    devueltos: {type: integer(4)}
   relations:
-    Proveedor: {type: one, local: proveedor_id, onDelete: RESTRICT}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
-    Compra: {type: one, local: compra_id, onDelete: RESTRICT}
 Lote:
   connection: doctrine
   tableName: lote

@@ -7,9 +7,9 @@
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
       <div id="sf_admin_filters_buttons" class="fg-buttonset fg-buttonset-multi ui-state-default">
         <a href="#sf_admin_filter" id="sf_admin_filter_button" class="fg-button ui-state-default fg-button-icon-left ui-corner-left"><?php echo UIHelper::addIconByConf('filters') . __('Filters', array(), 'sf_admin') ?></a>
-        <?php echo link_to(UIHelper::addIconByConf('reset') . __('Reset', array(), 'sf_admin'), 'movimiento_producto_collection', array('action' => 'filter'), array('query_string' => '_reset', 'method' => 'post', 'class' => 'fg-button ui-state-default fg-button-icon-left ui-corner-right ui-state-disabled')) ?></span>
+        <?php echo link_to(UIHelper::addIconByConf('reset') . __('Reset', array(), 'sf_admin'), 'listado_ventas_collection', array('action' => 'filter'), array('query_string' => '_reset', 'method' => 'post', 'class' => 'fg-button ui-state-default fg-button-icon-left ui-corner-right ui-state-disabled')) ?></span>
       </div>
-      <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Listado de Ventas, Ventas de Remitos y Remitos', array(), 'messages') ?></h1>
+      <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Listado de Ventas y Remitos', array(), 'messages') ?></h1>
     </caption>
     <tbody>
       <tr class="sf_admin_row ui-widget-content">
@@ -27,25 +27,24 @@
       <div id="sf_admin_filters_buttons" class="fg-buttonset fg-buttonset-multi ui-state-default">
         <a href="#sf_admin_filter" id="sf_admin_filter_button" class="fg-button ui-state-default fg-button-icon-left ui-corner-left"><?php echo UIHelper::addIconByConf('filters') . __('Filters', array(), 'sf_admin') ?></a>
         <?php $isDisabledResetButton = ($hasFilters->getRawValue()) ? '' : ' ui-state-disabled' ?>
-        <?php echo link_to(UIHelper::addIconByConf('reset') . __('Reset', array(), 'sf_admin'), 'movimiento_producto_collection', array('action' => 'filter'), array('query_string' => '_reset', 'method' => 'post', 'class' => 'fg-button ui-state-default fg-button-icon-left ui-corner-right'.$isDisabledResetButton)) ?></span>
+        <?php echo link_to(UIHelper::addIconByConf('reset') . __('Reset', array(), 'sf_admin'), 'listado_ventas_collection', array('action' => 'filter'), array('query_string' => '_reset', 'method' => 'post', 'class' => 'fg-button ui-state-default fg-button-icon-left ui-corner-right'.$isDisabledResetButton)) ?></span>
       </div>
-      <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Listado de Ventas, Ventas de Remitos y Remitos', array(), 'messages') ?></h1>
+      <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Listado de Ventas y Remitos', array(), 'messages') ?></h1>
     </caption>
 
     <thead class="ui-widget-header">
       <tr>
-        <?php 
-						include_partial('movprod/list_th_tabular', array('sort' => $sort));
+        <?php
+						include_partial('ctrlvtadet/list_th_tabular', array('sort' => $sort));
 					?>
-						<th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
       </tr>
     </thead>
 
     <tfoot>
       <tr>
-        <th colspan="13">
+        <th colspan="6">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
-            <?php include_partial('movprod/pagination', array('pager' => $pager)) ?>
+            <?php include_partial('ctrlvtadet/pagination', array('pager' => $pager)) ?>
           </div>
         </th>
       </tr>
@@ -63,12 +62,15 @@
 						}
 						echo '</td></tr>';
 					} */
-					foreach ($pager->getResults() as $i => $movimiento_producto): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
+					foreach ($pager->getResults() as $i => $listado_ventas): $odd = fmod(++$i, 2) ? ' odd' : '' ;
+						if ($listado_ventas->cantidad > 0):
+				?>
 					<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-						<?php include_partial('movprod/list_td_tabular', array('movimiento_producto' => $movimiento_producto)) ?>
-						<?php include_partial('movprod/list_td_actions', array('movimiento_producto' => $movimiento_producto, 'helper' => $helper)) ?>
+						<?php include_partial('ctrlvtadet/list_td_tabular', array('listado_ventas' => $listado_ventas)) ?>
+						<?php //include_partial('ctrlvtadet/list_td_actions', array('listado_ventas' => $listado_ventas, 'helper' => $helper)) ?>
 					</tr>
-					<?php 
+					<?php
+						endif;
 					endforeach;
 			?>
     </tbody>

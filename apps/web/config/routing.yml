@@ -1,3 +1,12 @@
+listado_ventas_ctrlvtadet:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                ListadoVentas
+    module:               ctrlvtadet
+    prefix_path:          /ctrlvtadet
+    column:               id
+    with_wildcard_routes: true
+
 listado_ventas_ctrlvta:
   class: sfDoctrineRouteCollection
   options:
