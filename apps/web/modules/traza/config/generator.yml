@@ -14,15 +14,13 @@ generator:
     config:
       actions: ~
       fields:
-        nro_lote: { label: lote }
-        Resumen: { label: Venta }
-        fecha_vto: { date_format: dd/MM/yyyy }
+        nro_lote: { label: Lote }
+        Resumen: { label: Comprobante }
         fecha_venta: { date_format: dd/MM/yyyy }
-        fecha_compra: { date_format: dd/MM/yyyy }
       list:
         table_method: retrieveConJoins
         title: Traza de Productos Vendidos
-        display: [codigo, Producto, cant_vendida, nro_lote, fecha_vto, Resumen, fecha_venta, Cliente, fecha_compra, Proveedor, Compra]
+        display: [Resumen, fecha_venta, Cliente, Producto, nro_lote, _fecha_vto, vendidos, devueltos]
         max_per_page: 50
         object_actions: []
         batch_actions: []
@@ -31,9 +29,7 @@ generator:
           excel: {label: Exportar página}
           excel_todo: {label: Exportar Todo}
       filter:
-        display: [producto_id, nro_lote, fecha_venta, cliente_id, fecha_compra, proveedor_id, cant_vendida]
+        display: [nro_lote, fecha_venta, cliente_id, fecha_vto]
       form:    ~
-      edit:
-        title: Modificar Traza
-      new:
-        title: Nueva Traza
+      edit:    ~
+      new:    ~

@@ -25,7 +25,6 @@ class ProductoTrazaTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Cliente c');
       $q->leftJoin($rootAlias . '.Producto p');
-      $q->leftJoin($rootAlias . '.Proveedor pr');
       return $q;
     }
 }

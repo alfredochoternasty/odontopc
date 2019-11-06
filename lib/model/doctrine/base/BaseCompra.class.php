@@ -27,7 +27,6 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property sfGuardUser $sfGuardUser
  * @property Zona $Zona
  * @property Resumen $Remito
- * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ListadoCompras
  * 
@@ -51,7 +50,6 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Zona                getZona()           Returns the current record's "Zona" value
  * @method Resumen             getRemito()         Returns the current record's "Remito" value
- * @method Doctrine_Collection getProductoTraza()  Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getLote()           Returns the current record's "Lote" collection
  * @method Doctrine_Collection getListadoCompras() Returns the current record's "ListadoCompras" collection
  * @method Compra              setId()             Sets the current record's "id" value
@@ -74,7 +72,6 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method Compra              setZona()           Sets the current record's "Zona" value
  * @method Compra              setRemito()         Sets the current record's "Remito" value
- * @method Compra              setProductoTraza()  Sets the current record's "ProductoTraza" collection
  * @method Compra              setLote()           Sets the current record's "Lote" collection
  * @method Compra              setListadoCompras() Sets the current record's "ListadoCompras" collection
  * 
@@ -187,10 +184,6 @@ abstract class BaseCompra extends sfDoctrineRecord
         $this->hasOne('Resumen as Remito', array(
              'local' => 'remito_id',
              'foreign' => 'id'));
-
-        $this->hasMany('ProductoTraza', array(
-             'local' => 'id',
-             'foreign' => 'compra_id'));
 
         $this->hasMany('Lote', array(
              'local' => 'id',

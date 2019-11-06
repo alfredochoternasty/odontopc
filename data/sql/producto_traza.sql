@@ -7,7 +7,7 @@ select
 	r.cliente_id,	
 	dr.producto_id,
 	replace(dr.nro_lote,	'T ',	'') AS nro_lote,
-	coalesce(l.fecha_vto, 'no tiene') AS fecha_vto,
+	l.fecha_vto,
 	sum(dr.cantidad) + sum(dr.bonificados) as vendidos,
 	(SELECT SUM(dp.cantidad) FROM dev_producto dp WHERE dr.resumen_id = dp.resumen_id AND dr.nro_lote = dp.nro_lote) AS devueltos
 from 
@@ -16,8 +16,7 @@ from
 		join cliente c on r.cliente_id = c.id
 		JOIN lote l ON dr.producto_id = l.producto_id and dr.nro_lote = l.nro_lote
 where 
-	dr.nro_lote = '0103501000003G/18'
-	and not exists(select 1 from lotes_romi where lotes_romi.nro_lote = dr.nro_lote)
+	not exists(select 1 from lotes_romi where lotes_romi.nro_lote = dr.nro_lote)
 	and r.zona_id = 1
 	AND r.tipofactura_id <> 4
 GROUP BY

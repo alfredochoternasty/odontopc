@@ -19,7 +19,6 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @property Localidad $Localidad
  * @property Doctrine_Collection $Compras
  * @property CondicionFiscal $Condfiscal
- * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ListadoCompras
  * 
  * @method integer             getId()                 Returns the current record's "id" value
@@ -34,7 +33,6 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
- * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Proveedor           setId()                 Sets the current record's "id" value
  * @method Proveedor           setCuit()               Sets the current record's "cuit" value
@@ -48,7 +46,6 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Proveedor           setLocalidad()          Sets the current record's "Localidad" value
  * @method Proveedor           setCompras()            Sets the current record's "Compras" collection
  * @method Proveedor           setCondfiscal()         Sets the current record's "Condfiscal" value
- * @method Proveedor           setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Proveedor           setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * 
  * @package    odontopc
@@ -119,10 +116,6 @@ abstract class BaseProveedor extends sfDoctrineRecord
              'local' => 'condicionfiscal_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
-
-        $this->hasMany('ProductoTraza', array(
-             'local' => 'id',
-             'foreign' => 'proveedor_id'));
 
         $this->hasMany('ListadoCompras', array(
              'local' => 'id',
