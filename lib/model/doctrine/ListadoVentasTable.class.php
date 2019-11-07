@@ -33,7 +33,7 @@ class ListadoVentasTable extends Doctrine_Table
 		// devuelve los totales de las ventas, remitos y devoluciones
     public function retrieveCtrlvta(Doctrine_Query $q){			
 			$rootAlias = $q->getRootAlias();
-			$q->where($rootAlias . 'zona_id = 1');
+			$q->where($rootAlias . '.zona_id = 1');
 			$q->andWhere($rootAlias . '.det_remito_id is null');
 			return $q;
     }
@@ -41,7 +41,7 @@ class ListadoVentasTable extends Doctrine_Table
     // devuelve los detaller las ventas y remitos, sin las devoluciones
 		public function retrieveCtrlvtadet(Doctrine_Query $q){
 			$rootAlias = $q->getRootAlias();
-			$q->where($rootAlias . 'zona_id = 1');
+			$q->where($rootAlias . '.zona_id = 1');
 			$q->andWhere($rootAlias . '.det_remito_id is null');
 			$q->andWhere($rootAlias . '.cantidad > 0');
 			return $q;

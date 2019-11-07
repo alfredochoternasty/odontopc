@@ -29,7 +29,7 @@ generator:
           excel: {label: Exportar página}
           excel_todo: {label: Exportar Todo}
       filter:
-        display: [nro_lote, fecha_venta, cliente_id, fecha_vto]
+        display: [producto_id, nro_lote, fecha_venta, cliente_id, fecha_vto]
       form:    ~
       edit:    ~
       new:    ~
