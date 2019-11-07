@@ -35,9 +35,12 @@
 				<div id="img_nti_header">
 					<br>
 					<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-					<b>Versión del Sistema: 3.3</b><br>
-					Fecha Actualización: 30/10/2019
+					<b>Versión del Sistema: 3.4</b><br>
+					Fecha Actualización: 06/11/2019
 				</div>
+				<?php if (date("Ymd") == '20191107') { ?>
+				<img src="<?php echo $prefijo ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+				<?php } ?>
 				</center>
 			</div>
 		<?php 
