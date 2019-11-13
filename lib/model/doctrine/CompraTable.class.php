@@ -22,14 +22,11 @@ class CompraTable extends Doctrine_Table
     }    
     public function retrieveConJoins(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+      $zonas_usuario = Doctrine::getTable('UsuarioZona')->findByUsuario($id);
+      
       $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Proveedor p');
-      $q->leftJoin($rootAlias . '.Remito res');
-      $q->leftJoin('res.TipoFactura t');
-      $q->leftJoin($rootAlias . '.Tipofactura tf');
-			$q->leftJoin($rootAlias . '.Zona z');
-			$q->leftJoin('z.UsuarioZona uz');
-			$q->andWhere('uz.usuario = '.$id);
+			$q->andWhere($rootAlias . '.zona_id = '.$zonas_usuario[0]->zona_id);
+			$q->andWhere($rootAlias . '.proveedor_id not in (13, 6)');
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }

@@ -18,14 +18,13 @@ generator:
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
       list:
-        table_method: retrieveConJoins
+        table_method: retrieveCtrlvtadet
         title: Listado de Ventas
         display: [Resumen, fecha, Cliente, Producto, _cantidad, nro_lote]
         max_per_page: 250
         object_actions: []
         batch_actions: []
         actions:
-          ver_detallado: ~
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:

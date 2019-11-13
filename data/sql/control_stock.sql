@@ -12,7 +12,7 @@ select
 		from 
 			detalle_compra dc 
 				join compra on dc.compra_id = compra.id 
-		where dc.nro_lote = l.nro_lote and l.zona_id = compra.zona_id
+		where dc.nro_lote = l.nro_lote and l.zona_id = compra.zona_id and dc.nro_lote not like 'er%'
 	) AS comprados,
 	(
 		select (sum(lv.cantidad) + sum(lv.bonificados))

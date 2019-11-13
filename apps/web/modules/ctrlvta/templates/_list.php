@@ -84,7 +84,7 @@
 					$suma_total_dev = 0;
 					foreach ($pager->getResults() as $vtas) {
 						if (empty($ventas[$vtas->producto_id])) {
-							if ($vtas->cantidad > 0) {
+							if ($vtas->cantidad >= 0) {
 								$ventas[$vtas->producto_id] = array(
 									'grupo' => $vtas->getGrupo(),
 									'producto' => $vtas->getProducto(),
@@ -102,14 +102,14 @@
 								);								
 							}
 						} else {
-							if ($vtas->cantidad > 0) {
+							if ($vtas->cantidad >= 0) {
 								$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
 								$ventas[$vtas->producto_id]['bono'] += $vtas->bonificados;
 							} else {
 								$ventas[$vtas->producto_id]['dev'] += $vtas->cantidad * -1;
 							}
 						}
-						if ($vtas->cantidad > 0) {
+						if ($vtas->cantidad >= 0) {
 							$suma_total += $vtas->cantidad;
 							$suma_total_bon += $vtas->bonificados;
 						} else {
@@ -145,7 +145,7 @@
 				<?php
 				} else {
 					foreach ($pager->getResults() as $i => $listado_ventas): $odd = fmod(++$i, 2) ? ' odd' : '' ;
-						if ($listado_ventas->cantidad > 0):
+						if ($listado_ventas->cantidad >= 0):
 				?>
 					<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 						<?php include_partial('ctrlvta/list_td_tabular', array('listado_ventas' => $listado_ventas)) ?>

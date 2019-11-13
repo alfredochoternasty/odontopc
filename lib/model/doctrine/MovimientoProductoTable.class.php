@@ -23,7 +23,7 @@ class MovimientoProductoTable extends Doctrine_Table
 			$q->leftJoin($rootAlias . '.Zona z');
       $q->leftJoin('z.UsuarioZona uz');	
 			$q->where('uz.usuario = '.$id);
-			$q->andWhere($rootAlias . '.cantidad > 0');
+			$q->andWhere($rootAlias . '.cantidad >= 0');
 			return $q;
     }
 }

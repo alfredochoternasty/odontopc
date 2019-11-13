@@ -16,4 +16,17 @@ class ListadoComprasTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ListadoCompras');
     }
+    
+    public function retrieveConJoins(Doctrine_Query $q){
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			
+			$rootAlias = $q->getRootAlias();
+			$q->leftJoin($rootAlias . '.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');	
+			$q->where('uz.usuario = '.$id);
+			$q->andWhere($rootAlias . ".nro_lote not like 'er%'");
+			$q->andWhere($rootAlias . ".proveedor_id not in (13, 6)");
+      $q->orderBy($rootAlias . '.fecha desc');
+			return $q;
+    }
 }

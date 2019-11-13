@@ -43,7 +43,7 @@ class ListadoVentasTable extends Doctrine_Table
 			$rootAlias = $q->getRootAlias();
 			$q->where($rootAlias . '.zona_id = 1');
 			$q->andWhere($rootAlias . '.det_remito_id is null');
-			$q->andWhere($rootAlias . '.cantidad > 0');
+			$q->andWhere($rootAlias . '.cantidad >= 0');
 			return $q;
     }
 }

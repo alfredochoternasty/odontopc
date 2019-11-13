@@ -60,7 +60,7 @@
 			<?php } // if (!$sf_user->hasGroup('Cliente')) ?> 
 		<?php } // if (!$pager->getNbResults()) ?>
 
-  
+	<?php if ($sf_user->hasGroup('Cliente') || $sf_user->hasGroup('ventas')) { ?>	
   <div style="position:absolute;top:0; left:0; width:45%;">
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
@@ -104,6 +104,7 @@
     </tbody>
   </table> 
 </div>
+<?php } // if (!$sf_user->hasGroup('Cliente')) ?> 
 
 <?php if($sf_user->hasPermission('@cliente_seguimiento')) { ?> 
   <div style="position:absolute;top:0; left:0; width:45%;">

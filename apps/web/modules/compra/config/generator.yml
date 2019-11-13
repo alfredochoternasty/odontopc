@@ -19,7 +19,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Compras Realizadas
-        display: [Zona, Proveedor, tipofactura, numero, Remito, fecha, observacion]
+        display: [Zona, Proveedor, fecha, Tipofactura, numero, observacion, _remito]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
