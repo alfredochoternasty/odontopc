@@ -56,8 +56,10 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     
 		if ($tipofactura != 4) {
 
+			$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
 			$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
-			$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => false));
+			$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($uz[0]->zona_id != 1)));
 			
 			if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
 				$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();

@@ -42,6 +42,8 @@ select
 							from resumen r2 
 								join detalle_resumen dr2 on r2.id = dr2.resumen_id
 							where r2.id = dp2.resumen_id
+										and dr2.producto_id = l.producto_id
+										and dr2.nro_lote = l.nro_lote
 										and isnull(dr2.det_remito_id)
 			)
 	) AS cant_dev,

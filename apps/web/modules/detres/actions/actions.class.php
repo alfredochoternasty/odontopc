@@ -292,10 +292,11 @@ class detresActions extends autoDetresActions
 			$q->andWhere('r.cliente_id = '.$zona->cliente_id);
 			$q->leftJoin('r.Compra');
 			$q->andWhere("r.Compra.remito_id is not null");
+		} else {
+			$options[] = '<option value=""></option>';
 		}
     $remitos = $q->execute();
   
-    $options[] = '<option value=""></option>';
     foreach($remitos as $remito){
 			if ($remito->RemitoProductoCantVend() < $remito->cantidad) {
 				$fecha = $remito->getResumen()->getFechaDMY();
