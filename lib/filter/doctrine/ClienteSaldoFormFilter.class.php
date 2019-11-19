@@ -16,6 +16,9 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 		$this->widgetSchema ['mayor'] = new sfWidgetFormInputText();
 		$this->validatorSchema ['mayor'] = new sfValidatorString();
 		
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
+		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));
+		
 		$this->setDefault('mayor', '0');
   }
 	

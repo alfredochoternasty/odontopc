@@ -18,14 +18,15 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Administracion Presupuestos
-        display: [fecha, descripcion, email]
+        display: [Zona, fecha, descripcion, email]
         object_actions:
           _delete: {label: Borrar}
           _edit: {label: Modificar}
           detalle: {label: Ver Detalle}
           imprimir: ~
           mail: ~
-      filter:  ~
+      filter:
+        display: [zona_id, fecha, email]
       form:
         actions:
           _list: {label: Volver}

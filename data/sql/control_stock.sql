@@ -51,17 +51,13 @@ select
 	p.minimo_stock AS minimo_stock,
 	(
 		SELECT 
-			case when max(r1.fecha) > max(dp1.fecha) 
+			case when max(r1.fecha) > COALESCE((select max(dp1.fecha) FROM dev_producto dp1 where dp1.producto_id = l.producto_id and dp1.nro_lote = l.nro_lote), '1900-01-01')
 				then max(r1.fecha) 
-				else max(dp1.fecha)
+				else (select max(dp1.fecha) FROM dev_producto dp1 where dp1.producto_id = l.producto_id and dp1.nro_lote = l.nro_lote)
 			end
 		from resumen r1 
-			join detalle_resumen dr on r1.id = dr.resumen_id,
-			dev_producto dp1
-		where dr.producto_id = l.producto_id
-				and dr.nro_lote = l.nro_lote
-				and dp1.producto_id = l.producto_id
-				and dp1.nro_lote = l.nro_lote
+			join detalle_resumen dr on r1.id = dr.resumen_id			
+		where dr.producto_id = l.producto_id and dr.nro_lote = l.nro_lote
 	) AS ult_venta 
 from 
 	lote l 
