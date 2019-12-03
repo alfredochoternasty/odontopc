@@ -18,7 +18,6 @@ from
 where 
 	not exists(select 1 from lotes_romi where CONVERT(lotes_romi.nro_lote using utf8) collate utf8_spanish_ci = dr.nro_lote)
 	and dr.nro_lote not like 'er%'
-	and r.zona_id = 1
 	and r.tipofactura_id <> 4
 group by
 	r.id,
