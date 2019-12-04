@@ -22,7 +22,9 @@
   </table>
 
   <?php else: ?>
-
+  <?php
+    if ($hasFilters->count() > 0) include_partial('admins/filtro_usado', array('configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters))
+	?>
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
       <div id="sf_admin_filters_buttons" class="fg-buttonset fg-buttonset-multi ui-state-default">
@@ -31,8 +33,7 @@
         <?php echo link_to(UIHelper::addIconByConf('reset') . __('Reset', array(), 'sf_admin'), 'listado_ventas_ctrlvta_collection', array('action' => 'filter'), array('query_string' => '_reset', 'method' => 'post', 'class' => 'fg-button ui-state-default fg-button-icon-left ui-corner-right'.$isDisabledResetButton)) ?></span>
       </div>
       <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Listado de Ventas Totalizado', array(), 'messages') ?></h1>
-    </caption>
-
+		</caption>
     <thead class="ui-widget-header">
       <tr>
         <?php 
@@ -64,20 +65,7 @@
     </tfoot>
 
     <tbody>
-				<?php 
-				/*
-					if ($hasFilters->count() > 0) {
-						echo '<tr><td> Filtro utilizado: ';
-						foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-							@$valor = $hasFilters->getRaw($name);
-							$tag = $field->getConfig('label');
-							$tag = empty($tag)?$name:$tag;							
-							// if (!empty($valor)) echo $tag.' = '.$valor;
-							if (!empty($valor)) var_dump($valor);
-						}
-						echo '</td></tr>';
-					}
-					*/
+				<?php 				
         if ($ver_solo_totales=1) {
 					$suma_total = 0;
 					$suma_total_bon = 0;

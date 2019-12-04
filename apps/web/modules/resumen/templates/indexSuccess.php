@@ -13,7 +13,7 @@
     </div>
   
   <div id="sf_admin_content">
-      <?php include_partial('resumen/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters)) ?>
+      <?php include_partial('resumen/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'filters' => $filters, 'configuration' => $configuration)) ?>
     </div>
 
   <div id="sf_admin_footer">

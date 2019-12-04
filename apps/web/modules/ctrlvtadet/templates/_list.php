@@ -21,7 +21,9 @@
   </table>
 
   <?php else: ?>
-
+  <?php
+    if ($hasFilters->count() > 0) include_partial('admins/filtro_usado', array('configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters))
+	?>
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
       <div id="sf_admin_filters_buttons" class="fg-buttonset fg-buttonset-multi ui-state-default">
