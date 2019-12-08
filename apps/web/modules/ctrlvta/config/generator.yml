@@ -20,14 +20,14 @@ generator:
       list:
         table_method: retrieveCtrlvta
         title: Listado de Ventas Totalizado
-        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote]
-        max_per_page: 250
+        display: [Producto]
+        max_per_page: 99999
         object_actions: []
         batch_actions: []
         actions:
           imprimir_todo: ~
       filter:
-        display: [zona_id, tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
+        display: [zona_id, fecha, grupoprod_id, producto_id]
       form:    ~
       edit:    ~
       new:     ~
