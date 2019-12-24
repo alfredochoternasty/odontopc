@@ -15,9 +15,10 @@ class ctrlstockActions extends autoCtrlstockActions
 {
 	
   public function executeListImprimirTodo(sfWebRequest $request){
-    $filtro = new ControlStockFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-		$consulta->orderBy('nombre');
+    //$filtro = new ControlStockFormFilter();
+    //$consulta = $filtro->buildQuery($this->getFilters());
+	$consulta = $this->buildQuery($this->getFilters());
+	$consulta->orderBy('nombre');
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();

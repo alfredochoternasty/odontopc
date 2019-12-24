@@ -23,7 +23,7 @@ class trazaActions extends autoTrazaActions
     
     $dompdf = new DOMPDF();
     $dompdf->load_html($this->getPartial("imprimir", array("traza" => $traza)));
-    $dompdf->set_paper('A4','portrait');
+    $dompdf->set_paper('A4','landscape');
     $dompdf->render();
     $dompdf->stream("traza.pdf");    
     return sfView::NONE;
