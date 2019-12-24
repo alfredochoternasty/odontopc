@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
- <h2>Listado de Ventas Totalizado - <?php echo $listado[0]->getZona() ?></h2>
+ <h2>Listado de Ventas Totalizado - <?php echo $listado_ventass[0]->getZona() ?></h2>
 <table border="1" cellspacing="0" cellpadding="1" width="100%">
   <tr>
     <th style="background: #CCC;">Grupo</th>
@@ -13,7 +13,7 @@
   </tr>
   <?php 
 					$suma_total = $suma_total_bon = $suma_total_dev = 0;
-					foreach ($listado as $vtas) {
+					foreach ($listado_ventass as $vtas) {
 						if (empty($ventas[$vtas->producto_id])) {
 							if ($vtas->cantidad > 0) {
 								$ventas[$vtas->producto_id] = array(

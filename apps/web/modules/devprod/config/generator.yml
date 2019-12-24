@@ -27,7 +27,8 @@ generator:
         display: [fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
         actions:
           _new: {label: Nuevo}
-          listado: ~        
+          imprimir_pagina: {label: Imprimir}
+          excel_pagina: {label: Descargar Excel}
         object_actions:
           _delete: {label: Eliminar}
           asociada: {label: Ver Fact}
@@ -41,3 +42,5 @@ generator:
       new:
         title: Devolver Producto
         display: [fecha, cliente_id, producto_id, resumen_id, nro_lote, cantidad, precio, iva, total, precio_unitario, iva_unitario, observacion]
+      show:
+        display: [fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total]

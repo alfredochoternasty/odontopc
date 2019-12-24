@@ -37,7 +37,9 @@ generator:
           activar: ~		  
         actions:
           _new: {label: Nuevo}
-          imprimir: {label: Imprimir}
+          imprimir_pagina: {label: Imprimir Pagina}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
       filter:
         display: [zona_id, dni, apellido, nombre, sexo, localidad_id, lista_id, activo]
       form:
@@ -49,6 +51,7 @@ generator:
           _save: {label: Guardar}
           _save_and_add: {label: Guardar y agregar otro}
           generar_usuario: ~
-        
       new:
         title: Nuevo Cliente
+      show:
+        display: [Zona, _c_fiscal, apellido, nombre, _direccion, _telefonos, email]

@@ -145,39 +145,12 @@ class cliActions extends autoCliActions
     $objLoc->save();
     return $this->renderText(json_encode($objLoc->getId()));
   }
-  
-  public function executeListImprimir(sfWebRequest $request){
-    $filtro = new ClienteFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-		$consulta->andWhere('activo = 1');
-		$consulta->addOrderBy('apellido');
-    $clientes = $consulta->execute();
-    
-    header("Content-Disposition: attachment; filename=\"clientes.xls\"");
-    header("Content-Type: application/vnd.ms-excel");
-    
-    echo 'Listado de Clientes Activos' . "\r\n";
-    $titulos = array('Tipo', 'Apellido', 'Nombre', 'Tel.', 'Celular', 'Email', 'Localidad');
-    $flag = false;
-    foreach($clientes as $cliente):
-          if (!$flag) {
-              echo implode("\t", $titulos) . "\r\n";
-              $flag = true;
-          }  
-          $fila = array($cliente->getTipo(), $cliente->getApellido(), $cliente->getNombre(), $cliente->getTelefono(), $cliente->getCelular(), $cliente->getEmail(), $cliente->getLocalidad());
-          $string = implode("\t", array_values($fila));
-          echo utf8_decode($string)."\r\n"; 
-    endforeach;
-    
-    /*$dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("clientes" => $clientes)));
-    $dompdf->set_paper('letter','landscape');
-    $dompdf->render();
-    $dompdf->stream("clientes.pdf"); 
-    */
-    return sfView::NONE;
-  }
-  
+	
+	public function getModoImpresion()
+	{
+		return 'landscape';
+	}
+	
   public function executeCargar(sfWebRequest $request){
     $this->form = new ClienteForm();
     $this->cliente = $this->form->getObject();    

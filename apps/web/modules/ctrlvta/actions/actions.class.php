@@ -13,17 +13,5 @@ require_once dirname(__FILE__).'/../lib/ctrlvtaGeneratorHelper.class.php';
  */
 class ctrlvtaActions extends autoCtrlvtaActions
 {  
-  
-  public function executeListImprimirTodo(sfWebRequest $request){
-    $consulta = $this->buildQuery($this->getFilters());
-    $listado = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial('imprimir_tot' , array("listado" => $listado)));
-    $dompdf->set_paper('A4','landscape');
-    $dompdf->render();
-    $dompdf->stream("listado_ventas.pdf");    
-    return sfView::NONE;
-  } 
-  
+
 }

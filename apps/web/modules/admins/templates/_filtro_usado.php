@@ -25,6 +25,9 @@
 				else 
 					$valor = '';
 				break;
+			case 'Boolean':
+				$valor = $valor==1?'Si':'No';
+				break;
 		}
 		if (!empty($valor)) {
 			$tag = empty($filters[$name]->renderLabel())?$name:$filters[$name]->renderLabel();
