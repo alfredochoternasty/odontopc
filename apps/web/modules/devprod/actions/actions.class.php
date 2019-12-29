@@ -167,6 +167,10 @@ class devprodActions extends autoDevprodActions
     return sfView::NONE;
   }
 	
+	function getModoImpresion(){
+		return 'landscape';
+	}
+	
   public function executeListImprimir(sfWebRequest $request){
     $rid = $request->getParameter('id');
     $dev_producto = Doctrine::getTable('DevProducto')->find($rid);

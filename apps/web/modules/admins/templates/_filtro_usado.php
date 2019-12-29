@@ -1,7 +1,7 @@
 <?php
-	echo '<div style="text-align:center"> Filtro utilizado: ';
+	echo '<div id="filtro_utilizado" style="text-align:center"> Filtro utilizado: ';
 	foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-		@$valor = $hasFilters->getRaw($name);
+		$valor = $hasFilters->getRaw($name);
 		$tipo = $field->getType();
 		switch($tipo){
 			case 'ForeignKey':
