@@ -50,7 +50,13 @@
   
   public function executeListExcelPagina(sfWebRequest $request)
   {
-    $this->descargar_excel(true);
+    $_hasFilters = $this->getUser()->getAttribute('devprod.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    if (empty($_hasFilters)) {
+      $this->getUser()->setFlash('error', 'Para poder imprimir todo debe realizar un filtro');
+      $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
+    } else {
+      $this->descargar_excel(true);
+    }
   }
     
   public function descargar_excel($imp_pag)
@@ -83,6 +89,7 @@
           echo utf8_decode($string)."\r\n";
         }
     }
-				
-    return sfView::NONE;
-  }  
+		
+    die();
+    // return sfView::NONE;
+  }

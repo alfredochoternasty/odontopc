@@ -25,11 +25,14 @@ generator:
         object_actions: []
         batch_actions: []
         actions:
-          imprimir: {label: Imprimir página}
-          excel: {label: Exportar página}
-          excel_todo: {label: Exportar Todo}
+          imprimir_pagina: {label: Imprimir página}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar página}
+          excel_todo: {label: Descargar Todo}
       filter:
         display: [producto_id, nro_lote, fecha_venta, cliente_id, fecha_vto]
       form:    ~
       edit:    ~
       new:    ~
+      show:
+        display: [Resumen, fecha_venta, Cliente, Producto, nro_lote, _fecha_vto, vendidos, devueltos]
