@@ -165,3 +165,7 @@ background-image: url('error.png');
 #detalle_resumen_nro_lote{
 	font-size:16px;
 }
+
+.sf_admin_form {
+	font-size: 1.2em;
+}

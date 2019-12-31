@@ -61,10 +61,10 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends s
   {
     $params['ui-icon'] = $this->getIcon('saveAndAdd', $params);
 
-    if (!$object->isNew())
-    {
-      return '';
-    }
+    // if (!$object->isNew())
+    // {
+      // return '';
+    // }
 
     return '<li class="sf_admin_action_save_and_add"><button type="submit" name="_save_and_add" class="fg-button ui-state-default fg-button-icon-left"/>'. UIHelper::addIcon($params) . __($params['label'], array(), 'sf_admin').'</button></li>';
   }

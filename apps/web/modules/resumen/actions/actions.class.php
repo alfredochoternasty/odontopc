@@ -72,9 +72,12 @@ class resumenActions extends autoResumenActions
           Doctrine_Query::create()->update('Pedido p')->set('p.vendido', 1)->set('p.fecha_venta', date('Ymd'))->where('p.id = '.$id_pedido)->execute();
         endforeach;
         $this->redirect( 'detres/index?rid='.$resumen->getId());
-      }else{
-        $this->redirect( 'detres/new?rid='.$resumen->getId());
       }
+			if ($request->hasParameter('_save_and_add')) {
+        $this->redirect( 'detres/new?rid='.$resumen->getId());
+      } else {
+				$this->redirect('@resumen');
+			}
     }
   }
   
