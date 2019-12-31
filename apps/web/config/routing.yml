@@ -270,7 +270,7 @@ pedido_pedidos:
 
 nuevo_pedido:
   url: /detped
-  param: { module: detped, action nuevo}
+  param: { module: detped, action: nuevo}
   
 detalle_pedido:
   class: sfDoctrineRouteCollection

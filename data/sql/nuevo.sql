@@ -1,12 +1,4 @@
-ALTER TABLE `presupuesto`
-	ADD COLUMN `zona_id` INT NULL AFTER `descripcion`,
-	ADD COLUMN `email` VARCHAR(100) NULL DEFAULT NULL AFTER `zona_id`;
-
-ALTER TABLE `detalle_presupuesto`
-	ADD COLUMN `descuento` INT NULL DEFAULT NULL AFTER `iva`;
-
-ALTER TABLE `detalle_presupuesto`
-	ADD COLUMN `sub_total` DECIMAL(10,0) NULL DEFAULT NULL AFTER `descuento`;
+UPDATE ventas.cliente SET usuario_id='223' WHERE  id=635;
 
 /*
 DROP TABLE 
