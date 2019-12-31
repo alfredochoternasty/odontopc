@@ -33,10 +33,13 @@ generator:
           mail: {label: Env. Recibo}
         actions:
           _new: ~
-          imprimir: {label: Imprimir Listado}
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir Todo}
       filter:  ~
       form:    ~
       edit:
         title: Modificar Cobro
       new:
         title: Nuevo Cobro
+      show:
+        display: [Cliente, fecha, _monto, Tipo, Banco, numero]

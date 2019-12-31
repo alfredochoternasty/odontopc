@@ -5,7 +5,13 @@
 
   public function executeListImprimirTodo(sfWebRequest $request)
   {
-    $this->descargar_pdf(false);
+    $_hasFilters = $this->getUser()->getAttribute('devprod.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    if (empty($_hasFilters)) {
+      $this->getUser()->setFlash('error', 'Para poder imprimir todo debe realizar un filtro');
+      $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
+    } else {
+      $this->descargar_pdf(false);
+    }
   }
   
   public function get_datos($p_imp_pagina=false)

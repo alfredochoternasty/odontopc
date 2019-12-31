@@ -13,55 +13,6 @@ require_once dirname(__FILE__).'/../lib/cobroGeneratorHelper.class.php';
  */
 class cobroActions extends autoCobroActions
 {
-  public function executeBuscarresumen(sfWebRequest $request){
-    
-    $resultado = '<div class="label ui-helper-clearfix"><label for="cobro_resumen_id">Ventas</label><div class="help"><span class="ui-icon ui-icon-help floatleft"></span>Aqui se muestra las ventas del cliente seleccionado</div>
-<div class="sf_admin_list ui-grid-table ui-widget ui-corner-all ui-helper-reset ui-helper-clearfix">
-<table>
-  <thead class="ui-widget-header">
-    <tr>
-      <th class="sf_admin_text sf_admin_list_th_Cliente ui-state-default ui-th-column">Numero</th>
-      <th class="sf_admin_text sf_admin_list_th_total ui-state-default ui-th-column">Fecha</th>
-      <th class="sf_admin_text sf_admin_list_th_facturado ui-state-default ui-th-column">Total Venta</th>
-      <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column">Cobrado</th>
-      <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column">Saldo</th>
-    </tr>
-  </thead>
-  <tbody>';
-  $suma_saldo = 0;
-  $suma_resumen = 0;
-  $suma_cobrado = 0;
-  $cliente = $request->getParameter('cid');
-  $Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagado($cliente, 0);  
-  foreach($Resumenes as $resumen){
-    $suma_cobrado += $resumen->getTotalCobrado();
-    $saldo = $resumen->getTotalResumen() - $resumen->getTotalCobrado();
-    $suma_saldo += $saldo;
-    $suma_resumen += $resumen->getTotalResumen();
-    
-    $resultado .= '<tr class="sf_admin_row ui-widget-content  odd">';
-    $resultado .= '<td class="sf_admin_text sf_admin_list_td_numero">'.$resumen->getId().'</td>';
-    $resultado .= '<td class="sf_admin_text sf_admin_list_td_numero">'.$resumen->getFecha().'</td>';
-    $resultado .= '<td class="sf_admin_text sf_admin_list_td_numero"> $ '.number_format($resumen->getTotalResumen(), 2, ',', '.').'</td>';
-    $resultado .= '<td class="sf_admin_text sf_admin_list_td_numero"> $ '.number_format($resumen->getTotalCobrado(), 2, ',', '.').'</td>';
-    $resultado .= '<td class="sf_admin_text sf_admin_list_td_numero"> $ '.number_format($saldo, 2, ',', '.').'</td>';
-    $resultado .= '</tr>';
-  }
-    
-  $resultado .= '</tbody>
-  <tfoot>
-    <tr>
-      <td></td>
-      <td style="text-align:right;">Totales:&nbsp;</td>
-      <td>&nbsp;$ '.number_format($suma_resumen, 2, ',', '.').'</td>
-      <td>&nbsp;$ '.number_format($suma_cobrado, 2, ',', '.').'</td>
-      <td>&nbsp;$ '.number_format($suma_saldo, 2, ',', '.').'</td>
-    </tr>
-  </tfoot>
-</table>
-</div>';
-return $this->renderText($resultado);
-  }
   
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
@@ -145,19 +96,6 @@ return $this->renderText($resultado);
 
     $this->redirect('@cobro');
   }  
-  
-  public function executeListImprimir(sfWebRequest $request){
-    $filtro = new CobroFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-    $cobros = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("listado" => $cobros)));
-    $dompdf->set_paper('A4','portrait');
-    $dompdf->render();
-    $dompdf->stream("cobros.pdf");    
-    return sfView::NONE;
-  }
 	
   public function executeGuardarnuevobanco(sfWebRequest $request){
     $objProd = new Banco();
