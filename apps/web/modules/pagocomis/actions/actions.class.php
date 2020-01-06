@@ -42,4 +42,27 @@ class pagocomisActions extends autoPagocomisActions
     return sfView::NONE;
   }
 	
+  public function executeListMail(sfWebRequest $request){
+		$id_pago = $request->getParameter('id');
+		$pago = Doctrine::getTable('PagoComision')->find($id_pago);
+    $facturas = Doctrine::getTable('Resumen')->findByPagoComisionId($id_pago);
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial('imprimir', array('pago' => $pago, 'facturas' => $facturas)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+
+    $mensaje = Swift_Message::newInstance();
+    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
+    $mensaje->setTo($pago->getRevendedor()->getEmail());
+    $mensaje->setSubject('Pago de Comisiones - NTI Implantes');
+	
+		$detalle = $dompdf->output();
+		$adjunto = new Swift_Attachment($detalle, 'pago_comision.pdf', 'application/pdf');
+		$mensaje->attach($adjunto);
+    $this->getMailer()->send($mensaje);
+    
+    $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$pago->getRevendedor()->getEmail());
+    $this->redirect('pago_comision');    
+  }
 }

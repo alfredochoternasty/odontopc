@@ -23,6 +23,7 @@ generator:
             _delete: ~
             _edit: ~
             imprimir: ~
+            mail: ~
         batch_actions: []            
       filter:  ~
       form:    ~
