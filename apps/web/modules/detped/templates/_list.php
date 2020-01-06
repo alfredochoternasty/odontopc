@@ -23,11 +23,8 @@
 
     <thead class="ui-widget-header">
       <tr>
-          <th id="sf_admin_list_batch_actions"  class="ui-state-default ui-th-column"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
-
-           <?php include_partial('detped/list_th_tabular', array('sort' => $sort)) ?>  
-
-          <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
+        <?php include_partial('detped/list_th_tabular', array('sort' => $sort)) ?>  
+        <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
       </tr>
     </thead>
 
@@ -50,7 +47,6 @@
           ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
           <?php 
-            include_partial('detped/list_td_batch_actions', array('detalle_pedido' => $detalle_pedido, 'helper' => $helper));
             include_partial('detped/list_td_tabular', array('detalle_pedido' => $detalle_pedido));
             $finalizado = $detalle_pedido->getPedido()->getFinalizado();
             if($finalizado == 0){
@@ -76,12 +72,3 @@
 
   <?php endif; ?>
 </div>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-function checkAll()
-{
-  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
-}
-/* ]]> */
-</script>

@@ -1,5 +1,5 @@
 <?php 
-if($vendido == 0)
+if($finalizado == 0)
   echo $helper->linkToNew(array(  'label' => 'Agregar Producto',  'params' => 'class= fg-button ui-state-default  ',  'class_suffix' => 'new',)) 
 ?>
 <li class="sf_admin_action_imprimir fg-menu-has-icons">

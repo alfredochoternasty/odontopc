@@ -21,6 +21,7 @@ class PedidoTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Cliente c');
       $q->where($rootAlias . '.vendido = 0');
+      $q->andWhere($rootAlias . '.finalizado = 1');
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }        

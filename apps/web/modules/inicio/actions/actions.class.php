@@ -91,11 +91,12 @@ class inicioActions extends autoInicioActions
     */
     parent::executeIndex($request);
     $q = Doctrine::getTable('Pedido')->createQuery('p')->where('p.vendido = 0')->orderBy('p.fecha DESC')->limit('10');
-    if($this->getUser()->hasPermission('cliente')){
+    if($this->getUser()->getGuardUser()->es_cliente){
       $id_usuario = $this->getUser()->getGuardUser()->getId();
       $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
       $id_cliente = $clientes[0]->getId();	
       $q->andWhere('p.cliente_id = ?', $id_cliente);
+      $q->andWhere('p.finalizado = 1');
     }else{
 			
       $this->pager = $this->getPager();

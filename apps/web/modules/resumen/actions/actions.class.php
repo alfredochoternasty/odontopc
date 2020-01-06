@@ -49,12 +49,6 @@ class resumenActions extends autoResumenActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $resumen = $form->save();
-			//$resumen->setListaId($resumen->getCliente()->getListaPrecio());
-			$resumen->setListaId(0);
-			//$resumen->setMonedaId($resumen->getLista()->getMonedaId());
-			$resumen->setMonedaId(0);
-
-			$resumen->save();
 			
       $id_pedido = $resumen->getPedidoId();
       if($id_pedido > 0){
@@ -63,9 +57,16 @@ class resumenActions extends autoResumenActions
           $detalle_resumen = new DetalleResumen();
           $detalle_resumen->setResumenId($resumen->getId());
           $detalle_resumen->setProductoId($detalle->getProductoId());
+          $detalle_resumen->setNroLote($detalle->getNroLote());
           $detalle_resumen->setPrecio($detalle->getPrecio());
           $detalle_resumen->setCantidad($detalle->getCantidad());
-          $detalle_resumen->setTotal($detalle->getTotal());
+					$sub_total = $detalle->precio * $detalle->cantidad;
+					$iva = $sub_total * 0.25;
+					$total = $sub_total + $iva;
+          $detalle_resumen->setSubTotal($sub_total);
+          $detalle_resumen->setDescuento(0);
+          $detalle_resumen->setIva($iva);
+          $detalle_resumen->setTotal($total);
           $detalle_resumen->setObservacion($detalle->getObservacion());
           $detalle_resumen->save();
           $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
@@ -131,8 +132,6 @@ class resumenActions extends autoResumenActions
 				$this->resumen->setClienteId($this->pedido->getClienteId());
 				$this->resumen->setPedidoId($this->pedido->getId());
 				$this->form = $this->configuration->getForm($this->resumen);
-				$actions = $this->configuration->getFormActions();//->setLabel('aaa');
-				$actions['_¨save']['label'] = 'aaa';
 				$this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->getId())));
 				$this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->getClienteId())));
 			} elseif($todos_tienen_lote = 'N') {
