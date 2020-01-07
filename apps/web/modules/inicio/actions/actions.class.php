@@ -90,22 +90,25 @@ class inicioActions extends autoInicioActions
     }	
     */
     parent::executeIndex($request);
-    $q = Doctrine::getTable('Pedido')->createQuery('p')->where('p.vendido = 0')->orderBy('p.fecha DESC')->limit('10');
+    $q = Doctrine::getTable('Pedido')
+      ->createQuery('p')
+      ->where('p.vendido = 0')
+      ->andWhere('p.finalizado = 1')
+      ->orderBy('p.fecha DESC')
+      ->limit('10');
     if($this->getUser()->getGuardUser()->es_cliente){
       $id_usuario = $this->getUser()->getGuardUser()->getId();
       $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
       $id_cliente = $clientes[0]->getId();	
       $q->andWhere('p.cliente_id = ?', $id_cliente);
-      $q->andWhere('p.finalizado = 1');
     }else{
-			
       $this->pager = $this->getPager();
       $this->sort = $this->getSort();
       $q2 = Doctrine::getTable('ClienteSeguimiento')->createQuery('cs')->where('cs.prox_contac_fecha >= \''.date("Y-m-d").'\'')->orderBy('cs.prox_contac_fecha DESC')->limit('20');
       $this->pager3 = $q2->execute();
-      
     }
     $this->pager2 = $q->execute();
+      
   }
   
   
