@@ -4,9 +4,9 @@ dev:
   mailer:
     param:      
       #delivery_strategy: realtime
-      delivery_strategy: none
-      #delivery_strategy: single_address
-      #delivery_address:  alfredochoternasty@gmail.com
+      #delivery_strategy: none
+      delivery_strategy: single_address
+      delivery_address:  alfredochoternasty@gmail.com
       transport:
         class: Swift_SmtpTransport
         param:
@@ -14,8 +14,8 @@ dev:
           port: 465
           encryption: ssl
           auth_mode: auth
-          #username: alfredochoternasty@gmail.com
-          #password: cham*3213
+          username: alfredochoternasty@gmail.com
+          password: cham*3213
           
 prod:
   logger:

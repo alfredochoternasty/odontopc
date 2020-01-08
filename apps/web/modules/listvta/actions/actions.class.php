@@ -29,8 +29,8 @@ class listvtaActions extends autoListvtaActions
   }
   
   public function executeListImprimirTodo(sfWebRequest $request){
-    $filtro = new ListadoVentasFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
+    //$filtro = new ListadoVentasFormFilter();
+    $consulta = $this->buildQuery($this->getFilters());
     $listado = $consulta->execute();
     
     $dompdf = new DOMPDF();
@@ -47,8 +47,8 @@ class listvtaActions extends autoListvtaActions
       $this->getUser()->setFlash('error', '"Imprimir pagina" es solo para el listado detallado, utilice la opción "Imprimir todo"');
       $this->redirect('listvta/index?page=1');
     } else {
-      $filtro = new ListadoVentasFormFilter();
-      $consulta = $filtro->buildQuery($this->getFilters());	
+      //$filtro = new ListadoVentasFormFilter();
+      $consulta = $this->buildQuery($this->getFilters());	
       $pagina = $this->getUser()->getAttribute('listvta.page', '1', 'admin_module')-1;
       $consulta->limit(50)->offset($pagina * 50);
       $listado = $consulta->execute();
