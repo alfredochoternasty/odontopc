@@ -66,25 +66,14 @@
     </tfoot>
 
     <tbody>
-				<?php /*
-					if ($hasFilters->count() > 0) {
-						echo '<tr><td> Filtro utilizado: ';
-						foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-							@$valor = $hasFilters->getRaw($name);
-							$tag = $field->getConfig('label');
-							$tag = empty($tag)?$name:$tag;							
-							if (!empty($valor)) echo $tag.' = '.$valor;
-						}
-						echo '</td></tr>';
-					} */
+				<?php 
 					
         if ($ver_solo_totales) {
 					$suma_total = 0;
 					$suma_total_bon = 0;
 					$suma_total_dev = 0;
 					foreach ($pager->getResults() as $vtas) {
-						// $vtas = $pager->getNext();
-						//echo $vtas->producto_id.'xx<br>';
+
 						if (empty($ventas[$vtas->producto_id])) {
 							if ($vtas->cantidad >= 0) {
 								$ventas[$vtas->producto_id] = array(

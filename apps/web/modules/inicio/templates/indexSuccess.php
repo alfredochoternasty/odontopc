@@ -5,7 +5,11 @@
 	<?php include_partial('inicio/flashes') ?>
 	<div id="sf_admin_content">
     <?php if(!$sf_user->hasPermission('traza')): ?>    
-		<?php include_partial('inicio/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'pager2' => $pager2)) ?>
+		<?php 
+			$parametros = array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters);
+			if (!empty($pager2)) $parametros['pager2'] = $pager2;
+			include_partial('inicio/list', $parametros);
+		?>
     <?php endif; ?>
 	</div>
 </div>

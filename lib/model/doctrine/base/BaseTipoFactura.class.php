@@ -12,6 +12,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @property integer $cod_tipo_afip
  * @property string $letra
  * @property integer $id_fact_cancela
+ * @property string $modelo_impresion
  * @property Doctrine_Collection $Ventas
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Resumen
@@ -25,6 +26,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method integer             getCodTipoAfip()        Returns the current record's "cod_tipo_afip" value
  * @method string              getLetra()              Returns the current record's "letra" value
  * @method integer             getIdFactCancela()      Returns the current record's "id_fact_cancela" value
+ * @method string              getModeloImpresion()    Returns the current record's "modelo_impresion" value
  * @method Doctrine_Collection getVentas()             Returns the current record's "Ventas" collection
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method Doctrine_Collection getResumen()            Returns the current record's "Resumen" collection
@@ -37,6 +39,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method TipoFactura         setCodTipoAfip()        Sets the current record's "cod_tipo_afip" value
  * @method TipoFactura         setLetra()              Sets the current record's "letra" value
  * @method TipoFactura         setIdFactCancela()      Sets the current record's "id_fact_cancela" value
+ * @method TipoFactura         setModeloImpresion()    Sets the current record's "modelo_impresion" value
  * @method TipoFactura         setVentas()             Sets the current record's "Ventas" collection
  * @method TipoFactura         setCompras()            Sets the current record's "Compras" collection
  * @method TipoFactura         setResumen()            Sets the current record's "Resumen" collection
@@ -72,12 +75,15 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
              ));
         $this->hasColumn('letra', 'string', 50, array(
              'type' => 'string',
-             'notnull' => true,
              'length' => 50,
              ));
         $this->hasColumn('id_fact_cancela', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('modelo_impresion', 'string', 50, array(
+             'type' => 'string',
+             'length' => 50,
              ));
     }
 

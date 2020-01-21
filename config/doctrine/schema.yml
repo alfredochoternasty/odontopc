@@ -59,8 +59,9 @@ TipoFactura:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}
     cod_tipo_afip: {type: integer(4)}
-    letra: {type: string(50), notnull: true}
+    letra: {type: string(50)}
     id_fact_cancela: {type: integer(4)}
+    modelo_impresion: {type: string(50)}
   relations:
     Ventas: {type: many, class: Venta, local: id, foreign: tipofactura_id}
     Compras: {type: many, class: Compra, local: id, foreign: tipofactura_id}
@@ -935,3 +936,10 @@ PagoComision:
     Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, onDelete: RESTRICT}
     Banco: {type: one, class: Banco, local: banco_id, onDelete: RESTRICT}
+Configuracion:
+  connection: doctrine
+  tableName: configuracion
+  columns:
+    id: {type: string(200), primary: true}
+    valor: {type: string(50)}
+    observacion: {type: string(200)}

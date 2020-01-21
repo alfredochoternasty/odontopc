@@ -55,47 +55,5 @@ class ctrlvtaActions extends autoCtrlvtaActions
       return sfView::NONE;
     }
   }  
-  
-  /*
-  public function executeFilter(sfWebRequest $request)
-  {
-    $this->setPage(1);  
-    
-    if ($request->hasParameter('_reset'))
-    {
-      $this->setFilters($this->configuration->getFilterDefaults());
 
-      $this->redirect('@listado_ventas');
-    }
-
-    $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    $this->hasFilters = $this->getUser()->getAttribute('ctrlvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-
-    $this->filters->bind($request->getParameter($this->filters->getName()));
-    if ($this->filters->isValid())
-    {
-      $this->setFilters($this->filters->getValues());
-      $this->hasFilters = $this->getUser()->getAttribute('ctrlvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    }
-
-    $this->pager = $this->getPager();
-		if ($this->pager->count() > 500) {
-			$this->getUser()->setFlash('error', 'El listado es demasiado grande! por favor seleccione otro filtro para achicar la cantidad de resultados');
-			$this->redirect('@listado_ventas');
-		}
-    $this->sort = $this->getSort();
-  }  
-  
-  public function executeIndex(sfWebRequest $request)
-  {
-	
-    $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    $this->hasFilters = $this->getUser()->getAttribute('ctrlvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    if ($request->getParameter('sort')){
-      $this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
-      $this->redirect('ctrlvta/filter');
-    } 
-		
-  }
-  */
 }

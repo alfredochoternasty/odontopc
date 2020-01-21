@@ -18,7 +18,7 @@
 			</a>
 			<div id="sf_admin_actions_menu" class="ui-helper-hidden fg-menu fg-menu-has-icons">
 				<ul class="sf_admin_actions" id="sf_admin_actions_menu_list">
-					<?php include_partial('detres/list_actions', array('helper' => $helper)) ?>
+					<?php include_partial('detres/list_actions', array('helper' => $helper, 'pager' => $pager)) ?>
 				</ul>
 			</div>
 		</div>

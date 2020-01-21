@@ -47,24 +47,6 @@ $(document).ready(function(){
 });
 
 
-
-//Ventas
-$(document).ready(function(){
-  $("#venta_cliente_id").change(function(event){
-      var id = $("#venta_cliente_id").find(':selected').val();
-      $.ajax({
-          url: 'get_vtas_cliente?cid='+id,
-          //dataType: "json",
-          success: function(data) {
-            $("#venta_resumen_id").html('');
-            $("#venta_resumen_id").html(data);
-          }
-        });                  
-  });
-});
-
-
-
 $(document).ready(function(){
   
   $("#producto_total").bind("propertychange keyup input paste", function(event){
@@ -268,9 +250,7 @@ $(document).ready(function(){
 		var cantidad = $("#detalle_resumen_cantidad").find(':selected').val();
 		var descuento = $("#detalle_resumen_descuento").find(':selected').val();
 		var precio = $("#detalle_resumen_precio").val();
-		if (descuento > 0) {
-			precio = precio - (precio * (descuento/100))
-		}
+
 		if ($('#detalle_resumen_iva').length){
 			var subtotal = cantidad * precio;
 			var iva = (subtotal * 21)/100;
@@ -278,7 +258,13 @@ $(document).ready(function(){
 			$("#detalle_resumen_iva").attr('value', iva.toFixed(2));
 			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
 		}else{
+			var subtotal = cantidad * precio;
 			var total = cantidad * precio;
+			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
+		}
+		
+		if (descuento > 0) {
+			total = subtotal - (subtotal * (descuento/100))
 		}
 		$("#detalle_resumen_total").attr('value', total.toFixed(2));		
 	}

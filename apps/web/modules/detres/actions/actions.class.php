@@ -150,28 +150,17 @@ class detresActions extends autoDetresActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid()) {
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-      
-      // si ya hay un producto igual en la factura, actualizar la cantidad
-      // $detres = $request->getParameter($form->getName());
-      // $existe = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($detres['resumen_id'], $detres['producto_id'], $detres['nro_lote']);
-      // if (!empty($existe[0]->resumen_id)) {
-        // $detalle_resumen = $existe[0];
-        // $detalle_resumen->cantidad += $detres['cantidad'];
-        // $detalle_resumen->save();
-				// $detalle_resumen->cantidad = $detres['cantidad'];
-      // } else {
-        $detalle_resumen = $form->save();
+			$detalle_resumen = $form->save();
 
-        $lista_id = $detalle_resumen->getProducto()->getListaId();
-        $moneda_id = $detalle_resumen->getProducto()->getLista()->getMonedaId();
-        if (empty($lista_id)) {
-          $lista_id = $detalle_resumen->getResumen()->getCliente()->getListaId();
-          $moneda_id = $detalle_resumen->getResumen()->getCliente()->getLista()->getMonedaId();
-        }
-        $detalle_resumen->setListaId($lista_id);
-        $detalle_resumen->setMonedaId($moneda_id);
-        $detalle_resumen->save();
-      // }
+			$lista_id = $detalle_resumen->getProducto()->getListaId();
+			$moneda_id = $detalle_resumen->getProducto()->getLista()->getMonedaId();
+			if (empty($lista_id)) {
+				$lista_id = $detalle_resumen->getResumen()->getCliente()->getListaId();
+				$moneda_id = $detalle_resumen->getResumen()->getCliente()->getLista()->getMonedaId();
+			}
+			$detalle_resumen->setListaId($lista_id);
+			$detalle_resumen->setMonedaId($moneda_id);			
+			$detalle_resumen->save();
 			
       // si se vende de un remito sumar esa cantidad para el stock del remito
 			if (!empty($detalle_resumen->det_remito_id)) {
@@ -204,10 +193,11 @@ class detresActions extends autoDetresActions
     $rid = $this->getUser()->getAttribute('rid', 1);
     $resumen = Doctrine::getTable('Resumen')->find($rid);
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("resumen" => $resumen)));
+		$modelo_impresion = $resumen->getTipoFactura()->modelo_impresion;
+    $dompdf->load_html($this->getPartial($modelo_impresion, array("resumen" => $resumen)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
-    $dompdf->stream($resumen.".pdf");    
+    $dompdf->stream($resumen.".pdf");
 		$this->forward('resumen', 'index');
     return sfView::NONE;
   }
@@ -384,8 +374,11 @@ class detresActions extends autoDetresActions
     }else{
       $rid = $this->getUser()->getAttribute('rid');
     }
-
-		if (!empty($rid)) {
+		
+		$resumen = Doctrine::getTable('Resumen')->find($rid);
+		
+		$modulo_factura = $this->getUser()->getVarConfig('modulo_factura');
+		if ($modulo_factura == 'S') {
 			$wsaa = new WSAA(dirname(__FILE__)); 
 			$dt_expira = new DateTime($wsaa->get_expiration());
 			$dt_actual = new DateTime(date("Y-m-d h:m:i"));
@@ -397,7 +390,6 @@ class detresActions extends autoDetresActions
 			
 			$ptovta = '0005';
 			
-			$resumen = Doctrine::getTable('Resumen')->find($rid);
 			$regfe['ImpTotal'] = $resumen->getTotalResumen();
 			$regfe['ImpOpEx'] = 0;
 			$regfe['ImpIVA'] = $resumen->getIVATotalResumen();
@@ -483,9 +475,26 @@ class detresActions extends autoDetresActions
 			$resumen->setAfipMensaje($msj2);
 			$resumen->setAfipEnvio($wsfev1->client->__getLastRequest());
 			$resumen->setAfipRespuesta($wsfev1->client->__getLastResponse());
-			
-			$resumen->save();
+		} else {
+			$resumen->setAfipEstado(1);
 		}
+		
+		$saldo_cliente = $resumen->getCliente()->getSaldoCtaCte(1, null, false) - $resumen->getTotalResumen();
+		if ($saldo_cliente < 0) { // si tiene saldo a favor
+			$saldo_resumen = $resumen->getTotalResumen() - $resumen->getTotalCobrado() + $resumen->getTotalDevuelto();
+			$objCobro = new CobroResumen();
+			$objCobro->setResumenId($resumen->getId());			
+			if (abs($saldo_cliente-5) >= $saldo_resumen) {//tolerancia de 5 pesos
+				$objCobro->setMonto($resumen->getTotalResumen());
+				$resumen->setPagado(1);
+				$resumen->setFechaPagado(date('Y-m-d'));
+			} else {
+				$objCobro->setMonto(abs($saldo_cliente));
+			}
+			$objCobro->save();
+		}
+		
+		$resumen->save();
 		
 		$this->getUser()->setFlash($tipo_msj, $msj);
 		$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));

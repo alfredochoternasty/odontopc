@@ -8,21 +8,15 @@
     <?php use_helper('Date') ?>
     <?php 
 		
-    $entorno = sfConfig::get('sf_environment');
-		if($entorno == 'dev'){
-			$prefijo = '/odontopc';
-		} else {
-			$prefijo = '';
-		}
+		$base_url = $sf_user->getVarConfig('base_url');
+		$favicon = $sf_user->getVarConfig('favicon');
+		$jquery = $sf_user->getVarConfig('jquery_theme');
+		$cssmenu = $sf_user->getVarConfig('cssmenu');
 		
-		if($sf_user->hasGroup('Blanco')): ?>
-			<link rel="shortcut icon" href="/web/images/favicon_b.ico" />
-      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $prefijo ?>/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $prefijo ?>/web/css/cssmenu_b.css" />
-    <?php else: ?> 
-			<link rel="shortcut icon" href="/web/images/favicon_n.ico" />
-			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $prefijo ?>/web/css/cssmenu_n.css" />
-    <?php endif; ?>
+		if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/web/images/'.$favicon.'" />';
+		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
+		if (!empty($cssmenu)) echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/css/'.$cssmenu.'" />';
+		?>
   </head>
   <body style="margin:0px">
   <?php 

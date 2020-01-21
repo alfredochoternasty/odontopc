@@ -165,14 +165,24 @@ class resumenActions extends autoResumenActions
   }
 	
 	public function executeGettipofacli(sfWebRequest $request){
-    $cliente_id = $request->getParameter('cid');
-    $cliente = Doctrine::getTable('Cliente')->find($cliente_id);
-		if ($cliente->condicionfiscal_id == 1) {
-			$options = '<option value="1">Factura A</option>'; 
-			$options .= '<option value="4">Remito</option>'; 
+		$modulo_factura = $this->getUser()->getVarConfig('modulo_factura');
+		$cliente_id = $request->getParameter('cid');
+		$cliente = Doctrine::getTable('Cliente')->find($cliente_id);
+		if ($modulo_factura == 'S') {
+			if ($cliente->condicionfiscal_id == 1) {
+				$options = '<option value="1">Factura A</option>'; 
+				$options .= '<option value="4">Remito</option>'; 
+			} else {
+				$options = '<option value="2">Factura B</option>'; 
+				$options .= '<option value="4">Remito</option>';
+			}
 		} else {
-			$options = '<option value="2">Factura B</option>'; 
-			$options .= '<option value="4">Remito</option>';
+			if ($cliente->zona_id > 1) {
+				$options = '<option value="1">Venta</option>'; 
+			} else {
+				$options = '<option value="1">Venta</option>'; 
+				$options .= '<option value="4">Remito</option>'; 
+			}
 		}
 		return $this->renderText(json_encode($options));
 	}

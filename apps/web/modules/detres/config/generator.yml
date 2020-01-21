@@ -33,4 +33,4 @@ generator:
         title: Modificar Detalle
       new:
         title: Nuevo Detalle
-        display: [producto_id, nro_lote, det_remito_id, precio, cantidad, descuento, sub_total, iva, total, observacion]
+        display: [producto_id, nro_lote, det_remito_id, precio, cantidad, sub_total, descuento, iva, total, observacion]

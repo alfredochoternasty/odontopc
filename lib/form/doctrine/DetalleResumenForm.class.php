@@ -12,12 +12,11 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 {
   
   public function configure()
-  {
-    //parent::configure();
-    
+  {  
     unset($this['fecha_vto'], $this['lista_id'], $this['moneda_id'], $this['bonificados']);
 		
 		$tipofactura = sfContext::getInstance()->getUser()->getAttribute('tipofactura');
+		$modulo_factura = sfContext::getInstance()->getUser()->getVarConfig('modulo_factura');
     
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
     		
@@ -55,13 +54,12 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
     
 		if ($tipofactura != 4) {
-
 			$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 			$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
 			$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
 			$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($uz[0]->zona_id != 1)));
 			
-			if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
+			if($modulo_factura == 'S'){
 				$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 				$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
 				if ($uz[0]->zona_id != 1) {
@@ -70,16 +68,16 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 				$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 				$this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 			}else{
-				unset($this['iva'], $this['sub_total']);
+				unset($this['iva']);
 			}
 			$this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 		} else {
-			if(sfContext::getInstance()->getUser()->hasGroup('Blanco')){
+			if($modulo_factura == 'N'){
 				$this->setDefault('iva', '0');
 				$this->setDefault('sub_total', '0');
 				$this->setDefault('total', '0');
 				$this->setDefault('precio', '0');
-				unset($this['iva'], $this['sub_total'], $this['total'], $this['precio'], $this['bonificados'], $this['det_remito_id']);
+				unset($this['iva'], $this['sub_total'], $this['total'], $this['precio'], $this['descuento'], $this['det_remito_id']);
 			}
 		}
     

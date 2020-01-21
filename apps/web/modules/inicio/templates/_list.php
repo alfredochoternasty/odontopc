@@ -6,8 +6,12 @@
 		if ($uz[0]->zona_id > 1) {
 			echo '<div style="width:100%;margin-top:10%;text-align:center;"><img src="../images/home.png"></div>';
 		} else {
-			if (!$sf_user->hasGroup('Cliente')) include_partial('stock_minimo', array('pager' => $pager));
-			if ($sf_user->hasCredential('Pedidos Nuevos')) include_partial('ped_pend', array('pager2' => $pager2));
+			if ($sf_user->hasCredential('Stock Minimo'))
+				include_partial('stock_minimo', array('pager' => $pager));
+			
+			$modulo_pedidos = $sf_user->getVarConfig('modulo_pedidos');
+			if (!empty($pager2) && $modulo_pedidos == 'S' && $sf_user->hasCredential('Pedidos Nuevos')) 
+				include_partial('ped_pend', array('pager2' => $pager2));
 		}
 	} else {
 		echo '<div style="width:100%;margin-top:10%;text-align:center;"><img src="../images/home.png"></div>';

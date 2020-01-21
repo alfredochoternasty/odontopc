@@ -40,7 +40,7 @@ class cobroActions extends autoCobroActions
 				$objCobro->setCobroId($cobro->getId());
 				$objCobro->setResumenId($resumen->getId());
 				
-				if(($monto + 1) >= $saldo_resumen){
+				if(($monto + 5) >= $saldo_resumen){
 					$objCobro->setMonto($saldo_resumen);
 					$monto = $monto - $saldo_resumen;
 					$resumen->pagado = 1;
@@ -55,13 +55,14 @@ class cobroActions extends autoCobroActions
 			}
 
 			$this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $objCobro)));
-			
-			if ($cobro->getCliente()->zona_id != 1) {
+			$cobro_alerta = $this->getUser()->getVarConfig('cobro_alerta');
+			if ($cobro->getCliente()->zona_id > 1 && $cobro_alerta == 'S') {
+				$cobro_alerta_mail = $this->getUser()->getVarConfig('cobro_alerta_mail');
+				$cobro_modelo_impresion = $this->getUser()->getVarConfig('cobro_modelo_impresion');
 				$mensaje = Swift_Message::newInstance();
-				$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
-				$mensaje->setTo(array('implantesnti@gmail.com' => 'NTI implantes'));
+				$mensaje->setTo(array($cobro_alerta_mail));
 				$mensaje->setSubject('Cobro realizado en '.$cobro->getCliente()->getZona());
-				$mensaje->setBody($this->getPartial("recibo", array("cobro" => $cobro)));
+				$mensaje->setBody($this->getPartial($cobro_modelo_impresion, array("cobro" => $cobro)));
 				$mensaje->setContentType("text/html");
 				$this->getMailer()->send($mensaje);
 			}
@@ -95,7 +96,7 @@ class cobroActions extends autoCobroActions
     $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
 
     $this->redirect('@cobro');
-  }  
+  }
 	
   public function executeGuardarnuevobanco(sfWebRequest $request){
     $objProd = new Banco();

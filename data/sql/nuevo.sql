@@ -1,4 +1,25 @@
-UPDATE ventas.cliente SET usuario_id='223' WHERE  id=635;
+CREATE TABLE configuracion (
+	id VARCHAR(200) NOT NULL,
+	valor VARCHAR(50) NULL DEFAULT NULL,
+	observacion VARCHAR(200) NULL DEFAULT NULL,
+	PRIMARY KEY (id)
+)
+COLLATE='latin1_swedish_ci'
+;
+
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('base_url', '/odontopc_negro', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('cssmenu', 'cssmenu_n.css', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('favicon', 'favicon_n.ico', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('jquery', 'S', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('modulo_factura', 'N', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('cobro_alerta', 'S', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('cobro_alerta_mail', 'marcelamina@gmail.com', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('modulo_pedidos', 'N', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('modulo_seguimiento_clientes', 'N', NULL);
+INSERT INTO `configuracion` (`id`, `valor`, `observacion`) VALUES ('cobro_modelo_impresion', 'recibo', NULL);
+
+ALTER TABLE `tipo_factura`
+	ADD COLUMN `modelo_impresion` VARCHAR(50) NULL DEFAULT NULL AFTER `nombre_corto`;
 
 /*
 DROP TABLE 
