@@ -25,7 +25,8 @@ generator:
             imprimir: ~
             mail: ~
         batch_actions: []            
-      filter:  ~
+      filter:
+        display: [fecha, revendedor_id, tipo_id, banco_id]
       form:    ~
       edit:
         title: Completar informacion del pago a %%Revendedor%%
