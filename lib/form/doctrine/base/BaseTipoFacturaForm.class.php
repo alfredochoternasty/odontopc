@@ -15,19 +15,21 @@ abstract class BaseTipoFacturaForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'              => new sfWidgetFormInputHidden(),
-      'nombre'          => new sfWidgetFormInputText(),
-      'cod_tipo_afip'   => new sfWidgetFormInputText(),
-      'letra'           => new sfWidgetFormInputText(),
-      'id_fact_cancela' => new sfWidgetFormInputText(),
+      'id'               => new sfWidgetFormInputHidden(),
+      'nombre'           => new sfWidgetFormInputText(),
+      'cod_tipo_afip'    => new sfWidgetFormInputText(),
+      'letra'            => new sfWidgetFormInputText(),
+      'id_fact_cancela'  => new sfWidgetFormInputText(),
+      'modelo_impresion' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'              => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'nombre'          => new sfValidatorString(array('max_length' => 50)),
-      'cod_tipo_afip'   => new sfValidatorInteger(array('required' => false)),
-      'letra'           => new sfValidatorString(array('max_length' => 50)),
-      'id_fact_cancela' => new sfValidatorInteger(array('required' => false)),
+      'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'nombre'           => new sfValidatorString(array('max_length' => 50)),
+      'cod_tipo_afip'    => new sfValidatorInteger(array('required' => false)),
+      'letra'            => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'id_fact_cancela'  => new sfValidatorInteger(array('required' => false)),
+      'modelo_impresion' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_factura[%s]');

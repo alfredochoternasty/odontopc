@@ -13,17 +13,19 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'nombre'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'cod_tipo_afip'   => new sfWidgetFormFilterInput(),
-      'letra'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'id_fact_cancela' => new sfWidgetFormFilterInput(),
+      'nombre'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'cod_tipo_afip'    => new sfWidgetFormFilterInput(),
+      'letra'            => new sfWidgetFormFilterInput(),
+      'id_fact_cancela'  => new sfWidgetFormFilterInput(),
+      'modelo_impresion' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'nombre'          => new sfValidatorPass(array('required' => false)),
-      'cod_tipo_afip'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'letra'           => new sfValidatorPass(array('required' => false)),
-      'id_fact_cancela' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'nombre'           => new sfValidatorPass(array('required' => false)),
+      'cod_tipo_afip'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'letra'            => new sfValidatorPass(array('required' => false)),
+      'id_fact_cancela'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'modelo_impresion' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_factura_filters[%s]');
@@ -43,11 +45,12 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'              => 'Number',
-      'nombre'          => 'Text',
-      'cod_tipo_afip'   => 'Number',
-      'letra'           => 'Text',
-      'id_fact_cancela' => 'Number',
+      'id'               => 'Number',
+      'nombre'           => 'Text',
+      'cod_tipo_afip'    => 'Number',
+      'letra'            => 'Text',
+      'id_fact_cancela'  => 'Number',
+      'modelo_impresion' => 'Text',
     );
   }
 }

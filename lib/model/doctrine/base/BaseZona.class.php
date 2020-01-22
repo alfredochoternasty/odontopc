@@ -16,6 +16,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $Cobro
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $MovimientoProducto
+ * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Presupuesto
  * @property Doctrine_Collection $Lote
@@ -36,6 +37,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getCobro()              Returns the current record's "Cobro" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
+ * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
  * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getPresupuesto()        Returns the current record's "Presupuesto" collection
  * @method Doctrine_Collection getLote()               Returns the current record's "Lote" collection
@@ -55,6 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setCobro()              Sets the current record's "Cobro" collection
  * @method Zona                setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Zona                setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
+ * @method Zona                setListadoCobros()      Sets the current record's "ListadoCobros" collection
  * @method Zona                setDevProducto()        Sets the current record's "DevProducto" collection
  * @method Zona                setPresupuesto()        Sets the current record's "Presupuesto" collection
  * @method Zona                setLote()               Sets the current record's "Lote" collection
@@ -117,6 +120,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('MovimientoProducto', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('ListadoCobros', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

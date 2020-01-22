@@ -20,6 +20,7 @@ abstract class BaseListadoCobrosFormFilter extends BaseFormFilterDoctrine
       'moneda'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'cli_gen_comis' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'monto'         => new sfWidgetFormFilterInput(),
+      'zona_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseListadoCobrosFormFilter extends BaseFormFilterDoctrine
       'moneda'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
       'cli_gen_comis' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'monto'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'zona_id'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('listado_cobros_filters[%s]');
@@ -57,6 +59,7 @@ abstract class BaseListadoCobrosFormFilter extends BaseFormFilterDoctrine
       'moneda'        => 'ForeignKey',
       'cli_gen_comis' => 'Boolean',
       'monto'         => 'Number',
+      'zona_id'       => 'ForeignKey',
     );
   }
 }

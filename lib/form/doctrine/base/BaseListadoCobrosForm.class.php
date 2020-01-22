@@ -23,6 +23,7 @@ abstract class BaseListadoCobrosForm extends BaseFormDoctrine
       'moneda'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'cli_gen_comis' => new sfWidgetFormInputCheckbox(),
       'monto'         => new sfWidgetFormInputText(),
+      'zona_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseListadoCobrosForm extends BaseFormDoctrine
       'moneda'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'required' => false)),
       'cli_gen_comis' => new sfValidatorBoolean(array('required' => false)),
       'monto'         => new sfValidatorNumber(array('required' => false)),
+      'zona_id'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('listado_cobros[%s]');

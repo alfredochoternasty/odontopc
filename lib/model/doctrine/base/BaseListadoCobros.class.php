@@ -15,10 +15,12 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoCobros', 'doctrine');
  * @property integer $moneda
  * @property boolean $cli_gen_comis
  * @property decimal $monto
+ * @property integer $zona_id
  * @property Cliente $Cliente
  * @property TipoCliente $TipoCliente
  * @property TipoCobroPago $TipoCobro
  * @property TipoMoneda $Moneda
+ * @property Zona $Zona
  * 
  * @method integer       getId()            Returns the current record's "id" value
  * @method date          getFecha()         Returns the current record's "fecha" value
@@ -28,10 +30,12 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoCobros', 'doctrine');
  * @method integer       getMoneda()        Returns the current record's "moneda" value
  * @method boolean       getCliGenComis()   Returns the current record's "cli_gen_comis" value
  * @method decimal       getMonto()         Returns the current record's "monto" value
+ * @method integer       getZonaId()        Returns the current record's "zona_id" value
  * @method Cliente       getCliente()       Returns the current record's "Cliente" value
  * @method TipoCliente   getTipoCliente()   Returns the current record's "TipoCliente" value
  * @method TipoCobroPago getTipoCobro()     Returns the current record's "TipoCobro" value
  * @method TipoMoneda    getMoneda()        Returns the current record's "Moneda" value
+ * @method Zona          getZona()          Returns the current record's "Zona" value
  * @method ListadoCobros setId()            Sets the current record's "id" value
  * @method ListadoCobros setFecha()         Sets the current record's "fecha" value
  * @method ListadoCobros setCliente()       Sets the current record's "cliente" value
@@ -40,10 +44,12 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoCobros', 'doctrine');
  * @method ListadoCobros setMoneda()        Sets the current record's "moneda" value
  * @method ListadoCobros setCliGenComis()   Sets the current record's "cli_gen_comis" value
  * @method ListadoCobros setMonto()         Sets the current record's "monto" value
+ * @method ListadoCobros setZonaId()        Sets the current record's "zona_id" value
  * @method ListadoCobros setCliente()       Sets the current record's "Cliente" value
  * @method ListadoCobros setTipoCliente()   Sets the current record's "TipoCliente" value
  * @method ListadoCobros setTipoCobro()     Sets the current record's "TipoCobro" value
  * @method ListadoCobros setMoneda()        Sets the current record's "Moneda" value
+ * @method ListadoCobros setZona()          Sets the current record's "Zona" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -89,6 +95,10 @@ abstract class BaseListadoCobros extends sfDoctrineRecord
              'length' => 10,
              'scale' => '2',
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -108,6 +118,11 @@ abstract class BaseListadoCobros extends sfDoctrineRecord
 
         $this->hasOne('TipoMoneda as Moneda', array(
              'local' => 'moneda',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
     }

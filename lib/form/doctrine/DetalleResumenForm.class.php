@@ -72,13 +72,11 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 			}
 			$this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 		} else {
-			if($modulo_factura == 'N'){
-				$this->setDefault('iva', '0');
-				$this->setDefault('sub_total', '0');
-				$this->setDefault('total', '0');
-				$this->setDefault('precio', '0');
-				unset($this['iva'], $this['sub_total'], $this['total'], $this['precio'], $this['descuento'], $this['det_remito_id']);
-			}
+			$this->setDefault('iva', '0');
+			$this->setDefault('sub_total', '0');
+			$this->setDefault('total', '0');
+			$this->setDefault('precio', '0');
+			unset($this['iva'], $this['sub_total'], $this['total'], $this['precio'], $this['descuento'], $this['det_remito_id']);
 		}
     
 

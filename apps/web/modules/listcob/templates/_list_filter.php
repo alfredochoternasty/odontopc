@@ -40,7 +40,7 @@
 
     <tfoot>
       <tr>
-        <th colspan="11">
+        <th colspan="5">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('listcob/pagination', array('pager' => $pager)) ?>
           </div>
@@ -63,23 +63,13 @@
       <?php endforeach; ?>
       
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-          <td colspan="6" class="sf_admin_foreignkey">&nbsp;</td>
+          <td colspan="2" class="sf_admin_foreignkey">&nbsp;</td>
           <td style="text-align: right;" class="sf_admin_foreignkey">Total:</td>
-          <td class="sf_admin_foreignkey">
-            <?php echo '$'.sprintf("%01.2f", $suma_total)  ?>
-          </td>
+          <td class="sf_admin_foreignkey"><?php echo '$ '.sprintf("%01.2f", $suma_total) ?></td>
+          <td class="sf_admin_foreignkey">&nbsp;</td>
         </tr>
     </tbody>
   </table>
 
   <?php endif; ?>
 </div>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-function checkAll()
-{
-  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
-}
-/* ]]> */
-</script>

@@ -486,11 +486,13 @@ ListadoCobros:
     moneda: {type: integer(4)}
     cli_gen_comis: {type: boolean}
     monto: {type: 'decimal(10, 2)'}
+    zona_id: {type: integer(4)}
   relations:
     Cliente: {type: one, class: Cliente, local: cliente}
     TipoCliente: {type: one, class: TipoCliente, local: tipo_cliente}
     TipoCobro: {type: one, class: TipoCobroPago, local: tipo_cobro}
     Moneda: {type: one, class: TipoMoneda, local: moneda, foreign: id, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 DevProducto:
   connection: doctrine
   tableName: dev_producto

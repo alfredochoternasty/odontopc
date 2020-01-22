@@ -19,12 +19,13 @@ generator:
       list:
         title: Listado de Cobros
         max_per_page: 99999
+        display: [fecha, Cliente, tipo_cobro, _monto, Zona]
         object_actions: []
         batch_actions: []
         actions:
           imprimir: ~
       filter:
-        display: [fecha, cliente, tipo_cliente, tipo_cobro, moneda]
+        display: [fecha, cliente, tipo_cliente, tipo_cobro, moneda, zona_id]
       form:    ~
       edit:    ~
       new:     ~
