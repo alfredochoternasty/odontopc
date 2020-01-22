@@ -15,14 +15,16 @@
 		<tr>
 			<th style="background: #CCC;">Fecha</th>
 			<th colspan="3" style="background: #CCC;">Factura</th>
-			<th colspan="4" style="background: #CCC;">Cliente</th>
+			<th colspan="3" style="background: #CCC;">Cliente</th>
 			<th style="background: #CCC;">Total</th>
+			<th style="background: #CCC;">Cobrado</th>
 		</tr>
 		<tr>
 			<td><?php echo implode("/", array_reverse(explode("-", $fila->getFecha()))) ?></td>
 			<td colspan="3" ><?php echo $fila ?></td>
-			<td colspan="4" ><?php echo $fila->getCliente() ?></td>
+			<td colspan="3" ><?php echo $fila->getCliente() ?></td>
 			<td>$ <?php echo $fila->getTotalResumen() ?></td>
+			<td><?php echo implode("/", array_reverse(explode("-", $fila->fecha_pagado))) ?></td>
 		</tr>
 		<tr>
 			<th style="background: #CCC;">Producto</th>
