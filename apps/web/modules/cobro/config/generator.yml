@@ -25,7 +25,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Cobros Realizados
-        display: [Cliente, fecha, _monto, Tipo, Banco, numero, observacion]
+        display: [Cliente, fecha, _monto, Tipo, Banco, _archivo, observacion]
         object_actions:
           _edit: ~
           _delete: ~

@@ -37,7 +37,10 @@ class CobroForm extends BaseCobroForm
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
 
     $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();		
+		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
+		
+    $this->widgetSchema['archivo'] = new sfWidgetFormInputFile();
+		$this->validatorSchema['archivo'] =  new sfValidatorFile();
 	
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
 		

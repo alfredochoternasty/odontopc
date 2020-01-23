@@ -360,6 +360,7 @@ Cobro:
     usuario: {type: integer(4)}
     nro_recibo: {type: integer(4)}
     zona_id: {type: integer(4)}
+    archivo: {type: string(255)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}

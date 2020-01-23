@@ -30,6 +30,7 @@ abstract class BaseCobroForm extends BaseFormDoctrine
       'usuario'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'nro_recibo'  => new sfWidgetFormInputText(),
       'zona_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'archivo'     => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -48,6 +49,7 @@ abstract class BaseCobroForm extends BaseFormDoctrine
       'usuario'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
       'nro_recibo'  => new sfValidatorInteger(array('required' => false)),
       'zona_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
+      'archivo'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cobro[%s]');

@@ -22,6 +22,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @property integer $usuario
  * @property integer $nro_recibo
  * @property integer $zona_id
+ * @property string $archivo
  * @property Resumen $Resumen
  * @property Cliente $Cliente
  * @property TipoCobroPago $Tipo
@@ -46,6 +47,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method integer             getUsuario()      Returns the current record's "usuario" value
  * @method integer             getNroRecibo()    Returns the current record's "nro_recibo" value
  * @method integer             getZonaId()       Returns the current record's "zona_id" value
+ * @method string              getArchivo()      Returns the current record's "archivo" value
  * @method Resumen             getResumen()      Returns the current record's "Resumen" value
  * @method Cliente             getCliente()      Returns the current record's "Cliente" value
  * @method TipoCobroPago       getTipo()         Returns the current record's "Tipo" value
@@ -69,6 +71,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cobro', 'doctrine');
  * @method Cobro               setUsuario()      Sets the current record's "usuario" value
  * @method Cobro               setNroRecibo()    Sets the current record's "nro_recibo" value
  * @method Cobro               setZonaId()       Sets the current record's "zona_id" value
+ * @method Cobro               setArchivo()      Sets the current record's "archivo" value
  * @method Cobro               setResumen()      Sets the current record's "Resumen" value
  * @method Cobro               setCliente()      Sets the current record's "Cliente" value
  * @method Cobro               setTipo()         Sets the current record's "Tipo" value
@@ -158,6 +161,10 @@ abstract class BaseCobro extends sfDoctrineRecord
         $this->hasColumn('zona_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('archivo', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 
