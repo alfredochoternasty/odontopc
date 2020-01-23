@@ -17,7 +17,10 @@ FROM cobro
 	left outer join resumen r ON cobro.resumen_id = r.id
 WHERE r.tipofactura_id <> 4 or cobro.resumen_id = 0;
 
+ALTER TABLE `cobro`
+	ADD COLUMN `archivo` VARCHAR(255) NULL DEFAULT NULL AFTER `zona_id`;
 
+/*
 DROP TABLE 
 	producto2, 
 	traza2, 
@@ -34,7 +37,6 @@ DROP TABLE
 
 DROP VIEW vta_fact, comp_fact, cta_cte_prov;
 
-/*
 DELETE FROM sf_guard_user WHERE es_cliente = 1 OR id = 150;
 
 INSERT INTO sf_guard_user(username, last_name, first_name, email_address, algorithm, salt, password)
