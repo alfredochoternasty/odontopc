@@ -14,9 +14,11 @@ generator:
     config:
       actions: ~
       fields:
-        fecha: { date_format: dd/MM/yyyy }
-        fecha_cobrado: { date_format: dd/MM/yyyy }
+        fecha: { label: Fecha de Venta, date_format: dd/MM/yyyy }
+        fecha_cobrado: { label: Fecha de cobro de la factura, date_format: dd/MM/yyyy }
         pagado: { label: Comision Pagada }
+        cobrado: { label: Factura Cobrada Completa }
+        grupoprod_id: { label: Grupo del producto }
       list:
         max_per_page: 9999
         table_method: retrieveConJoins
