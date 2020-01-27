@@ -20,6 +20,12 @@ WHERE r.tipofactura_id <> 4 or cobro.resumen_id = 0;
 ALTER TABLE `cobro`
 	ADD COLUMN `archivo` VARCHAR(255) NULL DEFAULT NULL AFTER `zona_id`;
 
+ALTER TABLE `tipo_factura`
+	ADD COLUMN `cond_fiscales` VARCHAR(50) NULL DEFAULT NULL AFTER `modelo_impresion`;
+
+INSERT INTO `ventas`.`producto` (`id`, `nombre`, `grupoprod_id`, `precio_vta`, `moneda_id`, `orden_grupo`, `activo`)
+VALUES ('309', 'Debito - Ajuste Cta Cte', '1', '10', '0', '0', '1');
+
 /*
 DROP TABLE 
 	producto2, 

@@ -21,6 +21,7 @@ abstract class BaseTipoFacturaForm extends BaseFormDoctrine
       'letra'            => new sfWidgetFormInputText(),
       'id_fact_cancela'  => new sfWidgetFormInputText(),
       'modelo_impresion' => new sfWidgetFormInputText(),
+      'cond_fiscales'    => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseTipoFacturaForm extends BaseFormDoctrine
       'letra'            => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'id_fact_cancela'  => new sfValidatorInteger(array('required' => false)),
       'modelo_impresion' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'cond_fiscales'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_factura[%s]');

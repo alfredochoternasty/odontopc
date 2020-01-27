@@ -20,7 +20,7 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
     		
-    $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+    $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getProdDebito', 'add_empty' => true, 'order_by' => array('nombre', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => true, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
 	
     $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => array()));
@@ -54,23 +54,32 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => true));
     
 		if ($tipofactura != 4) {
-			$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-			$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
-			$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
-			$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($uz[0]->zona_id != 1)));
-			
-			if($modulo_factura == 'S'){
+			if ($tipofactura == 5 || $tipofactura == 7) {
+				$this->setDefault('iva', '0');
+				$this->setDefault('sub_total', '0');
+				$this->setDefault('total', '0');
+				$this->setDefault('cantidad', '1');
+				$this->setDefault('nro_lote', '-');
+				unset($this['iva'], $this['sub_total'], $this['total'], $this['descuento'], $this['det_remito_id'], $this['nro_lote'], $this['cantidad']);
+			} else {
 				$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 				$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
-				if ($uz[0]->zona_id != 1) {
-					$this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+				$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
+				$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($uz[0]->zona_id != 1)));
+				
+				if($modulo_factura == 'S'){
+					$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+					$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+					if ($uz[0]->zona_id != 1) {
+						$this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+					}
+					$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+					$this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+				}else{
+					unset($this['iva']);
 				}
-				$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-				$this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-			}else{
-				unset($this['iva']);
+				$this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 			}
-			$this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 		} else {
 			$this->setDefault('iva', '0');
 			$this->setDefault('sub_total', '0');

@@ -80,16 +80,23 @@ class ProductoTable extends Doctrine_Table
     }
 
 
-    public function getActivos(){
-			$query = Doctrine_Core::getTable('Producto')
-			->createQuery('q')
-      ->where('grupoprod_id not in (1, 15) or id = 71')
-      ->andWhere('activo = 1')
-      ->orderBy('nombre')			
-      ->addOrderBy('orden_grupo');
+    public function getActivos($debito=false){
+			$query = Doctrine_Core::getTable('Producto')->createQuery('q');
+			if ($debito)
+				$query->where('id = 309');
+			else 
+				$query->where('grupoprod_id not in (1, 15) or id = 71');
+			
+      $query->andWhere('activo = 1');
+      $query->orderBy('nombre');
+      $query->addOrderBy('orden_grupo');
 			$result = $query->execute();
       return $result;
     }
+		
+		public function getProdDebito() {
+			return $this->getActivos(true);
+		}
 		
     public function retrieveProdConCod(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();

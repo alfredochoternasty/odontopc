@@ -62,6 +62,7 @@ TipoFactura:
     letra: {type: string(50)}
     id_fact_cancela: {type: integer(4)}
     modelo_impresion: {type: string(50)}
+    cond_fiscales: {type: string(50)}
   relations:
     Ventas: {type: many, class: Venta, local: id, foreign: tipofactura_id}
     Compras: {type: many, class: Compra, local: id, foreign: tipofactura_id}

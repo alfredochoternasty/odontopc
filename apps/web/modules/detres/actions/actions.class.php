@@ -159,7 +159,9 @@ class detresActions extends autoDetresActions
 				$moneda_id = $detalle_resumen->getResumen()->getCliente()->getLista()->getMonedaId();
 			}
 			$detalle_resumen->setListaId($lista_id);
-			$detalle_resumen->setMonedaId($moneda_id);			
+			$detalle_resumen->setMonedaId($moneda_id);
+			$detalle_resumen->setSubTotal($detalle_resumen->precio_vta);
+			$detalle_resumen->setTotal($detalle_resumen->precio_vta);
 			$detalle_resumen->save();
 			
       // si se vende de un remito sumar esa cantidad para el stock del remito

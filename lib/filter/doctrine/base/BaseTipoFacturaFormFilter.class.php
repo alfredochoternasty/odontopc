@@ -18,6 +18,7 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
       'letra'            => new sfWidgetFormFilterInput(),
       'id_fact_cancela'  => new sfWidgetFormFilterInput(),
       'modelo_impresion' => new sfWidgetFormFilterInput(),
+      'cond_fiscales'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
       'letra'            => new sfValidatorPass(array('required' => false)),
       'id_fact_cancela'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'modelo_impresion' => new sfValidatorPass(array('required' => false)),
+      'cond_fiscales'    => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_factura_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BaseTipoFacturaFormFilter extends BaseFormFilterDoctrine
       'letra'            => 'Text',
       'id_fact_cancela'  => 'Number',
       'modelo_impresion' => 'Text',
+      'cond_fiscales'    => 'Text',
     );
   }
 }
