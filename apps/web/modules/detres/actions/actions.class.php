@@ -427,7 +427,8 @@ class detresActions extends autoDetresActions
 			->from('Resumen')
 			->where('tipofactura_id = '.$resumen->tipofactura_id)
 			->andWhere("pto_vta = '".$ptovta."'")
-			->andWhere('nro_factura is not null');
+			->andWhere('afip_estado = 1')
+			->andWhere('nro_factura is null');
 			$ultimo_nro_sistema = $q->fetchArray();
 			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
 				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el último número registrado en el sistema (nro: '.$ultimo_nro_sistema[0]['ultimo'].')');
