@@ -64,9 +64,7 @@
       ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
         <?php include_partial('detres/list_td_tabular', array('detalle_resumen' => $detalle_resumen)) ?>
-				<?php if ($resumen->afip_estado == 0) : ?>
         <?php include_partial('detres/list_td_actions', array('detalle_resumen' => $detalle_resumen, 'helper' => $helper)) ?>
-				<?php endif; ?>
         </tr>
       <?php endforeach; 
 			

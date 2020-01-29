@@ -19,8 +19,8 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 		$modulo_factura = sfContext::getInstance()->getUser()->getVarConfig('modulo_factura');
     
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
-    		
-    $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getProdDebito', 'add_empty' => true, 'order_by' => array('nombre', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+    $table_method	= ($tipofactura == 5 || $tipofactura == 7)?'getProdDebito':'getActivos';
+    $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => $table_method, 'add_empty' => true, 'order_by' => array('nombre', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => true, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));
 	
     $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => array()));

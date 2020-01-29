@@ -13,7 +13,7 @@ all:
     # ThemeRoller name
     # (depends on theme_dir option)
     # browse: http://jqueryui.com/themeroller/
-    theme:          black-tie
+    #theme:          black-tie
     #theme:          redmond
 
     # activates the jQuery UI widget to dynamically change theme
