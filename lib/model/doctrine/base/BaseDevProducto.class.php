@@ -30,6 +30,7 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property integer $lote_id
  * @property string $afip_mensaje
  * @property integer $zona_id
+ * @property integer $pago_comision_id
  * @property Cliente $Cliente
  * @property Resumen $Resumen
  * @property Producto $Producto
@@ -37,67 +38,72 @@ Doctrine_Manager::getInstance()->bindComponent('DevProducto', 'doctrine');
  * @property sfGuardUser $sfGuardUser
  * @property Lote $Lote
  * @property Zona $Zona
+ * @property Doctrine_Collection $PagoComision
  * 
- * @method integer     getId()             Returns the current record's "id" value
- * @method date        getFecha()          Returns the current record's "fecha" value
- * @method integer     getClienteId()      Returns the current record's "cliente_id" value
- * @method integer     getResumenId()      Returns the current record's "resumen_id" value
- * @method integer     getProductoId()     Returns the current record's "producto_id" value
- * @method integer     getCantidad()       Returns the current record's "cantidad" value
- * @method decimal     getPrecio()         Returns the current record's "precio" value
- * @method decimal     getTotal()          Returns the current record's "total" value
- * @method string      getObservacion()    Returns the current record's "observacion" value
- * @method string      getNroLote()        Returns the current record's "nro_lote" value
- * @method decimal     getIva()            Returns the current record's "iva" value
- * @method integer     getUsuario()        Returns the current record's "usuario" value
- * @method integer     getAfipEstado()     Returns the current record's "afip_estado" value
- * @method string      getAfipCae()        Returns the current record's "afip_cae" value
- * @method date        getAfipVtoCae()     Returns the current record's "afip_vto_cae" value
- * @method string      getPtoVta()         Returns the current record's "pto_vta" value
- * @method integer     getTipofacturaId()  Returns the current record's "tipofactura_id" value
- * @method integer     getNroFactura()     Returns the current record's "nro_factura" value
- * @method string      getAfipEnvio()      Returns the current record's "afip_envio" value
- * @method string      getAfipRespuesta()  Returns the current record's "afip_respuesta" value
- * @method integer     getLoteId()         Returns the current record's "lote_id" value
- * @method string      getAfipMensaje()    Returns the current record's "afip_mensaje" value
- * @method integer     getZonaId()         Returns the current record's "zona_id" value
- * @method Cliente     getCliente()        Returns the current record's "Cliente" value
- * @method Resumen     getResumen()        Returns the current record's "Resumen" value
- * @method Producto    getProducto()       Returns the current record's "Producto" value
- * @method TipoFactura getTipoFactura()    Returns the current record's "TipoFactura" value
- * @method sfGuardUser getSfGuardUser()    Returns the current record's "sfGuardUser" value
- * @method Lote        getLote()           Returns the current record's "Lote" value
- * @method Zona        getZona()           Returns the current record's "Zona" value
- * @method DevProducto setId()             Sets the current record's "id" value
- * @method DevProducto setFecha()          Sets the current record's "fecha" value
- * @method DevProducto setClienteId()      Sets the current record's "cliente_id" value
- * @method DevProducto setResumenId()      Sets the current record's "resumen_id" value
- * @method DevProducto setProductoId()     Sets the current record's "producto_id" value
- * @method DevProducto setCantidad()       Sets the current record's "cantidad" value
- * @method DevProducto setPrecio()         Sets the current record's "precio" value
- * @method DevProducto setTotal()          Sets the current record's "total" value
- * @method DevProducto setObservacion()    Sets the current record's "observacion" value
- * @method DevProducto setNroLote()        Sets the current record's "nro_lote" value
- * @method DevProducto setIva()            Sets the current record's "iva" value
- * @method DevProducto setUsuario()        Sets the current record's "usuario" value
- * @method DevProducto setAfipEstado()     Sets the current record's "afip_estado" value
- * @method DevProducto setAfipCae()        Sets the current record's "afip_cae" value
- * @method DevProducto setAfipVtoCae()     Sets the current record's "afip_vto_cae" value
- * @method DevProducto setPtoVta()         Sets the current record's "pto_vta" value
- * @method DevProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
- * @method DevProducto setNroFactura()     Sets the current record's "nro_factura" value
- * @method DevProducto setAfipEnvio()      Sets the current record's "afip_envio" value
- * @method DevProducto setAfipRespuesta()  Sets the current record's "afip_respuesta" value
- * @method DevProducto setLoteId()         Sets the current record's "lote_id" value
- * @method DevProducto setAfipMensaje()    Sets the current record's "afip_mensaje" value
- * @method DevProducto setZonaId()         Sets the current record's "zona_id" value
- * @method DevProducto setCliente()        Sets the current record's "Cliente" value
- * @method DevProducto setResumen()        Sets the current record's "Resumen" value
- * @method DevProducto setProducto()       Sets the current record's "Producto" value
- * @method DevProducto setTipoFactura()    Sets the current record's "TipoFactura" value
- * @method DevProducto setSfGuardUser()    Sets the current record's "sfGuardUser" value
- * @method DevProducto setLote()           Sets the current record's "Lote" value
- * @method DevProducto setZona()           Sets the current record's "Zona" value
+ * @method integer             getId()               Returns the current record's "id" value
+ * @method date                getFecha()            Returns the current record's "fecha" value
+ * @method integer             getClienteId()        Returns the current record's "cliente_id" value
+ * @method integer             getResumenId()        Returns the current record's "resumen_id" value
+ * @method integer             getProductoId()       Returns the current record's "producto_id" value
+ * @method integer             getCantidad()         Returns the current record's "cantidad" value
+ * @method decimal             getPrecio()           Returns the current record's "precio" value
+ * @method decimal             getTotal()            Returns the current record's "total" value
+ * @method string              getObservacion()      Returns the current record's "observacion" value
+ * @method string              getNroLote()          Returns the current record's "nro_lote" value
+ * @method decimal             getIva()              Returns the current record's "iva" value
+ * @method integer             getUsuario()          Returns the current record's "usuario" value
+ * @method integer             getAfipEstado()       Returns the current record's "afip_estado" value
+ * @method string              getAfipCae()          Returns the current record's "afip_cae" value
+ * @method date                getAfipVtoCae()       Returns the current record's "afip_vto_cae" value
+ * @method string              getPtoVta()           Returns the current record's "pto_vta" value
+ * @method integer             getTipofacturaId()    Returns the current record's "tipofactura_id" value
+ * @method integer             getNroFactura()       Returns the current record's "nro_factura" value
+ * @method string              getAfipEnvio()        Returns the current record's "afip_envio" value
+ * @method string              getAfipRespuesta()    Returns the current record's "afip_respuesta" value
+ * @method integer             getLoteId()           Returns the current record's "lote_id" value
+ * @method string              getAfipMensaje()      Returns the current record's "afip_mensaje" value
+ * @method integer             getZonaId()           Returns the current record's "zona_id" value
+ * @method integer             getPagoComisionId()   Returns the current record's "pago_comision_id" value
+ * @method Cliente             getCliente()          Returns the current record's "Cliente" value
+ * @method Resumen             getResumen()          Returns the current record's "Resumen" value
+ * @method Producto            getProducto()         Returns the current record's "Producto" value
+ * @method TipoFactura         getTipoFactura()      Returns the current record's "TipoFactura" value
+ * @method sfGuardUser         getSfGuardUser()      Returns the current record's "sfGuardUser" value
+ * @method Lote                getLote()             Returns the current record's "Lote" value
+ * @method Zona                getZona()             Returns the current record's "Zona" value
+ * @method Doctrine_Collection getPagoComision()     Returns the current record's "PagoComision" collection
+ * @method DevProducto         setId()               Sets the current record's "id" value
+ * @method DevProducto         setFecha()            Sets the current record's "fecha" value
+ * @method DevProducto         setClienteId()        Sets the current record's "cliente_id" value
+ * @method DevProducto         setResumenId()        Sets the current record's "resumen_id" value
+ * @method DevProducto         setProductoId()       Sets the current record's "producto_id" value
+ * @method DevProducto         setCantidad()         Sets the current record's "cantidad" value
+ * @method DevProducto         setPrecio()           Sets the current record's "precio" value
+ * @method DevProducto         setTotal()            Sets the current record's "total" value
+ * @method DevProducto         setObservacion()      Sets the current record's "observacion" value
+ * @method DevProducto         setNroLote()          Sets the current record's "nro_lote" value
+ * @method DevProducto         setIva()              Sets the current record's "iva" value
+ * @method DevProducto         setUsuario()          Sets the current record's "usuario" value
+ * @method DevProducto         setAfipEstado()       Sets the current record's "afip_estado" value
+ * @method DevProducto         setAfipCae()          Sets the current record's "afip_cae" value
+ * @method DevProducto         setAfipVtoCae()       Sets the current record's "afip_vto_cae" value
+ * @method DevProducto         setPtoVta()           Sets the current record's "pto_vta" value
+ * @method DevProducto         setTipofacturaId()    Sets the current record's "tipofactura_id" value
+ * @method DevProducto         setNroFactura()       Sets the current record's "nro_factura" value
+ * @method DevProducto         setAfipEnvio()        Sets the current record's "afip_envio" value
+ * @method DevProducto         setAfipRespuesta()    Sets the current record's "afip_respuesta" value
+ * @method DevProducto         setLoteId()           Sets the current record's "lote_id" value
+ * @method DevProducto         setAfipMensaje()      Sets the current record's "afip_mensaje" value
+ * @method DevProducto         setZonaId()           Sets the current record's "zona_id" value
+ * @method DevProducto         setPagoComisionId()   Sets the current record's "pago_comision_id" value
+ * @method DevProducto         setCliente()          Sets the current record's "Cliente" value
+ * @method DevProducto         setResumen()          Sets the current record's "Resumen" value
+ * @method DevProducto         setProducto()         Sets the current record's "Producto" value
+ * @method DevProducto         setTipoFactura()      Sets the current record's "TipoFactura" value
+ * @method DevProducto         setSfGuardUser()      Sets the current record's "sfGuardUser" value
+ * @method DevProducto         setLote()             Sets the current record's "Lote" value
+ * @method DevProducto         setZona()             Sets the current record's "Zona" value
+ * @method DevProducto         setPagoComision()     Sets the current record's "PagoComision" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -210,6 +216,10 @@ abstract class BaseDevProducto extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('pago_comision_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -249,5 +259,9 @@ abstract class BaseDevProducto extends sfDoctrineRecord
              'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('PagoComision', array(
+             'local' => 'pago_comision_id',
+             'foreign' => 'id'));
     }
 }

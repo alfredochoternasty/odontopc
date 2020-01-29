@@ -23,6 +23,7 @@ Doctrine_Manager::getInstance()->bindComponent('PagoComision', 'doctrine');
  * @property TipoMoneda $Moneda
  * @property Banco $Banco
  * @property Resumen $Resumen
+ * @property DevProducto $DevProducto
  * 
  * @method integer       getId()            Returns the current record's "id" value
  * @method date          getFecha()         Returns the current record's "fecha" value
@@ -40,6 +41,7 @@ Doctrine_Manager::getInstance()->bindComponent('PagoComision', 'doctrine');
  * @method TipoMoneda    getMoneda()        Returns the current record's "Moneda" value
  * @method Banco         getBanco()         Returns the current record's "Banco" value
  * @method Resumen       getResumen()       Returns the current record's "Resumen" value
+ * @method DevProducto   getDevProducto()   Returns the current record's "DevProducto" value
  * @method PagoComision  setId()            Sets the current record's "id" value
  * @method PagoComision  setFecha()         Sets the current record's "fecha" value
  * @method PagoComision  setRevendedorId()  Sets the current record's "revendedor_id" value
@@ -56,6 +58,7 @@ Doctrine_Manager::getInstance()->bindComponent('PagoComision', 'doctrine');
  * @method PagoComision  setMoneda()        Sets the current record's "Moneda" value
  * @method PagoComision  setBanco()         Sets the current record's "Banco" value
  * @method PagoComision  setResumen()       Sets the current record's "Resumen" value
+ * @method PagoComision  setDevProducto()   Sets the current record's "DevProducto" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -147,6 +150,10 @@ abstract class BasePagoComision extends sfDoctrineRecord
              'onDelete' => 'RESTRICT'));
 
         $this->hasOne('Resumen', array(
+             'local' => 'id',
+             'foreign' => 'pago_comision_id'));
+
+        $this->hasOne('DevProducto', array(
              'local' => 'id',
              'foreign' => 'pago_comision_id'));
     }

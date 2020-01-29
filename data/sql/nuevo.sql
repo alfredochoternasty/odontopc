@@ -26,6 +26,9 @@ ALTER TABLE `tipo_factura`
 INSERT INTO `ventas`.`producto` (`id`, `nombre`, `grupoprod_id`, `precio_vta`, `moneda_id`, `orden_grupo`, `activo`)
 VALUES ('309', 'Debito - Ajuste Cta Cte', '1', '10', '0', '0', '1');
 
+ALTER TABLE `dev_producto`
+	ADD COLUMN `pago_comision_id` INT NULL AFTER `zona_id`;
+
 /*
 DROP TABLE 
 	producto2, 

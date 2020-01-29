@@ -14,11 +14,11 @@ generator:
     config:
       actions: ~
       fields:
-        fecha: { label: Fecha de Venta, date_format: dd/MM/yyyy }
-        fecha_cobrado: { label: Fecha de cobro de la factura, date_format: dd/MM/yyyy }
+        fecha: { date_format: dd/MM/yyyy }
+        fecha_cobrado: { label: Fecha Cobrado, date_format: dd/MM/yyyy }
         pagado: { label: Comision Pagada }
-        cobrado: { label: Factura Cobrada Completa }
-        grupoprod_id: { label: Grupo del producto }
+        cobrado: { label: Factura Cobrada }
+        grupoprod_id: { label: Grupo }
       list:
         max_per_page: 9999
         table_method: retrieveConJoins
@@ -30,6 +30,12 @@ generator:
         actions:
           excel: ~
       filter:
+        fields:
+          fecha: { label: Fecha de Venta, date_format: dd/MM/yyyy }
+          fecha_cobrado: { label: Fecha de cobro de la factura, date_format: dd/MM/yyyy }
+          pagado: { label: Comision Pagada }
+          cobrado: { label: Factura Cobrada Completa }
+          grupoprod_id: { label: Grupo del producto }
         display: [fecha, cliente_id, grupoprod_id, producto_id, nro_lote, zona_id, cobrado, fecha_cobrado, pagado]
       form:    ~
       edit:    ~

@@ -67,14 +67,15 @@ class vta_zonaActions extends autoVta_zonaActions
   protected function executeBatchPagar(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
+    $ids_dev = $request->getParameter('ids_dev');
 
-		$q2 = Doctrine_Query::create()
-			->from('VentasZona')
-			->whereIn('id', $ids);
-		$result = $q2->execute();
+		$q2 = Doctrine_Query::create()->from('VentasZona')->whereIn('id', $ids);
+		$q3 = Doctrine_Query::create()->from('DevProducto')->whereIn('id', $ids_dev);
+		$ventas = $q2->execute();
+		$devs = $q3->execute();
 		
 		$total_todo = 0;
-		foreach ($result as $vta) {
+		foreach ($ventas as $vta) {
 			if (!empty($vta->grupo_porc_desc)) {
 				$descuento = $vta->grupo_porc_desc.' %';
 				$total = $vta->getDetalleResumen()->sub_total * $vta->grupo_porc_desc / 100;
@@ -93,7 +94,24 @@ class vta_zonaActions extends autoVta_zonaActions
 			}
 			$total_todo += $total;
 		}
-		
+		$total_todo_dev = 0;
+		foreach ($devs as $dev) {
+			$grupoprod_id = Doctrine_Core::getTable('Producto')->find($dev->producto_id)->grupoprod_id;
+			$desc_zona_grupo = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndGrupoprodId($dev->zona_id, $dev->getProducto()->grupoprod_id);
+			$desc_zona_prod = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndProductoId($dev->zona_id, $dev->producto_id);
+			if (!empty($desc_zona_grupo[0]->porc_desc)) {
+				$descuento_dev = $desc_zona_grupo[0]->porc_desc.' %';
+				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
+			} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
+				$descuento_dev = $desc_zona_prod[0]->porc_desc.' %';
+				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_prod[0]->porc_desc/100);
+			} else {
+				$descuento_dev = 0;
+				$total_dev = 0;
+			}
+			
+			$total_todo_dev += $total_dev;
+		}
     $zona_id = $this->getUser()->getAttribute('comision_zona');
 		$zona = Doctrine::getTable('Zona')->find($zona_id);
 		$cliente = $zona->cliente_id;
@@ -102,14 +120,40 @@ class vta_zonaActions extends autoVta_zonaActions
 		$pago_comision->setFecha(date('Y-m-d'));
 		$pago_comision->setRevendedorId($cliente);
 		$pago_comision->setMonedaId(1);
-		$pago_comision->setMonto($total_todo);
+		$pago_comision->setMonto($total_todo - $total_todo_dev);
 		$pago_comision->save();
 
     $count = Doctrine_Query::create()
-      ->update('resumen')
+      ->update('Resumen')
 			->set('pago_comision_id ', $pago_comision->id)
       ->where('id in (select resumen_id from detalle_resumen where id in ('.implode(', ', $ids).'))')
       ->execute();
+		
+    $count = Doctrine_Query::create()
+      ->update('DevProducto')
+			->set('pago_comision_id ', $pago_comision->id)
+      ->where('id in ('.implode(', ', $ids_dev).')')
+      ->execute();
+			
 		$this->redirect('pagocomis/edit?id='.$pago_comision->id);
-  }	
+  }
+	
+  public function executeDelete(sfWebRequest $request)
+  {
+		$obj = $this->getRoute()->getObject();
+		
+    $count = Doctrine_Query::create()
+      ->update('DevProducto')
+			->set('pago_comision_id = null')
+      ->where('pago_comision_id = '.$obj->id)
+      ->execute();
+		
+    $count = Doctrine_Query::create()
+      ->update('Resumen')
+			->set('pago_comision_id = null')
+      ->where('pago_comision_id = '.$obj->id)
+      ->execute();
+			
+		parent::executeDelete($request);
+	}
 }

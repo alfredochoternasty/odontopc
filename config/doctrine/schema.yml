@@ -522,6 +522,7 @@ DevProducto:
     lote_id: {type: integer(4)}
     afip_mensaje: {type: string(255)}
     zona_id: {type: integer(4)}
+    pago_comision_id: {type: integer(4)}
   relations:
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Resumen: {type: one, local: resumen_id, onDelete: RESTRICT}
@@ -530,6 +531,7 @@ DevProducto:
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
     Lote: {type: one, local: lote_id, onDelete: RESTRICT}
     Zona: {type: one, local: zona_id, onDelete: RESTRICT}
+    PagoComision: {type: many, class: PagoComision, local: pago_comision_id, foreign: id}
 Presupuesto:
   connection: doctrine
   tableName: presupuesto
