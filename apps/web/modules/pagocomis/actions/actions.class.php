@@ -17,13 +17,22 @@ class pagocomisActions extends autoPagocomisActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
+		
 		$pago_id = $this->getRoute()->getObject()->getId();
 		$this->getRoute()->getObject()->delete();
-    $count = Doctrine_Query::create()
-      ->update('resumen')
+    
+		$count = Doctrine_Query::create()
+      ->update('Resumen')
 			->set('pago_comision_id ', 'null')
       ->where('pago_comision_id = '.$pago_id)
       ->execute();
+		
+		$count = Doctrine_Query::create()
+      ->update('DevProducto')
+			->set('pago_comision_id ', 'null')
+      ->where('pago_comision_id = '.$pago_id)
+      ->execute();
+		
 		$this->getUser()->setFlash('notice', 'Borrada correctamente');
 
     $this->redirect('@pago_comision');

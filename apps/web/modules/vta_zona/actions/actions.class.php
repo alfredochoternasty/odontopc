@@ -137,23 +137,4 @@ class vta_zonaActions extends autoVta_zonaActions
 			
 		$this->redirect('pagocomis/edit?id='.$pago_comision->id);
   }
-	
-  public function executeDelete(sfWebRequest $request)
-  {
-		$obj = $this->getRoute()->getObject();
-		
-    $count = Doctrine_Query::create()
-      ->update('DevProducto')
-			->set('pago_comision_id = null')
-      ->where('pago_comision_id = '.$obj->id)
-      ->execute();
-		
-    $count = Doctrine_Query::create()
-      ->update('Resumen')
-			->set('pago_comision_id = null')
-      ->where('pago_comision_id = '.$obj->id)
-      ->execute();
-			
-		parent::executeDelete($request);
-	}
 }
