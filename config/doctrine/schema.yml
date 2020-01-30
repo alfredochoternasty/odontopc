@@ -192,6 +192,7 @@ Producto:
     grupo3: {type: integer(4)}
     lista_id: {type: integer(4)}
     foto: {type: string(255)}
+    foto_chica: {type: string(255)}
     descripcion: {type: text}
   relations:
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}

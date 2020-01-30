@@ -1,0 +1,1 @@
+<?php	if (!empty($producto->foto_chica)) echo '<img src="'.sfConfig::get('sf_upload_dir').'/productos/'.$producto->foto_chica.'">'; ?>

@@ -20,14 +20,6 @@ class cobroActions extends autoCobroActions
     
     if ($form->isValid()) {
 			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-
-			$file = $form->getValue('archivo');
-			$filename = sha1(date('Ymdhis').$file->getOriginalName());
-			$extension = $file->getExtension($file->getOriginalExtension());
-			$ruta = sfConfig::get('sf_upload_dir').'/cobros/'.$filename.$extension;
-			$file->save($ruta);
-			$form->getObject()->setArchivo('web/uploads/cobros/'.$filename.$extension);
-			
 			$cobro = $form->save();
 			
 			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');

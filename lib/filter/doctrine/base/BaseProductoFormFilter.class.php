@@ -29,6 +29,7 @@ abstract class BaseProductoFormFilter extends BaseFormFilterDoctrine
       'grupo3'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'add_empty' => true)),
       'lista_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
       'foto'            => new sfWidgetFormFilterInput(),
+      'foto_chica'      => new sfWidgetFormFilterInput(),
       'descripcion'     => new sfWidgetFormFilterInput(),
     ));
 
@@ -49,6 +50,7 @@ abstract class BaseProductoFormFilter extends BaseFormFilterDoctrine
       'grupo3'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('GrupoTres'), 'column' => 'id')),
       'lista_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lista'), 'column' => 'id')),
       'foto'            => new sfValidatorPass(array('required' => false)),
+      'foto_chica'      => new sfValidatorPass(array('required' => false)),
       'descripcion'     => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -86,6 +88,7 @@ abstract class BaseProductoFormFilter extends BaseFormFilterDoctrine
       'grupo3'          => 'ForeignKey',
       'lista_id'        => 'ForeignKey',
       'foto'            => 'Text',
+      'foto_chica'      => 'Text',
       'descripcion'     => 'Text',
     );
   }

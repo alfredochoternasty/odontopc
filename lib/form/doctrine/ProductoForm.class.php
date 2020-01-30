@@ -22,11 +22,25 @@ class ProductoForm extends BaseProductoForm
     
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
+
+    $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
+                                      'label' => ' ',
+                                      'file_src' => '/web/uploads/productos/'.$this->getObject()->getFoto(),
+                                      'is_image' => true,
+                                      'edit_mode' => true,
+                                      'template' => '<div>%input%<br>%file%</div>',
+                                  ));
+                                  
+    $ruta = sfConfig::get('sf_upload_dir').'/productos/';
+    $this->validatorSchema['foto'] = new sfValidatorFile(array(
+      'required'   => false,
+      'path'       => $ruta,
+      'mime_types' => 'web_images',
+    ));
     
     $this->validatorSchema->setOption('allow_extra_fields', true);		    
     $this->widgetSchema['precio_vta'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
     $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));
-    
+    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));    
   }
 }

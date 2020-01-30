@@ -49,9 +49,7 @@ jQuery().ready(function(){
 		// modal window for filters
 		$('.sf_admin_filter').dialog({
 			autoOpen: false,
-      modal: true,
-			width: 600,
-      height: 530,
+			width: 800,
 			close: function(evt, ui){
 				$('#sf_admin_filter_button').removeClass('ui-state-active');
 			},
@@ -66,7 +64,7 @@ jQuery().ready(function(){
 				}, 
 				"Cerrar": function() { 
 					$(this).dialog("close");
-					/*location.href = $('#sf_admin_filter_reset').attr('href');*/
+					location.href = $('#sf_admin_filter_reset').attr('href');
 				} 
 			}
 		});

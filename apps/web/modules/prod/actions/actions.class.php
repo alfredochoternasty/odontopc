@@ -92,4 +92,35 @@ class prodActions extends autoProdActions
     $dompdf->stream("productos.pdf");    
     return sfView::NONE;
   }
+  
+  protected function processForm(sfWebRequest $request, sfForm $form){
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid()){
+      $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+      $producto = $form->save();
+      
+      $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$producto->foto, 'image/jpg');
+      $img->thumbnail(50,50);
+      $img->setQuality(50);
+      $img->saveAs(sfConfig::get('sf_upload_dir').'/productos/'.$producto->foto.'_50x50.jpg');
+      $producto->setFotoChica($producto->foto.'_50x50.jpg');
+      $producto->save();
+
+      $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $producto)));
+      if ($request->hasParameter('_save_and_add')){
+        $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
+        $this->redirect('@producto_new');
+      }else{
+        if ($request->hasParameter('rtn')){
+          return $producto->getId();
+        }else{
+          $this->getUser()->setFlash('notice', $notice);
+          //$this->redirect(array('sf_route' => 'producto_edit', 'sf_subject' => $producto));
+          $this->redirect('@producto');
+        }
+      }
+    }else{
+      $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
+    }
+  }
 }

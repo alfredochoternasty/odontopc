@@ -24,6 +24,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property integer $grupo3
  * @property integer $lista_id
  * @property string $foto
+ * @property string $foto_chica
  * @property text $descripcion
  * @property Grupoprod $Grupo
  * @property Grupoprod $GrupoDos
@@ -64,6 +65,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method integer             getGrupo3()             Returns the current record's "grupo3" value
  * @method integer             getListaId()            Returns the current record's "lista_id" value
  * @method string              getFoto()               Returns the current record's "foto" value
+ * @method string              getFotoChica()          Returns the current record's "foto_chica" value
  * @method text                getDescripcion()        Returns the current record's "descripcion" value
  * @method Grupoprod           getGrupo()              Returns the current record's "Grupo" value
  * @method Grupoprod           getGrupoDos()           Returns the current record's "GrupoDos" value
@@ -103,6 +105,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setGrupo3()             Sets the current record's "grupo3" value
  * @method Producto            setListaId()            Sets the current record's "lista_id" value
  * @method Producto            setFoto()               Sets the current record's "foto" value
+ * @method Producto            setFotoChica()          Sets the current record's "foto_chica" value
  * @method Producto            setDescripcion()        Sets the current record's "descripcion" value
  * @method Producto            setGrupo()              Sets the current record's "Grupo" value
  * @method Producto            setGrupoDos()           Sets the current record's "GrupoDos" value
@@ -206,6 +209,10 @@ abstract class BaseProducto extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('foto', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('foto_chica', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
              ));

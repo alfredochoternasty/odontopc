@@ -24,7 +24,7 @@ generator:
         table_method: retrieveProdConGrupo
         title: Administraci&oacute;n de Productos
         sort: [nombre, asc]
-        display: [Grupo, nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id]
+        display: [Grupo, nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id, _foto]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -39,7 +39,7 @@ generator:
           precio: {label: Cambiar Precio}
       filter:  ~
       form:
-        display: [grupoprod_id, codigo, nombre, precio_vta, iva, total, minimo_stock, orden_grupo, activo, lista_id]
+        display: [grupoprod_id, codigo, nombre, foto, precio_vta, iva, total, minimo_stock, orden_grupo, activo, lista_id]
       edit:
         title: Modificar Producto
       new:

@@ -32,6 +32,7 @@ abstract class BaseProductoForm extends BaseFormDoctrine
       'grupo3'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'add_empty' => true)),
       'lista_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
       'foto'            => new sfWidgetFormInputText(),
+      'foto_chica'      => new sfWidgetFormInputText(),
       'descripcion'     => new sfWidgetFormInputText(),
     ));
 
@@ -53,6 +54,7 @@ abstract class BaseProductoForm extends BaseFormDoctrine
       'grupo3'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'required' => false)),
       'lista_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'required' => false)),
       'foto'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'foto_chica'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'descripcion'     => new sfValidatorPass(array('required' => false)),
     ));
 

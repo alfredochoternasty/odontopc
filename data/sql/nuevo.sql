@@ -32,6 +32,8 @@ ALTER TABLE `dev_producto`
 ALTER TABLE `producto`
 	ADD COLUMN `foto` VARCHAR(255) NULL DEFAULT NULL AFTER `nombre_corto`,
 	ADD COLUMN `descripcion` TEXT NULL DEFAULT NULL AFTER `foto`;
+ALTER TABLE `producto`
+	ADD COLUMN `foto_chica` VARCHAR(255) NULL DEFAULT NULL AFTER `descripcion`;
 
 /*
 DROP TABLE 

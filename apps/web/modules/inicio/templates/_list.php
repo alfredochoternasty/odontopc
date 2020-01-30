@@ -6,7 +6,7 @@
 		if ($uz[0]->zona_id > 1) {
 			echo '<div style="width:100%;margin-top:10%;text-align:center;"><img src="../images/home.png"></div>';
 		} else {
-			if ($sf_user->hasCredential('Stock Minimo'))
+			// if ($sf_user->hasCredential('Stock Minimo'))
 				include_partial('stock_minimo', array('pager' => $pager));
 			
 			$modulo_pedidos = $sf_user->getVarConfig('modulo_pedidos');
