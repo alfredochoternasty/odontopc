@@ -28,6 +28,8 @@ abstract class BaseProductoFormFilter extends BaseFormFilterDoctrine
       'grupo2'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'add_empty' => true)),
       'grupo3'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'add_empty' => true)),
       'lista_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
+      'foto'            => new sfWidgetFormFilterInput(),
+      'descripcion'     => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -46,6 +48,8 @@ abstract class BaseProductoFormFilter extends BaseFormFilterDoctrine
       'grupo2'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('GrupoDos'), 'column' => 'id')),
       'grupo3'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('GrupoTres'), 'column' => 'id')),
       'lista_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Lista'), 'column' => 'id')),
+      'foto'            => new sfValidatorPass(array('required' => false)),
+      'descripcion'     => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('producto_filters[%s]');
@@ -81,6 +85,8 @@ abstract class BaseProductoFormFilter extends BaseFormFilterDoctrine
       'grupo2'          => 'ForeignKey',
       'grupo3'          => 'ForeignKey',
       'lista_id'        => 'ForeignKey',
+      'foto'            => 'Text',
+      'descripcion'     => 'Text',
     );
   }
 }

@@ -23,6 +23,8 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property integer $grupo2
  * @property integer $grupo3
  * @property integer $lista_id
+ * @property string $foto
+ * @property text $descripcion
  * @property Grupoprod $Grupo
  * @property Grupoprod $GrupoDos
  * @property Grupoprod $GrupoTres
@@ -61,6 +63,8 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method integer             getGrupo2()             Returns the current record's "grupo2" value
  * @method integer             getGrupo3()             Returns the current record's "grupo3" value
  * @method integer             getListaId()            Returns the current record's "lista_id" value
+ * @method string              getFoto()               Returns the current record's "foto" value
+ * @method text                getDescripcion()        Returns the current record's "descripcion" value
  * @method Grupoprod           getGrupo()              Returns the current record's "Grupo" value
  * @method Grupoprod           getGrupoDos()           Returns the current record's "GrupoDos" value
  * @method Grupoprod           getGrupoTres()          Returns the current record's "GrupoTres" value
@@ -98,6 +102,8 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setGrupo2()             Sets the current record's "grupo2" value
  * @method Producto            setGrupo3()             Sets the current record's "grupo3" value
  * @method Producto            setListaId()            Sets the current record's "lista_id" value
+ * @method Producto            setFoto()               Sets the current record's "foto" value
+ * @method Producto            setDescripcion()        Sets the current record's "descripcion" value
  * @method Producto            setGrupo()              Sets the current record's "Grupo" value
  * @method Producto            setGrupoDos()           Sets the current record's "GrupoDos" value
  * @method Producto            setGrupoTres()          Sets the current record's "GrupoTres" value
@@ -198,6 +204,13 @@ abstract class BaseProducto extends sfDoctrineRecord
         $this->hasColumn('lista_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('foto', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('descripcion', 'text', null, array(
+             'type' => 'text',
              ));
     }
 

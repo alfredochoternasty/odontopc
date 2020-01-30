@@ -31,6 +31,8 @@ abstract class BaseProductoForm extends BaseFormDoctrine
       'grupo2'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'add_empty' => true)),
       'grupo3'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'add_empty' => true)),
       'lista_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true)),
+      'foto'            => new sfWidgetFormInputText(),
+      'descripcion'     => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -50,6 +52,8 @@ abstract class BaseProductoForm extends BaseFormDoctrine
       'grupo2'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoDos'), 'required' => false)),
       'grupo3'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('GrupoTres'), 'required' => false)),
       'lista_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'required' => false)),
+      'foto'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'descripcion'     => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('producto[%s]');

@@ -28,6 +28,10 @@ VALUES ('309', 'Debito - Ajuste Cta Cte', '1', '10', '0', '0', '1');
 
 ALTER TABLE `dev_producto`
 	ADD COLUMN `pago_comision_id` INT NULL AFTER `zona_id`;
+	
+ALTER TABLE `producto`
+	ADD COLUMN `foto` VARCHAR(255) NULL DEFAULT NULL AFTER `nombre_corto`,
+	ADD COLUMN `descripcion` TEXT NULL DEFAULT NULL AFTER `foto`;
 
 /*
 DROP TABLE 
