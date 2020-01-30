@@ -7,7 +7,7 @@
 <td class="sf_admin_text sf_admin_list_td_nro_lote">
   <?php 
     $lote = $detalle_resumen->getNroLote();
-    if($lote[0] != 'i'){
+    if($lote[0] != 'i' && !empty($lote)){
       $lotes = Doctrine::getTable('Lote')->findByNroLote($lote);
 			$fec = $lotes[0]->getFechaVto();
       if(!empty($fec)){

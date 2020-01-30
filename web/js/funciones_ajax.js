@@ -251,10 +251,11 @@ $(document).ready(function(){
 		var descuento = $("#detalle_resumen_descuento").find(':selected').val();
 		var precio = $("#detalle_resumen_precio").val();
 
-		if ($('#detalle_resumen_iva').length){
+		if ($('#detalle_resumen_iva').length) {
+			precio = precio - (precio * (descuento/100))
 			var subtotal = cantidad * precio;
 			var iva = (subtotal * 21)/100;
-			var total = subtotal + iva;    
+			var total = subtotal + iva;
 			$("#detalle_resumen_iva").attr('value', iva.toFixed(2));
 			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
 		}else{
@@ -263,9 +264,6 @@ $(document).ready(function(){
 			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
 		}
 		
-		if (descuento > 0) {
-			total = subtotal - (subtotal * (descuento/100))
-		}
 		$("#detalle_resumen_total").attr('value', total.toFixed(2));		
 	}
 	

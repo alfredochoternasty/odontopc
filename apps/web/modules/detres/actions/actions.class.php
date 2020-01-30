@@ -128,6 +128,7 @@ class detresActions extends autoDetresActions
   {
     $request->checkCSRFProtection();
 		$detalle_resumen = $this->getRoute()->getObject();
+		$tipofactura = $detalle_resumen->getResumen()->tipofactura_id;
 		if (!empty($detalle_resumen->det_remito_id)) {
 			$det_remito_id = $detalle_resumen->det_remito_id;
 			$detalle_remito = Doctrine::getTable('DetalleResumen')->find($det_remito_id);
@@ -136,7 +137,7 @@ class detresActions extends autoDetresActions
 			if ($detalle_resumen->getResumen()->getCliente()->zona_id > 1) {
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $this->getRoute()->getObject())));
 			}
-		} else {
+		} elseif ($tipofactura != 5 && $tipofactura != 7) {
 			$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $this->getRoute()->getObject())));
 		}
     $rid = $this->getRoute()->getObject()->getResumenId();
@@ -160,8 +161,14 @@ class detresActions extends autoDetresActions
 			}
 			$detalle_resumen->setListaId($lista_id);
 			$detalle_resumen->setMonedaId($moneda_id);
-			$detalle_resumen->setSubTotal($detalle_resumen->precio);
-			$detalle_resumen->setTotal($detalle_resumen->precio);
+			
+			//esto es para notas de debito
+			$tipofactura = $detalle_resumen->getResumen()->tipofactura_id;
+			if ($tipofactura == 5 || $tipofactura == 7) {
+				$detalle_resumen->setSubTotal($detalle_resumen->precio);
+				$detalle_resumen->setTotal($detalle_resumen->precio);
+			}
+			
 			$detalle_resumen->save();
 			
       // si se vende de un remito sumar esa cantidad para el stock del remito
@@ -175,7 +182,7 @@ class detresActions extends autoDetresActions
 				if ($detalle_resumen->getResumen()->getCliente()->zona_id != 1) {
 					$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
         }
-			} else {
+			} elseif ($tipofactura != 5 && $tipofactura != 7) {
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
 			}
 			
