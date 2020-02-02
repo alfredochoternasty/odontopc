@@ -99,13 +99,16 @@ class prodActions extends autoProdActions
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $producto = $form->save();
       
-      $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$producto->foto, 'image/jpg');
+			list($filename, $extension) = explode('.', $producto->foto);
+			$ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
+      $img = new sfImage($ruta, 'image/'.$extension);
       $img->thumbnail(50,50);
       $img->setQuality(50);
-      $img->saveAs(sfConfig::get('sf_upload_dir').'/productos/'.$producto->foto.'_50x50.jpg');
-      $producto->setFotoChica($producto->foto.'_50x50.jpg');
+			$ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension;
+      $img->saveAs($ruta);
+			$producto->setFotoChica($filename.'_chica.'.$extension);
       $producto->save();
-
+ 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $producto)));
       if ($request->hasParameter('_save_and_add')){
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');

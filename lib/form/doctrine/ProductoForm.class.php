@@ -23,9 +23,10 @@ class ProductoForm extends BaseProductoForm
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
 
+    $base_url = sfContext::getInstance()->getUser()->getVarConfig('base_url');
     $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
-                                      'file_src' => '/web/uploads/productos/'.$this->getObject()->getFoto(),
+                                      'file_src' => $base_url.'/web/uploads/productos/'.$this->getObject()->getFotoChica(),
                                       'is_image' => true,
                                       'edit_mode' => true,
                                       'template' => '<div>%input%<br>%file%</div>',
@@ -42,5 +43,7 @@ class ProductoForm extends BaseProductoForm
     $this->widgetSchema['precio_vta'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
     $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
     $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));    
+
+    $this->widgetSchema['foto_chica'] = new sfWidgetFormInputHidden();
   }
 }
