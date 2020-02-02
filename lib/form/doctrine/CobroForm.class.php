@@ -42,8 +42,7 @@ class CobroForm extends BaseCobroForm
     $this->widgetSchema['archivo'] = new sfWidgetFormInputFile();
     $this->validatorSchema['archivo'] = new sfValidatorFile(array(
       'required'   => false,
-      'path'       => sfConfig::get('sf_upload_dir').'/cobros',
-      'mime_types' => 'web_images',
+      'path'       => sfConfig::get('sf_upload_dir').'/cobros'
     ));
 	
 		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
