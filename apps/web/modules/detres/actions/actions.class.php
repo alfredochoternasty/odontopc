@@ -438,7 +438,7 @@ class detresActions extends autoDetresActions
 			->from('Resumen')
 			->where('tipofactura_id = '.$resumen->tipofactura_id)
 			->andWhere("pto_vta = '".$ptovta."'")
-			->andWhere('afip_estado = 1')
+			->andWhere('afip_estado >= 1')
 			->andWhere('nro_factura is not null');
 			$ultimo_nro_sistema = $q->fetchArray();
 			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
