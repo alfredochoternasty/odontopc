@@ -126,14 +126,18 @@ class cliActions extends autoCliActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = $this->configuration->getForm();
-    $this->cliente = $this->form->getObject();
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+		$this->form = $this->configuration->getForm(null, array('zona_id' => $uz[0]->zona_id));
+		$this->cliente = $this->form->getObject();
   }
   
   public function executeEdit(sfWebRequest $request)
   {
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
     $this->cliente = $this->getRoute()->getObject();
-    $this->form = $this->configuration->getForm($this->cliente);
+    $this->form = $this->configuration->getForm($this->cliente, array('zona_id' => $uz[0]->zona_id));
   }
   
   public function executeGuardarnuevalocalidad(sfWebRequest $request){
