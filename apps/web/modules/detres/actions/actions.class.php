@@ -104,8 +104,12 @@ class detresActions extends autoDetresActions
 			$this->getUser()->setFlash('error', 'Esta venta ya fue enviada a la AFIP y no se puede modificar');
 			$this->redirect( 'detres/index?rid='.$rid);
 		} else {
-			$this->getUser()->setAttribute('tipofactura', $detres->getResumen()->tipofactura_id);
-			$this->form = new DetalleResumenForm($detres);
+			$parametros_form = array(
+				'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
+				'zona_id' => $detres->getResumen()->getCliente()->zona_id,
+				'usuario_id' => $this->getUser()->getGuardUser()->getId(),
+			);
+			$this->form = new DetalleResumenForm($detres, $parametros_form);
 			$this->detalle_resumen = $this->form->getObject();  
 			$this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
 		}

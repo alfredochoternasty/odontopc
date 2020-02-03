@@ -10,14 +10,15 @@
  */
 class DetalleResumenForm extends BaseDetalleResumenForm
 {
-  
   public function configure()
-  {  
+  {
     unset($this['fecha_vto'], $this['lista_id'], $this['moneda_id'], $this['bonificados']);
 		
-		$tipofactura = sfContext::getInstance()->getUser()->getAttribute('tipofactura');
-		$modulo_factura = sfContext::getInstance()->getUser()->getVarConfig('modulo_factura');
-    
+		$tipofactura = $this->getObject()->getResumen()->tipofactura_id;		
+		$modulo_factura = $this->getOption('modulo_factura');
+		$zona_id = $this->getOption('zona_id');
+		$usuario_id = $this->getOption('usuario_id');
+		
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
     $table_method	= ($tipofactura == 5 || $tipofactura == 7)?'getProdDebito':'getActivos';
     $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => $table_method, 'add_empty' => true, 'order_by' => array('nombre', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
@@ -62,15 +63,11 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 				$this->setDefault('nro_lote', '-');
 				unset($this['iva'], $this['sub_total'], $this['total'], $this['descuento'], $this['det_remito_id'], $this['nro_lote'], $this['cantidad']);
 			} else {
-				$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-				$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
 				$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
-				$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($uz[0]->zona_id != 1)));
+				$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($zona_id != 1)));
 				
 				if($modulo_factura == 'S'){
-					$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-					$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
-					if ($uz[0]->zona_id != 1) {
+					if ($zona_id != 1) {
 						$this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 					}
 					$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
@@ -93,7 +90,22 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();	
 				
-		$this->setDefault('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		$this->setDefault('usuario', $usuario_id);
+  }
+/*
+  public function setOption($name, $value)
+  {
+    $this->options[$name] = $value;
   }
   
+  public function getOption($name, $default = null)
+  {
+    return isset($this->options[$name]) ? $this->options[$name] : '-';
+  }
+	
+  public function getOptions()
+  {
+    return $this->options;
+  }
+*/
 }
