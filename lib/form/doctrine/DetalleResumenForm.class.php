@@ -92,20 +92,5 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 				
 		$this->setDefault('usuario', $usuario_id);
   }
-/*
-  public function setOption($name, $value)
-  {
-    $this->options[$name] = $value;
-  }
-  
-  public function getOption($name, $default = null)
-  {
-    return isset($this->options[$name]) ? $this->options[$name] : '-';
-  }
-	
-  public function getOptions()
-  {
-    return $this->options;
-  }
-*/
+
 }
