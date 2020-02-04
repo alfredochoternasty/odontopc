@@ -58,7 +58,7 @@ class detpedActions extends autoDetpedActions
       $pid = $this->getUser()->getAttribute('pid');
     }
     $detped->setPedidoId($pid);
-    $this->form = new DetallePedidoForm($detped);
+    $this->form = new DetallePedidoForm($detped, array('es_cliente', $this->getUser()->getGuardUser()->es_cliente));
     $this->detalle_pedido = $this->form->getObject();
     
     $this->pager2 = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
@@ -73,7 +73,7 @@ class detpedActions extends autoDetpedActions
       $pid = $this->getUser()->getAttribute('pid');
     }    
     $this->detalle_pedido = $this->getRoute()->getObject();
-    $this->form = $this->configuration->getForm($this->detalle_pedido);
+    $this->form = $this->configuration->getForm($this->detalle_pedido, , array('es_cliente', $this->getUser()->getGuardUser()->es_cliente));
     
     $this->pager2 = Doctrine::getTable('DetallePedido')->createQuery('dp')->where('pedido_id = ?', $pid)->andWhere('id <> ?', $request->getParameter('id'))->execute();
     $this->getUser()->setAttribute('pid', $pid);    

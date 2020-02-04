@@ -12,8 +12,7 @@ class DevProductoForm extends BaseDevProductoForm
 {
   public function configure()
   {
-    //parent::configure();
-    unset($this['fecha_vto']);
+    unset($this['fecha_vto'], $this['zona_id'], $this['usuario']);
 
     $choices = ProductoTable::getArrayActivos();
 		
@@ -36,22 +35,10 @@ class DevProductoForm extends BaseDevProductoForm
     $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));    
     $this->widgetSchema['resumen_id'] = new sfWidgetFormChoice(array('choices' => array()));
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
-	
-    $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
-		
-    $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();		
-		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
 
 		$this->widgetSchema['precio_unitario'] = new sfWidgetFormInput(array(), array());
 		$this->widgetSchema['iva_unitario'] = new sfWidgetFormInput(array(), array());
 		$this->validatorSchema->setOption('allow_extra_fields', true);
-
-		$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
-			
-		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
-		$this->setDefault ('zona_id', $uz[0]->zona_id);
   }
 	
 }

@@ -14,7 +14,7 @@ class DetallePedidoForm extends BaseDetallePedidoForm
   {
     parent::configure();
     
-    $es_cliente = sfContext::getInstance()->getUser()->getGuardUser()->es_cliente;
+    $es_cliente = $this->getOption('es_cliente');
     if ($es_cliente) {
         unset($this['nro_lote']);
     } else {

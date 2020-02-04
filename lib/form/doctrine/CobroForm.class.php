@@ -11,10 +11,8 @@
 class CobroForm extends BaseCobroForm
 {
   public function configure()
-  {    
-    parent::Configure();
-    
-    unset($this['devprod_id'], $this['resumen_id']);
+  {	
+    unset($this['devprod_id'], $this['resumen_id'], $this['zona_id'], $this['usuario']);
     
     $this->widgetSchema['fecha'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
     $this->validatorSchema['fecha'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
@@ -32,23 +30,11 @@ class CobroForm extends BaseCobroForm
     $this->validatorSchema['moneda_id'] = new sfValidatorInteger(array('required' => true));
 
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
-	
-    $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
-
-    $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
 		
     $this->widgetSchema['archivo'] = new sfWidgetFormInputFile();
     $this->validatorSchema['archivo'] = new sfValidatorFile(array(
       'required'   => false,
       'path'       => sfConfig::get('sf_upload_dir').'/cobros'
     ));
-	
-		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
-		
-		$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
-		$this->setDefault ('zona_id', $uz[0]->zona_id);
   }
 }

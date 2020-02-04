@@ -19,13 +19,15 @@ class cobroActions extends autoCobroActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     
     if ($form->isValid()) {
-			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';			
 			$cobro = $form->save();
 			
 			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
 			$max_nro = $q->execute();
 			$nro = $max_nro[0]['nro'];
-			$cobro->setNroRecibo($nro+1);
+			$cobro->nro_recibo = $nro+1;
+			$cobro->zona_id = $cobro->getCliente()->zona_id;
+			$cobro->usuario = $this->getUser()->getGuardUser()->getId();
 			$cobro->save();
 			
 			$monto = $cobro->getMonto();
@@ -145,4 +147,5 @@ class cobroActions extends autoCobroActions
     $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$cobro->getCliente()->getEmail());
     $this->redirect('@cobro');
   }
+
 }

@@ -64,4 +64,20 @@ class compraActions extends autoCompraActions
 		}
     return $this->renderText(json_encode($nro));
   }
+	
+  public function executeNew(sfWebRequest $request)
+  {
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+		$this->form = $this->configuration->getForm(null, array('zona_id' => $uz[0]->zona_id, 'usuario_id' => $u_id));
+		$this->compra = $this->form->getObject();
+  }
+  
+  public function executeEdit(sfWebRequest $request)
+  {
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+    $this->compra = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->compra, array('zona_id' => $uz[0]->zona_id, 'usuario_id' => $u_id));
+  }
 }

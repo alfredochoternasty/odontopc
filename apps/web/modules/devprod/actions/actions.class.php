@@ -28,6 +28,9 @@ class devprodActions extends autoDevprodActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $dev_producto = $form->save();
+			$dev_producto->zona_id = $dev_producto->getCliente()->zona_id;
+			$dev_producto->usuario = $this->getUser()->getGuardUser()->getId();
+			$dev_producto->save();
 			
 			//solo aumento stock cuando sea de parana y no se este devolviendo de un remito
 			if ($dev_producto->zona_id > 1) {

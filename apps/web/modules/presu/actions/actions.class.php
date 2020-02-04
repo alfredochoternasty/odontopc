@@ -59,4 +59,20 @@ class presuActions extends autoPresuActions
     $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$presu->email);
     $this->redirect('presupuesto');
   }
+  
+  public function executeNew(sfWebRequest $request)
+  {
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+		$this->form = $this->configuration->getForm(null, array('zona_id' => $uz[0]->zona_id));
+		$this->presupuesto = $this->form->getObject();
+  }
+  
+  public function executeEdit(sfWebRequest $request)
+  {
+		$u_id = $this->getUser()->getGuardUser()->getId();
+		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+    $this->presupuesto = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->presupuesto, array('zona_id' => $uz[0]->zona_id));
+  }
 }

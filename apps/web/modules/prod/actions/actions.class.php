@@ -128,4 +128,16 @@ class prodActions extends autoProdActions
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
+  
+  public function executeNew(sfWebRequest $request)
+  {
+		$this->form = $this->configuration->getForm(null, array('base_url' => $this->getUser()->getVarConfig('base_url')));
+		$this->presupuesto = $this->form->getObject();
+  }
+  
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->presupuesto = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->presupuesto, array('base_url' => $this->getUser()->getVarConfig('base_url')));
+  }
 }

@@ -14,7 +14,8 @@ class ProductoForm extends BaseProductoForm
   {
     parent::configure();
     unset($this['mueve_stock'], $this['moneda_id'], $this['genera_comision']);
-        
+    $base_url = $this->getOption('base_url');
+    
     $this->widgetSchema['ctr_fact_grupo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['ctr_fact_grupo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
     
@@ -23,7 +24,6 @@ class ProductoForm extends BaseProductoForm
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
 
-    $base_url = sfContext::getInstance()->getUser()->getVarConfig('base_url');
     $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
                                       'file_src' => $base_url.'/web/uploads/productos/'.$this->getObject()->getFotoChica(),

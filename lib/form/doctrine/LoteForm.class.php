@@ -31,9 +31,6 @@ class LoteForm extends BaseLoteForm
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));
 
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
-	
-    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());	
-    $this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		$this->validatorSchema['usuario'] =  new sfValidatorInteger(array('required' => false));
   }
 }

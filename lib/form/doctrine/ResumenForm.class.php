@@ -15,19 +15,18 @@ class ResumenForm extends BaseResumenForm
   public function configure()
   {
     parent::configure();
-    $modulo_factura = sfContext::getInstance()->getUser()->getVarConfig('modulo_factura');
+		$modulo_factura = $this->getOption('modulo_factura');
+		$zona_id = $this->getOption('zona_id');
+		$usuario_id = $this->getOption('usuario_id');
 		
     $this->widgetSchema['cliente_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Cliente', 'table_method' => 'getActivos', 'method' => 'getDescAfip', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->widgetSchema['fecha'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
     $this->validatorSchema['fecha'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
 		
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
-
-		$u_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
 			
     if($modulo_factura == 'S'){
-			if ($uz[0]->zona_id != 1) {
+			if ($zona_id != 1) {
 				$this->widgetSchema['nro_factura'] = new sfWidgetFormInputHidden();
 				$this->widgetSchema['pto_vta'] = new sfWidgetFormInputHidden();
 			} else {
@@ -58,7 +57,7 @@ class ResumenForm extends BaseResumenForm
 		
 		$this->validatorSchema->setOption('allow_extra_fields', true);		    
 		
-		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
-		$this->setDefault ('zona_id', $uz[0]->zona_id);
+		$this->setDefault ('usuario', $usuario_id);
+		$this->setDefault ('zona_id', $zona_id);
   }
 }

@@ -36,10 +36,7 @@ class ClienteSeguimientoForm extends BaseClienteSeguimientoForm
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
 	
 		$this->widgetSchema['realizada'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
-		$this->validatorSchema['realizada'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));    
-	
-    //$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getId());
-		$this->setDefault ('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		$this->validatorSchema['realizada'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
   }
 }
 
