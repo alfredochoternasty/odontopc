@@ -1,3 +1,11 @@
+function truncar (x, posiciones = 0) {
+  var s = x.toString()
+  var l = s.length
+  var decimalLength = s.indexOf('.') + 1
+  var numStr = s.substr(0, decimalLength + posiciones)
+  return Number(numStr)
+}
+
 jQuery(function($){
 $("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
@@ -48,12 +56,11 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
-  
   $("#producto_total").bind("propertychange keyup input paste", function(event){
 		var total = $("#producto_total").val();
 		total = total * 1;
-		var iva = total * 0.21;
-		var precio = total - iva;    
+		var precio = truncar(total / 1.21, 2);
+		var iva = total - precio;
 		$("#producto_iva").attr('value', iva.toFixed(2));
 		$("#producto_precio_vta").attr('value', precio.toFixed(2));
 	});
@@ -252,9 +259,9 @@ $(document).ready(function(){
 		var precio = $("#detalle_resumen_precio").val();
 
 		if ($('#detalle_resumen_iva').length) {
-			precio = precio - (precio * (descuento/100))
-			var subtotal = cantidad * precio;
-			var iva = (subtotal * 21)/100;
+			precio = precio - precio * descuento/100
+			var subtotal = cantidad * truncar(precio, 2);
+			var iva = subtotal * 21/100;
 			var total = subtotal + iva;
 			$("#detalle_resumen_iva").attr('value', iva.toFixed(2));
 			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
