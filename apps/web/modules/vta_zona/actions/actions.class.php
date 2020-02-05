@@ -67,12 +67,14 @@ class vta_zonaActions extends autoVta_zonaActions
   protected function executeBatchPagar(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
-    $ids_dev = $request->getParameter('ids_dev');
-
 		$q2 = Doctrine_Query::create()->from('VentasZona')->whereIn('id', $ids);
-		$q3 = Doctrine_Query::create()->from('DevProducto')->whereIn('id', $ids_dev);
 		$ventas = $q2->execute();
-		$devs = $q3->execute();
+		
+    $ids_dev = $request->getParameter('ids_dev');
+		if (!empty($ids_dev)) {
+			$q3 = Doctrine_Query::create()->from('DevProducto')->whereIn('id', $ids_dev);
+			$devs = $q3->execute();
+		}
 		
 		$total_todo = 0;
 		foreach ($ventas as $vta) {
@@ -129,12 +131,13 @@ class vta_zonaActions extends autoVta_zonaActions
       ->where('id in (select resumen_id from detalle_resumen where id in ('.implode(', ', $ids).'))')
       ->execute();
 		
-    $count = Doctrine_Query::create()
-      ->update('DevProducto')
-			->set('pago_comision_id ', $pago_comision->id)
-      ->where('id in ('.implode(', ', $ids_dev).')')
-      ->execute();
-			
+		if (!empty($ids_dev)) {
+			$count = Doctrine_Query::create()
+				->update('DevProducto')
+				->set('pago_comision_id ', $pago_comision->id)
+				->where('id in ('.implode(', ', $ids_dev).')')
+				->execute();
+		}
 		$this->redirect('pagocomis/edit?id='.$pago_comision->id);
   }
 }
