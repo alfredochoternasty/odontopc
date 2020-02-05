@@ -104,9 +104,9 @@ hr {
     <td><?php echo $producto->getNombre() ?></td>
     <td>
 			<?php 
-				$precio = $producto->getPrecioVta();
-				$iva = round($precio * 0.21, 2);
-				$total = $precio + $iva;
+				$precio = $producto->precio_vta;
+				$iva = round($precio * 0.21, 1);
+				$total = round($precio + $iva);
 				echo '$ '.sprintf("%01.2f", $total);
 			?>
 		</td>
