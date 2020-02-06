@@ -114,8 +114,8 @@ class vta_zonaActions extends autoVta_zonaActions
 			
 			$total_todo_dev += $total_dev;
 		}
-    $zona_id = $this->getUser()->getAttribute('comision_zona');
-		$zona = Doctrine::getTable('Zona')->find($zona_id);
+
+		$zona = Doctrine::getTable('Zona')->find($vta->zona_id);
 		$cliente = $zona->cliente_id;
 
 		$pago_comision = new PagoComision();
