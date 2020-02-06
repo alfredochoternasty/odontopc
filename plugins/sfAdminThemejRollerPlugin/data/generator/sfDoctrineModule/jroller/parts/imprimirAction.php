@@ -5,7 +5,7 @@
 
   public function executeListImprimirTodo(sfWebRequest $request)
   {
-    $_hasFilters = $this->getUser()->getAttribute('devprod.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $_hasFilters = $this->getUser()->getAttribute('<?php echo $this->getModuleName() ?>.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     if (empty($_hasFilters)) {
       $this->getUser()->setFlash('error', 'Para poder imprimir todo debe realizar un filtro');
       $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
