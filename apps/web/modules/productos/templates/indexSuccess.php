@@ -9,9 +9,9 @@
   <tbody>
     <?php foreach ($productos as $producto): ?>
     <tr>
-      <td width="15%"><?php echo '<img src="/odontopc/web/uploads/productos/'.$producto->foto_chica.'">' ?></td>
-      <td width="50%"><span style="font-size:4vw;font-family: sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto->getNombre() ?></span>
-        <br><span style="font-size:3vw;font-family: sans-serif;color: #e20202;font-weight: bold;"><?php echo $producto->getPrecioVta() ?></span>
+      <td width="15%"><?php echo '<img src="/odontopc/web/uploads/productos/'.$producto->foto_chica.'" height="80vw" width="80vw">' ?></td>
+      <td width="50%"><span style="font-size:13pt;font-family: sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto->getNombre() ?></span>
+        <br><span style="font-size:10pt;font-family: sans-serif;color: #e20202;font-weight: bold;"><?php echo $producto->getPrecioVta() ?></span>
       </td>
       <td width="35%">
         <form>
