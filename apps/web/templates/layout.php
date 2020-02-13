@@ -33,7 +33,7 @@
 					Fecha Actualización: 13/11/2019
 				</div>
 				<?php if (date("Ymd") == '20191114') { ?>
-				<img src="<?php echo $prefijo ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+				<img src="<?php echo $base_url ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 				<?php } ?>
 				</center>
 			</div>
