@@ -12,31 +12,66 @@ class productosActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
-    $this->productos = Doctrine::getTable('Producto')->getActivos();
+	$this->grupo_id = $request->getParameter('grupo_id');
+	$buscar = $request->getParameter('buscar');
+	if (!empty($buscar)) {
+		$this->productos = Doctrine_Core::getTable('Producto')->createQuery('a')->where('nombre like ?', '%'.$buscar.'%')->execute();
+	} else {
+		if (!empty($this->grupo_id)) {
+			$this->productos = Doctrine::getTable('Producto')->findByGrupoprodId($this->grupo_id);
+		} else {
+			$this->productos = Doctrine::getTable('Producto')->getActivos();
+		}
+	}
+	$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
     $this->setLayout('layout_app');
   }
 
-  public function executeNew(sfWebRequest $request)
+  public function executePedir(sfWebRequest $request)
   {
-    $this->form = new ProductoForm();
+	$producto_id = $request->getParameter('producto_id');
+	$cantidad = $request->getParameter('cantidad');
+	if (empty($this->getUser()->getAttribute('pid'))) {
+		$id_usuario = $this->getUser()->getGuardUser()->getId();
+		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
+		$id_cliente = $clientes[0]->getId();
+		$pedido = new Pedido();
+		$pedido->setFecha(date('Y-m-d'));
+		$pedido->setClienteId($id_cliente);
+		$pedido->save();
+		$id_ped = $pedido->getId();
+		$this->getUser()->setAttribute('pid', $id_ped);
+	}
+	
+	$detalle_pedido = new DetallePedido();
+	$detalle_pedido->pedido_id = $this->getUser()->getAttribute('pid');
+	$detalle_pedido->producto_id = $producto_id;
+	$detalle_pedido->cantidad = $cantidad;
+	$producto = Doctrine::getTable('Producto')->find($producto_id);
+	$detalle_pedido->precio = $producto->precio_vta;
+	$detalle_pedido->total = $producto->precio_vta * $cantidad;
+	$detalle_pedido->save();
+	$this->redirect('producto2');
   }
 
-  public function executeCreate(sfWebRequest $request)
+  public function executeCarrito(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
-
-    $this->form = new ProductoForm();
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
+    if (!empty($this->getUser()->getAttribute('pid'))) {
+		$this->detalle_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getUser()->getAttribute('pid'));
+	}
+	$this->setLayout('layout_app');
+	$this->setTemplate('carrito');
   }
 
-  public function executeEdit(sfWebRequest $request)
+  public function executeModificar(sfWebRequest $request)
   {
-    $this->forward404Unless($producto = Doctrine_Core::getTable('Producto')->find(array($request->getParameter('id'))), sprintf('Object producto does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ProductoForm($producto);
+	$detalle_id = $request->getParameter('detalle_id');
+	$cantidad = $request->getParameter('cantidad');
+	$detalle = new DetallePedido($detalle_id);
+	$detalle->cantidad = $cantidad;
+	$detalle->save();
+	$this->setLayout('layout_app');
+	$this->setTemplate('carrito');
   }
 
   public function executeUpdate(sfWebRequest $request)

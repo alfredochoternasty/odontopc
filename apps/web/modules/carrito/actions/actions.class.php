@@ -12,9 +12,26 @@ class carritoActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->detalle_pedidos = Doctrine_Core::getTable('DetallePedido')
-      ->createQuery('a')
-      ->execute();
+    if (!empty($this->getUser()->getAttribute('pid'))) {
+		$this->detalle_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getUser()->getAttribute('pid'));
+		$this->nro_pedido = $this->getUser()->getAttribute('pid');
+		$this->total_pedido = 0;
+		foreach ($this->detalle_pedido as $det) {
+			$this->total_pedido += $det->total;
+		}
+	}
+	$this->setLayout('layout_app');
+  }
+
+  public function executeModificar(sfWebRequest $request)
+  {
+	$detalle_id = $request->getParameter('detalle_id');
+	$cantidad = $request->getParameter('cantidad');
+	$detalle = Doctrine::getTable('DetallePedido')->find($detalle_id);
+	$detalle->cantidad = $cantidad;
+	$detalle->total = $cantidad * $detalle->precio;
+	$detalle->save();
+	$this->redirect('@carrito');
   }
 
   public function executeNew(sfWebRequest $request)
