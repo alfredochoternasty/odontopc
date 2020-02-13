@@ -10,14 +10,3 @@ dev:
         default_table_type:    MyISAM
         default_table_collate: utf8_unicode_ci
         default_table_charset: utf8
-prod:
-  doctrine:
-    class: sfDoctrineDatabase
-    param:
-      dsn: 'mysql:host=localhost;dbname=ventas'
-      username: ntisis
-      password: maf/2826
-      attributes:
-        default_table_type:    MyISAM
-        default_table_collate: utf8_unicode_ci
-        default_table_charset: utf8
