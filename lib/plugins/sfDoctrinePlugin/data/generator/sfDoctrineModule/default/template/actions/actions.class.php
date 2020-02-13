@@ -29,5 +29,5 @@ class <?php echo $this->getGeneratedModuleName() ?>Actions extends <?php echo $t
 
 <?php include dirname(__FILE__).'/../../parts/processFormAction.php' ?>
 
-<?php //include dirname(__FILE__).'/../../parts/imprimirAction.php' ?>
+<?php include dirname(__FILE__).'/../../parts/imprimirAction.php' ?>
 }

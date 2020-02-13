@@ -1,5 +1,4 @@
 <div class="sf_admin_list ui-grid-table ui-widget ui-corner-all ui-helper-reset ui-helper-clearfix">
-  <?php //if (!$pager->getNbResults()): ?>
   <?php if (count($hasFilters) == 0): ?>
 
   <table>
@@ -48,6 +47,7 @@
       <?php 
 				$tot_descuento = 0;
 				$zona_id = 0;
+				$array_devueltos = array();
 				foreach ($pager->getResults() as $i => $ventas_zona): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<?php include_partial('vta_zona/list_td_batch_actions', array('ventas_zona' => $ventas_zona, 'helper' => $helper)) ?>
@@ -89,9 +89,7 @@
 						?>					
 					</td>
 				</tr>
-      <?php endforeach;
-				$sf_user->setAttribute('comision_zona', $zona_id);
-			?>
+      <?php endforeach; ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total de Comisiones: $ <span id="total_comisiones" style="color:red;">0</span></b></td>
 				</tr>
@@ -142,7 +140,6 @@
 			
 				$tot_descuento = 0;
 				$zona_id = 0;
-				$array_devueltos = array();
 				foreach ($devueltos as $devuelto): ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<?php include_partial('vta_zona/list_td_batch_actions_dev', array('devuelto' => $devuelto, 'helper' => $helper)) ?>
@@ -187,7 +184,9 @@
 						?>					
 					</td>
 				</tr>
-      <?php endforeach;	?>
+      <?php endforeach;
+				$sf_user->setAttribute('comision_zona', $zona_id);
+			?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total Devoluciones: $ <span id="total_restar" style="color:red;">0</span></b></td>
 				</tr>

@@ -29,11 +29,11 @@
 				<div id="img_nti_header">
 					<br>
 					<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-					<b>Versión del Sistema: 3.5</b><br>
-					Fecha Actualización: 13/11/2019
+					<b>Versión del Sistema: 4.1</b><br>
+					Fecha Actualización: 31/01/2020
 				</div>
-				<?php if (date("Ymd") == '20191114') { ?>
-				<img src="<?php echo $base_url ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+				<?php if (date("Ymd") == '20200131') { ?>
+				<img src="<?php echo $prefijo ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 				<?php } ?>
 				</center>
 			</div>

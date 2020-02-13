@@ -3,7 +3,7 @@
 </head>
 <body>
 <h1>Pago de Comisi&oacute;n</h1>
-<h3><?php echo $pago->getRevendedor(); ?></h3>
+<h3><?php echo utf8_decode($pago->getRevendedor()); ?></h3>
 <h3>Fecha: <?php echo implode('/', array_reverse(explode('-', $pago->fecha))) ?></h3>
 <h3>Comisi&oacute;n: $ <?php echo $pago->monto ?></h3>
 <h3>Detalle de ventas pagadas</h3>
