@@ -30,7 +30,18 @@
     foreach($cta_cte as $ctacte):?>
   <tr>
     <?php $saldo += $ctacte->getDebe() - $ctacte->getHaber(); ?>
-    <td><?php echo utf8_decode($ctacte->getConcepto()) ?></td>
+    <td><?php 
+if ($ctacte->concepto == 'Venta') {
+	echo Doctrine::getTable('Resumen')->find($ctacte->numero);
+} elseif ($ctacte->concepto == 'Cobro') {
+	echo "RECIBO DE COBRO 0005 - ".str_pad($ctacte->numero, 8, 0, STR_PAD_LEFT);
+} elseif ($ctacte->concepto == 'Devolución') {
+	$cobro = Doctrine::getTable('Cobro')->find($ctacte->numero);
+	echo Doctrine::getTable('DevProducto')->find($cobro->devprod_id);
+} else {
+	echo $ctacte->concepto." - #".$ctacte->getNumero();
+}		
+		?></td>
     <td><?php echo implode("/", array_reverse(explode("-", $ctacte->getFecha()))) ?></td>
     <td><?php echo '$ '.sprintf("%01.2f", $ctacte->getDebe()) ?></td>
     <td><?php echo '$ '.sprintf("%01.2f", $ctacte->getHaber()) ?></td>

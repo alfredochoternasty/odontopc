@@ -97,7 +97,7 @@ class inicioActions extends autoInicioActions
       $q = Doctrine::getTable('Pedido')
         ->createQuery('p')
         ->where('p.vendido = 0')
-        ->andWhere('p.finalizado = 1')
+        //->andWhere('p.finalizado = 1')
         ->orderBy('p.fecha DESC')
         ->limit('10');
       if($this->getUser()->getGuardUser()->es_cliente){

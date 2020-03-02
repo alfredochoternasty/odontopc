@@ -15,7 +15,7 @@ class Resumen extends BaseResumen
   public function __toString()
   {
 		if (empty($this->nro_factura)) {
-			return $this->getTipoFactura().' - '.$this->id;
+			return $this->getTipoFactura().' - 0005 -'.str_pad($this->id, 8, 0, STR_PAD_LEFT);;
 		} else {
 			return $this->getTipoFactura().' - '.str_pad($this->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->nro_factura, 8, 0, STR_PAD_LEFT);
 		}

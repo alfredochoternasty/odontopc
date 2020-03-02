@@ -14,12 +14,20 @@ class DevProducto extends BaseDevProducto
 {
 	public function __toString()
   {
+	if (empty($this->nro_factura)) {
+	return $this->getTipoFactura().' - '.$this->id;
+	} else {
     return $this->getTipoFactura().' - '.str_pad($this->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->nro_factura, 8, 0, STR_PAD_LEFT);
+	}
   }
 	
   public function getFactura()
   {
+	if (empty($this->nro_factura)) {
+	return $this->getTipoFactura().' - '.$this->id;
+	} else {
     return $this->getTipoFactura().' - '.str_pad($this->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->nro_factura, 8, 0, STR_PAD_LEFT);
+	}
   }
 	
 	public function getFechaYMD(){

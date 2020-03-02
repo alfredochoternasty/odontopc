@@ -42,4 +42,4 @@ generator:
       new:
         title: Nuevo Cobro
       show:
-        display: [Cliente, fecha, _monto, Tipo, Banco, numero]
+        display: [Cliente, fecha, _monto, Tipo, Banco, numero, observacion]
