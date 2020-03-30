@@ -131,13 +131,21 @@ class prodActions extends autoProdActions
   
   public function executeNew(sfWebRequest $request)
   {
-		$this->form = $this->configuration->getForm(null, array('base_url' => $this->getUser()->getVarConfig('base_url')));
-		$this->presupuesto = $this->form->getObject();
+    $parametros = array(
+      'base_url' => $this->getUser()->getVarConfig('base_url'),
+      'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura')
+    );
+		$this->form = $this->configuration->getForm(null, $parametros);
+		$this->producto = $this->form->getObject();
   }
   
   public function executeEdit(sfWebRequest $request)
   {
-    $this->presupuesto = $this->getRoute()->getObject();
-    $this->form = $this->configuration->getForm($this->presupuesto, array('base_url' => $this->getUser()->getVarConfig('base_url')));
+    $parametros = array(
+      'base_url' => $this->getUser()->getVarConfig('base_url'),
+      'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura')
+    );
+    $this->producto = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->producto, $parametros);
   }
 }

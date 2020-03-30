@@ -50,8 +50,8 @@ class ResumenForm extends BaseResumenForm
 	
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
-		$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
+		$this->validatorSchema['usuario'] =  new sfValidatorInteger(array('required' => false));
+		$this->validatorSchema['zona_id'] =  new sfValidatorInteger(array('required' => false));
 	
 		$this->widgetSchema['saldo_pesos'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));
 		

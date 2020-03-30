@@ -266,7 +266,7 @@ class detresActions extends autoDetresActions
 			} else {
 				$stock = '';
 			}
-			if (!empty($stock)) $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
+			if (!empty($stock)) $options[] = '<option value="'.urlencode($lote['nro_lote']).'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
     }
 		
     echo implode($options);
@@ -303,7 +303,7 @@ class detresActions extends autoDetresActions
     foreach($remitos as $remito){
 			if ($remito->RemitoProductoCantVend() < $remito->cantidad) {
 				$fecha = $remito->getResumen()->getFechaDMY();
-				$options[] = '<option value="'.$remito->id.'">'.$remito->getResumen()->getCliente().'- Fecha: '.$fecha.' - Nro: '.$remito->getResumen()->nro_factura.'</option>';
+				$options[] = '<option value="'.$remito->id.'">'.$remito->getResumen()->getCliente().'- Fecha: '.$fecha.' - Nro: '.$remito->getResumen().'</option>';
 			}
     }
     echo implode($options);
@@ -442,7 +442,7 @@ class detresActions extends autoDetresActions
 			->andWhere('nro_factura is not null');
 			$ultimo_nro_sistema = $q->fetchArray();
 			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
-				$this->getUser()->setFlash('error', 'El Ãºltimo nÃºmero de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el Ãºltimo nÃºmero registrado en el sistema (nro: '.$ultimo_nro_sistema[0]['ultimo'].')');
+				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el último número registrado en el sistema (nro: '.$ultimo_nro_sistema[0]['ultimo'].')');
 				$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
 			}
 			$nuevo_nro = $ultimo_nro_afip+1;

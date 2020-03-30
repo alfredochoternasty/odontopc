@@ -13,12 +13,10 @@ class ProductoForm extends BaseProductoForm
   public function configure()
   {
     parent::configure();
-    unset($this['mueve_stock'], $this['moneda_id'], $this['genera_comision']);
+    unset($this['mueve_stock'], $this['moneda_id'], $this['genera_comision'], $this['stock_actual'], $this['ctr_fact_grupo'], $this['grupo2'], $this['grupo3'], $this['descripcion']);
     $base_url = $this->getOption('base_url');
-    
-    $this->widgetSchema['ctr_fact_grupo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
-    $this->validatorSchema['ctr_fact_grupo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
-    
+    $modulo_factura = $this->getOption('modulo_factura');
+        
     $this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => false, 'order_by' => array('nombre', 'asc')));    
     
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
@@ -39,11 +37,17 @@ class ProductoForm extends BaseProductoForm
       'mime_types' => 'web_images',
     ));
     
-    $this->validatorSchema->setOption('allow_extra_fields', true);		    
-    $this->widgetSchema['precio_vta'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-    $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));    
-
+    if ($modulo_factura == 'S') {
+      $this->widgetSchema['precio_vta'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+      $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+      $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));
+      $this->validatorSchema->setOption('allow_extra_fields', true);
+    } else {
+      unset($this['iva'], $this['total']);
+      $this->widgetSchema['precio_vta'] = new sfWidgetFormInput();
+    }
+    
     $this->widgetSchema['foto_chica'] = new sfWidgetFormInputHidden();
+    
   }
 }
