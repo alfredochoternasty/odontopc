@@ -1,40 +1,19 @@
-DROP VIEW listado_cobros;
-CREATE VIEW listado_cobros (
-  id,fecha,cliente,tipo_cliente,tipo_cobro,moneda,cli_gen_comis,monto, zona_id
-) AS 
-SELECT 
-  cobro.id, 
-  cobro.fecha, 
-  cobro.cliente_id, 
-  cliente.tipo_id, 
-  cobro.tipo_id, 
-  cobro.moneda_id, 
-  cliente.genera_comision, 
-  cobro.monto,
-	cobro.zona_id
-FROM cobro
-	JOIN cliente ON cobro.cliente_id = cliente.id
-	left outer join resumen r ON cobro.resumen_id = r.id
-WHERE r.tipofactura_id <> 4 or cobro.resumen_id = 0;
-
-ALTER TABLE `cobro`
-	ADD COLUMN `archivo` VARCHAR(255) NULL DEFAULT NULL AFTER `zona_id`;
-
-ALTER TABLE `tipo_factura`
-	ADD COLUMN `cond_fiscales` VARCHAR(50) NULL DEFAULT NULL AFTER `modelo_impresion`;
-
-INSERT INTO `ventas`.`producto` (`id`, `nombre`, `grupoprod_id`, `precio_vta`, `moneda_id`, `orden_grupo`, `activo`)
-VALUES ('309', 'Debito - Ajuste Cta Cte', '1', '10', '0', '0', '1');
-
-ALTER TABLE `dev_producto`
-	ADD COLUMN `pago_comision_id` INT NULL AFTER `zona_id`;
+CREATE TABLE `cliente_domicilio` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`cliente_id` INT NOT NULL,
+	`direccion` VARCHAR(255) NOT NULL,
+	`telefono` VARCHAR(255) NULL DEFAULT NULL,
+	`correo` VARCHAR(255) NULL DEFAULT NULL,
+	`observacion` VARCHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='latin1_swedish_ci'
+;
+ALTER TABLE `pedido`
+	ADD COLUMN `cliente_domicilio_id` INT NULL AFTER `finalizado`;
+ALTER TABLE `cliente_domicilio`
+	ADD COLUMN `localidad_id` INT NULL AFTER `observacion`;
 	
-ALTER TABLE `producto`
-	ADD COLUMN `foto` VARCHAR(255) NULL DEFAULT NULL AFTER `nombre_corto`,
-	ADD COLUMN `descripcion` TEXT NULL DEFAULT NULL AFTER `foto`;
-ALTER TABLE `producto`
-	ADD COLUMN `foto_chica` VARCHAR(255) NULL DEFAULT NULL AFTER `descripcion`;
-
 /*
 DROP TABLE 
 	producto2, 

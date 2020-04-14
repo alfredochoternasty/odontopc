@@ -25,13 +25,71 @@ class carritoActions extends sfActions
 
   public function executeModificar(sfWebRequest $request)
   {
-	$detalle_id = $request->getParameter('detalle_id');
-	$cantidad = $request->getParameter('cantidad');
-	$detalle = Doctrine::getTable('DetallePedido')->find($detalle_id);
-	$detalle->cantidad = $cantidad;
-	$detalle->total = $cantidad * $detalle->precio;
-	$detalle->save();
-	$this->redirect('@carrito');
+		$detalle_id = $request->getParameter('detalle_id');
+		$cantidad = $request->getParameter('cantidad');
+		$detalle = Doctrine::getTable('DetallePedido')->find($detalle_id);
+		$detalle->cantidad = $cantidad;
+		$detalle->total = $cantidad * $detalle->precio;
+		$detalle->save();
+		$this->redirect('@carrito');
+  }
+
+  public function executeFinalizar(sfWebRequest $request)
+  {
+    if (!empty($this->getUser()->getAttribute('pid'))) {
+			if ($request->hasParameter('entrega')) {
+				$pedido = Doctrine::getTable('Pedido')->find($this->getUser()->getAttribute('pid'));
+				$pedido->forma_envio = ($request->getParameter('entrega') > 0)?2:1;
+				$pedido->cliente_domicilio_id = !empty($request->getParameter('entrega'))?$request->getParameter('entrega'):null;
+				$pedido->finalizado = 1;
+				$this->getUser()->setAttribute('pid', 0);
+				$pedido->save();
+				$this->EnviarPedidoMail($this->getUser()->getAttribute('pid'));
+			}
+		}
+		$this->setLayout('layout_app');
+  }
+
+
+  function EnviarPedidoMail($pid){
+		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+		$mensaje = Swift_Message::newInstance();
+		$mensaje->setFrom(array('implantesnti@gmail.com' => 'Sistemas de Pedidos'));
+		$mensaje->setTo(array(
+			'implantesnti@gmail.com' => 'NTI NTI',
+			$detpedidos[0]->getPedido()->getCliente()->email => $detpedidos[0]->getPedido()->getCliente()
+		));
+		$mensaje->setSubject('Nuevo Pedido');
+		$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));
+		$mensaje->setContentType("text/html");
+		$this->getMailer()->send($mensaje);
+		$this->getUser()->setFlash('notice', 'Pedido Enviado!');
+  }
+	
+  public function executeConfirmar(sfWebRequest $request)
+  {
+    if (!empty($this->getUser()->getAttribute('pid'))) {
+			$pedido = Doctrine::getTable('Pedido')->find($this->getUser()->getAttribute('pid'));
+			$this->domicilios = $pedido->getCliente()->getDomicilios();
+		}
+		$this->setLayout('layout_app');
+  }
+	
+  public function executeDomicilio(sfWebRequest $request)
+  {
+		$this->setLayout('layout_app');
+  }
+
+  public function executeDomiagr(sfWebRequest $request)
+  {
+    if (!empty($request->getParameter('domicilio'))) {
+			$pedido = Doctrine::getTable('Pedido')->find($this->getUser()->getAttribute('pid'));
+			$direccion = new ClienteDomicilio();
+			$direccion->cliente_id = $pedido->cliente_id;
+			$direccion->direccion = $request->getParameter('domicilio');
+			$direccion->save();
+		}
+		$this->redirect('carrito/confirmar');
   }
 
   public function executeNew(sfWebRequest $request)
@@ -69,7 +127,7 @@ class carritoActions extends sfActions
 
   public function executeDelete(sfWebRequest $request)
   {
-    $request->checkCSRFProtection();
+    //$request->checkCSRFProtection();
 
     $this->forward404Unless($detalle_pedido = Doctrine_Core::getTable('DetallePedido')->find(array($request->getParameter('id'))), sprintf('Object detalle_pedido does not exist (%s).', $request->getParameter('id')));
     $detalle_pedido->delete();

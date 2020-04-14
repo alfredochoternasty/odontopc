@@ -13,19 +13,22 @@ Doctrine_Manager::getInstance()->bindComponent('Localidad', 'doctrine');
  * @property Provincia $Provincia
  * @property Doctrine_Collection $Cliente
  * @property Doctrine_Collection $Proveedor
+ * @property Doctrine_Collection $ClienteDomicilio
  * 
- * @method integer             getId()           Returns the current record's "id" value
- * @method string              getNombre()       Returns the current record's "nombre" value
- * @method integer             getProvinciaId()  Returns the current record's "provincia_id" value
- * @method Provincia           getProvincia()    Returns the current record's "Provincia" value
- * @method Doctrine_Collection getCliente()      Returns the current record's "Cliente" collection
- * @method Doctrine_Collection getProveedor()    Returns the current record's "Proveedor" collection
- * @method Localidad           setId()           Sets the current record's "id" value
- * @method Localidad           setNombre()       Sets the current record's "nombre" value
- * @method Localidad           setProvinciaId()  Sets the current record's "provincia_id" value
- * @method Localidad           setProvincia()    Sets the current record's "Provincia" value
- * @method Localidad           setCliente()      Sets the current record's "Cliente" collection
- * @method Localidad           setProveedor()    Sets the current record's "Proveedor" collection
+ * @method integer             getId()               Returns the current record's "id" value
+ * @method string              getNombre()           Returns the current record's "nombre" value
+ * @method integer             getProvinciaId()      Returns the current record's "provincia_id" value
+ * @method Provincia           getProvincia()        Returns the current record's "Provincia" value
+ * @method Doctrine_Collection getCliente()          Returns the current record's "Cliente" collection
+ * @method Doctrine_Collection getProveedor()        Returns the current record's "Proveedor" collection
+ * @method Doctrine_Collection getClienteDomicilio() Returns the current record's "ClienteDomicilio" collection
+ * @method Localidad           setId()               Sets the current record's "id" value
+ * @method Localidad           setNombre()           Sets the current record's "nombre" value
+ * @method Localidad           setProvinciaId()      Sets the current record's "provincia_id" value
+ * @method Localidad           setProvincia()        Sets the current record's "Provincia" value
+ * @method Localidad           setCliente()          Sets the current record's "Cliente" collection
+ * @method Localidad           setProveedor()        Sets the current record's "Proveedor" collection
+ * @method Localidad           setClienteDomicilio() Sets the current record's "ClienteDomicilio" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -68,6 +71,10 @@ abstract class BaseLocalidad extends sfDoctrineRecord
              'foreign' => 'localidad_id'));
 
         $this->hasMany('Proveedor', array(
+             'local' => 'id',
+             'foreign' => 'localidad_id'));
+
+        $this->hasMany('ClienteDomicilio', array(
              'local' => 'id',
              'foreign' => 'localidad_id'));
     }

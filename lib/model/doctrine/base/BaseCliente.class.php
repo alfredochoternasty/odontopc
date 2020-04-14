@@ -38,6 +38,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property ListaPrecio $Lista
  * @property sfGuardUser $Usuario
  * @property Zona $Zona
+ * @property Doctrine_Collection $Domicilios
  * @property Doctrine_Collection $Venta
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $MovimientoProducto
@@ -82,6 +83,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
  * @method sfGuardUser         getUsuario()            Returns the current record's "Usuario" value
  * @method Zona                getZona()               Returns the current record's "Zona" value
+ * @method Doctrine_Collection getDomicilios()         Returns the current record's "Domicilios" collection
  * @method Doctrine_Collection getVenta()              Returns the current record's "Venta" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
@@ -125,6 +127,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setLista()              Sets the current record's "Lista" value
  * @method Cliente             setUsuario()            Sets the current record's "Usuario" value
  * @method Cliente             setZona()               Sets the current record's "Zona" value
+ * @method Cliente             setDomicilios()         Sets the current record's "Domicilios" collection
  * @method Cliente             setVenta()              Sets the current record's "Venta" collection
  * @method Cliente             setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Cliente             setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
@@ -288,6 +291,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('ClienteDomicilio as Domicilios', array(
+             'local' => 'id',
+             'foreign' => 'cliente_id'));
 
         $this->hasMany('Venta', array(
              'local' => 'id',

@@ -16,34 +16,37 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @property string $direccion_entrega
  * @property integer $forma_envio
  * @property integer $finalizado
+ * @property integer $cliente_domicilio_id
  * @property Doctrine_Collection $Detalle
  * @property Cliente $Cliente
  * @property Doctrine_Collection $Resumen
  * 
- * @method integer             getId()                Returns the current record's "id" value
- * @method date                getFecha()             Returns the current record's "fecha" value
- * @method integer             getClienteId()         Returns the current record's "cliente_id" value
- * @method string              getObservacion()       Returns the current record's "observacion" value
- * @method integer             getVendido()           Returns the current record's "vendido" value
- * @method date                getFechaVenta()        Returns the current record's "fecha_venta" value
- * @method string              getDireccionEntrega()  Returns the current record's "direccion_entrega" value
- * @method integer             getFormaEnvio()        Returns the current record's "forma_envio" value
- * @method integer             getFinalizado()        Returns the current record's "finalizado" value
- * @method Doctrine_Collection getDetalle()           Returns the current record's "Detalle" collection
- * @method Cliente             getCliente()           Returns the current record's "Cliente" value
- * @method Doctrine_Collection getResumen()           Returns the current record's "Resumen" collection
- * @method Pedido              setId()                Sets the current record's "id" value
- * @method Pedido              setFecha()             Sets the current record's "fecha" value
- * @method Pedido              setClienteId()         Sets the current record's "cliente_id" value
- * @method Pedido              setObservacion()       Sets the current record's "observacion" value
- * @method Pedido              setVendido()           Sets the current record's "vendido" value
- * @method Pedido              setFechaVenta()        Sets the current record's "fecha_venta" value
- * @method Pedido              setDireccionEntrega()  Sets the current record's "direccion_entrega" value
- * @method Pedido              setFormaEnvio()        Sets the current record's "forma_envio" value
- * @method Pedido              setFinalizado()        Sets the current record's "finalizado" value
- * @method Pedido              setDetalle()           Sets the current record's "Detalle" collection
- * @method Pedido              setCliente()           Sets the current record's "Cliente" value
- * @method Pedido              setResumen()           Sets the current record's "Resumen" collection
+ * @method integer             getId()                   Returns the current record's "id" value
+ * @method date                getFecha()                Returns the current record's "fecha" value
+ * @method integer             getClienteId()            Returns the current record's "cliente_id" value
+ * @method string              getObservacion()          Returns the current record's "observacion" value
+ * @method integer             getVendido()              Returns the current record's "vendido" value
+ * @method date                getFechaVenta()           Returns the current record's "fecha_venta" value
+ * @method string              getDireccionEntrega()     Returns the current record's "direccion_entrega" value
+ * @method integer             getFormaEnvio()           Returns the current record's "forma_envio" value
+ * @method integer             getFinalizado()           Returns the current record's "finalizado" value
+ * @method integer             getClienteDomicilioId()   Returns the current record's "cliente_domicilio_id" value
+ * @method Doctrine_Collection getDetalle()              Returns the current record's "Detalle" collection
+ * @method Cliente             getCliente()              Returns the current record's "Cliente" value
+ * @method Doctrine_Collection getResumen()              Returns the current record's "Resumen" collection
+ * @method Pedido              setId()                   Sets the current record's "id" value
+ * @method Pedido              setFecha()                Sets the current record's "fecha" value
+ * @method Pedido              setClienteId()            Sets the current record's "cliente_id" value
+ * @method Pedido              setObservacion()          Sets the current record's "observacion" value
+ * @method Pedido              setVendido()              Sets the current record's "vendido" value
+ * @method Pedido              setFechaVenta()           Sets the current record's "fecha_venta" value
+ * @method Pedido              setDireccionEntrega()     Sets the current record's "direccion_entrega" value
+ * @method Pedido              setFormaEnvio()           Sets the current record's "forma_envio" value
+ * @method Pedido              setFinalizado()           Sets the current record's "finalizado" value
+ * @method Pedido              setClienteDomicilioId()   Sets the current record's "cliente_domicilio_id" value
+ * @method Pedido              setDetalle()              Sets the current record's "Detalle" collection
+ * @method Pedido              setCliente()              Sets the current record's "Cliente" value
+ * @method Pedido              setResumen()              Sets the current record's "Resumen" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -98,6 +101,10 @@ abstract class BasePedido extends sfDoctrineRecord
         $this->hasColumn('finalizado', 'integer', 4, array(
              'type' => 'integer',
              'notnull' => true,
+             'length' => 4,
+             ));
+        $this->hasColumn('cliente_domicilio_id', 'integer', 4, array(
+             'type' => 'integer',
              'length' => 4,
              ));
     }

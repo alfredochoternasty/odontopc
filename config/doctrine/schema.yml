@@ -112,6 +112,7 @@ Cliente:
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Usuario: {type: one, class: sfGuardUser, local: usuario_id}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
+    Domicilios: {type: many, class: ClienteDomicilio, local: id, foreign: cliente_id}
 Compra:
   connection: doctrine
   tableName: compra
@@ -586,7 +587,8 @@ Pedido:
     fecha_venta: {type: date(25), notnull: true}
     direccion_entrega: {type: string(200)}
     forma_envio: {type: integer(4), notnull: true}
-    finalizado: {type: integer(4), notnull: true}    
+    finalizado: {type: integer(4), notnull: true}
+    cliente_domicilio_id: {type: integer(4)}
   relations:
     Detalle: {type: many, class: DetallePedido, local: id, foreign: pedido_id}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
@@ -952,3 +954,17 @@ Configuracion:
     id: {type: string(200), primary: true}
     valor: {type: string(50)}
     observacion: {type: string(200)}
+ClienteDomicilio:
+  connection: doctrine
+  tableName: cliente_domicilio
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    cliente_id: {type: integer(4), notnull: true}
+    direccion: {type: string(255)}
+    telefono: {type: string(255)}
+    correo: {type: string(255)}
+    observacion: {type: string(200)}
+    localidad_id: {type: integer(4)}
+  relations:
+    Cliente: {type: one, class: Cliente, local: cliente_id, onDelete: RESTRICT}
+    Localidad: {type: one, class: Localidad, local: localidad_id, onDelete: RESTRICT}
