@@ -34,7 +34,8 @@
 <div style="width:97%; border: 1px solid #cccccc; margin:2%;">
 	<table width="100%">
 		<tr >
-		  <td width="10%"><?php echo '<img src="'.$base_url.'/web/uploads/productos/'.$producto->foto_chica.'" height="70vw" width="70vw">' ?></td>
+			<?php $foto = empty($producto->foto_chica)? 'no_img.png' : $producto->foto_chica ?>
+		  <td width="10%"><?php echo '<img src="'.$base_url.'/web/uploads/productos/'.$foto.'" height="70vw" width="70vw">' ?></td>
 		  <td width="60%"><span style="font-size:12pt;font-family:sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto->getNombre() ?></span>
 			<br><span style="font-size:10pt;font-family:sans-serif;color: #e20202;font-weight: bold;">$ <?php echo $producto->getPrecioVta() ?></span>
 		  </td>

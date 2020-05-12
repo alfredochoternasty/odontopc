@@ -78,4 +78,11 @@ class pedActions extends autoPedActions
 		$this->getUser()->setFlash('notice', 'Pedido Enviado!');
   }
 	
+	public function executePedidos(sfWebRequest $request) {
+    $id_usuario = $this->getUser()->getGuardUser()->getId();
+    $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
+    $id_cliente = $clientes[0]->getId();
+		$this->pedidos = Doctrine_Core::getTable('Pedido')->createQuery('p')->where('cliente_id = '.$id_cliente)->orderBy('p.id DESC')->execute();
+		$this->setLayout('layout_app');
+	}
 }

@@ -88,8 +88,8 @@ class ProductoTable extends Doctrine_Table
 				$query->where('grupoprod_id not in (1, 15) or id = 71');
 			
       $query->andWhere('activo = 1');
-      $query->orderBy('nombre');
-      $query->addOrderBy('orden_grupo');
+      $query->orderBy('orden_grupo');
+      $query->addOrderBy('nombre');
 			$result = $query->execute();
       return $result;
     }
@@ -102,7 +102,8 @@ class ProductoTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Grupo g');
       $q->where('codigo not is nnull 1');
-			$q->andWhere('activo = 1');
+      $q->andWhere('activo = 1');
+      $q->orderBy('orden_grupo');
       return $q;
     }
 }

@@ -42,9 +42,9 @@ class carritoActions extends sfActions
 				$pedido->forma_envio = ($request->getParameter('entrega') > 0)?2:1;
 				$pedido->cliente_domicilio_id = !empty($request->getParameter('entrega'))?$request->getParameter('entrega'):null;
 				$pedido->finalizado = 1;
+				$this->EnviarPedidoMail($this->getUser()->getAttribute('pid'));
 				$this->getUser()->setAttribute('pid', 0);
 				$pedido->save();
-				$this->EnviarPedidoMail($this->getUser()->getAttribute('pid'));
 			}
 		}
 		$this->setLayout('layout_app');
@@ -53,11 +53,12 @@ class carritoActions extends sfActions
 
   function EnviarPedidoMail($pid){
 		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+		$pedido = Doctrine::getTable('Pedido')->find($pid);
 		$mensaje = Swift_Message::newInstance();
 		$mensaje->setFrom(array('implantesnti@gmail.com' => 'Sistemas de Pedidos'));
 		$mensaje->setTo(array(
 			'implantesnti@gmail.com' => 'NTI NTI',
-			$detpedidos[0]->getPedido()->getCliente()->email => $detpedidos[0]->getPedido()->getCliente()
+			$pedido->getCliente()->email => $pedido->getCliente()
 		));
 		$mensaje->setSubject('Nuevo Pedido');
 		$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));

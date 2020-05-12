@@ -27,7 +27,9 @@ class ProductoForm extends BaseProductoForm
                                       'file_src' => $base_url.'/web/uploads/productos/'.$this->getObject()->getFotoChica(),
                                       'is_image' => true,
                                       'edit_mode' => true,
-                                      'template' => '<div>%input%<br>%file%</div>',
+                                      'with_delete' => true,
+                                      'delete_label' => 'Borrar esta imagen?',
+                                      'template' => '<div>%input%<br>%file%<br>%delete_label%&nbsp;%delete%</div>',
                                   ));
                                   
     $ruta = sfConfig::get('sf_upload_dir').'/productos/';
@@ -48,6 +50,7 @@ class ProductoForm extends BaseProductoForm
     }
     
     $this->widgetSchema['foto_chica'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema->setOption('allow_extra_fields', true);
     
   }
 }

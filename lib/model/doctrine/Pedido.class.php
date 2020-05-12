@@ -16,4 +16,13 @@ class Pedido extends BasePedido
   {
         return $this->getCliente();
   }*/
+  
+  public function getTotal() {
+    $rsTotal = Doctrine_Core::getTable('DetallePedido')
+      ->createQuery('dp')
+      ->select('sum(total) as total')
+      ->where('pedido_id = '.$this->getId())
+      ->execute();
+    return $rsTotal[0]->total;
+  }
 }

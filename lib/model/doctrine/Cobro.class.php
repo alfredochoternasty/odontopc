@@ -12,5 +12,16 @@
  */
 class Cobro extends BaseCobro
 {
-
+	public function __toString()
+  {
+		if (empty($this->nro_recibo)) {
+			return $this->getTipoFactura().' - '.$this->id;
+		} else {
+			return $this->getTipoFactura().' - '.str_pad('5', 4, 0, STR_PAD_LEFT) .'-'.str_pad($this->getNroRecibo(), 8, 0, STR_PAD_LEFT);
+		}
+  }
+	
+	public function getTipoFactura() {
+		return 'COBRO';
+	}
 }

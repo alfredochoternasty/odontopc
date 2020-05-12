@@ -160,7 +160,7 @@
 		$(document).ready(function(){$("#menu").click(function(e){abrir();});});
 		$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar();});});
 		$(document).ready(function(){$("#grupo_id").on("change",function(e){$("#grupos").submit();});});
-		$(window).load(function(){$(".loader").fadeOut("fast");});
+		// $(window).load(function(){$(".loader").fadeOut("fast");});
 		function validar(p_form) {
 			var cant = p_form['cantidad'].value;
 			if (cant != '') {
@@ -174,7 +174,7 @@
 	</script>
   </head>
   <body style="margin:0px;font-family:sans-serif;">
-	  <div class="loader"></div>
+	  <!-- <div class="loader"></div> -->
 	  
 	<div class="sidemenu">
     <div style="height:80px;background:#03528a">
@@ -198,8 +198,8 @@
 		<nav>
 			<ul>
 				<li><img src="<?php echo $base_url?>/web/images/implante.png"><a href="<?php echo url_for('@producto2') ?>">Lista de Productos</a></li>
-				<li><img src="<?php echo $base_url?>/web/images/box.png"><a href="#">Pedidos</a></li>
-				<li><img src="<?php echo $base_url?>/web/images/cta_cte.png"><a href="#">Cuenta Corriente</a></li>
+				<li><img src="<?php echo $base_url?>/web/images/box.png"><a href="<?php echo url_for('ped/pedidos') ?>">Pedidos</a></li>
+				<li><img src="<?php echo $base_url?>/web/images/cta_cte.png"><a href="<?php echo url_for('ctacte/ver') ?>">Cuenta Corriente</a></li>
 				<li><img src="<?php echo $base_url?>/web/images/facturas.png"><a href="#">Facturas</a></li>
 				<li><img src="<?php echo $base_url?>/web/images/logout.png"><a href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
 			</ul>
