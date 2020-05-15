@@ -17,10 +17,11 @@ class myUser extends sfGuardSecurityUser
 	
 	public function EsCliente($u_id)
 	{
-		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($u_id);
-		if (!empty($clientes[0]))
-			return true;
-		else
-			return false;
+		return false;
+		// $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($u_id);
+		// if (!empty($clientes[0]))
+			// return true;
+		// else
+			// return false;
 	}
 }
