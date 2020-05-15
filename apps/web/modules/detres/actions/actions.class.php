@@ -266,7 +266,7 @@ class detresActions extends autoDetresActions
 			} else {
 				$stock = '';
 			}
-			if (!empty($stock)) $options[] = '<option value="'.urlencode($lote['nro_lote']).'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
+			if (!empty($stock)) $options[] = '<option value="'.$lote['nro_lote'].'">'.$lote['nro_lote'].$fec_vto.$stock.'</option>';
     }
 		
     echo implode($options);
