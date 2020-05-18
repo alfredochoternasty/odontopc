@@ -12,5 +12,16 @@ class GrupoprodForm extends BaseGrupoprodForm
 {
   public function configure()
   {
+    $productos = $this->getOption('productos');
+    
+    $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array('size' => 50, 'style' => 'font-size:16pt;'));
+    
+    $this->widgetSchema['operacion'] = new sfWidgetFormChoice(array('choices' => array('' => 'Seleccione una Opcion', 'precio' => 'Precio Fijo', 'aumento' => 'Aumentar un % sobre el valor actual', 'descuento' => 'Disminuir un % sobre el valor actual')));
+    $this->widgetSchema['precio_vta'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+    $this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+    $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));
+    $this->widgetSchema['porcentaje'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));
+    $this->widgetSchema['productos'] = new sfWidgetFormChoice(array('expanded' => true, 'multiple' => true, 'choices' => $productos));
+    $this->validatorSchema->setOption('allow_extra_fields', true);
   }
 }

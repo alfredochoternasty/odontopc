@@ -31,7 +31,7 @@
 		}
 		#footer_remito {
 				position: fixed; 
-				bottom: 60px;
+				bottom: 50px;
 				font-weight: bold;
 				text-align: center;
 		}
@@ -47,7 +47,7 @@
 	<table cellpadding="10" cellspacing="0" border="0" width="100%">
 		<tr>
 			<td width="44%">
-				<img src="images/logo_nti.png" width=204 height=77>
+				<img src="images/logo_nti.jpg" width=204 height=77>
 				<p>
 					<b>Razon Social: </b>NTI Implantes<br>
 					<b>Domicilio Comercial: </b>Feliciano 581 - Paraná (Entre Ríos)<br>
@@ -80,35 +80,52 @@
 		</tr>
 	</table>
 </div>
-
+<div id="footer_remito">
+	Pág. <span class="pagenum"></span> de <?php echo ceil(count($presupuesto->getDetallePresupuesto())/35) ?>
+</div>
 <div id="content">
-<?php $moneda = $presupuesto->getLista()->getMoneda()->getSimbolo(); ?>
-<table border="1" cellspacing="0" cellpadding="1" width="100%">
-  <tr>
-    <th style="background: #CCC;">Producto</th>
-    <th style="background: #CCC;">Precio Unitario</th>
-    <th style="background: #CCC;">Cantidad</th>
-    <th style="background: #CCC;">Descuento</th>
-    <th style="background: #CCC;">Sub Total</th>
-    <th style="background: #CCC;">IVA</th>
-    <th style="background: #CCC;">Total</th>
-  </tr>
-  <?php 
+<?php 
+	$moneda = $presupuesto->getLista()->getMoneda()->getSimbolo();
+
+	$total_items = count($presupuesto->getDetallePresupuesto());
+	$cont = 0;
+	$cont_total = 0;
+	$primero = true;
+	$items_por_pagina = 35;
   $total = 0;
   foreach($presupuesto->getDetallePresupuesto() as $detalle):
-  ?>
-  <tr>
-    <td><?php echo $detalle->getProducto() ?></td>
-    <td><?php echo $moneda.' '.$detalle->precio ?></td>
-    <td><?php echo $detalle->cantidad ?></td>
-    <td><?php echo $detalle->descuento.'%' ?></td>
-    <td><?php echo $moneda.' '.$detalle->sub_total ?></td>
-    <td><?php echo $moneda.' '.$detalle->iva ?></td>
-    <td><?php echo $moneda.' '.$detalle->total ?></td>
-  </tr>
+		if ($cont > $items_por_pagina) {
+			$cont = 0;
+			$primero = false;					
+		}
+		if ($cont == 0) :
+			if (!$primero) echo '</table>';
+		?>
+		<table style="page-break-after: <?php echo ($cont_total + $items_por_pagina >= $total_items )?'never':'always'; ?>;" cellpadding="2" cellspacing="0" border="1" width="100%">	
+			<tr>
+				<th style="background: #CCC;">Producto</th>
+				<th style="background: #CCC;">Precio Unitario</th>
+				<th style="background: #CCC;">Cantidad</th>
+				<th style="background: #CCC;">Descuento</th>
+				<th style="background: #CCC;">Sub Total</th>
+				<th style="background: #CCC;">IVA</th>
+				<th style="background: #CCC;">Total</th>
+			</tr>
+		<?php endif; ?>
+			<tr>
+				<td><?php echo $detalle->getProducto() ?></td>
+				<td><?php echo $moneda.' '.$detalle->precio ?></td>
+				<td><?php echo $detalle->cantidad ?></td>
+				<td><?php echo $detalle->descuento.'%' ?></td>
+				<td><?php echo $moneda.' '.$detalle->sub_total ?></td>
+				<td><?php echo $moneda.' '.$detalle->iva ?></td>
+				<td><?php echo $moneda.' '.$detalle->total ?></td>
+			</tr>
   <?php 
-	$total += $detalle->total;
-  endforeach;
+			$cont += 1;
+			$cont_total += 1;
+			$total += $detalle->total;
+		endforeach;
   ?>
   <tr>
 	<td colspan="5">&nbsp;</td>
