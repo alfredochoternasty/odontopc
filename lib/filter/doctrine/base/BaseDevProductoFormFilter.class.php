@@ -17,7 +17,7 @@ abstract class BaseDevProductoFormFilter extends BaseFormFilterDoctrine
       'cliente_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
       'resumen_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Resumen'), 'add_empty' => true)),
       'producto_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
-      'cantidad'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'cantidad'         => new sfWidgetFormFilterInput(),
       'precio'           => new sfWidgetFormFilterInput(),
       'total'            => new sfWidgetFormFilterInput(),
       'observacion'      => new sfWidgetFormFilterInput(),

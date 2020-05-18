@@ -133,18 +133,14 @@ abstract class BaseDevProducto extends sfDoctrineRecord
              ));
         $this->hasColumn('resumen_id', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
              'length' => 4,
              ));
         $this->hasColumn('producto_id', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
              'length' => 4,
              ));
         $this->hasColumn('cantidad', 'integer', 4, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 1,
              'length' => 4,
              ));
         $this->hasColumn('precio', 'decimal', 10, array(

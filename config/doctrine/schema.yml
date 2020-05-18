@@ -506,9 +506,9 @@ DevProducto:
     id: {type: integer(4), primary: true, autoincrement: true}
     fecha: {type: date(25), notnull: true}
     cliente_id: {type: integer(4), notnull: true}
-    resumen_id: {type: integer(4), notnull: true}
-    producto_id: {type: integer(4), notnull: true}
-    cantidad: {type: integer(4), notnull: true, default: 1}
+    resumen_id: {type: integer(4)}
+    producto_id: {type: integer(4)}
+    cantidad: {type: integer(4)}
     precio: {type: 'decimal(10, 2)'}
     total: {type: 'decimal(10, 2)'}
     observacion: {type: string(200)}

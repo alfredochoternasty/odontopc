@@ -457,6 +457,20 @@ $(document).ready(function(){
   
 });
 
+//NOTA DE CREDITO
+$(document).ready(function(){
+  $("#notacred_dev_producto_cliente_id").change(function(event){
+      var cid = $("#notacred_dev_producto_cliente_id").find(':selected').val();
+      $.ajax({
+          url: 'get_vtas_cliente?cid='+cid,
+          success: function(data) {
+            $("#notacred_dev_producto_resumen_id").html('');
+            $("#notacred_dev_producto_resumen_id").html(data);
+          }
+        });                  
+  });
+  
+});
 
 
 $(document).ready(function() { 

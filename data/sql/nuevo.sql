@@ -1,18 +1,6 @@
-CREATE TABLE `cliente_domicilio` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`cliente_id` INT NOT NULL,
-	`direccion` VARCHAR(255) NOT NULL,
-	`telefono` VARCHAR(255) NULL DEFAULT NULL,
-	`correo` VARCHAR(255) NULL DEFAULT NULL,
-	`observacion` VARCHAR(255) NULL DEFAULT NULL,
-	PRIMARY KEY (`id`)
-)
-COLLATE='latin1_swedish_ci'
-;
-ALTER TABLE `pedido`
-	ADD COLUMN `cliente_domicilio_id` INT NULL AFTER `finalizado`;
-ALTER TABLE `cliente_domicilio`
-	ADD COLUMN `localidad_id` INT NULL AFTER `observacion`;
+ALTER TABLE `dev_producto`
+	CHANGE COLUMN `producto_id` `producto_id` INT(11) NULL AFTER `resumen_id`,
+	CHANGE COLUMN `cantidad` `cantidad` INT(11) NULL DEFAULT '1' AFTER `producto_id`;
 	
 /*
 DROP TABLE 

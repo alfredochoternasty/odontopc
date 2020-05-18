@@ -1,3 +1,12 @@
+dev_producto_notacred:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                DevProducto
+    module:               notacred
+    prefix_path:          /notacred
+    column:               id
+    with_wildcard_routes: true
+
 carrito:
   class: sfDoctrineRouteCollection
   options:
