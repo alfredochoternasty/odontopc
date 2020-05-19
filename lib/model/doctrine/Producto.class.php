@@ -17,7 +17,7 @@ class Producto extends BaseProducto
 		$val = $this->getNombre();
 		return empty($val)? '' : $val;
 	}
-  
+	
   public static function DescontarStock(sfEvent $event){
     $prod = $event['object']->getProductoId();
     $cant_vta = $event['object']->getCantidad();

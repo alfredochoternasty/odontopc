@@ -18,6 +18,15 @@ class Grupoprod extends BaseGrupoprod
 		return empty($val)? '' : $val;
 	}
   
+  public function getProductos() {
+    $q = Doctrine_Core::getTable('Producto')
+      ->createQuery('p')
+      ->where('p.activo = 1')
+      ->andWhere('p.grupoprod_id = ?', $this->getId())
+      ->orderBy('p.orden_grupo ASC');
+    return $q->execute();
+  }
+  
   public function CantidadFacturada(){
     $q = Doctrine_Query::create()
         ->select('sum(d.cantidad) as cant')

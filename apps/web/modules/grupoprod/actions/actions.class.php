@@ -17,7 +17,8 @@ class grupoprodActions extends autoGrupoprodActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->grupoprod = $this->getRoute()->getObject();
-		$productos = Doctrine::getTable('Producto')->findByGrupoprodId($this->grupoprod->id);
+		// $productos = Doctrine::getTable('Producto')->findByGrupoprodId($this->grupoprod->id);
+		$productos = $this->grupoprod->getProductos();
 		foreach ($productos as $prod) $lista[$prod->id] = $prod->nombre;
     $this->form = $this->configuration->getForm($this->grupoprod, array('productos' => $lista));
   }
