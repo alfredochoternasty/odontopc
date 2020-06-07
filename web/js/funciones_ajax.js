@@ -83,7 +83,7 @@ $(document).ready(function(){
           var cantidad = $("#detalle_presupuesto_cantidad").val();
           var subtotal = data * cantidad;
           var iva = subtotal * 0.21;
-          var total = total + 0.21;
+          var total = subtotal + iva; 
 					$("#detalle_presupuesto_sub_total").attr('value', subtotal.toFixed(2));
           $("#detalle_presupuesto_total").attr('value', total.toFixed(2));
           $("#detalle_presupuesto_iva").attr('value', iva.toFixed(2));

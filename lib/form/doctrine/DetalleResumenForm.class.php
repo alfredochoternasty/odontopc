@@ -67,9 +67,6 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 				$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($zona_id != 1)));
 				
 				if($modulo_factura == 'S'){
-					if ($zona_id != 1) {
-						$this->widgetSchema['precio'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
-					}
 					$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 					$this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 				}else{
