@@ -451,7 +451,6 @@ $(document).ready(function(){
     var total = parseFloat(precio) + parseFloat(iva);
     
 		$("#dev_producto_total").attr('value', total.toFixed(2));
-	  $("#dev_producto_precio").attr('value', precio.toFixed(2));
     $("#dev_producto_iva").attr('value', iva.toFixed(2));   
   });   
   
