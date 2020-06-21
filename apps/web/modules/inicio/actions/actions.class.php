@@ -13,83 +13,13 @@ require_once dirname(__FILE__).'/../lib/inicioGeneratorHelper.class.php';
  */
 class inicioActions extends autoInicioActions
 {
-  public function executeAct_local(sfWebRequest $request){
-    $statement = Doctrine_Manager::getInstance()->connection();  
-    $sql =  'insert into traza2(producto_id, nro_lote, nro_venta, fecha_venta, cliente_id, cant_vendida) ';
-    $sql .=  'select producto_id, nro_lote, nro_factura, fecha, cliente_id, cantidad from detalle_resumen dr join resumen r on dr.resumen_id = r.id ';
-    $sql .=  'where producto_id in (select id from producto2) and nro_lote not like \'i0%\' and exportado = 0';    
-    $results = $statement->execute($sql, array(1));
-    
-    $sql =  'update detalle_resumen set exportado = 1 where producto_id in (select id from producto2) and exportado = 0';
-    $results = $statement->execute($sql, array(1));
-/*    
-    $sql = 'insert into compra2(numero, proveedor_id, fecha, producto_id, cantidad, nro_lote) ';
-    $sql .= 'select c.numero, c.proveedor_id, c.fecha, dc.producto_id, dc.cantidad, dc.nro_lote ';
-    $sql .= 'from detalle_compra dc join compra c on dc.compra_id = c.id ';
-    $sql .= 'where dc.producto_id in (select id from producto2) and exportado = 0 and nro_lote not like \'i0%\'';
-    $results = $statement->execute($sql, array(1));
-    
-    $sql =  'update detalle_compra set exportado = 1 where producto_id in (select id from producto2) and exportado = 0';
-    $results = $statement->execute($sql, array(1));
-*/
-    $this->getUser()->setFlash('notice', 'Actualización correcta');
-    $this->setTemplate('actualizar');
-  }
-  
-  public function executeAct_exp(sfWebRequest $request){
-    $statement = Doctrine_Manager::getInstance()->connection();  
-    $sql = file_get_contents('http://ventas.ntiimplantes.com.ar/web/datos_traza.php');
-    $sqls = explode('; ', $sql);
-    foreach($sqls as $k => $v){
-      $results = $statement->execute($v);
-    }
-    
-    $this->getUser()->setFlash('notice', 'Actualización correcta');
-    $this->setTemplate('actualizar');
-  }
- 
+   
   public function executeIndex(sfWebRequest $request)
   {
-		/*
-    $entorno = sfConfig::get('sf_environment');
-    if($entorno != 'dev'){
-      if($this->getUser()->hasGroup('Blanco')){
-        $filename = './bckp/ventas-'.date("Ymd", time()).'.sql.zip';
-      }else{
-        $filename = './bckp/ntiimplantes_db-'.date("Ymd", time()).'.sql.zip';
-      }
-      if(!file_exists ($filename)){
-        $db = new Backup_Database();
-        $db->backupTables();
-        $mensaje = Swift_Message::newInstance();
-        $mensaje->setFrom(array('info@ntiimplantes.com.ar' => 'NTI implantes'));
-        $mensaje->setTo(array('alfredochoternasty@gmail.com' => 'Backup Sistema'));
-        if($this->getUser()->hasGroup('Blanco')){
-          $mensaje->setSubject('backup blanco NTI');
-        }else{
-          $mensaje->setSubject('backup negro NTI');
-        }
-        $mensaje->setBody('aca esta el backup');
-        $mensaje->attach(Swift_Attachment::fromPath($filename));
-        $mensaje->setContentType("text/html");
-        $this->getMailer()->send($mensaje);
-      }	
-    }
-
-    
-    $filename = './sql/nuevo.sql';
-    if(file_exists ($filename)){
-      $db = new Backup_Database();
-      $db->ejecutar_archivo_sql($filename);
-    }
-    //borra los pedido sin detalle
-    
-    if ($request->getParameter('page')){
-      $this->setPage($request->getParameter('page'));
-    }	
-    */
     parent::executeIndex($request);
     
+    //borra los pedidos que iniciados y que no tienen detalle
+    //el pedido su hay detalle se hace una cabecera, y despues se borra el detalle y la cabecera queda sola
     $q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
     
     $modulo_pedidos = $this->getUser()->getVarConfig('modulo_pedidos');
@@ -118,6 +48,17 @@ class inicioActions extends autoInicioActions
     }
     
   }
-  
+
+ 	public function executeListImprimirStockMinimo(sfWebRequest $request){ 
+    $consulta = $this->buildQuery();
+    $datos = $consulta->execute();
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("imprimir_stock_minimo", array('datos' => $datos)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("stock_mininmo.pdf");    
+    return sfView::NONE;
+  }
   
 }

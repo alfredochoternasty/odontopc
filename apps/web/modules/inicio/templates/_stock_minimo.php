@@ -1,4 +1,15 @@
 <div style="position:absolute;top:0; right:0; width:45%;">
+<div class="sf_admin_actions_block floatleft">
+	<a tabindex="0" href="#sf_admin_actions_menu" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="sf_admin_actions_button">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<?php echo __('Actions', array(), 'sf_admin') ?>
+	</a>
+	<div id="sf_admin_actions_menu" class="ui-helper-hidden fg-menu fg-menu-has-icons">
+		<ul class="sf_admin_actions" id="sf_admin_actions_menu_list">
+			<?php echo link_to(__('Imprimir', array(), 'messages'), 'inicio/ListImprimirStockMinimo', array()) ?>
+		</ul>
+	</div>
+</div>
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
 		<h1><?php echo __('Productos con Stock por debajo del Mínimo', array(), 'messages') ?></h1>
