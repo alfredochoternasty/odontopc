@@ -864,7 +864,6 @@ FacturasAfip:
   relations:
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, onDelete: RESTRICT}
     Cliente: {type: one, class: Cliente, local: cliente_id, onDelete: RESTRICT}
-    Resumen: {type: one, class: Resumen, local: id, onDelete: RESTRICT}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 Zona:
   connection: doctrine

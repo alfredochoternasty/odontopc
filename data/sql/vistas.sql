@@ -286,32 +286,6 @@ from
 		left outer join producto p on dlp.producto_id = p.id
 where 
 	lp.activo = 1;
-	
-CREATE VIEW facturas_afip as
-SELECT
-	r.id,
-	r.tipofactura_id, 
-	r.pto_vta, 
-	r.nro_factura,
-	fecha, 
-	r.cliente_id,
-	r.afip_cae AS cae,
-	SUM(dr.iva) AS iva,
-	SUM(dr.sub_total) AS neto,
-	SUM(dr.total) AS total,
-	concat(c.apellido, ' ', c.nombre) as cliente,
-	c.zona_id
-FROM resumen r
-	JOIN detalle_resumen dr ON r.id = dr.resumen_id
-	join cliente c ON r.cliente_id = c.id
-WHERE afip_estado > 0
-GROUP BY 
-	r.id,
-	r.pto_vta,
-	r.nro_factura,
-	fecha,
-	r.cliente_id,
-	r.afip_mensaje;
 
 CREATE VIEW ventas_zona as
 SELECT 

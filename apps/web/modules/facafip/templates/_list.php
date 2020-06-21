@@ -51,18 +51,6 @@
     </tfoot>
 
     <tbody>
-				<?php /*
-					if ($hasFilters->count() > 0) {
-						echo '<tr><td> Filtro utilizado: ';
-						foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-							@$valor = $hasFilters->getRaw($name);
-							$tag = $field->getConfig('label');
-							$tag = empty($tag)?$name:$tag;							
-							if (!empty($valor)) echo $tag.' = '.$valor;
-						}
-						echo '</td></tr>';
-					} */
-				?>
       <?php foreach ($pager->getResults() as $i => $facturas_afip): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
           

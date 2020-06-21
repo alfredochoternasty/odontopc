@@ -253,10 +253,10 @@ class devprodActions extends autoDevprodActions
 			$regfe['ImpIVA'] = $dev->getIva();
 			$regfe['ImpTrib'] = 0;
 			$regfe['ImpTotConc'] = 0;
-			$regfe['ImpNeto'] = $dev->getPrecio();
+			$regfe['ImpNeto'] = $dev->precio*$dev->cantidad;
 			$regfeiva[] = array(
 				'Id' => 5, 
-				'BaseImp' => $dev->getPrecio(),
+				'BaseImp' => $dev->precio*$dev->cantidad,
 				'Importe' => $dev->getIva(),
 			);
 			$regfetrib = '';

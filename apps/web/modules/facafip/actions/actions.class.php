@@ -46,7 +46,7 @@ class facafipActions extends autoFacafipActions
 						$flag = true;
 				}
 				$fila = array(
-					$fila->getResumen()->getFactura(), 
+					$fila->getTipoFactura().' - '.str_pad($fila->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($fila->nro_factura, 8, 0, STR_PAD_LEFT),
 					$fila->getFecha(), 
 					trim($fila->getCliente()), 
 					str_replace('.', ',', $fila->getIva()), 
