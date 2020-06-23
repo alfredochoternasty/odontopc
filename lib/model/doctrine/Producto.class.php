@@ -119,4 +119,13 @@ class Producto extends BaseProducto
 		return Doctrine::getTable('ListaPrecio')->find($p_lis)->getPrecioLista($this->getId(), $this->getPrecioVta());
   }
    
+	public function getLotesDisponibles($p_zona){
+		$q = Doctrine::getTable('Lote')->createQuery('p')
+			->where('producto_id = ?', $this->getId())
+			->andWhere('stock > 0')
+			->andWhere('zona_id = ?', $p_zona)
+			->andWhere("nro_lote not like 'er%'")
+			->orderBy('fecha_vto ASC');
+		return $q->execute();
+	}
 }

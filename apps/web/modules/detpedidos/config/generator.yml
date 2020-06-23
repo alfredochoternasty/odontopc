@@ -21,6 +21,7 @@ generator:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
         actions:
+          asignar_lote: ~
           vender: ~
           imprimir: ~
       filter: {}

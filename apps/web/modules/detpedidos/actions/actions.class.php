@@ -43,6 +43,15 @@ class detpedidosActions extends autoDetpedidosActions
     $this->redirect( 'resumen/new?pid='.$pid);
   }
   
+  public function executeListAsignarLote(sfWebRequest $request){
+    $pid = $this->getUser()->getAttribute('pid');
+    $detalle = Doctrine::getTable('Pedido')->find($pid)->getDetalle();
+    foreach ($detalle as $fila) {
+      $fila->AsigarLote();
+    }
+    $this->redirect('detpedidos/index?pid='.$pid);
+  }
+  
   public function executeGet_cantidad_lote(sfWebRequest $request){
   
     $q = Doctrine_Query::create()

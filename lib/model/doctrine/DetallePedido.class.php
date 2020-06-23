@@ -22,5 +22,50 @@ class DetallePedido extends BaseDetallePedido
   
   public function TotalFormato(){
     return sprintf($this->SimboloMoneda()." %01.2f", $this->getTotal());
-  }  
+  }
+  
+  public function AsigarLote(){
+    $zona_id = $this->getPedido()->getCliente()->zona_id;
+    $lotes_disponibles = $this->getProducto()->getLotesDisponibles($zona_id);
+    if (!empty($lotes_disponibles[0])) {
+      $lote = $lotes_disponibles[0];
+      
+      // si el stock alcanza asigno el lote
+      if (($lote->stock - $this->cantidad) > 0) { 
+        $this->nro_lote = $lote->nro_lote;
+        $this->save();
+      } else {
+        unset($lotes_disponibles[0]);
+        
+        //si la cantidad solicitada es mayor que el stock
+        $this->nro_lote = $lote->nro_lote;
+        $resto = ($this->cantidad - $lote->stock);
+        $this->cantidad = $lote->stock; //modifico la cantidad con del pedido con la cantidad del stock
+        $this->total = $this->precio * $lote->stock; //actualizo el total xq modifiue la cantidad
+        $this->save();
+
+        if (empty($lotes_disponibles[1])) {
+          $this->observacion = 'Faltan '.$resto.' unidades por no haber lotes disponibles';
+          $this->save();
+        } else {  
+          foreach ($lotes_disponibles as $lote) {
+            $nueva_cantidad = (($lote->stock - $resto) > 0)? $resto : $lote->stock;
+            $nueva_fila = new DetallePedido();
+            $nueva_fila->pedido_id = $fila->pedido_id;
+            $nueva_fila->producto_id = $fila->producto_id;
+            $nueva_fila->precio = $fila->precio;
+            $nueva_fila->cantidad = $nueva_cantidad;
+            $nueva_fila->total = $fila->precio * $nueva_cantidad;
+            $nueva_fila->nro_lote = $fila->nro_lote;
+            $nueva_fila->save();
+            $resto = ($resto - $lote->stock);
+            if ($resto < 0) break;
+          }
+        }
+      }
+    } else{
+      $this->observacion = 'No hay lotes disponibles';
+      $this->save();     
+    }
+  }
 }
