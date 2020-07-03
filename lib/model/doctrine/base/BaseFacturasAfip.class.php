@@ -21,7 +21,6 @@ Doctrine_Manager::getInstance()->bindComponent('FacturasAfip', 'doctrine');
  * @property integer $zona_id
  * @property TipoFactura $TipoFactura
  * @property Cliente $Cliente
- * @property Resumen $Resumen
  * @property Zona $Zona
  * 
  * @method integer      getId()             Returns the current record's "id" value
@@ -38,7 +37,6 @@ Doctrine_Manager::getInstance()->bindComponent('FacturasAfip', 'doctrine');
  * @method integer      getZonaId()         Returns the current record's "zona_id" value
  * @method TipoFactura  getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method Cliente      getCliente()        Returns the current record's "Cliente" value
- * @method Resumen      getResumen()        Returns the current record's "Resumen" value
  * @method Zona         getZona()           Returns the current record's "Zona" value
  * @method FacturasAfip setId()             Sets the current record's "id" value
  * @method FacturasAfip setTipofacturaId()  Sets the current record's "tipofactura_id" value
@@ -54,7 +52,6 @@ Doctrine_Manager::getInstance()->bindComponent('FacturasAfip', 'doctrine');
  * @method FacturasAfip setZonaId()         Sets the current record's "zona_id" value
  * @method FacturasAfip setTipoFactura()    Sets the current record's "TipoFactura" value
  * @method FacturasAfip setCliente()        Sets the current record's "Cliente" value
- * @method FacturasAfip setResumen()        Sets the current record's "Resumen" value
  * @method FacturasAfip setZona()           Sets the current record's "Zona" value
  * 
  * @package    odontopc
@@ -132,11 +129,6 @@ abstract class BaseFacturasAfip extends sfDoctrineRecord
 
         $this->hasOne('Cliente', array(
              'local' => 'cliente_id',
-             'foreign' => 'id',
-             'onDelete' => 'RESTRICT'));
-
-        $this->hasOne('Resumen', array(
-             'local' => 'id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

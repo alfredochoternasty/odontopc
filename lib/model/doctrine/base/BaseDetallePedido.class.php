@@ -15,29 +15,32 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePedido', 'doctrine');
  * @property decimal $total
  * @property string $observacion
  * @property string $nro_lote
+ * @property string $asignacion_lote
  * @property Pedido $Pedido
  * @property Producto $Producto
  * 
- * @method integer       getId()          Returns the current record's "id" value
- * @method integer       getPedidoId()    Returns the current record's "pedido_id" value
- * @method integer       getProductoId()  Returns the current record's "producto_id" value
- * @method decimal       getPrecio()      Returns the current record's "precio" value
- * @method integer       getCantidad()    Returns the current record's "cantidad" value
- * @method decimal       getTotal()       Returns the current record's "total" value
- * @method string        getObservacion() Returns the current record's "observacion" value
- * @method string        getNroLote()     Returns the current record's "nro_lote" value
- * @method Pedido        getPedido()      Returns the current record's "Pedido" value
- * @method Producto      getProducto()    Returns the current record's "Producto" value
- * @method DetallePedido setId()          Sets the current record's "id" value
- * @method DetallePedido setPedidoId()    Sets the current record's "pedido_id" value
- * @method DetallePedido setProductoId()  Sets the current record's "producto_id" value
- * @method DetallePedido setPrecio()      Sets the current record's "precio" value
- * @method DetallePedido setCantidad()    Sets the current record's "cantidad" value
- * @method DetallePedido setTotal()       Sets the current record's "total" value
- * @method DetallePedido setObservacion() Sets the current record's "observacion" value
- * @method DetallePedido setNroLote()     Sets the current record's "nro_lote" value
- * @method DetallePedido setPedido()      Sets the current record's "Pedido" value
- * @method DetallePedido setProducto()    Sets the current record's "Producto" value
+ * @method integer       getId()              Returns the current record's "id" value
+ * @method integer       getPedidoId()        Returns the current record's "pedido_id" value
+ * @method integer       getProductoId()      Returns the current record's "producto_id" value
+ * @method decimal       getPrecio()          Returns the current record's "precio" value
+ * @method integer       getCantidad()        Returns the current record's "cantidad" value
+ * @method decimal       getTotal()           Returns the current record's "total" value
+ * @method string        getObservacion()     Returns the current record's "observacion" value
+ * @method string        getNroLote()         Returns the current record's "nro_lote" value
+ * @method string        getAsignacionLote()  Returns the current record's "asignacion_lote" value
+ * @method Pedido        getPedido()          Returns the current record's "Pedido" value
+ * @method Producto      getProducto()        Returns the current record's "Producto" value
+ * @method DetallePedido setId()              Sets the current record's "id" value
+ * @method DetallePedido setPedidoId()        Sets the current record's "pedido_id" value
+ * @method DetallePedido setProductoId()      Sets the current record's "producto_id" value
+ * @method DetallePedido setPrecio()          Sets the current record's "precio" value
+ * @method DetallePedido setCantidad()        Sets the current record's "cantidad" value
+ * @method DetallePedido setTotal()           Sets the current record's "total" value
+ * @method DetallePedido setObservacion()     Sets the current record's "observacion" value
+ * @method DetallePedido setNroLote()         Sets the current record's "nro_lote" value
+ * @method DetallePedido setAsignacionLote()  Sets the current record's "asignacion_lote" value
+ * @method DetallePedido setPedido()          Sets the current record's "Pedido" value
+ * @method DetallePedido setProducto()        Sets the current record's "Producto" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -90,6 +93,10 @@ abstract class BaseDetallePedido extends sfDoctrineRecord
              'length' => 200,
              ));
         $this->hasColumn('nro_lote', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('asignacion_lote', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
              ));

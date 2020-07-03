@@ -50,7 +50,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Doctrine_Collection $MovimientoProducto
  * @property Doctrine_Collection $CobroResumen
  * @property Doctrine_Collection $ProductoTraza
- * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $VentasZona
  * 
  * @method integer             getId()                 Returns the current record's "id" value
@@ -96,7 +95,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
  * @method Doctrine_Collection getCobroResumen()       Returns the current record's "CobroResumen" collection
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
- * @method Doctrine_Collection getFacturasAfip()       Returns the current record's "FacturasAfip" collection
  * @method Doctrine_Collection getVentasZona()         Returns the current record's "VentasZona" collection
  * @method Resumen             setId()                 Sets the current record's "id" value
  * @method Resumen             setFecha()              Sets the current record's "fecha" value
@@ -141,7 +139,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
  * @method Resumen             setCobroResumen()       Sets the current record's "CobroResumen" collection
  * @method Resumen             setProductoTraza()      Sets the current record's "ProductoTraza" collection
- * @method Resumen             setFacturasAfip()       Sets the current record's "FacturasAfip" collection
  * @method Resumen             setVentasZona()         Sets the current record's "VentasZona" collection
  * 
  * @package    odontopc
@@ -342,10 +339,6 @@ abstract class BaseResumen extends sfDoctrineRecord
         $this->hasMany('ProductoTraza', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
-
-        $this->hasMany('FacturasAfip', array(
-             'local' => 'id',
-             'foreign' => 'id'));
 
         $this->hasMany('VentasZona', array(
              'local' => 'id',
