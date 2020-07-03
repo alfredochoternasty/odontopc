@@ -2,8 +2,8 @@
 	echo '<div id="filtro_utilizado" style="text-align:center"> Filtro utilizado: ';
 	foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
 		@$valor = $hasFilters->getRaw($name);
-		if (!empty($valor)) {
-			@$tipo = $field->getType();
+		@$tipo = $field->getType();
+		if (isset($valor)) {
 			switch($tipo){
 				case 'ForeignKey':
 					if (!empty($valor))
@@ -24,13 +24,13 @@
 					if (!empty($valor['text']))
 						$valor = $valor['text'];
 					else 
-						$valor = '';
+						$valor = null;
 					break;
 				case 'Boolean':
 					$valor = $valor==1?'Si':'No';
 					break;
 			}
-			if (!empty($valor)) {
+			if (isset($valor)) {
 				$tag = empty($filters[$name]->renderLabel())?$name:$filters[$name]->renderLabel();
 				echo $tag.' = '.$valor.' - ';
 			}

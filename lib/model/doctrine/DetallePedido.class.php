@@ -24,7 +24,7 @@ class DetallePedido extends BaseDetallePedido
     return sprintf($this->SimboloMoneda()." %01.2f", $this->getTotal());
   }
   
-  public function AsigarLote(){
+  public function AsignarLote(){
     $zona_id = $this->getPedido()->getCliente()->zona_id;
     $lotes_disponibles = $this->getProducto()->getLotesDisponibles($zona_id);
     if (!empty($lotes_disponibles[0])) {
@@ -33,6 +33,7 @@ class DetallePedido extends BaseDetallePedido
       // si el stock alcanza asigno el lote
       if (($lote->stock - $this->cantidad) > 0) { 
         $this->nro_lote = $lote->nro_lote;
+        $this->asignacion_lote = 'OK';
         $this->save();
       } else {
         unset($lotes_disponibles[0]);
@@ -42,12 +43,13 @@ class DetallePedido extends BaseDetallePedido
         $resto = ($this->cantidad - $lote->stock);
         $this->cantidad = $lote->stock; //modifico la cantidad con del pedido con la cantidad del stock
         $this->total = $this->precio * $lote->stock; //actualizo el total xq modifiue la cantidad
+        $this->asignacion_lote = 'ok - se agrega otra fila para completar la cantidad con otro lote';
         $this->save();
 
         if (empty($lotes_disponibles[1])) {
-          $this->observacion = 'Faltan '.$resto.' unidades por no haber lotes disponibles';
+          $this->asignacion_lote = 'Faltan '.$resto.' unidades por no tener lotes disponibles';
           $this->save();
-        } else {  
+        } else { 
           foreach ($lotes_disponibles as $lote) {
             $nueva_cantidad = (($lote->stock - $resto) > 0)? $resto : $lote->stock;
             $nueva_fila = new DetallePedido();
@@ -57,6 +59,7 @@ class DetallePedido extends BaseDetallePedido
             $nueva_fila->cantidad = $nueva_cantidad;
             $nueva_fila->total = $fila->precio * $nueva_cantidad;
             $nueva_fila->nro_lote = $fila->nro_lote;
+            $this->asignacion_lote = 'Fila Agregada para completar pedido con otro lote';
             $nueva_fila->save();
             $resto = ($resto - $lote->stock);
             if ($resto < 0) break;
@@ -64,7 +67,7 @@ class DetallePedido extends BaseDetallePedido
         }
       }
     } else{
-      $this->observacion = 'No hay lotes disponibles';
+      $this->asignacion_lote = 'No hay lotes disponibles';
       $this->save();     
     }
   }

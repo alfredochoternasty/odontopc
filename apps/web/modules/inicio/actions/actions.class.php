@@ -46,7 +46,7 @@ class inicioActions extends autoInicioActions
       $q2 = Doctrine::getTable('ClienteSeguimiento')->createQuery('cs')->where('cs.prox_contac_fecha >= \''.date("Y-m-d").'\'')->orderBy('cs.prox_contac_fecha DESC')->limit('20');
       $this->pager3 = $q2->execute();
     }
-    
+
   }
 
  	public function executeListImprimirStockMinimo(sfWebRequest $request){ 

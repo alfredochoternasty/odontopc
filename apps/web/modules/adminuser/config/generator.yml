@@ -13,6 +13,8 @@ generator:
 
     config:
       fields:
+        is_active: { label: Activo }
+        is_super_admin: { label: Es Administrador    }
         username: { label: Usuario }
         first_name: { label: Nombres }
         last_name: { label: Apellido }
@@ -20,15 +22,13 @@ generator:
         password_again: { label: "Clave (denuevo)" }
         email_address: { label: "Email" }
       list:
-        #table_method: retrieveByUsername
         title: Usuarios
-        display: [username, first_name, =last_name, es_cliente]
+        display: [is_active, username, first_name, =last_name, es_cliente]
         object_actions:
             _edit: {label: Modificar}
             _delete: {label: Eliminar}
       form:
         class: sfGuardUserAdminForm
-        #display: [username, first_name, last_name, email_address, password, password_again]
       filter:
         display: [username, first_name, last_name, email_address, es_cliente]
       edit:

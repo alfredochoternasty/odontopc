@@ -10,4 +10,8 @@
  */
 class adminuserGeneratorConfiguration extends BaseAdminuserGeneratorConfiguration
 {
+	public function getFilterDefaults()
+	{    
+			return array('es_cliente' => '0');
+	}	
 }

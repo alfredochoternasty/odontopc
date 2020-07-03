@@ -127,13 +127,22 @@ class resumenActions extends autoResumenActions
 			}
 			
 			if ($todos_tienen_lote == 'S') {
-				$this->getUser()->setFlash('notice', 'Esta por vender el Pedido Nº '.$this->pedido->getId().' del cliente '.$this->pedido->getCliente(), false);
+				$this->getUser()->setFlash('notice', 'Esta por vender el Pedido Nº '.$this->pedido->id.' del cliente '.$this->pedido->getCliente(), false);
 				$this->resumen = new Resumen();
-				$this->resumen->setClienteId($this->pedido->getClienteId());
-				$this->resumen->setPedidoId($this->pedido->getId());
-				$this->form = $this->configuration->getForm($this->resumen);
-				$this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->getId())));
-				$this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->getClienteId())));
+				$this->resumen->setClienteId($this->pedido->cliente_id);
+				$this->resumen->setPedidoId($this->pedido->id);
+				
+				$parametros_form = array(
+					'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
+					'zona_id' => $this->pedido->getCliente()->zona_id,
+					'usuario_id' => $this->getUser()->getGuardUser()->getId(),
+				);
+				
+				$cliente = Doctrine::getTable('Cliente')->find($this->pedido->cliente_id);
+				$this->form = $this->configuration->getForm($this->resumen, $parametros_form);
+				$this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->id)));
+				$this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $cliente->id)));
+				$this->form->setWidget('tipofactura_id', new sfWidgetFormChoice(array('choices' => $this->pedido->getCliente()->getTiposFacturas())));
 			} elseif($todos_tienen_lote = 'N') {
 				$this->getUser()->setFlash('error', 'No se puede vender este pedido, porque hay productos que no tienen lote cargado');
 				$this->redirect('@pedido_pedidos');
@@ -168,15 +177,9 @@ class resumenActions extends autoResumenActions
 		$modulo_factura = $this->getUser()->getVarConfig('modulo_factura');
 		$options = '';
 		if ($modulo_factura == 'S') {
-			$cliente_id = $request->getParameter('cid');
-			$cliente = Doctrine::getTable('Cliente')->find($cliente_id);
-			$tipo_facts = Doctrine_Core::getTable('TipoFactura')->createQuery()->execute();
-			foreach ($tipo_facts as $tipo_fact) {
-				$fact_cond_fiscales = explode(',', $tipo_fact->cond_fiscales);
-				if (in_array($cliente->condicionfiscal_id, $fact_cond_fiscales)) {
-					$options .= '<option value="'.$tipo_fact->id.'">'.$tipo_fact->nombre.'</option>'; 
-				}
-			}
+			$cliente = Doctrine::getTable('Cliente')->find($request->getParameter('cid'));
+			$opciones = $cliente->getTiposFacturas();
+			foreach ($opciones as $k => $v) $options .= '<option value="'.$k.'">'.$v.'</option>';
 		} else {
 			if ($cliente->zona_id > 1) {
 				$options = '<option value="1">Venta</option>'; 

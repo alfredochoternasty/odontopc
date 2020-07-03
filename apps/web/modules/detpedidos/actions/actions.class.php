@@ -47,7 +47,7 @@ class detpedidosActions extends autoDetpedidosActions
     $pid = $this->getUser()->getAttribute('pid');
     $detalle = Doctrine::getTable('Pedido')->find($pid)->getDetalle();
     foreach ($detalle as $fila) {
-      $fila->AsigarLote();
+      $fila->AsignarLote();
     }
     $this->redirect('detpedidos/index?pid='.$pid);
   }

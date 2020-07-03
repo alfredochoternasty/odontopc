@@ -55,4 +55,14 @@ class Cliente extends BaseCliente
   function getTelefonos() {
 	  return trim($this->getTelefono()).'/'.trim($this->getCelular());
   }
+	
+	public function getTiposFacturas(){
+		$tipo_facts = Doctrine::getTable('TipoFactura')->createQuery()->execute();
+		$options[] = '';
+		foreach ($tipo_facts as $tipo_fact) {
+			$fact_cond_fiscales = explode(',', $tipo_fact->cond_fiscales);
+			if (in_array($this->condicionfiscal_id, $fact_cond_fiscales)) $options[$tipo_fact->id] = $tipo_fact->nombre;
+		}
+		return $options;
+	}
 }

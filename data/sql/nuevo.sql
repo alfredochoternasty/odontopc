@@ -1,6 +1,9 @@
 ALTER TABLE `dev_producto`
 	CHANGE COLUMN `producto_id` `producto_id` INT(11) NULL AFTER `resumen_id`,
 	CHANGE COLUMN `cantidad` `cantidad` INT(11) NULL DEFAULT '1' AFTER `producto_id`;
+
+ALTER TABLE `detalle_pedido`
+	ADD COLUMN `asignacion_lote` VARCHAR(50) NULL DEFAULT NULL AFTER `nro_lote`;
 	
 /*
 DROP TABLE 
