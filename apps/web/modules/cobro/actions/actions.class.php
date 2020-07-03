@@ -19,7 +19,7 @@ class cobroActions extends autoCobroActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     
     if ($form->isValid()) {
-			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';			
+			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
 			$cobro = $form->save();
 			
 			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
@@ -61,6 +61,7 @@ class cobroActions extends autoCobroActions
 				$cobro_alerta_mail = $this->getUser()->getVarConfig('cobro_alerta_mail');
 				$cobro_modelo_impresion = $this->getUser()->getVarConfig('cobro_modelo_impresion');
 				$mensaje = Swift_Message::newInstance();
+				$mensaje->setFrom(array('implantesnti@gmail.com'));
 				$mensaje->setTo(array($cobro_alerta_mail));
 				$mensaje->setSubject('Cobro realizado en '.$cobro->getCliente()->getZona());
 				$mensaje->setBody($this->getPartial($cobro_modelo_impresion, array("cobro" => $cobro)));
