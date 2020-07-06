@@ -194,11 +194,11 @@
 	</table>
 	<table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
-      <h1><span class="ui-icon ui-icon-triangle-1-s"></span>Total a Pagar</h1>
+      <h1><span class="ui-icon ui-icon-triangle-1-s"></span>Total</h1>
     </caption>
 		<tbody>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total a Pagar: $ <span id="total_pagar" style="color:red;">0</span></b></td>
+					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total: $ <span id="total_pagar" style="color:red;">0</span></b></td>
 				</tr>
 		<tbody>
 	</table>

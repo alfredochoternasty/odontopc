@@ -123,7 +123,7 @@ html { overflow: -moz-scrollbars-vertical !important; }
     border-color: #333;
   }
   .sf_admin_text input[type=text], .sf_admin_text input[type=password], textarea { padding: 3px 5px; }
-  .sf_admin_filter input[type=text] { margin-right: -28px; }
+  .sf_admin_filter input[type=text] { margin-right: -25px; }
 
   /* form element */
   .sf_admin_form_row { padding: 5px 9px; margin-bottom: 5px; }

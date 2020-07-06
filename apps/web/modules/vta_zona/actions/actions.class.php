@@ -140,4 +140,9 @@ class vta_zonaActions extends autoVta_zonaActions
 		}
 		$this->redirect('pagocomis/edit?id='.$pago_comision->id);
   }
+	
+	public function executeIndex(sfWebRequest $request){
+		parent::executeIndex($request);
+		$this->zona_id = $this->getUser()->getGuardUser()->getZonaId();
+	}
 }

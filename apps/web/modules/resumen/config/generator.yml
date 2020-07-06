@@ -35,7 +35,7 @@ generator:
         batch_actions:
           _delete: {label: Eliminar}
       filter:
-        display: [tipofactura_id, zona_id, fecha, cliente_id, nro_factura]
+        display: [tipofactura_id, fecha, cliente_id, nro_factura]
       form:
         display: [fecha, cliente_id, tipofactura_id, pto_vta, nro_factura, tipo_venta_id, cuit, afip, saldo_pesos, saldo_dolar, observacion]
       edit:

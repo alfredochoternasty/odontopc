@@ -63,22 +63,28 @@
 		<tr><td style="text-align:right;"><b style="font-size:20px; color: #F00;">Total Comisiones $ <?php echo $suma_total ?></b></td></tr>
 	</table>
 	<br>
+	<?php 
+		$devueltos = Doctrine_core::getTable('DevProducto')->findByPagoComisionId($pago->id);
+		if (!empty($devueltos[0])):
+	?>
 	<table border="1" cellspacing="0" cellpadding="1" width="100%">
-					<tr>
-						<th style="background: #CCC;">Fecha</th>
-						<th style="background: #CCC;">Factura</th>
-						<th style="background: #CCC;">Cliente</th>
-						<th style="background: #CCC;">Producto</th>
-						<th style="background: #CCC;">Precio</th>
-						<th style="background: #CCC;">Cant.</th>
-						<th style="background: #CCC;">Neto</th>
-						<th style="background: #CCC;">IVA</th>
-						<th style="background: #CCC;">Total</th>
-						<th style="background: #CCC;">Porc.</th>
-						<th style="background: #CCC;">Comisi&oacute;n</th>
-					</tr>
+		<tr>
+			<th colspan="11" style="background: #CCC;">Devoluciones</th>
+		</tr>
+		<tr>
+			<th style="background: #CCC;">Fecha</th>
+			<th style="background: #CCC;">Factura</th>
+			<th style="background: #CCC;">Cliente</th>
+			<th style="background: #CCC;">Producto</th>
+			<th style="background: #CCC;">Precio</th>
+			<th style="background: #CCC;">Cant.</th>
+			<th style="background: #CCC;">Neto</th>
+			<th style="background: #CCC;">IVA</th>
+			<th style="background: #CCC;">Total</th>
+			<th style="background: #CCC;">Porc.</th>
+			<th style="background: #CCC;">Comisi&oacute;n</th>
+		</tr>
 		<?php 
-			$devueltos = Doctrine_core::getTable('DevProducto')->findByPagoComisionId($pago->id);
 			$tot_descuento = 0;
 				foreach ($devueltos as $devuelto): ?>
 					<tr>
@@ -126,6 +132,7 @@
 	<table border="1" cellspacing="0" cellpadding="1" width="100%">
 		<tr><td style="text-align:right;"><b style="font-size:20px; color: #F00;">Total Devoluciones $ <?php echo $tot_descuento ?></b></td></tr>
 	</table>
+	<?php endif; ?>
 	<br>
 	<br>
 	<table border="1" cellspacing="0" cellpadding="1" width="100%">

@@ -17,7 +17,11 @@ class devprodActions extends autoDevprodActions
 {
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = $this->configuration->getForm();
+		$parametros = array(
+			'zona_id' => $this->getUser()->getGuardUser()->getZonaId(),
+			'usuario_id' => $this->getUser()->getGuardUser()->getId(),
+		);
+    $this->form = $this->configuration->getForm(null, $parametros);
 		$cliente_id = $this->getUser()->getAttribute('cliente_id');
 		if (!empty($cliente_id)) $this->form->setDefault('cliente_id', $cliente_id);
     $this->dev_producto = $this->form->getObject();
@@ -28,14 +32,13 @@ class devprodActions extends autoDevprodActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $dev_producto = $form->save();
-			$dev_producto->zona_id = $dev_producto->getCliente()->zona_id;
-			$dev_producto->usuario = $this->getUser()->getGuardUser()->getId();
 			$dev_producto->save();
 			
-			//solo aumento stock cuando sea de parana y no se este devolviendo de un remito
 			if ($dev_producto->zona_id > 1) {
+				 // solo aumento stock
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_producto)));
 			} else {
+				// si la devolucion no es de un remito entonces aumento el stock
 				$det_res = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($dev_producto->resumen_id, $dev_producto->producto_id, $dev_producto->nro_lote);
 				if (empty($det_res[0]->det_remito_id)) {
 					$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.delete', array('object' => $dev_producto)));

@@ -22,13 +22,11 @@ class ClienteTable extends Doctrine_Table
     }
 		
     public function retrieveConJoins(Doctrine_Query $q){
-			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Tipo t');
       $q->leftJoin($rootAlias . '.Localidad l');
-			$q->leftJoin($rootAlias . '.Zona z');
-			$q->leftJoin('z.UsuarioZona uz');
-			$q->andWhere('uz.usuario = '.$id);	
+			$q->andWhere($rootAlias . '.zona_id = '.$zid);
       return $q;
     }
     
@@ -71,16 +69,13 @@ class ClienteTable extends Doctrine_Table
     }
 	
 	public function getActivos(){
-		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+		$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
 		$query = Doctrine_Core::getTable('Cliente')
 		->createQuery('q')
-		->leftJoin('q.Zona z')
-		->leftJoin('z.UsuarioZona uz')
 		->where('q.activo = 1')
-		->andWhere('uz.usuario = '.$id)
+		->andWhere('q.zona_id = '.$zid)
 		->orderBy('apellido ASC, nombre ASC');
-		$result = $query->execute();
-		return $result;
+		return $query->execute();
 	}	
 	
 	public function getClientesEnviarCurso($p_id_curso){

@@ -49,7 +49,9 @@ jQuery().ready(function(){
 		// modal window for filters
 		$('.sf_admin_filter').dialog({
 			autoOpen: false,
+      modal: false,
 			width: 800,
+      height: 530,
 			close: function(evt, ui){
 				$('#sf_admin_filter_button').removeClass('ui-state-active');
 			},

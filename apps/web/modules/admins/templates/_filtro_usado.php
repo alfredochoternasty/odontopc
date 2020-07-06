@@ -7,7 +7,11 @@
 			switch($tipo){
 				case 'ForeignKey':
 					if (!empty($valor))
-						$valor = Doctrine::getTable(ucfirst(str_replace('_id', '', $name)))->find($valor);
+						if ($name != 'usuario') {
+							$valor = Doctrine::getTable(ucfirst(str_replace('_id', '', $name)))->find($valor);
+						} else {
+							$valor = Doctrine::getTable('SfGuardUser')->find($valor);
+						}
 					break;
 				case 'Date':
 					if (array_key_exists('from', $valor)) {

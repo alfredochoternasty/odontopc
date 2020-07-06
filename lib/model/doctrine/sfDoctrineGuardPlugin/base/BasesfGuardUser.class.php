@@ -16,8 +16,10 @@
  * @property boolean $is_super_admin
  * @property timestamp $last_login
  * @property boolean $es_cliente
+ * @property type: integer $zona_id
  * @property Doctrine_Collection $Groups
  * @property Doctrine_Collection $Permissions
+ * @property Zona $Zona
  * @property Doctrine_Collection $sfGuardUserPermission
  * @property Doctrine_Collection $sfGuardUserGroup
  * @property sfGuardRememberKey $RememberKeys
@@ -46,6 +48,7 @@
  * @method boolean               getEsCliente()             Returns the current record's "es_cliente" value
  * @method Doctrine_Collection   getGroups()                Returns the current record's "Groups" collection
  * @method Doctrine_Collection   getPermissions()           Returns the current record's "Permissions" collection
+ * @method Zona                  getZona()                  Returns the current record's "Zona" value
  * @method Doctrine_Collection   getSfGuardUserPermission() Returns the current record's "sfGuardUserPermission" collection
  * @method Doctrine_Collection   getSfGuardUserGroup()      Returns the current record's "sfGuardUserGroup" collection
  * @method sfGuardRememberKey    getRememberKeys()          Returns the current record's "RememberKeys" value
@@ -73,6 +76,7 @@
  * @method sfGuardUser           setEsCliente()             Sets the current record's "es_cliente" value
  * @method sfGuardUser           setGroups()                Sets the current record's "Groups" collection
  * @method sfGuardUser           setPermissions()           Sets the current record's "Permissions" collection
+ * @method sfGuardUser           setZona()                  Sets the current record's "Zona" value
  * @method sfGuardUser           setSfGuardUserPermission() Sets the current record's "sfGuardUserPermission" collection
  * @method sfGuardUser           setSfGuardUserGroup()      Sets the current record's "sfGuardUserGroup" collection
  * @method sfGuardUser           setRememberKeys()          Sets the current record's "RememberKeys" value
@@ -147,6 +151,9 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'type' => 'boolean',
              'default' => false,
              ));
+        $this->hasColumn('zona_id', 'type: integer', null, array(
+             'type' => 'type: integer',
+             ));
 
 
         $this->index('is_active_idx', array(
@@ -169,6 +176,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'refClass' => 'sfGuardUserPermission',
              'local' => 'user_id',
              'foreign' => 'permission_id'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
+             'foreign' => 'id'));
 
         $this->hasMany('sfGuardUserPermission', array(
              'local' => 'id',

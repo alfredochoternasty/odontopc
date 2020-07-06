@@ -36,7 +36,7 @@ generator:
           imprimir: {label: Imprimir}
           mail: {label: Enviar Mail}
       filter:
-        display: [fecha, cliente_id, producto_id, nro_lote, zona_id]
+        display: [fecha, cliente_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:

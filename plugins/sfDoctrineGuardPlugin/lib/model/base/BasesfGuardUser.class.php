@@ -34,10 +34,12 @@
  * @method boolean               getIsSuperAdmin()          Returns the current record's "is_super_admin" value
  * @method timestamp             getLastLogin()             Returns the current record's "last_login" value
  * @method integer               getEsCliente()             Returns the current record's "es_cliente" value
+ * @method integer               getZonaId()             Returns the current record's "zona_id" value
  * @method Doctrine_Collection   getGroups()                Returns the current record's "Groups" collection
  * @method Doctrine_Collection   getPermissions()           Returns the current record's "Permissions" collection
  * @method Doctrine_Collection   getSfGuardUserPermission() Returns the current record's "sfGuardUserPermission" collection
  * @method Doctrine_Collection   getSfGuardUserGroup()      Returns the current record's "sfGuardUserGroup" collection
+ * @method Doctrine_Collection   getZona()      Returns the current record's "Zona" collection
  * @method sfGuardRememberKey    getRememberKeys()          Returns the current record's "RememberKeys" value
  * @method sfGuardForgotPassword getForgotPassword()        Returns the current record's "ForgotPassword" value
  * @method sfGuardUser           setFirstName()             Sets the current record's "first_name" value
@@ -51,10 +53,12 @@
  * @method sfGuardUser           setIsSuperAdmin()          Sets the current record's "is_super_admin" value
  * @method sfGuardUser           setLastLogin()             Sets the current record's "last_login" value
  * @method sfGuardUser           setEsCliente()             Sets the current record's "es_cliente" value
+ * @method sfGuardUser           setZonaId()             Sets the current record's "es_cliente" value
  * @method sfGuardUser           setGroups()                Sets the current record's "Groups" collection
  * @method sfGuardUser           setPermissions()           Sets the current record's "Permissions" collection
  * @method sfGuardUser           setSfGuardUserPermission() Sets the current record's "sfGuardUserPermission" collection
  * @method sfGuardUser           setSfGuardUserGroup()      Sets the current record's "sfGuardUserGroup" collection
+ * @method sfGuardUser           setZona()      Sets the current record's "Zona" collection
  * @method sfGuardUser           setRememberKeys()          Sets the current record's "RememberKeys" value
  * @method sfGuardUser           setForgotPassword()        Sets the current record's "ForgotPassword" value
  * 
@@ -117,6 +121,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('zona_id', 'integer', null, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
 
 
         $this->index('is_active_idx', array(
@@ -155,6 +163,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasOne('sfGuardForgotPassword as ForgotPassword', array(
              'local' => 'id',
              'foreign' => 'user_id'));
+             
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
+             'foreign' => 'id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

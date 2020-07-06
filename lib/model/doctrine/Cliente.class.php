@@ -18,10 +18,10 @@ class Cliente extends BaseCliente
   }
 
   public function getDescAfip(){
-    $val = $this->getApellido().' '.$this->getNombre();
-	if ($this->zona_id == 1) $val .= ' - ('.$this->getZona().')';
-	$val .= ' - CUIT: '.$this->getCuit().' ('.$this->getCondfiscal().')';
-    return empty($val)? '' : $val;
+		$val = $this->getApellido().' '.$this->getNombre();
+		// if ($this->zona_id == 1) $val .= ' - ('.$this->getZona().')';
+		$val .= ' - CUIT: '.$this->getCuit().' ('.$this->getCondfiscal().')';
+		return empty($val)? '' : $val;
   }
   
   public function getListaPrecio(){

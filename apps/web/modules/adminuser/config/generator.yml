@@ -23,14 +23,14 @@ generator:
         email_address: { label: "Email" }
       list:
         title: Usuarios
-        display: [is_active, username, first_name, =last_name, es_cliente]
+        display: [is_active, Zona, username, first_name, =last_name, es_cliente]
         object_actions:
             _edit: {label: Modificar}
             _delete: {label: Eliminar}
       form:
         class: sfGuardUserAdminForm
       filter:
-        display: [username, first_name, last_name, email_address, es_cliente]
+        display: [is_active, zona_id, username, first_name, last_name, es_cliente]
       edit:
         title: Editrar Usuario "%%first_name%% %%last_name%%"
       new:

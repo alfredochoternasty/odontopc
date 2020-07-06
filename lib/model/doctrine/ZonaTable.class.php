@@ -18,12 +18,12 @@ class ZonaTable extends Doctrine_Table
     }
 		
 		public function getZonasUsuario(){
-			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-			$query = Doctrine_Core::getTable('Zona')
-			->createQuery('q')
-			->leftJoin('q.UsuarioZona uz')
-			->andWhere('uz.usuario = '.$id);
-			$result = $query->execute();
+			$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
+			$result = Doctrine::getTable('Zona')->find($zid);
+			// ->createQuery('q')
+			// ->leftJoin('q.UsuarioZona uz')
+			// ->andWhere('uz.usuario = '.$id);
+			// $result = $query->execute();
 			return $result;
 		}	
 }

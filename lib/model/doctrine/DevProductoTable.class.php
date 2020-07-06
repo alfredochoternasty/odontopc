@@ -18,14 +18,9 @@ class DevProductoTable extends Doctrine_Table
     }
     
     public function retrieveConJoins(Doctrine_Query $q){
-			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
       $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Cliente c');
-			$q->leftJoin('c.Zona z');
-			$q->leftJoin('z.UsuarioZona uz');			
-      // $q->leftJoin($rootAlias . '.Resumen res');
-      // $q->leftJoin($rootAlias . '.Producto p');
-			$q->andWhere('uz.usuario = '.$id);
+			$q->andWhere($rootAlias . '.zona_id = '.$zid);
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }

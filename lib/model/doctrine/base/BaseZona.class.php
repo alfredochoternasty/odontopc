@@ -11,6 +11,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property string $nombre
  * @property integer $cliente_id
  * @property Cliente $Cliente
+ * @property Doctrine_Collection $sfGuardUser
  * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $Resumen
  * @property Doctrine_Collection $Cobro
@@ -32,6 +33,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method string              getNombre()             Returns the current record's "nombre" value
  * @method integer             getClienteId()          Returns the current record's "cliente_id" value
  * @method Cliente             getCliente()            Returns the current record's "Cliente" value
+ * @method Doctrine_Collection getSfGuardUser()        Returns the current record's "sfGuardUser" collection
  * @method Doctrine_Collection getCompra()             Returns the current record's "Compra" collection
  * @method Doctrine_Collection getResumen()            Returns the current record's "Resumen" collection
  * @method Doctrine_Collection getCobro()              Returns the current record's "Cobro" collection
@@ -52,6 +54,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setNombre()             Sets the current record's "nombre" value
  * @method Zona                setClienteId()          Sets the current record's "cliente_id" value
  * @method Zona                setCliente()            Sets the current record's "Cliente" value
+ * @method Zona                setSfGuardUser()        Sets the current record's "sfGuardUser" collection
  * @method Zona                setCompra()             Sets the current record's "Compra" collection
  * @method Zona                setResumen()            Sets the current record's "Resumen" collection
  * @method Zona                setCobro()              Sets the current record's "Cobro" collection
@@ -102,6 +105,10 @@ abstract class BaseZona extends sfDoctrineRecord
         $this->hasOne('Cliente', array(
              'local' => 'cliente_id',
              'foreign' => 'id'));
+
+        $this->hasMany('sfGuardUser', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
 
         $this->hasMany('Compra', array(
              'local' => 'id',

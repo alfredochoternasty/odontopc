@@ -5,6 +5,9 @@ ALTER TABLE `dev_producto`
 ALTER TABLE `detalle_pedido`
 	ADD COLUMN `asignacion_lote` VARCHAR(50) NULL DEFAULT NULL AFTER `nro_lote`;
 	
+ALTER TABLE `sf_guard_user`
+	ADD COLUMN `zona_id` SMALLINT NULL DEFAULT NULL AFTER `es_cliente`;
+	
 /*
 DROP TABLE 
 	producto2, 
