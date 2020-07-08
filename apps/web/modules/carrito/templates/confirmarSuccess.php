@@ -1,4 +1,5 @@
 <?php	$base_url = $sf_user->getVarConfig('base_url'); ?>
+<?php include_partial('global/boton_volver', array('url' => '@carrito')) ?>
 <p style="width: 100%; text-align: center; top:75px;position:fixed;">Seleccione una opción para la entrega</p>
 <div class="form_terminar">
 	<form id="form_finalizar" style="width:90%;" action="<?php echo url_for('carrito/finalizar') ?>" onSubmit="">
@@ -18,13 +19,13 @@
 </div>
 
 <a href="<?php echo url_for('carrito/domicilio') ?>">
-<div class="boton_otro">
+<div class="boton_blanco boton_abajo_2">
 	<img src="<?php echo $base_url?>/web/images/marker.png">&nbsp;&nbsp;Otra Dirección
 </div>
 </a>	
 
 <a href="#" onclick="document.getElementById('form_finalizar').submit();">
-<div class="boton_finalizar">
+<div class="boton_azul boton_abajo_1">
 	<img src="<?php echo $base_url?>/web/images/box_check.png">&nbsp;&nbsp;Confirmar
 </div>
 </a>	

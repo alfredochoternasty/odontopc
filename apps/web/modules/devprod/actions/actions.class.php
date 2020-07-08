@@ -209,7 +209,7 @@ class devprodActions extends autoDevprodActions
     $dev_producto = Doctrine::getTable('DevProducto')->find($this->getRequestParameter('id'));
     
     $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
+    $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
     $mensaje->setTo($dev_producto->getCliente()->getEmail());
     $mensaje->setSubject('Nota de Credito - NTI Implantes');
 

@@ -1,4 +1,5 @@
 <?php $base_url = $sf_user->getVarConfig('base_url'); ?>
+<?php include_partial('carrito/boton_carrito') ?>
 <div style="width:100%; height:40px; background-color:#fff; position:fixed; top:50px; left:0px;border-bottom:1px solid #cccccc;">
 	<!--
 	<div class="combo_orden">

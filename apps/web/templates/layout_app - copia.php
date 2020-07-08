@@ -65,19 +65,6 @@
 			color: white;
 			font-weight: bold;
 		}
-		
-		.boton_arriba_derecha{
-			position: fixed;
-			right: 5pt;
-		}
-		
-		.boton_abajo_1{
-			bottom: 10px;
-		}
-		.boton_abajo_2{
-			bottom: 70px;
-		}
-		
 		a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
 		.sidemenu {background:#fff;position:absolute;left:-300px;top:0;width:300px;height:100%;overflow:hidden;transition: left .5s;z-index:999}
 		.sidemenu ul {list-style:none;padding:10px}
@@ -88,8 +75,9 @@
 		.contenedor {display:inline;float:left;width:100%;padding:20px;transition: margin-left .5s;}
 		.toggle {display:block;width:40px;height:40px;background:#f2f2f2 url(toggle.png) 50% 50% no-repeat}
 		
-		.boton_azul{
+		.boton_finalizar{
 			position: absolute;
+			bottom: 10px;
 			left: 8%;
 			height: 5%;
 			width: 80%;
@@ -103,8 +91,9 @@
 			align-items: center;
 		}
 		
-		.boton_blanco{
+		.boton_otro{
 			position: absolute;
+			bottom: 70px;
 			left: 8%;
 			height: 5%;
 			width: 80%;
@@ -222,7 +211,24 @@
 				<tr>
 					<td width="35px"><img id="menu" src="<?php echo $base_url?>/web/images/app_menu.png" style="margin:10px;float:left;vertical-align:center;"></td>
 					<td style="text-align:center;vertical-align:initial;"><img id="menu" height="40px" src="<?php echo $base_url?>/web/images/logo_chico.png"></td>
-					<td width="35px"></td>
+					<td width="35px">
+						<?php if (!in_array($sf_params->get('module'), array('carrito', 'ped'))) { ?>
+						<a href="carrito/index">
+						<img id="carrito" src="<?php echo $base_url?>/web/images/shopping-cart.png" style="margin:10px;float:right; vertical-align:center;">
+						</a>
+						<?php 
+							if (!empty($sf_user->getAttribute('pid'))) {
+								$ped_cant_prods = count(Doctrine::getTable('DetallePedido')->findByPedidoId($sf_user->getAttribute('pid', 0)));
+								if (!empty($ped_cant_prods)) echo '<div class="cant_prods">'.$ped_cant_prods.'</div>';
+							}
+						} else { ?>
+							<a href="<?php echo url_for('@producto2') ?>">
+							<img id="carrito" src="<?php echo $base_url?>/web/images/back-arrow.png" style="margin:10px;float:right; vertical-align:center;">
+							</a>			
+						<?php			
+						}
+						?>
+					</td>
 				</tr>
 			</table>
 		</div>

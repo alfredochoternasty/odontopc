@@ -62,7 +62,7 @@ class pagocomisActions extends autoPagocomisActions
     $dompdf->render();
 
     $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
+    $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
     $mensaje->setTo($pago->getRevendedor()->getEmail());
     $mensaje->setSubject('Pago de Comisiones - NTI Implantes');
 	

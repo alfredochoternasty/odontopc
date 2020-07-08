@@ -1,3 +1,4 @@
+<?php include_partial('global/boton_volver', array('url' => '@producto2')) ?>
 <div style="width:100%; height:35px; background-color:#fff; position:fixed; top:50px; left:0px; border-bottom:1px solid #cccccc;">
 	<table width="96%" style="margin:1%;">
 		<tr>
@@ -38,7 +39,7 @@
 </div>
 <?php	$base_url = $sf_user->getVarConfig('base_url'); ?>
 <a href="<?php echo url_for('carrito/confirmar') ?>"> 
-<div class="boton_finalizar">
-	<img src="<?php echo $base_url?>/web/images/order.png">&nbsp;&nbsp;Confirmar Pedido
+<div class="boton_azul boton_abajo_1">
+	<img src="<?php echo $base_url?>/web/images/order.png">&nbsp;&nbsp;Terminar Pedido
 </div>
 </a>

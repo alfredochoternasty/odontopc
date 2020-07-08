@@ -13,7 +13,7 @@ class cursosActions extends sfActions
   private function enviarMailInscripcion($p_email, $p_id_curso){
     $o_curso = Doctrine_Core::getTable('Curso')->find($p_id_curso);
     $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+    $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
     $mensaje->setTo($p_email);
     $mensaje->setSubject('Inscripcion a Curso');
     $headers = $mensaje->getHeaders();

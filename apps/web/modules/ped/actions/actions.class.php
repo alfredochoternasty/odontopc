@@ -69,7 +69,7 @@ class pedActions extends autoPedActions
   function EnviarPedidoMail($pid){
 		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
 		$mensaje = Swift_Message::newInstance();
-		$mensaje->setFrom(array('implantesnti@gmail.com' => 'Sistemas de Pedidos'));
+		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
 		$mensaje->setTo(array('implantesnti@gmail.com' => 'NTI NTI'));
 		$mensaje->setSubject('Nuevo Pedido');
 		$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));
@@ -83,6 +83,17 @@ class pedActions extends autoPedActions
     $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
     $id_cliente = $clientes[0]->getId();
 		$this->pedidos = Doctrine_Core::getTable('Pedido')->createQuery('p')->where('cliente_id = '.$id_cliente)->orderBy('p.id DESC')->execute();
+		$this->setLayout('layout_app');
+	}
+	
+	public function executeDetpedido(sfWebRequest $request) {
+    $pid = $request->getParameter('pid');
+    $this->detalle_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+    $this->nro_pedido = $pid;
+		$this->total_pedido = 0;
+		foreach ($this->detalle_pedido as $det) {
+			$this->total_pedido += $det->total;
+		}
 		$this->setLayout('layout_app');
 	}
 }

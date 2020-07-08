@@ -1,4 +1,5 @@
 <?php $base_url = $sf_user->getVarConfig('base_url'); ?>
+<?php include_partial('carrito/boton_carrito') ?>
 <div style="position:fixed; top:50px; height: 90%; overflow: scroll; width:99%; font-family: verdana; font-size: small;">
 	<p style="font-weight: bold;text-align: center;color: #d90036;">Cuenta Corriente</p>
 	<p style="font-size: 12pt; font-weight: bold;text-align: center;color: #000000;">Saldo $<?php echo $saldo ?></p>

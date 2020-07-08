@@ -109,7 +109,7 @@ class cursmailActions extends autoCursmailActions
   private function enviarMail($p_email, $p_id_curso){
     $o_curso = Doctrine_Core::getTable('Curso')->find($p_id_curso);
     $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+    $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
     //$mensaje->setTo($p_email);
     $mensaje->setBcc($p_email);
     $mensaje->setSubject('CURSOS NTI IMPLANTES');

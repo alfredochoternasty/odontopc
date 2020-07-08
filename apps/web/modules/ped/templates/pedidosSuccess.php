@@ -1,8 +1,10 @@
 <?php $base_url = $sf_user->getVarConfig('base_url'); ?>
+<?php include_partial('carrito/boton_carrito') ?>
 <div style="position:fixed; top:50px; height: 100%; overflow: scroll; width:99%; font-family: verdana; font-size: small;">
 	<p style="font-weight: bold;text-align: center;color: #d90036;">Pedidos Realizados</p>
 	<?php foreach ($pedidos as $pedido): ?>
 		<div style="width:97%; border: 1px solid #cccccc; margin:2%;">
+			<a href="<?php echo url_for('ped/detpedido?pid='.$pedido->id) ?>">
 			<table width="100%">
 				<tr>
 					<td>
@@ -20,6 +22,7 @@
 					<td><img src="<?php echo $base_url?>/web/images/<?php echo $img ?>"></td>
 				</tr>
 			</table>
+			</a>
 		</div>
 <?php endforeach; ?>
 </div>

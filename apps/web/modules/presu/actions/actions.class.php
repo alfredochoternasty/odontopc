@@ -42,7 +42,7 @@ class presuActions extends autoPresuActions
     $presu = Doctrine::getTable('Presupuesto')->find($this->getRequestParameter('id'));
     
     $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI Implantes'));
+    $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
     $mensaje->setTo($presu->email);
     $mensaje->setSubject('Presupuesto - NTI Implantes');
 

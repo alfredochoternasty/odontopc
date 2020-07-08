@@ -61,7 +61,7 @@ class cobroActions extends autoCobroActions
 				$cobro_alerta_mail = $this->getUser()->getVarConfig('cobro_alerta_mail');
 				$cobro_modelo_impresion = $this->getUser()->getVarConfig('cobro_modelo_impresion');
 				$mensaje = Swift_Message::newInstance();
-				$mensaje->setFrom(array('implantesnti@gmail.com'));
+				$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
 				$mensaje->setTo(array($cobro_alerta_mail));
 				$mensaje->setSubject('Cobro realizado en '.$cobro->getCliente()->getZona());
 				$mensaje->setBody($this->getPartial($cobro_modelo_impresion, array("cobro" => $cobro)));

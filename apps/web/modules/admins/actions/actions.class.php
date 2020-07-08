@@ -167,7 +167,7 @@ class adminsActions extends sfActions
 		}
 		
 		$mensaje = Swift_Message::newInstance();
-		$mensaje->setFrom(array('alfredochoternasty@gmail.com' => 'NTI implantes'));
+		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
 		$mensaje->setTo(array('alfredochoternasty@gmail.com' => 'Backup Sistema'));
 		if(file_exists($filename)){
 			$mensaje->attach(Swift_Attachment::fromPath($filename));

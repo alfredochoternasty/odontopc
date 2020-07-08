@@ -176,7 +176,7 @@ class detpedActions extends autoDetpedActions
   function EnviarPedidoMail($pid){
 		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
 		$mensaje = Swift_Message::newInstance();
-		$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
 		$mensaje->setTo(array('implantesnti@gmail.com' => 'NTI NTI'));
 		$mensaje->setSubject('Nuevo Pedido');
 		$mensaje->setBody($this->getPartial("imprimir", array("detalles" => $detpedidos)));

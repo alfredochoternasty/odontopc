@@ -55,7 +55,7 @@ class carritoActions extends sfActions
 		$detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
 		$pedido = Doctrine::getTable('Pedido')->find($pid);
 		$mensaje = Swift_Message::newInstance();
-		$mensaje->setFrom(array('implantesnti@gmail.com' => 'Sistemas de Pedidos'));
+		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => 'Sistema de Pedidos'));
 		$mensaje->setTo(array(
 			'implantesnti@gmail.com' => 'NTI NTI',
 			$pedido->getCliente()->email => $pedido->getCliente()

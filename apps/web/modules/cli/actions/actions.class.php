@@ -98,7 +98,7 @@ class cliActions extends autoCliActions
 		}
 
 		$mensaje = Swift_Message::newInstance();
-		$mensaje->setFrom(array('implantesnti@gmail.com' => 'NTI implantes'));
+		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
 		$mensaje->setTo($correo);
 		$mensaje->setSubject('NTI Sistema de Pedidos');
 		$headers = $mensaje->getHeaders();

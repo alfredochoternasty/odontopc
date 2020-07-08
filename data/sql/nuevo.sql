@@ -1,12 +1,8 @@
-ALTER TABLE `dev_producto`
-	CHANGE COLUMN `producto_id` `producto_id` INT(11) NULL AFTER `resumen_id`,
-	CHANGE COLUMN `cantidad` `cantidad` INT(11) NULL DEFAULT '1' AFTER `producto_id`;
-
-ALTER TABLE `detalle_pedido`
-	ADD COLUMN `asignacion_lote` VARCHAR(50) NULL DEFAULT NULL AFTER `nro_lote`;
-	
 ALTER TABLE `sf_guard_user`
 	ADD COLUMN `zona_id` SMALLINT NULL DEFAULT NULL AFTER `es_cliente`;
+	
+INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('mail_from', 'alfredochoternasty@gmail.com');
+INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('mail_from_nombre', 'NTI Implantes');
 	
 /*
 DROP TABLE 
