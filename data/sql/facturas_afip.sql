@@ -32,9 +32,9 @@ SELECT
 	fecha, 
 	d.cliente_id,
 	d.afip_cae AS cae,
-	(d.iva * -1) as iva,
-	(d.precio * d.cantidad) -1 AS neto,
-	(d.total * -1) as total,
+	d.iva,
+	(d.precio * d.cantidad) AS neto,
+	d.total as total,
 	concat(c.apellido, ' ', c.nombre) as cliente,
 	c.zona_id
 FROM dev_producto d

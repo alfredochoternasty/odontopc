@@ -1,1 +1,1 @@
-<?php echo sprintf("$"." %01.2f", $facturas_afip->getIva()) ?>
+<?php echo sprintf("$"." %01.2f", $facturas_afip->tipofactura_id>5?$facturas_afip->iva*-1:$facturas_afip->iva) ?>

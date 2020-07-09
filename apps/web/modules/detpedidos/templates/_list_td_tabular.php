@@ -16,3 +16,7 @@
 <td class="sf_admin_text sf_admin_list_td_observacion">
   <?php echo $detalle_pedido->getObservacion() ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_asignacion_lote">
+  <?php echo $detalle_pedido->getAsignacionLote() ?>
+</td>
+

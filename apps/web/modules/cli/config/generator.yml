@@ -41,7 +41,7 @@ generator:
           excel_pagina: {label: Descargar Pagina}
           excel_todo: {label: Descargar Todo}
       filter:
-        display: [zona_id, dni, apellido, nombre, sexo, localidad_id, lista_id, activo]
+        display: [zona_id, dni, apellido, nombre, sexo, localidad_id, provincia_id, lista_id, activo]
       form:
         display: [tipo_id, activo, cuit, condicionfiscal_id, dni, apellido, nombre, sexo, lista_id, localidad_id, domicilio, telefono, celular, fax, email, zona_id, observacion]
       edit:

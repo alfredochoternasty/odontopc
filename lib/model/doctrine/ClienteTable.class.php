@@ -24,9 +24,8 @@ class ClienteTable extends Doctrine_Table
     public function retrieveConJoins(Doctrine_Query $q){
 			$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
       $rootAlias = $q->getRootAlias();
-      $q->leftJoin($rootAlias . '.Tipo t');
       $q->leftJoin($rootAlias . '.Localidad l');
-			$q->andWhere($rootAlias . '.zona_id = '.$zid);
+			$q->andWhere('('.$rootAlias.'.zona_id = '.$zid.' or 1 = '.$zid.')');
       return $q;
     }
     

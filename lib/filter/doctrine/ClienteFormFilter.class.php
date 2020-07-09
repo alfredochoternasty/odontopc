@@ -16,16 +16,18 @@ class ClienteFormFilter extends BaseClienteFormFilter
 {
 	public function configure()
 	{
-		unset($this['cuit'], $this['fecha_nacimiento'], $this['domicilio'], $this['telefono'], $this['celular'], $this['fax'], $this['email'], $this['observacion']);
+		// unset($this['cuit'], $this['fecha_nacimiento'], $this['domicilio'], $this['telefono'], $this['celular'], $this['fax'], $this['email'], $this['observacion']);
 
-		$this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Localidad'), 'add_empty' => true), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));    
-		$this->widgetSchema['sexo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'Masculino', 'F' => 'Femenino', 'J' => 'Persona Juridica')));
-
-		$this->widgetSchema['moneda'] = new sfWidgetFormDoctrineChoice(array('model' => 'TipoMoneda', 'add_empty' => true));
-		$this->validatorSchema['moneda'] = new sfValidatorPass(array('required' => false));
+		$this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Localidad', 'add_empty' => true), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));    
+		$this->validatorSchema['localidad_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Localidad'), 'column' => 'id'));
 		
-		// $this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true));
-		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
+		$this->widgetSchema['provincia_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Provincia', 'add_empty' => true), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));    
+		$this->validatorSchema['provincia_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Provincia', 'column' => 'id'));
+		
+		$this->widgetSchema['sexo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'Masculino', 'F' => 'Femenino', 'J' => 'Persona Juridica')));
+		$this->validatorSchema['sexo'] = new sfValidatorPass(array('required' => false));
+		
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true, 'order_by' => array('nombre', 'asc')));
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));		
 		
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
@@ -33,18 +35,19 @@ class ClienteFormFilter extends BaseClienteFormFilter
 		
 		//$this->validatorSchema->setOption('allow_extra_fields', true);
 		//$this->validatorSchema->setOption('filter_extra_fields', false);			
-	}
-  
-	public function addMonedaColumnQuery(Doctrine_Query $query, $field, $values)
-	{
-		if ($values['text'] != '') {
-			$query->andWhere("m.id = ?", $values['text']);
-		}
-	}  
+	}	
 	
 	public function getFields()
 	{
-	  return parent::getFields() + array('Moneda' => 'Text');
+		return array_merge(parent::getFields(), array('provincia_id' => 'Number'));
+	}	
+	
+	public function addProvinciaIdColumnQuery($query, $field, $value)
+	{
+		if (!empty($value) && is_numeric($value)) {
+			$query->andWhere('l.provincia_id = '.$value);
+		}
+		return $query;
 	}
 
 }
