@@ -204,6 +204,7 @@ class detresActions extends autoDetresActions
   
   public function executeListImprimir(sfWebRequest $request){
     $rid = $this->getUser()->getAttribute('rid', 1);
+		if (empty($rid)) $rid = $request->getParameter('rid');
     $resumen = Doctrine::getTable('Resumen')->find($rid);
     $dompdf = new DOMPDF();
 		$modelo_impresion = $resumen->getTipoFactura()->modelo_impresion;

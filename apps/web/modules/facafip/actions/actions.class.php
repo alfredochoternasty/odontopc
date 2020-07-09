@@ -61,4 +61,23 @@ class facafipActions extends autoFacafipActions
     return sfView::NONE;
   }	
 	
+  public function executeVer(sfWebRequest $request){
+    $id_usuario = $this->getUser()->getGuardUser()->getId();
+    $cliente = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
+    $this->facturas = Doctrine::getTable('FacturasAfip')->findByClienteId($cliente[0]->id);
+    $this->setLayout('layout_app');
+  }
+	
+  public function executeImprimir(sfWebRequest $request){
+		$rid = $request->getParameter('rid');
+    $resumen = Doctrine::getTable('Resumen')->find($rid);
+    $dompdf = new DOMPDF();
+		$modelo_impresion = $resumen->getTipoFactura()->modelo_impresion;
+    $dompdf->load_html($this->getPartial('detres/'.$modelo_impresion, array("resumen" => $resumen)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream($resumen.".pdf");
+		$this->forward('resumen', 'index');
+    return sfView::NONE;
+  }
 }

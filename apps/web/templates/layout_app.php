@@ -211,7 +211,7 @@
 				<li><img src="<?php echo $base_url?>/web/images/implante.png"><a href="<?php echo url_for('@producto2') ?>">Lista de Productos</a></li>
 				<li><img src="<?php echo $base_url?>/web/images/box.png"><a href="<?php echo url_for('ped/pedidos') ?>">Pedidos</a></li>
 				<li><img src="<?php echo $base_url?>/web/images/cta_cte.png"><a href="<?php echo url_for('ctacte/ver') ?>">Cuenta Corriente</a></li>
-				<li><img src="<?php echo $base_url?>/web/images/facturas.png"><a href="#">Facturas</a></li>
+				<li><img src="<?php echo $base_url?>/web/images/facturas.png"><a href="<?php echo url_for('facafip/ver') ?>">Facturas</a></li>
 				<li><img src="<?php echo $base_url?>/web/images/logout.png"><a href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
 			</ul>
 		</nav>
