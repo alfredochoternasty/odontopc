@@ -17,10 +17,10 @@ class grupoprodActions extends autoGrupoprodActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->grupoprod = $this->getRoute()->getObject();
-		// $productos = Doctrine::getTable('Producto')->findByGrupoprodId($this->grupoprod->id);
-		$productos = $this->grupoprod->getProductos();
-		foreach ($productos as $prod) $lista[$prod->id] = $prod->nombre;
-    $this->form = $this->configuration->getForm($this->grupoprod, array('productos' => $lista));
+		// $grupoprods = Doctrine::getTable('Producto')->findByGrupoprodId($this->grupoprod->id);
+		$grupoprods = $this->grupoprod->getProductos();
+		foreach ($grupoprods as $prod) $lista[$prod->id] = $prod->nombre;
+    $this->form = $this->configuration->getForm($this->grupoprod, array('productos' => $lista, 'base_url' => $this->getUser()->getVarConfig('base_url')));
   }
 	
   protected function processForm(sfWebRequest $request, sfForm $form){
@@ -44,6 +44,26 @@ class grupoprodActions extends autoGrupoprodActions
 					->where('id in ('.implode(', ', $datos['productos']).')')
 					->execute();
 			}
+			
+      if (!empty($grupoprod->foto)) {
+        list($filename, $extension) = explode('.', $grupoprod->foto);
+        $ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
+        $ruta_chica = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension;
+        if ($datos_prod['foto_delete'] == 'on') {
+          unlink($ruta);
+          unlink($ruta_chica);
+          $grupoprod->foto = '';
+          $grupoprod->foto_chica = '';
+          $grupoprod->save();
+        } else {
+          $img = new sfImage($ruta, 'image/'.$extension);
+          $img->thumbnail(50,50);
+          $img->setQuality(50);
+          $img->saveAs($ruta_chica);
+          $grupoprod->setFotoChica($filename.'_chica.'.$extension);
+          $grupoprod->save();
+        }
+      }
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $grupoprod)));
       if ($request->hasParameter('_save_and_add')){

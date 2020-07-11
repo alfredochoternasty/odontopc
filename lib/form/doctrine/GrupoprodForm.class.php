@@ -13,6 +13,7 @@ class GrupoprodForm extends BaseGrupoprodForm
   public function configure()
   {
     $productos = $this->getOption('productos');
+    $base_url = $this->getOption('base_url');
     
     $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array('size' => 50, 'style' => 'font-size:16pt;'));
     
@@ -22,6 +23,22 @@ class GrupoprodForm extends BaseGrupoprodForm
     $this->widgetSchema['total'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));
     $this->widgetSchema['porcentaje'] = new sfWidgetFormInput(array(), array('style' =>'font-weight: bold; font-size:16px; color:#FF0000'));
     $this->widgetSchema['productos'] = new sfWidgetFormChoice(array('expanded' => true, 'multiple' => true, 'choices' => $productos));
+    $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
+                                      'label' => ' ',
+                                      'file_src' => $base_url.'/web/uploads/productos/'.$this->getObject()->getFotoChica(),
+                                      'is_image' => true,
+                                      'edit_mode' => true,
+                                      'with_delete' => true,
+                                      'delete_label' => 'Borrar esta imagen?',
+                                      'template' => '<div>%input%<br>%file%<br>%delete_label%&nbsp;%delete%</div>',
+                                  ));
+                                  
+    $ruta = sfConfig::get('sf_upload_dir').'/productos/';
+    $this->validatorSchema['foto'] = new sfValidatorFile(array(
+      'required'   => false,
+      'path'       => $ruta,
+      'mime_types' => 'web_images',
+    ));    
     $this->validatorSchema->setOption('allow_extra_fields', true);
   }
 }

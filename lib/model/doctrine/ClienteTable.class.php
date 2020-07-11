@@ -67,7 +67,7 @@ class ClienteTable extends Doctrine_Table
       ->execute();
     }
 	
-	public function getActivos(){
+	public function getActivosVta(){
 		$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
 		$query = Doctrine_Core::getTable('Cliente')
 		->createQuery('q')
@@ -76,6 +76,19 @@ class ClienteTable extends Doctrine_Table
 		->orderBy('apellido ASC, nombre ASC');
 		return $query->execute();
 	}	
+	
+	public function getActivosListado(){
+		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+		$query = Doctrine_Core::getTable('Cliente')
+		->createQuery('q')
+		->leftJoin('q.Zona z')
+		->leftJoin('z.UsuarioZona uz')
+		->where('q.activo = 1')
+		->andWhere('uz.usuario = '.$id)
+		->orderBy('apellido ASC, nombre ASC');
+		$result = $query->execute();
+		return $result;
+	}
 	
 	public function getClientesEnviarCurso($p_id_curso){
 		$sql = "

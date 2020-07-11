@@ -27,7 +27,7 @@ class LoteFormFilter extends BaseLoteFormFilter
 		$this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
     $this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
 		
-		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true));
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'add_empty' => true));
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));				
   }
  

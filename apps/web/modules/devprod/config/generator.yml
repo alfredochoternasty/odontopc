@@ -24,7 +24,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
-        display: [fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
+        display: [Zona, fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
         actions:
           _new: {label: Nuevo}
           imprimir_pagina: {label: Imprimir}

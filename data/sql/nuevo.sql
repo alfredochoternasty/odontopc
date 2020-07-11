@@ -4,6 +4,11 @@ ALTER TABLE `sf_guard_user`
 INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('mail_from', 'alfredochoternasty@gmail.com');
 INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('mail_from_nombre', 'NTI Implantes');
 	
+ALTER TABLE `ventas`.`grupoprod` 
+ADD COLUMN `foto` VARCHAR(255) NULL DEFAULT NULL AFTER `color`;
+ALTER TABLE `ventas`.`grupoprod` 
+ADD COLUMN `foto_chica` VARCHAR(255) NULL DEFAULT NULL AFTER `foto`;
+
 /*
 DROP TABLE 
 	producto2, 

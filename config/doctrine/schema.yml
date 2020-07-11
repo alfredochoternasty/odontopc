@@ -170,6 +170,8 @@ Grupoprod:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}
     color: {type: string(7)}
+    foto: {type: string(255)}
+    foto_chica: {type: string(255)}
   relations:
     Productos: {type: many, class: Producto, local: id, foreign: grupoprod_id}
 Producto:

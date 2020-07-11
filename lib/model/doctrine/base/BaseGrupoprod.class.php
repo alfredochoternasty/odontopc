@@ -10,6 +10,8 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property string $color
+ * @property string $foto
+ * @property string $foto_chica
  * @property Doctrine_Collection $Productos
  * @property Doctrine_Collection $DetLisPrecio
  * @property Doctrine_Collection $ListadoVentas
@@ -23,6 +25,8 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getNombre()             Returns the current record's "nombre" value
  * @method string              getColor()              Returns the current record's "color" value
+ * @method string              getFoto()               Returns the current record's "foto" value
+ * @method string              getFotoChica()          Returns the current record's "foto_chica" value
  * @method Doctrine_Collection getProductos()          Returns the current record's "Productos" collection
  * @method Doctrine_Collection getDetLisPrecio()       Returns the current record's "DetLisPrecio" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
@@ -35,6 +39,8 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @method Grupoprod           setId()                 Sets the current record's "id" value
  * @method Grupoprod           setNombre()             Sets the current record's "nombre" value
  * @method Grupoprod           setColor()              Sets the current record's "color" value
+ * @method Grupoprod           setFoto()               Sets the current record's "foto" value
+ * @method Grupoprod           setFotoChica()          Sets the current record's "foto_chica" value
  * @method Grupoprod           setProductos()          Sets the current record's "Productos" collection
  * @method Grupoprod           setDetLisPrecio()       Sets the current record's "DetLisPrecio" collection
  * @method Grupoprod           setListadoVentas()      Sets the current record's "ListadoVentas" collection
@@ -69,6 +75,14 @@ abstract class BaseGrupoprod extends sfDoctrineRecord
         $this->hasColumn('color', 'string', 7, array(
              'type' => 'string',
              'length' => 7,
+             ));
+        $this->hasColumn('foto', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('foto_chica', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 
