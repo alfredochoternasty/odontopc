@@ -12,18 +12,16 @@ class productosActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-	$this->grupo_id = $request->getParameter('grupo_id');
-	$buscar = $request->getParameter('buscar');
-	if (!empty($buscar)) {
-		$this->productos = Doctrine_Core::getTable('Producto')->createQuery('a')->where('nombre like ?', '%'.$buscar.'%')->execute();
-	} else {
-		if (!empty($this->grupo_id)) {
-			$this->productos = Doctrine::getTable('Producto')->findByGrupoprodId($this->grupo_id);
-		} else {
+		if ($request->getParameter('grupo_id') == '-') {
+			$this->grupo_id = 0;
 			$this->productos = Doctrine::getTable('Producto')->getActivos();
+		} else {
+			$this->grupo_id = empty($request->getParameter('grupo_id'))?$this->getUser()->getAttribute('grupo_id'):$request->getParameter('grupo_id');
+			$this->productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($this->grupo_id, 1);
+			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		}
-	}
-	$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
+		
+		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
     $this->setLayout('layout_app');
   }
 

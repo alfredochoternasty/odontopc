@@ -13,14 +13,14 @@ class carritoActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     if (!empty($this->getUser()->getAttribute('pid'))) {
-		$this->detalle_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getUser()->getAttribute('pid'));
-		$this->nro_pedido = $this->getUser()->getAttribute('pid');
-		$this->total_pedido = 0;
-		foreach ($this->detalle_pedido as $det) {
-			$this->total_pedido += $det->total;
+			$this->detalle_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getUser()->getAttribute('pid'));
+			$this->nro_pedido = $this->getUser()->getAttribute('pid');
+			$this->total_pedido = 0;
+			foreach ($this->detalle_pedido as $det) {
+				$this->total_pedido += $det->total;
+			}
 		}
-	}
-	$this->setLayout('layout_app');
+		$this->setLayout('layout_app');
   }
 
   public function executeModificar(sfWebRequest $request)
@@ -42,7 +42,6 @@ class carritoActions extends sfActions
 				$pedido->forma_envio = ($request->getParameter('entrega') > 0)?2:1;
 				$pedido->cliente_domicilio_id = !empty($request->getParameter('entrega'))?$request->getParameter('entrega'):null;
 				$pedido->finalizado = 1;
-				$this->EnviarPedidoMail($this->getUser()->getAttribute('pid'));
 				$this->getUser()->setAttribute('pid', 0);
 				$pedido->save();
 			}

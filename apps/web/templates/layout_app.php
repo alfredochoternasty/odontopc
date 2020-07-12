@@ -13,7 +13,6 @@
     <?php use_helper('Date') ?>
 	<style>
 		.combo_grupos select, .combo_orden select {
-		  /*background: transparent;*/
 		  width: 90%;
 		  font-size: 10pt;
 		  color: #000;
@@ -66,17 +65,9 @@
 			font-weight: bold;
 		}
 		
-		.boton_arriba_derecha{
-			position: fixed;
-			right: 5pt;
-		}
-		
-		.boton_abajo_1{
-			bottom: 10px;
-		}
-		.boton_abajo_2{
-			bottom: 70px;
-		}
+		.boton_arriba_derecha{position: fixed;right: 5pt;}
+		.boton_abajo_1{bottom: 10px;}
+		.boton_abajo_2{bottom: 70px;}
 		
 		a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
 		.sidemenu {background:#fff;position:absolute;left:-300px;top:0;width:300px;height:100%;overflow:hidden;transition: left .5s;z-index:999}
@@ -139,9 +130,7 @@
 			align-items: center;
 			font-weight: bold;
 		}
-		.form_terminar input[type="radio"] {
-			display: none;
-		}
+		.form_terminar input[type="radio"] {display: none;}
 
 		.form_terminar label {
 			display: inline-block;
@@ -157,13 +146,19 @@
 			align-items: center;
 		}
 
-		.form_terminar img {
-			margin-right: 10px;
-		}
-		.form_terminar input[type="radio"]:checked+label {
-			background-color: #ff8000;
-			color: #fff;
-		}
+		.form_terminar img {margin-right: 10px;}
+		.form_terminar input[type="radio"]:checked+label {background-color: #ff8000; color: #fff;}
+		.contenido {position:fixed; top:50px; height: 90%; overflow: scroll; width:99%; font-family: verdana; font-size: small;}
+		.contenido_boton {height: 80%;}
+		.titulo {color: #ff800C;text-align: center;}
+		.fila_contenido {width:97%; border: 1px solid #cccccc; margin:2%;}
+		.fila_primario {font-weight: bold; color: #2982f3;}
+		.fila_secundario {font-weight: bold;text-align: center;color: #a0a0a2;}
+		.precio {text-align:right; font-weight: bold; color:#e20202; font-size:11pt;}
+		.monto {text-align:right; font-weight: bold; font-size:12pt;}
+		.monto_positivo {color:#ff0040}
+		.monto_negativo {color:#008c46}
+		
 	</style>
 	<script type="text/javascript">
 		function abrir(){$(".sidemenu").css("left","0");}
@@ -220,7 +215,7 @@
 		<div style="width:100%; height:50px; background-color:#2982F3; position:fixed; top:0px; left:0px;">
 			<table width="100%">
 				<tr>
-					<td width="35px"><img id="menu" src="<?php echo $base_url?>/web/images/app_menu.png" style="margin:10px;float:left;vertical-align:center;"></td>
+					<td width="35px"><img id="menu" src="<?php echo $base_url?>/web/images/app_menu.png" style="margin:5px;float:left;vertical-align:center;"></td>
 					<td style="text-align:center;vertical-align:initial;"><img id="menu" height="40px" src="<?php echo $base_url?>/web/images/logo_chico.png"></td>
 					<td width="35px"></td>
 				</tr>
