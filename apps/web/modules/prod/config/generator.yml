@@ -31,7 +31,8 @@ generator:
         actions:
           _new: {label: Nuevo}
           imprimir: {label: Imprimir}
-          lista: {label: Lista de Precios}
+          lista: {label: Lista de Precios con Fotos}
+          lista2: {label: Lista de Precios sin Fotos}
         batch_actions:
           _delete: {label: Eliminar}
           desactivar: ~

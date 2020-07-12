@@ -51,7 +51,7 @@ body {
 }
 
 .page-number:before {
-	content: "PÃ¡gina " counter(page);
+	content: "Página " counter(page);
 }
 
 hr {
@@ -63,7 +63,10 @@ hr {
 .lista_precios td{
 	border: 1px solid #3D6092;
 }
-
+.lista_precios td{
+	border: 1px solid #3D6092;
+	padding: 3pt;
+}
 </style>
 </head>
 <body>
@@ -84,24 +87,47 @@ hr {
 </div>
 
 <table width="100%" class="lista_precios">  
-  <?php
+<?php
+	$base_url = 'http://localhost/'.$sf_user->getVarConfig('base_url');
 	$count = 1;
   $grupo = 0;
   foreach($productos as $producto):
     $aux = $producto->getGrupoprodId();
+		$count++;
     if($aux <> $grupo){
+			$count=1;
       $grupo = $aux;
-      $count++;
       ?>
         <tr>
-          <td colspan="3" style="background-color:#3D6092;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
+          <td colspan="<?php echo ($mostrar_foto===true)? 3:2 ?>" style="background-color:#3D6092;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
         </tr>            
       <?php
     }
+?>
+	<tr>
+<?php	
+		$foto_grupo = '';
+		if ($mostrar_foto) {
+			if ($count == 1) {
+				$foto_grupo = $producto->getGrupo()->getFotoChica();
+				if (!empty($foto_grupo)) { 
+					echo '<td colspan="3"><img src="'.$base_url.'/web/uploads/productos/'.$foto_grupo.'"></td></tr><tr>';
+				}
+			}
+			if (empty($foto_grupo)) { 
+				$foto_prod = $producto->getFotoChica();
+				if (!empty($foto_prod)) {
+					echo '<td><img src="'.$base_url.'/web/uploads/productos/'.$foto_prod.'"></td>';
+				} else {
+					echo '<td></td>';
+				}
+			}
+		}
   ?>
-  <tr>
-    <td><?php echo $producto->getCodigo() ?></td>
-    <td><?php echo $producto->getNombre() ?></td>
+    <td <?php echo (($mostrar_foto===true) && !empty($foto_grupo))?'colspan="2"':'' ?>>
+			<?php echo utf8_decode($producto->nombre) ?><br>
+			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>
+		</td>
     <td>
 			<?php 
 				$precio = $producto->precio_vta;

@@ -80,9 +80,6 @@ hr {
     <th style="background: #CCC;">Grupo</th>
     <th style="background: #CCC;">Nombre</th>
     <th style="background: #CCC;">Precio Venta</th>
-    <th style="background: #CCC;">Stock Actual</th>
-    <th style="background: #CCC;">Stock M&iacute;nimo</th>
-    <th style="background: #CCC;">Gen. Comisi&oacute;n</th>
   </tr>
   <?php $count = 0;
   foreach($productos as $producto):
@@ -91,10 +88,7 @@ hr {
   <tr>
     <td><?php if($producto->getGrupoprodId()) echo $producto->getGrupo(); ?></td>
     <td><?php echo $producto->getNombre() ?></td>
-    <td><?php echo '$ '.sprintf("%01.2f", $producto->getPrecioVta()) ?></td>
-    <td><?php echo $producto->getStockActual() ?></td>
-    <td><?php echo $producto->getMinimoStock() ?></td>
-    <td><?php echo $producto->getGeneraComision() ?></td>
+    <td><?php echo '$ '.sprintf("%01.2f", round($producto->getPrecioVta()*1.21, 0)) ?></td>
   </tr>
   <?php 
     if($count == 500){

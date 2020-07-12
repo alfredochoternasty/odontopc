@@ -79,17 +79,35 @@ class prodActions extends autoProdActions
     $filtro = new ProductoFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
     $consulta->leftJoin('r.Grupo gr');
-    $consulta->addWhere('grupoprod_id <> 1');
-    $consulta->andWhere('grupoprod_id <> 15');
-    $consulta->andWhere('activo = 1');
+    $consulta->addWhere('r.grupoprod_id <> 1');
+    $consulta->andWhere('r.grupoprod_id <> 15');
+    $consulta->andWhere('r.activo = 1');
     $consulta->orderBy('gr.nombre asc, r.orden_grupo asc, r.nombre asc');
     $productos = $consulta->execute();
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("lista_precio", array("productos" => $productos)));
+    $dompdf->load_html($this->getPartial("lista_precio", array("productos" => $productos, 'mostrar_foto' => true)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
-    $dompdf->stream("productos.pdf");    
+    $dompdf->stream("lista_precio_con_fotos.pdf");    
+    return sfView::NONE;
+  }
+  
+  public function executeListLista2(sfWebRequest $request){
+    $filtro = new ProductoFormFilter();
+    $consulta = $filtro->buildQuery($this->getFilters());
+    $consulta->leftJoin('r.Grupo gr');
+    $consulta->addWhere('r.grupoprod_id <> 1');
+    $consulta->andWhere('r.grupoprod_id <> 15');
+    $consulta->andWhere('r.activo = 1');
+    $consulta->orderBy('gr.nombre asc, r.orden_grupo asc, r.nombre asc');
+    $productos = $consulta->execute();
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("lista_precio", array("productos" => $productos, 'mostrar_foto' => false)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("lista_precio_sin_fotos.pdf");    
     return sfView::NONE;
   }
   
