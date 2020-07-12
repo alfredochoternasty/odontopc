@@ -18,9 +18,12 @@ generator:
         username: { label: Usuario }
         first_name: { label: Nombres }
         last_name: { label: Apellido }
-        password: { label: "Clave" }
-        password_again: { label: "Clave (denuevo)" }
-        email_address: { label: "Email" }
+        password: { label: Clave }
+        password_again: { label: Confirmar Clave }
+        email_address: { label: Email }
+        zona_id: { label: Zona donde puede vender}
+        usuario_zona: { label: Zonas que puede ver en los listados}
+        permissions_list: { label: Opciones de menu que puede ver}
       list:
         title: Usuarios
         display: [is_active, Zona, username, first_name, =last_name, es_cliente]
@@ -29,6 +32,7 @@ generator:
             _delete: {label: Eliminar}
       form:
         class: sfGuardUserAdminForm
+        display: [first_name, last_name, email_address, username, password, password_again, is_super_admin, is_active, es_cliente, zona_id, usuario_zona, permissions_list]
       filter:
         display: [is_active, zona_id, username, first_name, last_name, es_cliente]
       edit:

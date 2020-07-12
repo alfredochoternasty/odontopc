@@ -40,6 +40,7 @@
  * @method Doctrine_Collection   getSfGuardUserPermission() Returns the current record's "sfGuardUserPermission" collection
  * @method Doctrine_Collection   getSfGuardUserGroup()      Returns the current record's "sfGuardUserGroup" collection
  * @method Doctrine_Collection   getZona()      Returns the current record's "Zona" collection
+ * @method Doctrine_Collection   getZonas()      Returns the current record's "Zona" collection
  * @method sfGuardRememberKey    getRememberKeys()          Returns the current record's "RememberKeys" value
  * @method sfGuardForgotPassword getForgotPassword()        Returns the current record's "ForgotPassword" value
  * @method sfGuardUser           setFirstName()             Sets the current record's "first_name" value
@@ -59,6 +60,7 @@
  * @method sfGuardUser           setSfGuardUserPermission() Sets the current record's "sfGuardUserPermission" collection
  * @method sfGuardUser           setSfGuardUserGroup()      Sets the current record's "sfGuardUserGroup" collection
  * @method sfGuardUser           setZona()      Sets the current record's "Zona" collection
+ * @method sfGuardUser           setZonas()      Sets the current record's "Zona" collection
  * @method sfGuardUser           setRememberKeys()          Sets the current record's "RememberKeys" value
  * @method sfGuardUser           setForgotPassword()        Sets the current record's "ForgotPassword" value
  * 
@@ -167,6 +169,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
              'foreign' => 'id'));
+             
+        $this->hasMany('UsuarioZona', array(
+             'local' => 'id',
+             'foreign' => 'usuario'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

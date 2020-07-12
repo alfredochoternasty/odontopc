@@ -100,6 +100,12 @@ sfGuardUser:
     Zona:
       type: one
       local: zona_id
+    UsuarioZona:
+      class: Zona
+      local: usuario
+      foreign: zona_id
+      refClass: UsuarioZona
+      foreignAlias: Usuario
 sfGuardUserPermission:
   options:
     symfony:

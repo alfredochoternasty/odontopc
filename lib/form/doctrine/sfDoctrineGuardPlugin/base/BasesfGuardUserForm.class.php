@@ -32,6 +32,7 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'updated_at'       => new sfWidgetFormDateTime(),
       'groups_list'      => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
       'permissions_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardPermission')),
+      'usuario_zona' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Zona')),
     ));
 
     $this->setValidators(array(
@@ -52,6 +53,7 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'updated_at'       => new sfValidatorDateTime(),
       'groups_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardPermission', 'required' => false)),
+      'usuario_zona' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Zona', 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
