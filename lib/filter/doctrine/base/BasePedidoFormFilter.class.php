@@ -22,6 +22,7 @@ abstract class BasePedidoFormFilter extends BaseFormFilterDoctrine
       'forma_envio'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'finalizado'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'cliente_domicilio_id' => new sfWidgetFormFilterInput(),
+      'zona_id'              => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BasePedidoFormFilter extends BaseFormFilterDoctrine
       'forma_envio'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'finalizado'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'cliente_domicilio_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'zona_id'              => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('pedido_filters[%s]');
@@ -63,6 +65,7 @@ abstract class BasePedidoFormFilter extends BaseFormFilterDoctrine
       'forma_envio'          => 'Number',
       'finalizado'           => 'Number',
       'cliente_domicilio_id' => 'Number',
+      'zona_id'              => 'ForeignKey',
     );
   }
 }

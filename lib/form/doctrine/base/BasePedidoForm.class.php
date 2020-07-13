@@ -25,6 +25,7 @@ abstract class BasePedidoForm extends BaseFormDoctrine
       'forma_envio'          => new sfWidgetFormInputText(),
       'finalizado'           => new sfWidgetFormInputText(),
       'cliente_domicilio_id' => new sfWidgetFormInputText(),
+      'zona_id'              => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -38,6 +39,7 @@ abstract class BasePedidoForm extends BaseFormDoctrine
       'forma_envio'          => new sfValidatorInteger(),
       'finalizado'           => new sfValidatorInteger(),
       'cliente_domicilio_id' => new sfValidatorInteger(array('required' => false)),
+      'zona_id'              => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('pedido[%s]');

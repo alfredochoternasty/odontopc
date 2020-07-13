@@ -116,7 +116,6 @@
 			color: #fff;
 			background: #f4800c;
 			height: 17pt;
-			margin-left:4px;
 		}
 		
 		.form_terminar {

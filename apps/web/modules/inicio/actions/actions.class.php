@@ -26,11 +26,12 @@ class inicioActions extends autoInicioActions
     if ($modulo_pedidos == 'S') {
       $q = Doctrine::getTable('Pedido')
         ->createQuery('p')
-        ->where('p.vendido = 0')
-        //->andWhere('p.finalizado = 1')
-        ->orderBy('p.fecha DESC')
-        ->limit('10');
-      if($this->getUser()->getGuardUser()->es_cliente){
+        ->andWhere('p.vendido = 0')
+        ->andWhere('p.finalizado = 1')
+        ->andWhere('p.zona_id = ?', $this->getUser()->getGuardUser()->getZonaId())
+        ->orderBy('p.fecha ASC');
+        
+      if ($this->getUser()->getGuardUser()->es_cliente){
         $id_usuario = $this->getUser()->getGuardUser()->getId();
         $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
         $id_cliente = $clientes[0]->getId();	

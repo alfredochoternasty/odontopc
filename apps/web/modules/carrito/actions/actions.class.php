@@ -40,8 +40,18 @@ class carritoActions extends sfActions
 			if ($request->hasParameter('entrega')) {
 				$pedido = Doctrine::getTable('Pedido')->find($this->getUser()->getAttribute('pid'));
 				$pedido->forma_envio = ($request->getParameter('entrega') > 0)?2:1;
-				$pedido->cliente_domicilio_id = !empty($request->getParameter('entrega'))?$request->getParameter('entrega'):null;
+				
+				if (!empty($request->getParameter('entrega'))) {
+					$ClienteDomicilio = Doctrine::getTable('ClienteDomicilio')->find($request->getParameter('entrega'));
+					$dir = $ClienteDomicilio->direccion.' - '.$ClienteDomicilio->getLocalidad();
+					$pedido->cliente_domicilio_id = $request->getParameter('entrega');
+				} else {
+					$dir = 'Retira en Sucursal';
+				}
+				
+				$pedido->direccion_entrega = $dir;
 				$pedido->finalizado = 1;
+				$pedido->zona_id = $pedido->getCliente()->zona_id;
 				$this->getUser()->setAttribute('pid', 0);
 				$pedido->save();
 			}

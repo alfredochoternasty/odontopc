@@ -5,16 +5,28 @@ body
   background: #FDFDFF;
 }
 
-#nti_header{
+.cabecera{
   background: url(../images/nti-bg-header.jpg) top repeat-x
 }
 
-#img_nti_header{
+.img_cabecera{
   text-align: right;
   font-family: monospace;
   width:90%; 
   height: 62px;
   background: url(../images/nti-header.jpg) no-repeat left;
+}
+
+.pedidos_nuevos {
+    position: absolute;
+    width: 20px;
+    background-color: red;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+		font-size: large;
+		margin-left: 2px;
+		margin-right: 10px;
 }
 
 .myButton {

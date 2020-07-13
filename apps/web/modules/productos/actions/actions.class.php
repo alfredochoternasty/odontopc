@@ -12,9 +12,9 @@ class productosActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-		if ($request->getParameter('grupo_id') == '-') {
-			$this->grupo_id = 0;
+		if ($request->getParameter('grupo_id') == '-' || empty($this->getUser()->getAttribute('grupo_id'))) {
 			$this->productos = Doctrine::getTable('Producto')->getActivos();
+			$this->grupo_id = 0;
 		} else {
 			$this->grupo_id = empty($request->getParameter('grupo_id'))?$this->getUser()->getAttribute('grupo_id'):$request->getParameter('grupo_id');
 			$this->productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($this->grupo_id, 1);

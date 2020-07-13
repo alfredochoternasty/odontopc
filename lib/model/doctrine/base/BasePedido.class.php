@@ -17,8 +17,10 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @property integer $forma_envio
  * @property integer $finalizado
  * @property integer $cliente_domicilio_id
+ * @property integer $zona_id
  * @property Doctrine_Collection $Detalle
  * @property Cliente $Cliente
+ * @property Zona $Zona
  * @property Doctrine_Collection $Resumen
  * 
  * @method integer             getId()                   Returns the current record's "id" value
@@ -31,8 +33,10 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @method integer             getFormaEnvio()           Returns the current record's "forma_envio" value
  * @method integer             getFinalizado()           Returns the current record's "finalizado" value
  * @method integer             getClienteDomicilioId()   Returns the current record's "cliente_domicilio_id" value
+ * @method integer             getZonaId()               Returns the current record's "zona_id" value
  * @method Doctrine_Collection getDetalle()              Returns the current record's "Detalle" collection
  * @method Cliente             getCliente()              Returns the current record's "Cliente" value
+ * @method Zona                getZona()                 Returns the current record's "Zona" value
  * @method Doctrine_Collection getResumen()              Returns the current record's "Resumen" collection
  * @method Pedido              setId()                   Sets the current record's "id" value
  * @method Pedido              setFecha()                Sets the current record's "fecha" value
@@ -44,8 +48,10 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @method Pedido              setFormaEnvio()           Sets the current record's "forma_envio" value
  * @method Pedido              setFinalizado()           Sets the current record's "finalizado" value
  * @method Pedido              setClienteDomicilioId()   Sets the current record's "cliente_domicilio_id" value
+ * @method Pedido              setZonaId()               Sets the current record's "zona_id" value
  * @method Pedido              setDetalle()              Sets the current record's "Detalle" collection
  * @method Pedido              setCliente()              Sets the current record's "Cliente" value
+ * @method Pedido              setZona()                 Sets the current record's "Zona" value
  * @method Pedido              setResumen()              Sets the current record's "Resumen" collection
  * 
  * @package    odontopc
@@ -107,6 +113,10 @@ abstract class BasePedido extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -118,6 +128,11 @@ abstract class BasePedido extends sfDoctrineRecord
 
         $this->hasOne('Cliente', array(
              'local' => 'cliente_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 

@@ -1,0 +1,17 @@
+{
+  "name": "NTI-Ventas",
+  "short_name": "NTI-Vta",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "Scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "web/images/icono_app.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+  ],
+  "splash_pages": null
+}

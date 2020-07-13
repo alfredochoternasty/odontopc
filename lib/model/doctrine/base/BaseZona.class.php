@@ -21,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $Presupuesto
+ * @property Doctrine_Collection $Pedido
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
@@ -44,6 +45,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
  * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection getPresupuesto()        Returns the current record's "Presupuesto" collection
+ * @method Doctrine_Collection getPedido()             Returns the current record's "Pedido" collection
  * @method Doctrine_Collection getLote()               Returns the current record's "Lote" collection
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
@@ -66,6 +68,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setListadoCobros()      Sets the current record's "ListadoCobros" collection
  * @method Zona                setDevProducto()        Sets the current record's "DevProducto" collection
  * @method Zona                setPresupuesto()        Sets the current record's "Presupuesto" collection
+ * @method Zona                setPedido()             Sets the current record's "Pedido" collection
  * @method Zona                setLote()               Sets the current record's "Lote" collection
  * @method Zona                setListadoCompras()     Sets the current record's "ListadoCompras" collection
  * @method Zona                setControlStock()       Sets the current record's "ControlStock" collection
@@ -147,6 +150,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('Presupuesto', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('Pedido', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

@@ -8,6 +8,9 @@ ALTER TABLE `ventas`.`grupoprod`
 ADD COLUMN `foto` VARCHAR(255) NULL DEFAULT NULL AFTER `color`;
 ALTER TABLE `ventas`.`grupoprod` 
 ADD COLUMN `foto_chica` VARCHAR(255) NULL DEFAULT NULL AFTER `foto`;
+ALTER TABLE `ventas`.`pedido` 
+ADD COLUMN `zona_id` INT NULL AFTER `cliente_domicilio_id`;
+INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('mostrar_cabecera', 'S');
 
 /*
 DROP TABLE 

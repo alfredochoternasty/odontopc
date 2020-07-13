@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Odonto Venta</title>
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
     <?php use_helper('Date') ?>
@@ -12,6 +12,7 @@
 		$favicon = $sf_user->getVarConfig('favicon');
 		$jquery = $sf_user->getVarConfig('jquery_theme');
 		$cssmenu = $sf_user->getVarConfig('cssmenu');
+		$mostrar_cabecera = $sf_user->getVarConfig('mostrar_cabecera');
 		
 		if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/web/images/'.$favicon.'" />';
 		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
@@ -23,18 +24,18 @@
   if ($sf_user->isAuthenticated()): // if de login
     $id = $sf_user->getGuardUser()->getId();
 		
-		if($sf_user->hasGroup('Blanco')){ ?>
-			<div id="nti_header">
+		if($mostrar_cabecera == 'S'){ ?>
+			<div class="cabecera">
 				<center>
-				<div id="img_nti_header">
-					<br>
-					<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-					<b>Versión del Sistema: 4.1</b><br>
-					Fecha Actualización: 31/01/2020
-				</div>
-				<?php if (date("Ymd") == '20200131') { ?>
-				<img src="<?php echo $prefijo ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
-				<?php } ?>
+					<div class="img_cabecera">
+						<br>
+						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
+						<b>Versión del Sistema: 5.0</b><br>
+						Fecha Actualización: 17/07/2020
+					</div>
+					<?php if (date("Ymd") == '20200717') { ?>
+					<img src="<?php echo $prefijo ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+					<?php } ?>
 				</center>
 			</div>
 		<?php 
@@ -51,10 +52,11 @@
 					$bandera = 0;
 					echo "<ul><li>".link_to("Inicio","@homepage")."</li>";
 					foreach ($results as $r){
-						
 						if ($r['padre'] == 0 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
 							echo $bandera?"</ul></li>":"";
-							echo "<li class='has-sub'><a href='#'><span>".$r['name']."</span></a><ul>";
+							echo "<li class='has-sub'><a href='#'><span>".$r['name']."</span>";
+							if ($r['name'] == 'Pedidos') include_component('ped', 'CantPedNuevos');	
+							echo "</a><ul>";
 							$bandera = 1;
 						}
 						if ($r['name'] == 'Cambiar Clave') {
@@ -66,12 +68,13 @@
 						}
 					}
 					echo $bandera?"</ul></li>":"";
-					echo "<li>".link_to("Salir", "sf_guard_signout")."</li></ul>";
+					echo "<li>".link_to("Salir", "sf_guard_signout")."</li>";
+					echo "</ul>";
 				?>    	
       </center>
     </div>
-
     <?php endif; //del login ?>
+		
     
     <?php echo $sf_content ?>
     

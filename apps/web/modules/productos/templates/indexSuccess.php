@@ -12,21 +12,20 @@
 		</form>
 	</div>
 </div>
-<div style="position:fixed; top:90px; height: 100%; overflow: scroll;">
+<div style="position:fixed; top:90px; height: 100%; overflow: scroll; width:95%; padding:2%;">
 <?php foreach ($productos as $producto): ?>
-<div style="width:97%; border: 1px solid #cccccc; margin:2%;">
+<div style="width:100%; border: 1px solid #cccccc; margin-bottom:1%">
 	<table width="100%">
 		<tr >
 			<?php $foto = empty($producto->foto_chica)? 'no_img.png' : $producto->foto_chica ?>
 		  <td width="10%"><?php echo '<img src="'.$base_url.'/web/uploads/productos/'.$foto.'" height="70vw" width="70vw">' ?></td>
-		  <td width="60%"><span style="font-size:12pt;font-family:sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto->getNombre() ?></span>
+		  <td width="55%"><span style="font-size:12pt;font-family:sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto->getNombre() ?></span>
 			<br><span style="font-size:10pt;font-family:sans-serif;color: #e20202;font-weight: bold;">$ <?php echo $producto->getPrecioVta() ?></span>
 		  </td>
-		  <td width="25%">
-			<span style="font-size:10pt;font-family:sans-serif;">Cant.</span>
-			<form style="display:flex;" action="productos/pedir" onSubmit="return validar(this);">
+		  <td width="35%" style="text-align:right">
+			<form action="productos/pedir" onSubmit="return validar(this);">
 			  <input name="producto_id" type="hidden" value="<?php echo $producto->getId() ?>">
-			  <input name="cantidad" type="number" style="width:30%; border: 1px solid #f4800c; height:14pt; text-align:center;display:inline;">
+			  <input name="cantidad" placeholder="Cant." type="number" style="width:30%; border: 1px solid #f4800c; height:14pt; text-align:center;display:inline;">
 			  <input type="submit" value="Pedir" class="boton_prod">
 			</form>
 		  </td>
