@@ -11,6 +11,8 @@ ADD COLUMN `foto_chica` VARCHAR(255) NULL DEFAULT NULL AFTER `foto`;
 ALTER TABLE `ventas`.`pedido` 
 ADD COLUMN `zona_id` INT NULL AFTER `cliente_domicilio_id`;
 INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('mostrar_cabecera', 'S');
+ALTER TABLE `detalle_pedido`
+	CHANGE COLUMN `cantidad` `cantidad` SMALLINT NOT NULL DEFAULT 1 AFTER `precio`;
 
 /*
 DROP TABLE 

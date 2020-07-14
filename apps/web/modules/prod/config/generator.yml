@@ -22,7 +22,7 @@ generator:
         activo: { label: Activo, help: Indica si el producto se puede utilizar o no}
       list:
         table_method: retrieveProdConGrupo
-        title: Administraci&oacute;n de Productos
+        title: Productos
         sort: [nombre, asc]
         display: [Grupo, nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id, _foto]
         object_actions:
@@ -30,7 +30,10 @@ generator:
           _edit: {label: Modificar}
         actions:
           _new: {label: Nuevo}
-          imprimir: {label: Imprimir}
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar todo}
           lista: {label: Lista de Precios con Fotos}
           lista2: {label: Lista de Precios sin Fotos}
         batch_actions:
@@ -45,3 +48,5 @@ generator:
         title: Modificar Producto
       new:
         title: Nuevo Producto
+      show:
+        display: [Grupo, nombre, _precio_venta, minimo_stock, orden_grupo]

@@ -54,13 +54,19 @@ class productosActions extends sfActions
 			$this->getUser()->setAttribute('pid', $pedido->getId());
 		}
 		
-		$detalle_pedido = new DetallePedido();
-		$detalle_pedido->pedido_id = $this->getUser()->getAttribute('pid');
-		$detalle_pedido->producto_id = $producto_id;
-		$detalle_pedido->cantidad = $cantidad;
+		$detalle = Doctrine::getTable('DetallePedido')->findByPedidoIdAndProductoId($this->getUser()->getAttribute('pid'), $producto_id);
+		if (empty($detalle[0]->getId())) {
+			$detalle_pedido = new DetallePedido();
+			$detalle_pedido->pedido_id = $this->getUser()->getAttribute('pid');
+			$detalle_pedido->producto_id = $producto_id;
+			$detalle_pedido->cantidad = $cantidad;
+		} else {
+			$detalle_pedido = $detalle[0];
+			$detalle_pedido->cantidad += $cantidad;
+		}
 		$producto = Doctrine::getTable('Producto')->find($producto_id);
 		$detalle_pedido->precio = $producto->precio_vta;
-		$detalle_pedido->total = $producto->precio_vta * $cantidad;
+		$detalle_pedido->total = $producto->precio_vta * $detalle_pedido->cantidad;
 		$detalle_pedido->save();
 		$this->redirect('productos/filtrado');
   }

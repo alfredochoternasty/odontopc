@@ -168,10 +168,10 @@
 		// $(window).load(function(){$(".loader").fadeOut("fast");});
 		function validar(p_form) {
 			var cant = p_form['cantidad'].value;
-			if (cant != '') {
+			if (cant != '' && cant > 0) {
 				return true;
 			} else {
-				alert('Para poder relizar el pedido debe ingresar la cantidad');
+				alert('Para poder relizar el pedido debe ingresar una cantidad');
 				p_form['cantidad'].focus();
 				return false;
 			}
