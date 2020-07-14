@@ -90,6 +90,7 @@ class cobroActions extends autoCobroActions
       $cr->delete(); 
       $resumen = Doctrine::getTable('Resumen')->find($cr->getResumen()->getId());
       $resumen->pagado = 0;
+      $resumen->fecha_pagado = null;
       $resumen->save();
     }    
     

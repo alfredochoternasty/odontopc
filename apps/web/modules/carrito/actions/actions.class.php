@@ -138,11 +138,18 @@ class carritoActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
     //$request->checkCSRFProtection();
-
     $this->forward404Unless($detalle_pedido = Doctrine_Core::getTable('DetallePedido')->find(array($request->getParameter('id'))), sprintf('Object detalle_pedido does not exist (%s).', $request->getParameter('id')));
+		$pedido = Doctrine::getTable('Pedido')->find($detalle_pedido->getPedidoId());
     $detalle_pedido->delete();
-
-    $this->redirect('carrito/index');
+		// si el pedido no tiene mas productos lo borro
+		$cantidad_productos = $pedido->getCantidadProductos();
+		if ($cantidad_productos <= 0) {
+			$this->getUser()->setAttribute('pid', 0);
+			$pedido->delete();
+			$this->redirect('productos/index');
+		} else {
+			$this->redirect('carrito/index');
+		}
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

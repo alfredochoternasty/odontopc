@@ -12,5 +12,10 @@ class sfGuardUserFormFilter extends BasesfGuardUserFormFilter
 {
   public function configure()
   {
+    $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
+    $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
+    
+    $this->widgetSchema['es_cliente'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
+    $this->validatorSchema['es_cliente'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));        
   }
 }

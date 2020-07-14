@@ -12,44 +12,57 @@ class productosActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-		if ($request->getParameter('grupo_id') == '-' || empty($this->getUser()->getAttribute('grupo_id'))) {
+		$this->productos = Doctrine::getTable('Producto')->getActivos();
+		$this->grupo_id = 0;
+		$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
+		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
+    $this->setLayout('layout_app');
+  }
+	
+  public function executeFiltrado(sfWebRequest $request)
+  {
+		if ($request->getParameter('grupo_id') == '-') {
 			$this->productos = Doctrine::getTable('Producto')->getActivos();
 			$this->grupo_id = 0;
+			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		} else {
 			$this->grupo_id = empty($request->getParameter('grupo_id'))?$this->getUser()->getAttribute('grupo_id'):$request->getParameter('grupo_id');
-			$this->productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($this->grupo_id, 1);
+			if (empty($this->grupo_id)) {
+				$this->productos = Doctrine::getTable('Producto')->getActivos();
+			} else {
+				$this->productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($this->grupo_id, 1);
+			}
 			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		}
 		
 		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
     $this->setLayout('layout_app');
+		$this->setTemplate('index');
   }
 
   public function executePedir(sfWebRequest $request)
   {
-	$producto_id = $request->getParameter('producto_id');
-	$cantidad = $request->getParameter('cantidad');
-	if (empty($this->getUser()->getAttribute('pid'))) {
-		$id_usuario = $this->getUser()->getGuardUser()->getId();
-		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
-		$id_cliente = $clientes[0]->getId();
-		$pedido = new Pedido();
-		$pedido->setFecha(date('Y-m-d'));
-		$pedido->setClienteId($id_cliente);
-		$pedido->save();
-		$id_ped = $pedido->getId();
-		$this->getUser()->setAttribute('pid', $id_ped);
-	}
-	
-	$detalle_pedido = new DetallePedido();
-	$detalle_pedido->pedido_id = $this->getUser()->getAttribute('pid');
-	$detalle_pedido->producto_id = $producto_id;
-	$detalle_pedido->cantidad = $cantidad;
-	$producto = Doctrine::getTable('Producto')->find($producto_id);
-	$detalle_pedido->precio = $producto->precio_vta;
-	$detalle_pedido->total = $producto->precio_vta * $cantidad;
-	$detalle_pedido->save();
-	$this->redirect('producto2');
+		$producto_id = $request->getParameter('producto_id');
+		$cantidad = $request->getParameter('cantidad');
+		if (empty($this->getUser()->getAttribute('pid'))) {
+			$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
+			$pedido = new Pedido();
+			$pedido->setFecha(date('Y-m-d'));
+			$pedido->setClienteId($clientes[0]->getId());
+			$pedido->setZonaId($clientes[0]->getZonaId());
+			$pedido->save();
+			$this->getUser()->setAttribute('pid', $pedido->getId());
+		}
+		
+		$detalle_pedido = new DetallePedido();
+		$detalle_pedido->pedido_id = $this->getUser()->getAttribute('pid');
+		$detalle_pedido->producto_id = $producto_id;
+		$detalle_pedido->cantidad = $cantidad;
+		$producto = Doctrine::getTable('Producto')->find($producto_id);
+		$detalle_pedido->precio = $producto->precio_vta;
+		$detalle_pedido->total = $producto->precio_vta * $cantidad;
+		$detalle_pedido->save();
+		$this->redirect('productos/filtrado');
   }
 
   public function executeCarrito(sfWebRequest $request)

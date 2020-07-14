@@ -2,7 +2,10 @@
 <?php include_partial('carrito/boton_carrito') ?>
 <div class="contenido">
 	<h3 class="titulo">Detalle de Cuenta</h3>
-	<p style="text-align:center;" class="monto <?php echo ($saldo<0)?'monto_negativo':'monto_positivo' ?>">Saldo $<?php echo $saldo ?></p>
+	<?php 
+		if (count($ctacte) > 0):
+	?>
+		<p style="text-align:center;" class="monto <?php echo ($saldo<0)?'monto_negativo':'monto_positivo' ?>">Saldo $<?php echo $saldo ?></p>
 	<?php foreach ($ctacte as $fila): ?>
 		<div style="width:97%; border: 1px solid #cccccc; margin:2%;">
 			<table width="100%">
@@ -27,5 +30,12 @@
 				</tr>
 			</table>
 		</div>
-<?php endforeach; ?>
+	<?php 
+			endforeach; 
+		else:
+	?>
+		<div class="fila_contenido fila_primario" style="width:93%; text-align:center; padding:2%;">No hay datos</div>
+	<?php	
+		endif;
+	?>
 </div>

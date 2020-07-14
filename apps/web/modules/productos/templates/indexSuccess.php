@@ -2,7 +2,7 @@
 <?php include_partial('carrito/boton_carrito') ?>
 <div style="width:100%; height:40px; background-color:#fff; position:fixed; top:50px; left:0px;border-bottom:1px solid #cccccc;">
 	<div class="combo_grupos">
-		<form id="grupos" action="<?php url_for('@producto2') ?>">
+		<form id="grupos" action="<?php echo url_for('productos/filtrado') ?>">
 			<select name="grupo_id" id="grupo_id">
 				<option value="-">Mostrar todos los productos</option>
 				<?php foreach ($grupos_prod as $grupo): ?>
@@ -23,7 +23,7 @@
 			<br><span style="font-size:10pt;font-family:sans-serif;color: #e20202;font-weight: bold;">$ <?php echo $producto->getPrecioVta() ?></span>
 		  </td>
 		  <td width="35%" style="text-align:right">
-			<form action="productos/pedir" onSubmit="return validar(this);">
+			<form action="<?php echo url_for('productos/pedir') ?>" onSubmit="return validar(this);">
 			  <input name="producto_id" type="hidden" value="<?php echo $producto->getId() ?>">
 			  <input name="cantidad" placeholder="Cant." type="number" style="width:30%; border: 1px solid #f4800c; height:14pt; text-align:center;display:inline;">
 			  <input type="submit" value="Pedir" class="boton_prod">

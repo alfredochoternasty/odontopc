@@ -25,4 +25,9 @@ class Pedido extends BasePedido
       ->execute();
     return $rsTotal[0]->total;
   }
+  
+  public function getCantidadProductos() {
+    $rs = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getId());
+    return count($rs);
+  }
 }

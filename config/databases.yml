@@ -1,4 +1,4 @@
-dev:
+all:
   doctrine:
     class: sfDoctrineDatabase
     param:

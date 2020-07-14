@@ -19,7 +19,7 @@ class sfGuardUserAdminForm extends BasesfGuardUserAdminForm
 	  $this->widgetSchema['usuario_zona'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Zona', 'expanded' => true), array('size' => '20'));
 	  $this->widgetSchema['permissions_list'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardPermission', 'expanded' => true), array('size' => '20'));
 		
-		// $this->validatorSchema->setOption('allow_extra_fields', true);
+		$this->validatorSchema->setOption('allow_extra_fields', true);
   }
 	
 	public function updateDefaultsFromObject()

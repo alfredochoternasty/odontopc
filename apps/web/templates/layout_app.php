@@ -191,9 +191,8 @@
 		  </tr>
 		</table>
     </div>
-		<div style="height:20px;background:#F3F3F3;text-align:center;padding:5px;">
-			<span style="font-weight:bold;font-size:12pt;">Saldo</span>
-			<span style="margin-left:4px;font-weight:bold;font-size:12pt;color:#F00">
+		<div style="height:20px;background:#F3F3F3;text-align:center;padding:2%;font-size:14pt;font-weight:bold;">
+			<span>Saldo</span><span style="margin-left:4px;color:#F00;">
 			<?php
 				$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($sf_user->getGuardUser()->getId());
 				echo "$ ".$clientes[0]->getSaldoCtaCte(1, null, true);
