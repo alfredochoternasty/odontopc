@@ -34,7 +34,7 @@
   {
     $datos = $this->get_datos($imp_pag);
     $dompdf = new DOMPDF();
-    $_hasFilters = $this->getUser()->getAttribute('devprod.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $_hasFilters = $this->getUser()->getAttribute('<?php echo $this->getModuleName() ?>.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     $dompdf->load_html($this->getPartial("imp", array("<?php echo $this->getSingularName() ?>s" => $datos, 'configuration' => $this->configuration, 'filters' => $this->filters, 'hasFilters' => $_hasFilters)));
     $dompdf->set_paper('A4',$this->getModoImpresion());
     $dompdf->render();
@@ -50,7 +50,7 @@
   
   public function executeListExcelPagina(sfWebRequest $request)
   {
-    $_hasFilters = $this->getUser()->getAttribute('devprod.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $_hasFilters = $this->getUser()->getAttribute('<?php echo $this->getModuleName() ?>.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     if (empty($_hasFilters)) {
       $this->getUser()->setFlash('error', 'Para poder imprimir todo debe realizar un filtro');
       $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');

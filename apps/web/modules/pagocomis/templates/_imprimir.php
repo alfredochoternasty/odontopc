@@ -1,7 +1,4 @@
-<html>
-<head>
-</head>
-<body>
+<?php include_partial('global/cabecera_impresion') ?>
 <h1>Pago de Comisi&oacute;n</h1>
 <h3><?php echo utf8_decode($pago->getRevendedor()); ?></h3>
 <h3>Fecha: <?php echo implode('/', array_reverse(explode('-', $pago->fecha))) ?></h3>
@@ -138,5 +135,4 @@
 	<table border="1" cellspacing="0" cellpadding="1" width="100%">
 		<tr><td style="text-align:right;"><b style="font-size:30px; color: #F00;">Total Comisi&oacute;n&nbsp; $ <?php echo $pago->monto ?></b></td></tr>
 	</table>
-</body>
-<html>
+<?php include_partial('global/pie_impresion') ?>

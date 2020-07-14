@@ -36,3 +36,5 @@ generator:
       form:    ~
       edit:    ~
       new:     ~
+      show:
+        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote, _remito]

@@ -16,30 +16,12 @@ class listvtaActions extends autoListvtaActions
 
   public function executeListVerTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);
-    //$this->filters = $this->configuration->getFilterForm($this->getFilters());
-    //$this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     $this->redirect('listvta/index?page=1');
   }  
   
   public function executeListVerDetallado(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', false);
-    //$this->filters = $this->configuration->getFilterForm($this->getFilters());
-    //$this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     $this->redirect('listvta/index?page=1');
-  }
-  
-  public function executeListImprimirTodo(sfWebRequest $request){
-    //$filtro = new ListadoVentasFormFilter();
-    $consulta = $this->buildQuery($this->getFilters());
-    $listado = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
-    // $dompdf->load_html($this->getPartial("imprimir" , array("listado" => $listado)));
-    $dompdf->set_paper('A4','landscape');
-    $dompdf->render();
-    $dompdf->stream("listado_ventas.pdf");    
-    return sfView::NONE;
   }
   
   public function executeListImprimirPagina(sfWebRequest $request){
@@ -47,62 +29,25 @@ class listvtaActions extends autoListvtaActions
       $this->getUser()->setFlash('error', '"Imprimir pagina" es solo para el listado detallado, utilice la opción "Imprimir todo"');
       $this->redirect('listvta/index?page=1');
     } else {
-      //$filtro = new ListadoVentasFormFilter();
-      $consulta = $this->buildQuery($this->getFilters());	
-      $pagina = $this->getUser()->getAttribute('listvta.page', '1', 'admin_module')-1;
-      $consulta->limit(50)->offset($pagina * 50);
-      $listado = $consulta->execute();
-      
-      $dompdf = new DOMPDF();
-      $dompdf->load_html($this->getPartial($this->getUser()->getAttribute('totales', true)?"imprimir_tot":"imprimir" , array("listado" => $listado)));
-      // $dompdf->load_html($this->getPartial("imprimir" , array("listado" => $listado)));
-      $dompdf->set_paper('A4','landscape');
-      $dompdf->render();
-      $dompdf->stream("listado_ventas.pdf");    
-      return sfView::NONE;
+      parent::executeListImprimirPagina($request);
     }
   }  
   
-  /*
-  public function executeFilter(sfWebRequest $request)
+  public function getModoImpresion()
   {
-    $this->setPage(1);  
-    
-    if ($request->hasParameter('_reset'))
-    {
-      $this->setFilters($this->configuration->getFilterDefaults());
-
-      $this->redirect('@listado_ventas');
-    }
-
-    $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    $this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-
-    $this->filters->bind($request->getParameter($this->filters->getName()));
-    if ($this->filters->isValid())
-    {
-      $this->setFilters($this->filters->getValues());
-      $this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    }
-
-    $this->pager = $this->getPager();
-		if ($this->pager->count() > 500) {
-			$this->getUser()->setFlash('error', 'El listado es demasiado grande! por favor seleccione otro filtro para achicar la cantidad de resultados');
-			$this->redirect('@listado_ventas');
-		}
-    $this->sort = $this->getSort();
-  }  
-  
-  public function executeIndex(sfWebRequest $request)
-  {
-	
-    $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    $this->hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-    if ($request->getParameter('sort')){
-      $this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
-      $this->redirect('listvta/filter');
-    } 
-		
+    return 'landscape';
   }
-  */
+  
+  public function descargar_pdf($imp_pag=false)
+  {
+    $datos = $this->get_datos($imp_pag);
+    $dompdf = new DOMPDF();
+    $_hasFilters = $this->getUser()->getAttribute('listvta.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $plantilla = $this->getUser()->getAttribute('totales', false)?"imprimir_tot":"imprimir";
+    $dompdf->load_html($this->getPartial($plantilla, array("listado" => $datos, 'configuration' => $this->configuration, 'filters' => $this->filters, 'hasFilters' => $_hasFilters)));
+    $dompdf->set_paper('A4',$this->getModoImpresion());
+    $dompdf->render();
+    $dompdf->stream("Listado de Ventas.pdf");    
+    return sfView::NONE;
+  }
 }

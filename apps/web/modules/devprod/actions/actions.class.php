@@ -181,27 +181,11 @@ class devprodActions extends autoDevprodActions
     $rid = $request->getParameter('id');
     $dev_producto = Doctrine::getTable('DevProducto')->find($rid);
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("dev_producto" => $dev_producto)));
+    $dompdf->load_html($this->getPartial("comprobante_imp", array("dev_producto" => $dev_producto)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream($dev_producto.".pdf");    
-		$this->forward('dev_producto', 'index');
-    return sfView::NONE;
-  }  
-	
-	public function executeListListado(sfWebRequest $request){
-    $filtro = new DevProductoFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-		$pagina = $this->getUser()->getAttribute('traza.page', '1', 'admin_module')-1;
-		$consulta->limit(30)->offset($pagina * 30);		
-    $listado = $consulta->execute();
-	
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("listado", array("dev_productos" => $listado)));
-    $dompdf->set_paper('A4','landscape');
-    $dompdf->render();
-    $dompdf->stream("productos_devueltos.pdf");    
-		$this->forward('dev_producto', 'index');
+		$this->forward($dev_producto, 'index');
     return sfView::NONE;
   }
 	
@@ -214,7 +198,7 @@ class devprodActions extends autoDevprodActions
     $mensaje->setSubject('Nota de Credito - NTI Implantes');
 
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("devprod/imprimir", array("dev_producto" => $dev_producto)));
+    $dompdf->load_html($this->getPartial("comprobante_imp", array("dev_producto" => $dev_producto)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
 	

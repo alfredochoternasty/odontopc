@@ -12,7 +12,7 @@ class PagoComisionFormFilter extends BasePagoComisionFormFilter
 {
   public function configure()
   {
-    $this->widgetSchema['revendedor_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Revendedor'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));
+    $this->widgetSchema['revendedor_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Revendedor'), 'table_method' => 'getActivosVta', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));
     $this->validatorSchema['revendedor_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Revendedor')));
     
 		$this->widgetSchema['fecha'] = new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true)), 'to_date' => new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true)), 'with_empty' => false, 'template' => 'desde %from_date% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hasta %to_date%'));

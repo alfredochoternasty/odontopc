@@ -1,7 +1,4 @@
-<html>
-<head>
-</head>
-<body>
+<?php include_partial('global/cabecera_impresion') ?>
 <h2>Pedido</h2>
 <p><b>Número:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedidoId() ?></p>
 <p><b>Nombre y Apellido:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedido()->getCliente() ?></p>
@@ -40,5 +37,4 @@
     <td colspan="2">&nbsp;</td>
   </tr>
 </table>
-</body>
-<html>
+<?php include_partial('global/pie_impresion') ?>

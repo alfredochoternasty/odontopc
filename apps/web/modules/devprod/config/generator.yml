@@ -27,13 +27,14 @@ generator:
         display: [Zona, fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total, _cae_afip]
         actions:
           _new: {label: Nuevo}
-          imprimir_pagina: {label: Imprimir}
-          excel_pagina: {label: Descargar Excel}
+          imprimir_pagina: {label: Imprimir Pagina}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
         object_actions:
           _delete: {label: Eliminar}
           asociada: {label: Ver Fact}
           factura: {label: Enviar AFIP}
-          imprimir: {label: Imprimir}
+          comprobante_imp: {label: Imprimir}
           mail: {label: Enviar Mail}
       filter:
         display: [fecha, cliente_id, producto_id, nro_lote]
