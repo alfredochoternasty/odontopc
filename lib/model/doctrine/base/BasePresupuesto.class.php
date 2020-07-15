@@ -13,6 +13,7 @@ Doctrine_Manager::getInstance()->bindComponent('Presupuesto', 'doctrine');
  * @property text $descripcion
  * @property integer $zona_id
  * @property string $email
+ * @property string $telefono
  * @property ListaPrecio $Lista
  * @property Zona $Zona
  * @property Doctrine_Collection $DetallePresupuesto
@@ -23,6 +24,7 @@ Doctrine_Manager::getInstance()->bindComponent('Presupuesto', 'doctrine');
  * @method text                getDescripcion()        Returns the current record's "descripcion" value
  * @method integer             getZonaId()             Returns the current record's "zona_id" value
  * @method string              getEmail()              Returns the current record's "email" value
+ * @method string              getTelefono()           Returns the current record's "telefono" value
  * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
  * @method Zona                getZona()               Returns the current record's "Zona" value
  * @method Doctrine_Collection getDetallePresupuesto() Returns the current record's "DetallePresupuesto" collection
@@ -32,6 +34,7 @@ Doctrine_Manager::getInstance()->bindComponent('Presupuesto', 'doctrine');
  * @method Presupuesto         setDescripcion()        Sets the current record's "descripcion" value
  * @method Presupuesto         setZonaId()             Sets the current record's "zona_id" value
  * @method Presupuesto         setEmail()              Sets the current record's "email" value
+ * @method Presupuesto         setTelefono()           Sets the current record's "telefono" value
  * @method Presupuesto         setLista()              Sets the current record's "Lista" value
  * @method Presupuesto         setZona()               Sets the current record's "Zona" value
  * @method Presupuesto         setDetallePresupuesto() Sets the current record's "DetallePresupuesto" collection
@@ -72,6 +75,10 @@ abstract class BasePresupuesto extends sfDoctrineRecord
         $this->hasColumn('email', 'string', 100, array(
              'type' => 'string',
              'length' => 100,
+             ));
+        $this->hasColumn('telefono', 'string', 50, array(
+             'type' => 'string',
+             'length' => 50,
              ));
     }
 

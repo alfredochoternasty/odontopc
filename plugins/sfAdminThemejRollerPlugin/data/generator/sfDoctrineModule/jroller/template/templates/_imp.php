@@ -1,4 +1,4 @@
-<?php echo "[?php include_partial('global/cabecera_impresion', array('titulo' => '".$this->configuration->getValue('list.title')."', 'configuration' => \$configuration, 'filters' => \$filters, 'hasFilters' => \$hasFilters)) ?]" ?>
+<?php echo "[?php include_partial('global/cabecera_listado', array('titulo' => '".$this->configuration->getValue('list.title')."', 'configuration' => \$configuration, 'filters' => \$filters, 'hasFilters' => \$hasFilters)) ?]" ?>
 <table cellspacing="0" border="1px" width="100%">
   <thead>
 	<tr>
@@ -13,4 +13,4 @@
 	[?php endforeach ?]
   </tbody>
 </table>
-[?php include_partial('global/pie_impresion') ?]
+[?php include_partial('global/pie_listado') ?]

@@ -88,24 +88,53 @@ class detresActions extends autoDetresActions
     }
     return $this->renderText(json_encode($nro_lote));
   }  
-  
-  public function executeNew(sfWebRequest $request){
+
+  public function executeCreate(sfWebRequest $request){
     if($request->hasParameter('rid')){
       $rid = $request->getParameter('rid');
       $this->getUser()->setAttribute('rid', $rid);
     }else{
       $rid = $this->getUser()->getAttribute('rid');
     }
+		$this->resumen = Doctrine::getTable('Resumen')->find($rid);
+    $this->form = $this->configuration->getForm();
+    $this->detalle_resumen = $this->form->getObject();
+		$this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
+		echo $rid;
+		die();
+    if ($request->hasParameter('rtn')){
+      $detalle_resumen_id = $this->processForm($request, $this->form);
+      return $this->renderText(json_encode($detalle_resumen_id));
+    }else{
+      $this->processForm($request, $this->form);
+      $this->setTemplate('new');
+    }
+  }
 	
+  public function executeNew(sfWebRequest $request)
+  {
+    if($request->hasParameter('rid')){
+      $rid = $request->getParameter('rid');
+      $this->getUser()->setAttribute('rid', $rid);
+    }else{
+      $rid = $this->getUser()->getAttribute('rid');
+    }
+
     $detres = new DetalleResumen();
-    $detres->setResumenId($rid);
-		if ($detres->getResumen()->afip_estado > 0) {
+    $detres->setResumenId($rid);		
+    $this->resumen = Doctrine::getTable('Resumen')->find($rid);
+		if ($this->resumen->afip_estado > 0) {
 			$this->getUser()->setFlash('error', 'Esta venta ya fue enviada a la AFIP y no se puede modificar');
 			$this->redirect( 'detres/index?rid='.$rid);
 		} else {
-			$this->getUser()->setAttribute('tipofactura', $detres->getResumen()->tipofactura_id);
-			$this->form = new DetalleResumenForm($detres);
-			$this->detalle_resumen = $this->form->getObject();  
+			$parametros_form = array(
+				'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
+				'zona_id' => $this->resumen->getCliente()->zona_id,
+				'usuario_id' => $this->getUser()->getGuardUser()->getId(),
+				'resumen_id' => $rid,
+			);
+			$this->form = new DetalleResumenForm($detres, $parametros_form);
+			$this->detalle_resumen = $detres;  
 			$this->pager2 = Doctrine::getTable('DetalleResumen')->findByResumenId($rid);
 		}
   }
@@ -123,7 +152,8 @@ class detresActions extends autoDetresActions
     parent::executeIndex($request);
   }
 
-  public function executeDelete(sfWebRequest $request){
+  public function executeDelete(sfWebRequest $request)
+  {
     $request->checkCSRFProtection();
 		$detalle_resumen = $this->getRoute()->getObject();
 		$tipofactura = $detalle_resumen->getResumen()->tipofactura_id;
@@ -144,7 +174,8 @@ class detresActions extends autoDetresActions
     $this->redirect('detres/index?rid='.$rid);
   }
   
-  protected function processForm(sfWebRequest $request, sfForm $form){
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid()) {
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
@@ -183,13 +214,13 @@ class detresActions extends autoDetresActions
 				$this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
 			}
 			
-      if ($request->hasParameter('_save_and_add')) {
-        $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
-        $this->redirect('detres/new?rid='.$detalle_resumen->getResumenId());
-      } else {
-        $this->getUser()->setFlash('notice', $notice);
-        $this->redirect('detres/index?rid='.$detalle_resumen->getResumenId());
-      }
+      // if ($request->hasParameter('_save_and_add')) {
+        // $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
+        // $this->redirect('detres/new?rid='.$detalle_resumen->getResumenId());
+      // } else {
+        // $this->getUser()->setFlash('notice', $notice);
+        // $this->redirect('detres/index?rid='.$detalle_resumen->getResumenId());
+      // }
     } else {
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
@@ -197,6 +228,7 @@ class detresActions extends autoDetresActions
   
   public function executeListImprimir(sfWebRequest $request){
     $rid = $this->getUser()->getAttribute('rid', 1);
+		if (empty($rid)) $rid = $request->getParameter('rid');
     $resumen = Doctrine::getTable('Resumen')->find($rid);
     $dompdf = new DOMPDF();
 		$modelo_impresion = $resumen->getTipoFactura()->modelo_impresion;
@@ -269,7 +301,7 @@ class detresActions extends autoDetresActions
   public function executeGet_prod_remito(sfWebRequest $request){
     $pid = $request->getParameter('pid');
     $lid = $request->getParameter('lid');
-	  
+		
 		$u_id = $this->getUser()->getGuardUser()->getId();
 		$uz = Doctrine_Core::getTable('UsuarioZona')->findByUsuario($u_id);		
 
@@ -296,10 +328,9 @@ class detresActions extends autoDetresActions
     foreach($remitos as $remito){
 			if ($remito->RemitoProductoCantVend() < $remito->cantidad) {
 				$fecha = $remito->getResumen()->getFechaDMY();
-				$options[] = '<option value="'.$remito->id.'">'.$remito->getResumen()->getCliente().'- Fecha: '.$fecha.' - Nro: '.$remito->getResumen()->nro_factura.'</option>';
+				$options[] = '<option value="'.$remito->id.'">'.$remito->getResumen()->getCliente().'- Fecha: '.$fecha.' - Nro: '.$remito->getResumen().'</option>';
 			}
     }
-	//echo $q->getSQLQuery();
     echo implode($options);
     return sfView::NONE;
   }
@@ -313,14 +344,14 @@ class detresActions extends autoDetresActions
 		// $q->select('sum(cantidad) as cant_vend');
 		// $q->from('DetalleResumen dr');
 		// $q->where('dr.det_remito_id = '.$drid);
-    	// $remitos = $q->fetchArray();
+    // $remitos = $q->fetchArray();
 		// $cant_vend = $remitos[0]['cant_vend'];		
 		
 		$q = Doctrine_Query::create();
 		$q->select('dr.cantidad');
 		$q->from('DetalleResumen dr');
 		$q->where('dr.id = '.$drid);
-    	$remitos = $q->fetchArray();
+    $remitos = $q->fetchArray();
 		$cantidad = $remitos[0]['cantidad'];		
 		
 		$stock = $cantidad - $cant_vend;
@@ -421,7 +452,7 @@ class detresActions extends autoDetresActions
 			}
 			$regfe['CbteFch'] = $resumen->getFechaYMD(); //date('Ymd');
 			$regfe['MonId'] = 'PES';
-			$regfe['MonCotiz'] = 1;			
+			$regfe['MonCotiz'] = 1;
 			
 			$wsfev1 = new WSFEV1(dirname(__FILE__));
 			
@@ -436,7 +467,7 @@ class detresActions extends autoDetresActions
 			->andWhere('nro_factura is not null');
 			$ultimo_nro_sistema = $q->fetchArray();
 			if ($ultimo_nro_sistema[0]['ultimo'] != $ultimo_nro_afip) {
-				$this->getUser()->setFlash('error', 'El Ãºltimo nÃºmero de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el Ãºltimo nÃºmero registrado en el sistema (nro: '.$ultimo_nro_sistema[0]['ultimo'].')');
+				$this->getUser()->setFlash('error', 'El último número de factura registrado en la afip (nro: '.$ultimo_nro_afip.') no coincide con el último número registrado en el sistema (nro: '.$ultimo_nro_sistema[0]['ultimo'].')');
 				$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
 			}
 			$nuevo_nro = $ultimo_nro_afip+1;

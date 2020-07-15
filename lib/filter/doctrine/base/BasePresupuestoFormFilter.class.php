@@ -18,6 +18,7 @@ abstract class BasePresupuestoFormFilter extends BaseFormFilterDoctrine
       'descripcion' => new sfWidgetFormFilterInput(),
       'zona_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'email'       => new sfWidgetFormFilterInput(),
+      'telefono'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ abstract class BasePresupuestoFormFilter extends BaseFormFilterDoctrine
       'descripcion' => new sfValidatorPass(array('required' => false)),
       'zona_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
       'email'       => new sfValidatorPass(array('required' => false)),
+      'telefono'    => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('presupuesto_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BasePresupuestoFormFilter extends BaseFormFilterDoctrine
       'descripcion' => 'Text',
       'zona_id'     => 'ForeignKey',
       'email'       => 'Text',
+      'telefono'    => 'Text',
     );
   }
 }

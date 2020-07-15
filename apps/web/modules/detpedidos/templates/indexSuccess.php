@@ -19,16 +19,8 @@
       $vendido = $det_pedido[0]->getPedido()->getVendido();
       if($vendido == 0){
     ?>    
-      <div class="sf_admin_actions_block floatleft">
-      	<a tabindex="0" href="#sf_admin_actions_menu" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="sf_admin_actions_button">
-      	  <span class="ui-icon ui-icon-triangle-1-s"></span>
-      	  <?php echo __('Actions', array(), 'sf_admin') ?>
-      	</a>
-      	<div id="sf_admin_actions_menu" class="ui-helper-hidden fg-menu fg-menu-has-icons">
-      		<ul class="sf_admin_actions" id="sf_admin_actions_menu_list">
+      <div class="sf_admin_actions_block" style="font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; margin:0px">
       			<?php include_partial('detpedidos/list_actions', array('helper' => $helper)) ?>
-      		</ul>
-      	</div>
       </div>
     <?php 
       }

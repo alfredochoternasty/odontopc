@@ -40,39 +40,40 @@ class presuActions extends autoPresuActions
 
   public function executeListMail(sfWebRequest $request){
     $presu = Doctrine::getTable('Presupuesto')->find($this->getRequestParameter('id'));
-    
-    $mensaje = Swift_Message::newInstance();
-    $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
-    $mensaje->setTo($presu->email);
-    $mensaje->setSubject('Presupuesto - NTI Implantes');
+    if (!empty($presu->email)) {
+      $mensaje = Swift_Message::newInstance();
+      $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
+      $mensaje->setTo($presu->email);
+      $mensaje->setSubject('Presupuesto - NTI Implantes');
 
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("detpresu/imprimir", array("presupuesto" => $presu)));
-    $dompdf->set_paper('A4','portrait');
-    $dompdf->render();
-	
-		$presupuesto = $dompdf->output();
-		$adjunto = new Swift_Attachment($presupuesto, 'presupuesto.pdf', 'application/pdf');
-		$mensaje->attach($adjunto);
-    $this->getMailer()->send($mensaje);
+      $dompdf = new DOMPDF();
+      $dompdf->load_html($this->getPartial("detpresu/imprimir", array("presupuesto" => $presu)));
+      $dompdf->set_paper('A4','portrait');
+      $dompdf->render();
     
-    $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$presu->email);
+      $presupuesto = $dompdf->output();
+      $adjunto = new Swift_Attachment($presupuesto, 'presupuesto.pdf', 'application/pdf');
+      $mensaje->attach($adjunto);
+      $this->getMailer()->send($mensaje);
+      
+      $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$presu->email);
+    } else {
+      $this->getUser()->setFlash('error', 'El presupues no tiene una Email a donde enviarlo');
+    }
     $this->redirect('presupuesto');
   }
   
   public function executeNew(sfWebRequest $request)
   {
-		$u_id = $this->getUser()->getGuardUser()->getId();
-		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
-		$this->form = $this->configuration->getForm(null, array('zona_id' => $uz[0]->zona_id));
+		$zid = $this->getUser()->getGuardUser()->getZonaId();
+		$this->form = $this->configuration->getForm(null, array('zona_id' => $zid));
 		$this->presupuesto = $this->form->getObject();
   }
   
   public function executeEdit(sfWebRequest $request)
   {
-		$u_id = $this->getUser()->getGuardUser()->getId();
-		$uz = Doctrine::getTable('UsuarioZona')->findByUsuario($u_id);
+		$zid = $this->getUser()->getGuardUser()->getZonaId();
     $this->presupuesto = $this->getRoute()->getObject();
-    $this->form = $this->configuration->getForm($this->presupuesto, array('zona_id' => $uz[0]->zona_id));
+    $this->form = $this->configuration->getForm($this->presupuesto, array('zona_id' => $zid));
   }
 }

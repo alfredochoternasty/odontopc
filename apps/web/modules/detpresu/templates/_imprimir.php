@@ -1,32 +1,26 @@
 <?php include_partial('global/cabecera_impresion') ?>
 	<table cellpadding="10" cellspacing="0" border="0" width="100%">
 		<tr>
-			<td width="56%">
-				<p>
-					<b>Razon Social: </b>NTI Implantes<br>
-					<b>Domicilio Comercial: </b>Feliciano 581 - Paraná (Entre Ríos)<br>
-					<b>Tel: </b>(0343) 4235207 / 155 094802<br>
-					<b>Condición frente al IVA: </b>IVA Responsable Inscripto<br>
-				</p>			
+			<td width="50%">
+				<span style="font-size: 14px;">
+					<b>C.U.I.T.: </b>30-71227246-1</b><br>
+					<b>Ingresos Brutos: </b>30-71227246-1</b><br>
+					<b>Inicio de Actividades: </b>01/05/2012</b>
+				</span>
 			</td>
-			<td width="44%">
+			<td width="50%">
 				<div style="margin-bottom: 40px; width:100%; font-weight:bold; font-size:14px; text-align:right;"></div>
-				<span style="font-weight:bold; font-size: 22px;">PRESUPUESTO</span><br>
+				<span style="font-weight:bold; font-size: 22px;">PRESUPUESTO N° <?php echo $presupuesto->id ?></span><br>
 				<span style="font-size: 14px;">
 					<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $presupuesto->fecha))) ?><br>
-					<br>
-					<b>C.U.I.T.: </b>30-71227246-1<br>
-					<b>Ingresos Brutos: </b>30-71227246-1<br>
-					<b>Inicio de Actividades: </b>01/05/2012
 				</span>
-				</b>
 			</td>
 		</tr>
 		</table>
 		<br>
 		<table cellpadding="1" cellspacing="0" border="0" width="100%" style="border-top:1px solid #000; border-bottom:1px solid #000;">
 		<tr>
-			<td colspan="2" align="left"><b>Razón Social: </b><?php echo $presupuesto->descripcion ?></td>
+			<td colspan="2" align="left"><?php echo utf8_decode($presupuesto->descripcion) ?></td>
 		</tr>
 		</table>
 		<br>
@@ -59,7 +53,7 @@
 			</tr>
 		<?php endif; ?>
 			<tr>
-				<td><?php echo $detalle->getProducto() ?></td>
+				<td><?php echo utf8_decode($detalle->getProducto()) ?></td>
 				<td><?php echo $moneda.' '.$detalle->precio ?></td>
 				<td><?php echo $detalle->cantidad ?></td>
 				<td><?php echo $detalle->descuento.'%' ?></td>

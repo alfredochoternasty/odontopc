@@ -1,13 +1,6 @@
-<html>
-<head>
-</head>
-<body>
-<p><b>Dni:</b>&nbsp;&nbsp;<?php echo $cta_cte[0]->getCliente()->getDni() ?></p>
-<p><b>Nombre y Apellido:</b>&nbsp;&nbsp;<?php echo $cta_cte[0]->getCliente() ?></p>
-<p><b>Domicilio:</b>&nbsp;&nbsp;<?php echo $cta_cte[0]->getCliente()->getDomicilio() ?> - <?php echo $cta_cte[0]->getCliente()->getLocalidad() ?></p>
-<p><b>Tel&eacute;fono:</b>&nbsp;&nbsp;<?php echo $cta_cte[0]->getCliente()->getTelefono() ?>, <?php echo $cta_cte[0]->getCliente()->getCelular() ?></p>
-<p>&nbsp;</p>
-<h2>Cuenta Corriente</h2>
+<?php include_partial('global/cabecera_impresion') ?>
+<h2 id="titulo">Cuenta Corriente</h2>
+<h3>Nombre y Apellido:&nbsp;&nbsp;<?php echo $cta_cte[0]->getCliente().' ('.$cta_cte[0]->getCliente()->getDni().')' ?></h3>
 <table border="1" cellspacing="0" cellpadding="5" width="100%">
   <tr>
     <th style="background: #CCC;">Concepto</th>
@@ -60,7 +53,4 @@ if ($ctacte->concepto == 'Venta') {
     <td><?php echo '$'.sprintf("%01.2f", $cta_cte[0]->getCliente()->getSaldoCtaCte($cta_cte[0]->getMonedaId())) ?></td>
   </tr>
 </table>
-<p>&nbsp;</p>
-<p style="text-align: right; width: 100%; "><b>Fecha de Impresi&oacute;n:</b>&nbsp;&nbsp;<?php echo date("d/m/Y") ?></p>
-</body>
-<html>
+<?php include_partial('global/pie_impresion') ?>

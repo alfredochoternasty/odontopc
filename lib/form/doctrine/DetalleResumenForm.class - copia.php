@@ -10,14 +10,16 @@
  */
 class DetalleResumenForm extends BaseDetalleResumenForm
 {
-  
   public function configure()
-  {  
+  {
     unset($this['fecha_vto'], $this['lista_id'], $this['moneda_id'], $this['bonificados']);
 		
-		$tipofactura = sfContext::getInstance()->getUser()->getAttribute('tipofactura');
-		$modulo_factura = sfContext::getInstance()->getUser()->getVarConfig('modulo_factura');
-    
+		$tipofactura = $this->getObject()->getResumen()->tipofactura_id;		
+		$modulo_factura = $this->getOption('modulo_factura');
+		$zona_id = $this->getOption('zona_id');
+		$usuario_id = $this->getOption('usuario_id');
+		$resumen_id = $this->getOption('resumen_id');
+		
     $this->widgetSchema['resumen_id'] = new sfWidgetFormInputHidden();
     $table_method	= ($tipofactura == 5 || $tipofactura == 7)?'getProdDebito':'getActivos';
     $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => $table_method, 'add_empty' => true, 'order_by' => array('nombre', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
@@ -62,13 +64,14 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 				$this->setDefault('nro_lote', '-');
 				unset($this['iva'], $this['sub_total'], $this['total'], $this['descuento'], $this['det_remito_id'], $this['nro_lote'], $this['cantidad']);
 			} else {
-				$zona_id = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
 				$this->widgetSchema['det_remito_id'] = new sfWidgetFormChoice(array('choices' => array()));
 				$this->validatorSchema['det_remito_id'] = new sfValidatorNumber(array('required' => ($zona_id != 1)));
 				
 				if($modulo_factura == 'S'){
 					$this->widgetSchema['iva'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+					$this->validatorSchema['iva'] = new sfValidatorNumber(array('required' => false));
 					$this->widgetSchema['sub_total'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
+					$this->validatorSchema['sub_total'] = new sfValidatorNumber(array('required' => false));
 				}else{
 					unset($this['iva']);
 				}
@@ -87,7 +90,10 @@ class DetalleResumenForm extends BaseDetalleResumenForm
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();	
 				
-		$this->setDefault('usuario', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		$this->setDefault('usuario', $usuario_id);
+		$this->setDefault('resumen_id', $resumen_id);
+		$this->validatorSchema->setOption('allow_extra_fields', true);
+		
   }
-  
+
 }

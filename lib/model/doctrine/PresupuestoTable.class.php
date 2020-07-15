@@ -18,11 +18,9 @@ class PresupuestoTable extends Doctrine_Table
     }
     
     public function retrieveConJoins(Doctrine_Query $q){
-			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
       $rootAlias = $q->getRootAlias();
-			$q->leftJoin($rootAlias.'.Zona z');
-			$q->leftJoin('z.UsuarioZona uz');			
-			$q->andWhere('uz.usuario = '.$id);
+			$q->andWhere($rootAlias. '.zona_id = ?', $zid);
       $q->orderBy($rootAlias. '.fecha desc');
       return $q;
     }

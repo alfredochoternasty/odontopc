@@ -18,7 +18,7 @@ class pedidosActions extends autoPedidosActions
   }
   
   public function executeListVender(sfWebRequest $request){
-    $this->redirect( 'resumen/new?pid='.$this->getRequestParameter('id'));
+    $this->redirect( 'detpedidos/vender?pid='.$this->getRequestParameter('id'));
   }  
   
   public function executeDelete(sfWebRequest $request)

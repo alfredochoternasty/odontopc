@@ -25,9 +25,12 @@ generator:
         object_actions: []
         batch_actions: []
         actions:
-          imprimir: {label: Imprimir página}
+          imprimir_pagina: {label: Imprimir página}
+          imprimir_todo: {label: Imprimir todo}
       filter:
         display: [apellido, moneda_id, zona_id, mayor]
       form:    ~
       edit:    ~
       new:     ~
+      show:
+        display: [apellido, nombre, saldo]

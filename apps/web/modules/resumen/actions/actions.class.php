@@ -132,16 +132,8 @@ class resumenActions extends autoResumenActions
 				$this->resumen->setClienteId($this->pedido->cliente_id);
 				$this->resumen->setPedidoId($this->pedido->id);
 				
-				$parametros_form = array(
-					'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
-					'zona_id' => $this->pedido->getCliente()->zona_id,
-					'usuario_id' => $this->getUser()->getGuardUser()->getId(),
-				);
-				
-				$cliente = Doctrine::getTable('Cliente')->find($this->pedido->cliente_id);
-				$this->form = $this->configuration->getForm($this->resumen, $parametros_form);
 				$this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->id)));
-				$this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $cliente->id)));
+				$this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->cliente_id)));
 				$this->form->setWidget('tipofactura_id', new sfWidgetFormChoice(array('choices' => $this->pedido->getCliente()->getTiposFacturas())));
 			} elseif($todos_tienen_lote = 'N') {
 				$this->getUser()->setFlash('error', 'No se puede vender este pedido, porque hay productos que no tienen lote cargado');
@@ -151,9 +143,16 @@ class resumenActions extends autoResumenActions
 				$this->redirect('@pedido_pedidos');
 			}
 			
-    } else {
-      parent::executeNew($request);
     }
+		
+		$parametros_form = array(
+			'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
+			'zona_id' => $this->getUser()->getGuardUser()->getZonaId(),
+			'usuario_id' => $this->getUser()->getGuardUser()->getId(),
+		);
+		
+		$this->form = $this->configuration->getForm(null, $parametros_form);
+    $this->resumen = $this->form->getObject();
   }
   
   public function executeVerdetalle(sfWebRequest $request){

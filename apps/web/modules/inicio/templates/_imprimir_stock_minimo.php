@@ -1,4 +1,5 @@
 <?php include_partial('global/cabecera_impresion') ?>
+<h2 id="titulo">Productos con stock por debajo del m&iacute;nimo</h2>
 <table cellspacing="0" border="1px" width="100%">
   <thead>
 	<tr>

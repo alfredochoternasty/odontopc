@@ -20,9 +20,10 @@ class PresupuestoForm extends BasePresupuestoForm
     
     $this->widgetSchema['descripcion'] = new sfWidgetFormTextarea();
     $this->widgetSchema['email'] = new sfWidgetFormInputText(array(), array('size' => 70));
-    $this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
+    $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();
+		$this->setDefault('zona_id', $zona_id);
     
-		if (zona_id != 1) {
+		if ($zona_id != 1) {
 			$this->widgetSchema['lista_id'] = new sfWidgetFormInputHidden();
 			$this->validatorSchema['lista_id'] =  new sfValidatorInteger();
 			$this->setDefault('lista_id', 1);

@@ -548,6 +548,7 @@ Presupuesto:
     descripcion: {type: text}
     zona_id: {type: integer(4)}
     email: {type: string(100)}
+    telefono: {type: string(50)}
   relations:
     Lista: {type: one, class: ListaPrecio, local: lista_id, onDelete: RESTRICT}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}

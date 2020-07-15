@@ -14,11 +14,13 @@ generator:
     config:
       actions: ~
       fields:
+        id: {label: Nro}
         fecha: { date_format: dd/MM/yyyy }
+        descripcion: {label: Presupuesto a nombre de}
       list:
         table_method: retrieveConJoins
         title: Administracion Presupuestos
-        display: [Zona, fecha, descripcion, email]
+        display: [id, fecha, descripcion, email, telefono]
         object_actions:
           _delete: {label: Borrar}
           _edit: {label: Modificar}
@@ -26,7 +28,7 @@ generator:
           imprimir: ~
           mail: ~
       filter:
-        display: [zona_id, fecha, email]
+        display: [id, fecha]
       form:
         actions:
           _list: {label: Volver}

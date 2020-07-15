@@ -2,17 +2,22 @@
 <head>
 <style type="text/css">
 body {font-family:sans-serif; font-size:0.7em;}
-#filtro_utilizado {font-size:0.6em;margin-bottom:0.9em;}
-#header {margin-bottom:0.1em;}
+#logo{position:absolute;left:0;top:-20}
+#content table{width:100%}
+#titulo{width:100%;text-align:center;}
 .page-number {text-align: right;}
 .page-number:before {content: "Página " counter(page);}
 hr {page-break-after: always;border: 0;}
-#footer1 {position:fixed; bottom:0; left:0; width:70%; font-size: 0.5em;}
 #footer2 {position:fixed; bottom:0; right:0; width:20%}
+
+@page { margin: 100px 40px 40px 80px;}
+header { position: fixed; top: -60px; left: 0px; right: 0px; height: 80px; }
+footer { position: fixed; bottom: -60px; left: 0px; right: 0px; height: 50px; }
+p { page-break-after: always; }
+p:last-child { page-break-after: never; }
 </style>
 </head>
 <body>
-<img src="images/logo_nti.png" width=204 height=77 style="position:absolute;left:0;top:-20;">
-<h2 id="header" style="width:100%;text-align:center;margin-top:2.5em"><?php echo $titulo ?></h2>
-<?php if ($hasFilters->count() > 0) include_partial('admins/filtro_usado', array('configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters)) ?>
-<div id="content">
+<header><img src="images/logo_nti.png" width=204 height=77 id="logo"></header>
+<footer><div class="page-number"></div></footer>
+<main>

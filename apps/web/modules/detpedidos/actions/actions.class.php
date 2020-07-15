@@ -39,8 +39,32 @@ class detpedidosActions extends autoDetpedidosActions
   }
   
   public function executeListVender(sfWebRequest $request){
-    $pid = $this->getUser()->getAttribute('pid');
-    $this->redirect( 'resumen/new?pid='.$pid);
+    $pedido = Doctrine::getTable('Pedido')->find($this->getRequestParameter('pid'));
+    $det_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($pedido->id);
+		
+    $todos_tienen_lote = '';
+    foreach ($det_pedido as $det) {
+      $nro_lote = $det->getNroLote();
+      if (empty($nro_lote)) {
+        $todos_tienen_lote = 'N';
+        break;
+      } else {
+        $todos_tienen_lote = 'S';
+      }
+    }
+			
+    if ($todos_tienen_lote == 'S') {
+      $this->resumen = new Resumen();
+      $this->resumen->setClienteId($pedido->cliente_id);
+      $this->resumen->setPedidoId($pedido->id);
+      $tipos_fact = $this->pedido->getCliente()->getTiposFacturas()->orderBy('id ASC');
+      $this->resumen->setTipofacturaId($tipos_fact[0]->id);      
+      $this->getUser()->setFlash('notice', 'Factura generada para el Pedido Nro '.$pedido->id.' del cliente '.$pedido->getCliente(), false);
+      $this->redirect('resumen/index');
+    } else {
+      $this->getUser()->setFlash('error', 'Hay productos que no tiene lotes asignados', false);
+      $this->redirect('detpedidos/index?pid='.$pedido->id);      
+    }
   }
   
   public function executeListAsignarLote(sfWebRequest $request){

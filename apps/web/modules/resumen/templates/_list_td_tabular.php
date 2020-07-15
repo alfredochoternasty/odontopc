@@ -26,6 +26,3 @@
 <td class="sf_admin_text sf_admin_list_td_obs">
   <?php echo get_partial('resumen/obs', array('type' => 'list', 'resumen' => $resumen)) ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_afip_estado">
-	<?php echo get_partial('resumen/pagada', array('type' => 'list', 'resumen' => $resumen)) ?>
-</td>
