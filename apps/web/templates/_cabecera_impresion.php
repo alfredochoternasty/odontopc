@@ -3,7 +3,8 @@
 <style type="text/css">
 body {font-family:sans-serif; font-size:0.7em;}
 #logo{position:absolute;left:0;top:-20}
-#content table{width:100%}
+main table{width:100%}
+main table tr th{background: #CCC;}
 #titulo{width:100%;text-align:center;}
 .page-number {text-align: right;}
 .page-number:before {content: "Página " counter(page);}

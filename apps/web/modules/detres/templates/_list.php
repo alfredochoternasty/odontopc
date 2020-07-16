@@ -40,7 +40,7 @@
 ?>
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
-            <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo __('Detalle de la Venta', array(), 'messages') ?></h1>
+            <h1><span class="ui-icon ui-icon-triangle-1-s"></span> <?php echo 'Detalle' ?></h1>
     </caption>
 
     <thead class="ui-widget-header">

@@ -16,10 +16,9 @@ generator:
       fields:  ~
       list: 
         title: Detalle de pedido
-        display: [Producto, nro_lote, precio, cantidad, total, observacion, asignacion_lote]
+        display: [Producto, nro_lote, precio, cantidad, total, asignacion_lote]
         object_actions:
           _delete: {label: Eliminar}
-          _edit: {label: Modificar}
         actions:
           asignar_lote: ~
           vender: ~
@@ -28,6 +27,6 @@ generator:
       form:    ~
       edit:
         title: Modificar de pedido
-        display: [producto_id, nro_lote, precio, cantidad, total, observacion]
+        display: [producto_id, nro_lote, precio, cantidad, total]
       new: 
         title: Nuevo de pedido

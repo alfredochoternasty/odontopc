@@ -55,13 +55,13 @@ class resumenActions extends autoResumenActions
         $detalle_pedido = Doctrine::getTable('DetallePedido')->findbyPedidoId($id_pedido);
         foreach($detalle_pedido as $detalle):
           $detalle_resumen = new DetalleResumen();
-          $detalle_resumen->setResumenId($resumen->getId());
-          $detalle_resumen->setProductoId($detalle->getProductoId());
-          $detalle_resumen->setNroLote($detalle->getNroLote());
-          $detalle_resumen->setPrecio($detalle->getPrecio());
-          $detalle_resumen->setCantidad($detalle->getCantidad());
-					$sub_total = $detalle->precio * $detalle->cantidad;
-					$iva = $sub_total * 0.25;
+          $detalle_resumen->resumen_id = $resumen->id;
+          $detalle_resumen->producto_id = $detalle->producto_id();
+          $detalle_resumen->nro_lote = $detalle->nro_lote;
+          $detalle_resumen->precio = ($detalle->precio/1.21); //precio sin iva
+          $detalle_resumen->cantidad = $detalle->cantidad;
+					$sub_total = $detalle_resumen->precio * $detalle_resumen->cantidad;
+					$iva = $sub_total * 0.21;
 					$total = $sub_total + $iva;
           $detalle_resumen->setSubTotal($sub_total);
           $detalle_resumen->setDescuento(0);
@@ -111,39 +111,39 @@ class resumenActions extends autoResumenActions
   }    
   
 	public function executeNew(sfWebRequest $request){
-    if ($this->getRequestParameter('pid')) {
-      $this->pedido = Doctrine::getTable('Pedido')->find($this->getRequestParameter('pid'));
-			$det_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getRequestParameter('pid'));
-			$todos_tienen_lote = '';
+    // if ($this->getRequestParameter('pid')) {
+      // $pedido = Doctrine::getTable('Pedido')->find($this->getRequestParameter('pid'));
+			// $det_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($pedido->id);
+			// $todos_tienen_lote = '';
 			
-			foreach ($det_pedido as $det) {
-				$nro_lote = $det->getNroLote();
-				if (empty($nro_lote)) {
-					$todos_tienen_lote = 'N';
-					break;
-				} else {
-					$todos_tienen_lote = 'S';
-				}
-			}
+			// foreach ($det_pedido as $det) {
+				// $nro_lote = $det->getNroLote();
+				// if (empty($nro_lote)) {
+					// $todos_tienen_lote = 'N';
+					// break;
+				// } else {
+					// $todos_tienen_lote = 'S';
+				// }
+			// }
 			
-			if ($todos_tienen_lote == 'S') {
-				$this->getUser()->setFlash('notice', 'Esta por vender el Pedido Nº '.$this->pedido->id.' del cliente '.$this->pedido->getCliente(), false);
-				$this->resumen = new Resumen();
-				$this->resumen->setClienteId($this->pedido->cliente_id);
-				$this->resumen->setPedidoId($this->pedido->id);
-				
-				$this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->id)));
-				$this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $this->pedido->cliente_id)));
-				$this->form->setWidget('tipofactura_id', new sfWidgetFormChoice(array('choices' => $this->pedido->getCliente()->getTiposFacturas())));
-			} elseif($todos_tienen_lote = 'N') {
-				$this->getUser()->setFlash('error', 'No se puede vender este pedido, porque hay productos que no tienen lote cargado');
-				$this->redirect('@pedido_pedidos');
-			} else {
-				$this->getUser()->setFlash('error', 'Este pedido no tiene productos');
-				$this->redirect('@pedido_pedidos');
-			}
+			// if ($todos_tienen_lote == 'S') {
+				// $this->getUser()->setFlash('notice', 'Esta por vender el Pedido Nº '.$pedido->id.' del cliente '.$pedido->getCliente(), false);
+				// $this->resumen = new Resumen();
+				// $this->resumen->setClienteId($pedido->cliente_id);
+				// $this->resumen->setPedidoId($pedido->id);
+
+				// $this->form->setWidget('pedido_id', new sfWidgetFormInputHidden(array('default' => $pedido->id)));
+				// $this->form->setWidget('cliente_id', new sfWidgetFormInputHidden(array('default' => $pedido->cliente_id)));
+				// $this->form->setWidget('tipofactura_id', new sfWidgetFormChoice(array('choices' => $pedido->getCliente()->getTiposFacturas())));
+			// } elseif($todos_tienen_lote = 'N') {
+				// $this->getUser()->setFlash('error', 'No se puede vender este pedido, porque hay productos que no tienen lote cargado');
+				// $this->redirect('@pedido_pedidos');
+			// } else {
+				// $this->getUser()->setFlash('error', 'Este pedido no tiene productos');
+				// $this->redirect('@pedido_pedidos');
+			// }
 			
-    }
+    // }
 		
 		$parametros_form = array(
 			'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),

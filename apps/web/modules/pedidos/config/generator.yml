@@ -19,11 +19,10 @@ generator:
       list:
         title: Pedidos Pendientes
         table_method: get_pendientes
-        display: [id, fecha, Cliente, observacion]
+        display: [id, fecha, Cliente, direccion_entrega]
         object_actions:
           _delete: ~
           detalle: ~
-          vender: ~
       filter:
         display: [fecha, cliente_id]
       form:    ~

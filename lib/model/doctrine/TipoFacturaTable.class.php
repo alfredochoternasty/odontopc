@@ -14,7 +14,7 @@ class TipoFacturaTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('TipoFactura');
+        return Doctrine_Core::getTable('TipoFactura')->orderBy('id ASC');
     }
 		
 		public function TipoFactCompraZona(){

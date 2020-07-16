@@ -38,8 +38,20 @@ class detpedidosActions extends autoDetpedidosActions
     $this->pager2 = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
   }
   
+  
+  // public function executeListVender(sfWebRequest $request){
+    // $pid = $this->getUser()->getAttribute('pid');
+    // $this->redirect( 'resumen/new?pid='.$pid);
+  // }
+  
   public function executeListVender(sfWebRequest $request){
-    $pedido = Doctrine::getTable('Pedido')->find($this->getRequestParameter('pid'));
+    if($request->hasParameter('pid')){
+      $pid = $request->getParameter('pid');
+    }else{
+      $pid = $this->getUser()->getAttribute('pid');
+    }
+    
+    $pedido = Doctrine::getTable('Pedido')->find($pid);
     $det_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($pedido->id);
 		
     $todos_tienen_lote = '';
@@ -52,17 +64,43 @@ class detpedidosActions extends autoDetpedidosActions
         $todos_tienen_lote = 'S';
       }
     }
-			
+    
     if ($todos_tienen_lote == 'S') {
-      $this->resumen = new Resumen();
-      $this->resumen->setClienteId($pedido->cliente_id);
-      $this->resumen->setPedidoId($pedido->id);
-      $tipos_fact = $this->pedido->getCliente()->getTiposFacturas()->orderBy('id ASC');
-      $this->resumen->setTipofacturaId($tipos_fact[0]->id);      
-      $this->getUser()->setFlash('notice', 'Factura generada para el Pedido Nro '.$pedido->id.' del cliente '.$pedido->getCliente(), false);
+      $res = new Resumen();
+      $res->cliente_id = $pedido->cliente_id;
+      $res->pedido_id = $pedido->id;
+      $res->zona_id = $pedido->getCliente()->zona_id; 
+      $res->tipofactura_id = 1;
+      $res->usuario = $this->getUser()->getGuardUser()->getId();
+      $res->fecha = date('Y-m-d');
+      $res->save();
+      
+      foreach($det_pedido as $detalle):
+        $detalle_resumen = new DetalleResumen();
+        $detalle_resumen->resumen_id = $res->id;
+        $detalle_resumen->producto_id = $detalle->producto_id;
+        $detalle_resumen->nro_lote = $detalle->nro_lote;
+        $detalle_resumen->precio = ($detalle->precio/1.21); //precio sin iva
+        $detalle_resumen->cantidad = $detalle->cantidad;
+        $sub_total = $detalle_resumen->precio * $detalle_resumen->cantidad;
+        $iva = $sub_total * 0.21;
+        $total = $sub_total + $iva;
+        $detalle_resumen->sub_total = $sub_total;
+        $detalle_resumen->iva = $iva;
+        $detalle_resumen->total = $total;
+        $detalle_resumen->observacion = $detalle->observacion;
+        $detalle_resumen->save();
+        $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+      endforeach;
+      
+      $pedido->vendido = 1;
+      $pedido->fecha_venta = date('Y-m-d');
+      $pedido->save();
+      
+      $this->getUser()->setFlash('notice', 'Factura generada para el Pedido Nro '.$pedido->id.' del cliente '.$pedido->getCliente(), true);
       $this->redirect('resumen/index');
     } else {
-      $this->getUser()->setFlash('error', 'Hay productos que no tiene lotes asignados', false);
+      $this->getUser()->setFlash('error', 'Hay productos que no tiene lotes asignados', true);
       $this->redirect('detpedidos/index?pid='.$pedido->id);      
     }
   }

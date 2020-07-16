@@ -9,17 +9,22 @@
 			}
 		?>
 		<li class="sf_admin_action_detalle">
-			<?php echo link_to(__('Detalle', array(), 'messages'), 'resumen/ListDetalle?id='.$resumen->getId(), 'class=fg-button-mini fg-button ui-state-default fg-button-icon-left ') ?>
-		</li>          
+			<?php echo link_to('Detalle', 'resumen/ListDetalle?id='.$resumen->id, array('class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')) ?>
+		</li>
+		<?php if (!empty($resumen->pedido_id)): ?>
+		<li class="sf_admin_action_detalle">
+			<?php echo link_to('Pedido', 'detpedidos/index?pid='.$resumen->pedido_id, array('class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left', 'target' => '_blank')) ?>
+		</li>
+		<?php endif; ?>
 		<li class="sf_admin_action_mail">
-			<?php echo link_to(__('Email', array(), 'messages'), 'resumen/ListMail?id='.$resumen->getId(), 'class=fg-button-mini fg-button ui-state-default fg-button-icon-left ') ?>
+			<?php echo link_to('Email', 'resumen/ListMail?id='.$resumen->id, array('class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')) ?>
 		</li>		
 		<?php 
 		if ($modulo_factura == 'S') {
 			if ($resumen->afip_estado == 0 && $resumen->tipofactura_id != 4 && $resumen->fecha >= '2019-02-01')
-				echo '<li class="sf_admin_action_factura">'.link_to(__('Enviar AFIP', array(), 'messages'), 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere ENVIAR A AFIP', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')).'</li>';
+				echo '<li class="sf_admin_action_factura">'.link_to('Enviar AFIP', 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere ENVIAR A AFIP', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')).'</li>';
 		} elseif ($resumen->afip_estado == 0) {
-			echo '<li class="sf_admin_action_factura">'.link_to(__('Finalizar', array(), 'messages'), 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere FINALIZAR', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')).'</li>';
+			echo '<li class="sf_admin_action_factura">'.link_to('Finalizar', 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere FINALIZAR', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')).'</li>';
 		}				
 		?>
 	</ul>

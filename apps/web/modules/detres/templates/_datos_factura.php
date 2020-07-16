@@ -1,5 +1,5 @@
-<table>
-	<caption class="fg-toolbar ui-widget-header ui-corner-top"><h1>Venta</h1></caption>
+<table style="width:100%">
+	<caption class="fg-toolbar ui-widget-header ui-corner-top"><h1>Datos</h1></caption>
 	<tbody>
 	<tr>
 		<td>
@@ -21,7 +21,10 @@
 			<b>C.U.I.T. : </b><?php echo $resumen->getCliente()->getCuit() ?><br>
 			<b>Condición frente al I.V.A. : </b><?php echo $resumen->getCliente()->getCondfiscal() ?><br>
 			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
-				<b>Condición de Venta : </b>Cuenta Corriente
+				<b>Condición de Venta : </b>Cuenta Corriente<br>
+			<?php endif;?>
+			<?php if (!empty($resumen->pedido_id)): ?>
+				<b>Pedido Nro: </b> <?php echo $resumen->getPedido()->id; ?><br>
 			<?php endif;?>
 			</span>
 		</td>

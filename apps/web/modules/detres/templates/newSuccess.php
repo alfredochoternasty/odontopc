@@ -5,34 +5,7 @@
 ?>
 		
 <div id="sf_admin_container" class="sf_admin_edit ui-widget ui-widget-content ui-corner-all">
-	<table width="100%">
-		<caption class="fg-toolbar ui-widget-header ui-corner-top">
-						<h1>Venta</h1>
-		</caption>
-		<tbody>
-		<tr>
-		<td>
-			<span style="font-size: 14px;">
-				<b><?php echo $resumen->getTipoFactura(); ?></b><br>
-				<b>Punto de Venta: </b>0004<b style="margin-left: 20px;">Comp. Nro: </b><?php echo str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT) ?><br>
-				<b>Fecha de Emisión: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getFecha()))) ?><br>
-				<b>CAE: </b><?php echo $resumen->getAfipCAE() ?><br>
-				<b>Fecha Vto CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
-			</span>
-		</td>
-		<td>
-			<span style="font-size: 14px;">
-			<b>Razón Social: </b><?php echo $resumen->getCliente() ?><br>
-			<b>Domicilio: </b><?php echo $resumen->getCliente()->getDomicilio() ?> - <?php echo $resumen->getCliente()->getLocalidad() ?><br>
-			<b>C.U.I.T. : </b><?php echo $resumen->getCliente()->getCuit() ?><br>
-			<b>Condición frente al I.V.A. : </b><?php echo $resumen->getCliente()->getCondfiscal() ?><br>
-			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
-				<b>Condición de Venta : </b>Cuenta Corriente
-			<?php endif;?>
-			</span>
-		</td>
-		</tbody>
-	</table>
+	<?php include_partial('datos_factura', array('resumen' => $resumen)); ?>
 	<br>
   <div class="fg-toolbar ui-widget-header ui-corner-all">
     <h1><?php echo __('Nuevo Detalle', array(), 'messages') ?></h1>
