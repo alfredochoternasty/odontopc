@@ -5,7 +5,8 @@ body
   background: #FDFDFF;
 }
 
-.cabecera{
+header{
+	text-align: -webkit-center;
   background: url(../images/nti-bg-header.jpg) top repeat-x
 }
 

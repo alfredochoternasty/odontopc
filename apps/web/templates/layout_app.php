@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
   <head>
     <title>Odonto Venta</title>
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
-	<meta name="mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+		<meta name="mobile-web-app-capable" content="yes">
 	<?php
 		$base_url = $sf_user->getVarConfig('base_url');
 		$favicon = $sf_user->getVarConfig('favicon');	
@@ -70,7 +70,7 @@
 		.boton_abajo_2{bottom: 70px;}
 		
 		a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
-		.sidemenu {background:#fff;position:absolute;left:-300px;top:0;width:300px;height:100%;overflow:hidden;transition: left .5s;z-index:999}
+		.sidemenu {background:#fff;position:absolute;left:-400px;top:0;width:100%;height:100%;overflow:hidden;transition: left .5s;z-index:999}
 		.sidemenu ul {list-style:none;padding:10px}
 		.sidemenu ul li {display:flex;padding:10px; border-bottom: 1px solid #c3c3c3;}
 		.sidemenu ul li a:link,.sidemenu ul li a:active,.sidemenu ul li a:visited {display:inline;padding:8px;color:#000;transition: 0.3s;}
@@ -161,7 +161,7 @@
 	</style>
 	<script type="text/javascript">
 		function abrir(){$(".sidemenu").css("left","0");}
-		function cerrar(){$(".sidemenu").css("left","-300px");}
+		function cerrar(){$(".sidemenu").css("left","-400px");}
 		$(document).ready(function(){$("#menu").click(function(e){abrir();});});
 		$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar();});});
 		$(document).ready(function(){$("#grupo_id").on("change",function(e){$("#grupos").submit();});});

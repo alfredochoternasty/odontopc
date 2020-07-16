@@ -18,6 +18,29 @@
 		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
 		if (!empty($cssmenu)) echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/css/'.$cssmenu.'" />';
 		?>
+		
+		<script type="text/javascript">
+			function abrir(){$(".menujq").css("left","0");}
+			function cerrar(){$(".menujq").css("left","-400px");}
+			$(document).ready(function(){$("#menu").click(function(e){abrir();});});
+			$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar();});});
+			$(document).ready(function(){
+				$('.menujq > ul > li:has(ul)').addClass('desplegable');
+				$('.menujq > ul > li > a').click(function() {
+					var comprobar = $(this).next();
+					$('.menujq li').removeClass('activa');
+					$(this).closest('li').addClass('activa');
+					if((comprobar.is('ul')) && (comprobar.is(':visible'))) {
+						$(this).closest('li').removeClass('activa');
+						comprobar.slideUp('normal');
+					}
+					if((comprobar.is('ul')) && (!comprobar.is(':visible'))) {
+						$('.menujq ul ul:visible').slideUp('normal');
+						comprobar.slideDown('normal');
+					}
+				});
+			});
+		</script>
   </head>
   <body style="margin:0px">
   <?php 
@@ -25,8 +48,7 @@
     $id = $sf_user->getGuardUser()->getId();
 		
 		if($mostrar_cabecera == 'S'){ ?>
-			<div class="cabecera">
-				<center>
+			<header>
 					<div class="img_cabecera">
 						<br>
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
@@ -34,16 +56,18 @@
 						Fecha Actualización: 17/07/2020
 					</div>
 					<?php if (date("Ymd") == '20200717') { ?>
-					<img src="<?php echo $prefijo ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+					<img src="<?php echo $base_url ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
-				</center>
-			</div>
+			</header>
 		<?php 
 		} 
 		?>
-        
-		<div id="cssmenu">
-			<center>
+ 		<div class="header" style="width:100%; height:60px; background-color:#eaeaea; position:fixed; top:0px; left:0px;">
+			<img id="menu" src="<?php echo $base_url?>/web/images/menu.png" style="margin:10px;float:left">			
+			<img width="280px" height="60px" src="<?php echo $base_url?>/web/images/nti-header.jpg" style="margin-left:10px;float:left;">
+		</div>
+		<div id="nav" class="menujq">
+			<img id="cerrar_menu" src="<?php echo $base_url?>/web/images/back.png" style="position: absolute;top: 5px; right: 10px;">
 				<?php
 					/* para que esto funcione tuve que modificar la clase sfDoctrineGuardPlugin	- getAllPermissions */
 					$statement = Doctrine_Manager::getInstance()->connection();  
@@ -54,7 +78,7 @@
 					foreach ($results as $r){
 						if ($r['padre'] == 0 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
 							echo $bandera?"</ul></li>":"";
-							echo "<li class='has-sub'><a href='#'><span>".$r['name']."</span>";
+							echo "<li><a href='javascript:void();'>".$r['name'];
 							if ($r['name'] == 'Pedidos') include_component('ped', 'CantPedNuevos');	
 							echo "</a><ul>";
 							$bandera = 1;
@@ -68,10 +92,9 @@
 						}
 					}
 					echo $bandera?"</ul></li>":"";
-					echo "<li>".link_to("Salir", "sf_guard_signout")."</li>";
+					echo "<li class='menu'>".link_to("Salir", "sf_guard_signout")."</li>";
 					echo "</ul>";
 				?>    	
-      </center>
     </div>
     <?php endif; //del login ?>
 		
