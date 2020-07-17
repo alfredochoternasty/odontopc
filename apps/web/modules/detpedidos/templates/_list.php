@@ -29,7 +29,6 @@
     <thead class="ui-widget-header">
       <tr>
         <?php if (empty($pedido->vendido)): ?> 
-          <th id="sf_admin_list_batch_actions"  class="ui-state-default ui-th-column"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>        
         <?php endif; ?>
         <?php include_partial('detpedidos/list_th_tabular', array('sort' => $sort)) ?>
 
@@ -56,7 +55,6 @@
           ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
           <?php 
-            if (empty($pedido->vendido)) include_partial('detpedidos/list_td_batch_actions', array('detalle_pedido' => $detalle_pedido, 'helper' => $helper)); 
             include_partial('detpedidos/list_td_tabular', array('detalle_pedido' => $detalle_pedido));
             $vendido = $detalle_pedido->getPedido()->getVendido();
             if($vendido == 0){

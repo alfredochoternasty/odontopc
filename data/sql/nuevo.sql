@@ -16,6 +16,35 @@ ALTER TABLE `detalle_pedido`
 ALTER TABLE `presupuesto`
 	ADD COLUMN `telefono` VARCHAR(50) NULL DEFAULT NULL AFTER `email`;
 
+CREATE TABLE `ventas`.`promocion` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `descripcion` VARCHAR(45) NULL,
+  `estado` TINYINT(1) NULL DEFAULT 1,
+  `fecha_ini` DATE NOT NULL,
+  `fecha_fin` DATE NULL,
+  `tipo_id` TINYINT(1) NULL DEFAULT 1,
+  `min_cant` SMALLINT(1) NULL DEFAULT 1,
+  `cant_regalo` SMALLINT(1) NULL,
+  `porc_desc` DECIMAL(3,2) NULL,
+  `aplica_neto` TINYINT(1) NULL DEFAULT 0,
+  `lista_id` INT NULL,
+  PRIMARY KEY (`id`));
+	
+CREATE TABLE `ventas`.`promocion_producto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `promocion_id` INT NULL,
+  `producto_id` INT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `ventas`.`promocion_regalo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `promcion_id` INT NULL,
+  `prodcuto_id` INT NULL,
+  PRIMARY KEY (`id`));
+
+
+
 /*
 DROP TABLE 
 	producto2, 

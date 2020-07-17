@@ -25,13 +25,6 @@
 
       <?php include_partial('detpedidos/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'filters' => $filters, 'configuration' => $configuration)) ?>
 
-    <?php 
-      if (empty($detalles[0]->getPedido()->vendido)):?>
-      <ul class="sf_admin_actions">
-        <?php include_partial('detpedidos/list_batch_actions', array('helper' => $helper)) ?>
-      </ul>
-    <?php endif; ?>
-
           </form>
       </div>
 
