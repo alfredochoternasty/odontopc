@@ -21,6 +21,9 @@ generator:
         cae_afip: {label: AFIP}
         cantidad: {label: Cant}
         nro_lote: {label: Lote}
+        precio_unitario: {label: Precio Producto}
+        descuento: {label: Desc. Vta.}
+        precio: {label: Precio Vendido}
       list:
         table_method: retrieveConJoins
         title: Productos Devueltos
@@ -38,10 +41,10 @@ generator:
           mail: {label: Enviar Mail}
       filter:
         display: [fecha, cliente_id, producto_id, nro_lote]
-      form:    ~
+      form:
+        display: [fecha, cliente_id, producto_id, resumen_id, nro_lote, cantidad, precio_unitario, descuento, precio, iva, total, observacion]
       edit:    ~
       new:
         title: Devolver Producto
-        display: [fecha, cliente_id, producto_id, resumen_id, nro_lote, cantidad, precio, iva, total, precio_unitario, iva_unitario, observacion]
       show:
         display: [fecha, _comprobante, Cliente, Producto, nro_lote, cantidad, _precio, _iva, _total]

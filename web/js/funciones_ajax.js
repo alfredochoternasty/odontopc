@@ -432,10 +432,10 @@ $(document).ready(function(){
 				url: 'buscarprecio?rid='+rid+'&pid='+pid,
 				dataType: "json",
 				success: function(data) {
+					$("#dev_producto_precio_unitario").attr('value', data.precio_vta);
+					$("#dev_producto_descuento").attr('value', data.descuento);
 					$("#dev_producto_precio").attr('value', data.precio);
-					$("#dev_producto_precio_unitario").attr('value', data.precio);
 					$("#dev_producto_iva").attr('value', data.iva);
-					$("#dev_producto_iva_unitario").attr('value', data.iva);
 					$("#dev_producto_total").attr('value', data.total);
 				}
 			});

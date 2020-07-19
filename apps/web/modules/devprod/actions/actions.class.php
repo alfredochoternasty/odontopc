@@ -18,8 +18,10 @@ class devprodActions extends autoDevprodActions
   public function executeNew(sfWebRequest $request)
   {
 		$parametros = array(
+			'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
 			'zona_id' => $this->getUser()->getGuardUser()->getZonaId(),
 			'usuario_id' => $this->getUser()->getGuardUser()->getId(),
+			'nota_manual' => false,
 		);
     $this->form = $this->configuration->getForm(null, $parametros);
 		$cliente_id = $this->getUser()->getAttribute('cliente_id');
@@ -106,9 +108,11 @@ class devprodActions extends autoDevprodActions
       $rid = $this->getUser()->getAttribute('rid');
     }
     $prec_prod = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($resumen, $producto);
-    $datos['precio'] = sprintf("%01.2f", $prec_prod[0]->getPrecio());
-    $datos['iva'] = sprintf("%01.2f", $prec_prod[0]->getIva()/$prec_prod[0]->getCantidad());
-    $datos['cant'] = sprintf("%01.2f", $prec_prod[0]->getCantidad());
+    $datos['descuento'] = $prec_prod[0]->descuento.'%';
+    $datos['precio_vta'] = $prec_prod[0]->precio;
+    $datos['precio'] = sprintf("%01.2f", $prec_prod[0]->precio - ($prec_prod[0]->precio * $prec_prod[0]->descuento/100));
+    $datos['iva'] = sprintf("%01.2f", $prec_prod[0]->iva/$prec_prod[0]->cantidad);
+    $datos['cant'] = sprintf("%01.2f", $prec_prod[0]->cantidad);
 		$total = $datos['iva'] + $datos['precio'];
     $datos['total'] = sprintf("%01.2f", $total);
     return $this->renderText(json_encode($datos));

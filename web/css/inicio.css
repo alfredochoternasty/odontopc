@@ -171,9 +171,9 @@ background-image: url('error.png');
 {
     background: #ccc;
 }
-.sf_admin_form_field_precio_unitario, .sf_admin_form_field_iva_unitario {
-	display: none;
-}
+/* .sf_admin_form_field_precio_unitario, .sf_admin_form_field_iva_unitario { */
+	/* display: none; */
+/* } */
 
 #detalle_resumen_nro_lote{
 	font-size:16px;

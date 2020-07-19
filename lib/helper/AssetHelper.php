@@ -677,9 +677,8 @@ function get_stylesheets_for_form(sfForm $form)
   $html = '';
   foreach ($form->getStylesheets() as $file => $media)
   {
-    $html .= stylesheet_tag($file, array('media' => $media));
+    if (!empty($file)) $html .= stylesheet_tag($file, array('media' => $media));
   }
-
   return $html;
 }
 

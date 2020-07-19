@@ -18,6 +18,7 @@ class notacredActions extends autoNotacredActions
 		
 		$parametros_form = array(
 			'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura'),
+			'zona_id' => $this->getUser()->getGuardUser()->getZonaId(),
 			'usuario_id' => $this->getUser()->getGuardUser()->getId(),
 			'nota_manual' => true,
 		);
