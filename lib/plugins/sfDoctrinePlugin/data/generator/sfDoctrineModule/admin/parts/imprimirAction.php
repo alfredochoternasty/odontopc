@@ -59,7 +59,7 @@
 				}
 			$titulos = implode("', '", $titulos);
 			
-			echo '<?php echo $this->getI18NString('list.title') ?>' . "\r\n";
+			echo '<?php echo $this->configuration->getValue('list.title') ?>' . "\r\n";
 			foreach($datos as $fila){
 				if (!$flag) {
 						echo implode("\t", $titulos) . "\r\n";

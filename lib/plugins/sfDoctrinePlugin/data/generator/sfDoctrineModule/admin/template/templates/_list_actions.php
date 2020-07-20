@@ -4,7 +4,7 @@ if ($actions = $this->configuration->getValue('list.actions')):
 	foreach ($actions as $name => $params) {
 		if ('_new' == $name) {
 			echo $this->addCredentialCondition('[?php echo $helper->linkToNew('.$this->asPhp($params).') ?]', $params)."\n";
-		} else: { ?>
+		} else { ?>
 			<li class="sf_admin_action_<?php echo $params['class_suffix'] ?>">
 			<?php echo $this->addCredentialCondition($this->getLinkToAction($name, $params, false), $params)."\n" ?>
 			</li>
