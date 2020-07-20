@@ -14,7 +14,7 @@ class TipoMoneda extends BaseTipoMoneda
 {
 	public function __toString()
 	{
-		$val = $this->getNombre().' ('.$this->getSimbolo().')';
+		$val = $this->nombre.' ('.$this->simbolo.')';
 		return empty($val)? '' : $val;
 	}
 

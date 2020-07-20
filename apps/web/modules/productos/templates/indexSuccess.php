@@ -17,9 +17,8 @@
 <div style="width:100%; border: 1px solid #cccccc; margin-bottom:1%">
 	<table width="100%">
 		<tr >
-			<?php $foto = empty($producto->foto_chica)? 'no_img.png' : $producto->foto_chica ?>
-		  <td width="10%"><?php echo '<img src="'.$base_url.'/web/uploads/productos/'.$foto.'" height="70vw" width="70vw">' ?></td>
-		  <td width="55%"><span style="font-size:12pt;font-family:sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto->getNombre() ?></span>
+		  <td width="10%"><?php echo '<img src="'.$base_url.'/web/uploads/productos/'.$producto->getFoto().'" height="70vw" width="70vw">' ?></td>
+		  <td width="55%"><span style="font-size:12pt;font-family:sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto ?></span>
 			<br><span style="font-size:10pt;font-family:sans-serif;color: #e20202;font-weight: bold;">$ <?php echo sprintf("%01.2f", $producto->precio_vta * 1.21) ?></span>
 		  </td>
 		  <td width="35%" style="text-align:right">

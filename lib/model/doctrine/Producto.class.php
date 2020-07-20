@@ -14,8 +14,17 @@ class Producto extends BaseProducto
 {
 	public function __toString()
 	{
-		$val = $this->getNombre();
-		return empty($val)? '' : $val;
+		return $this->nombre?:'-';
+	}
+	
+	public function getFoto()
+	{
+		if (!empty($this->foto_chica)) {
+			return $this->foto_chica;
+		} else {
+			$grupo = Doctrine::getTable('Grupoprod')->find($this->grupoprod_id);
+			return $grupo->foto_chica?:'no_img.png';
+		}
 	}
 	
   public static function DescontarStock(sfEvent $event){
@@ -110,13 +119,9 @@ class Producto extends BaseProducto
       return $Comp[0]['cant'];
   }  
   
-  public function getPrecioFinal($p_lis){
-		$prod_lista = $this->getListaId();
-		if (!empty($prod_lista)) {
-			$p_lis = $prod_lista;
-		} 
-
-		return Doctrine::getTable('ListaPrecio')->find($p_lis)->getPrecioLista($this->getId(), $this->getPrecioVta());
+  public function getPrecioFinal($p_lista_id){
+		if (!empty($this->lista_id)) $p_lista_id = $this->lista_id;
+		return Doctrine::getTable('ListaPrecio')->find($p_lista_id)->getPrecioLista($this->getId(), $this->getPrecioVta());
   }
    
 	public function getLotesDisponibles($p_zona){

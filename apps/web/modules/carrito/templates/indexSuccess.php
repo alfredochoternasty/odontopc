@@ -8,7 +8,7 @@
 	<div class="fila_contenido">
 		<table width="100%">
 			<tr >
-				<td width="10%"><img src="<?php echo $base_url ?>/web/uploads/productos/<?php echo $detped->getProducto()->foto_chica ?>" height="50vw" width="50vw"></td>
+				<td width="10%"><img src="<?php echo $base_url ?>/web/uploads/productos/<?php echo $detped->getProducto()->getFoto() ?>" height="50vw" width="50vw"></td>
 				<td width="90%">
 					<span class="fila_primario"><?php echo $detped->getProducto()->getNombre() ?></span><br>
 					<span class="fila_secundario">$ <?php echo $detped->precio.' x '.$detped->cantidad.' = $ '.$detped->total ?></span>
