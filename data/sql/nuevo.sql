@@ -26,7 +26,7 @@ CREATE TABLE `ventas`.`promocion` (
   `tipo_id` TINYINT(1) NULL DEFAULT 1,
   `min_cant` SMALLINT(1) NULL DEFAULT 1,
   `cant_regalo` SMALLINT(1) NULL,
-  `porc_desc` DECIMAL(3,2) NULL,
+  `porc_desc` DECIMAL(5,2) NULL,
   `aplica_neto` TINYINT(1) NULL DEFAULT 0,
   `lista_id` INT NULL,
   PRIMARY KEY (`id`));
@@ -39,10 +39,17 @@ CREATE TABLE `ventas`.`promocion_producto` (
 
 CREATE TABLE `ventas`.`promocion_regalo` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `promcion_id` INT NULL,
-  `prodcuto_id` INT NULL,
+  `promocion_id` INT NULL,
+  `producto_id` INT NULL,
   PRIMARY KEY (`id`));
 
+ALTER TABLE `ventas`.`promocion` 
+CHANGE COLUMN `nombre` `nombre` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `descripcion` `descripcion` VARCHAR(255) NULL DEFAULT NULL ;
+
+ALTER TABLE `ventas`.`detalle_pedido` 
+CHANGE COLUMN `observacion` `observacion` VARCHAR(255) NULL DEFAULT NULL ,
+CHANGE COLUMN `asignacion_lote` `asignacion_lote` VARCHAR(255) NULL DEFAULT NULL ;
 
 
 /*

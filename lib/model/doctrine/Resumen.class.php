@@ -141,4 +141,23 @@ class Resumen extends BaseResumen
 		$resultado = $st->fetchAll();
 		return sprintf($this->SimboloMoneda()." %01.2f", $resultado[0]['monto']);
 	}
+	
+	public function AgregarProductoDePedido($p_datos, $p_desc) {
+		$detalle_resumen = new DetalleResumen();
+		$detalle_resumen->resumen_id = $this->id;
+		$detalle_resumen->producto_id = $p_datos->producto_id;
+		$detalle_resumen->nro_lote = $p_datos->nro_lote;
+		$detalle_resumen->precio = ($p_datos->precio/1.21); //precio sin iva
+		$detalle_resumen->descuento = $p_desc;
+		$detalle_resumen->cantidad = $p_datos->cantidad;
+		$sub_total = ($detalle_resumen->precio -($detalle_resumen->precio * $detalle_resumen->descuento/100)) * $detalle_resumen->cantidad;
+		$iva = $sub_total * 0.21;
+		$total = $sub_total + $iva;
+		$detalle_resumen->sub_total = $sub_total;
+		$detalle_resumen->iva = $iva;
+		$detalle_resumen->total = $total;
+		$detalle_resumen->observacion = $p_datos->observacion;
+		$detalle_resumen->save();
+		return $detalle_resumen;
+	}
 }

@@ -41,9 +41,9 @@ class DetallePedido extends BaseDetallePedido
         //si la cantidad solicitada es mayor que el stock
         $this->nro_lote = $lote->nro_lote;
         $resto = ($this->cantidad - $lote->stock);
-        $this->cantidad = $lote->stock; //modifico la cantidad con del pedido con la cantidad del stock
-        $this->total = $this->precio * $lote->stock; //actualizo el total xq modifiue la cantidad
-        $this->asignacion_lote = 'ok - se agrega otra fila para completar la cantidad con otro lote';
+        $this->cantidad = $lote->stock; //modifico la cantidad del pedido con la cantidad del stock
+        $this->total = $this->precio * $lote->stock; //actualizo el total xq modifique la cantidad
+        $this->asignacion_lote = 'ok - se agrega otro renglon para completar la cantidad con otro lote';
         $this->save();
 
         if (empty($lotes_disponibles[1])) {
@@ -51,15 +51,15 @@ class DetallePedido extends BaseDetallePedido
           $this->save();
         } else { 
           foreach ($lotes_disponibles as $lote) {
-            $nueva_cantidad = (($lote->stock - $resto) > 0)? $resto : $lote->stock;
+            $nueva_cantidad = ($lote->stock - $resto > 0)? $resto : $lote->stock;
             $nueva_fila = new DetallePedido();
-            $nueva_fila->pedido_id = $fila->pedido_id;
-            $nueva_fila->producto_id = $fila->producto_id;
-            $nueva_fila->precio = $fila->precio;
+            $nueva_fila->pedido_id = $this->pedido_id;
+            $nueva_fila->producto_id = $this->producto_id;
+            $nueva_fila->precio = $this->precio;
             $nueva_fila->cantidad = $nueva_cantidad;
-            $nueva_fila->total = $fila->precio * $nueva_cantidad;
-            $nueva_fila->nro_lote = $fila->nro_lote;
-            $this->asignacion_lote = 'Fila Agregada para completar pedido con otro lote';
+            $nueva_fila->total = $this->precio * $nueva_cantidad;
+            $nueva_fila->nro_lote = $this->nro_lote;
+            $nueva_fila->asignacion_lote = 'Renglon agregado para completar pedido con otro lote';
             $nueva_fila->save();
             $resto = ($resto - $lote->stock);
             if ($resto < 0) break;

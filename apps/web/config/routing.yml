@@ -1,3 +1,12 @@
+promocion:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Promocion
+    module:               promo
+    prefix_path:          /promo
+    column:               id
+    with_wildcard_routes: true
+
 dev_producto_notacred:
   class: sfDoctrineRouteCollection
   options:

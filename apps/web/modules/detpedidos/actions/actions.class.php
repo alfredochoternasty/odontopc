@@ -38,12 +38,6 @@ class detpedidosActions extends autoDetpedidosActions
     $this->pager2 = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
   }
   
-  
-  // public function executeListVender(sfWebRequest $request){
-    // $pid = $this->getUser()->getAttribute('pid');
-    // $this->redirect( 'resumen/new?pid='.$pid);
-  // }
-  
   public function executeListVender(sfWebRequest $request){
     if($request->hasParameter('pid')){
       $pid = $request->getParameter('pid');
@@ -52,7 +46,7 @@ class detpedidosActions extends autoDetpedidosActions
     }
     
     $pedido = Doctrine::getTable('Pedido')->find($pid);
-    $det_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($pedido->id);
+    $det_pedido = Doctrine::getTable('DetallePedido')->getOrdernadoCantidad($pedido->id);
 		
     $uno_con_lote = '';
     foreach ($det_pedido as $det) {
@@ -65,38 +59,52 @@ class detpedidosActions extends autoDetpedidosActions
     }
     
     if ($uno_con_lote == 'S') {
-      $res = new Resumen();
-      $res->cliente_id = $pedido->cliente_id;
-      $res->pedido_id = $pedido->id;
-      $res->zona_id = $pedido->getCliente()->zona_id; 
-      $res->tipofactura_id = 1;
-      $res->usuario = $this->getUser()->getGuardUser()->getId();
-      $res->fecha = date('Y-m-d');
-      $res->save();
+      $resumen = new Resumen();
+      $resumen->cliente_id = $pedido->cliente_id;
+      $resumen->pedido_id = $pedido->id;
+      $resumen->zona_id = $pedido->getCliente()->zona_id; 
+      $resumen->tipofactura_id = 1;
+      $resumen->usuario = $this->getUser()->getGuardUser()->getId();
+      $resumen->fecha = date('Y-m-d');
+      $resumen->save();
       
-      foreach($det_pedido as $detalle) {
-        if (!empty($detalle->nro_lote)) {
-          $detalle_resumen = new DetalleResumen();
-          $detalle_resumen->resumen_id = $res->id;
-          $detalle_resumen->producto_id = $detalle->producto_id;
-          $detalle_resumen->nro_lote = $detalle->nro_lote;
-          $detalle_resumen->precio = ($detalle->precio/1.21); //precio sin iva
-          $detalle_resumen->cantidad = $detalle->cantidad;
-          $sub_total = $detalle_resumen->precio * $detalle_resumen->cantidad;
-          $iva = $sub_total * 0.21;
-          $total = $sub_total + $iva;
-          $detalle_resumen->sub_total = $sub_total;
-          $detalle_resumen->iva = $iva;
-          $detalle_resumen->total = $total;
-          $detalle_resumen->observacion = $detalle->observacion;
-          $detalle_resumen->save();
+      $promos_pedido = $pedido->getPromosPedido();
+      foreach ($promos_pedido as $k => $promo)
+        if (!$pedido->ControlarPromo($promo->id))
+          unset($promos_pedido[$k]);
+      
+      foreach($det_pedido as $detalle_pedido) {
+        if (!empty($detalle_pedido->nro_lote)) {
+          $descuento = 0;
+          foreach ($promos_pedido as $promo) {
+            if ($promo->estado) {
+              if ($promo->ProductoEnPromocion($detalle_pedido->producto_id)) {
+                if ($detalle_pedido->cantidad == $promo->cant_regalo) {
+                  $descuento = $promo->porc_desc;
+                  $promo->estado = 0;
+                } elseif ($detalle_pedido->cantidad > $promo->cant_regalo) {
+                  $nuevo_det_pedido = clone $detalle_pedido;
+                  $nuevo_det_pedido->cantidad = $promo->cant_regalo;
+                  $detalle_pedido->cantidad = $detalle_pedido->cantidad - $promo->cant_regalo;
+                  $detalle_resumen = $resumen->AgregarProductoDePedido($nuevo_det_pedido, $promo->porc_desc);
+                  $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
+                  $descuento = 0;
+                  $promo->estado = 0;
+                } else {
+                  $promo->cant_regalo = $promo->cant_regalo - $detalle_pedido->cantidad;
+                  $descuento = $promo->porc_desc;
+                }
+              }
+            }
+          }
+          $detalle_resumen = $resumen->AgregarProductoDePedido($detalle_pedido, $descuento);
           $this->dispatcher->notify(new sfEvent($this, 'detalle_resumen.save', array('object' => $detalle_resumen)));
         }
       } 
       
       $pedido->vendido = 1;
       $pedido->fecha_venta = date('Y-m-d');
-      $pedido->save();
+      // $pedido->save();
       
       $this->getUser()->setFlash('notice', 'Factura generada para el Pedido Nro '.$pedido->id.' del cliente '.$pedido->getCliente(), true);
       $this->redirect('resumen/index');
@@ -146,5 +154,6 @@ class detpedidosActions extends autoDetpedidosActions
     $dompdf->render();
     $dompdf->stream("pedido_nro_$pid.pdf");    
     return sfView::NONE;
-  }  
+  }
+  
 }

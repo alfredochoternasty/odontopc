@@ -973,3 +973,43 @@ ClienteDomicilio:
   relations:
     Cliente: {type: one, class: Cliente, local: cliente_id, onDelete: RESTRICT}
     Localidad: {type: one, class: Localidad, local: localidad_id, onDelete: RESTRICT}
+Promocion:
+  connection: doctrine
+  tableName: promocion
+  columns:
+    id: {type: integer(4), primary: true}
+    nombre: {type: string(255)}
+    descripcion: {type: string(255)}
+    estado: {type: integer(1), notnull: true, default: 0}
+    fecha_ini: {type: date(25)}
+    fecha_fin: {type: date(25)}
+    tipo_id: {type: integer(1)}
+    min_cant: {type: integer(4)}
+    cant_regalo: {type: integer(4)}
+    porc_desc: {type: integer(1)}
+    aplica_neto: {type: integer(1)}
+    lista_id: {type: integer(4)}
+  relations:
+    Lista: {type: one, class: Lista, local: lista_id, onDelete: RESTRICT}
+    Productos: {type: many, class: PromocionProducto, local: id, foreign: promocion_id}
+    Regalos: {type: many, class: PromocionRegalo, local: id, foreign: promocion_id}
+PromocionProducto:
+  connection: doctrine
+  tableName: promocion_producto
+  columns:
+    id: {type: integer(4), primary: true}
+    promocion_id: {type: integer(4)}
+    producto_id: {type: integer(4)}
+  relations:
+    Promocion: {type: one, class: Promocion, local: promocion_id, onDelete: RESTRICT}
+    Producto: {type: one, class: Producto, local: producto_id, onDelete: RESTRICT}
+PromocionRegalo:
+  connection: doctrine
+  tableName: promocion_regalo
+  columns:
+    id: {type: integer(4), primary: true}
+    promocion_id: {type: integer(4)}
+    producto_id: {type: integer(4)}
+  relations:
+    Promocion: {type: one, class: Promocion, local: promocion_id, onDelete: RESTRICT}
+    Producto: {type: one, class: Producto, local: producto_id, onDelete: RESTRICT}
