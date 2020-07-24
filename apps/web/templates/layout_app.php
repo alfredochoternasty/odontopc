@@ -12,33 +12,20 @@
 	<script src="<?php echo $base_url?>/web/sfAdminThemejRollerPlugin/js/jquery.min.js"></script>
     <?php use_helper('Date') ?>
 	<style>
-		.combo_grupos select, .combo_orden select {
-		  width: 90%;
-		  font-size: 10pt;
-		  color: #000;
-		  border-style: none;
-		  height: 25px;
-	      padding: 1px;
+		.combo_grupos{
+		  width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			top: 75px;
+			position: fixed;
+			
 		}
-		.combo_grupos, combo_orden {
-		  margin: 2px;
-		  width: 90%;
-		  height: 25px;
-		  border-style: none;
-		  border-radius: 3px;
-		  overflow: hidden;
-		}
-		.combo_grupos {
-		  background: url(<?php echo $base_url?>/web/images/list.png) no-repeat #fff;
-		  float:right;
-		  margin-top:7px;
-		  margin-right:5px;
-		}
-		.combo_orden {
-		  background: url(<?php echo $base_url?>/web/images/sort.png) no-repeat #fff;
-		  float:left;
-		  margin-top:7px;
-		  margin-left:5px;
+		.combo_grupos select{
+			border-radius:22px;
+			height: 25px;
+			width: 250px;
+			background-color: #fff;
 		}
 		.loader {
 			position: fixed;
@@ -209,16 +196,18 @@
 			</ul>
 		</nav>
 	</div>
-	  
-		<div style="width:100%; height:50px; background-color:#2982F3; position:fixed; top:0px; left:0px;">
+	
+		<div style="border-radius:50%;width:180%;height:220px;background-color:#2982F3;position:fixed;top:-155px;left:-40%;display:flex;justify-content:center;"></div>
+		<div style="position:absolute;top:0px;left:0px;width:100%;height:55px;">
 			<table width="100%">
-				<tr>
-					<td width="35px"><img id="menu" src="<?php echo $base_url?>/web/images/app_menu.png" style="margin:5px;float:left;vertical-align:center;"></td>
-					<td style="text-align:center;vertical-align:initial;"><img id="menu" height="40px" src="<?php echo $base_url?>/web/images/logo_chico.png"></td>
-					<td width="35px"></td>
+				<tr style="vertical-align:top">
+					<td width="25%"><img id="menu" src="<?php echo $base_url?>/web/images/app_menu.png" style="margin:5px;margin-left:10px;"></td>
+					<td width="50%" style="text-align: center;"><img id="menu" src="<?php echo $base_url?>/web/images/logo_chico.png" style="margin-top:10px;"></td>
+					<td width="25%"></td>
 				</tr>
 			</table>
 		</div>
+
 		<?php echo $sf_content ?>
   </body>
 </html>

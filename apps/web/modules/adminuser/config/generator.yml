@@ -26,7 +26,7 @@ generator:
         permissions_list: { label: Opciones de menu que puede ver}
       list:
         title: Usuarios
-        display: [is_active, Zona, username, first_name, =last_name, es_cliente]
+        display: [is_active, Zona, username, =last_name, first_name, es_cliente]
         object_actions:
             _edit: {label: Modificar}
             _delete: {label: Eliminar}

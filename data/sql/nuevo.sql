@@ -51,6 +51,24 @@ ALTER TABLE `ventas`.`detalle_pedido`
 CHANGE COLUMN `observacion` `observacion` VARCHAR(255) NULL DEFAULT NULL ,
 CHANGE COLUMN `asignacion_lote` `asignacion_lote` VARCHAR(255) NULL DEFAULT NULL ;
 
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`, `padre`)
+VALUES ('275', 'Promociones', '@promocion', '230');
+
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Menu' WHERE (`id` = '510');
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Perfiles' WHERE (`id` = '500');
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Lista de Precios' WHERE (`id` = '270');
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Grupos' WHERE (`id` = '260');
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Presupuestos' WHERE (`id` = '250');
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Adm. de Productos' WHERE (`id` = '240');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '10' WHERE (`id` = '250');
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '45' WHERE (`id` = '250');
+UPDATE `ventas`.`sf_guard_user_permission` SET `permission_id` = '45' WHERE (`permission_id` = '250');
+
+delete FROM sf_guard_user_permission WHERE permission_id NOT IN (SELECT id FROM sf_guard_permission);
+
+ALTER TABLE `sf_guard_user_permission`
+	ADD CONSTRAINT `permisos` FOREIGN KEY (`permission_id`) REFERENCES `sf_guard_permission` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	ADD CONSTRAINT `usuarios` FOREIGN KEY (`user_id`) REFERENCES `sf_guard_user` (`id`) ON UPDATE CASCADE;
 
 /*
 DROP TABLE 

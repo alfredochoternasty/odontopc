@@ -1,7 +1,6 @@
 <?php $base_url = $sf_user->getVarConfig('base_url'); ?>
 <?php include_partial('carrito/boton_carrito') ?>
-<div style="width:100%; height:40px; background-color:#fff; position:fixed; top:50px; left:0px;border-bottom:1px solid #cccccc;">
-	<div class="combo_grupos">
+<div class="combo_grupos">
 		<form id="grupos" action="<?php echo url_for('productos/filtrado') ?>">
 			<select name="grupo_id" id="grupo_id">
 				<option value="-">Mostrar todos los productos</option>
@@ -10,9 +9,8 @@
 				<?php endforeach; ?>
 			</select>
 		</form>
-	</div>
 </div>
-<div style="position:fixed; top:90px; height: 100%; overflow: scroll; width:95%; padding:2%;">
+<div style="position:fixed; top:105px; height: 77%; overflow: scroll; width:95%; padding:2%;">
 <?php foreach ($productos as $producto): ?>
 <div style="width:100%; border: 1px solid #cccccc; margin-bottom:1%">
 	<table width="100%">
