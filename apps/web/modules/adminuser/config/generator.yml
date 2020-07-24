@@ -26,10 +26,12 @@ generator:
         permissions_list: { label: Opciones de menu que puede ver}
       list:
         title: Usuarios
-        display: [is_active, Zona, username, =last_name, first_name, es_cliente]
+        display: [is_active, _zona, username, =last_name, first_name, es_cliente]
         object_actions:
             _edit: {label: Modificar}
             _delete: {label: Eliminar}
+        actions:
+          _new: {label: Nuevo}
       form:
         class: sfGuardUserAdminForm
         display: [first_name, last_name, email_address, username, password, password_again, is_super_admin, is_active, es_cliente, zona_id, usuario_zona, permissions_list]

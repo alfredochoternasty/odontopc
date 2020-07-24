@@ -106,6 +106,10 @@ sfGuardUser:
       foreign: zona_id
       refClass: UsuarioZona
       foreignAlias: Usuario
+    Cliente:
+      type: one
+      local: id
+      foreign: usuario_id
 sfGuardUserPermission:
   options:
     symfony:

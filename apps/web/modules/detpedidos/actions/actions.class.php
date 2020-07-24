@@ -104,7 +104,7 @@ class detpedidosActions extends autoDetpedidosActions
       
       $pedido->vendido = 1;
       $pedido->fecha_venta = date('Y-m-d');
-      // $pedido->save();
+      $pedido->save();
       
       $this->getUser()->setFlash('notice', 'Factura generada para el Pedido Nro '.$pedido->id.' del cliente '.$pedido->getCliente(), true);
       $this->redirect('resumen/index');

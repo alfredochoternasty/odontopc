@@ -21,11 +21,11 @@
  * @property Doctrine_Collection $Permissions
  * @property Zona $Zona
  * @property Doctrine_Collection $UsuarioZona
+ * @property Cliente $Cliente
  * @property Doctrine_Collection $sfGuardUserPermission
  * @property Doctrine_Collection $sfGuardUserGroup
  * @property sfGuardRememberKey $RememberKeys
  * @property sfGuardForgotPassword $ForgotPassword
- * @property Doctrine_Collection $Cliente
  * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $Resumen
@@ -50,11 +50,11 @@
  * @method Doctrine_Collection   getPermissions()           Returns the current record's "Permissions" collection
  * @method Zona                  getZona()                  Returns the current record's "Zona" value
  * @method Doctrine_Collection   getUsuarioZona()           Returns the current record's "UsuarioZona" collection
+ * @method Cliente               getCliente()               Returns the current record's "Cliente" value
  * @method Doctrine_Collection   getSfGuardUserPermission() Returns the current record's "sfGuardUserPermission" collection
  * @method Doctrine_Collection   getSfGuardUserGroup()      Returns the current record's "sfGuardUserGroup" collection
  * @method sfGuardRememberKey    getRememberKeys()          Returns the current record's "RememberKeys" value
  * @method sfGuardForgotPassword getForgotPassword()        Returns the current record's "ForgotPassword" value
- * @method Doctrine_Collection   getCliente()               Returns the current record's "Cliente" collection
  * @method Doctrine_Collection   getCompra()                Returns the current record's "Compra" collection
  * @method Doctrine_Collection   getDetalleCompra()         Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection   getResumen()               Returns the current record's "Resumen" collection
@@ -78,11 +78,11 @@
  * @method sfGuardUser           setPermissions()           Sets the current record's "Permissions" collection
  * @method sfGuardUser           setZona()                  Sets the current record's "Zona" value
  * @method sfGuardUser           setUsuarioZona()           Sets the current record's "UsuarioZona" collection
+ * @method sfGuardUser           setCliente()               Sets the current record's "Cliente" value
  * @method sfGuardUser           setSfGuardUserPermission() Sets the current record's "sfGuardUserPermission" collection
  * @method sfGuardUser           setSfGuardUserGroup()      Sets the current record's "sfGuardUserGroup" collection
  * @method sfGuardUser           setRememberKeys()          Sets the current record's "RememberKeys" value
  * @method sfGuardUser           setForgotPassword()        Sets the current record's "ForgotPassword" value
- * @method sfGuardUser           setCliente()               Sets the current record's "Cliente" collection
  * @method sfGuardUser           setCompra()                Sets the current record's "Compra" collection
  * @method sfGuardUser           setDetalleCompra()         Sets the current record's "DetalleCompra" collection
  * @method sfGuardUser           setResumen()               Sets the current record's "Resumen" collection
@@ -186,6 +186,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'local' => 'usuario',
              'foreign' => 'zona_id'));
 
+        $this->hasOne('Cliente', array(
+             'local' => 'id',
+             'foreign' => 'usuario_id'));
+
         $this->hasMany('sfGuardUserPermission', array(
              'local' => 'id',
              'foreign' => 'user_id'));
@@ -201,10 +205,6 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasOne('sfGuardForgotPassword as ForgotPassword', array(
              'local' => 'id',
              'foreign' => 'user_id'));
-
-        $this->hasMany('Cliente', array(
-             'local' => 'id',
-             'foreign' => 'usuario_id'));
 
         $this->hasMany('Compra', array(
              'local' => 'id',
