@@ -32,6 +32,20 @@ class detpresuActions extends autoDetpresuActions
     $detpres->setPresupuestoId($pid);
     $this->form = new DetallePresupuestoForm($detpres);
     $this->detalle_presupuesto = $this->form->getObject();
+    $this->presupuesto_detalle = Doctrine::getTable('DetallePresupuesto')->findByPresupuestoId($pid);
+  }
+  
+  public function executeEdit(sfWebRequest $request)
+  {
+    if($request->hasParameter('pid')){
+      $pid = $request->getParameter('pid');
+    }else{
+      $pid = $this->getUser()->getAttribute('pid');
+    }
+    $this->getUser()->setAttribute('pid', $pid);
+    $this->detalle_presupuesto = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->detalle_presupuesto);
+    $this->presupuesto_detalle = Doctrine::getTable('DetallePresupuesto')->findByPresupuestoId($pid);
   }
   
   public function executeIndex(sfWebRequest $request){
@@ -45,6 +59,17 @@ class detpresuActions extends autoDetpresuActions
     parent::executeIndex($request);
   }
 
+  protected function getPager2($pid)
+  {
+    $pager = $this->configuration->getPager('DetallePresupuesto');
+    $query = Doctrine::getTable('DetallePresupuesto')->createQuery()->where('presupuesto_id = ?', $pid);
+    $pager->setQuery($query);
+    $pager->setPage(1);
+    $pager->init();
+
+    return $pager;
+  }
+  
   public function executeListImprimir(sfWebRequest $request){
     $pid = $this->getUser()->getAttribute('pid', 1);
     $presupuesto = Doctrine::getTable('Presupuesto')->find($pid);
