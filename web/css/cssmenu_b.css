@@ -8,7 +8,7 @@
 		font-size:12px;
 		font-weight:bold;
 		width:100%;
-		background:#EEEEEE;
+		background:#0087ca;
 		text-align: -webkit-center;
 		}
 	#nav ul{
@@ -23,22 +23,24 @@
 		padding:0px;
 		}
 	#nav li a{
-		background:#EEEEEE;
-		color:#00468C;
+		background:#0087ca;
+		color:#ffffff;
 		display:block;
 		line-height:35px;
 		margin:0px;
 		padding:0px 15px;
 		text-align:center;
 		text-decoration:none;
+		font-size: 1.2em;
 		}
 	#nav li a:hover, #nav ul li:hover a{
-		background: #CCCCCC;
-		color:#00468C;
+		background: #85b5d9;
+		color:#fdfdff;
 		text-decoration:none;
+		font-size: 1.2em;
 		}
 	#nav li ul{
-		background:#EEEEEE;
+		background:#0087ca;
 		display:none;
 		height:auto;
 		padding:0px;
@@ -71,12 +73,14 @@
 		margin:0px;
 		padding:0px 10px 0px 15px;
 		text-align:left;
+		font-size: 1.2em;
 		}
 	#nav li ul a:hover, #nav li ul li:hover a{
-		background:#CCCCCC;
+		background:#85b5d9;
 		border:0px;
-		color:#ffffff;
+		color:#fdfdff;
 		text-decoration:none;
+		font-size: 1.2em;
 		}
 	.header{
 		display: none;

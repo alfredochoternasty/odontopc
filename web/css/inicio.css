@@ -7,15 +7,24 @@ body
 
 header{
 	text-align: -webkit-center;
-  background: url(../images/nti-bg-header.jpg) top repeat-x
+  background-color: #fff;
+	height: 70px;
+	height: 55px;
+	padding: 10px;
 }
 
-.img_cabecera{
-  text-align: right;
-  font-family: monospace;
-  width:90%; 
-  height: 62px;
-  background: url(../images/nti-header.jpg) no-repeat left;
+#logo{
+	margin-left:5%;
+	float:left;
+	font-family: Arial;
+}
+
+#info{
+	margin-right: 5%;
+	float: right;
+	text-align: right;
+	font-family: Arial, sans-serif;
+	font-size: 0.7rem;
 }
 
 .pedidos_nuevos {
@@ -162,23 +171,40 @@ background-color: #FFBABA;
 background-image: url('error.png');
 }
 
-#sf_guard_group_permissions_list option[value="10"], option[value="60"], [value="90"], [value="170"], [value="230"], [value="310"], [value="360"] 
-{
-    background: #ccc;
-}
-
-#unassociated_sf_guard_group_permissions_list option[value="10"], option[value="60"], [value="90"], [value="170"], [value="230"], [value="310"], [value="360"] 
-{
-    background: #ccc;
-}
-/* .sf_admin_form_field_precio_unitario, .sf_admin_form_field_iva_unitario { */
-	/* display: none; */
-/* } */
 
 #detalle_resumen_nro_lote{
 	font-size:16px;
 }
 
-.sf_admin_form {
+.sf_admin_form{
+	font-size: 1.3em;
+}
+
+.sf_admin_text{
 	font-size: 1.2em;
+}
+
+.checkbox_list li{margin-left: 50px;}
+#sf_guard_user_permissions_list_10, 
+#sf_guard_user_permissions_list_60, 
+#sf_guard_user_permissions_list_90, 
+#sf_guard_user_permissions_list_170, 
+#sf_guard_user_permissions_list_230, 
+#sf_guard_user_permissions_list_310, 
+#sf_guard_user_permissions_list_360{
+	margin-left: -30px;
+	font-weight: bold;
+}
+#sf_guard_user_permissions_list_10 + label, 
+#sf_guard_user_permissions_list_60 + label, 
+#sf_guard_user_permissions_list_90 + label, 
+#sf_guard_user_permissions_list_170 + label, 
+#sf_guard_user_permissions_list_230 + label, 
+#sf_guard_user_permissions_list_310 + label, 
+#sf_guard_user_permissions_list_360 + label{
+	font-weight: bold;
+	font-size: larger;
+	background-color: #0087ca;
+	padding: 5px;
+	color: #fff;
 }

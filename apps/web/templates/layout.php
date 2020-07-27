@@ -49,13 +49,15 @@
 		
 		if($mostrar_cabecera == 'S'){ ?>
 			<header>
-					<div class="img_cabecera">
-						<br>
+					<div id="logo" style="margin-left:5%;float:left;">
+						<img width="175px" height="60px" src="<?php echo $base_url?>/web/images/logo_nti.png">
+					</div>
+					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
 						<b>Versión del Sistema: 5.0</b><br>
-						Fecha Actualización: 17/07/2020
+						Fecha Actualización: 27/07/2020
 					</div>
-					<?php if (date("Ymd") == '20200717') { ?>
+					<?php if (date("Ymd") == '20200727') { ?>
 					<img src="<?php echo $base_url ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
 			</header>
@@ -64,7 +66,6 @@
 		?>
  		<div class="header" style="width:100%; height:60px; background-color:#eaeaea; position:fixed; top:0px; left:0px;">
 			<img id="menu" src="<?php echo $base_url?>/web/images/menu.png" style="margin:10px;float:left">			
-			<img width="280px" height="60px" src="<?php echo $base_url?>/web/images/nti-header.jpg" style="margin-left:10px;float:left;">
 		</div>
 		<div id="nav" class="menujq">
 			<img id="cerrar_menu" src="<?php echo $base_url?>/web/images/back.png" style="position: absolute;top: 5px; right: 10px;">
