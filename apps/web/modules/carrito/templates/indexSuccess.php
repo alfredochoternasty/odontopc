@@ -2,7 +2,7 @@
 <?php include_partial('global/boton_volver', array('url' => '@producto2')) ?>
 <div class="contenido contenido_boton">
 	<h3 class="titulo">Pedido Nro: <?php echo $nro_pedido?></h3>
-	<p style="text-align:center;" class="precio">Total: <b>$ <?php echo $total_pedido ?></p>
+	<p class="sub_titulo">Total: <b>$ <?php echo $total_pedido ?></p>
 	
 	<?php foreach ($detalle_pedido as $detped): ?>
 	<div class="fila_contenido">

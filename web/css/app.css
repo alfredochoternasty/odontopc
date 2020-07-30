@@ -1,0 +1,212 @@
+#header_app {
+	width: 100%;
+	height: 60px;
+	background-color: #0087ca;
+}
+
+#header_app table{
+	width: 100%;
+	padding: 5px;
+}
+
+#menu{margin-left:10px;}
+
+#user_info{
+	height:80px;
+	background:#0087ca;				
+}
+
+#user_img {
+	float:left;
+	margin: 10px 0px 0px 10px;
+}
+
+#user_name {
+	float:left;
+	margin: 10px 0px 0px 10px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+#cerrar_menu{
+	float: right;
+	margin: 5px 5px;
+}
+
+#saldo{
+	height:20px;
+	background:#dddddd;
+	text-align:center;
+	padding:2%;font-size:14pt;
+	font-weight:bold;
+}
+
+#lista_productos{
+	position:fixed;
+	top:95px;
+	height: 77%;
+	overflow: scroll;
+	width:95%;
+	padding:2%;
+}
+
+#lista_productos .productos{
+	width:100%; 
+	border: 1px solid #cccccc; 
+	margin-bottom:1%;
+}
+
+#lista_productos .nombre_producto{
+	font-size:12pt;
+	font-family:sans-serif;
+	color: #0087ca;
+	font-weight: bold;
+}
+
+#lista_productos .precio{
+	font-size:10pt;
+	font-family:sans-serif;
+	color: #e20202;
+	font-weight: bold;
+}
+
+#lista_productos .cant_pedir{
+	width:30%;
+	border: 1px solid #f4800c;
+	height:14pt;
+	text-align:center;
+	display:inline;
+}
+
+.combo_grupos{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 68px;
+	position: fixed;
+	
+}
+.combo_grupos select{
+	border-radius:22px;
+	height: 25px;
+	width: 250px;
+	background-color: #fff;
+}
+
+.cant_prods{
+	float: right;
+	position: fixed;
+	top: 5px;
+	right: 4px;
+	width: 20px;
+	height: 20px;
+	background-color: red;
+	border-radius: 50%;
+	text-align: center;
+	padding: 1px;
+	color: white;
+	font-weight: bold;
+}
+
+#boton_arriba_derecha{
+	position: fixed;
+	top: 12px;
+	right: 12px;
+}
+
+.boton_abajo_1{bottom: 10px;}
+.boton_abajo_2{bottom: 70px;}
+
+a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
+.sidemenu {background:#fff;position:absolute;left:-400px;top:0;width:100%;height:100%;overflow:hidden;transition: left .5s;z-index:999}
+.sidemenu ul {list-style:none;padding:10px}
+.sidemenu ul li {display:flex;padding:10px; border-bottom: 1px solid #c3c3c3;}
+.sidemenu ul li a:link,.sidemenu ul li a:active,.sidemenu ul li a:visited {display:inline;padding:8px;color:#000;transition: 0.3s;}
+.sidemenu ul li a:hover {background:#FFF;}
+.sidemenu ul li img {display:inline;margin:5px; width:24px;height:24px;}
+.contenedor {display:inline;float:left;width:100%;padding:20px;transition: margin-left .5s;}
+.toggle {display:block;width:40px;height:40px;background:#f2f2f2 url(toggle.png) 50% 50% no-repeat}
+
+.boton_azul{
+	position: absolute;
+	left: 8%;
+	height: 5%;
+	width: 80%;
+	color: #fff;
+	font-size: 15pt;
+	padding: 2%;
+	background-color: #0087ca;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.boton_blanco{
+	position: absolute;
+	left: 8%;
+	height: 5%;
+	width: 80%;
+	color: #0660f7;
+	font-size: 15pt;
+	padding: 2%;
+	background-color: #fff;
+	border: 1px solid #0660f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.boton_prod{
+	display:inline;
+	border: none;
+	font: normal normal bold 8pt/normal Verdana, Geneva, sans-serif;
+	color: #fff;
+	background: #f4800c;
+	height: 17pt;
+}
+
+.form_terminar {
+	position: fixed;
+	top: 110px;
+	width:97%; 
+	border: 1px solid #c3c3c3;
+	margin:1%; 
+	display:flex; 
+	justify-content: center; 
+	align-items: center;
+	font-weight: bold;
+}
+.form_terminar input[type="radio"] {display: none;}
+
+.form_terminar label {
+	display: inline-block;
+	padding: 4px 11px;
+	font-family: Arial;
+	font-size: 16px;
+	cursor: pointer;
+	padding: 5%;
+	margin: 3%;
+	width: 85%;
+	color: #000;
+	display: flex;
+	align-items: center;
+}
+
+.form_terminar img {margin-right: 10px;}
+.form_terminar input[type="radio"]:checked+label {background-color: #ff8000; color: #fff;}
+.contenido {position:fixed; top:50px; height: 90%; overflow: scroll; width:99%; font-family: verdana; font-size: small;}
+.contenido_boton {height: 80%;}
+.titulo {color: #ff800C;text-align: center;}
+.sub_titulo {width:100%;color: #ff800C;text-align: center;font-weight: bold; color:#e20202; font-size:11pt;}
+.fila_contenido {width:97%; border: 1px solid #cccccc; margin:2%;}
+.fila_primario {font-weight: bold; color: #2982f3;}
+.fila_secundario {font-weight: bold;text-align: center;color: #a0a0a2;}
+.precio {text-align:right; font-weight: bold; color:#e20202; font-size:11pt;}
+.monto {text-align:right; font-weight: bold; font-size:12pt;}
+.monto_positivo {color:#ff0040}
+.monto_negativo {color:#008c46}

@@ -10,19 +10,19 @@
 			</select>
 		</form>
 </div>
-<div style="position:fixed; top:105px; height: 77%; overflow: scroll; width:95%; padding:2%;">
+<div id="lista_productos">
 <?php foreach ($productos as $producto): ?>
-<div style="width:100%; border: 1px solid #cccccc; margin-bottom:1%">
+<div class="productos">
 	<table width="100%">
 		<tr >
-		  <td width="10%"><?php echo '<img src="'.$base_url.'/web/uploads/productos/'.$producto->getFoto().'" height="70vw" width="70vw">' ?></td>
-		  <td width="55%"><span style="font-size:12pt;font-family:sans-serif;color: #008ddc;font-weight: bold;"><?php echo $producto ?></span>
-			<br><span style="font-size:10pt;font-family:sans-serif;color: #e20202;font-weight: bold;">$ <?php echo sprintf("%01.2f", $producto->precio_vta * 1.21) ?></span>
+		  <td width="10%"><img src="<?php echo $base_url ?>/web/uploads/productos/<?php echo $producto->getFoto() ?>" height="70vw" width="70vw"></td>
+		  <td width="55%"><span class="nombre_producto"><?php echo $producto ?></span>
+			<br><span class="precio">$ <?php echo sprintf("%01.2f", $producto->precio_vta * 1.21) ?></span>
 		  </td>
 		  <td width="35%" style="text-align:right">
 			<form action="<?php echo url_for('productos/pedir') ?>" onSubmit="return validar(this);">
 			  <input name="producto_id" type="hidden" value="<?php echo $producto->getId() ?>">
-			  <input name="cantidad" placeholder="Cant." type="number" style="width:30%; border: 1px solid #f4800c; height:14pt; text-align:center;display:inline;">
+			  <input name="cantidad" placeholder="Cant." type="number" class="cant_pedir">
 			  <input type="submit" value="Pedir" class="boton_prod">
 			</form>
 		  </td>
