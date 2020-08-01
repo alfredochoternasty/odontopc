@@ -76,6 +76,48 @@ INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('enviar_cliente_url
 ALTER TABLE `ventas`.`pedido` 
 ADD COLUMN `usuario_id` INT(11) NULL AFTER `zona_id`;
 
+ALTER TABLE `ventas`.`lote` 
+ADD COLUMN `activo` INT(1) NULL DEFAULT 1 AFTER `zona_id`,
+CHANGE COLUMN `producto_id` `producto_id` INT(11) NOT NULL ,
+CHANGE COLUMN `nro_lote` `nro_lote` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL ,
+CHANGE COLUMN `usuario` `usuario_id` INT(11) NULL DEFAULT NULL ;
+
+ALTER TABLE `ventas`.`log_lote` 
+CHANGE COLUMN `usuario` `usuario_id` INT(11) NULL DEFAULT NULL ;
+
+update lote set activo = 0 where nro_lote like 'er%';
+DELETE FROM `ventas`.`lote` WHERE (`id` = '243');
+DELETE FROM `ventas`.`lote` WHERE (`id` = '262');
+
+DROP TRIGGER IF EXISTS `ventas`.`ti_lote`;
+
+DELIMITER $$
+USE `ventas`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `ti_lote` AFTER INSERT ON `lote` FOR EACH ROW BEGIN
+					INSERT INTO log_lote (log_fecha, log_operacion, id, producto_id, nro_lote, stock, fecha_vto, compra_id, observacion, usuario_id, zona_id)
+					VALUES(NOW(), 'INSERT', NEW.id, NEW.producto_id, NEW.nro_lote, NEW.stock, NEW.fecha_vto, NEW.compra_id, NEW.observacion, NEW.usuario_id, NEW.zona_id);
+				END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `ventas`.`tu_lote`;
+
+DELIMITER $$
+USE `ventas`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `tu_lote` AFTER UPDATE ON `lote` FOR EACH ROW BEGIN
+					INSERT INTO log_lote (log_fecha, log_operacion, id, producto_id, nro_lote, stock, fecha_vto, compra_id, observacion, usuario_id, zona_id)
+					VALUES(NOW(), 'UPDATE', NEW.id, NEW.producto_id, NEW.nro_lote, NEW.stock, NEW.fecha_vto, NEW.compra_id, NEW.observacion, NEW.usuario_id, NEW.zona_id);
+				END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `ventas`.`td_lote`;
+
+DELIMITER $$
+USE `ventas`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `td_lote` AFTER DELETE ON `lote` FOR EACH ROW BEGIN
+					INSERT INTO log_lote (log_fecha, log_operacion, id, producto_id, nro_lote, stock, fecha_vto, compra_id, observacion, usuario_id, zona_id)
+					VALUES(NOW(), 'DELETE', OLD.id, OLD.producto_id, OLD.nro_lote, OLD.stock, OLD.fecha_vto, OLD.compra_id, OLD.observacion, OLD.usuario_id, OLD.zona_id);
+				END$$
+DELIMITER ;
+
+
 
 /*
 DROP TABLE 

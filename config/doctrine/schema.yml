@@ -643,12 +643,13 @@ Lote:
     fecha_vto: {type: date(25)}
     compra_id: {type: integer(4)}
     observacion: {type: string(255)}
-    usuario: {type: integer(4)}
+    usuario_id: {type: integer(4)}
     zona_id: {type: integer(4)}
+    activo: {type: integer(1)}
   relations:
     Compra: {type: one, local: compra_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
-    sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
+    Usuario: {class: SfGuardUser, type: one, local: usuario_id, onDelete: RESTRICT}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 ClienteUltimaCompra:
   connection: doctrine
@@ -683,13 +684,6 @@ ListadoCompras:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id}
     Zona: {type: one, class: Zona, local: zona_id}
-Parametros:
-  connection: doctrine
-  tableName: parametros
-  columns:
-    id: {type: integer(4), primary: true}
-    nombre: {type: string(100)}
-    valor: {type: string(100)}
 ControlStock:
   connection: doctrine
   tableName: control_stock

@@ -18,7 +18,6 @@ generator:
         compra_id: {label: Compra, help: La compra en la que ingreso este numero de lote}
         nro_lote: {label: Lote}
         stock: {help: stock actual de lote}
-        SfGuardUser: {label: Usuario}
       list:
         title: Stock por Lote
         table_method: retrieveConJoins

@@ -14,11 +14,11 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @property date $fecha_vto
  * @property integer $compra_id
  * @property string $observacion
- * @property integer $usuario
+ * @property integer $usuario_id
  * @property integer $zona_id
+ * @property integer $activo
  * @property Compra $Compra
  * @property Producto $Producto
- * @property sfGuardUser $sfGuardUser
  * @property Zona $Zona
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $DetalleResumen
@@ -31,11 +31,11 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method date                getFechaVto()       Returns the current record's "fecha_vto" value
  * @method integer             getCompraId()       Returns the current record's "compra_id" value
  * @method string              getObservacion()    Returns the current record's "observacion" value
- * @method integer             getUsuario()        Returns the current record's "usuario" value
+ * @method integer             getUsuarioId()      Returns the current record's "usuario_id" value
  * @method integer             getZonaId()         Returns the current record's "zona_id" value
+ * @method integer             getActivo()         Returns the current record's "activo" value
  * @method Compra              getCompra()         Returns the current record's "Compra" value
  * @method Producto            getProducto()       Returns the current record's "Producto" value
- * @method sfGuardUser         getSfGuardUser()    Returns the current record's "sfGuardUser" value
  * @method Zona                getZona()           Returns the current record's "Zona" value
  * @method Doctrine_Collection getDetalleCompra()  Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
@@ -47,11 +47,11 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method Lote                setFechaVto()       Sets the current record's "fecha_vto" value
  * @method Lote                setCompraId()       Sets the current record's "compra_id" value
  * @method Lote                setObservacion()    Sets the current record's "observacion" value
- * @method Lote                setUsuario()        Sets the current record's "usuario" value
+ * @method Lote                setUsuarioId()      Sets the current record's "usuario_id" value
  * @method Lote                setZonaId()         Sets the current record's "zona_id" value
+ * @method Lote                setActivo()         Sets the current record's "activo" value
  * @method Lote                setCompra()         Sets the current record's "Compra" value
  * @method Lote                setProducto()       Sets the current record's "Producto" value
- * @method Lote                setSfGuardUser()    Sets the current record's "sfGuardUser" value
  * @method Lote                setZona()           Sets the current record's "Zona" value
  * @method Lote                setDetalleCompra()  Sets the current record's "DetalleCompra" collection
  * @method Lote                setDetalleResumen() Sets the current record's "DetalleResumen" collection
@@ -97,13 +97,17 @@ abstract class BaseLote extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
-        $this->hasColumn('usuario', 'integer', 4, array(
+        $this->hasColumn('usuario_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
         $this->hasColumn('zona_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('activo', 'integer', 1, array(
+             'type' => 'integer',
+             'length' => 1,
              ));
     }
 
@@ -117,11 +121,6 @@ abstract class BaseLote extends sfDoctrineRecord
 
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
-             'foreign' => 'id',
-             'onDelete' => 'RESTRICT'));
-
-        $this->hasOne('sfGuardUser', array(
-             'local' => 'usuario',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
