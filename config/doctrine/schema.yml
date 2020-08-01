@@ -593,10 +593,12 @@ Pedido:
     finalizado: {type: integer(4), notnull: true}
     cliente_domicilio_id: {type: integer(4)}
     zona_id: {type: integer(4)}
+    usuario_id: {type: integer(4)}
   relations:
     Detalle: {type: many, class: DetallePedido, local: id, foreign: pedido_id}
     Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
     Zona: {type: one, local: zona_id, onDelete: RESTRICT}
+    Usuario: {type: one, local: usuario_id, onDelete: RESTRICT}
 DetallePedido:
   connection: doctrine
   tableName: detalle_pedido

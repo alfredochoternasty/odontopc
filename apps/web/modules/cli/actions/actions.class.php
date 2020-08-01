@@ -60,36 +60,10 @@ class cliActions extends autoCliActions
 			$user->setLastName($cliente->apellido);
 			$user->setPassword($clave);
 			$user->setEsCliente(true);
-			$user->save();      
-
-			$perfil = new sfGuardUserGroup();
-			$perfil->setUserId($user->getId());
-			$perfil->setGroupId(4);
-			$perfil->save();
-			
-			$perfil = new sfGuardUserGroup();
-			$perfil->setUserId($user->getId());
-			$perfil->setGroupId(7);
-			$perfil->save();
-			
-			$permiso = new sfGuardUserPermission();
-			$permiso->setUserId($user->getId());
-			$permiso->setPermissionId(81);
-			$permiso->save();
-			
-			$permiso = new sfGuardUserPermission();
-			$permiso->setUserId($user->getId());
-			$permiso->setPermissionId(82);
-			$permiso->save();
-			
-			$permiso = new sfGuardUserPermission();
-			$permiso->setUserId($user->getId());
-			$permiso->setPermissionId(83);
-			$permiso->save();
-			
+			$user->setZonaId($this->getUser()->getGuardUser()->getZonaId());
+			$user->save();			
 			$cliente->setUsuarioId($user->getId());
 			$cliente->save();
-			
 		}else{
 			$user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
 			$accion = 'actualizado';
@@ -106,15 +80,8 @@ class cliActions extends autoCliActions
 		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente));			
 		$mensaje->setBody($msj, "text/html");
 		$this->getMailer()->send($mensaje);    
-		
-		$entorno = sfConfig::get('sf_environment');
-		if($entorno != 'dev'){
-			$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
-		}else{
-			$this->getUser()->setFlash('notice', $accion.' - Usuario: '.$usuario.' - Clave: '.$clave );
-		}
+		$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
 		$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
-		
   }
 
   public function executeAutocomplete(sfWebRequest $request){
@@ -166,14 +133,16 @@ class cliActions extends autoCliActions
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $cliente = $form->save();
       
-			$a_cliente = $cliente->toArray();
-			$enviado = $this->enviar_cliente($a_cliente);
-			if($enviado == true){
-				$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
-			} else {
-				$this->getUser()->setFlash('notice', 'Error: '.$enviado);
+			if ($this->getUser()->getVarConfig('enviar_cliente') == 'S') {
+				$a_cliente = $cliente->toArray();
+				$enviado = $this->enviar_cliente($a_cliente);
+				if($enviado == true){
+					$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
+				} else {
+					$this->getUser()->setFlash('notice', 'Error: '.$enviado);
+				}
 			}
-     
+			
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $cliente)));
       if ($request->hasParameter('generar_usuario')){
         $this->getUser()->setFlash('notice', ' Usuario.');
@@ -245,14 +214,8 @@ class cliActions extends autoCliActions
     foreach($arr_datos as $k => $v){
       $vars[] = $k.'='.urlencode($v);
     }
-		
-		if ($this->getUser()->hasGroup('Blanco')) {
-				$url = 'http://sistema.ntiimplantes.com.ar/web/cliente.php?'.implode('&', $vars);
-				// $url = 'http://localhost/odontopc/web/cliente.php?'.implode('&', $vars);
-		} else {
-				$url = 'http://ventas.ntiimplantes.com.ar/web/cliente.php?'.implode('&', $vars);
-		}
-    
-    echo file_get_contents($url);
+		$url = $this->getUser()->getVarConfig('enviar_cliente_url').'?'.implode('&', $vars);
+		if (!empty($url) && $url != 'http://') echo file_get_contents($url);
   }
+
 }

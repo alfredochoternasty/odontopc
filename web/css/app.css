@@ -123,7 +123,7 @@
 .boton_abajo_2{bottom: 70px;}
 
 a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
-.sidemenu {background:#fff;position:absolute;left:-400px;top:0;width:100%;height:100%;overflow:hidden;transition: left .5s;z-index:999}
+.sidemenu {background:#fff;position:absolute;left:-4000px;top:0;width:100%;height:100%;overflow:hidden;transition: left .5s;z-index:999}
 .sidemenu ul {list-style:none;padding:10px}
 .sidemenu ul li {display:flex;padding:10px; border-bottom: 1px solid #c3c3c3;}
 .sidemenu ul li a:link,.sidemenu ul li a:active,.sidemenu ul li a:visited {display:inline;padding:8px;color:#000;transition: 0.3s;}

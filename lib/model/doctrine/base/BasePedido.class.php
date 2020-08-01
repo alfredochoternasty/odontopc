@@ -18,6 +18,7 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @property integer $finalizado
  * @property integer $cliente_domicilio_id
  * @property integer $zona_id
+ * @property integer $usuario_id
  * @property Doctrine_Collection $Detalle
  * @property Cliente $Cliente
  * @property Zona $Zona
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @method integer             getFinalizado()           Returns the current record's "finalizado" value
  * @method integer             getClienteDomicilioId()   Returns the current record's "cliente_domicilio_id" value
  * @method integer             getZonaId()               Returns the current record's "zona_id" value
+ * @method integer             getUsuarioId()            Returns the current record's "usuario_id" value
  * @method Doctrine_Collection getDetalle()              Returns the current record's "Detalle" collection
  * @method Cliente             getCliente()              Returns the current record's "Cliente" value
  * @method Zona                getZona()                 Returns the current record's "Zona" value
@@ -49,6 +51,7 @@ Doctrine_Manager::getInstance()->bindComponent('Pedido', 'doctrine');
  * @method Pedido              setFinalizado()           Sets the current record's "finalizado" value
  * @method Pedido              setClienteDomicilioId()   Sets the current record's "cliente_domicilio_id" value
  * @method Pedido              setZonaId()               Sets the current record's "zona_id" value
+ * @method Pedido              setUsuarioId()            Sets the current record's "usuario_id" value
  * @method Pedido              setDetalle()              Sets the current record's "Detalle" collection
  * @method Pedido              setCliente()              Sets the current record's "Cliente" value
  * @method Pedido              setZona()                 Sets the current record's "Zona" value
@@ -114,6 +117,10 @@ abstract class BasePedido extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('usuario_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

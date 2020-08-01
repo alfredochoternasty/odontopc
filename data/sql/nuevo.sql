@@ -70,6 +70,13 @@ ALTER TABLE `sf_guard_user_permission`
 	ADD CONSTRAINT `permisos` FOREIGN KEY (`permission_id`) REFERENCES `sf_guard_permission` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
 	ADD CONSTRAINT `usuarios` FOREIGN KEY (`user_id`) REFERENCES `sf_guard_user` (`id`) ON UPDATE CASCADE;
 
+INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('enviar_cliente', 'N');
+INSERT INTO `ventas`.`configuracion` (`id`, `valor`) VALUES ('enviar_cliente_url', 'http://');
+
+ALTER TABLE `ventas`.`pedido` 
+ADD COLUMN `usuario_id` INT(11) NULL AFTER `zona_id`;
+
+
 /*
 DROP TABLE 
 	producto2, 

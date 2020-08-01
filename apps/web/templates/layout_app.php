@@ -26,7 +26,7 @@
 		</style>
 		<script type="text/javascript">
 			function abrir(){$(".sidemenu").css("left","0");}
-			function cerrar(){$(".sidemenu").css("left","-400px");}
+			function cerrar(){$(".sidemenu").css("left","-4000px");}
 			$(document).ready(function(){$("#menu").click(function(e){abrir();});});
 			$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar();});});
 			$(document).ready(function(){$("#grupo_id").on("change",function(e){$("#grupos").submit();});});
