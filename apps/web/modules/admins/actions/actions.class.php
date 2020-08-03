@@ -95,44 +95,44 @@ class adminsActions extends sfActions
 		$link = mysql_connect($host,$user,$pass);
 		mysql_select_db($name,$link);
 		
-		// $tables = array();
-		// $result = mysql_query('SHOW TABLES');
+		$tables = array();
+		$result = mysql_query('SHOW TABLES');
 		
-		// while($row = mysql_fetch_row($result))
-			// if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
-				// $tables[] = $row[0];
+		while($row = mysql_fetch_row($result))
+			if (!in_array($row[0], $tablas_excluir) && substr($row[0], 0, 4) != 'log_' )
+				$tables[] = $row[0];
 
-		$tables = array('cliente', 'resumen', 'detalle_resumen', 'zona', 'usuario_zona', 'descuento_zona', 'lote', 'compra');
+		$acciones = array('ti_' => 'INSERT', 'tu_' => 'UPDATE', 'td_' => 'DELETE');
+		$sql = "
+			DROP TRIGGER IF EXISTS {{nom_trigger}};
+			DELIMITER $$
+			CREATE TRIGGER {{nom_trigger}} AFTER {{operacion}} ON {{tabla}}
+			FOR EACH ROW
+			BEGIN
+				INSERT INTO log_{{tabla}} (log_fecha, log_operacion, {{campos}})
+				VALUES(NOW(), '{{operacion}}', {{valores}});
+			END$$
+			DELIMITER ;
+		";
+		$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
+		
 		foreach ($tables as $table) {
 			$result = mysql_query('DESCRIBE '.$table.';');
 			$campos = '';
 			while($row = mysql_fetch_row($result)) {
 				$campos[] = $row[0];
+			}			
+			foreach ($acciones as $pre => $accion) {
+				$tiempo = $accion == 'DELETE'? 'OLD.':'NEW.';
+				$reemplazar = array($pre.$table, $accion, $table, implode(', ', $campos), $tiempo.implode(', '.$tiempo, $campos));
+				$ejecutar = str_replace($buscar, $reemplazar, $sql);
+				$resultado = mysql_query($ejecutar);
+				$file = fopen("triggers.sql", "a");
+				fwrite($file, $ejecutar . PHP_EOL);
+				fclose($file);
 			}
-						
-			$sql = "
-				DROP TRIGGER IF EXISTS {{nom_trigger}};
-				CREATE TRIGGER {{nom_trigger}} AFTER {{operacion}} ON {{tabla}}
-				FOR EACH ROW
-				BEGIN
-					INSERT INTO log_{{tabla}} (log_fecha, log_operacion, {{campos}})
-					VALUES(NOW(), '{{operacion}}', {{valores}});
-				END;
-			";
-
-			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
-			$reemplazar = array('ti_'.$table, 'INSERT', $table, implode(', ', $campos), 'NEW.'.implode(', NEW.', $campos));
-			$sql = str_replace($buscar, $reemplazar, $sql);
-			$result = mysql_query($sql);
-			
-			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
-			$reemplazar = array('tu_'.$table, 'UPDATE', $table, implode(', ', $campos), 'NEW.'.implode(', NEW.', $campos));
-			$result = mysql_query(str_replace($buscar, $reemplazar, $sql));
-			
-			$buscar = array('{{nom_trigger}}', '{{operacion}}', '{{tabla}}', '{{campos}}', '{{valores}}');
-			$reemplazar = array('td_'.$table, 'DELETE', $table, implode(', ', $campos), 'OLD.'.implode(', OLD.', $campos));
-			$result = mysql_query(str_replace($buscar, $reemplazar, $sql));
 		}
+		return $resultado;
 	}	
 	
 	public function executeIndex(sfWebRequest $request)
@@ -238,7 +238,8 @@ class adminsActions extends sfActions
 
 		$entorno = sfConfig::get('sf_environment');
 		if ($entorno == 'dev') {
-			$filename = $this->crear_triggers('localhost','root','','ventas', $tbl_excluir);
+			$this->result = $this->crear_triggers('localhost','root','','ventas', $tbl_excluir);
+			$this->setTemplate('index');
 		} else {
 			$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
 			list($host, $db) = explode(';', $oCurrentConnection->getOption('dsn'));

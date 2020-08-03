@@ -66,8 +66,8 @@ from
 where 
 	p.grupoprod_id not in (1,15)
 	and p.activo = 1
-	and not(l.nro_lote in (select lotes_romi.nro_lote from lotes_romi))
-	and not(l.nro_lote like 'er%') 
+	and l.activo = 1
+	and l.externo = 0 
 	and exists(select 1 from detalle_compra dc where dc.nro_lote = l.nro_lote and dc.producto_id = l.producto_id) 
 group 
 	by l.id,

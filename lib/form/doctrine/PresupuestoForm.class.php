@@ -28,7 +28,8 @@ class PresupuestoForm extends BasePresupuestoForm
 			$this->validatorSchema['lista_id'] =  new sfValidatorInteger();
 			$this->setDefault('lista_id', 1);
 		} else {
-			$this->widgetSchema['lista_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true));			
+			$this->widgetSchema['lista_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => false));			
+			$this->validatorSchema['lista_id'] =  new sfValidatorInteger(array('required' => false));
 		}
   }
 }

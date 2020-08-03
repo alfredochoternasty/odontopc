@@ -1,3 +1,8 @@
+  public function executeVolver(sfWebRequest $request)
+  {
+		$this->redirect('@<?php echo $this->getUrlForAction('index') ?>');
+  }
+  
   public function executeListImprimirPagina(sfWebRequest $request)
   {
     $this->descargar_pdf(true);

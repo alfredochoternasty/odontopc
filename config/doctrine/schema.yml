@@ -172,8 +172,10 @@ Grupoprod:
     color: {type: string(7)}
     foto: {type: string(255)}
     foto_chica: {type: string(255)}
+    categoria_id: {type: integer(4)}
   relations:
     Productos: {type: many, class: Producto, local: id, foreign: grupoprod_id}
+    Categoria: {type: many, class: Categoria, local: id, foreign: grupoprod_id}
 Producto:
   connection: doctrine
   tableName: producto
@@ -646,6 +648,7 @@ Lote:
     usuario_id: {type: integer(4)}
     zona_id: {type: integer(4)}
     activo: {type: integer(1)}
+    externo: {type: integer(1)}
   relations:
     Compra: {type: one, local: compra_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT} 
@@ -1009,3 +1012,11 @@ PromocionRegalo:
   relations:
     Promocion: {type: one, class: Promocion, local: promocion_id, onDelete: RESTRICT}
     Producto: {type: one, class: Producto, local: producto_id, onDelete: RESTRICT}
+Categoria:
+  connection: doctrine
+  tableName: categoria
+  columns:
+    id: {type: integer(4), primary: true}
+    nombre: {type: string(255)}
+  relations:
+    Grupos: {type: many, class: Grupoprod, local: id, onDelete: RESTRICT}

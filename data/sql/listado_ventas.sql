@@ -23,10 +23,11 @@ from
 	resumen 
 		left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
 		left join producto on detalle_resumen.producto_id = producto.id
+		LEFT JOIN lote ON detalle_resumen.nro_lote = lote.nro_lote
 where 
 	producto.grupoprod_id not in (1,15)
-	and (not(detalle_resumen.nro_lote in (select lotes_romi.nro_lote from lotes_romi)))
-	and detalle_resumen.nro_lote not like 'er%'
+	AND lote.externo = 0
+	AND lote.activo = 1
 UNION ALL
 
 select 
@@ -51,6 +52,8 @@ select
 from 
 	dev_producto
 		left join producto on dev_producto.producto_id = producto.id
+		LEFT JOIN lote ON dev_producto.nro_lote = lote.nro_lote
 where 
 	producto.grupoprod_id not in (1,15)
-	and (not(dev_producto.nro_lote in (select lotes_romi.nro_lote from lotes_romi)))
+	AND lote.externo = 0
+	AND lote.activo = 1

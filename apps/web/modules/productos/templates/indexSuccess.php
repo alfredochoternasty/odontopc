@@ -16,8 +16,10 @@
 	<table width="100%">
 		<tr >
 		  <td width="10%"><img src="<?php echo $base_url ?>/web/uploads/productos/<?php echo $producto->getFoto() ?>" height="70vw" width="70vw"></td>
-		  <td width="55%"><span class="nombre_producto"><?php echo $producto ?></span>
-			<br><span class="precio">$ <?php echo sprintf("%01.2f", $producto->precio_vta * 1.21) ?></span>
+		  <td width="55%">
+			<span class="nombre_producto"><?php echo $producto ?></span><br>
+			<span class="nombre_grupo"><?php echo $producto->getGrupo() ?></span><br>
+			<span class="precio">$ <?php echo sprintf("%01.2f", $producto->precio_vta * 1.21) ?></span>
 		  </td>
 		  <td width="35%" style="text-align:right">
 			<form action="<?php echo url_for('productos/pedir') ?>" onSubmit="return validar(this);">

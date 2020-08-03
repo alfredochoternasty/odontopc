@@ -9,7 +9,6 @@ header{
 	text-align: -webkit-center;
   background-color: #fff;
 	height: 70px;
-	height: 55px;
 	padding: 10px;
 }
 
@@ -21,6 +20,7 @@ header{
 
 #info{
 	margin-right: 5%;
+	margin-top: 10px;
 	float: right;
 	text-align: right;
 	font-family: Arial, sans-serif;

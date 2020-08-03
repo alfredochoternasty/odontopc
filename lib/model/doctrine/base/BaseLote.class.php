@@ -17,6 +17,7 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @property integer $usuario_id
  * @property integer $zona_id
  * @property integer $activo
+ * @property integer $externo
  * @property Compra $Compra
  * @property Producto $Producto
  * @property Zona $Zona
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method integer             getUsuarioId()      Returns the current record's "usuario_id" value
  * @method integer             getZonaId()         Returns the current record's "zona_id" value
  * @method integer             getActivo()         Returns the current record's "activo" value
+ * @method integer             getExterno()        Returns the current record's "externo" value
  * @method Compra              getCompra()         Returns the current record's "Compra" value
  * @method Producto            getProducto()       Returns the current record's "Producto" value
  * @method Zona                getZona()           Returns the current record's "Zona" value
@@ -50,6 +52,7 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method Lote                setUsuarioId()      Sets the current record's "usuario_id" value
  * @method Lote                setZonaId()         Sets the current record's "zona_id" value
  * @method Lote                setActivo()         Sets the current record's "activo" value
+ * @method Lote                setExterno()        Sets the current record's "externo" value
  * @method Lote                setCompra()         Sets the current record's "Compra" value
  * @method Lote                setProducto()       Sets the current record's "Producto" value
  * @method Lote                setZona()           Sets the current record's "Zona" value
@@ -106,6 +109,10 @@ abstract class BaseLote extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('activo', 'integer', 1, array(
+             'type' => 'integer',
+             'length' => 1,
+             ));
+        $this->hasColumn('externo', 'integer', 1, array(
              'type' => 'integer',
              'length' => 1,
              ));

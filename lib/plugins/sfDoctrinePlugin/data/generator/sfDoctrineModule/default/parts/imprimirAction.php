@@ -1,3 +1,8 @@
+  public function executeVolver(sfWebRequest $request)
+  {
+		$this->redirect('@<?php echo $this->getUrlForAction('index') ?>);
+  }
+
   public function executeImprimirPagina(sfWebRequest $request)
   {
     $filtro = new $this->configuration->getFilterForm();

@@ -3,17 +3,17 @@
 <table cellspacing="0" border="1px" width="100%">
   <thead>
 	<tr>
-    <th style="background: #CCC;">Producto</th>
-    <th style="background: #CCC;">Actual</th>
-    <th style="background: #CCC;">Minimo</th>
+    <th style="font-size:15px; background: #CCC;">Producto</th>
+    <th style="font-size:15px; background: #CCC;">Actual</th>
+    <th style="font-size:15px; background: #CCC;">Minimo</th>
   </tr>
   </thead>
   <tbody>
 	<?php foreach ($datos as $i => $dato): ?>
 	  <tr>
-      <td><?php echo utf8_decode($dato->nombre) ?></td>
-      <td><?php echo $dato->stock ?></td>
-      <td><?php echo $dato->minimo_stock ?></td>
+      <td style="font-size:15px;"><?php echo utf8_decode($dato->nombre) ?></td>
+      <td style="font-size:15px; text-align:center;"><?php echo $dato->stock ?></td>
+      <td style="font-size:15px; text-align:center;"><?php echo $dato->minimo_stock ?></td>
 	  </tr>
 	<?php endforeach ?>
   </tbody>

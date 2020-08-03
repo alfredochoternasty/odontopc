@@ -49,8 +49,8 @@
 		
 		if($mostrar_cabecera == 'S'){ ?>
 			<header>
-					<div id="logo" style="margin-left:5%;float:left;">
-						<img width="175px" height="60px" src="<?php echo $base_url?>/web/images/logo_nti.png">
+					<div id="logo">
+						<img width="250px" height="70px" src="<?php echo $base_url?>/web/images/logo_nti.png">
 					</div>
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>

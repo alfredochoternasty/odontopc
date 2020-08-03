@@ -12,8 +12,8 @@ require_once dirname(__FILE__).'/../lib/listvtaGeneratorHelper.class.php';
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class listvtaActions extends autoListvtaActions
-{  
-
+{
+  
   public function executeListVerTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);
     $this->redirect('listvta/index?page=1');
