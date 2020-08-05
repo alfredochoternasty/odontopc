@@ -16,6 +16,7 @@ class productosActions extends sfActions
 		$this->grupo_id = 0;
 		$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,15)')->orderBy('nombre')->execute();
+		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
     $this->setLayout('layout_app');
   }
 	
@@ -35,7 +36,8 @@ class productosActions extends sfActions
 			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		}
 		
-		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->execute();
+		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,15)')->execute();
+		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
     $this->setLayout('layout_app');
 		$this->setTemplate('index');
   }

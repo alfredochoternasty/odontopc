@@ -28,7 +28,7 @@ class PromocionForm extends BasePromocionForm
     $this->widgetSchema['grupos'] = new sfWidgetFormDoctrineChoice(array('model' => 'Grupoprod', 'add_empty' => true));
     $this->validatorSchema['grupos'] = new sfValidatorChoice(array('choices' => $grup, 'multiple' => true, 'min' => 1, 'required' => false));
 
-		$productos = Doctrine::getTable('Producto')->findAll();
+		$productos = Doctrine::getTable('Producto')->getActivos();
 		foreach ($productos as $producto) $prods[] =  $producto->id;
     $this->widgetSchema['productos'] = new sfWidgetFormChoice(array('expanded' => true, 'multiple' => true, 'choices' => array('' => '')));
     $this->validatorSchema['productos'] = new sfValidatorChoice(array('choices' => $prods, 'multiple' => true, 'min' => 1, 'required' => false));

@@ -48,10 +48,53 @@
 #lista_productos{
 	position:fixed;
 	top:95px;
-	height: 77%;
+	height: 75%;
 	overflow: scroll;
 	width:95%;
 	padding:2%;
+}
+
+#promociones{
+	position: fixed;
+	bottom: 0px;
+	height: 30px;
+	overflow: scroll;
+	width: 95%;
+	padding: 2%;
+	background-color: #fff;
+}
+
+#promociones #titulo{
+	height: 40px;
+	font-size: large;
+	font-weight: bold;
+	background-color: #ec9136;
+	color: white;
+	padding: 3px;
+	text-align: center;
+	width:100%;
+}
+
+#cerrar_promo{display:none}
+
+#promociones .promocion{
+	border: 1px solid #cccccc; 
+	margin-bottom:1%;
+	padding:5px;
+}
+
+#promociones .nombre_promo{
+	font-size:14pt;
+	font-family:sans-serif;
+	color: #e20202;
+	font-weight: bold;
+}
+
+#promociones .promo_detalle{
+	font-size:11pt;
+	font-family:sans-serif;
+	color: #999;
+	font-weight: bold;
 }
 
 #lista_productos .productos{
@@ -61,7 +104,7 @@
 }
 
 #lista_productos .nombre_producto{
-	font-size:12pt;
+	font-size:11pt;
 	font-family:sans-serif;
 	color: #0087ca;
 	font-weight: bold;

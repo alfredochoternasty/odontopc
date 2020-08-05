@@ -25,10 +25,24 @@
 			}			
 		</style>
 		<script type="text/javascript">
-			function abrir(){$(".sidemenu").css("left","0");}
-			function cerrar(){$(".sidemenu").css("left","-4000px");}
-			$(document).ready(function(){$("#menu").click(function(e){abrir();});});
-			$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar();});});
+			function abrir_menu(){$(".sidemenu").css("left","0");}
+			function abrir_promo(){
+				$("#promociones").css("bottom","5%");
+				$("#promociones").css("height","60%");
+				$("#abrir_promo").css("display","none");
+				$("#cerrar_promo").css("display","revert");
+			}
+			function cerrar_menu(){$(".sidemenu").css("left","-1000px");}
+			function cerrar_promo(){
+				$("#promociones").css("bottom","0px");
+				$("#promociones").css("height","30px");
+				$("#cerrar_promo").css("display","none");
+				$("#abrir_promo").css("display","revert");
+			}
+			$(document).ready(function(){$("#menu").click(function(e){abrir_menu();});});
+			$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar_menu();});});
+			$(document).ready(function(){$("#abrir_promo").click(function(e){abrir_promo();});});
+			$(document).ready(function(){$("#cerrar_promo").click(function(e){cerrar_promo();});});
 			$(document).ready(function(){$("#grupo_id").on("change",function(e){$("#grupos").submit();});});
 			$(window).load(function(){$("#loader").fadeOut("fast");});
 			function validar(p_form) {

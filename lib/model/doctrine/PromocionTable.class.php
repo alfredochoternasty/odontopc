@@ -16,4 +16,12 @@ class PromocionTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Promocion');
     }
+    
+    public function getVigentes() {
+			$q = Doctrine_Core::getTable('Promocion')->createQuery('q');
+			$q->where('fecha_ini <= curdate()');
+			$q->andWhere('(fecha_fin >= curdate() or fecha_fin is null)');
+      $q->orderBy('fecha_ini desc');
+      return $q->execute();
+    }
 }

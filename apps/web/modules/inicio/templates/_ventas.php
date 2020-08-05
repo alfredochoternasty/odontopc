@@ -35,7 +35,7 @@
 					<td class="sf_admin_text"><?php echo $categoria->nombre ?></td>
 					<td class="sf_admin_text"><?php echo $actual ?></td>
 					<td class="sf_admin_text"><?php echo $anterior ?></td>
-					<td class="sf_admin_text" style="font-weight:bold; color:<?php echo ($porcentaje<0)?'#ff4000':'#00b359'; ?>"><?php echo ($porcentaje<0)?'&#9660; ':'&#9650; '; ?><?php echo number_format(abs($porcentaje), 2).'%'; ?></td>
+					<td class="sf_admin_text" style="font-weight:bold; color:<?php echo ($porcentaje<0)?'#ff4000':'#00b359'; ?>"><?php echo ($porcentaje<0)?'&#9660;':'&#9650;'; ?><?php echo number_format(abs($porcentaje), 2).'%'; ?></td>
 				</tr>
 		<?php } ?>
 	</tbody>

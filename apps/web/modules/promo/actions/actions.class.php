@@ -16,7 +16,7 @@ class promoActions extends autoPromoActions
 	public function executeGetProductosGrupo(sfWebRequest $request)
 	{
 		$gid = $request->getParameter('gid');
-		$productos = Doctrine::getTable('Producto')->findByGrupoprodId($gid);
+		$productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($gid, 1);
 		$prods = array();
 		foreach ($productos as $producto) {
 			$prods[] = '<input type="checkbox" name="promocion[productos][]" value="'.$producto->id.'" id="promocion_productos_'.$producto->id.'">&nbsp;<label for="promocion_productos_'.$producto->id.'">'.$producto->nombre.'</label>';
