@@ -40,7 +40,7 @@ class promoActions extends autoPromoActions
       $promocion = $form->save();
 			
 			// pregunto si hay productos selecionados en la promocion
-			if (count($datos['productos'])) {
+			if (!empty($datos['productos'])) {
 				foreach ($datos['productos'] as $producto_id) {
 					
 					if ($datos['agregar_como'] == 3) // selecciono poner el producto como requisito y como promocion
@@ -61,7 +61,7 @@ class promoActions extends autoPromoActions
 			}
 			
 			$this->getUser()->setFlash('notice', $notice);
-			$this->redirect('promo/edit?id='.$promocion.'#sf_fieldset_agregar_productos');
+			$this->redirect('promo/edit?id='.$promocion->getId().'#sf_fieldset_agregar_productos');
     }else{
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }

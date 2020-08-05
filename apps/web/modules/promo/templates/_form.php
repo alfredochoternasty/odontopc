@@ -44,17 +44,3 @@
 
   </form>
 </div>
-
-<script>
-  $("#promocion_grupos").change(function(event){
-    var id = $("#promocion_grupos").find(':selected').val();
-    $.ajax({
-        url: 'GetProductosGrupo?gid='+id,
-        // dataType: "json",
-        success: function(data) {
-					$(".sf_admin_form_field_productos ul").html(data);
-					
-				},
-      });
-  });
-</script>
