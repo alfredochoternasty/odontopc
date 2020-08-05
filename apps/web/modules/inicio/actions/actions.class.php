@@ -20,7 +20,7 @@ class inicioActions extends autoInicioActions
     
     //borra los pedidos que iniciados y que no tienen detalle
     //el pedido su hay detalle se hace una cabecera, y despues se borra el detalle y la cabecera queda sola
-    $q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
+    // $q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
     
     $modulo_pedidos = $this->getUser()->getVarConfig('modulo_pedidos');
     if ($modulo_pedidos == 'S') {
@@ -47,7 +47,18 @@ class inicioActions extends autoInicioActions
       $q2 = Doctrine::getTable('ClienteSeguimiento')->createQuery('cs')->where('cs.prox_contac_fecha >= \''.date("Y-m-d").'\'')->orderBy('cs.prox_contac_fecha DESC')->limit('20');
       $this->pager3 = $q2->execute();
     }
-
+    
+    $modulo_tablero = 'S'; //$this->getUser()->getVarConfig('modulo_tablero');
+    if ($modulo_tablero == 'S') {
+        $this->ventas = Doctrine::getTable('Categoria')->findAll();
+        $this->clientes = array();
+        $this->clientes['nuevos'] = Doctrine::getTable('Cliente')->getNuevos();
+        $this->clientes['anterior'] = Doctrine::getTable('Cliente')->getNuevosAnt();
+        $this->clientes['total'] = count(Doctrine::getTable('Cliente')->findByActivo(1));
+        $this->tipo_ventas = array();
+        $this->tipo_ventas['ventas'] = Doctrine::getTable('Resumen')->getVentas();
+        $this->tipo_ventas['pedidos'] = Doctrine::getTable('Resumen')->getVentasPedidos();
+    }
   }
 
  	public function executeListImprimirStockMinimo(sfWebRequest $request){ 
@@ -61,5 +72,6 @@ class inicioActions extends autoInicioActions
     $dompdf->stream("stock_mininmo.pdf");    
     return sfView::NONE;
   }
-  
+
+
 }

@@ -1,4 +1,4 @@
-<div style="position:absolute;top:0; right:0; width:45%;">
+<div style="float:left; width:45%;margin:5px;">
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
 		<h1><?php echo __('Productos con Stock por debajo del Mínimo', array(), 'messages') ?></h1>

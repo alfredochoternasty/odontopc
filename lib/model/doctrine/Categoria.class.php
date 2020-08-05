@@ -12,5 +12,82 @@
  */
 class Categoria extends BaseCategoria
 {
+	
+	private function ejecutarSQL($p_sql) {
+			$conexion = Doctrine_Manager::connection();
+			$sentencia = $conexion->execute($p_sql);
+			$sentencia->execute();
+			return $sentencia->fetch(PDO::FETCH_OBJ);
+	}
 
+	public function getCantVendida() {
+		$sql = "
+			select 
+				sum(dr.cantidad) - (
+					select coalesce(sum(dp.cantidad), 0)
+					from 
+						dev_producto dp
+							join producto p2 on dp.producto_id = p2.id
+							join lote l2 on dp.nro_lote = l2.nro_lote
+							join grupoprod g2 on p2.grupoprod_id = g2.id
+							join resumen r on dp.resumen_id = r.id
+					where 
+						g2.categoria_id = g.categoria_id
+						and r.tipofactura_id <> 4
+						and l2.activo = 1
+						and l2.externo = 0
+						and dp.fecha >= date_format(curdate(), '%Y-%m-01')
+				) as cantidad
+			from 
+				resumen r
+					join detalle_resumen dr on r.id = dr.resumen_id
+					join producto p on dr.producto_id = p.id
+					join grupoprod g on p.grupoprod_id = g.id
+					JOIN lote l ON dr.nro_lote = l.nro_lote
+			where 
+				g.categoria_id = ".$this->id."
+				and r.tipofactura_id <> 4
+				AND l.externo = 0
+				AND l.activo = 1 
+				and r.fecha >= date_format(curdate(), '%Y-%m-01')
+		";
+		$resultado = $this->ejecutarSQL($sql);
+		return $resultado->cantidad;
+	}
+
+	public function getCantVendidaAnt() {
+		$sql = "
+			select 
+				sum(dr.cantidad) - (
+					select coalesce(sum(dp.cantidad), 0)
+					from 
+						dev_producto dp
+							join producto p2 on dp.producto_id = p2.id
+							join lote l2 on dp.nro_lote = l2.nro_lote
+							join grupoprod g2 on p2.grupoprod_id = g2.id
+							join resumen r on dp.resumen_id = r.id
+					where 
+						g2.categoria_id = g.categoria_id
+						and r.tipofactura_id <> 4
+						and l2.activo = 1
+						and l2.externo = 0
+						and dp.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
+				) as cantidad
+			from 
+				resumen r
+					join detalle_resumen dr on r.id = dr.resumen_id
+					join producto p on dr.producto_id = p.id
+					join grupoprod g on p.grupoprod_id = g.id
+					JOIN lote l ON dr.nro_lote = l.nro_lote
+			where 
+				g.categoria_id = ".$this->id."
+				and r.tipofactura_id <> 4
+				AND l.externo = 0
+				AND l.activo = 1 
+				and r.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
+		";
+		$resultado = $this->ejecutarSQL($sql);
+		return $resultado->cantidad;
+	}
+	
 }

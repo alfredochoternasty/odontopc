@@ -105,4 +105,25 @@ class ClienteTable extends Doctrine_Table
 		return $st->fetchAll();
 	}
 	
+	public function getNuevos() {
+		$sql = "select count(id) as cantidad from cliente where fecha_alta >= date_format(curdate(), '%Y-%m-01')";
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetch(PDO::FETCH_OBJ);
+		return $resultado->cantidad;
+	}
+	
+	public function getNuevosAnt() {
+		$sql = "
+			select count(id) as cantidad 
+			from cliente 
+			where fecha_alta between 
+												date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01')
+												and last_day(date_sub(curdate(), interval 1 month))
+		";
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetch(PDO::FETCH_OBJ);
+		return $resultado->cantidad;
+	}
 }

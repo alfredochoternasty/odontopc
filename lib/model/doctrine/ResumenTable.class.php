@@ -66,5 +66,27 @@ class ResumenTable extends Doctrine_Table
 			->orderBy('fecha desc, nro_factura desc');
 			$result = $query->execute();
 			return $result;
-		}		
+		}
+		
+	public function getVentas() {
+		$sql = "select count(id) as cantidad from resumen where fecha >= date_format(curdate(), '%Y-%m-01')";
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetch(PDO::FETCH_OBJ);
+		return $resultado->cantidad;
+	}
+	
+	public function getVentasPedidos() {
+		$sql = "
+			select count(id) as cantidad 
+			from resumen 
+			where 
+				pedido_id is not null
+				and fecha >= date_format(curdate(), '%Y-%m-01')
+		";
+		$con = Doctrine_Manager::getInstance()->connection();
+		$st = $con->execute($sql);
+		$resultado = $st->fetch(PDO::FETCH_OBJ);
+		return $resultado->cantidad;
+	}
 }

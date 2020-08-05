@@ -1,4 +1,4 @@
-<div style="position:absolute;top:0; left:0; width:45%;">
+<div style="float:left; width:45%;margin:5px;">
   <table>
     <caption class="fg-toolbar ui-widget-header ui-corner-top">
       <h1>Pedidos Nuevos</h1>
@@ -14,6 +14,16 @@
       </tr>
     </thead>
 
+	<tfoot>
+		<tr>
+			<th colspan="5">
+				<div class="ui-state-default ui-th-column ui-corner-bottom">
+					
+				</div>
+			</th>
+		</tr>
+	</tfoot>
+  
     <tbody>
       <?php foreach ($pager2 as $i => $pedido): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">

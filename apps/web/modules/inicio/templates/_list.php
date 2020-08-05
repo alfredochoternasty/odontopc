@@ -13,6 +13,10 @@
 			$modulo_pedidos = $sf_user->getVarConfig('modulo_pedidos');
 			if (!empty($pager2) && $modulo_pedidos == 'S' && $sf_user->hasCredential('Pedidos Nuevos')) 
 				include_partial('ped_pend', array('pager2' => $pager2));
+			
+			include_partial('ventas', array('ventas' => $ventas));
+			include_partial('clientes', array('clientes' => $clientes));
+			include_partial('tipo_ventas', array('tipo_ventas' => $tipo_ventas));
 		}
 	} else {
 		echo '<div style="width:100%;margin-top:10%;text-align:center;"><img src="'.$base_url.'/web/images/home.png"></div>';

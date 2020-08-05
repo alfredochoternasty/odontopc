@@ -15,7 +15,7 @@ class productosActions extends sfActions
 		$this->productos = Doctrine::getTable('Producto')->getActivos();
 		$this->grupo_id = 0;
 		$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
-		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,6,15,16)')->orderBy('nombre')->execute();
+		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,15)')->orderBy('nombre')->execute();
     $this->setLayout('layout_app');
   }
 	
