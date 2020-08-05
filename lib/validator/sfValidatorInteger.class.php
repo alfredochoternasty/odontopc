@@ -44,7 +44,7 @@ class sfValidatorInteger extends sfValidatorBase
     $this->addOption('min');
     $this->addOption('max');
 
-    $this->setMessage('invalid', '"%value%" is not an integer.');
+    $this->setMessage('invalid', '"%value%" no es un numero entero.');
   }
 
   /**

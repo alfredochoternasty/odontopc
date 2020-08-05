@@ -459,6 +459,7 @@ class detresActions extends autoDetresActions
 						$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
 					} elseif ($res['resultado'] == 'A') {
 						$afip_estado = 1;
+						$resumen->setFecha(date("Y-m-d"));
 						$resumen->setAfipCae($res['cae']);
 						$resumen->setNroFactura($nuevo_nro);
 						$resumen->setPtoVta($ptovta);

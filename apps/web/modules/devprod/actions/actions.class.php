@@ -286,6 +286,7 @@ class devprodActions extends autoDevprodActions
 					$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
 				} elseif ($res['resultado'] == 'A') {
 						$afip_estado = 1;
+						$dev->setFecha(date("Y-m-d"));
 						$dev->setAfipCae($res['cae']);
 						$dev->setNroFactura($nuevo_nro);
 						$dev->setPtoVta($resumen->pto_vta);

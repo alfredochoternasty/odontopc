@@ -619,3 +619,5 @@ update cliente
 set fecha_alta = (select min(fecha) from resumen where resumen.cliente_id = cliente.id)
 
 SET @tu_cliente = 1;
+
+UPDATE ventas.dev_producto SET fecha = '2020-07-03' WHERE (id = '1018');
