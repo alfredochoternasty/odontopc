@@ -15,19 +15,21 @@ abstract class BaseGrupoprodForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'         => new sfWidgetFormInputHidden(),
-      'nombre'     => new sfWidgetFormInputText(),
-      'color'      => new sfWidgetFormInputText(),
-      'foto'       => new sfWidgetFormInputText(),
-      'foto_chica' => new sfWidgetFormInputText(),
+      'id'           => new sfWidgetFormInputHidden(),
+      'nombre'       => new sfWidgetFormInputText(),
+      'color'        => new sfWidgetFormInputText(),
+      'foto'         => new sfWidgetFormInputText(),
+      'foto_chica'   => new sfWidgetFormInputText(),
+      'categoria_id' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'         => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'nombre'     => new sfValidatorString(array('max_length' => 50)),
-      'color'      => new sfValidatorString(array('max_length' => 7, 'required' => false)),
-      'foto'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'foto_chica' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'nombre'       => new sfValidatorString(array('max_length' => 50)),
+      'color'        => new sfValidatorString(array('max_length' => 7, 'required' => false)),
+      'foto'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'foto_chica'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'categoria_id' => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('grupoprod[%s]');

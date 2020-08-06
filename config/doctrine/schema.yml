@@ -327,7 +327,7 @@ DetalleResumen:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
-    Lote: {type: one, local: nro_lote, onDelete: RESTRICT}
+    Lote: {type: one, local: nro_lote, foreign: nro_lote, onDelete: RESTRICT}
     Lista: {type: one, class: ListaPrecio, local: lista_id, foreign: id, onDelete: RESTRICT}
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Lote: {type: one, local: lote_id, onDelete: RESTRICT}

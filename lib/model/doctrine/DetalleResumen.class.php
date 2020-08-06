@@ -12,6 +12,15 @@
  */
 class DetalleResumen extends BaseDetalleResumen
 {
+	public function setUp()
+  {
+		parent::setUp();
+		$this->hasOne('Lote', array(
+		 'local' => 'nro_lote',
+		 'foreign' => 'nro_lote',
+		 'onDelete' => 'RESTRICT'));
+	}
+	
   public function SimboloMoneda(){
     return $this->getMoneda()->getSimbolo();
   }

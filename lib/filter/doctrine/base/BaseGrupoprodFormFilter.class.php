@@ -13,17 +13,19 @@ abstract class BaseGrupoprodFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'nombre'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'color'      => new sfWidgetFormFilterInput(),
-      'foto'       => new sfWidgetFormFilterInput(),
-      'foto_chica' => new sfWidgetFormFilterInput(),
+      'nombre'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'color'        => new sfWidgetFormFilterInput(),
+      'foto'         => new sfWidgetFormFilterInput(),
+      'foto_chica'   => new sfWidgetFormFilterInput(),
+      'categoria_id' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'nombre'     => new sfValidatorPass(array('required' => false)),
-      'color'      => new sfValidatorPass(array('required' => false)),
-      'foto'       => new sfValidatorPass(array('required' => false)),
-      'foto_chica' => new sfValidatorPass(array('required' => false)),
+      'nombre'       => new sfValidatorPass(array('required' => false)),
+      'color'        => new sfValidatorPass(array('required' => false)),
+      'foto'         => new sfValidatorPass(array('required' => false)),
+      'foto_chica'   => new sfValidatorPass(array('required' => false)),
+      'categoria_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('grupoprod_filters[%s]');
@@ -43,11 +45,12 @@ abstract class BaseGrupoprodFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'         => 'Number',
-      'nombre'     => 'Text',
-      'color'      => 'Text',
-      'foto'       => 'Text',
-      'foto_chica' => 'Text',
+      'id'           => 'Number',
+      'nombre'       => 'Text',
+      'color'        => 'Text',
+      'foto'         => 'Text',
+      'foto_chica'   => 'Text',
+      'categoria_id' => 'Number',
     );
   }
 }

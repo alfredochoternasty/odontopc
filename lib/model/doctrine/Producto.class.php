@@ -89,6 +89,8 @@ class Producto extends BaseProducto
       $obj_lote->setCompraId($event['object']->compra_id);
       $obj_lote->setUsuario($event['object']->usuario);
       $obj_lote->setZonaId($event['object']->getCompra()->zona_id);
+      $obj_lote->setActivo(1);
+      $obj_lote->setExterno(0);
       $obj_lote->save();			
 		}
   }
