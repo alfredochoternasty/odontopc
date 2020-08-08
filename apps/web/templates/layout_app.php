@@ -27,8 +27,8 @@
 		<script type="text/javascript">
 			function abrir_menu(){$(".sidemenu").css("left","0");}
 			function abrir_promo(){
-				$("#promociones").css("bottom","5%");
-				$("#promociones").css("height","60%");
+				$("#promociones").css("bottom","0px");
+				$("#promociones").css("height","87%");
 				$("#abrir_promo").css("display","none");
 				$("#cerrar_promo").css("display","revert");
 			}
