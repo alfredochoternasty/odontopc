@@ -1,0 +1,59 @@
+producto
+	+ get_activos
+	+ get_productos_grupo
+	
+lista_precio
+	+ get_precio_producto
+
+cliente
+	+ getIdentidad
+	+ getContacto
+	+ getCondfiscal
+	+ getCuit
+	+ get_saldo
+	+ get_lista_precio
+	+ GenerarUsuario
+	+ setEmail
+	+ getEmail
+
+zona
+	+ getDescuentoProducto
+
+cta_cte
+	+ enviarMail
+
+cobro
+	+ saldarFactura
+	+ enviarMail
+	
+resumen
+	+ getFecha
+	+ getSubtotal
+	+ getIva
+	+ getTotal
+	+ getTotalCobrado
+	+ getTotalDevuelto
+	+ enviarMail
+
+detalle_resumen
+	+ getPrecio
+	+ getSubtotal
+	+ getIva
+	+ getTotal
+	+ producto_cantidad_vendido
+
+dev_producto
+	+ getFecha
+	+ getPrecio
+	+ getSubtotal
+	+ getIva
+	+ getTotal
+	+ enviarMail
+	
+pedido
+	+ getTotal
+	+ enviarMailCliente
+	+ enviarMailVendedor
+
+detalle_pedido
+	+ getTotal

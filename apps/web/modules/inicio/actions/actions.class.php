@@ -21,14 +21,14 @@ class inicioActions extends autoInicioActions
     //borra los pedidos que iniciados y que no tienen detalle
     //el pedido su hay detalle se hace una cabecera, y despues se borra el detalle y la cabecera queda sola
     // $q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
-    
+    $zona_id = $this->getUser()->getGuardUser()->getZonaId();
     $modulo_pedidos = $this->getUser()->getVarConfig('modulo_pedidos');
     if ($modulo_pedidos == 'S') {
       $q = Doctrine::getTable('Pedido')
         ->createQuery('p')
         ->andWhere('p.vendido = 0')
         ->andWhere('p.finalizado = 1')
-        ->andWhere('p.zona_id = ?', $this->getUser()->getGuardUser()->getZonaId())
+        ->andWhere('p.zona_id = ?', $zona_id)
         ->orderBy('p.fecha ASC');
         
       if ($this->getUser()->getGuardUser()->es_cliente){
@@ -52,13 +52,14 @@ class inicioActions extends autoInicioActions
     if ($modulo_tablero == 'S') {
         $this->ventas = Doctrine::getTable('Categoria')->findAll();
         $this->clientes = array();
-        $this->clientes['nuevos'] = Doctrine::getTable('Cliente')->getNuevos();
-        $this->clientes['anterior'] = Doctrine::getTable('Cliente')->getNuevosAnt();
-        $this->clientes['total'] = count(Doctrine::getTable('Cliente')->findByActivo(1));
+        $this->clientes['nuevos'] = Doctrine::getTable('Cliente')->getNuevos($zona_id);
+        $this->clientes['anterior'] = Doctrine::getTable('Cliente')->getNuevosAnt($zona_id);
+        $this->clientes['total'] = count(Doctrine::getTable('Cliente')->findByActivoAndZonaId(1, $zona_id));
         $this->tipo_ventas = array();
-        $this->tipo_ventas['ventas'] = Doctrine::getTable('Resumen')->getVentas();
-        $this->tipo_ventas['pedidos'] = Doctrine::getTable('Resumen')->getVentasPedidos();
+        $this->tipo_ventas['ventas'] = Doctrine::getTable('Resumen')->getVentas($zona_id);
+        $this->tipo_ventas['pedidos'] = Doctrine::getTable('Resumen')->getVentasPedidos($zona_id);
     }
+    $this->zona_id = $zona_id;
   }
 
  	public function executeListImprimirStockMinimo(sfWebRequest $request){ 

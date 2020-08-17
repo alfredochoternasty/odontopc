@@ -14,7 +14,7 @@
 			if (!empty($pager2) && $modulo_pedidos == 'S' && $sf_user->hasCredential('Pedidos Nuevos')) 
 				include_partial('ped_pend', array('pager2' => $pager2));
 			
-			include_partial('ventas', array('ventas' => $ventas));
+			include_partial('ventas', array('ventas' => $ventas, 'zona_id' => $zona_id));
 			include_partial('clientes', array('clientes' => $clientes));
 			include_partial('tipo_ventas', array('tipo_ventas' => $tipo_ventas));
 		}

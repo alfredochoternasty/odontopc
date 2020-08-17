@@ -19,19 +19,25 @@ class carritoActions extends sfActions
 			foreach ($this->detalle_pedido as $det) {
 				$this->total_pedido += $det->total;
 			}
+		} else {
+			$this->redirect('@producto2');
 		}
 		$this->setLayout('layout_app');
   }
 
   public function executeModificar(sfWebRequest $request)
   {
-		$detalle_id = $request->getParameter('detalle_id');
-		$cantidad = $request->getParameter('cantidad');
-		$detalle = Doctrine::getTable('DetallePedido')->find($detalle_id);
-		$detalle->cantidad = $cantidad;
-		$detalle->total = $cantidad * $detalle->precio;
-		$detalle->save();
-		$this->redirect('@carrito');
+		if ($request->haveParameter('detalle_id')) {
+			$detalle_id = $request->getParameter('detalle_id');
+			$cantidad = $request->getParameter('cantidad');
+			$detalle = Doctrine::getTable('DetallePedido')->find($detalle_id);
+			$detalle->cantidad = $cantidad;
+			$detalle->total = $cantidad * $detalle->precio;
+			$detalle->save();
+			$this->redirect('@carrito');
+		} else {
+			$this->redirect('@producto2');
+		}
   }
 
   public function executeFinalizar(sfWebRequest $request)
@@ -55,8 +61,10 @@ class carritoActions extends sfActions
 				$this->getUser()->setAttribute('pid', 0);
 				$pedido->save();
 			}
+			$this->setLayout('layout_app');
+		} else {
+			$this->redirect('@producto2');
 		}
-		$this->setLayout('layout_app');
   }
 
 
@@ -81,8 +89,10 @@ class carritoActions extends sfActions
     if (!empty($this->getUser()->getAttribute('pid'))) {
 			$pedido = Doctrine::getTable('Pedido')->find($this->getUser()->getAttribute('pid'));
 			$this->domicilios = $pedido->getCliente()->getDomicilios();
+			$this->setLayout('layout_app');
+		} else {
+			$this->redirect('@producto2');
 		}
-		$this->setLayout('layout_app');
   }
 	
   public function executeDomicilio(sfWebRequest $request)
@@ -98,8 +108,10 @@ class carritoActions extends sfActions
 			$direccion->cliente_id = $pedido->cliente_id;
 			$direccion->direccion = $request->getParameter('domicilio');
 			$direccion->save();
+			$this->redirect('carrito/confirmar');
+		} else {
+			$this->redirect('@producto2');
 		}
-		$this->redirect('carrito/confirmar');
   }
 
   public function executeNew(sfWebRequest $request)

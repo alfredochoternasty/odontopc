@@ -1,7 +1,7 @@
 <div style="float:left; width:45%;margin:5px;">
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
-		<h1>Ventas comparadas con mismo dia del mes anterior</h1>
+		<h1>Ventas mes actual comparadas con mismo dia mes anterior</h1>
 	</caption>
 
 	<thead class="ui-widget-header">
@@ -27,8 +27,8 @@
 		<?php 
 			foreach ($ventas as $i => $categoria) {
 				$odd = fmod(++$i, 2) ? ' odd' : '';
-				$actual = $categoria->getCantVendida();
-				$anterior = $categoria->getCantVendidaAnt();
+				$actual = $categoria->getCantVendida($zona_id);
+				$anterior = $categoria->getCantVendidaAnt($zona_id);
 				$porcentaje = ($actual*100/$anterior)-100;
 		?>
 				<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">

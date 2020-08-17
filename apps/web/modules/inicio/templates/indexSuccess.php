@@ -10,6 +10,7 @@
 			if (!empty($ventas)) $parametros['ventas'] = $ventas;
 			if (!empty($clientes)) $parametros['clientes'] = $clientes;
 			if (!empty($tipo_ventas)) $parametros['tipo_ventas'] = $tipo_ventas;
+			$parametros['zona_id'] = $zona_id;
 			include_partial('inicio/list', $parametros);
 		?>
     <?php endif; ?>

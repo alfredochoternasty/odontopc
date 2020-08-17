@@ -1,3 +1,12 @@
+categoria:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Categoria
+    module:               catprod
+    prefix_path:          /catprod
+    column:               id
+    with_wildcard_routes: true
+
 promocion:
   class: sfDoctrineRouteCollection
   options:

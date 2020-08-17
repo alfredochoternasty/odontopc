@@ -613,11 +613,211 @@ ADD COLUMN fecha_alta DATE NULL AFTER zona_id;
 SET @tu_cliente = 0;
 
 update cliente 
-set fecha_alta = (select date_format(log_fecha, '%Y-%m') from log_cliente where cliente.id = log_cliente.id and log_operacion = 'INSERT');
-
-update cliente 
-set fecha_alta = (select min(fecha) from resumen where resumen.cliente_id = cliente.id)
+set fecha_alta = (select min(fecha) from resumen where resumen.cliente_id = cliente.id);
 
 SET @tu_cliente = 1;
 
 UPDATE ventas.dev_producto SET fecha = '2020-07-03' WHERE (id = '1018');
+
+DROP VIEW listado_ventas;
+CREATE VIEW listado_ventas AS 
+select 
+	detalle_resumen.id AS id,
+	resumen.id AS resumen_id,
+	resumen.tipofactura_id AS tipofactura_id,
+	resumen.fecha AS fecha,
+	resumen.cliente_id AS cliente_id,
+	resumen.zona_id AS zona_id,
+	detalle_resumen.producto_id AS producto_id,
+	producto.grupoprod_id AS grupoprod_id,
+	producto.orden_grupo AS orden_grupo,
+	producto.nombre AS nombre,
+	detalle_resumen.nro_lote AS nro_lote,
+	detalle_resumen.cantidad AS cantidad,
+	detalle_resumen.bonificados AS bonificados,
+	detalle_resumen.precio AS precio,
+	detalle_resumen.iva AS iva,
+	detalle_resumen.sub_total AS sub_total,
+	detalle_resumen.total AS total,
+	detalle_resumen.det_remito_id AS det_remito_id
+from 
+	resumen 
+		left join detalle_resumen on resumen.id = detalle_resumen.resumen_id
+		left join producto on detalle_resumen.producto_id = producto.id
+		LEFT JOIN lote ON detalle_resumen.nro_lote = lote.nro_lote
+where 
+	producto.grupoprod_id not in (1,15)
+	AND lote.externo = 0
+	AND lote.activo = 1
+UNION ALL
+select 
+	dev_producto.id AS id,
+	dev_producto.resumen_id AS resumen_id,
+	dev_producto.tipofactura_id AS tipofactura_id,
+	dev_producto.fecha AS fecha,
+	dev_producto.cliente_id AS cliente_id,
+	dev_producto.zona_id AS zona_id,
+	dev_producto.producto_id AS producto_id,
+	producto.grupoprod_id AS grupoprod_id,
+	producto.orden_grupo AS orden_grupo,
+	producto.nombre AS nombre,
+	dev_producto.nro_lote AS nro_lote,
+	dev_producto.cantidad * -1 AS cantidad,
+	0 AS bonificados,
+	dev_producto.precio * -1 AS precio,
+	dev_producto.iva * -1 AS iva,
+	0 AS sub_total,
+	dev_producto.total * -1 AS total,
+	null
+from 
+	dev_producto
+		left join producto on dev_producto.producto_id = producto.id
+		LEFT JOIN lote ON dev_producto.nro_lote = lote.nro_lote
+where 
+	producto.grupoprod_id not in (1,15)
+	AND lote.externo = 0
+	AND lote.activo = 1;
+
+drop view control_stock;
+create view control_stock as
+select 
+	l.id AS id,
+	l.producto_id AS producto_id,
+	p.nombre AS nombre,
+	p.grupoprod_id AS grupoprod_id,
+	l.nro_lote AS nro_lote,
+	l.zona_id AS zona_id,
+	(
+		select sum(dc.cantidad) 
+		from 
+			detalle_compra dc 
+				join compra on dc.compra_id = compra.id 
+		where dc.producto_id = l.producto_id and dc.nro_lote = l.nro_lote and l.zona_id = compra.zona_id and dc.nro_lote not like 'er%'
+	) AS comprados,
+	(
+		select (sum(lv.cantidad) + sum(lv.bonificados))
+		from listado_ventas lv 
+		where 
+			lv.nro_lote = l.nro_lote 
+			and lv.cantidad >= 0
+			and lv.producto_id = l.producto_id
+			and lv.zona_id = l.zona_id 
+			and (
+						(isnull(lv.det_remito_id) and lv.zona_id = 1) 
+						or (lv.det_remito_id is not null and lv.zona_id <> 1)
+					)
+	) AS vendidos,
+	(
+		select 
+			sum(dp2.cantidad) 
+		from 
+			dev_producto dp2 
+				join cliente c on dp2.cliente_id = c.id
+		where 
+			c.zona_id = l.zona_id 
+			and dp2.producto_id = l.producto_id
+			and dp2.nro_lote = l.nro_lote
+			and exists(
+							select 1 
+							from resumen r2 
+								join detalle_resumen dr2 on r2.id = dr2.resumen_id
+							where r2.id = dp2.resumen_id
+										and dr2.producto_id = l.producto_id
+										and dr2.nro_lote = l.nro_lote
+										and isnull(dr2.det_remito_id)
+			)
+	) AS cant_dev,
+	l.stock AS stock_guardado,
+	p.minimo_stock AS minimo_stock,
+	(
+		SELECT 
+			case when max(r1.fecha) > COALESCE((select max(dp1.fecha) FROM dev_producto dp1 where dp1.producto_id = l.producto_id and dp1.nro_lote = l.nro_lote), '1900-01-01')
+				then max(r1.fecha) 
+				else (select max(dp1.fecha) FROM dev_producto dp1 where dp1.producto_id = l.producto_id and dp1.nro_lote = l.nro_lote)
+			end
+		from resumen r1 
+			join detalle_resumen dr on r1.id = dr.resumen_id			
+		where dr.producto_id = l.producto_id and dr.nro_lote = l.nro_lote
+	) AS ult_venta 
+from 
+	lote l 
+		join producto p on l.producto_id = p.id
+		join grupoprod gp on p.grupoprod_id = gp.id
+where 
+	p.grupoprod_id not in (1,15)
+	and p.activo = 1
+	and l.activo = 1
+	and l.externo = 0 
+	and exists(select 1 from detalle_compra dc where dc.nro_lote = l.nro_lote and dc.producto_id = l.producto_id) 
+group 
+	by l.id,
+	l.producto_id,
+	p.grupoprod_id,
+	l.nro_lote,
+	l.zona_id,
+	l.stock
+order by 
+	p.orden_grupo,
+	p.nombre,
+	l.nro_lote;
+	
+DROP VIEW listado_compras;
+CREATE VIEW listado_compras AS 
+select
+  detalle_compra.id,
+  detalle_compra.compra_id,
+  compra.fecha,
+  compra.proveedor_id,
+  detalle_compra.producto_id,
+  detalle_compra.precio,
+  detalle_compra.cantidad,
+  detalle_compra.total,
+  producto.grupoprod_id,
+  detalle_compra.nro_lote,
+	compra.zona_id
+from
+  compra
+    left join detalle_compra on compra.id = detalle_compra.compra_id
+    left join producto on detalle_compra.producto_id = producto.id
+    LEFT JOIN lote ON detalle_compra.nro_lote = lote.nro_lote
+WHERE
+	lote.externo = 0
+	AND lote.activo = 1
+order by
+  producto.grupoprod_id, producto.orden_grupo;
+	
+DROP VIEW producto_traza;
+CREATE VIEW producto_traza AS
+SELECT
+	dr.id AS id,
+	r.id AS resumen_id,
+	r.fecha AS fecha_venta,
+	r.cliente_id,	
+	dr.producto_id,
+	replace(dr.nro_lote,	'T ',	'') AS nro_lote,
+	l.fecha_vto,
+	sum(dr.cantidad) + sum(dr.bonificados) as vendidos,
+	(select sum(dp.cantidad) from dev_producto dp where dr.resumen_id = dp.resumen_id and dr.nro_lote = dp.nro_lote) AS devueltos
+FROM
+	detalle_resumen dr
+		join resumen r on dr.resumen_id = r.id
+		join lote l on dr.producto_id = l.producto_id and dr.nro_lote = l.nro_lote and r.zona_id = l.zona_id
+WHERE 
+	l.externo = 0
+	AND l.activo = 1
+	and r.tipofactura_id <> 4
+group by
+	r.id,
+	r.fecha,
+	r.cliente_id,	
+	dr.producto_id,
+	dr.nro_lote,
+	l.fecha_vto
+HAVING 
+	vendidos > devueltos 
+	or devueltos is null;
+	
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`, `padre`) VALUES ('340', 'Comisiones', '@Comisiones Menu', '0');
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '341', `padre` = '340' WHERE (`id` = '52');
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '342', `padre` = '340' WHERE (`id` = '53');
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '343', `padre` = '340' WHERE (`id` = '54');

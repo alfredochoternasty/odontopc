@@ -14,6 +14,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfDoctrineGuardPlugin');
     $this->enablePlugins('sfFormExtraPlugin');
     $this->enablePlugins('sfImageTransformPlugin');
+    $this->enablePlugins('sfJPGraphPlugin');
     
     sfValidatorBase::setDefaultMessage('required','Este campo debe tener un valor');
     sfValidatorBase::setDefaultMessage('invalid','El valor para el campo no es v&aacute;lido');
