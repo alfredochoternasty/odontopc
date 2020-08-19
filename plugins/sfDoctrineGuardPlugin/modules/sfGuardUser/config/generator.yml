@@ -13,7 +13,7 @@ generator:
     config:
       fields:
         password: { label: "Clave" }
-        password_again: { label: "Clave (denuevo)" }
+        password_again: { label: "Confirmar Clave" }
       list:
         table_method: retrieveByUsername
         title: Usuarios

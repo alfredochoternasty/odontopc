@@ -5,5 +5,8 @@
 	<input class="form-componente user_icon" type="text" name="signin[username]" placeholder="Usuario">
 	<input class="form-componente pass_icon" type="password" name="signin[password]" placeholder="Clave">
   <?php echo $form['_csrf_token']; ?>
-	<button class="boton-login" type="submit">Ingresar</button>
+	<div id="olvido">
+		<a href="<?php echo url_for('@cliente_registro') ?>">Olvid&eacute; mi clave</a>
+		<button class="boton-login" type="submit">Ingresar</button><br>
+	</div>
 </form>

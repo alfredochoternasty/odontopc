@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Cliente
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cliente_registro
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        dni: {help: solo números y sin puntos}
+        celular: {help: solo números}
+      list:    ~
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:
+        title: Por favor ingrese sus datos
+        display: [dni, apellido, nombre, domicilio, celular, email]
+        actions:
+          _save: ~
+          _list: ~

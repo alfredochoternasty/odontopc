@@ -32,7 +32,8 @@ class cliActions extends autoCliActions
     
 		$correo = trim($cliente->email);
 		$usuario = $cliente->dni;
-		$clave = 'abc123456';
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$clave = substr(str_shuffle($chars),0,8);
     
 		if(empty($usuario)){
       $this->getUser()->setFlash('error', 'El cliente debe tener cargado un DNI');

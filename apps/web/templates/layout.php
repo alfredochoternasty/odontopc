@@ -85,7 +85,7 @@
 							$bandera = 1;
 						}
 						if ($r['name'] == 'Cambiar Clave') {
-							echo "<li>".link_to($r['name'], "sfGuardUser/edit?id=".$id)."</li>";
+							echo "<li>".link_to($r['name'], "sfGuardUser/clave?id=".$id)."</li>";
 						} else {
 							if ($r['padre'] > 0 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
 								echo "<li>".link_to($r['name'], $r['description'])."</li>";
