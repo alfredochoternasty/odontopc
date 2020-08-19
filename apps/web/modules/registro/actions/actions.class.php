@@ -41,7 +41,7 @@ class registroActions extends autoRegistroActions
 			$mensaje->setSubject('NTI Sistema de Pedidos');
 			$headers = $mensaje->getHeaders();
 			$headers->addTextHeader('Content-Type', 'text/html');
-			$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente));			
+			$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));
 			$mensaje->setBody($msj, "text/html");
 			$this->getMailer()->send($mensaje);   
 			
