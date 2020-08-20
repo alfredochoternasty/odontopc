@@ -821,3 +821,7 @@ INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`, `padre`
 UPDATE `ventas`.`sf_guard_permission` SET `id` = '341', `padre` = '340' WHERE (`id` = '52');
 UPDATE `ventas`.`sf_guard_permission` SET `id` = '342', `padre` = '340' WHERE (`id` = '53');
 UPDATE `ventas`.`sf_guard_permission` SET `id` = '343', `padre` = '340' WHERE (`id` = '54');
+
+ALTER TABLE `ventas`.`cliente` ADD COLUMN `nro_matricula` VARCHAR(255) NULL;
+ALTER TABLE `ventas`.`cliente` ADD COLUMN `foto_matricula` VARCHAR(255) NULL;
+ALTER TABLE `ventas`.`localidad` ADD COLUMN `codigo_postal` VARCHAR(255) NULL;

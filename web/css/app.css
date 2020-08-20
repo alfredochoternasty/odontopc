@@ -260,3 +260,11 @@ a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
 .monto {text-align:right; font-weight: bold; font-size:12pt;}
 .monto_positivo {color:#ff0040}
 .monto_negativo {color:#008c46}
+
+#form_sf_guard_user .sf_admin_form_row{
+	margin: 10px;
+}
+
+#form_sf_guard_user ul{
+	list-style-type: none;
+}

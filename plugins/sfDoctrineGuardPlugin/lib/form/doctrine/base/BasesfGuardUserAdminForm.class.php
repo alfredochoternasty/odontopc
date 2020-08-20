@@ -36,6 +36,6 @@ class BasesfGuardUserAdminForm extends BasesfGuardUserForm
 
     $this->widgetSchema->moveField('password_again', 'after', 'password');
 
-    $this->mergePostValidator(new sfValidatorSchemaCompare('password', sfValidatorSchemaCompare::EQUAL, 'password_again', array(), array('invalid' => 'The two passwords must be the same.')));
+    $this->mergePostValidator(new sfValidatorSchemaCompare('password', sfValidatorSchemaCompare::EQUAL, 'password_again', array(), array('invalid' => 'Ambas claves deben ser iguales.')));
   }
 }

@@ -27,7 +27,7 @@ class carritoActions extends sfActions
 
   public function executeModificar(sfWebRequest $request)
   {
-		if ($request->haveParameter('detalle_id')) {
+		if ($request->hasParameter('detalle_id')) {
 			$detalle_id = $request->getParameter('detalle_id');
 			$cantidad = $request->getParameter('cantidad');
 			$detalle = Doctrine::getTable('DetallePedido')->find($detalle_id);

@@ -33,7 +33,7 @@
 </div>
 <?php endforeach; ?>
 </div>
-<?php if (!empty($promociones)): ?>
+<?php if (!empty(count($promociones))): ?>
 	<div id="promociones">
 	<table id="titulo">
 		<tr>
