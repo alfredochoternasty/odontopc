@@ -3,7 +3,7 @@ all:
     class: sfDoctrineDatabase
     param:
       # dsn: 'mysql:host=localhost;dbname=ntiimplantes_db'
-      dsn: 'mysql:host=localhost;dbname=ventas'
+      dsn: 'mysql:host=localhost;dbname=ventas_2'
       username: root
       password: 
       attributes:

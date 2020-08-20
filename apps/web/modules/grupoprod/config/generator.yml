@@ -18,14 +18,16 @@ generator:
       list:
         table_method: retrieveProds
         title: Administracion de Grupos de Productos
-        display: [nombre, _foto]
+        display: [nombre, Categoria, _foto]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
+        actions:
+          _new: {label: Nuevo}
       filter:  ~
       form:
         display:
-          Grupo: [nombre, foto]
+          Grupo: [nombre, categoria_id, foto]
           Precio de Productos: [operacion, precio_vta, iva, total, porcentaje, productos]
       edit:
         title: Modificar Grupo

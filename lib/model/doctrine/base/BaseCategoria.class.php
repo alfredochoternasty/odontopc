@@ -10,16 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('Categoria', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property Doctrine_Collection $Grupos
- * @property Grupoprod $Grupoprod
+ * @property Doctrine_Collection $Grupoprod
  * 
  * @method integer             getId()        Returns the current record's "id" value
  * @method string              getNombre()    Returns the current record's "nombre" value
  * @method Doctrine_Collection getGrupos()    Returns the current record's "Grupos" collection
- * @method Grupoprod           getGrupoprod() Returns the current record's "Grupoprod" value
+ * @method Doctrine_Collection getGrupoprod() Returns the current record's "Grupoprod" collection
  * @method Categoria           setId()        Sets the current record's "id" value
  * @method Categoria           setNombre()    Sets the current record's "nombre" value
  * @method Categoria           setGrupos()    Sets the current record's "Grupos" collection
- * @method Categoria           setGrupoprod() Sets the current record's "Grupoprod" value
+ * @method Categoria           setGrupoprod() Sets the current record's "Grupoprod" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -50,8 +50,8 @@ abstract class BaseCategoria extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
-        $this->hasOne('Grupoprod', array(
-             'local' => 'grupoprod_id',
-             'foreign' => 'id'));
+        $this->hasMany('Grupoprod', array(
+             'local' => 'id',
+             'foreign' => 'categoria_id'));
     }
 }

@@ -29,6 +29,9 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property boolean $activo
  * @property boolean $recibir_curso
  * @property integer $zona_id
+ * @property string $nro_matricula
+ * @property string $foto_matricula
+ * @property string $modo_alta
  * @property Doctrine_Collection $Resumenes
  * @property Localidad $Localidad
  * @property CondicionFiscal $Condfiscal
@@ -74,6 +77,9 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method boolean             getActivo()             Returns the current record's "activo" value
  * @method boolean             getRecibirCurso()       Returns the current record's "recibir_curso" value
  * @method integer             getZonaId()             Returns the current record's "zona_id" value
+ * @method string              getNroMatricula()       Returns the current record's "nro_matricula" value
+ * @method string              getFotoMatricula()      Returns the current record's "foto_matricula" value
+ * @method string              getModoAlta()           Returns the current record's "modo_alta" value
  * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
@@ -118,6 +124,9 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setActivo()             Sets the current record's "activo" value
  * @method Cliente             setRecibirCurso()       Sets the current record's "recibir_curso" value
  * @method Cliente             setZonaId()             Sets the current record's "zona_id" value
+ * @method Cliente             setNroMatricula()       Sets the current record's "nro_matricula" value
+ * @method Cliente             setFotoMatricula()      Sets the current record's "foto_matricula" value
+ * @method Cliente             setModoAlta()           Sets the current record's "modo_alta" value
  * @method Cliente             setResumenes()          Sets the current record's "Resumenes" collection
  * @method Cliente             setLocalidad()          Sets the current record's "Localidad" value
  * @method Cliente             setCondfiscal()         Sets the current record's "Condfiscal" value
@@ -245,6 +254,18 @@ abstract class BaseCliente extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'length' => 4,
+             ));
+        $this->hasColumn('nro_matricula', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('foto_matricula', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('modo_alta', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 

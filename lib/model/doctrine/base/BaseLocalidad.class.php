@@ -10,6 +10,7 @@ Doctrine_Manager::getInstance()->bindComponent('Localidad', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property integer $provincia_id
+ * @property string $codigo_postal
  * @property Provincia $Provincia
  * @property Doctrine_Collection $Cliente
  * @property Doctrine_Collection $Proveedor
@@ -18,6 +19,7 @@ Doctrine_Manager::getInstance()->bindComponent('Localidad', 'doctrine');
  * @method integer             getId()               Returns the current record's "id" value
  * @method string              getNombre()           Returns the current record's "nombre" value
  * @method integer             getProvinciaId()      Returns the current record's "provincia_id" value
+ * @method string              getCodigoPostal()     Returns the current record's "codigo_postal" value
  * @method Provincia           getProvincia()        Returns the current record's "Provincia" value
  * @method Doctrine_Collection getCliente()          Returns the current record's "Cliente" collection
  * @method Doctrine_Collection getProveedor()        Returns the current record's "Proveedor" collection
@@ -25,6 +27,7 @@ Doctrine_Manager::getInstance()->bindComponent('Localidad', 'doctrine');
  * @method Localidad           setId()               Sets the current record's "id" value
  * @method Localidad           setNombre()           Sets the current record's "nombre" value
  * @method Localidad           setProvinciaId()      Sets the current record's "provincia_id" value
+ * @method Localidad           setCodigoPostal()     Sets the current record's "codigo_postal" value
  * @method Localidad           setProvincia()        Sets the current record's "Provincia" value
  * @method Localidad           setCliente()          Sets the current record's "Cliente" collection
  * @method Localidad           setProveedor()        Sets the current record's "Proveedor" collection
@@ -55,6 +58,10 @@ abstract class BaseLocalidad extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'length' => 4,
+             ));
+        $this->hasColumn('codigo_postal', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 

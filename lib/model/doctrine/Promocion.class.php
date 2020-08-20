@@ -21,4 +21,9 @@ class Promocion extends BasePromocion
 		else
 			return false;
 	}
+	
+	public function getTotalProdComprar()
+	{
+		return $this->min_cant + $this->cant_regalo;
+	}
 }

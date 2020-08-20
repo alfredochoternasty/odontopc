@@ -13,7 +13,8 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        asignacion_lote: {label: lote}
       list: 
         title: Detalle de pedido
         display: [Producto, nro_lote, precio, cantidad, total, asignacion_lote]

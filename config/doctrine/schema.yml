@@ -102,6 +102,9 @@ Cliente:
     activo: {type: boolean, default: 1}
     recibir_curso: {type: boolean, default: 1}
     zona_id: {type: integer(4), notnull: true}
+    nro_matricula: {type: string(255)}
+    foto_matricula: {type: string(255)}
+    modo_alta: {type: string(255)}
   relations:
     Resumenes: {type: many, class: Resumen, local: id, foreign: cliente_id}
     Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
@@ -175,7 +178,7 @@ Grupoprod:
     categoria_id: {type: integer(4)}
   relations:
     Productos: {type: many, class: Producto, local: id, foreign: grupoprod_id}
-    Categoria: {type: many, class: Categoria, local: id, foreign: grupoprod_id}
+    Categoria: {type: one, class: Categoria, local: categoria_id, foreign: id}
 Producto:
   connection: doctrine
   tableName: producto
@@ -340,6 +343,7 @@ Localidad:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(50), notnull: true}
     provincia_id: {type: integer(4), notnull: true}
+    codigo_postal: {type: string(255)}
   relations:
     Provincia: {type: one, local: provincia_id, onDelete: RESTRICT}
 Provincia:

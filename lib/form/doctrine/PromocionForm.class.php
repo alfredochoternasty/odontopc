@@ -46,7 +46,7 @@ class PromocionForm extends BasePromocionForm
     $this->validatorSchema['cant_regalo'] = new sfValidatorInteger(array('required' => true));		
 		
 		$this->widgetSchema['porc_desc'] = new sfWidgetFormInput(array(), array('size' => '10'));
-    $this->validatorSchema['porc_desc'] = new sfValidatorInteger(array('required' => true));		
+    $this->validatorSchema['porc_desc'] = new sfValidatorInteger(array('required' => true, 'min' => 1, 'max' => 100));		
 		
   }
   

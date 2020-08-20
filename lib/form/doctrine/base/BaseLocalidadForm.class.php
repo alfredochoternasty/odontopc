@@ -15,15 +15,17 @@ abstract class BaseLocalidadForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'           => new sfWidgetFormInputHidden(),
-      'nombre'       => new sfWidgetFormInputText(),
-      'provincia_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Provincia'), 'add_empty' => false)),
+      'id'            => new sfWidgetFormInputHidden(),
+      'nombre'        => new sfWidgetFormInputText(),
+      'provincia_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Provincia'), 'add_empty' => false)),
+      'codigo_postal' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'nombre'       => new sfValidatorString(array('max_length' => 50)),
-      'provincia_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Provincia'))),
+      'id'            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'nombre'        => new sfValidatorString(array('max_length' => 50)),
+      'provincia_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Provincia'))),
+      'codigo_postal' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('localidad[%s]');

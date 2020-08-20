@@ -14,15 +14,18 @@ generator:
     config:
       actions: ~
       fields:
-        dni: {help: solo números y sin puntos}
-        celular: {help: solo números}
+        dni: {label: DNI, help: Solo números y sin puntos}
+        cuit: {label: CUIT, help: Solo números}
+        celular: {label: Nro. de Celular, help: Solo números}
+        domicilio: {help: Por favor indique ciudad y provincia}
+        nro_matricula: {label: Nro. de Matrícula Profesional}
       list:    ~
       filter:  ~
       form:    ~
       edit:    ~
       new:
         title: Por favor ingrese sus datos
-        display: [dni, apellido, nombre, domicilio, celular, email]
+        display: [dni, cuit, apellido, nombre, domicilio, nro_matricula, celular, email]
         actions:
           _save: ~
           _list: ~

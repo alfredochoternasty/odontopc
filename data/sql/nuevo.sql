@@ -223,23 +223,23 @@ ALTER TABLE log_presupuesto ADD COLUMN telefono varchar(50);
 ALTER TABLE log_sf_guard_user ADD COLUMN zona_id smallint(6);
 
 UPDATE sf_guard_permission SET name = 'Lotes' WHERE id = 280;
-DELETE FROM ventas.sf_guard_permission WHERE  id=303;
-UPDATE ventas.sf_guard_permission SET name='Traza de Productos' WHERE  id=290;
+DELETE FROM sf_guard_permission WHERE  id=303;
+UPDATE sf_guard_permission SET name='Traza de Productos' WHERE  id=290;
 
-UPDATE ventas.grupoprod SET nombre = 'Instrumentales' WHERE (id = '11');
-UPDATE ventas.grupoprod SET nombre = 'Aditamentos Fusion' WHERE (id = '13');
-UPDATE ventas.grupoprod SET nombre = 'Extras' WHERE (id = '17');
-UPDATE ventas.grupoprod SET nombre = 'Fresas Específicas' WHERE (id = '21');
-UPDATE ventas.grupoprod SET nombre = 'Implantes Finos y Accesorios' WHERE (id = '22');
+UPDATE grupoprod SET nombre = 'Instrumentales' WHERE (id = '11');
+UPDATE grupoprod SET nombre = 'Aditamentos Fusion' WHERE (id = '13');
+UPDATE grupoprod SET nombre = 'Extras' WHERE (id = '17');
+UPDATE grupoprod SET nombre = 'Fresas Específicas' WHERE (id = '21');
+UPDATE grupoprod SET nombre = 'Implantes Finos y Accesorios' WHERE (id = '22');
 
-DELETE FROM ventas.grupoprod WHERE (id = '6');
-DELETE FROM ventas.grupoprod WHERE (id = '16');
+DELETE FROM grupoprod WHERE (id = '6');
+DELETE FROM grupoprod WHERE (id = '16');
 
-UPDATE ventas.producto SET grupoprod_id = '15' WHERE (id = '380');
-UPDATE ventas.producto SET grupoprod_id = '15' WHERE (id = '309');
-UPDATE ventas.producto SET grupoprod_id = '15' WHERE (id = '297');
-UPDATE ventas.producto SET grupoprod_id = '15' WHERE (id = '295');
-UPDATE ventas.producto SET grupoprod_id = '1' WHERE (id = '215');
+UPDATE producto SET grupoprod_id = '15' WHERE (id = '380');
+UPDATE producto SET grupoprod_id = '15' WHERE (id = '309');
+UPDATE producto SET grupoprod_id = '15' WHERE (id = '297');
+UPDATE producto SET grupoprod_id = '15' WHERE (id = '295');
+UPDATE producto SET grupoprod_id = '1' WHERE (id = '215');
 
 update producto set nombre = '% Gastos Administrativos' where id = 380;
 update producto set nombre = 'Actualización Precio' where id = 295;
@@ -574,12 +574,12 @@ update producto set nombre = 'Transportador Implante NTI M Para Contra Ángulo' w
 update producto set nombre = 'Transportador Implante NTI S Para Contra Ángulo' where id = 249;
 update producto set nombre = 'Transportador Largo Implante Para Cricket' where id = 97;
 
-CREATE TABLE ventas.categoria (
+CREATE TABLE categoria (
   id INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(255) NOT NULL,
   PRIMARY KEY (id));
 
-CREATE TABLE ventas.log_categoria (
+CREATE TABLE log_categoria (
 	log_id INT NOT NULL AUTO_INCREMENT,
 	log_fecha datetime,
 	log_operacion varchar(50),
@@ -587,27 +587,27 @@ CREATE TABLE ventas.log_categoria (
   nombre VARCHAR(255) NOT NULL,
   PRIMARY KEY (log_id));
 
-ALTER TABLE ventas.grupoprod 
+ALTER TABLE grupoprod 
 ADD COLUMN categoria_id INT NULL AFTER foto_chica;
 
-INSERT INTO ventas.categoria (id, nombre) VALUES ('1', 'Implantes');
-INSERT INTO ventas.categoria (id, nombre) VALUES ('2', 'Pilares');
-INSERT INTO ventas.categoria (id, nombre) VALUES ('3', 'Tapones');
-INSERT INTO ventas.categoria (id, nombre) VALUES ('4', 'Fresas');
+INSERT INTO categoria (id, nombre) VALUES ('1', 'Implantes');
+INSERT INTO categoria (id, nombre) VALUES ('2', 'Pilares');
+INSERT INTO categoria (id, nombre) VALUES ('3', 'Tapones');
+INSERT INTO categoria (id, nombre) VALUES ('4', 'Fresas');
 
-UPDATE ventas.grupoprod SET categoria_id = '1' WHERE (id = '8');
-UPDATE ventas.grupoprod SET categoria_id = '1' WHERE (id = '9');
-UPDATE ventas.grupoprod SET categoria_id = '1' WHERE (id = '10');
-UPDATE ventas.grupoprod SET categoria_id = '1' WHERE (id = '22');
-UPDATE ventas.grupoprod SET categoria_id = '1' WHERE (id = '19');
-UPDATE ventas.grupoprod SET categoria_id = '2' WHERE (id = '4');
-UPDATE ventas.grupoprod SET categoria_id = '2' WHERE (id = '5');
-UPDATE ventas.grupoprod SET categoria_id = '2' WHERE (id = '18');
-UPDATE ventas.grupoprod SET categoria_id = '3' WHERE (id = '7');
-UPDATE ventas.grupoprod SET categoria_id = '4' WHERE (id = '14');
-UPDATE ventas.grupoprod SET categoria_id = '4' WHERE (id = '21');
+UPDATE grupoprod SET categoria_id = '1' WHERE (id = '8');
+UPDATE grupoprod SET categoria_id = '1' WHERE (id = '9');
+UPDATE grupoprod SET categoria_id = '1' WHERE (id = '10');
+UPDATE grupoprod SET categoria_id = '1' WHERE (id = '22');
+UPDATE grupoprod SET categoria_id = '1' WHERE (id = '19');
+UPDATE grupoprod SET categoria_id = '2' WHERE (id = '4');
+UPDATE grupoprod SET categoria_id = '2' WHERE (id = '5');
+UPDATE grupoprod SET categoria_id = '2' WHERE (id = '18');
+UPDATE grupoprod SET categoria_id = '3' WHERE (id = '7');
+UPDATE grupoprod SET categoria_id = '4' WHERE (id = '14');
+UPDATE grupoprod SET categoria_id = '4' WHERE (id = '21');
 
-ALTER TABLE ventas.cliente 
+ALTER TABLE cliente 
 ADD COLUMN fecha_alta DATE NULL AFTER zona_id;
 
 SET @tu_cliente = 0;
@@ -617,7 +617,7 @@ set fecha_alta = (select min(fecha) from resumen where resumen.cliente_id = clie
 
 SET @tu_cliente = 1;
 
-UPDATE ventas.dev_producto SET fecha = '2020-07-03' WHERE (id = '1018');
+UPDATE dev_producto SET fecha = '2020-07-03' WHERE (id = '1018');
 
 DROP VIEW listado_ventas;
 CREATE VIEW listado_ventas AS 
@@ -817,11 +817,24 @@ HAVING
 	vendidos > devueltos 
 	or devueltos is null;
 	
-INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`, `padre`) VALUES ('340', 'Comisiones', '@Comisiones Menu', '0');
-UPDATE `ventas`.`sf_guard_permission` SET `id` = '341', `padre` = '340' WHERE (`id` = '52');
-UPDATE `ventas`.`sf_guard_permission` SET `id` = '342', `padre` = '340' WHERE (`id` = '53');
-UPDATE `ventas`.`sf_guard_permission` SET `id` = '343', `padre` = '340' WHERE (`id` = '54');
+INSERT INTO sf_guard_permission (id, name, description, padre) VALUES ('340', 'Comisiones', '@Comisiones Menu', '0');
+UPDATE sf_guard_permission SET id = '341', padre = '340' WHERE (id = '52');
+UPDATE sf_guard_permission SET id = '342', padre = '340' WHERE (id = '53');
+UPDATE sf_guard_permission SET id = '343', padre = '340' WHERE (id = '54');
 
-ALTER TABLE `ventas`.`cliente` ADD COLUMN `nro_matricula` VARCHAR(255) NULL;
-ALTER TABLE `ventas`.`cliente` ADD COLUMN `foto_matricula` VARCHAR(255) NULL;
-ALTER TABLE `ventas`.`localidad` ADD COLUMN `codigo_postal` VARCHAR(255) NULL;
+ALTER TABLE cliente ADD COLUMN nro_matricula VARCHAR(255) NULL;
+ALTER TABLE cliente ADD COLUMN foto_matricula VARCHAR(255) NULL;
+ALTER TABLE localidad ADD COLUMN codigo_postal VARCHAR(255) NULL;
+ALTER TABLE cliente ADD COLUMN modo_alta VARCHAR(255) NULL;
+
+UPDATE sf_guard_permission SET id = '54' WHERE (id = '51');
+UPDATE sf_guard_permission SET id = '52' WHERE (id = '304');
+DELETE FROM sf_guard_permission WHERE (id = '150');
+DELETE FROM sf_guard_permission WHERE (id = '160');
+DELETE FROM sf_guard_permission WHERE (id = '221');
+INSERT INTO sf_guard_permission (id, name, description, padre) VALUES ('305', 'Stock', '@Stock Menu', '0');
+UPDATE sf_guard_permission SET id = '306', padre = '305' WHERE (id = '280');
+UPDATE sf_guard_permission SET id = '308', padre = '305' WHERE (id = '300');
+UPDATE sf_guard_permission SET name = 'Control de Stock' WHERE (id = '308');
+DELETE FROM sf_guard_permission WHERE (id = '301');
+DELETE FROM sf_guard_permission WHERE (id = '302');

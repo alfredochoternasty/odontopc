@@ -12,6 +12,11 @@
  */
 class Categoria extends BaseCategoria
 {
+	public function __toString()
+	{
+		$val = $this->getNombre();
+		return empty($val)? '' : $val;
+	}
 	
 	private function ejecutarSQL($p_sql) {
 			$conexion = Doctrine_Manager::connection();

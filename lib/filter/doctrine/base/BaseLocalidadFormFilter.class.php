@@ -13,13 +13,15 @@ abstract class BaseLocalidadFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'nombre'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'provincia_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Provincia'), 'add_empty' => true)),
+      'nombre'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'provincia_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Provincia'), 'add_empty' => true)),
+      'codigo_postal' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'nombre'       => new sfValidatorPass(array('required' => false)),
-      'provincia_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Provincia'), 'column' => 'id')),
+      'nombre'        => new sfValidatorPass(array('required' => false)),
+      'provincia_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Provincia'), 'column' => 'id')),
+      'codigo_postal' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('localidad_filters[%s]');
@@ -39,9 +41,10 @@ abstract class BaseLocalidadFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'           => 'Number',
-      'nombre'       => 'Text',
-      'provincia_id' => 'ForeignKey',
+      'id'            => 'Number',
+      'nombre'        => 'Text',
+      'provincia_id'  => 'ForeignKey',
+      'codigo_postal' => 'Text',
     );
   }
 }

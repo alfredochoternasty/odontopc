@@ -20,7 +20,7 @@ abstract class BaseGrupoprodForm extends BaseFormDoctrine
       'color'        => new sfWidgetFormInputText(),
       'foto'         => new sfWidgetFormInputText(),
       'foto_chica'   => new sfWidgetFormInputText(),
-      'categoria_id' => new sfWidgetFormInputText(),
+      'categoria_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Categoria'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -29,7 +29,7 @@ abstract class BaseGrupoprodForm extends BaseFormDoctrine
       'color'        => new sfValidatorString(array('max_length' => 7, 'required' => false)),
       'foto'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'foto_chica'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'categoria_id' => new sfValidatorInteger(array('required' => false)),
+      'categoria_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Categoria'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('grupoprod[%s]');

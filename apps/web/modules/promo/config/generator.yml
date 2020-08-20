@@ -14,11 +14,11 @@ generator:
     config:
       actions:  ~
       fields:
-        fecha_ini: {label: Inicion}
-        fecha_fin: {label: Fin}
-        min_cant: {label: Cantidad Minima}
-        cant_regalo: {label: Cantidad Bonificada}
-        porc_desc: {label: Porc. Descuento}
+        fecha_ini: {label: Inicio, help: Fecha donde comineza a ser vigente la promoción}
+        fecha_fin: {label: Fin, help: Fecha fin de la promoción, puede estar vacio}
+        min_cant: {label: Unidades Comprar, help: Cantidad mínima que debe comprar para la promoción}
+        cant_regalo: {label: Unidades Bono, help: Cantidad a bonificar}
+        porc_desc: {label: Porc. Descuento, help: Porcentaje de descuento en la cantidad a bonificar}
       list:
         title: Promociones
         display: [nombre, fecha_ini, fecha_fin, min_cant, cant_regalo, porc_desc]
@@ -30,4 +30,5 @@ generator:
           Datos de la Promo: [nombre, descripcion, fecha_ini, fecha_fin, min_cant, cant_regalo, porc_desc]
           Agregar Productos: [agregar_como, grupos, productos]
       edit:    ~
-      new:    ~
+      new:
+        title: Nueva Promoción

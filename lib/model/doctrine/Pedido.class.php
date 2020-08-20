@@ -61,7 +61,7 @@ class Pedido extends BasePedido
       ->whereIn('dp.producto_id', $prods_req)
       ->andwhere('dp.pedido_id = ?', $this->id)
       ->execute();
-    if ($prods_pedido_cant[0]['cant_total'] >= $promocion->min_cant+$promocion->cant_regalo)
+    if ($prods_pedido_cant[0]['cant_total'] >= $promocion->getTotalProdComprar())
       return true;
     else
       return false;

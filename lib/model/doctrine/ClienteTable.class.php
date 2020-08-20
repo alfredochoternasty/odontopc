@@ -106,7 +106,7 @@ class ClienteTable extends Doctrine_Table
 	}
 	
 	public function getNuevos() {
-		$sql = "select count(id) as cantidad from cliente where fecha_alta >= date_format(curdate(), '%Y-%m-01')";
+		$sql = "select count(id) as cantidad from cliente where activo = 1 and fecha_alta >= date_format(curdate(), '%Y-%m-01')";
 		$con = Doctrine_Manager::getInstance()->connection();
 		$st = $con->execute($sql);
 		$resultado = $st->fetch(PDO::FETCH_OBJ);
@@ -117,7 +117,7 @@ class ClienteTable extends Doctrine_Table
 		$sql = "
 			select count(id) as cantidad 
 			from cliente 
-			where fecha_alta between 
+			where activo = 1 and fecha_alta between 
 												date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01')
 												and last_day(date_sub(curdate(), interval 1 month))
 		";
@@ -125,5 +125,21 @@ class ClienteTable extends Doctrine_Table
 		$st = $con->execute($sql);
 		$resultado = $st->fetch(PDO::FETCH_OBJ);
 		return $resultado->cantidad;
+	}
+	
+	public function getAltasWeb($pzid) {
+		// $sql = "select * from cliente where activo = 1 and modo_alta = 'web' and condicionfiscal_id is null";
+		// $con = Doctrine_Manager::getInstance()->connection();
+		// $st = $con->execute($sql);
+		// $resultado = $st->fetch(PDO::FETCH_OBJ);
+		// return $resultado->cantidad;
+		
+		$query = $this->createQuery('q')
+		->where("q.activo = 1")
+		->andWhere("q.zona_id = $pzid")
+		->andWhere("q.modo_alta = 'web'")
+		->andWhere('q.condicionfiscal_id is null')
+		->orderBy('apellido ASC, nombre ASC');
+		return $query->execute();
 	}
 }

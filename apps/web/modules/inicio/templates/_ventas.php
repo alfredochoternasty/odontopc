@@ -9,7 +9,7 @@
 			<th class="ui-state-default" style="height:2em;">Categoria</th>
 			<th class="ui-state-default" style="height:2em;">Actual</th>
 			<th class="ui-state-default" style="height:2em;">Mes Anterior</th>
-			<th class="ui-state-default" style="height:2em;"></th>
+			<th class="ui-state-default" style="height:2em;">Diferencia</th>
 		</tr>
 	</thead>
 	

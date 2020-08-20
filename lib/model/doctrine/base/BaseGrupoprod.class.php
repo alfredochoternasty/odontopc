@@ -14,7 +14,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @property string $foto_chica
  * @property integer $categoria_id
  * @property Doctrine_Collection $Productos
- * @property Doctrine_Collection $Categoria
+ * @property Categoria $Categoria
  * @property Doctrine_Collection $DetLisPrecio
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $MovimientoProducto
@@ -31,7 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @method string              getFotoChica()          Returns the current record's "foto_chica" value
  * @method integer             getCategoriaId()        Returns the current record's "categoria_id" value
  * @method Doctrine_Collection getProductos()          Returns the current record's "Productos" collection
- * @method Doctrine_Collection getCategoria()          Returns the current record's "Categoria" collection
+ * @method Categoria           getCategoria()          Returns the current record's "Categoria" value
  * @method Doctrine_Collection getDetLisPrecio()       Returns the current record's "DetLisPrecio" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
@@ -47,7 +47,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupoprod', 'doctrine');
  * @method Grupoprod           setFotoChica()          Sets the current record's "foto_chica" value
  * @method Grupoprod           setCategoriaId()        Sets the current record's "categoria_id" value
  * @method Grupoprod           setProductos()          Sets the current record's "Productos" collection
- * @method Grupoprod           setCategoria()          Sets the current record's "Categoria" collection
+ * @method Grupoprod           setCategoria()          Sets the current record's "Categoria" value
  * @method Grupoprod           setDetLisPrecio()       Sets the current record's "DetLisPrecio" collection
  * @method Grupoprod           setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Grupoprod           setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
@@ -103,9 +103,9 @@ abstract class BaseGrupoprod extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'grupoprod_id'));
 
-        $this->hasMany('Categoria', array(
-             'local' => 'id',
-             'foreign' => 'grupoprod_id'));
+        $this->hasOne('Categoria', array(
+             'local' => 'categoria_id',
+             'foreign' => 'id'));
 
         $this->hasMany('DetLisPrecio', array(
              'local' => 'id',

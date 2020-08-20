@@ -24,14 +24,14 @@
 	
 	<tbody>
 		<?php 
-				$actual = $tipo_ventas['ventas'];
-				$anterior = $tipo_ventas['pedidos'];
+				$ventas = $tipo_ventas['ventas'];
+				$pedidos = $tipo_ventas['pedidos'];
 				$porcentaje = 0;
-				if (!empty($anterior)) $porcentaje = ($actual*100/$anterior)-100;
+				if (!empty($pedidos)) $porcentaje = ($pedidos*100/$ventas);
 		?>
 				<tr class="sf_admin_row ui-widget-content">
-					<td class="sf_admin_text"><?php echo $actual ?></td>
-					<td class="sf_admin_text"><?php echo $anterior ?></td>
+					<td class="sf_admin_text"><?php echo $ventas ?></td>
+					<td class="sf_admin_text"><?php echo $pedidos ?></td>
 					<td class="sf_admin_text" style="font-weight:bold; color:<?php echo ($porcentaje>=0)?'#ff4000':'#00b359'; ?>"><?php echo ($porcentaje>=0)?'&#9660; ':'&#9650; '; ?><?php echo number_format(abs($porcentaje), 2).'%'; ?></td>
 				</tr>
 	</tbody>

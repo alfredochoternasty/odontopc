@@ -34,6 +34,9 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'activo'             => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'recibir_curso'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'zona_id'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'nro_matricula'      => new sfWidgetFormFilterInput(),
+      'foto_matricula'     => new sfWidgetFormFilterInput(),
+      'modo_alta'          => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -58,6 +61,9 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'activo'             => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'recibir_curso'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'zona_id'            => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
+      'nro_matricula'      => new sfValidatorPass(array('required' => false)),
+      'foto_matricula'     => new sfValidatorPass(array('required' => false)),
+      'modo_alta'          => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_filters[%s]');
@@ -99,6 +105,9 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'activo'             => 'Boolean',
       'recibir_curso'      => 'Boolean',
       'zona_id'            => 'ForeignKey',
+      'nro_matricula'      => 'Text',
+      'foto_matricula'     => 'Text',
+      'modo_alta'          => 'Text',
     );
   }
 }
