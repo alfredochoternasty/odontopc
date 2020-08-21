@@ -15,7 +15,7 @@ generator:
       actions:  ~
       fields:
         fecha_ini: {label: Inicio, help: Fecha donde comineza a ser vigente la promoción}
-        fecha_fin: {label: Fin, help: Fecha fin de la promoción, puede estar vacio}
+        fecha_fin: {label: Fin, help: "Fecha fin de la promoción, puede estar vacio"}
         min_cant: {label: Unidades Comprar, help: Cantidad mínima que debe comprar para la promoción}
         cant_regalo: {label: Unidades Bono, help: Cantidad a bonificar}
         porc_desc: {label: Porc. Descuento, help: Porcentaje de descuento en la cantidad a bonificar}

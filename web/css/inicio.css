@@ -88,6 +88,8 @@ header{
 #sf_guard_user_permissions_list_170, 
 #sf_guard_user_permissions_list_230, 
 #sf_guard_user_permissions_list_310, 
+#sf_guard_user_permissions_list_150, 
+#sf_guard_user_permissions_list_305, 
 #sf_guard_user_permissions_list_360{
 	margin-left: -30px;
 	font-weight: bold;
@@ -98,6 +100,8 @@ header{
 #sf_guard_user_permissions_list_170 + label, 
 #sf_guard_user_permissions_list_230 + label, 
 #sf_guard_user_permissions_list_310 + label, 
+#sf_guard_user_permissions_list_150 + label, 
+#sf_guard_user_permissions_list_305 + label, 
 #sf_guard_user_permissions_list_360 + label{
 	font-weight: bold;
 	font-size: larger;

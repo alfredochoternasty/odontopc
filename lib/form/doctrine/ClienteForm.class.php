@@ -19,13 +19,15 @@ class ClienteForm extends BaseClienteForm
     $this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Localidad'), 'add_empty' => true, 'order_by' => array('nombre', 'asc'), 'method' => 'getLocConProvincia', 'table_method' => 'retrieveConJoins'), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));    
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
+    $this->widgetSchema['dni'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
+    $this->widgetSchema['cuit'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
     $this->widgetSchema['apellido'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['domicilio'] = new sfWidgetFormInputText(array(), array('size' => 30));
-    $this->widgetSchema['telefono'] = new sfWidgetFormInputText(array(), array('size' => 30));
-    $this->widgetSchema['celular'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['telefono'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
+    $this->widgetSchema['celular'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
     $this->widgetSchema['email'] = new sfWidgetFormInputText(array(), array('size' => 30));
-    $this->widgetSchema['nro_matricula'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['nro_matricula'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
 
 		
 		if ($zona_id != 1) {
@@ -40,7 +42,7 @@ class ClienteForm extends BaseClienteForm
 		}
 		
     $this->validatorSchema['dni'] = new sfValidatorNumber(array('required' => true));
-    $this->validatorSchema['cuit'] = new sfValidatorNumber(array('required' => true));
+    $this->validatorSchema['cuit'] = new sfValidatorString(array('required' => true));
     $this->validatorSchema['nro_matricula'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['celular'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['apellido'] = new sfValidatorString(array('required' => true));

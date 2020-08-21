@@ -61,7 +61,7 @@ class promoActions extends autoPromoActions
 			}
 			
 			$this->getUser()->setFlash('notice', $notice);
-			$this->redirect('promo/edit?id='.$promocion->getId().'#sf_fieldset_agregar_productos');
+			$this->redirect('promo/edit?id='.$promocion->getId());//.'#sf_fieldset_agregar_productos');
     }else{
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }

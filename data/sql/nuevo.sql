@@ -846,3 +846,8 @@ UPDATE sf_guard_permission SET id = '150' WHERE (id = '340');
 UPDATE sf_guard_permission SET id = '151', padre = '150' WHERE (id = '341');
 UPDATE sf_guard_permission SET id = '152', padre = '150' WHERE (id = '342');
 UPDATE sf_guard_permission SET id = '153', padre = '150' WHERE (id = '343');
+DELETE FROM sf_guard_permission WHERE (id = '303');
+DELETE FROM `ventas_2`.`sf_guard_permission` WHERE (`id` = '492');
+DELETE FROM `ventas_2`.`sf_guard_permission` WHERE (`id` = '500');
+DELETE FROM `ventas_2`.`sf_guard_permission` WHERE (`id` = '510');
+UPDATE `ventas_2`.`sf_guard_permission` SET `name` = 'Zonas' WHERE (`id` = '491');
