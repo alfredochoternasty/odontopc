@@ -17,17 +17,19 @@ generator:
         grupoprod_id: {label: Grupo}
         Grupoprod: {label: Grupo}
         porc_desc: {label: Porcentaje}
-        precio_desc: {label: Precio}
         zona_id: {label: Zona}
         Zona: {label: Zona}
       list:
-        title: Descuentos x Zona
+        title: Comisiones por Zona
         display: [Producto, Grupoprod, porc_desc, Zona]
         object_actions:
             _edit: ~
             _delete: ~
+        actions:
+            _new: {label: Nuevo}
       filter:  ~
-      form:    ~
+      form:
+        display: [producto_id, grupoprod_id, porc_desc, zona_id]
       edit:
         title: Modificar
       new:

@@ -23,9 +23,7 @@ class ListadoCobrosTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Cliente c');
 			$q->leftJoin('c.Zona z');
 			$q->leftJoin('z.UsuarioZona uz');	
-      $q->leftJoin($rootAlias . '.TipoCliente t');
       $q->leftJoin($rootAlias . '.TipoCobro tc');
-      $q->leftJoin($rootAlias . '.Moneda m');
 			$q->andWhere('uz.usuario = '.$id);
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;

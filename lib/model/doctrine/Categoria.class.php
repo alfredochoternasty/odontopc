@@ -131,7 +131,7 @@ class Categoria extends BaseCategoria
 				and r.tipofactura_id <> 4
 				AND l.externo = 0
 				AND l.activo = 1 
-				and r.fecha between date_format(date_sub(curdate(), interval 1 year), '%Y-%m-01') and last_day(date_sub(curdate(), interval 1 month))
+				and r.fecha between date_format(date_sub(curdate(), interval 6 month), '%Y-%m-01') and last_day(date_sub(curdate(), interval 1 month))
 			group by
 				anio, mes
 			order by

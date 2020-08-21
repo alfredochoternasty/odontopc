@@ -24,7 +24,7 @@
     $consulta = $this->buildQuery($this->getFilters());
     if ($p_imp_pagina) {
         $pagina = $this->getUser()->getAttribute('<?php echo $this->getModuleName() ?>.page', '1', 'admin_module')-1;
-        $limit = <?php echo !empty($this->config['list']['max_per_page'])?:30 ?>;
+        $limit = <?php echo isset($this->config['list']['max_per_page']) ? (integer) $this->config['list']['max_per_page'] : 20 ?>;
         $consulta->limit($limit)->offset($pagina * $limit);
     }
     return $consulta->execute();

@@ -32,14 +32,17 @@ generator:
           recibo: {label: Imp. Recibo}
           mail: {label: Env. Recibo}
         actions:
-          _new: ~
+          _new: {label: Nuevo}
           imprimir_pagina: {label: Imprimir Pagina}
-          imprimir_todo: {label: Imprimir Todo}
-      filter:  ~
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
+      filter:
+        display: [zona_id, cliente_id, fecha, tipo_id, banco_id, observacion]
       form:    ~
       edit:
         title: Modificar Cobro
       new:
         title: Nuevo Cobro
       show:
-        display: [Cliente, fecha, _monto, Tipo, Banco, numero, observacion]
+        display: [Zona, Cliente, fecha, _monto, Tipo, Banco, observacion]

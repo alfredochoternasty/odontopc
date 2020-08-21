@@ -15,17 +15,21 @@ generator:
       actions: ~
       fields:
         fecha: { date_format: dd/MM/yyyy }
-        cli_gen_comis: { label: Cliente<br>Gen.Comis.}
       list:
         title: Listado de Cobros
-        max_per_page: 99999
-        display: [fecha, Cliente, tipo_cobro, _monto, Zona]
+        max_per_page: 50
+        display: [Zona, fecha, Cliente, tipo_cobro, _monto, observacion]
         object_actions: []
         batch_actions: []
         actions:
-          imprimir: ~
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
       filter:
-        display: [fecha, cliente, tipo_cliente, tipo_cobro, moneda, zona_id]
+        display: [fecha, cliente, tipo_cobro, zona_id]
       form:    ~
       edit:    ~
       new:     ~
+      show:
+        display: [Zona, fecha, Cliente, tipo_cobro, _monto, observacion]

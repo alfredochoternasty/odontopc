@@ -77,7 +77,7 @@ header{
 	font-size: 1.3em;
 }
 
-.sf_admin_text{
+.sf_admin_text, .sf_admin_date {
 	font-size: 1.2em;
 }
 

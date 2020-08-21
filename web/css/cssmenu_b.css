@@ -9,7 +9,8 @@
 		font-weight:bold;
 		width:100%;
 		background:#0087ca;
-		text-align: -webkit-center;
+		display: flex;
+		justify-content: center;		
 		}
 	#nav ul{
 		height:35px;

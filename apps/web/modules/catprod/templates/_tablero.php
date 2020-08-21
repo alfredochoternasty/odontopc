@@ -21,7 +21,7 @@
           $nombre_mes[10] = 'Oct';
           $nombre_mes[11] = 'Nov';
           $nombre_mes[12] = 'Dic';
-          for($i=12;$i>=1;$i--){
+          for($i=6;$i>=1;$i--){
             list($anio, $mes) = explode('-', date("Y-n", strtotime("-$i months")));
             $x_labels[] = $nombre_mes[$mes].'-'.$anio;
             echo '<th class="sf_admin_text ui-state-default ui-th-column">'.$nombre_mes[$mes].'-'.$anio.'</th>';

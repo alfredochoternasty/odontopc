@@ -23,13 +23,17 @@ generator:
         table_method: retrieveConJoins
         title: Listado de Compras
         display: [Zona, Proveedor, Compra, fecha, Producto, cantidad, nro_lote]
-        max_per_page: 50
         object_actions: []
         batch_actions: []
         actions:
-          imprimir: ~        
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}    
       filter:
         display: [proveedor_id, fecha, producto_id, nro_lote, zona_id]
       form:    ~
       edit:    ~
       new:     ~
+      show:
+        display: [Zona, Proveedor, Compra, fecha, Producto, cantidad, nro_lote]

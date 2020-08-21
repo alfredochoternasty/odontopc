@@ -26,7 +26,7 @@ generator:
           _edit: {label: Modificar}
           _delete: {label: Eliminar}
         batch_actions: []
-        actions: ~
+        actions: []
       filter:
         display: [producto_id, nro_lote, fecha_vto, zona_id]
       form:    ~

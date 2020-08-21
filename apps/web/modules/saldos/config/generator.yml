@@ -19,14 +19,15 @@ generator:
         mayor: {label: Saldo mayor que, help: numero sin puntos ni comas por ej 5000}
       list:
         table_method: retrieveConJoins
-        max_per_page: 50
         title: Listado de Saldos  
         display: [apellido, nombre, _saldo]
         object_actions: []
         batch_actions: []
         actions:
-          imprimir_pagina: {label: Imprimir página}
+          imprimir_pagina: {label: Imprimir Pagina}
           imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
       filter:
         display: [apellido, moneda_id, zona_id, mayor]
       form:    ~

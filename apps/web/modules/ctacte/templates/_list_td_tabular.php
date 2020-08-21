@@ -3,7 +3,7 @@
   <?php echo get_partial('ctacte/concepto', array('type' => 'list', 'cta_cte' => $cta_cte)) ?>
 </td>
 <td class="sf_admin_date sf_admin_list_td_fecha">
-  <?php echo false !== strtotime($cta_cte->getFecha()) ? format_date($cta_cte->getFecha(), "dd/MM/yyyy") : '&nbsp;' ?>
+  <?php echo false !== strtotime($cta_cte->getFecha()) ? implode('/', array_reverse(explode('-', $cta_cte->getFecha()))) : '&nbsp;' ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_cliente">
   <?php echo $cta_cte->getCliente() ?>

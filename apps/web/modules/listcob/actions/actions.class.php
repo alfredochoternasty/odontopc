@@ -13,18 +13,18 @@ require_once dirname(__FILE__).'/../lib/listcobGeneratorHelper.class.php';
  */
 class listcobActions extends autoListcobActions
 {  
-  public function executeListImprimir(sfWebRequest $request){
-    $filtro = new ListadoCobrosFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-    $listado = $consulta->execute();
+  // public function executeListImprimir(sfWebRequest $request){
+    // $filtro = new ListadoCobrosFormFilter();
+    // $consulta = $filtro->buildQuery($this->getFilters());
+    // $listado = $consulta->execute();
     
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
-    $dompdf->set_paper('A4','landscape');
-    $dompdf->render();
-    $dompdf->stream("listado_cobros.pdf");    
-    return sfView::NONE;
-  }
+    // $dompdf = new DOMPDF();
+    // $dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
+    // $dompdf->set_paper('A4','landscape');
+    // $dompdf->render();
+    // $dompdf->stream("listado_cobros.pdf");    
+    // return sfView::NONE;
+  // }
   
   public function executeFilter(sfWebRequest $request)
   {
