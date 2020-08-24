@@ -19,6 +19,7 @@ p:last-child { page-break-after: never; }
 </style>
 </head>
 <body>
-<header><img src="images/logo_nti.png" width=204 height=77 id="logo"></header>
+<?php $logo_cabecera = $sf_user->getVarConfig('logo_cabecera'); ?>
+<header><img src="images/<?php echo $logo_cabecera ?>" id="logo"></header>
 <footer><div class="page-number"></div></footer>
 <main>

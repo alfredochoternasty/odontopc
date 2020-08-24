@@ -13,6 +13,7 @@
 		$jquery = $sf_user->getVarConfig('jquery_theme');
 		$cssmenu = $sf_user->getVarConfig('cssmenu');
 		$mostrar_cabecera = $sf_user->getVarConfig('mostrar_cabecera');
+		$logo_cabecera = $sf_user->getVarConfig('logo_cabecera');
 		
 		if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/web/images/'.$favicon.'" />';
 		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
@@ -50,7 +51,7 @@
 		if($mostrar_cabecera == 'S'){ ?>
 			<header>
 					<div id="logo">
-						<img width="250px" height="70px" src="<?php echo $base_url?>/web/images/logo_nti.png">
+						<img src="<?php echo $base_url?>/web/images/<?php echo $logo_cabecera ?>">
 					</div>
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>

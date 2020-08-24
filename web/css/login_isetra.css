@@ -1,0 +1,103 @@
+@media screen and (max-width: 600px) {
+  .cabecera img {
+    width: 100%
+  }
+}
+
+body{
+  background:#117bad;
+}
+
+.cabecera{
+  background-color: #fdfdff;
+  text-align: center;
+  vertical-align: bottom;
+  padding:2rem;
+}
+
+.msg_error{
+  font-size: 1rem;
+  color: #e2da9e;
+  font-weight: bold;
+  margin: 2rem;
+}
+.msg_error ul{
+  list-style:none;
+  margin-left:0px;
+}
+
+.form-login {
+  text-align: -webkit-center;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.form-componente{
+  border-radius: 50px;
+  border: 1px solid #2d9fd9;
+  color: #0087ca;
+  width: 250px;
+  height: 45px;
+  padding-left: 45px;
+  background-repeat: no-repeat;
+  background-position: 1rem 0.9rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.user_icon{background-image:url(../images/user_icon.png);}
+.pass_icon{background-image:url(../images/pass_icon.png);}
+
+.form-componente:focus {
+  outline: none;
+  border: 1px solid #a0d18c;
+  color: #0087ca;
+}
+
+.boton-login {
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  color: #0087ca;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 15px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  width: 10rem;
+  border: none;
+  margin-left: 25px;
+}
+
+.boton-login:hover {
+  background: #eeeeee;
+  color: #0087ca;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  text-decoration: none;
+}
+
+#olvido{
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+#olvido a{
+  color: #e8e8e8;
+  font-size: 0.9rem;
+  float:left;
+  margin-left: 10px;
+}
+
+#registrarse{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+}
+#registrarse a{
+  color: #f6f6f6;
+  font-size: 1.2rem;
+}
