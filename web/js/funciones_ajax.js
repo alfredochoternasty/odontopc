@@ -7,7 +7,7 @@ function truncar (x, posiciones = 0) {
 }
 
 jQuery(function($){
-$("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
+// $("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#cliente_seguimiento_hora").mask("99:99",{placeholder:" "});
 $("#cliente_seguimiento_prox_contac_hora").mask("99:99",{placeholder:" "});

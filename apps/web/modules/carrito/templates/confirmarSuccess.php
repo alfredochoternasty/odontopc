@@ -7,7 +7,7 @@
 		<form id="form_finalizar" style="width:90%;" action="<?php echo url_for('carrito/finalizar') ?>" onSubmit="">
 			<input checked="checked" type="radio" name="entrega" id="retiro" value="0"/>
 			<label for="retiro">
-				<img src="<?php echo $base_url?>/web/images/warehouse.png">Retirar en sucursal<br>Feliciando 345 - Parana (E.R)
+				<img src="<?php echo $base_url?>/web/images/warehouse.png">Retirar en sucursal<br>Feliciando 581 - Parana (E.R)
 			</label>
 			<br/>
 			<?php foreach ($domicilios as $domicilio): ?>

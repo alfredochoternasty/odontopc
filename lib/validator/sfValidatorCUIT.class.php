@@ -9,7 +9,7 @@ class sfValidatorCUIT extends sfValidatorBase
 
   protected function doClean($value)
   {
-    if (!is_numeric($value) || !validarCuit($value)) {
+    if (!is_numeric($value) || !$this->validarCuit($value)) {
       throw new sfValidatorError($this, 'invalid', array('value' => $value));
     }
 

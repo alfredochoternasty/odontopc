@@ -17,6 +17,7 @@ generator:
         dni: {label: DNI, help: Solo números y sin puntos}
         cuit: {label: CUIT, help: Solo números}
         celular: {label: Nro. de Celular, help: Solo números}
+        telefono: {label: Nro. de Teléfono Fijo, help: Solo números}
         domicilio: {help: Por favor indique ciudad y provincia}
         nro_matricula: {label: Nro. de Matrícula Profesional}
       list:    ~
@@ -25,7 +26,7 @@ generator:
       edit:    ~
       new:
         title: Por favor ingrese sus datos
-        display: [dni, cuit, apellido, nombre, domicilio, nro_matricula, celular, email]
+        display: [dni, cuit, condicionfiscal_id, apellido, nombre, domicilio, nro_matricula, telefono, celular, email]
         actions:
           _save: ~
           _list: ~
