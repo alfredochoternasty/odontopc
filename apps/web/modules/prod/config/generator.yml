@@ -15,11 +15,12 @@ generator:
       actions: ~
       fields:
         codigo: {label: Codigo}
-        precio_vta: { label: Precio de Venta, help: Es el precio de venta del producto y el que se toma como referencia en la lista de precio}
+        precio_vta: { label: Precio (Neto), help: Es el precio de venta del producto y el que se toma como referencia en la lista de precio}
         grupoprod_id: { label: Grupo}
         minimo_stock: { label: Stock Minimo}
-        orden_grupo: { label: Orden, help: Es un numero para los productos se vean ordendos en el grupo}
+        orden_grupo: { label: Orden, help: Es un numero que para los productos se vean ordendos en el grupo}
         activo: { label: Activo, help: Indica si el producto se puede utilizar o no}
+        iva: { label: Iva (21%)}
       list:
         table_method: retrieveProdConGrupo
         title: Productos
@@ -42,8 +43,8 @@ generator:
           activar: ~
           precio: {label: Cambiar Precio}
       filter:  ~
-      form: ~
-        #display: [grupoprod_id, codigo, nombre, foto, precio_vta, iva, total, minimo_stock, orden_grupo, activo, lista_id]
+      form:
+        display: [grupoprod_id, codigo, nombre, foto, precio_vta, iva, total, minimo_stock, orden_grupo, activo, lista_id]
       edit:
         title: Modificar Producto
       new:

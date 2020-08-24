@@ -26,6 +26,8 @@ generator:
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
+        actions:
+          _new: {label: Nuevo}
       filter:  ~
       form:    ~
       edit:

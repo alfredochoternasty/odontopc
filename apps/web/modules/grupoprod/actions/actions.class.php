@@ -27,21 +27,21 @@ class grupoprodActions extends autoGrupoprodActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-			$datos = $request->getParameter('grupoprod');
+			$datos_grupo = $request->getParameter('grupoprod');
       $grupoprod = $form->save();
 			
-			if (!empty($datos['operacion'])) {
-				if ($datos['operacion'] == 'precio') {
-					$str_set = "'".$datos['precio_vta']."'";
-				} elseif($datos['operacion'] == 'aumento') {
-					$str_set = "(precio_vta*".$datos['porcentaje']."/100+precio_vta)";
-				} elseif($datos['operacion'] == 'descuento') {
-					$str_set = "(precio_vta-".$datos['porcentaje']."*precio_vta/100)";
+			if (!empty($datos_grupo['operacion'])) {
+				if ($datos_grupo['operacion'] == 'precio') {
+					$str_set = "'".$datos_grupo['precio_vta']."'";
+				} elseif($datos_grupo['operacion'] == 'aumento') {
+					$str_set = "(precio_vta*".$datos_grupo['porcentaje']."/100+precio_vta)";
+				} elseif($datos_grupo['operacion'] == 'descuento') {
+					$str_set = "(precio_vta-".$datos_grupo['porcentaje']."*precio_vta/100)";
 				}
 				Doctrine::getTable('Producto')->createQuery()
 					->update()
 					->set('precio_vta', $str_set)
-					->where('id in ('.implode(', ', $datos['productos']).')')
+					->where('id in ('.implode(', ', $datos_grupo['productos']).')')
 					->execute();
 			}
 			
@@ -49,7 +49,7 @@ class grupoprodActions extends autoGrupoprodActions
         list($filename, $extension) = explode('.', $grupoprod->foto);
         $ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
         $ruta_chica = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension;
-        if ($datos_prod['foto_delete'] == 'on') {
+        if ($datos_grupo['foto_delete'] == 'on') {
           unlink($ruta);
           unlink($ruta_chica);
           $grupoprod->foto = '';

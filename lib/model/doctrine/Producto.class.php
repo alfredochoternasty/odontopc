@@ -17,15 +17,16 @@ class Producto extends BaseProducto
 		return $this->nombre?:'-';
 	}
 	
-	public function getFoto()
-	{
-		if (!empty($this->foto_chica)) {
-			return $this->foto_chica;
-		} else {
-			$grupo = Doctrine::getTable('Grupoprod')->find($this->grupoprod_id);
-			return $grupo->foto_chica?:'no_img.png';
-		}
-	}
+	// public function getFoto()
+	// {
+		// if (!empty($this->foto_chica)) {
+			// return $this->foto_chica;
+		// } elseif (!empty($this->getGrupo()->foto_chica)) {
+			// // $grupo = Doctrine::getTable('Grupoprod')->find($this->grupoprod_id);
+			// // return $grupo->foto_chica?:'no_img.png';
+			// return $this->getGrupo()->foto_chica;
+		// }
+	// }
 	
   public static function DescontarStock(sfEvent $event){
     $prod = $event['object']->getProductoId();
@@ -87,7 +88,7 @@ class Producto extends BaseProducto
       $obj_lote->setStock($event['object']->cantidad);
       $obj_lote->setFechaVto($event['object']->fecha_vto);
       $obj_lote->setCompraId($event['object']->compra_id);
-      $obj_lote->setUsuario($event['object']->usuario);
+      $obj_lote->setUsuarioId($event['object']->usuario);
       $obj_lote->setZonaId($event['object']->getCompra()->zona_id);
       $obj_lote->setActivo(1);
       $obj_lote->setExterno(0);

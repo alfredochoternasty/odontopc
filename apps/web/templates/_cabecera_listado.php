@@ -16,7 +16,8 @@ hr {page-break-after: always;border: 0;}
 </style>
 </head>
 <body>
-<img src="images/logo_nti.png" width=204 height=77 id="logo">
+<?php $logo_cabecera = $sf_user->getVarConfig('logo_cabecera'); ?>
+<header><img src="images/<?php echo $logo_cabecera ?>" id="logo"></header>
 <h2 id="titulo"><?php echo $titulo ?></h2>
 <?php if ($hasFilters->count() > 0) include_partial('admins/filtro_usado', array('configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters)) ?>
 <div id="content">

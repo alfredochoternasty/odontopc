@@ -35,7 +35,10 @@ class CompraForm extends BaseCompraForm
     
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 	
-    $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['numero'] = new sfWidgetFormInputText();
+		$this->validatorSchema['numero'] =  new sfValidatorInteger();    
+		
+		$this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
 		
     $this->widgetSchema['zona_id'] = new sfWidgetFormInputHidden();

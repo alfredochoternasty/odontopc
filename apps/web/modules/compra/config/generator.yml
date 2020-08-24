@@ -24,6 +24,8 @@ generator:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
           detalle: {label: Ver Detalle}
+        actions:
+          _new: {label: Nuevo}
       filter:
         display: [fecha, proveedor_id, numero]
       form: ~

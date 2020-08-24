@@ -43,7 +43,7 @@ class ClienteForm extends BaseClienteForm
 		
     $this->validatorSchema['dni'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['cuit'] = new sfValidatorString(array('required' => false));
-    $this->validatorSchema['nro_matricula'] = new sfValidatorNumber(array('required' => true));
+    $this->validatorSchema['nro_matricula'] = new sfValidatorNumber(array('required' => $zona_id?true:false));
     $this->validatorSchema['celular'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['apellido'] = new sfValidatorString(array('required' => true));
     $this->validatorSchema['condicionfiscal_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Condfiscal'), 'required' => $zona_id?true:false));
