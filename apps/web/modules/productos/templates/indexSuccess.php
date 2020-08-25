@@ -19,7 +19,7 @@
 		  <td width="60%">
 			<span class="nombre_producto"><?php echo $producto ?></span><br>
 			<span class="nombre_grupo"><?php echo $producto->getGrupo() ?></span><br>
-			<span class="precio">$ <?php echo sprintf("%01.2f", $producto->precio_vta * 1.21) ?></span>
+			<span class="precio">$ <?php echo number_format($producto->precio_vta * 1.21, 2, ',', '.') ?></span>
 		  </td>
 		  <td width="30%" style="text-align:right">
 			<form action="<?php echo url_for('productos/pedir') ?>" onSubmit="return validar(this);">

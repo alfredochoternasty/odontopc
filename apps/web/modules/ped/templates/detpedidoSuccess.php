@@ -10,7 +10,7 @@
 				<td width="10%"><img src="<?php echo $base_url?>/web/uploads/productos/<?php echo $detped->getProducto()->foto_chica ?>" height="50vw" width="50vw"></td>
 				<td width="90%"> 
 					<span class="fila_primario"><?php echo $detped->getProducto()->getNombre() ?></span><br>
-					<span class="fila_secundario">$ <?php echo $detped->precio.' x '.$detped->cantidad.' = $ '.$detped->total ?></span>
+					<span class="fila_secundario">$ <?php echo number_format($detped->precio * 1.21, 2, ',', '.').' x '.$detped->cantidad.' = $ '.number_format($detped->total * 1.21, 2, ',', '.') ?></span>
 				</td>
 			</tr>
 		</table>
