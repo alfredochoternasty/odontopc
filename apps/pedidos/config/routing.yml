@@ -1,0 +1,52 @@
+usuario:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                SfGuardUser
+    module:               usuario
+    prefix_path:          /usuario
+    column:               id
+    with_wildcard_routes: true
+
+carrito:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                DetallePedido
+    module:               carrito
+    prefix_path:          /carrito
+    column:               id
+    with_wildcard_routes: true
+
+cliente_registro:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Cliente
+    module:               registro
+    prefix_path:          /registro
+    column:               id
+    with_wildcard_routes: true
+
+producto2:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Producto2
+    module:               productos
+    prefix_path:          /productos
+    column:               id
+    with_wildcard_routes: true
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: productos, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
