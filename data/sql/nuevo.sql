@@ -852,7 +852,7 @@ DELETE FROM `ventas_2`.`sf_guard_permission` WHERE (`id` = '500');
 DELETE FROM `ventas_2`.`sf_guard_permission` WHERE (`id` = '510');
 UPDATE `ventas_2`.`sf_guard_permission` SET `name` = 'Zonas' WHERE (`id` = '491');
 
-INSERT INTO configuracion (id, valor) VALUES ('login_css', 'login.css');
+INSERT INTO configuracion (id, valor) VALUES ('login_css', 'login_nti.css');
 INSERT INTO configuracion (id, valor) VALUES ('logo_cabecera', 'logo_nti.png');
 INSERT INTO configuracion (id, valor) VALUES ('logo_login', 'logo_nti.png');
 
