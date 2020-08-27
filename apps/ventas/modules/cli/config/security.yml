@@ -1,0 +1,5 @@
+all:
+    is_secure: true
+    credentials: [Administracion de Clientes]
+recibir_cliente:
+    is_secure: false

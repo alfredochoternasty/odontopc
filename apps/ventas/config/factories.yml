@@ -1,0 +1,57 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/05-Factories
+dev:
+  mailer:
+    param:      
+      delivery_strategy: realtime
+      # delivery_strategy: none
+      # delivery_strategy: single_address
+      # delivery_address:  alfredochoternasty@gmail.com
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host: in-v3.mailjet.com
+          port: 25
+          # encryption: tls
+          # auth_mode: auth
+          username: 2a03b5e3c878137b3f77535377755dfe
+          password: 72a6a29d87c1f864d3129bc8c6fb1219
+          
+prod:
+  logger:
+    class:   sfNoLogger
+    param:
+      level:   err
+      loggers: ~
+  mailer:
+    param:
+      delivery_strategy: realtime
+      # delivery_strategy: none
+      # delivery_strategy: single_address
+      # delivery_address:  alfredochoternasty@gmail.com
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host: in-v3.mailjet.com
+          port: 25
+          # encryption: tls
+          # auth_mode: auth
+          username: 2a03b5e3c878137b3f77535377755dfe
+          password: 72a6a29d87c1f864d3129bc8c6fb1219
+
+all:
+  user:
+    class: myUser
+    param:
+      timeout: 36000
+  routing:
+    class: sfPatternRouting
+    param:
+      generate_shortest_url:            false
+      extra_parameters_as_query_string: true
+
+  view_cache_manager:
+    class: sfViewCacheManager
+    param:
+      cache_key_use_vary_headers: true
+      cache_key_use_host_name:    true

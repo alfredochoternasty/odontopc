@@ -1,0 +1,32 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           CursoInscripcion
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          curso_inscripcion_curasis
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: {label: Fecha Inscripcion, date_format: dd/MM/yyyy }
+      list:
+        title: Asistencia a Cursos
+        display: [Curso, es_cliente, nombre, fecha, asistio, pago_monto, mas_info, compro, observacion]
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
+      filter:
+        display: [curso_id, es_cliente, nombre, fecha, asistio, pago_monto, mas_info, compro]
+      form:    ~
+      edit:
+        title: Editar Asistencia a Cursos
+        display: [curso_id, es_cliente, nombre, asistio, pago_monto, mas_info, compro, observacion]
+      new:
+        title: Nueva Asistencia a Cursos
+        display: [curso_id, es_cliente, nombre, asistio, pago_monto, mas_info, compro, observacion]

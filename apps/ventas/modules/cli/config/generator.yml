@@ -1,0 +1,55 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Cliente
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cliente
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        condicionfiscal_id: {label: Cond. Fiscal}
+        dni: {help: Número de documento sin puntos '.'}
+        cuit: {help: Número de CUIT sin guion '-'}
+        localidad_id: {label: Ciudad, help: Si la ciudad no existe puede agregar un nueva}
+        telefono: {label: Teléfono, help: Número de teléfono fijo}
+        celular: {help: Número de teléfono celular}
+        lista: {help: Lista de precios para este cliente cuando hace el pedido via la parte de pedidos}
+      list:
+        table_method: retrieveConJoins
+        title: Clientes
+        display: [Zona, _c_fiscal, apellido, nombre, _direccion, _telefonos, email, activo]
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
+          _usuario: {label: Generar Usuario}
+        batch_actions:
+          desactivar: ~
+          activar: ~		  
+        actions:
+          _new: {label: Nuevo}
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
+      filter:
+        display: [zona_id, dni, apellido, nombre, localidad_id, provincia_id, lista_id, activo]
+      form:
+        display: [activo, condicionfiscal_id, cuit, dni, apellido, nombre, lista_id, localidad_id, domicilio, telefono, celular, email, zona_id, observacion]
+      edit:
+        title: Modificar Cliente
+        actions:
+          _list: {label: Volver}
+          _save: {label: Guardar}
+          _save_and_add: {label: Guardar y agregar otro}
+          generar_usuario: ~
+      new:
+        title: Nuevo Cliente
+      show:
+        display: [Zona, _c_fiscal, apellido, nombre, _direccion, _telefonos, email]

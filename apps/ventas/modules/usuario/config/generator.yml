@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           sfGuardUser
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sf_guard_user
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      fields:
+        password: { label: "Clave" }
+        password_again: { label: "Confirmar Clave" }
+      list:
+        table_method: retrieveByUsername
+        title: Usuarios
+        display: [=username]
+      form:
+        class: sfGuardChangeUserPasswordForm
+      edit:
+        title: Canbiar Clave
+        actions:
+          _save: ~
+      new:

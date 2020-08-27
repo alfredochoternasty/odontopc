@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DetalleResumen
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          detalle_resumen_ultcompdet
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+      list:
+        table_method: retrieveConJoins
+        title: Detalle de la Venta
+        display: [Producto, nro_lote, precio, cantidad, sub_total, iva, total, bonificados]
+        object_actions: {}
+        batch_actions: {}
+        actions: 
+          imprimir: {label: Imprimir}        
+      filter: {}
+      form: ~
+      edit: ~
+      new: ~

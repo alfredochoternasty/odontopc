@@ -1,0 +1,38 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Compra2
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          compra2
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        fecha_vto: { date_format: dd/MM/yyyy }
+        nro_lote: {label: Lote}
+        Producto2: {label: Codigo - Producto}
+      list:
+        table_method: retrieveConJoins
+        title: Compras Realizadas
+        display: [Proveedor, fecha, Producto2, cantidad, nro_lote, fecha_vto]
+        actions:
+          _new: {label: Nuevo}
+          imprimir: ~
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar Compra
+        display: [proveedor_id, fecha, producto_id, cantidad, nro_lote, fecha_vto]
+      new:
+        title: Nueva Compra
+        display: [proveedor_id, fecha, producto_id, cantidad, nro_lote, fecha_vto]

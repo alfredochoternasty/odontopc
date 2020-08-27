@@ -1,0 +1,34 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Promocion
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          promocion
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions:  ~
+      fields:
+        fecha_ini: {label: Inicio, help: Fecha donde comineza a ser vigente la promoción}
+        fecha_fin: {label: Fin, help: "Fecha fin de la promoción, puede estar vacio"}
+        min_cant: {label: Unidades Comprar, help: Cantidad mínima que debe comprar para la promoción}
+        cant_regalo: {label: Unidades Bono, help: Cantidad a bonificar}
+        porc_desc: {label: Porc. Descuento, help: Porcentaje de descuento en la cantidad a bonificar}
+      list:
+        title: Promociones
+        display: [nombre, fecha_ini, fecha_fin, min_cant, cant_regalo, porc_desc]
+        actions:
+          _new: {label: Nuevo}
+      filter:  ~
+      form:
+        display:
+          Datos de la Promo: [nombre, descripcion, fecha_ini, fecha_fin, min_cant, cant_regalo, porc_desc]
+          Agregar Productos: [agregar_como, grupos, productos]
+      edit:    ~
+      new:
+        title: Nueva Promoción

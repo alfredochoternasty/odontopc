@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Producto
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          producto_inicio
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        minimo_stock: {label: Stock Mínimo}
+        stock_guardado: {label: Stock Actual}
+      list:
+        title: Productos con Stock por debajo del Mínimo
+        table_method: ProdutosSinStock
+        max_per_page: 10
+        display: [nombre, stock_guardado, minimo_stock]
+        object_actions: {}
+        batch_actions: {}
+        actions: {}
+      filter: {}
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,37 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Venta
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          venta
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        resumen_id: { label: Venta }
+        tipofactura_id: { label: Comprobante }
+      list:
+        table_method: retrieveConJoins
+        title: Facturas Realizadas
+        display: [Cliente, numero, TipoFactura, fecha, _subtotal, _iva, _total, observacion]
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
+          detalle: {label: Ver Detalle}
+      filter:  ~
+      form:
+        display: [cliente_id, resumen_id, fecha, numero, tipofactura_id, moneda_id, observacion]
+        actions:
+          _list: {label: Volver}
+          _save: {label: 'Guardar y Agregar Detalle'}      
+      edit:
+        title: Factura de la Venta
+      new:
+        title: Facturar Venta

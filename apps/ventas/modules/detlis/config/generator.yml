@@ -1,0 +1,36 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DetLisPrecio
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          det_lis_precio
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        grupoprod_id: {label: Grupo}
+        aumento: {help: Porcentaje de aumento para el precio del producto o grupo}
+        descuento: {help: Porcentaje de descuento para el precio del producto o grupo}
+        precio: {help: Precio para el producto o grupo}
+      list:
+        title: Detalle de Lista de Precios
+        display: [Lista, _producto, _grupo, _aumento, _descuento, _precio]
+        object_actions:
+          _delete: {label: Eliminar}
+          _edit: {label: Modificar}
+        actions:
+          _new: {label: Agregar Producto}
+          agregar_grupo: {label: Agregar Grupo de Productos, action: agg}
+          imprimir: ~
+      filter:  ~
+      form:    ~
+      edit:
+        title: Modificar Detalle de Lista de Precios %%Lista%%
+      new:
+        title: Nuevo Detalle de Lista de Precios %%Lista%%

@@ -1,0 +1,32 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           CtaCte
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          ctacte
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+      list:
+        max_per_page: 9999
+        table_method: retrieveCtaConCli
+        title: Listado de Cuenta Corriente
+        display: [_concepto, fecha, Cliente, _concepto, debe, haber, _saldo]
+        object_actions: {}
+        batch_actions: {}
+        actions:
+          imprimir: {label: Imprimir}
+          mail: {label: Enviar via Email}
+      filter:
+        display: [fecha, cliente_id, moneda_id]
+      form:    ~
+      edit:    ~
+      new:     ~

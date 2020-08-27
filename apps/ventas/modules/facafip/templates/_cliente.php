@@ -1,0 +1,1 @@
+<?php echo $facturas_afip->getCliente() ?>

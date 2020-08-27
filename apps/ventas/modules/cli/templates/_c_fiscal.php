@@ -1,0 +1,1 @@
+<?php echo $cliente->getCondfiscal() . ' ( '. $cliente->getCuit() .' )'; ?>

@@ -1,0 +1,34 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ListadoVentas
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          listado_ventas_ctrlvtadet
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        grupoprod_id: {label: Grupo}
+        nro_lote: {label: Lote}
+      list:
+        table_method: retrieveCtrlvtadet
+        title: Listado de Ventas
+        display: [Resumen, fecha, Cliente, Producto, _cantidad, nro_lote]
+        max_per_page: 250
+        object_actions: []
+        batch_actions: []
+        actions:
+          imprimir_pagina: ~
+          imprimir_todo: ~
+      filter:
+        display: [tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
+      form:    ~
+      edit:    ~
+      new:     ~

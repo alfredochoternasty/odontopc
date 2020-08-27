@@ -1,0 +1,6 @@
+all:
+    is_secure: true
+    credentials: [Cuenta Corriente Clientes]
+ver:
+    is_secure: true
+    credentials: []

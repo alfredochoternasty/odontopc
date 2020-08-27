@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ClienteUltimaCompra
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          cliente_ultima_compra
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: {label: Ultima compra, date_format: dd/MM/yyyy }
+      list:
+        max_per_page: 20
+        title: Ultima compra por clientes
+        display: [apellido, nombre, fecha, telefono, celular, email]
+        object_actions:
+          detalle: ~
+        actions:
+          imprimir: {label: Imprimir}
+      filter:
+        display: [apellido, nombre, fecha]
+      form:    ~
+      edit:    ~
+      new:     ~

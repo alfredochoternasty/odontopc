@@ -1,0 +1,36 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           MovimientoProducto
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          movimiento_producto
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        grupoprod_id: {label: Grupo}
+        nro_lote: {label: Lote}
+        remito: {Label: De Rto.}
+      list:
+        table_method: retrieveConJoins
+        title: Listado de Movimientos de Producto
+        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote, _remito]
+        max_per_page: 9999
+        object_actions:
+          _factura: {label: Fact}
+        batch_actions: []
+        actions:
+          imprimir_pagina: ~
+          imprimir_todo: ~
+      filter:
+        display: [zona_id, tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote]
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,36 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Lote
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          lote
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha_vto: {label: Vto. Lote, help: Fecha de Vencimiento del lote, date_format: dd/MM/yyyy }
+        compra_id: {label: Compra, help: La compra en la que ingreso este numero de lote}
+        nro_lote: {label: Lote}
+        stock: {help: stock actual de lote}
+      list:
+        title: Stock por Lote
+        table_method: retrieveConJoins
+        display: [Producto, nro_lote, Zona, stock, fecha_vto]
+        object_actions:
+          _edit: {label: Modificar}
+          _delete: {label: Eliminar}
+        batch_actions: []
+        actions: []
+      filter:
+        display: [producto_id, nro_lote, fecha_vto, zona_id]
+      form:    ~
+      edit:
+        title: Modificar lote
+        display: [producto_id, nro_lote, stock, fecha_vto, zona_id]
+      new:     ~

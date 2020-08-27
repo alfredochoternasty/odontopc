@@ -1,0 +1,44 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           DevProducto
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          dev_producto_notacred
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        Resumen: {label: Venta}
+        resumen_id: {label: Venta}
+        sfGuardUser: {label: Usuario}
+        cae_afip: {label: AFIP}
+        cantidad: {label: Cant}
+        nro_lote: {label: Lote}
+      list:
+        table_method: getNotasManuales
+        title: Notas de Creditos
+        display: [Zona, fecha, _comprobante, Cliente, Resumen, _total, observacion, _cae_afip]
+        actions:
+          _new: {label: Nuevo}
+          imprimir_pagina: {label: Imprimir}
+          excel_pagina: {label: Descargar Excel}
+        object_actions:
+          _delete: {label: Eliminar}
+          imprimir: {label: Imprimir}
+          mail: {label: Enviar Mail}
+      filter:
+        display: [fecha, cliente_id, zona_id]
+      form:    ~
+      edit:    ~
+      new:
+        title: Nueva nota de credito
+        display: [fecha, cliente_id, resumen_id, total, observacion]
+      show:
+        display: [fecha, _comprobante, Cliente, _total, observacion]

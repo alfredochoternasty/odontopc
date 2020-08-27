@@ -1,0 +1,38 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ProductoTraza
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          producto_traza
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        nro_lote: { label: Lote }
+        Resumen: { label: Comprobante }
+        fecha_venta: { date_format: dd/MM/yyyy }
+      list:
+        table_method: retrieveConJoins
+        title: Traza de Productos Vendidos
+        display: [Resumen, fecha_venta, Cliente, Producto, nro_lote, _fecha_vto, vendidos, devueltos]
+        max_per_page: 50
+        object_actions: []
+        batch_actions: []
+        actions:
+          imprimir_pagina: {label: Imprimir página}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar página}
+          excel_todo: {label: Descargar Todo}
+      filter:
+        display: [producto_id, nro_lote, fecha_venta, cliente_id, fecha_vto]
+      form:    ~
+      edit:    ~
+      new:    ~
+      show:
+        display: [Resumen, fecha_venta, Cliente, Producto, nro_lote, _fecha_vto, vendidos, devueltos]
