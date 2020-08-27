@@ -1,1 +1,0 @@
-<?php echo $facturas_afip->getTipoFactura().' - '.str_pad($facturas_afip->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($facturas_afip->nro_factura, 8, 0, STR_PAD_LEFT); ?>

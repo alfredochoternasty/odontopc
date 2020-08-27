@@ -1,8 +1,0 @@
-new:
-    is_secure: false
-create:
-    is_secure: false
-listo:
-    is_secure: false
-all:
-    is_secure: true

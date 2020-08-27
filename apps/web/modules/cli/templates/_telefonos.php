@@ -1,1 +1,0 @@
-<?php echo $cliente->getTelefono() . '<br>'. $cliente->getCelular(); ?>

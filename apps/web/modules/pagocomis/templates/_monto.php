@@ -1,1 +1,0 @@
-<?php echo $pago_comision->getMoneda()->simbolo.' '.$pago_comision->monto ?>

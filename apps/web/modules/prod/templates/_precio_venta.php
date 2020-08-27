@@ -1,1 +1,0 @@
-<?php echo '$ '.sprintf("%01.2f", $producto->getPrecioVta()) ?>
