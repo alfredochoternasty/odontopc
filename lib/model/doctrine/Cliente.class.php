@@ -65,4 +65,12 @@ class Cliente extends BaseCliente
 		}
 		return $options;
 	}
+	
+	public function getFacturas(){
+		return Doctrine::getTable('FacturasAfip')
+			->createQuery()
+			->where('cliente_id = ?', $this->id)
+			->orderBy('id desc')
+			->execute();
+	}
 }

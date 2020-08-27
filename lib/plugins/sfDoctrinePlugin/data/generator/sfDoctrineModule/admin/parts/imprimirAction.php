@@ -47,28 +47,5 @@
     
   public function descargar_excel($datos)
   {
-    header("Content-Disposition: attachment; filename=\"<?php echo $this->getSingularName() ?>.xls\"");
-    header("Content-Type: application/vnd.ms-excel");
-		
-		if(!empty($datos[0])){
-			$flag = false;
-				$titulos = $campos = array();
-				foreach ($this->configuration->getValue('list.display') as $name => $field) {
-					$titulos[] = $field->getConfig('label', '', true);
-					$campos[] = $this->renderField($field);
-				}
-			$titulos = implode("', '", $titulos);
-			
-			echo '<?php echo $this->configuration->getValue('list.title') ?>' . "\r\n";
-			foreach($datos as $fila){
-				if (!$flag) {
-						echo implode("\t", $titulos) . "\r\n";
-						$flag = true;
-				}
-				$string = implode("\t", array_values($fila));
-				echo utf8_decode($string)."\r\n";
-			}
-		}
-				
-    return sfView::NONE;
+
   }  
