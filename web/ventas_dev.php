@@ -9,5 +9,5 @@
 
 require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
 
-$configuration = ProjectConfiguration::getApplicationConfiguration('web', 'dev', true);
+$configuration = ProjectConfiguration::getApplicationConfiguration('ventas', 'dev', true);
 sfContext::createInstance($configuration)->dispatch();
