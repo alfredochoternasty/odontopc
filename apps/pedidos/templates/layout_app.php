@@ -9,9 +9,9 @@
 			$base_url = $sf_user->getVarConfig('base_url');
 			$favicon = $sf_user->getVarConfig('favicon');	
 		?>
-		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url?>/web/css/app.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url?>/css/app.css">
 	
-		<script src="<?php echo $base_url?>/web/sfAdminThemejRollerPlugin/js/jquery.min.js"></script>
+		<script src="<?php echo $base_url?>/sfAdminThemejRollerPlugin/js/jquery.min.js"></script>
 		<style>
 			#loader {
 				position: fixed;
@@ -20,7 +20,7 @@
 				width: 100%;
 				height: 100%;
 				z-index: 9999;
-				background: url('<?php echo $base_url?>/web/images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+				background: url('<?php echo $base_url?>/images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
 				opacity: .8;
 			}			
 		</style>
@@ -62,9 +62,9 @@
 		<div id="loader"></div>
 		<div class="sidemenu">
 			<div id="user_info">
-				<div id="user_img"><img src="<?php echo $base_url?>/web/images/user.png"></div>
+				<div id="user_img"><img src="<?php echo $base_url?>/images/user.png"></div>
 				<div id="user_name"><?php echo $sf_user->getGuardUser() ?></div>
-				<div id="cerrar_menu"><img id="cerrar_menu" src="<?php echo $base_url?>/web/images/cross.png" width="16px" height="16px"></div>			
+				<div id="cerrar_menu"><img id="cerrar_menu" src="<?php echo $base_url?>/images/cross.png" width="16px" height="16px"></div>			
 			</div>		
 			<div id="saldo">
 				<span>Saldo</span><span style="margin-left:4px;color:#F00;">
@@ -76,20 +76,20 @@
 			</div>
 			<nav>
 				<ul>
-					<li><img src="<?php echo $base_url?>/web/images/implante.png"><a href="<?php echo url_for('@producto2') ?>">Lista de Productos</a></li>
-					<li><img src="<?php echo $base_url?>/web/images/box.png"><a href="<?php echo url_for('ped/pedidos') ?>">Pedidos</a></li>
-					<li><img src="<?php echo $base_url?>/web/images/cta_cte.png"><a href="<?php echo url_for('ctacte/ver') ?>">Cuenta Corriente</a></li>
-					<li><img src="<?php echo $base_url?>/web/images/facturas.png"><a href="<?php echo url_for('facafip/ver') ?>">Facturas</a></li>
-					<li><img src="<?php echo $base_url?>/web/images/password.png"><a href="<?php echo url_for('usuario/edit?id='.$sf_user->getGuardUser()->getId()) ?>">Cambiar Clave</a></li>
-					<li><img src="<?php echo $base_url?>/web/images/logout.png"><a href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
+					<li><img src="<?php echo $base_url?>/images/implante.png"><a href="<?php echo url_for('@producto2') ?>">Lista de Productos</a></li>
+					<li><img src="<?php echo $base_url?>/images/box.png"><a href="<?php echo url_for('ped/pedidos') ?>">Pedidos</a></li>
+					<li><img src="<?php echo $base_url?>/images/cta_cte.png"><a href="<?php echo url_for('ctacte/ver') ?>">Cuenta Corriente</a></li>
+					<li><img src="<?php echo $base_url?>/images/facturas.png"><a href="<?php echo url_for('facafip/ver') ?>">Facturas</a></li>
+					<li><img src="<?php echo $base_url?>/images/password.png"><a href="<?php echo url_for('usuario/edit?id='.$sf_user->getGuardUser()->getId()) ?>">Cambiar Clave</a></li>
+					<li><img src="<?php echo $base_url?>/images/logout.png"><a href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
 				</ul>
 			</nav>
 		</div>
 		<div id="header_app">
 			<table>
 				<tr>
-					<td width="25%"><img id="menu" src="<?php echo $base_url?>/web/images/app_menu.png"></td>
-					<td width="50%" style="text-align: center;"><img id="logo" src="<?php echo $base_url?>/web/images/logo_chico.png"></td>
+					<td width="25%"><img id="menu" src="<?php echo $base_url?>/images/app_menu.png"></td>
+					<td width="50%" style="text-align: center;"><img id="logo" src="<?php echo $base_url?>/images/logo_chico.png"></td>
 					<td width="25%"></td>
 				</tr>
 			</table>

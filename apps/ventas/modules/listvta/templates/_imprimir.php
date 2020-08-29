@@ -12,7 +12,7 @@ hr {page-break-after: always;border: 0;}
 </style>
 </head>
 <body>
-<img src="images/logo_nti.png" width=204 height=77 style="position:absolute;left:0;top:-20;">
+<img src="images/logo_nti_chico.png" width=204 height=77 style="position:absolute;left:0;top:-20;">
 <h2 id="header" style="width:100%;text-align:center;margin-top:2.5em">Listado de Ventas</h2>
 <?php if ($hasFilters->count() > 0) include_partial('admins/filtro_usado', array('configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters)) ?>
 <div id="footer1">Impreso por: <?php echo $sf_user.' ('.date("d/m/Y H:i:s").')' ?></div>

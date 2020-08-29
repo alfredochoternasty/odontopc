@@ -15,9 +15,9 @@
 		$mostrar_cabecera = $sf_user->getVarConfig('mostrar_cabecera');
 		$logo_cabecera = $sf_user->getVarConfig('logo_cabecera');
 		
-		if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/web/images/'.$favicon.'" />';
-		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
-		if (!empty($cssmenu)) echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/web/css/'.$cssmenu.'" />';
+		if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/images/'.$favicon.'" />';
+		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
+		if (!empty($cssmenu)) echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/css/'.$cssmenu.'" />';
 		?>
 		
 		<script type="text/javascript">
@@ -51,7 +51,7 @@
 		if($mostrar_cabecera == 'S'){ ?>
 			<header>
 					<div id="logo">
-						<img src="<?php echo $base_url?>/web/images/<?php echo $logo_cabecera ?>">
+						<img src="<?php echo $base_url?>/images/<?php echo $logo_cabecera ?>">
 					</div>
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
@@ -59,17 +59,17 @@
 						Fecha Actualización: 27/07/2020
 					</div>
 					<?php if (date("Ymd") == '20200727') { ?>
-					<img src="<?php echo $base_url ?>/web/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+					<img src="<?php echo $base_url ?>/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
 			</header>
 		<?php 
 		} 
 		?>
  		<div class="header" style="width:100%; height:60px; background-color:#eaeaea; position:fixed; top:0px; left:0px;">
-			<img id="menu" src="<?php echo $base_url?>/web/images/menu.png" style="margin:10px;float:left">			
+			<img id="menu" src="<?php echo $base_url?>/images/menu.png" style="margin:10px;float:left">			
 		</div>
 		<div id="nav" class="menujq">
-			<img id="cerrar_menu" src="<?php echo $base_url?>/web/images/back.png" style="position: absolute;top: 5px; right: 10px;">
+			<img id="cerrar_menu" src="<?php echo $base_url?>/images/back.png" style="position: absolute;top: 5px; right: 10px;">
 				<?php
 					/* para que esto funcione tuve que modificar la clase sfDoctrineGuardPlugin	- getAllPermissions */
 					$statement = Doctrine_Manager::getInstance()->connection();  

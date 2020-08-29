@@ -15,7 +15,7 @@
 <div class="productos">
 	<table width="100%">
 		<tr >
-		  <td width="10%"><img src="<?php echo $base_url ?>/web/uploads/productos/<?php echo $producto->getFoto() ?>" height="70vw" width="70vw"></td>
+		  <td width="10%"><img src="<?php echo $base_url ?>/uploads/productos/<?php echo $producto->getFoto() ?>" height="70vw" width="70vw"></td>
 		  <td width="60%">
 			<span class="nombre_producto"><?php echo $producto ?></span><br>
 			<span class="nombre_grupo"><?php echo $producto->getGrupo() ?></span><br>

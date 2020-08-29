@@ -30,7 +30,7 @@ class CursoForm extends BaseCursoForm
     $this->widgetSchema['permite_insc'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));
     $this->widgetSchema['mostrar_precio'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));
     
-    $ruta = '/web/uploads/cursos/';
+    $ruta = '/uploads/cursos/';
     $this->widgetSchema['logo'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
                                       'file_src' => $ruta.$this->getObject()->getLogo(),

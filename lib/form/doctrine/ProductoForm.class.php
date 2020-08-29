@@ -24,7 +24,7 @@ class ProductoForm extends BaseProductoForm
 
     $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
-                                      'file_src' => $base_url.'/web/uploads/productos/'.$this->getObject()->getFotoChica(),
+                                      'file_src' => $base_url.'/uploads/productos/'.$this->getObject()->getFotoChica(),
                                       'is_image' => true,
                                       'edit_mode' => true,
                                       'with_delete' => true,

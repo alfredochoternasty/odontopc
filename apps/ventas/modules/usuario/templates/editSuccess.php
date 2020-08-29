@@ -5,7 +5,7 @@
 	<h3 class="titulo">Modificar Clave</h3>
   <div style="width:100%;display:flex;justify-content:center;color:#ff0000;">
     <?php $base_url = $sf_user->getVarConfig('base_url'); ?>
-    <img src="<?php echo $base_url?>/web/sfDoctrinePlugin/images/error.png">
+    <img src="<?php echo $base_url?>/sfDoctrinePlugin/images/error.png">
     <?php include_partial('usuario/flashes') ?>
   </div>
   <div id="sf_admin_content" style="display:flex;justify-content:center;">

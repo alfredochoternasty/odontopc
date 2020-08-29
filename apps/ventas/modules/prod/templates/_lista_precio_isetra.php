@@ -109,13 +109,13 @@ hr {
 			if ($count == 1) {
 				$foto_grupo = $producto->getGrupo()->getFotoChica();
 				if (!empty($foto_grupo)) { 
-					echo '<td colspan="3"><img src="'.$base_url.'/web/uploads/productos/'.$foto_grupo.'"></td></tr><tr>';
+					echo '<td colspan="3"><img src="'.$base_url.'/uploads/productos/'.$foto_grupo.'"></td></tr><tr>';
 				}
 			}
 			if (empty($foto_grupo)) { 
 				$foto_prod = $producto->getFotoChica();
 				if (!empty($foto_prod)) {
-					echo '<td><img src="'.$base_url.'/web/uploads/productos/'.$foto_prod.'"></td>';
+					echo '<td><img src="'.$base_url.'/uploads/productos/'.$foto_prod.'"></td>';
 				} else {
 					echo '<td></td>';
 				}

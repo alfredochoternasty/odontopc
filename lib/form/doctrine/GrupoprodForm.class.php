@@ -25,7 +25,7 @@ class GrupoprodForm extends BaseGrupoprodForm
     $this->widgetSchema['productos'] = new sfWidgetFormChoice(array('expanded' => true, 'multiple' => true, 'choices' => $productos));
     $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
-                                      'file_src' => $base_url.'/web/uploads/productos/'.$this->getObject()->getFotoChica(),
+                                      'file_src' => $base_url.'/uploads/productos/'.$this->getObject()->getFotoChica(),
                                       'is_image' => true,
                                       'edit_mode' => true,
                                       'with_delete' => true,

@@ -119,9 +119,9 @@ class cursmailActions extends autoCursmailActions
     $msj .= "Hola!. Desde NTI Implantes estamos promocionando el curso : <b>".$o_curso->getNombre()."</b><br>";
     $msj .= "Este curso comienza el dia: <b>".implode('/', array_reverse(explode('-', $o_curso->getFecha())))."</b> a la hora: <b>".$o_curso->getHora()."</b><br>";
     $msj .= "A realizarce en : <b>".$o_curso->getLugar()."</b><br>";
-    //$msj .= "Para mas informacion ingrese en el siguiente enlace: <a href=\"http://sistema.ntiimplantes.com.ar/web/curso.php/ver/1/".$p_id_curso."\">sistema.ntiimplantes.com.ar/web/curso/ver/".$p_id_curso."</a><br>";
-		$msj .= '<img src="http://sistema.ntiimplantes.com.ar/web/uploads/cursos/'.$o_curso->getLogo().'" alt="'.$o_curso->getNombre().'">';
-		//$msj .= '<br><p style="color: #999999;font-size: 12px;text-align: center;">¿Deseas dejar de recibir estos emails? Click <a href="http://sistema.ntiimplantes.com.ar/web/curso.php/desuscribir/'.$p_email.'">aquí</a></p>';
+    //$msj .= "Para mas informacion ingrese en el siguiente enlace: <a href=\"http://sistema.ntiimplantes.com.ar/curso.php/ver/1/".$p_id_curso."\">sistema.ntiimplantes.com.ar/curso/ver/".$p_id_curso."</a><br>";
+		$msj .= '<img src="http://sistema.ntiimplantes.com.ar/uploads/cursos/'.$o_curso->getLogo().'" alt="'.$o_curso->getNombre().'">';
+		//$msj .= '<br><p style="color: #999999;font-size: 12px;text-align: center;">¿Deseas dejar de recibir estos emails? Click <a href="http://sistema.ntiimplantes.com.ar/curso.php/desuscribir/'.$p_email.'">aquí</a></p>';
 		//$msj .= '<p style="color: #999999;font-size: 12px;text-align: center;">NTI Implantes | Pascual Palma 666 | Paraná - Entre Ríos | 3100</p>';
     $msj .= "</body></html>";
     $mensaje->setBody($msj, "text/html");

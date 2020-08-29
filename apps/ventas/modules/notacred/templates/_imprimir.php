@@ -46,7 +46,7 @@
 	<table cellpadding="10" cellspacing="0" border="0" width="100%">
 		<tr>
 			<td width="44%">
-				<img src="images/logo_nti.png" width=204 height=77>
+				<img src="images/logo_nti_chico.png" width=204 height=77>
 				<p>
 					<b>Razon Social: </b>NTI Implantes<br>
 					<b>Domicilio Comercial: </b>Feliciano 581 - Paraná (Entre Ríos)<br>
@@ -135,7 +135,7 @@
 		<tr><td colspan="3" style="text-align:center;"><b>Pág. 1 de 1</b></td></tr>
 		<tr>
 			<td style="width:60%; text-align:center;">
-				<img src="http://ventas.ntiimplantes.com.ar/web/afip.png">
+				<img src="http://ventas.ntiimplantes.com.ar/afip.png">
 				<br>
 				<?php
 					$nro = '30712272461'.str_pad($dev_producto->getTipoFactura()->cod_tipo_afip, 2, "0", STR_PAD_LEFT).str_pad($dev_producto->pto_vta, 4, "0", STR_PAD_LEFT).$dev_producto->getAfipCae().implode('', explode('-', $dev_producto->getAfipVtoCae()));
@@ -153,7 +153,7 @@
 					$d_v = 10 - ($total % 10);
 					if ($d_v == 10) $d_v = 0;
 				?>
-				&nbsp;&nbsp;&nbsp;<img src="http://ventas.ntiimplantes.com.ar/web/codigo.php?nro=<?php echo $nro.$d_v; ?>">
+				&nbsp;&nbsp;&nbsp;<img src="http://ventas.ntiimplantes.com.ar/codigo.php?nro=<?php echo $nro.$d_v; ?>">
 				<?php echo $nro.$d_v; ?>
 			</td>
 			<td style="width:40%; font-size:14px;">

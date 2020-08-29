@@ -7,8 +7,8 @@
     <?php include_javascripts() ?>
     <?php use_helper('Date') ?>
     <?php if($sf_user->hasGroup('Blanco')): ?>
-      <link rel="stylesheet" type="text/css" media="screen" href="/web/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="/web/css/cssmenu_b.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="/css/cssmenu_b.css" />
     <?php endif; ?>    
   </head>
   <body style="margin:0px">

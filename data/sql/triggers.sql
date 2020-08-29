@@ -1,14 +1,3 @@
-DROP TRIGGER IF EXISTS ti_banco;
-DELIMITER $$
-CREATE TRIGGER ti_banco AFTER INSERT ON banco
-FOR EACH ROW
-BEGIN
-	INSERT INTO log_banco (log_fecha, log_operacion, id, nombre)
-	VALUES(NOW(), 'INSERT', NEW.id, NEW.nombre);
-END$$
-DELIMITER ;
-
-
 DROP TRIGGER IF EXISTS tu_banco;
 DELIMITER $$
 CREATE TRIGGER tu_banco AFTER UPDATE ON banco

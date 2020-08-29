@@ -12,11 +12,11 @@
 
 <a href="<?php echo url_for('carrito/confirmar') ?>"> 
 <div class="boton_blanco boton_abajo_2">
-	<img src="<?php echo $base_url?>/web/images/back_celeste.png">&nbsp;&nbsp;Volver
+	<img src="<?php echo $base_url?>/images/back_celeste.png">&nbsp;&nbsp;Volver
 </div>
 </a>	
 <a href="#" onclick="document.getElementById('form_finalizar').submit();">
 <div class="boton_azul boton_abajo_1">
-	<img src="<?php echo $base_url?>/web/images/gps.png">&nbsp;&nbsp;Aceptar
+	<img src="<?php echo $base_url?>/images/gps.png">&nbsp;&nbsp;Aceptar
 </div>
 </a>	

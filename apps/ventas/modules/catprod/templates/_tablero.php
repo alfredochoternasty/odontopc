@@ -98,7 +98,7 @@ $graph->img->Stream($fileName);
 // Send it back to browser
 // $graph->img->Headers();
 // $graph->img->Stream();
-echo '<img src="/odontopc/web/imagefile.png">';
+echo '<img src="/odontopc/imagefile.png">';
 
 ?>
 </div>
