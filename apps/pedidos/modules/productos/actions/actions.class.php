@@ -125,4 +125,16 @@ class productosActions extends sfActions
     }
   }
 
+  public function executeGetImagen(sfWebRequest $request)
+  {
+	  $img = $request->getParameter('img');
+	  list($nom, $ext) = explode('.', $img);
+	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$img, 'image/'.$ext);
+	  $response = $this->getResponse();
+	  $response->setContentType($img->getMIMEType());
+	  // $img->thumbnail(50,50);
+	  // $img->setQuality(50);
+	  $response->setContent($img);
+	  return sfView::NONE;
+  }
 }

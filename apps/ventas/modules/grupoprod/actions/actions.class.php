@@ -17,10 +17,11 @@ class grupoprodActions extends autoGrupoprodActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->grupoprod = $this->getRoute()->getObject();
-		$lista = '';
-		$grupoprods = $this->grupoprod->getProductos();
-		foreach ($grupoprods as $prod) $lista[$prod->id] = $prod->nombre;
-    $this->form = $this->configuration->getForm($this->grupoprod, array('productos' => $lista, 'base_url' => $this->getUser()->getVarConfig('base_url')));
+	$lista = '';
+	$grupoprods = $this->grupoprod->getProductos();
+	foreach ($grupoprods as $prod) $lista[$prod->id] = $prod->nombre;
+	$parametros = array('productos' => $lista, 'image_url' => 'GetImagen?img='.$this->grupoprod->getImagen());
+    $this->form = $this->configuration->getForm($this->grupoprod, $parametros);
   }
 	
   protected function processForm(sfWebRequest $request, sfForm $form){
@@ -81,5 +82,18 @@ class grupoprodActions extends autoGrupoprodActions
     }else{
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
+  }
+
+  public function executeGetImagen(sfWebRequest $request)
+  {
+	  $img = $request->getParameter('img');
+	  list($nom, $ext) = explode('.', $img);
+	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$img, 'image/'.$ext);
+	  $response = $this->getResponse();
+	  $response->setContentType($img->getMIMEType());
+	  // $img->thumbnail(50,50);
+	  // $img->setQuality(50);
+	  $response->setContent($img);
+	  return sfView::NONE;
   }
 }

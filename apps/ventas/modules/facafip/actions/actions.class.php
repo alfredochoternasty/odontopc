@@ -45,13 +45,14 @@ class facafipActions extends autoFacafipActions
 						echo implode("\t", $titulos) . "\r\n";
 						$flag = true;
 				}
+				$multiplicador = $fila->tipofactura_id>4?-1:1; 
 				$fila = array(
 					$fila->getTipoFactura().' - '.str_pad($fila->pto_vta, 4, 0, STR_PAD_LEFT) .'-'.str_pad($fila->nro_factura, 8, 0, STR_PAD_LEFT),
 					$fila->getFecha(), 
 					trim($fila->getCliente()), 
-					str_replace('.', ',', $fila->getIva()), 
-					str_replace('.', ',', $fila->getNeto()), 
-					str_replace('.', ',', $fila->getTotal()), 
+					str_replace('.', ',', $fila->getIva() * $multiplicador), 
+					str_replace('.', ',', $fila->getNeto() * $multiplicador), 
+					str_replace('.', ',', $fila->getTotal() * $multiplicador), 
 				);
 				$string = implode("\t", array_values($fila));
 				echo utf8_decode($string)."\r\n";					

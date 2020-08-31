@@ -1,4 +1,3 @@
-<?php	
-$base_url = $sf_user->getVarConfig('base_url');
-if (!empty($producto->foto_chica)) echo '<img src="'.$base_url.'/uploads/productos/'.$producto->foto_chica.'">'; 
+<?php
+echo '<img height="50px" width="50px" src="'.url_for('prod/GetImagen?img='.$producto->getImagen()).'">';
 ?>

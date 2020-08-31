@@ -14,7 +14,7 @@ class ProductoForm extends BaseProductoForm
   {
     parent::configure();
     unset($this['mueve_stock'], $this['moneda_id'], $this['genera_comision'], $this['stock_actual'], $this['ctr_fact_grupo'], $this['grupo2'], $this['grupo3'], $this['descripcion']);
-    $base_url = $this->getOption('base_url');
+    $image_url = $this->getOption('image_url');
     $modulo_factura = $this->getOption('modulo_factura');
         
     $this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => false, 'order_by' => array('nombre', 'asc')));    
@@ -24,7 +24,7 @@ class ProductoForm extends BaseProductoForm
 
     $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
-                                      'file_src' => $base_url.'/uploads/productos/'.$this->getObject()->getFotoChica(),
+                                      'file_src' => $image_url,
                                       'is_image' => true,
                                       'edit_mode' => true,
                                       'with_delete' => true,

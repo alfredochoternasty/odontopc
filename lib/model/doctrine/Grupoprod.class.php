@@ -18,6 +18,15 @@ class Grupoprod extends BaseGrupoprod
 		return empty($val)? '' : $val;
 	}
   
+	public function getImagen()
+	{
+		if (!empty($this->getFoto())) {
+			return $this->getFotoChica();
+		} else {
+			return 'no_img.png';
+		}
+	}
+	
   public function getProductos() {
     $q = Doctrine_Core::getTable('Producto')
       ->createQuery('p')

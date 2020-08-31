@@ -35,7 +35,7 @@ class detlisActions extends autoDetlisActions
     $this->det_lis_precio = $this->form->getObject();
   }
   
-  public function executeAgg(sfWebRequest $request)
+  public function executeListAgregarGrupo(sfWebRequest $request)
   {
     $detlis = new DetLisPrecio();
     $detlis->setListaId($this->getUser()->getAttribute('lid',0));

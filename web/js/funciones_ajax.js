@@ -457,8 +457,8 @@ $(document).ready(function(){
 		var iva_u = $("#dev_producto_iva_unitario").val();
     
 		var cantidad = $("#dev_producto_cantidad").find(':selected').val();      
-	  var precio = precio_u * cantidad;
-	  var iva = iva_u * cantidad;
+	  var precio = parseFloat(precio_u) * parseFloat(cantidad);
+	  var iva = parseFloat(iva_u) * parseFloat(cantidad);
     var total = parseFloat(precio) + parseFloat(iva);
     
 		$("#dev_producto_total").attr('value', total.toFixed(2));

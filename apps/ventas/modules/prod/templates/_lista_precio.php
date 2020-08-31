@@ -51,7 +51,7 @@ body {
 }
 
 .page-number:before {
-	content: "Página " counter(page);
+	content: "P?gina " counter(page);
 }
 
 hr {

@@ -17,16 +17,16 @@ class Producto extends BaseProducto
 		return $this->nombre?:'-';
 	}
 	
-	// public function getFoto()
-	// {
-		// if (!empty($this->foto_chica)) {
-			// return $this->foto_chica;
-		// } elseif (!empty($this->getGrupo()->foto_chica)) {
-			// // $grupo = Doctrine::getTable('Grupoprod')->find($this->grupoprod_id);
-			// // return $grupo->foto_chica?:'no_img.png';
-			// return $this->getGrupo()->foto_chica;
-		// }
-	// }
+	public function getImagen()
+	{
+		if (!empty($this->getFoto())) {
+			return $this->getFotoChica();
+		} elseif (!empty($this->getGrupo()->getFotoChica())) {
+			return $this->getGrupo()->getFotoChica();
+		} else {
+			return 'no_img.png';
+		}
+	}
 	
   public static function DescontarStock(sfEvent $event){
     $prod = $event['object']->getProductoId();

@@ -99,7 +99,7 @@ class prodActions extends autoProdActions
       $datos_prod = $request->getParameter('producto');
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $producto = $form->save();
-      
+
       if (!empty($producto->foto)) {
         list($filename, $extension) = explode('.', $producto->foto);
         $ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
@@ -119,7 +119,7 @@ class prodActions extends autoProdActions
           $producto->save();
         }
       }
-      
+
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $producto)));
       if ($request->hasParameter('_save_and_add')){
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
@@ -150,11 +150,25 @@ class prodActions extends autoProdActions
   
   public function executeEdit(sfWebRequest $request)
   {
+	  $this->producto = $this->getRoute()->getObject();
     $parametros = array(
       'base_url' => $this->getUser()->getVarConfig('base_url'),
+		'image_url' => 'GetImagen?img='.$this->producto->getImagen(),
       'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura')
     );
-    $this->producto = $this->getRoute()->getObject();
     $this->form = $this->configuration->getForm($this->producto, $parametros);
+  }
+	
+  public function executeGetImagen(sfWebRequest $request)
+  {
+	  $img = $request->getParameter('img');
+	  list($nom, $ext) = explode('.', $img);
+	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$img, 'image/'.$ext);
+	  $response = $this->getResponse();
+	  $response->setContentType($img->getMIMEType());
+	  // $img->thumbnail(50,50);
+	  // $img->setQuality(50);
+	  $response->setContent($img);
+	  return sfView::NONE;
   }
 }

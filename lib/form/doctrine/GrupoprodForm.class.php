@@ -13,7 +13,7 @@ class GrupoprodForm extends BaseGrupoprodForm
   public function configure()
   {
     $productos = $this->getOption('productos');
-    $base_url = $this->getOption('base_url');
+    $image_url = $this->getOption('image_url');
     
     $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array('size' => 50, 'style' => 'font-size:16pt;'));
     
@@ -25,7 +25,7 @@ class GrupoprodForm extends BaseGrupoprodForm
     $this->widgetSchema['productos'] = new sfWidgetFormChoice(array('expanded' => true, 'multiple' => true, 'choices' => $productos));
     $this->widgetSchema['foto'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
-                                      'file_src' => $base_url.'/uploads/productos/'.$this->getObject()->getFotoChica(),
+                                      'file_src' => $image_url,
                                       'is_image' => true,
                                       'edit_mode' => true,
                                       'with_delete' => true,

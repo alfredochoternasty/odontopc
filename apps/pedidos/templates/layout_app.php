@@ -10,6 +10,7 @@
 			$favicon = $sf_user->getVarConfig('favicon');	
 		?>
 		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url?>/css/app.css">
+	  	<?php if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/images/'.$favicon.'" />'; ?>
 	
 		<script src="<?php echo $base_url?>/sfAdminThemejRollerPlugin/js/jquery.min.js"></script>
 		<style>
@@ -32,7 +33,7 @@
 				$("#abrir_promo").css("display","none");
 				$("#cerrar_promo").css("display","revert");
 			}
-			function cerrar_menu(){$(".sidemenu").css("left","-1000px");}
+			function cerrar_menu(){$(".sidemenu").css("left","-2000px");}
 			function cerrar_promo(){
 				$("#promociones").css("bottom","0px");
 				$("#promociones").css("height","30px");

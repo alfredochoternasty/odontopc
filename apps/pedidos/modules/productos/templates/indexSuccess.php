@@ -15,11 +15,11 @@
 <div class="productos">
 	<table width="100%">
 		<tr >
-		  <td width="10%"><img src="<?php echo $base_url ?>/uploads/productos/<?php echo $producto->getFoto() ?>" height="70vw" width="70vw"></td>
+		  <td width="10%"><img src="<?php echo url_for('productos/GetImagen?img='.$producto->getImagen()) ?>" height="70vw" width="70vw"></td>
 		  <td width="60%">
 			<span class="nombre_producto"><?php echo $producto ?></span><br>
 			<span class="nombre_grupo"><?php echo $producto->getGrupo() ?></span><br>
-			<span class="precio">$ <?php echo number_format($producto->precio_vta * 1.21, 2, ',', '.') ?></span>
+			<span class="precio">$ <?php echo number_format(round($producto->precio_vta * 1.21, 2, PHP_ROUND_HALF_UP), 2, ',', '.') ?></span>
 		  </td>
 		  <td width="30%" style="text-align:right">
 			<form action="<?php echo url_for('productos/pedir') ?>" onSubmit="return validar(this);">
