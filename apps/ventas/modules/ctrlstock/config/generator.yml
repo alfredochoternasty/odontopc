@@ -23,7 +23,7 @@ generator:
         stock_guardado: { label: Stock}
         ult_venta: {label: Ultimo Movimiento}
       list:
-        table_method: retrieveConJoins
+        # table_method: retrieveConJoins
         title: Listado de Control de Stock
         display: [Grupo, Producto, Zona, nro_lote, comprados, _vendidos, stock_guardado, ult_venta]
         object_actions: []

@@ -1051,7 +1051,7 @@ class Stylesheet {
             case ":first":
               $key = $page_selector;
               
-            default: continue;
+            default: break;
           }
 
           // Store the style for later...
