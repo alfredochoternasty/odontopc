@@ -43,12 +43,5 @@ class ctrlstockActions extends autoCtrlstockActions
     $dompdf->stream("control_stock.pdf");    
     return sfView::NONE;
   }
-	
-  public function executeIndex(sfWebRequest $request)
-  {
-		if (!empty($this->getUser()->getAttribute('ctrlstock.filters', ''))) parent::executeIndex($request);
-		$this->pager = $this->getPager();
-    $this->sort = $this->getSort();
-  }
   
 }

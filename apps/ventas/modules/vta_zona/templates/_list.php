@@ -45,6 +45,7 @@
 
     <tbody>
       <?php 
+				$clientes_compartidos = array(664,708,675,709,769,655,736,770,656,671,650,756,674,719,746,722,682,698,767);
 				$tot_descuento = 0;
 				$zona_id = 0;
 				$array_devueltos = array();
@@ -54,8 +55,11 @@
           <?php include_partial('vta_zona/list_td_tabular', array('ventas_zona' => $ventas_zona)); ?>
 					<td class="sf_admin_text">
 						<?php 
-							if (!empty($ventas_zona->grupo_porc_desc)) {
-								$descuento = sprintf("%01.2f", $ventas_zona->grupo_porc_desc)." %";
+							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
+								// si es algun cliente compartido la comision es de 10%
+								$descuento = "10.00%";
+							} elseif (!empty($ventas_zona->grupo_porc_desc)) {
+								  $descuento = sprintf("%01.2f", $ventas_zona->grupo_porc_desc)." %";
 							} elseif (!empty($ventas_zona->prod_porc_desc)) {
 								$descuento = sprintf("%01.2f", $ventas_zona->prod_porc_desc)." %";
 							} elseif (!empty($ventas_zona->grupo_precio_desc)) {
@@ -70,8 +74,10 @@
 					</td>					
 					<td class="sf_admin_text">
 						<?php
-							// $plata_devuelta = $ventas_zona->getDetalleResumen()->precio * $total_dev;
-							if (!empty($ventas_zona->grupo_porc_desc)) {
+							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
+								// si es algun cliente compartido la comision es de 10%
+								$descuento = ($ventas_zona->getDetalleResumen()->sub_total) * 10 / 100;
+							} elseif (!empty($ventas_zona->grupo_porc_desc)) {
 								$descuento = ($ventas_zona->getDetalleResumen()->sub_total) * $ventas_zona->grupo_porc_desc / 100;
 							} elseif (!empty($ventas_zona->prod_porc_desc)) {
 								$descuento = ($ventas_zona->getDetalleResumen()->sub_total)  * $ventas_zona->prod_porc_desc / 100;
@@ -149,31 +155,27 @@
 							$grupoprod_id = Doctrine_Core::getTable('Producto')->find($devuelto->producto_id)->grupoprod_id;
 							$desc_zona_grupo = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndGrupoprodId($devuelto->zona_id, $grupoprod_id);
 							$desc_zona_prod = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndProductoId($devuelto->zona_id, $devuelto->producto_id);
-							
-							if (!empty($desc_zona_grupo[0]->porc_desc)) {
+							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
+								// si es algun cliente compartido la comision es de 10%
+								$descuento = "10.00%";
+							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
 								$descuento = sprintf("%01.2f", $desc_zona_grupo[0]->porc_desc)." %";
 							} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
 								$descuento = sprintf("%01.2f", $desc_zona_prod[0]->porc_desc)." %";
-							// } elseif (!empty($grupo_precio_desc)) {
-								// $descuento = sprintf("$ %01.2f", $grupo_precio_desc);
-							// } elseif (!empty($prod_precio_desc)) {
-								// $descuento = sprintf("$ %01.2f", $prod_precio_desc);
-							// } else {
-								// $descuento = '';
 							}
 							echo $descuento;
 					?>
 					</td>					
 					<td class="sf_admin_text">
 						<?php
-							if (!empty($desc_zona_grupo[0]->porc_desc)) {
+							// $plata_devuelta = $ventas_zona->getDetalleResumen()->precio * $total_dev;
+							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
+								// si es algun cliente compartido la comision es de 10%
+								$descuento = ($devuelto->precio * $devuelto->cantidad) * (10/100);
+							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
 								$descuento = ($devuelto->precio * $devuelto->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
 							} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
 								$descuento = ($devuelto->precio * $devuelto->cantidad) * ($desc_zona_prod[0]->porc_desc/100);
-							// } elseif (!empty($grupo_precio_desc)) {
-								// $descuento = sprintf("$ %01.2f", $grupo_precio_desc);
-							// } elseif (!empty($prod_precio_desc)) {
-								// $descuento = sprintf("$ %01.2f", $prod_precio_desc);
 							} else {
 								$descuento = 0;
 							}

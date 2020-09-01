@@ -21,7 +21,6 @@ generator:
         table_method: get_pendientes
         display: [id, fecha, Cliente, direccion_entrega]
         object_actions:
-          _delete: ~
           detalle: ~
       filter:
         display: [fecha, cliente_id]

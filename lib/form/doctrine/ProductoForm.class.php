@@ -16,7 +16,8 @@ class ProductoForm extends BaseProductoForm
     unset($this['mueve_stock'], $this['moneda_id'], $this['genera_comision'], $this['stock_actual'], $this['ctr_fact_grupo'], $this['grupo2'], $this['grupo3'], $this['descripcion']);
     $image_url = $this->getOption('image_url');
     $modulo_factura = $this->getOption('modulo_factura');
-        
+    
+	$this->widgetSchema['nombre'] = new sfWidgetFormInput(array(), array('size' => '50'));
     $this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => false, 'order_by' => array('nombre', 'asc')));    
     
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));

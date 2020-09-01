@@ -25,7 +25,7 @@ generator:
         table_method: retrieveProdConGrupo
         title: Productos
         sort: [nombre, asc]
-        display: [Grupo, nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id, _foto]
+        display: [Grupo, codigo, nombre, _precio_venta, minimo_stock, orden_grupo, activo, lista_id, _foto]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}

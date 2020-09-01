@@ -225,7 +225,7 @@ class detresActions extends autoDetresActions
     $q->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
 		$q->select('l.nro_lote, l.fecha_vto, l.stock');
 		$q->andWhere('l.stock > 0 ');
-    $q->orderBy('l.fecha_vto asc');     
+    $q->orderBy('l.fecha_vto asc');
     $lotes_stock = $q->fetchArray();
 	
 		if ($zona == 1 && $resumen->tipofactura_id != 4) {

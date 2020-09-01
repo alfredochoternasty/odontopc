@@ -88,7 +88,7 @@ hr {
 
 <table width="100%" class="lista_precios">  
 <?php
-	$base_url = 'http://ventas.ntiimplantes.com.ar/'.$sf_user->getVarConfig('base_url');
+	$base_url = 'http://ventas.ntiimplantes.com.ar'.$sf_user->getVarConfig('base_url');
 	$count = 1;
   $grupo = 0;
   foreach($productos as $producto):
@@ -114,18 +114,11 @@ hr {
 					echo '<td colspan="3"><img src="'.$base_url.'/uploads/productos/'.$foto_grupo.'"></td></tr><tr>';
 				}
 			}
-			if (empty($foto_grupo)) { 
-				$foto_prod = $producto->getFotoChica();
-				if (!empty($foto_prod)) {
-					echo '<td><img src="'.$base_url.'/uploads/productos/'.$foto_prod.'"></td>';
-				} else {
-					echo '<td></td>';
-				}
-			}
+			echo '<td><img src="'.$base_url.url_for('prod/GetImagen?img='.$producto->getImagen()).'"></td>';
 		}
   ?>
     <td <?php echo (($mostrar_foto===true) && !empty($foto_grupo))?'colspan="2"':'' ?>>
-			<?php echo utf8_decode($producto->nombre) ?><br>
+			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>
 		</td>
     <td>

@@ -83,15 +83,18 @@ class ProductoTable extends Doctrine_Table
 
     public function getActivos($debito=false){
 			$query = Doctrine_Core::getTable('Producto')->createQuery('q');
-			$query->select('id, nombre');
-			$query->where('activo = 1');
+		$query->select('id, nombre');
+      $query->where('activo = true');
+			
 			if ($debito)
 				$query->andWhere('id = 309');
 			else 
 				$query->andWhere('grupoprod_id not in (1, 15) or id = 71');
+			
       $query->orderBy('grupoprod_id');
       $query->addOrderBy('orden_grupo');
       $query->addOrderBy('nombre');
+		//echo $query->getSqlQuery();
 			$result = $query->execute();
       return $result;
     }
