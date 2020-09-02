@@ -12,13 +12,39 @@
  */
 class ControlStock extends BaseControlStock
 {
-	function getCantVendida()
-	{
-		return (empty($this->cant_vendida))? 0:$this->cant_vendida;
+	public function getCantComprada(){
+		$detalles_compras = Doctrine::getTable('DetalleCompra')->findByProductoIdAndNroLote($this->producto_id, $this->nro_lote);
+		$cantidad = 0;
+		foreach ($detalles_compras as $detalle) {
+			if ($detalle->getCompra()->zona_id == $this->zona_id) $cantidad += $detalle->cantidad;
+		}
+		return $cantidad;
 	}
 	
-	function getStock()
+	function getCantVendida()
 	{
-		return (empty($this->stock))? 0:$this->stock;
-	}	
+		$detalles_ventas = Doctrine::getTable('DetalleResumen')->findByProductoIdAndNroLote($this->producto_id, $this->nro_lote);
+		$cantidad = 0;
+		foreach ($detalles_ventas as $detalle) {
+			if ($detalle->getResumen()->zona_id == $this->zona_id)
+				if (($this->zona_id == 1 && empty($detalle->det_remito_id)) || ($this->zona_id != 1 && !empty($detalle->det_remito_id)))
+					$cantidad += $detalle->cantidad;
+		}
+		return $cantidad - $this->getCantDevueltos();
+	}
+	
+	function getCantDevueltos()
+	{
+		$devoluciones = Doctrine::getTable('DevProducto')->findByProductoIdAndNroLoteAndZonaId($this->producto_id, $this->nro_lote, $this->zona_id);
+		$cantidad = 0;
+		foreach ($devoluciones as $dev) {
+			$detalles_resumen = $dev->getResumen()->getDetalle();
+			$es_dev_de_remito = false;
+			foreach ($detalles_resumen as $detalle) {
+				if (!empty($detalle->det_remito_id)) $es_dev_de_remito = true;
+			}
+			if (!$es_dev_de_remito) $cantidad += $dev->cantidad;
+		}
+		return $cantidad;
+	}
 }

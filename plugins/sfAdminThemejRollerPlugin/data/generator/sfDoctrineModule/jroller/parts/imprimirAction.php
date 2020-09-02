@@ -51,6 +51,7 @@
   public function executeListExcelTodo(sfWebRequest $request)
   {
     $this->descargar_excel(false);
+    return sfView::NONE;
   }
   
   public function executeListExcelPagina(sfWebRequest $request)
@@ -62,6 +63,7 @@
     } else {
       $this->descargar_excel(true);
     }
+    return sfView::NONE;
   }
     
   public function descargar_excel($imp_pag)
@@ -94,7 +96,5 @@
           echo utf8_decode($string)."\r\n";
         }
     }
-		
-    die();
-    // return sfView::NONE;
+		return sfView::NONE;
   }

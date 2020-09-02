@@ -7,46 +7,9 @@ select
 	p.grupoprod_id AS grupoprod_id,
 	l.nro_lote AS nro_lote,
 	l.zona_id AS zona_id,
-	(
-		select sum(dc.cantidad) 
-		from 
-			detalle_compra dc 
-				join compra on dc.compra_id = compra.id 
-		where dc.producto_id = l.producto_id and dc.nro_lote = l.nro_lote and l.zona_id = compra.zona_id and dc.nro_lote not like 'er%'
-	) AS comprados,
-	(
-		select (sum(lv.cantidad) + sum(lv.bonificados))
-		from listado_ventas lv 
-		where 
-			lv.nro_lote = l.nro_lote 
-			and lv.cantidad >= 0
-			and lv.producto_id = l.producto_id
-			and lv.zona_id = l.zona_id 
-			and (
-						(isnull(lv.det_remito_id) and lv.zona_id = 1) 
-						or (lv.det_remito_id is not null and lv.zona_id <> 1)
-					)
-	) AS vendidos,
-	(
-		select 
-			sum(dp2.cantidad) 
-		from 
-			dev_producto dp2 
-				join cliente c on dp2.cliente_id = c.id
-		where 
-			c.zona_id = l.zona_id 
-			and dp2.producto_id = l.producto_id
-			and dp2.nro_lote = l.nro_lote
-			and exists(
-							select 1 
-							from resumen r2 
-								join detalle_resumen dr2 on r2.id = dr2.resumen_id
-							where r2.id = dp2.resumen_id
-										and dr2.producto_id = l.producto_id
-										and dr2.nro_lote = l.nro_lote
-										and isnull(dr2.det_remito_id)
-			)
-	) AS cant_dev,
+	0 AS comprados,
+	0 AS vendidos,
+	0 AS cant_dev,
 	l.stock AS stock_guardado,
 	p.minimo_stock AS minimo_stock,
 	(
@@ -68,15 +31,4 @@ where
 	and p.activo = 1
 	and l.activo = 1
 	and l.externo = 0 
-	and exists(select 1 from detalle_compra dc where dc.nro_lote = l.nro_lote and dc.producto_id = l.producto_id) 
-group 
-	by l.id,
-	l.producto_id,
-	p.grupoprod_id,
-	l.nro_lote,
-	l.zona_id,
-	l.stock
-order by 
-	p.orden_grupo,
-	p.nombre,
-	l.nro_lote;
+	and exists(select 1 from detalle_compra dc where dc.nro_lote = l.nro_lote and dc.producto_id = l.producto_id);

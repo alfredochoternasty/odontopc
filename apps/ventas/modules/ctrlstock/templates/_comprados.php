@@ -1,0 +1,1 @@
+<?php echo $control_stock->getCantComprada(); ?>

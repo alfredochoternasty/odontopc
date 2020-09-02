@@ -29,7 +29,7 @@
 				$odd = fmod(++$i, 2) ? ' odd' : '';
 				$actual = $categoria->getCantVendida($zona_id);
 				$anterior = $categoria->getCantVendidaAnt($zona_id);
-				$porcentaje = ($actual*100/$anterior)-100;
+				$porcentaje = $anterior>0?($actual*100/$anterior)-100:0;
 		?>
 				<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<td class="sf_admin_text"><?php echo $categoria->nombre ?></td>

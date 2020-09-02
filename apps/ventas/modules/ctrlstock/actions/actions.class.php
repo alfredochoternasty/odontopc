@@ -14,34 +14,9 @@ require_once dirname(__FILE__).'/../lib/ctrlstockGeneratorHelper.class.php';
 class ctrlstockActions extends autoCtrlstockActions
 {
 	
-  public function executeListImprimirTodo(sfWebRequest $request){
-    //$filtro = new ControlStockFormFilter();
-    //$consulta = $filtro->buildQuery($this->getFilters());
-	$consulta = $this->buildQuery($this->getFilters());
-	$consulta->orderBy('nombre');
-    $listado = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-		$dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
-    $dompdf->set_paper('A4','landscape');
-    $dompdf->render();
-    $dompdf->stream("control_stock.pdf");    
-    return sfView::NONE;
-  }	
-	
-  public function executeListImprimirPagina(sfWebRequest $request){
-    $filtro = new ControlStockFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-		$pagina = $this->getUser()->getAttribute('ctrlstock.page', '1', 'admin_module')-1;
-		$consulta->limit(40)->offset($pagina * 40);
-    $listado = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-		$dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
-    $dompdf->set_paper('A4','landscape');
-    $dompdf->render();
-    $dompdf->stream("control_stock.pdf");    
-    return sfView::NONE;
+  public function getModoImpresion()
+  {
+    return 'landscape';
   }
   
 }

@@ -54,17 +54,7 @@
     </tfoot>
 
     <tbody>
-				<?php /*
-					if ($hasFilters->count() > 0) {
-						echo '<tr><td> Filtro utilizado: ';
-						foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-							@$valor = $hasFilters->getRaw($name);
-							$tag = $field->getConfig('label');
-							$tag = empty($tag)?$name:$tag;							
-							if (!empty($valor)) echo $tag.' = '.$valor;
-						}
-						echo '</td></tr>';
-					} */
+				<?php
 					foreach ($pager->getResults() as $i => $movimiento_producto): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
 					<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 						<?php include_partial('movprod/list_td_tabular', array('movimiento_producto' => $movimiento_producto)) ?>
@@ -72,7 +62,18 @@
 					</tr>
 					<?php 
 					endforeach;
-			?>
+				?>
+				<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+					<td colspan="6"></td>
+					<td><span style="font-size:20px;font-weight:bold;">
+					<?php
+						$cantidad = 0;
+						foreach ($pager->getResults() as $i => $movimiento_producto) $cantidad += $movimiento_producto->cantidad;
+						echo $cantidad;
+					?>
+					</span></td>
+					<td colspan="6"></td>
+				</tr>
     </tbody>
   </table>
 
