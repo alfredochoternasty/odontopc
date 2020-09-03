@@ -31,7 +31,7 @@ class DetallePedido extends BaseDetallePedido
       $lote = $lotes_disponibles[0];
       
       // si el stock alcanza asigno el lote
-      if (($lote->stock - $this->cantidad) > 0) { 
+      if (($lote->stock - $this->cantidad) >= 0) { 
         $this->nro_lote = $lote->nro_lote;
         $this->asignacion_lote = 'OK';
         $this->save();
