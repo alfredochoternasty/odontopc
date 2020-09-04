@@ -83,8 +83,8 @@ class ProductoTable extends Doctrine_Table
 
     public function getActivos($debito=false){
 			$query = Doctrine_Core::getTable('Producto')->createQuery('q');
-		$query->select('id, nombre');
-      $query->where('activo = true');
+			$query->select('id, nombre');
+      $query->where('activo = 1');
 			
 			if ($debito)
 				$query->andWhere('id = 309');

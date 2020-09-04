@@ -31,12 +31,12 @@ class cliActions extends autoCliActions
     $cliente = Doctrine::getTable('Cliente')->find($request->getParameter('id'));
     
 		$correo = trim($cliente->email);
-		$usuario = $cliente->dni;
+		$usuario = $cliente->cuit;
 		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		$clave = substr(str_shuffle($chars),0,8);
     
 		if(empty($usuario)){
-      $this->getUser()->setFlash('error', 'El cliente debe tener cargado un DNI');
+      $this->getUser()->setFlash('error', 'El cliente debe tener cargado un CUIT');
       $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
 		}
 		
@@ -50,7 +50,8 @@ class cliActions extends autoCliActions
       $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
     }
 		
-		if(empty($cliente->usuario_id)){
+		$user = Doctrine::getTable('sfGuardUser')->findByUsername($usuario);
+		if(empty($user[0])){
 			$user = new sfGuardUser();
 			$accion = 'generado';
 			$user->setEmailAddress($correo);				
@@ -66,7 +67,7 @@ class cliActions extends autoCliActions
 			$cliente->setUsuarioId($user->getId());
 			$cliente->save();
 		}else{
-			$user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
+			$user = $user[0];
 			$accion = 'actualizado';
 			$user->setPassword($clave);
 			$user->save();      	  
@@ -78,7 +79,7 @@ class cliActions extends autoCliActions
 		$mensaje->setSubject('NTI Sistema de Pedidos');
 		$headers = $mensaje->getHeaders();
 		$headers->addTextHeader('Content-Type', 'text/html');
-		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente));			
+		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));			
 		$mensaje->setBody($msj, "text/html");
 		$this->getMailer()->send($mensaje);    
 		$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());

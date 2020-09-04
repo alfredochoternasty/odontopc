@@ -67,8 +67,11 @@ class productosActions extends sfActions
 			$detalle_pedido->cantidad += $cantidad;
 		}
 		$producto = Doctrine::getTable('Producto')->find($producto_id);
-		$detalle_pedido->precio = $producto->precio_vta * 1.21;
-		$detalle_pedido->total = $producto->precio_vta * 1.21 * $detalle_pedido->cantidad;
+		$precio = $producto->precio_vta;
+		$iva = round($precio * 0.21, 1);
+		$total = round($precio + $iva);
+		$detalle_pedido->precio = $total;
+		$detalle_pedido->total = $total * $detalle_pedido->cantidad;
 		$detalle_pedido->save();
 		$this->redirect('productos/filtrado');
   }
@@ -132,8 +135,6 @@ class productosActions extends sfActions
 	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$img, 'image/'.$ext);
 	  $response = $this->getResponse();
 	  $response->setContentType($img->getMIMEType());
-	  // $img->thumbnail(50,50);
-	  // $img->setQuality(50);
 	  $response->setContent($img);
 	  return sfView::NONE;
   }
