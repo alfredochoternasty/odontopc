@@ -116,8 +116,8 @@ class prodActions extends autoProdActions
         } else {
           foreach ($rutas_chica as $ruta) {
             $img = new sfImage($ruta_img, 'image/'.$extension);
-            $img->thumbnail(100, 70);
-            $img->setQuality(60);
+            $img->thumbnail(150, 150);
+            $img->setQuality(80);
             $img->saveAs($ruta);
           }
           $producto->setFotoChica($filename.'_chica.'.$extension);

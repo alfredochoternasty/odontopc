@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//Es" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml" lang="es">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-<title>Listado de items</title>
+<title>Lista de precios NTI Implantes</title>
 <style type="text/css">
 @page {
 	margin: 2cm;
@@ -101,9 +101,9 @@ hr {
       $grupo = $aux;
       ?>
         <tr style="background-color:#3D6092;color:#ffffff;font-weight:bold;">
-					<td <?php echo empty($producto->getGrupo()->foto)? 'colspan="3"':'colspan="2"' ?>>
+					<td colspan="3">
 						<?php 
-							if (!empty($producto->getGrupo()->foto)) echo '<img width="100px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getGrupo()->getImagen().'">';
+							if (!empty($producto->getGrupo()->foto)) echo '<img width="150px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getGrupo()->getImagen().'">';
 							echo '&nbsp;&nbsp;&nbsp;'.$producto->getGrupo();
 						?>
 					</td>
@@ -112,12 +112,12 @@ hr {
     }
 ?>
 	<tr>
-		<?php if (empty($producto->getGrupo()->foto)) echo '<td><img width="100px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getImagen().'"></td>'; ?>
-    <td <?php if (!empty($producto->getGrupo()->foto)) echo 'width="50%"' ?>>
+		<?php if (empty($producto->getGrupo()->foto)) echo '<td width="150px"><img width="150px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getImagen().'"></td>'; ?>
+    <td <?php echo !empty($producto->getGrupo()->foto)? 'colspan="2"':'' ?>>
 			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>
 		</td>
-    <td <?php if (!empty($producto->getGrupo()->foto)) echo 'width="50%"' ?>>
+    <td>
 			<?php 
 				$precio = $producto->precio_vta;
 				$iva = round($precio * 0.21, 1);
