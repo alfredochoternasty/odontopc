@@ -149,7 +149,7 @@ class cobroActions extends autoCobroActions
     $this->getUser()->setFlash('notice', 'El mail se enviado correctamente a la direccion '.$cobro->getCliente()->getEmail());
     $this->redirect('@cobro');
   }
-	
+
 	public function executeDescargar(sfwebRequest $request)
 	{
 			$cobro = Doctrine::getTable('cobro')->find($request->getParameter('cid'));

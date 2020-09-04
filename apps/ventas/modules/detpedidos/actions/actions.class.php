@@ -65,7 +65,7 @@ class detpedidosActions extends autoDetpedidosActions
       $resumen->zona_id = $pedido->getCliente()->zona_id; 
       $tipos_facturas = Doctrine::getTable('TipoFactura')->finAll();
       foreach ($tipos_facturas as $tipo_factura) {
-        $cond_fiscales = explode(',', $tipo_factura->cond_fiscales);
+		$cond_fiscales = explode(',', $tipo_factura->cond_fiscales);
         if (in_array($pedido->getCliente()->condicionfiscal_id, $cond_fiscales[0])) {
           $resumen->tipofactura_id = $tipo_factura->id;
           break;

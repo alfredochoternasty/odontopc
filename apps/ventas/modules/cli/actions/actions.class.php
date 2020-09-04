@@ -79,7 +79,7 @@ class cliActions extends autoCliActions
 		$mensaje->setSubject('NTI Sistema de Pedidos');
 		$headers = $mensaje->getHeaders();
 		$headers->addTextHeader('Content-Type', 'text/html');
-		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));			
+		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));
 		$mensaje->setBody($msj, "text/html");
 		$this->getMailer()->send($mensaje);    
 		$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());

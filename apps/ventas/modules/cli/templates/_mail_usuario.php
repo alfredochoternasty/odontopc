@@ -5,5 +5,5 @@
 		<li><b>Usuario:</b>&nbsp;&nbsp;<?php echo $cliente->cuit ?></li>
 		<li><b>Clave:</b>&nbsp;&nbsp;<?php echo $clave ?></li>
 	</ul>
-	Recuerde cambiar su clave.
+	<b>Para mayor seguridad cambie la clave.</b>
 </p>

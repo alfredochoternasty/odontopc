@@ -88,9 +88,9 @@ hr {
 
 <table width="100%" class="lista_precios">  
 <?php
-	$base_url = $sf_user->getVarConfig('base_url');
-	// $base_url = 'http://localhost'.$sf_user->getVarConfig('base_url');
-	//$base_url = 'http://ventas.ntiimplantes.com.ar'.$sf_user->getVarConfig('base_url');
+	//$base_url = $sf_user->getVarConfig('base_url');
+	//$base_url = 'http://localhost'.$sf_user->getVarConfig('base_url');
+	$base_url = 'http://ventas.ntiimplantes.com.ar'.$sf_user->getVarConfig('base_url');
 	$count = 1;
   $grupo = 0;
   foreach($productos as $producto):
@@ -103,7 +103,7 @@ hr {
         <tr style="background-color:#3D6092;color:#ffffff;font-weight:bold;">
 					<td colspan="3">
 						<?php 
-							if (!empty($producto->getGrupo()->foto)) echo '<img width="150px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getGrupo()->getImagen().'">';
+							if (!empty($producto->getGrupo()->foto)) echo '<img src="'.$base_url.'/uploads/productos/'.$producto->getGrupo()->getImagen().'">';
 							echo '&nbsp;&nbsp;&nbsp;'.$producto->getGrupo();
 						?>
 					</td>
@@ -112,7 +112,7 @@ hr {
     }
 ?>
 	<tr>
-		<?php if (empty($producto->getGrupo()->foto)) echo '<td width="150px"><img width="150px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getImagen().'"></td>'; ?>
+		<?php if (empty($producto->getGrupo()->foto)) echo '<td width="150px"><img src="'.$base_url.'/uploads/productos/'.$producto->getImagen().'"></td>'; ?>
     <td <?php echo !empty($producto->getGrupo()->foto)? 'colspan="2"':'' ?>>
 			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>

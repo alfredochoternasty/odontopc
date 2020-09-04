@@ -99,7 +99,7 @@ class prodActions extends autoProdActions
       $datos_prod = $request->getParameter('producto');
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $producto = $form->save();
-      
+
       if (!empty($producto->foto)) {
         list($filename, $extension) = explode('.', $producto->foto);
         $ruta_img = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;

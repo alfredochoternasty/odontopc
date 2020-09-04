@@ -10,6 +10,7 @@ main table tr th{background: #CCC;}
 .page-number:before {content: "Página " counter(page);}
 hr {page-break-after: always;border: 0;}
 #footer2 {position:fixed; bottom:0; right:0; width:20%}
+
 @page { margin: 100px 40px 40px 80px;}
 header { position: fixed; top: -60px; left: 0px; right: 0px; height: 80px; }
 footer { position: fixed; bottom: -60px; left: 0px; right: 0px; height: 50px; }
