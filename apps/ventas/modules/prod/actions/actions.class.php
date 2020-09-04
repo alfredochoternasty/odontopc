@@ -99,22 +99,27 @@ class prodActions extends autoProdActions
       $datos_prod = $request->getParameter('producto');
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $producto = $form->save();
-
+      
       if (!empty($producto->foto)) {
         list($filename, $extension) = explode('.', $producto->foto);
-        $ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
-        $ruta_chica = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension;
+        $ruta_img = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
+        $rutas_chica = array(
+          sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension,
+          sfConfig::get('sf_web_dir').'uploads/productos/'.$filename.'_chica.'.$extension
+        );
         if ($datos_prod['foto_delete'] == 'on') {
-          unlink($ruta);
-          unlink($ruta_chica);
+          unlink($ruta_img);
+          foreach ($rutas_chica as $ruta) unlink($ruta);
           $producto->foto = '';
           $producto->foto_chica = '';
           $producto->save();
         } else {
-          $img = new sfImage($ruta, 'image/'.$extension);
-          $img->thumbnail(50,50);
-          $img->setQuality(50);
-          $img->saveAs($ruta_chica);
+          foreach ($rutas_chica as $ruta) {
+            $img = new sfImage($ruta_img, 'image/'.$extension);
+            $img->thumbnail(100, 70);
+            $img->setQuality(60);
+            $img->saveAs($ruta);
+          }
           $producto->setFotoChica($filename.'_chica.'.$extension);
           $producto->save();
         }

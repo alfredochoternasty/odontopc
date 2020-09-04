@@ -26,18 +26,15 @@ prod:
   mailer:
     param:
       delivery_strategy: realtime
-      # delivery_strategy: none
-      # delivery_strategy: single_address
-      # delivery_address:  alfredochoternasty@gmail.com
       transport:
         class: Swift_SmtpTransport
         param:
-          host: in-v3.mailjet.com
-          port: 25
-          # encryption: tls
-          # auth_mode: auth
-          username: 2a03b5e3c878137b3f77535377755dfe
-          password: 72a6a29d87c1f864d3129bc8c6fb1219
+          host: smtp.gmail.com
+          port: 465
+          encryption: ssl
+          auth_mode: auth
+          username: implantesnti@gmail.com
+          password: implantesnti2020abc
 
 all:
   user:

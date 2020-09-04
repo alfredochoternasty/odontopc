@@ -88,7 +88,9 @@ hr {
 
 <table width="100%" class="lista_precios">  
 <?php
-	$base_url = 'http://ventas.ntiimplantes.com.ar'.$sf_user->getVarConfig('base_url');
+	$base_url = $sf_user->getVarConfig('base_url');
+	// $base_url = 'http://localhost'.$sf_user->getVarConfig('base_url');
+	//$base_url = 'http://ventas.ntiimplantes.com.ar'.$sf_user->getVarConfig('base_url');
 	$count = 1;
   $grupo = 0;
   foreach($productos as $producto):
@@ -98,30 +100,24 @@ hr {
 			$count=1;
       $grupo = $aux;
       ?>
-        <tr>
-          <td colspan="<?php echo ($mostrar_foto===true)? 3:2 ?>" style="background-color:#3D6092;color:#ffffff;font-weight:bold;"><?php echo $producto->getGrupo() ?></td>
+        <tr style="background-color:#3D6092;color:#ffffff;font-weight:bold;">
+					<td <?php echo empty($producto->getGrupo()->foto)? 'colspan="3"':'colspan="2"' ?>>
+						<?php 
+							if (!empty($producto->getGrupo()->foto)) echo '<img width="100px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getGrupo()->getImagen().'">';
+							echo '&nbsp;&nbsp;&nbsp;'.$producto->getGrupo();
+						?>
+					</td>
         </tr>            
       <?php
     }
 ?>
 	<tr>
-<?php	
-		$foto_grupo = '';
-		if ($mostrar_foto) {
-			if ($count == 1) {
-				$foto_grupo = $producto->getGrupo()->getFotoChica();
-				if (!empty($foto_grupo)) { 
-					echo '<td colspan="3"><img src="'.$base_url.'/uploads/productos/'.$foto_grupo.'"></td></tr><tr>';
-				}
-			}
-			echo '<td><img src="'.$base_url.url_for('prod/GetImagen?img='.$producto->getImagen()).'"></td>';
-		}
-  ?>
-    <td <?php echo (($mostrar_foto===true) && !empty($foto_grupo))?'colspan="2"':'' ?>>
+		<?php if (empty($producto->getGrupo()->foto)) echo '<td><img width="100px" height="70px" src="'.$base_url.'/uploads/productos/'.$producto->getImagen().'"></td>'; ?>
+    <td <?php if (!empty($producto->getGrupo()->foto)) echo 'width="50%"' ?>>
 			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>
 		</td>
-    <td>
+    <td <?php if (!empty($producto->getGrupo()->foto)) echo 'width="50%"' ?>>
 			<?php 
 				$precio = $producto->precio_vta;
 				$iva = round($precio * 0.21, 1);

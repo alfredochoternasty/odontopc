@@ -6,12 +6,10 @@
 		if (isset($valor)) {
 			switch($tipo){
 				case 'ForeignKey':
-					if (!empty($valor))
-						if ($name != 'usuario') {
-							$valor = Doctrine::getTable(ucfirst(str_replace('_id', '', $name)))->find($valor);
-						} else {
-							$valor = Doctrine::getTable('SfGuardUser')->find($valor);
-						}
+					if (!empty($valor)) {
+						$opciones = $filters->getWidget($name)->getOptions();
+						$valor = Doctrine::getTable($opciones['model'])->find($valor);
+					}
 					break;
 				case 'Date':
 					if (array_key_exists('from', $valor)) {
