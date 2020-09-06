@@ -103,7 +103,7 @@ hr {
         <tr style="background-color:#3D6092;color:#ffffff;font-weight:bold;">
 					<td colspan="3">
 						<?php 
-							if (!empty($producto->getGrupo()->foto)) echo '<img src="'.$base_url.'/uploads/productos/'.$producto->getGrupo()->getImagen().'">';
+							if (!empty($producto->getGrupo()->foto)) echo '<img src="'.$base_url.'/prod/GetImagen?img='.$producto->getGrupo()->getImagen().'">';
 							echo '&nbsp;&nbsp;&nbsp;'.$producto->getGrupo();
 						?>
 					</td>
@@ -112,7 +112,7 @@ hr {
     }
 ?>
 	<tr>
-		<?php if (empty($producto->getGrupo()->foto)) echo '<td width="150px"><img src="'.$base_url.'/uploads/productos/'.$producto->getImagen().'"></td>'; ?>
+		<?php if (empty($producto->getGrupo()->foto)) echo '<td width="150px"><img witdh="150" height="80" src="'.$base_url.'/prod/GetImagen?img='.$producto->getImagen().'"></td>'; ?>
     <td <?php echo !empty($producto->getGrupo()->foto)? 'colspan="2"':'' ?>>
 			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>

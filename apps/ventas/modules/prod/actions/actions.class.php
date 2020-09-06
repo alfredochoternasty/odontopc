@@ -103,23 +103,18 @@ class prodActions extends autoProdActions
       if (!empty($producto->foto)) {
         list($filename, $extension) = explode('.', $producto->foto);
         $ruta_img = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
-        $rutas_chica = array(
-          sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension,
-          sfConfig::get('sf_web_dir').'uploads/productos/'.$filename.'_chica.'.$extension
-        );
+        $ruta_chica = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension;
         if ($datos_prod['foto_delete'] == 'on') {
           unlink($ruta_img);
-          foreach ($rutas_chica as $ruta) unlink($ruta);
+          unlink($ruta_chica);
           $producto->foto = '';
           $producto->foto_chica = '';
           $producto->save();
         } else {
-          foreach ($rutas_chica as $ruta) {
-            $img = new sfImage($ruta_img, 'image/'.$extension);
-            $img->thumbnail(150, 150);
-            $img->setQuality(80);
-            $img->saveAs($ruta);
-          }
+          $img = new sfImage($ruta_img, 'image/'.$extension);
+          $img->thumbnail(150, 80);
+          $img->setQuality(80);
+          $img->saveAs($ruta_chica);
           $producto->setFotoChica($filename.'_chica.'.$extension);
           $producto->save();
         }

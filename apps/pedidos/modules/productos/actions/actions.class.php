@@ -15,28 +15,28 @@ class productosActions extends sfActions
 		$this->productos = Doctrine::getTable('Producto')->getActivos();
 		$this->grupo_id = 0;
 		$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
-		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,15)')->orderBy('nombre')->execute();
+		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->getGruposActivos();
 		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
     $this->setLayout('layout_app');
   }
 	
   public function executeFiltrado(sfWebRequest $request)
   {
-		if ($request->getParameter('grupo_id') == '-') {
-			$this->productos = Doctrine::getTable('Producto')->getActivos();
-			$this->grupo_id = 0;
+		// if ($request->getParameter('grupo_id') == '-') {
+			// $this->productos = Doctrine::getTable('Producto')->getActivos();
+			// $this->grupo_id = 0;
+			// $this->getUser()->setAttribute('grupo_id', $this->grupo_id);
+		// } else {
+			$this->grupo_id = !$request->hasParameter('grupo_id')?$this->getUser()->getAttribute('grupo_id'):$request->getParameter('grupo_id');
+			// if (empty($this->grupo_id)) {
+				$this->productos = Doctrine::getTable('Producto')->getActivos($this->grupo_id);
+			// } else {
+				// $this->productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($this->grupo_id, 1);
+			// }
 			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
-		} else {
-			$this->grupo_id = empty($request->getParameter('grupo_id'))?$this->getUser()->getAttribute('grupo_id'):$request->getParameter('grupo_id');
-			if (empty($this->grupo_id)) {
-				$this->productos = Doctrine::getTable('Producto')->getActivos();
-			} else {
-				$this->productos = Doctrine::getTable('Producto')->findByGrupoprodIdAndActivo($this->grupo_id, 1);
-			}
-			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
-		}
+		// }
 		
-		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->createQuery('a')->where('id not in (1,15)')->execute();
+		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->getGruposActivos();
 		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
     $this->setLayout('layout_app');
 		$this->setTemplate('index');

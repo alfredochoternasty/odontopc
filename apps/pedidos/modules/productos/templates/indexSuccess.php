@@ -3,7 +3,7 @@
 <div class="combo_grupos">
 		<form id="grupos" action="<?php echo url_for('productos/filtrado') ?>">
 			<select name="grupo_id" id="grupo_id">
-				<option value="-">Mostrar todos los productos</option>
+				<option value="0">Mostrar todos los productos</option>
 				<?php foreach ($grupos_prod as $grupo): ?>
 				<option value="<?php echo $grupo->id ?>" <?php if($grupo_id == $grupo->id) echo "selected" ?> ><?php echo $grupo->nombre ?></option>
 				<?php endforeach; ?>

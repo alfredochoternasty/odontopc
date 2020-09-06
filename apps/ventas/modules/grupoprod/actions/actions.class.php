@@ -49,7 +49,7 @@ class grupoprodActions extends autoGrupoprodActions
       if (!empty($grupoprod->foto)) {
         list($filename, $extension) = explode('.', $grupoprod->foto);
         $ruta = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'.'.$extension;
-        $ruta_chica = sfConfig::get('sf_web_dir').'uploads/productos/'.$filename.'_chica.'.$extension
+        $ruta_chica = sfConfig::get('sf_upload_dir').'/productos/'.$filename.'_chica.'.$extension;
         if ($datos_grupo['foto_delete'] == 'on') {
           unlink($ruta);
           unlink($ruta_chica);
@@ -58,7 +58,7 @@ class grupoprodActions extends autoGrupoprodActions
           $grupoprod->save();
         } else {
           $img = new sfImage($ruta, 'image/'.$extension);
-          $img->thumbnail(150,150);
+          $img->thumbnail(150,80);
           $img->setQuality(80);
           $img->saveAs($ruta_chica);
           $grupoprod->setFotoChica($filename.'_chica.'.$extension);
@@ -91,8 +91,6 @@ class grupoprodActions extends autoGrupoprodActions
 	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/productos/'.$img, 'image/'.$ext);
 	  $response = $this->getResponse();
 	  $response->setContentType($img->getMIMEType());
-	  // $img->thumbnail(50,50);
-	  // $img->setQuality(50);
 	  $response->setContent($img);
 	  return sfView::NONE;
   }

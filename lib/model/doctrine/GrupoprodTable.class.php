@@ -20,6 +20,14 @@ class GrupoprodTable extends Doctrine_Table
     public function retrieveProds(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->where('id <> 1');
+      $q->orderBy('nombre');
       return $q;
+    }
+    
+    public function getGruposActivos(){
+      $q = Doctrine::getTable('Grupoprod')->createquery('q');
+      $q->where('id <> 1');
+      $q->orderBy('nombre');
+      return $q->execute();
     } 
 }
