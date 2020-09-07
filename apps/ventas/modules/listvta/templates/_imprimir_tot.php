@@ -38,7 +38,7 @@ hr {page-break-after: always;border: 0;}
 									'grupo' => $vtas->getGrupo(),
 									'producto' => $vtas->getProducto(),
 									'cantidad' => $vtas->cantidad,
-									'bono' => $vtas->bonificados?:0,
+									'bono' => 0,
 									'dev' => 0,
 								);
 							} else {
@@ -53,14 +53,14 @@ hr {page-break-after: always;border: 0;}
 						} else {
 							if ($vtas->cantidad > 0) {
 								$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
-								$ventas[$vtas->producto_id]['bono'] += $vtas->bonificados;
+								$ventas[$vtas->producto_id]['bono'] += 0;
 							} else {
 								$ventas[$vtas->producto_id]['dev'] += $vtas->cantidad * -1;
 							}
 						}
 						if ($vtas->cantidad > 0) {
 							$suma_total += $vtas->cantidad;
-							$suma_total_bon += $vtas->bonificados;
+							$suma_total_bon += 0;
 						} else {
 							$suma_total_dev += $vtas->cantidad * -1;
 						}
@@ -71,7 +71,7 @@ hr {page-break-after: always;border: 0;}
 								<td><?php echo $vta['grupo'] ?></td>
 								<td><?php echo $vta['producto'] ?></td>
 								<td><?php echo $vta['cantidad'] ?></td>
-								<td><?php echo $vta['bono'] ?></td>
+								<td><?php echo 0 ?></td>
 								<td><?php echo $vta['dev'] ?></td>
 							</tr>
         <?php endforeach;?>

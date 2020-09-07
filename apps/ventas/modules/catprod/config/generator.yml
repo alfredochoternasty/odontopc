@@ -22,6 +22,8 @@ generator:
           _edit: {label: Modificar}
         actions:
           _new: {label: Nuevo}
+          ver_historico: {label: Ver Historico}
+          ver_actuales: {label: Ver Actuales}
       filter:  ~
       form:    ~
       edit:    ~

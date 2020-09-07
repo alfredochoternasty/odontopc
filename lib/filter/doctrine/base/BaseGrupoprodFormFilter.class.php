@@ -17,7 +17,7 @@ abstract class BaseGrupoprodFormFilter extends BaseFormFilterDoctrine
       'color'        => new sfWidgetFormFilterInput(),
       'foto'         => new sfWidgetFormFilterInput(),
       'foto_chica'   => new sfWidgetFormFilterInput(),
-      'categoria_id' => new sfWidgetFormFilterInput(),
+      'categoria_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Categoria'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -25,7 +25,7 @@ abstract class BaseGrupoprodFormFilter extends BaseFormFilterDoctrine
       'color'        => new sfValidatorPass(array('required' => false)),
       'foto'         => new sfValidatorPass(array('required' => false)),
       'foto_chica'   => new sfValidatorPass(array('required' => false)),
-      'categoria_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'categoria_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Categoria'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('grupoprod_filters[%s]');
@@ -50,7 +50,7 @@ abstract class BaseGrupoprodFormFilter extends BaseFormFilterDoctrine
       'color'        => 'Text',
       'foto'         => 'Text',
       'foto_chica'   => 'Text',
-      'categoria_id' => 'Number',
+      'categoria_id' => 'ForeignKey',
     );
   }
 }

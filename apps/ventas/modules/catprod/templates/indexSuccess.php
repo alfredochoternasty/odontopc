@@ -28,5 +28,12 @@
     <?php include_partial('catprod/list_footer', array('pager' => $pager)) ?>
   </div>
 
-  <?php include_partial('catprod/tablero', array('pager' => $pager)) ?>
+  <?php if (!empty($ver_historico)) include_partial('catprod/historico', array('pager' => $pager)) ?>
+  <?php 
+    if (!empty($ver_actuales)) {
+      include_partial('catprod/actuales', array('pager' => $pager, 'zona' => 0));
+      foreach ($zonas as $zona) 
+        include_partial('catprod/actuales', array('pager' => $pager, 'zona' => $zona));
+    }
+  ?>
 </div>

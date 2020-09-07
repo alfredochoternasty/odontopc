@@ -13,5 +13,16 @@ require_once dirname(__FILE__).'/../lib/catprodGeneratorHelper.class.php';
  */
 class catprodActions extends autoCatprodActions
 {
-
+	public function executeListVerHistorico(sfWebRequest $request) {
+		$this->ver_historico = true;
+		$this->executeIndex($request);
+		$this->setTemplate('index');
+	}
+	
+	public function executeListVerActuales(sfWebRequest $request) {
+		$this->ver_actuales = true;
+		$this->zonas = Doctrine::getTable('Zona')->findAll();
+		$this->executeIndex($request);
+		$this->setTemplate('index');
+	}
 }

@@ -69,7 +69,7 @@
           if($actual->getProductoId() != $anterior->getProductoId()){
             ?>
             <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-              <td><?php echo $anterior->getGrupoNombre() ?></td>
+              <td><?php echo $anterior->getGrupo() ?></td>
               <td><?php echo $anterior->getProducto() ?></td>
               <td><?php echo $suma_cant ?></td>
               <td><?php echo $suma_bon ?></td>
@@ -77,28 +77,28 @@
             <?php 
             $anterior = $actual;
             $suma_cant = $actual->getCantidad();
-            $suma_bon = $actual->getBonificados();
+            $suma_bon = 0; //$actual->getBonificados();
             $suma_total += $actual->getCantidad();
-            $suma_total_bon += $actual->getBonificados();
+            $suma_total_bon += 0; //$actual->getBonificados();
           }else{
             $suma_cant += $actual->getCantidad();
-            $suma_bon += $actual->getBonificados();
+            $suma_bon += 0; //$actual->getBonificados();
             $suma_total += $actual->getCantidad();
-            $suma_total_bon += $actual->getBonificados();
+            $suma_total_bon += 0;//$actual->getBonificados();
           }
         }else{ ?>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
             <td><?php echo $listado_ventas->getResumenId() ?></td>
             <td><?php echo false !== strtotime($listado_ventas->getFecha()) ? format_date($listado_ventas->getFecha(), "dd/MM/yyyy") : '&nbsp;' ?></td>
-            <td><?php echo $listado_ventas->getMoneda() ?></td>
-            <td><?php echo $listado_ventas->getClienteApellido() ?></td>
-            <td><?php echo $listado_ventas->getClienteNombre() ?></td>
-            <td><?php echo $listado_ventas->getTipoClienteNombre() ?></td>
-            <td><?php echo $listado_ventas->getGrupoNombre() ?></td>
-            <td><?php echo $listado_ventas->getProductoNombre() ?></td>
+            <td><?php echo 1 ?></td>
+            <td><?php echo $listado_ventas->getCliente() ?></td>
+            <td><?php echo $listado_ventas->getCliente() ?></td>
+            <td><?php echo $listado_ventas->getCliente() ?></td>
+            <td><?php echo $listado_ventas->getGrupo() ?></td>
+            <td><?php echo $listado_ventas->getProducto() ?></td>
             <td><?php echo $listado_ventas->PrecioFormato() ?></td>
             <td><?php echo $listado_ventas->getCantidad() ?></td>
-            <td><?php echo $listado_ventas->getBonificados() ?></td>
+            <td><?php echo 0 ?></td>
             <td><?php echo $listado_ventas->TotalFormato() ?></td>
             <td><?php echo $listado_ventas->getNroLote() ?></td>
           </tr>
@@ -108,7 +108,7 @@
       if($ver_solo_totales){
           ?>
           <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-            <td><?php echo $anterior->getGrupoNombre() ?></td>
+            <td><?php echo $anterior->getGrupo() ?></td>
             <td><?php echo $anterior->getProducto() ?></td>
             <td><?php echo $suma_cant ?></td>
             <td><?php echo $suma_bon ?></td>

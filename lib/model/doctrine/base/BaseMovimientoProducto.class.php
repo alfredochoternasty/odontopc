@@ -9,80 +9,53 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * 
  * @property integer $id
  * @property integer $resumen_id
- * @property integer $tipofactura_id
- * @property date $fecha
  * @property integer $cliente_id
- * @property integer $zona_id
  * @property integer $producto_id
  * @property integer $grupoprod_id
- * @property integer $orden_grupo
- * @property string $nombre
+ * @property integer $zona_id
+ * @property date $fecha
  * @property string $nro_lote
- * @property decimal $cantidad
- * @property decimal $bonificados
- * @property decimal $precio
- * @property decimal $iva
- * @property decimal $sub_total
- * @property decimal $total
- * @property integer $det_remito_id
+ * @property integer $cantidad
+ * @property integer $tipofactura_id
  * @property DetalleResumen $DetalleResumen
  * @property Resumen $Resumen
  * @property Cliente $Cliente
  * @property Producto $Producto
- * @property Zona $Zona
  * @property Grupoprod $Grupo
- * @property TipoFactura $TipoFactura
+ * @property Zona $Zona
  * 
  * @method integer            getId()             Returns the current record's "id" value
  * @method integer            getResumenId()      Returns the current record's "resumen_id" value
- * @method integer            getTipofacturaId()  Returns the current record's "tipofactura_id" value
- * @method date               getFecha()          Returns the current record's "fecha" value
  * @method integer            getClienteId()      Returns the current record's "cliente_id" value
- * @method integer            getZonaId()         Returns the current record's "zona_id" value
  * @method integer            getProductoId()     Returns the current record's "producto_id" value
  * @method integer            getGrupoprodId()    Returns the current record's "grupoprod_id" value
- * @method integer            getOrdenGrupo()     Returns the current record's "orden_grupo" value
- * @method string             getNombre()         Returns the current record's "nombre" value
+ * @method integer            getZonaId()         Returns the current record's "zona_id" value
+ * @method date               getFecha()          Returns the current record's "fecha" value
  * @method string             getNroLote()        Returns the current record's "nro_lote" value
- * @method decimal            getCantidad()       Returns the current record's "cantidad" value
- * @method decimal            getBonificados()    Returns the current record's "bonificados" value
- * @method decimal            getPrecio()         Returns the current record's "precio" value
- * @method decimal            getIva()            Returns the current record's "iva" value
- * @method decimal            getSubTotal()       Returns the current record's "sub_total" value
- * @method decimal            getTotal()          Returns the current record's "total" value
- * @method integer            getDetRemitoId()    Returns the current record's "det_remito_id" value
+ * @method integer            getCantidad()       Returns the current record's "cantidad" value
+ * @method integer            getTipofacturaId()  Returns the current record's "tipofactura_id" value
  * @method DetalleResumen     getDetalleResumen() Returns the current record's "DetalleResumen" value
  * @method Resumen            getResumen()        Returns the current record's "Resumen" value
  * @method Cliente            getCliente()        Returns the current record's "Cliente" value
  * @method Producto           getProducto()       Returns the current record's "Producto" value
- * @method Zona               getZona()           Returns the current record's "Zona" value
  * @method Grupoprod          getGrupo()          Returns the current record's "Grupo" value
- * @method TipoFactura        getTipoFactura()    Returns the current record's "TipoFactura" value
+ * @method Zona               getZona()           Returns the current record's "Zona" value
  * @method MovimientoProducto setId()             Sets the current record's "id" value
  * @method MovimientoProducto setResumenId()      Sets the current record's "resumen_id" value
- * @method MovimientoProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
- * @method MovimientoProducto setFecha()          Sets the current record's "fecha" value
  * @method MovimientoProducto setClienteId()      Sets the current record's "cliente_id" value
- * @method MovimientoProducto setZonaId()         Sets the current record's "zona_id" value
  * @method MovimientoProducto setProductoId()     Sets the current record's "producto_id" value
  * @method MovimientoProducto setGrupoprodId()    Sets the current record's "grupoprod_id" value
- * @method MovimientoProducto setOrdenGrupo()     Sets the current record's "orden_grupo" value
- * @method MovimientoProducto setNombre()         Sets the current record's "nombre" value
+ * @method MovimientoProducto setZonaId()         Sets the current record's "zona_id" value
+ * @method MovimientoProducto setFecha()          Sets the current record's "fecha" value
  * @method MovimientoProducto setNroLote()        Sets the current record's "nro_lote" value
  * @method MovimientoProducto setCantidad()       Sets the current record's "cantidad" value
- * @method MovimientoProducto setBonificados()    Sets the current record's "bonificados" value
- * @method MovimientoProducto setPrecio()         Sets the current record's "precio" value
- * @method MovimientoProducto setIva()            Sets the current record's "iva" value
- * @method MovimientoProducto setSubTotal()       Sets the current record's "sub_total" value
- * @method MovimientoProducto setTotal()          Sets the current record's "total" value
- * @method MovimientoProducto setDetRemitoId()    Sets the current record's "det_remito_id" value
+ * @method MovimientoProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
  * @method MovimientoProducto setDetalleResumen() Sets the current record's "DetalleResumen" value
  * @method MovimientoProducto setResumen()        Sets the current record's "Resumen" value
  * @method MovimientoProducto setCliente()        Sets the current record's "Cliente" value
  * @method MovimientoProducto setProducto()       Sets the current record's "Producto" value
- * @method MovimientoProducto setZona()           Sets the current record's "Zona" value
  * @method MovimientoProducto setGrupo()          Sets the current record's "Grupo" value
- * @method MovimientoProducto setTipoFactura()    Sets the current record's "TipoFactura" value
+ * @method MovimientoProducto setZona()           Sets the current record's "Zona" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -103,19 +76,7 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('tipofactura_id', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
-             ));
-        $this->hasColumn('fecha', 'date', 25, array(
-             'type' => 'date',
-             'length' => 25,
-             ));
         $this->hasColumn('cliente_id', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
-             ));
-        $this->hasColumn('zona_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
@@ -127,49 +88,23 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('orden_grupo', 'integer', 4, array(
+        $this->hasColumn('zona_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('nombre', 'string', 50, array(
-             'type' => 'string',
-             'length' => 50,
+        $this->hasColumn('fecha', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
              ));
         $this->hasColumn('nro_lote', 'string', 50, array(
              'type' => 'string',
              'length' => 50,
              ));
-        $this->hasColumn('cantidad', 'decimal', 10, array(
-             'type' => 'decimal',
-             'length' => 10,
-             'scale' => '2',
+        $this->hasColumn('cantidad', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
-        $this->hasColumn('bonificados', 'decimal', 10, array(
-             'type' => 'decimal',
-             'length' => 10,
-             'scale' => '2',
-             ));
-        $this->hasColumn('precio', 'decimal', 10, array(
-             'type' => 'decimal',
-             'length' => 10,
-             'scale' => '2',
-             ));
-        $this->hasColumn('iva', 'decimal', 10, array(
-             'type' => 'decimal',
-             'length' => 10,
-             'scale' => '2',
-             ));
-        $this->hasColumn('sub_total', 'decimal', 10, array(
-             'type' => 'decimal',
-             'length' => 10,
-             'scale' => '2',
-             ));
-        $this->hasColumn('total', 'decimal', 10, array(
-             'type' => 'decimal',
-             'length' => 10,
-             'scale' => '2',
-             ));
-        $this->hasColumn('det_remito_id', 'integer', 4, array(
+        $this->hasColumn('tipofactura_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
@@ -194,18 +129,12 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
              'local' => 'producto_id',
              'foreign' => 'id'));
 
+        $this->hasOne('Grupoprod as Grupo', array(
+             'local' => 'grupoprod_id',
+             'foreign' => 'id'));
+
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
              'foreign' => 'id'));
-
-        $this->hasOne('Grupoprod as Grupo', array(
-             'local' => 'grupoprod_id',
-             'foreign' => 'id',
-             'onDelete' => 'RESTRICT'));
-
-        $this->hasOne('TipoFactura', array(
-             'local' => 'tipofactura_id',
-             'foreign' => 'id',
-             'onDelete' => 'RESTRICT'));
     }
 }

@@ -13,6 +13,11 @@ require_once dirname(__FILE__).'/../lib/listvtaGeneratorHelper.class.php';
  */
 class listvtaActions extends autoListvtaActions
 {
+  public function executeIndex(sfWebRequest $request) {
+    if (!$this->getUser()->hasAttribute('totales')) $this->getUser()->setAttribute('totales', true);
+    parent::executeIndex($request);
+  }
+  
   
   public function executeListVerTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);

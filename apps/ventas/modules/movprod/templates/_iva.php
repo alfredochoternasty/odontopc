@@ -1,3 +1,3 @@
 <?php 
-echo '$ '.sprintf("%01.2f", $movimiento_producto->iva);
+echo '$ '.sprintf("%01.2f", $movimiento_producto->getDetalleResumen()->iva);
 ?>

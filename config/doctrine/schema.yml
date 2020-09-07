@@ -434,60 +434,42 @@ ListadoVentas:
   columns:
     id: {type: integer(4), primary: true}
     resumen_id: {type: integer(4)}
-    tipofactura_id: {type: integer(4)}
-    fecha: {type: date(25)}
     cliente_id: {type: integer(4)}
-    zona_id: {type: integer(4)}
     producto_id: {type: integer(4)}
     grupoprod_id: {type: integer(4)}
-    orden_grupo: {type: integer(4)}
-    nombre: {type: string(50)}
+    zona_id: {type: integer(4)}
+    fecha: {type: date(25)}
     nro_lote: {type: string(50)}
-    cantidad: {type: 'decimal(10, 2)'}
-    bonificados: {type: 'decimal(10, 2)'}
-    precio: {type: 'decimal(10, 2)'}
-    iva: {type: 'decimal(10, 2)'}
-    sub_total: {type: 'decimal(10, 2)'}
-    total: {type: 'decimal(10, 2)'}
-    det_remito_id: {type: integer(4)}
+    cantidad: {type: integer(4)}
+    tipofactura_id: {type: integer(4)}
   relations:
     DetalleResumen: {type: one, class: DetalleResumen, local: id}
     Resumen: {type: one, class: Resumen, local: resumen_id}
     Cliente: {type: one, class: Cliente, local: cliente_id}
     Producto: {type: one, class: Producto, local: producto_id}
+    Grupo: {type: one, class: Grupoprod, local: grupoprod_id}
     Zona: {type: one, class: Zona, local: zona_id}
-    Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
-    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
 MovimientoProducto:
   connection: doctrine
   tableName: listado_ventas
   columns:
     id: {type: integer(4), primary: true}
     resumen_id: {type: integer(4)}
-    tipofactura_id: {type: integer(4)}
-    fecha: {type: date(25)}
     cliente_id: {type: integer(4)}
-    zona_id: {type: integer(4)}
     producto_id: {type: integer(4)}
     grupoprod_id: {type: integer(4)}
-    orden_grupo: {type: integer(4)}
-    nombre: {type: string(50)}
+    zona_id: {type: integer(4)}
+    fecha: {type: date(25)}
     nro_lote: {type: string(50)}
-    cantidad: {type: 'decimal(10, 2)'}
-    bonificados: {type: 'decimal(10, 2)'}
-    precio: {type: 'decimal(10, 2)'}
-    iva: {type: 'decimal(10, 2)'}
-    sub_total: {type: 'decimal(10, 2)'}
-    total: {type: 'decimal(10, 2)'}
-    det_remito_id: {type: integer(4)}
+    cantidad: {type: integer(4)}
+    tipofactura_id: {type: integer(4)}
   relations:
     DetalleResumen: {type: one, class: DetalleResumen, local: id}
     Resumen: {type: one, class: Resumen, local: resumen_id}
     Cliente: {type: one, class: Cliente, local: cliente_id}
     Producto: {type: one, class: Producto, local: producto_id}
+    Grupo: {type: one, class: Grupoprod, local: grupoprod_id}
     Zona: {type: one, class: Zona, local: zona_id}
-    Grupo: {type: one, class: Grupoprod, local: grupoprod_id, onDelete: RESTRICT}
-    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
 ListadoCobros:
   connection: doctrine
   tableName: listado_cobros

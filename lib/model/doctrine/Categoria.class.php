@@ -42,7 +42,7 @@ class Categoria extends BaseCategoria
 						and l2.activo = 1
 						and l2.externo = 0
 						and dp.fecha >= date_format(curdate(), '%Y-%m-01')
-						and (dp.zona_id = 0 or dp.zona_id = $p_zona)
+						and ($p_zona = 0 or dp.zona_id = $p_zona)
 				) as cantidad
 			from 
 				resumen r
@@ -56,7 +56,7 @@ class Categoria extends BaseCategoria
 				AND l.externo = 0
 				AND l.activo = 1 
 				and r.fecha >= date_format(curdate(), '%Y-%m-01')
-				and (r.zona_id = 0 or r.zona_id = $p_zona)
+				and ($p_zona = 0 or r.zona_id = $p_zona)
 		";
 		$resultado = $this->ejecutarSQL($sql);
 		return $resultado->cantidad;
@@ -79,7 +79,7 @@ class Categoria extends BaseCategoria
 						and l2.activo = 1
 						and l2.externo = 0
 						and dp.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
-						and (dp.zona_id = 0 or dp.zona_id = $p_zona)
+						and ($p_zona = 0 or dp.zona_id = $p_zona)
 				) as cantidad
 			from 
 				resumen r
@@ -93,13 +93,13 @@ class Categoria extends BaseCategoria
 				AND l.externo = 0
 				AND l.activo = 1 
 				and r.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
-				and (r.zona_id = 0 or r.zona_id = $p_zona)
+				and ($p_zona = 0 or r.zona_id = $p_zona)
 		";
 		$resultado = $this->ejecutarSQL($sql);
 		return $resultado->cantidad;
 	}
 	
-	public function getCantVendidaHist() {
+	public function getCantVendidaHist($p_zona=0) {
 		$sql = "
 			select
 				year(r.fecha) as anio,
@@ -131,7 +131,8 @@ class Categoria extends BaseCategoria
 				and r.tipofactura_id <> 4
 				AND l.externo = 0
 				AND l.activo = 1 
-				and r.fecha between date_format(date_sub(curdate(), interval 6 month), '%Y-%m-01') and last_day(date_sub(curdate(), interval 1 month))
+				and r.fecha between date_format(date_sub(curdate(), interval 13 month), '%Y-%m-01') and last_day(date_sub(curdate(), interval 1 month))
+				and ($p_zona = 0 or r.zona_id = $p_zona)
 			group by
 				anio, mes
 			order by

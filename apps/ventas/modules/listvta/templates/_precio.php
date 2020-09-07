@@ -1,1 +1,1 @@
-<?php echo  "$ ".$listado_ventas->precio ?>  
+<?php echo  "$ ".$listado_ventas->getDetalleResumen()->precio ?>  

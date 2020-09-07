@@ -1,1 +1,1 @@
-<?php echo  "$ ".$movimiento_producto->precio ?>  
+<?php echo  "$ ".$movimiento_producto->getDetalleResumen()->precio ?>  

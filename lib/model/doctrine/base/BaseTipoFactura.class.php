@@ -17,39 +17,33 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @property Doctrine_Collection $Ventas
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Resumen
- * @property Doctrine_Collection $ListadoVentas
- * @property Doctrine_Collection $MovimientoProducto
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $FacturasAfip
  * 
- * @method integer             getId()                 Returns the current record's "id" value
- * @method string              getNombre()             Returns the current record's "nombre" value
- * @method integer             getCodTipoAfip()        Returns the current record's "cod_tipo_afip" value
- * @method string              getLetra()              Returns the current record's "letra" value
- * @method integer             getIdFactCancela()      Returns the current record's "id_fact_cancela" value
- * @method string              getModeloImpresion()    Returns the current record's "modelo_impresion" value
- * @method string              getCondFiscales()       Returns the current record's "cond_fiscales" value
- * @method Doctrine_Collection getVentas()             Returns the current record's "Ventas" collection
- * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
- * @method Doctrine_Collection getResumen()            Returns the current record's "Resumen" collection
- * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
- * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
- * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
- * @method Doctrine_Collection getFacturasAfip()       Returns the current record's "FacturasAfip" collection
- * @method TipoFactura         setId()                 Sets the current record's "id" value
- * @method TipoFactura         setNombre()             Sets the current record's "nombre" value
- * @method TipoFactura         setCodTipoAfip()        Sets the current record's "cod_tipo_afip" value
- * @method TipoFactura         setLetra()              Sets the current record's "letra" value
- * @method TipoFactura         setIdFactCancela()      Sets the current record's "id_fact_cancela" value
- * @method TipoFactura         setModeloImpresion()    Sets the current record's "modelo_impresion" value
- * @method TipoFactura         setCondFiscales()       Sets the current record's "cond_fiscales" value
- * @method TipoFactura         setVentas()             Sets the current record's "Ventas" collection
- * @method TipoFactura         setCompras()            Sets the current record's "Compras" collection
- * @method TipoFactura         setResumen()            Sets the current record's "Resumen" collection
- * @method TipoFactura         setListadoVentas()      Sets the current record's "ListadoVentas" collection
- * @method TipoFactura         setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
- * @method TipoFactura         setDevProducto()        Sets the current record's "DevProducto" collection
- * @method TipoFactura         setFacturasAfip()       Sets the current record's "FacturasAfip" collection
+ * @method integer             getId()               Returns the current record's "id" value
+ * @method string              getNombre()           Returns the current record's "nombre" value
+ * @method integer             getCodTipoAfip()      Returns the current record's "cod_tipo_afip" value
+ * @method string              getLetra()            Returns the current record's "letra" value
+ * @method integer             getIdFactCancela()    Returns the current record's "id_fact_cancela" value
+ * @method string              getModeloImpresion()  Returns the current record's "modelo_impresion" value
+ * @method string              getCondFiscales()     Returns the current record's "cond_fiscales" value
+ * @method Doctrine_Collection getVentas()           Returns the current record's "Ventas" collection
+ * @method Doctrine_Collection getCompras()          Returns the current record's "Compras" collection
+ * @method Doctrine_Collection getResumen()          Returns the current record's "Resumen" collection
+ * @method Doctrine_Collection getDevProducto()      Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getFacturasAfip()     Returns the current record's "FacturasAfip" collection
+ * @method TipoFactura         setId()               Sets the current record's "id" value
+ * @method TipoFactura         setNombre()           Sets the current record's "nombre" value
+ * @method TipoFactura         setCodTipoAfip()      Sets the current record's "cod_tipo_afip" value
+ * @method TipoFactura         setLetra()            Sets the current record's "letra" value
+ * @method TipoFactura         setIdFactCancela()    Sets the current record's "id_fact_cancela" value
+ * @method TipoFactura         setModeloImpresion()  Sets the current record's "modelo_impresion" value
+ * @method TipoFactura         setCondFiscales()     Sets the current record's "cond_fiscales" value
+ * @method TipoFactura         setVentas()           Sets the current record's "Ventas" collection
+ * @method TipoFactura         setCompras()          Sets the current record's "Compras" collection
+ * @method TipoFactura         setResumen()          Sets the current record's "Resumen" collection
+ * @method TipoFactura         setDevProducto()      Sets the current record's "DevProducto" collection
+ * @method TipoFactura         setFacturasAfip()     Sets the current record's "FacturasAfip" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -106,14 +100,6 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
              'foreign' => 'tipofactura_id'));
 
         $this->hasMany('Resumen', array(
-             'local' => 'id',
-             'foreign' => 'tipofactura_id'));
-
-        $this->hasMany('ListadoVentas', array(
-             'local' => 'id',
-             'foreign' => 'tipofactura_id'));
-
-        $this->hasMany('MovimientoProducto', array(
              'local' => 'id',
              'foreign' => 'tipofactura_id'));
 
