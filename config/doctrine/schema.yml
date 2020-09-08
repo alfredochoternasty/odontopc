@@ -603,6 +603,22 @@ DetallePedido:
   relations:
     Pedido: {type: one, local: pedido_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
+DetallePedidoOriginal:
+  connection: doctrine
+  tableName: detalle_pedido_original
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    pedido_id: {type: integer(4), notnull: true}
+    producto_id: {type: integer(4), notnull: true}
+    precio: {type: 'decimal(10, 2)', notnull: true, default: 0}
+    cantidad: {type: integer(4), notnull: true, default: 1}
+    total: {type: 'decimal(10, 2)', notnull: true, default: 0}
+    observacion: {type: string(200)}
+    nro_lote: {type: string(255)}
+    asignacion_lote: {type: string(255)}
+  relations:
+    Pedido: {type: one, local: pedido_id, onDelete: CASCADE}
+    Producto: {type: one, local: producto_id, onDelete: RESTRICT}
 ProductoTraza:
   connection: doctrine
   tableName: producto_traza

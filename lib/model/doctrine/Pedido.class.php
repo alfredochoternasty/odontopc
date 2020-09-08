@@ -44,7 +44,8 @@ class Pedido extends BasePedido
     $promociones = $sql_promo_prod->select('distinct(promocion_id) as promocion_id')
       ->where('pp.producto_id  IN ('.$sql_prods_pedido->getDql().')')
       ->execute();
-        
+    
+    $promos = array();
     foreach ($promociones as $promocion) 
       $promos[] = Doctrine::getTable('Promocion')->find($promocion['promocion_id']);
         

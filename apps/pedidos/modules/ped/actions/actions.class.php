@@ -20,7 +20,7 @@ class pedActions extends sfActions
 	
 	public function executeDetpedido(sfWebRequest $request) {
     $pid = $request->getParameter('pid');
-    $this->detalle_pedido = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+    $this->detalle_pedido = Doctrine::getTable('DetallePedidoOriginal')->findByPedidoId($pid);
     $this->nro_pedido = $pid;
 		$this->total_pedido = 0;
 		foreach ($this->detalle_pedido as $det) {

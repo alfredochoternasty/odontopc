@@ -31,7 +31,7 @@ class DetallePedido extends BaseDetallePedido
       $lote = $lotes_disponibles[0];
       
       // si el stock alcanza asigno el lote
-      if (($lote->stock - $this->cantidad) >= 0) { 
+      if ($lote->stock >= $this->cantidad) { 
         $this->nro_lote = $lote->nro_lote;
         $this->asignacion_lote = 'OK';
         $this->save();
@@ -58,7 +58,7 @@ class DetallePedido extends BaseDetallePedido
             $nueva_fila->precio = $this->precio;
             $nueva_fila->cantidad = $nueva_cantidad;
             $nueva_fila->total = $this->precio * $nueva_cantidad;
-            $nueva_fila->nro_lote = $this->nro_lote;
+            $nueva_fila->nro_lote = $lote->nro_lote;
             $nueva_fila->asignacion_lote = 'Renglon agregado para completar pedido con otro lote';
             $nueva_fila->save();
             $resto = ($resto - $lote->stock);

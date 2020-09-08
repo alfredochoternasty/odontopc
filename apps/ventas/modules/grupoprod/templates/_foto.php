@@ -1,1 +1,1 @@
-<?php echo '<img height="50px" width="50px" src="'.url_for('grupoprod/GetImagen?img='.$grupoprod->getImagen()).'">'; ?>
+<?php echo '<img height="40px" width="75px" src="'.url_for('grupoprod/GetImagen?img='.$grupoprod->getImagen()).'">'; ?>

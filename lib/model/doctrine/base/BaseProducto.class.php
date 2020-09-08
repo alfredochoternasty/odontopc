@@ -40,6 +40,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $DetallePresupuesto
  * @property Doctrine_Collection $DetallePedido
+ * @property Doctrine_Collection $DetallePedidoOriginal
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $Lote
  * @property Doctrine_Collection $ListadoCompras
@@ -50,90 +51,92 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property Doctrine_Collection $PromocionProducto
  * @property Doctrine_Collection $PromocionRegalo
  * 
- * @method integer             getId()                 Returns the current record's "id" value
- * @method string              getCodigo()             Returns the current record's "codigo" value
- * @method string              getNombre()             Returns the current record's "nombre" value
- * @method integer             getGrupoprodId()        Returns the current record's "grupoprod_id" value
- * @method decimal             getPrecioVta()          Returns the current record's "precio_vta" value
- * @method integer             getMonedaId()           Returns the current record's "moneda_id" value
- * @method boolean             getGeneraComision()     Returns the current record's "genera_comision" value
- * @method boolean             getMueveStock()         Returns the current record's "mueve_stock" value
- * @method integer             getMinimoStock()        Returns the current record's "minimo_stock" value
- * @method integer             getStockActual()        Returns the current record's "stock_actual" value
- * @method boolean             getCtrFactGrupo()       Returns the current record's "ctr_fact_grupo" value
- * @method integer             getOrdenGrupo()         Returns the current record's "orden_grupo" value
- * @method boolean             getActivo()             Returns the current record's "activo" value
- * @method integer             getGrupo2()             Returns the current record's "grupo2" value
- * @method integer             getGrupo3()             Returns the current record's "grupo3" value
- * @method integer             getListaId()            Returns the current record's "lista_id" value
- * @method string              getFoto()               Returns the current record's "foto" value
- * @method string              getFotoChica()          Returns the current record's "foto_chica" value
- * @method text                getDescripcion()        Returns the current record's "descripcion" value
- * @method Grupoprod           getGrupo()              Returns the current record's "Grupo" value
- * @method Grupoprod           getGrupoDos()           Returns the current record's "GrupoDos" value
- * @method Grupoprod           getGrupoTres()          Returns the current record's "GrupoTres" value
- * @method TipoMoneda          getMoneda()             Returns the current record's "Moneda" value
- * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
- * @method Doctrine_Collection getDetalleCompra()      Returns the current record's "DetalleCompra" collection
- * @method Doctrine_Collection getDetalleVenta()       Returns the current record's "DetalleVenta" collection
- * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
- * @method Doctrine_Collection getDetLisPrecio()       Returns the current record's "DetLisPrecio" collection
- * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
- * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
- * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
- * @method Doctrine_Collection getDetallePresupuesto() Returns the current record's "DetallePresupuesto" collection
- * @method Doctrine_Collection getDetallePedido()      Returns the current record's "DetallePedido" collection
- * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
- * @method Doctrine_Collection getLote()               Returns the current record's "Lote" collection
- * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
- * @method Doctrine_Collection getControlStock()       Returns the current record's "ControlStock" collection
- * @method Doctrine_Collection getListaPrecioDetalle() Returns the current record's "ListaPrecioDetalle" collection
- * @method Doctrine_Collection getDescuentoZona()      Returns the current record's "DescuentoZona" collection
- * @method Doctrine_Collection getVentasZona()         Returns the current record's "VentasZona" collection
- * @method Doctrine_Collection getPromocionProducto()  Returns the current record's "PromocionProducto" collection
- * @method Doctrine_Collection getPromocionRegalo()    Returns the current record's "PromocionRegalo" collection
- * @method Producto            setId()                 Sets the current record's "id" value
- * @method Producto            setCodigo()             Sets the current record's "codigo" value
- * @method Producto            setNombre()             Sets the current record's "nombre" value
- * @method Producto            setGrupoprodId()        Sets the current record's "grupoprod_id" value
- * @method Producto            setPrecioVta()          Sets the current record's "precio_vta" value
- * @method Producto            setMonedaId()           Sets the current record's "moneda_id" value
- * @method Producto            setGeneraComision()     Sets the current record's "genera_comision" value
- * @method Producto            setMueveStock()         Sets the current record's "mueve_stock" value
- * @method Producto            setMinimoStock()        Sets the current record's "minimo_stock" value
- * @method Producto            setStockActual()        Sets the current record's "stock_actual" value
- * @method Producto            setCtrFactGrupo()       Sets the current record's "ctr_fact_grupo" value
- * @method Producto            setOrdenGrupo()         Sets the current record's "orden_grupo" value
- * @method Producto            setActivo()             Sets the current record's "activo" value
- * @method Producto            setGrupo2()             Sets the current record's "grupo2" value
- * @method Producto            setGrupo3()             Sets the current record's "grupo3" value
- * @method Producto            setListaId()            Sets the current record's "lista_id" value
- * @method Producto            setFoto()               Sets the current record's "foto" value
- * @method Producto            setFotoChica()          Sets the current record's "foto_chica" value
- * @method Producto            setDescripcion()        Sets the current record's "descripcion" value
- * @method Producto            setGrupo()              Sets the current record's "Grupo" value
- * @method Producto            setGrupoDos()           Sets the current record's "GrupoDos" value
- * @method Producto            setGrupoTres()          Sets the current record's "GrupoTres" value
- * @method Producto            setMoneda()             Sets the current record's "Moneda" value
- * @method Producto            setLista()              Sets the current record's "Lista" value
- * @method Producto            setDetalleCompra()      Sets the current record's "DetalleCompra" collection
- * @method Producto            setDetalleVenta()       Sets the current record's "DetalleVenta" collection
- * @method Producto            setDetalleResumen()     Sets the current record's "DetalleResumen" collection
- * @method Producto            setDetLisPrecio()       Sets the current record's "DetLisPrecio" collection
- * @method Producto            setListadoVentas()      Sets the current record's "ListadoVentas" collection
- * @method Producto            setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
- * @method Producto            setDevProducto()        Sets the current record's "DevProducto" collection
- * @method Producto            setDetallePresupuesto() Sets the current record's "DetallePresupuesto" collection
- * @method Producto            setDetallePedido()      Sets the current record's "DetallePedido" collection
- * @method Producto            setProductoTraza()      Sets the current record's "ProductoTraza" collection
- * @method Producto            setLote()               Sets the current record's "Lote" collection
- * @method Producto            setListadoCompras()     Sets the current record's "ListadoCompras" collection
- * @method Producto            setControlStock()       Sets the current record's "ControlStock" collection
- * @method Producto            setListaPrecioDetalle() Sets the current record's "ListaPrecioDetalle" collection
- * @method Producto            setDescuentoZona()      Sets the current record's "DescuentoZona" collection
- * @method Producto            setVentasZona()         Sets the current record's "VentasZona" collection
- * @method Producto            setPromocionProducto()  Sets the current record's "PromocionProducto" collection
- * @method Producto            setPromocionRegalo()    Sets the current record's "PromocionRegalo" collection
+ * @method integer             getId()                    Returns the current record's "id" value
+ * @method string              getCodigo()                Returns the current record's "codigo" value
+ * @method string              getNombre()                Returns the current record's "nombre" value
+ * @method integer             getGrupoprodId()           Returns the current record's "grupoprod_id" value
+ * @method decimal             getPrecioVta()             Returns the current record's "precio_vta" value
+ * @method integer             getMonedaId()              Returns the current record's "moneda_id" value
+ * @method boolean             getGeneraComision()        Returns the current record's "genera_comision" value
+ * @method boolean             getMueveStock()            Returns the current record's "mueve_stock" value
+ * @method integer             getMinimoStock()           Returns the current record's "minimo_stock" value
+ * @method integer             getStockActual()           Returns the current record's "stock_actual" value
+ * @method boolean             getCtrFactGrupo()          Returns the current record's "ctr_fact_grupo" value
+ * @method integer             getOrdenGrupo()            Returns the current record's "orden_grupo" value
+ * @method boolean             getActivo()                Returns the current record's "activo" value
+ * @method integer             getGrupo2()                Returns the current record's "grupo2" value
+ * @method integer             getGrupo3()                Returns the current record's "grupo3" value
+ * @method integer             getListaId()               Returns the current record's "lista_id" value
+ * @method string              getFoto()                  Returns the current record's "foto" value
+ * @method string              getFotoChica()             Returns the current record's "foto_chica" value
+ * @method text                getDescripcion()           Returns the current record's "descripcion" value
+ * @method Grupoprod           getGrupo()                 Returns the current record's "Grupo" value
+ * @method Grupoprod           getGrupoDos()              Returns the current record's "GrupoDos" value
+ * @method Grupoprod           getGrupoTres()             Returns the current record's "GrupoTres" value
+ * @method TipoMoneda          getMoneda()                Returns the current record's "Moneda" value
+ * @method ListaPrecio         getLista()                 Returns the current record's "Lista" value
+ * @method Doctrine_Collection getDetalleCompra()         Returns the current record's "DetalleCompra" collection
+ * @method Doctrine_Collection getDetalleVenta()          Returns the current record's "DetalleVenta" collection
+ * @method Doctrine_Collection getDetalleResumen()        Returns the current record's "DetalleResumen" collection
+ * @method Doctrine_Collection getDetLisPrecio()          Returns the current record's "DetLisPrecio" collection
+ * @method Doctrine_Collection getListadoVentas()         Returns the current record's "ListadoVentas" collection
+ * @method Doctrine_Collection getMovimientoProducto()    Returns the current record's "MovimientoProducto" collection
+ * @method Doctrine_Collection getDevProducto()           Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getDetallePresupuesto()    Returns the current record's "DetallePresupuesto" collection
+ * @method Doctrine_Collection getDetallePedido()         Returns the current record's "DetallePedido" collection
+ * @method Doctrine_Collection getDetallePedidoOriginal() Returns the current record's "DetallePedidoOriginal" collection
+ * @method Doctrine_Collection getProductoTraza()         Returns the current record's "ProductoTraza" collection
+ * @method Doctrine_Collection getLote()                  Returns the current record's "Lote" collection
+ * @method Doctrine_Collection getListadoCompras()        Returns the current record's "ListadoCompras" collection
+ * @method Doctrine_Collection getControlStock()          Returns the current record's "ControlStock" collection
+ * @method Doctrine_Collection getListaPrecioDetalle()    Returns the current record's "ListaPrecioDetalle" collection
+ * @method Doctrine_Collection getDescuentoZona()         Returns the current record's "DescuentoZona" collection
+ * @method Doctrine_Collection getVentasZona()            Returns the current record's "VentasZona" collection
+ * @method Doctrine_Collection getPromocionProducto()     Returns the current record's "PromocionProducto" collection
+ * @method Doctrine_Collection getPromocionRegalo()       Returns the current record's "PromocionRegalo" collection
+ * @method Producto            setId()                    Sets the current record's "id" value
+ * @method Producto            setCodigo()                Sets the current record's "codigo" value
+ * @method Producto            setNombre()                Sets the current record's "nombre" value
+ * @method Producto            setGrupoprodId()           Sets the current record's "grupoprod_id" value
+ * @method Producto            setPrecioVta()             Sets the current record's "precio_vta" value
+ * @method Producto            setMonedaId()              Sets the current record's "moneda_id" value
+ * @method Producto            setGeneraComision()        Sets the current record's "genera_comision" value
+ * @method Producto            setMueveStock()            Sets the current record's "mueve_stock" value
+ * @method Producto            setMinimoStock()           Sets the current record's "minimo_stock" value
+ * @method Producto            setStockActual()           Sets the current record's "stock_actual" value
+ * @method Producto            setCtrFactGrupo()          Sets the current record's "ctr_fact_grupo" value
+ * @method Producto            setOrdenGrupo()            Sets the current record's "orden_grupo" value
+ * @method Producto            setActivo()                Sets the current record's "activo" value
+ * @method Producto            setGrupo2()                Sets the current record's "grupo2" value
+ * @method Producto            setGrupo3()                Sets the current record's "grupo3" value
+ * @method Producto            setListaId()               Sets the current record's "lista_id" value
+ * @method Producto            setFoto()                  Sets the current record's "foto" value
+ * @method Producto            setFotoChica()             Sets the current record's "foto_chica" value
+ * @method Producto            setDescripcion()           Sets the current record's "descripcion" value
+ * @method Producto            setGrupo()                 Sets the current record's "Grupo" value
+ * @method Producto            setGrupoDos()              Sets the current record's "GrupoDos" value
+ * @method Producto            setGrupoTres()             Sets the current record's "GrupoTres" value
+ * @method Producto            setMoneda()                Sets the current record's "Moneda" value
+ * @method Producto            setLista()                 Sets the current record's "Lista" value
+ * @method Producto            setDetalleCompra()         Sets the current record's "DetalleCompra" collection
+ * @method Producto            setDetalleVenta()          Sets the current record's "DetalleVenta" collection
+ * @method Producto            setDetalleResumen()        Sets the current record's "DetalleResumen" collection
+ * @method Producto            setDetLisPrecio()          Sets the current record's "DetLisPrecio" collection
+ * @method Producto            setListadoVentas()         Sets the current record's "ListadoVentas" collection
+ * @method Producto            setMovimientoProducto()    Sets the current record's "MovimientoProducto" collection
+ * @method Producto            setDevProducto()           Sets the current record's "DevProducto" collection
+ * @method Producto            setDetallePresupuesto()    Sets the current record's "DetallePresupuesto" collection
+ * @method Producto            setDetallePedido()         Sets the current record's "DetallePedido" collection
+ * @method Producto            setDetallePedidoOriginal() Sets the current record's "DetallePedidoOriginal" collection
+ * @method Producto            setProductoTraza()         Sets the current record's "ProductoTraza" collection
+ * @method Producto            setLote()                  Sets the current record's "Lote" collection
+ * @method Producto            setListadoCompras()        Sets the current record's "ListadoCompras" collection
+ * @method Producto            setControlStock()          Sets the current record's "ControlStock" collection
+ * @method Producto            setListaPrecioDetalle()    Sets the current record's "ListaPrecioDetalle" collection
+ * @method Producto            setDescuentoZona()         Sets the current record's "DescuentoZona" collection
+ * @method Producto            setVentasZona()            Sets the current record's "VentasZona" collection
+ * @method Producto            setPromocionProducto()     Sets the current record's "PromocionProducto" collection
+ * @method Producto            setPromocionRegalo()       Sets the current record's "PromocionRegalo" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -288,6 +291,10 @@ abstract class BaseProducto extends sfDoctrineRecord
              'foreign' => 'producto_id'));
 
         $this->hasMany('DetallePedido', array(
+             'local' => 'id',
+             'foreign' => 'producto_id'));
+
+        $this->hasMany('DetallePedidoOriginal', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
 

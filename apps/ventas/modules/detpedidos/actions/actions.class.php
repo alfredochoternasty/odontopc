@@ -63,10 +63,10 @@ class detpedidosActions extends autoDetpedidosActions
       $resumen->cliente_id = $pedido->cliente_id;
       $resumen->pedido_id = $pedido->id;
       $resumen->zona_id = $pedido->getCliente()->zona_id; 
-      $tipos_facturas = Doctrine::getTable('TipoFactura')->finAll();
+      $tipos_facturas = Doctrine::getTable('TipoFactura')->findAll();
       foreach ($tipos_facturas as $tipo_factura) {
-		$cond_fiscales = explode(',', $tipo_factura->cond_fiscales);
-        if (in_array($pedido->getCliente()->condicionfiscal_id, $cond_fiscales[0])) {
+        $cond_fiscales = explode(',', $tipo_factura->cond_fiscales);
+        if ($pedido->getCliente()->condicionfiscal_id == $cond_fiscales[0]) {
           $resumen->tipofactura_id = $tipo_factura->id;
           break;
         }
@@ -124,11 +124,12 @@ class detpedidosActions extends autoDetpedidosActions
   
   public function executeListAsignarLote(sfWebRequest $request){
     $pid = $this->getUser()->getAttribute('pid');
-    $detalle = Doctrine::getTable('Pedido')->find($pid)->getDetalle();
-    foreach ($detalle as $fila) {
-      $fila->AsignarLote();
+    $detalles = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
+    foreach ($detalles as $detalle) {
+      $detalle->AsignarLote();
     }
-    $this->redirect('detpedidos/index?pid='.$pid);
+    $this->executeIndex($request);
+    $this->setTemplate('index');
   }
   
   public function executeGet_cantidad_lote(sfWebRequest $request){
