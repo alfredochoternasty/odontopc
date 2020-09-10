@@ -22,6 +22,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'nro_lote'       => new sfWidgetFormFilterInput(),
       'cantidad'       => new sfWidgetFormFilterInput(),
       'tipofactura_id' => new sfWidgetFormFilterInput(),
+      'det_remito_id'  => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'nro_lote'       => new sfValidatorPass(array('required' => false)),
       'cantidad'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'tipofactura_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'det_remito_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas_filters[%s]');
@@ -63,6 +65,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'nro_lote'       => 'Text',
       'cantidad'       => 'Number',
       'tipofactura_id' => 'Number',
+      'det_remito_id'  => 'Number',
     );
   }
 }

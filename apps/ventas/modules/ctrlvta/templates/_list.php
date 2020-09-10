@@ -51,7 +51,7 @@
 									'grupo' => $vtas->getGrupo(),
 									'producto' => $vtas->getProducto(),
 									'cantidad' => $vtas->cantidad,
-									'bono' => $vtas->bonificados?:0,
+									'bono' => 0,//$vtas->bonificados?:0,
 									'dev' => 0,
 								);
 							} else {
@@ -66,14 +66,14 @@
 						} else {
 							if ($vtas->cantidad > 0) {
 								$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
-								$ventas[$vtas->producto_id]['bono'] += $vtas->bonificados;
+								$ventas[$vtas->producto_id]['bono'] += 0;//$vtas->bonificados;
 							} else {
 								$ventas[$vtas->producto_id]['dev'] += $vtas->cantidad * -1;
 							}
 						}
 						if ($vtas->cantidad > 0) {
 							$suma_total += $vtas->cantidad;
-							$suma_total_bon += $vtas->bonificados;
+							$suma_total_bon += 0;//$vtas->bonificados;
 						} else {
 							$suma_total_dev += $vtas->cantidad * -1;
 						}

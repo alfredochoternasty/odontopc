@@ -25,6 +25,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'nro_lote'       => new sfWidgetFormInputText(),
       'cantidad'       => new sfWidgetFormInputText(),
       'tipofactura_id' => new sfWidgetFormInputText(),
+      'det_remito_id'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -38,6 +39,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'nro_lote'       => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'cantidad'       => new sfValidatorInteger(array('required' => false)),
       'tipofactura_id' => new sfValidatorInteger(array('required' => false)),
+      'det_remito_id'  => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas[%s]');

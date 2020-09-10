@@ -94,7 +94,7 @@ class Resumen extends BaseResumen
   }
   
   public function getCuitCliente(){
-	  return str_replace('-', '', $this->getCliente()->cuit);
+	  return str_replace('-', '', trim($this->getCliente()->cuit));
   }
 	
   public function getDescRemito(){

@@ -25,9 +25,12 @@ generator:
         object_actions: []
         batch_actions: []
         actions:
-          imprimir_todo: ~
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
       filter:
-        display: [zona_id, fecha, grupoprod_id, producto_id]
+        display: [zona_id, fecha, grupoprod_id, producto_id, nro_lote]
       form:    ~
       edit:    ~
       new:     ~

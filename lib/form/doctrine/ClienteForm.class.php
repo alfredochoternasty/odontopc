@@ -24,8 +24,8 @@ class ClienteForm extends BaseClienteForm
     $this->widgetSchema['apellido'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['domicilio'] = new sfWidgetFormInputText(array(), array('size' => 30));
-    $this->widgetSchema['telefono'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
-    $this->widgetSchema['celular'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
+    $this->widgetSchema['telefono'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['celular'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['email'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['nro_matricula'] = new sfWidgetFormInputText(array(), array('size' => 30));
 
@@ -44,7 +44,7 @@ class ClienteForm extends BaseClienteForm
     $this->validatorSchema['dni'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['cuit'] = new sfValidatorCUIT(array('required' => true));
     $this->validatorSchema['nro_matricula'] = new sfValidatorString(array('required' => $zona_id?true:false));
-    $this->validatorSchema['celular'] = new sfValidatorNumber(array('required' => true));
+    $this->validatorSchema['celular'] = new sfValidatorNumber(array('required' => false));
     $this->validatorSchema['apellido'] = new sfValidatorString(array('required' => true));
     $this->validatorSchema['condicionfiscal_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Condfiscal'), 'required' => $zona_id?true:false));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => $zona_id?true:false, 'choices' => array('', 1, 0)));    

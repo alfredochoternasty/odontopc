@@ -17,6 +17,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @property string $nro_lote
  * @property integer $cantidad
  * @property integer $tipofactura_id
+ * @property integer $det_remito_id
  * @property DetalleResumen $DetalleResumen
  * @property Resumen $Resumen
  * @property Cliente $Cliente
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method string             getNroLote()        Returns the current record's "nro_lote" value
  * @method integer            getCantidad()       Returns the current record's "cantidad" value
  * @method integer            getTipofacturaId()  Returns the current record's "tipofactura_id" value
+ * @method integer            getDetRemitoId()    Returns the current record's "det_remito_id" value
  * @method DetalleResumen     getDetalleResumen() Returns the current record's "DetalleResumen" value
  * @method Resumen            getResumen()        Returns the current record's "Resumen" value
  * @method Cliente            getCliente()        Returns the current record's "Cliente" value
@@ -50,6 +52,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method MovimientoProducto setNroLote()        Sets the current record's "nro_lote" value
  * @method MovimientoProducto setCantidad()       Sets the current record's "cantidad" value
  * @method MovimientoProducto setTipofacturaId()  Sets the current record's "tipofactura_id" value
+ * @method MovimientoProducto setDetRemitoId()    Sets the current record's "det_remito_id" value
  * @method MovimientoProducto setDetalleResumen() Sets the current record's "DetalleResumen" value
  * @method MovimientoProducto setResumen()        Sets the current record's "Resumen" value
  * @method MovimientoProducto setCliente()        Sets the current record's "Cliente" value
@@ -105,6 +108,10 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('tipofactura_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('det_remito_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));
