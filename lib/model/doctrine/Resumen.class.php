@@ -146,6 +146,7 @@ class Resumen extends BaseResumen
 		$detalle_resumen = new DetalleResumen();
 		$detalle_resumen->resumen_id = $this->id;
 		$detalle_resumen->producto_id = $p_datos->producto_id;
+		$detalle_resumen->moneda_id = 1;
 		$detalle_resumen->nro_lote = $p_datos->nro_lote;
 		$detalle_resumen->precio = ($p_datos->precio/1.21);
 		$detalle_resumen->descuento = $p_desc;
