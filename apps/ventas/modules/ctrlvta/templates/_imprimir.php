@@ -2,39 +2,69 @@
 <head>
 </head>
 <body>
-<h2>Listado de Ventas - <?php echo $listado[0]->getZona() ?></h2>
-<table border="1" cellspacing="0" cellpadding="1">
+ <h2>Listado de Ventas Totalizado - <?php echo $listado[0]->getZona() ?></h2>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
   <tr>
-    <th style="background: #CCC;">Venta</th>
-    <th style="background: #CCC;">Fecha</th>
-    <th style="background: #CCC;">Cliente</th>
+    <th style="background: #CCC;">Grupo</th>
     <th style="background: #CCC;">Producto</th>
-    <th style="background: #CCC;">Precio</th>
-    <th style="background: #CCC;">Cant.</th>
-    <th style="background: #CCC;">Neto</th>
-    <th style="background: #CCC;">iva</th>
-    <th style="background: #CCC;">Total</th>
-    <th style="background: #CCC;">Lote</th>
+    <th style="background: #CCC;">Vendido</th>
+    <th style="background: #CCC;">Devueltos</th>
   </tr>
-  <?php $suma_total = 0; ?>
-  <?php foreach($listado as $fila):
-    if ($fila->cantidad > 0) :
-  ?>
-  <tr>
-    <?php $suma_total += $fila->getTotal(); ?>
-    <td><?php echo $fila->getResumen() ?></td>
-    <td><?php echo implode("/", array_reverse(explode("-", $fila->getFecha()))) ?></td>
-    <td><?php echo $fila->getCliente() ?></td>
-    <td><?php echo $fila->getNombre() ?></td>
-    <td><?php echo '$ '.sprintf("%01.2f", $fila->getPrecio()) ?></td>
-    <td><?php echo $fila->getCantidad() ?></td>
-    <td><?php echo '$ '.sprintf("%01.2f", $fila->getSubTotal()) ?></td>
-    <td><?php echo '$ '.sprintf("%01.2f", $fila->getIva()) ?></td>
-    <td><?php echo '$ '.sprintf("%01.2f", $fila->getTotal()) ?></td>
-    <td><?php echo $fila->getNroLote() ?></td>
+  <?php 
+  
+					$suma_total = 0;
+					$suma_total_dev = 0;
+					foreach ($listado as $vtas) {
+						if (empty($ventas[$vtas->producto_id])) {
+							if ($vtas->cantidad > 0) {
+								$ventas[$vtas->producto_id] = array(
+									'grupo' => $vtas->getGrupo(),
+									'producto' => $vtas->getProducto(),
+									'cantidad' => $vtas->cantidad,
+									'dev' => 0,
+								);
+							} else {
+								$ventas[$vtas->producto_id] = array(
+									'grupo' => $vtas->getGrupo(),
+									'producto' => $vtas->getProducto(),
+									'cantidad' => 0,
+									'dev' => ($vtas->cantidad * -1)?:0,
+								);								
+							}
+						} else {
+							if ($vtas->cantidad > 0) {
+								$ventas[$vtas->producto_id]['cantidad'] += $vtas->cantidad;
+							} else {
+								$ventas[$vtas->producto_id]['dev'] += $vtas->cantidad * -1;
+							}
+						}
+						if ($vtas->cantidad > 0) {
+							$suma_total += $vtas->cantidad;
+						} else {
+							$suma_total_dev += $vtas->cantidad * -1;
+						}
+					}
+					sort($ventas);
+					foreach ($ventas as $vta): ?>
+							<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+								<td><?php echo $vta['grupo'] ?></td>
+								<td><?php echo $vta['producto'] ?></td>
+								<td><?php echo $vta['cantidad'] ?></td>
+								<td><?php echo $vta['dev'] ?></td>
+							</tr>
+        <?php endforeach;?>
+  <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+    <td colspan="2" style="text-align: right; font-size:20px;"><b>Subtotal: </b> </td>
+    <td style="font-size:20px;"><b><?php echo $suma_total ?></b></td>
+    <td style="font-size:20px;"><b><?php echo $suma_total_dev ?></b></td>
   </tr>
-  <?php endif; ?> 
-  <?php endforeach; ?> 
+  <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+<td colspan="4">&nbsp;</td>
+  </tr>
+  <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
+    <td colspan="2" style="text-align: right; font-size:34px;"><b>Total: </b></td>
+    <td colspan="2" style="font-size:34px;"><b><?php echo $suma_total - $suma_total_dev ?></b></td>
+  </tr>
 </table>
 </body>
 <html>

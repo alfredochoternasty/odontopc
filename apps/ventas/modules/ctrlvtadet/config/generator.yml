@@ -20,8 +20,8 @@ generator:
       list:
         table_method: retrieveCtrlvtadet
         title: Listado de Ventas
-        display: [Resumen, fecha, Cliente, Producto, _cantidad, nro_lote]
-        max_per_page: 250
+        display: [Resumen, fecha, Cliente, Producto, cantidad, nro_lote]
+        max_per_page: 99999
         object_actions: []
         batch_actions: []
         actions:
@@ -35,4 +35,4 @@ generator:
       edit:    ~
       new:     ~
       show:
-        display: [Resumen, fecha, Cliente, Producto, _cantidad, nro_lote]
+        display: [Resumen, fecha, Cliente, Producto, cantidad, nro_lote]
