@@ -45,7 +45,8 @@
 
     <tbody>
       <?php 
-				$clientes_compartidos = array(664,708,675,709,769,655,736,770,656,671,650,756,674,719,746,722,682,698,767);
+				$clientes_compartidos = array(808, 664, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
+				$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
 				$tot_descuento = 0;
 				$zona_id = 0;
 				$array_devueltos = array();
@@ -58,6 +59,9 @@
 							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
 								// si es algun cliente compartido la comision es de 10%
 								$descuento = "10.00%";
+							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
+								// si es algun cliente compartido la comision es de 0%
+								$descuento = "00.00%";
 							} elseif (!empty($ventas_zona->grupo_porc_desc)) {
 								  $descuento = sprintf("%01.2f", $ventas_zona->grupo_porc_desc)." %";
 							} elseif (!empty($ventas_zona->prod_porc_desc)) {
@@ -77,6 +81,9 @@
 							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
 								// si es algun cliente compartido la comision es de 10%
 								$descuento = ($ventas_zona->getDetalleResumen()->sub_total) * 10 / 100;
+							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
+								// si es algun cliente compartido la comision es de 0%
+								$descuento = 0;
 							} elseif (!empty($ventas_zona->grupo_porc_desc)) {
 								$descuento = ($ventas_zona->getDetalleResumen()->sub_total) * $ventas_zona->grupo_porc_desc / 100;
 							} elseif (!empty($ventas_zona->prod_porc_desc)) {
@@ -158,6 +165,9 @@
 							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
 								// si es algun cliente compartido la comision es de 10%
 								$descuento = "10.00%";
+							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
+								// si es algun cliente compartido la comision es de 0%
+								$descuento = "00.00%";
 							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
 								$descuento = sprintf("%01.2f", $desc_zona_grupo[0]->porc_desc)." %";
 							} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
@@ -172,6 +182,9 @@
 							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
 								// si es algun cliente compartido la comision es de 10%
 								$descuento = ($devuelto->precio * $devuelto->cantidad) * (10/100);
+							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
+								// si es algun cliente compartido la comision es de 0%
+								$descuento = 0;
 							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
 								$descuento = ($devuelto->precio * $devuelto->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
 							} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
