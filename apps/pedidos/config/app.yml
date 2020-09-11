@@ -2,4 +2,8 @@
 # http://www.symfony-project.org/reference/1_4/en/11-App
 
 # default values
-#all:
+all:
+    sf_guard_plugin:
+        retrieve_by_username_callable: 
+            - myUser
+            - verificarUsuario

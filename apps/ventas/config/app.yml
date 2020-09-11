@@ -6,3 +6,6 @@ all:
   sf_guard_plugin:
     success_signin_url: @homepage # @my_route?param=value
     success_signout_url: @homepage # module/action
+    retrieve_by_username_callable: 
+        - myUser
+        - verificarUsuario

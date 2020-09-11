@@ -15,4 +15,13 @@ class myUser extends sfGuardSecurityUser
 		return $valor;
   }
 	
+	public function verificarUsuario($p_usuario)
+	{
+		$query = Doctrine_Core::getTable('sfGuardUser')->createQuery('u')
+			->where('u.username = ?', $p_usuario)
+			->addWhere('u.is_active = 1')
+			->addWhere('u.es_cliente = 0');
+
+		return $query->fetchOne();
+	}
 }

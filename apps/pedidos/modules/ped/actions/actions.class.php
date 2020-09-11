@@ -13,7 +13,7 @@ class pedActions extends sfActions
 	public function executePedidos(sfWebRequest $request) {
     $id_usuario = $this->getUser()->getGuardUser()->getId();
     $clientes = Doctrine::getTable('Cliente')->findByUsuarioId($id_usuario);
-    $id_cliente = $clientes[0]->getId();
+    $id_cliente = $clientes[0]->getId()?:0;
 		$this->pedidos = Doctrine_Core::getTable('Pedido')->createQuery('p')->where('finalizado = 1 and cliente_id = '.$id_cliente)->orderBy('p.id DESC')->execute();
 		$this->setLayout('layout_app');
 	}
