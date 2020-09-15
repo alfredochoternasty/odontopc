@@ -2,13 +2,10 @@
 <head>
 </head>
 <body>
-<h2>Pedido</h2>
-<p><b>N&uacute;mero de Pedido:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedidoId() ?></p>
-<p><b>Nombre y Apellido:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedido()->getCliente() ?></p>
-<p><b>Forma de Env&iacute;o:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedido()->getFormaEnvio() ?></p>
-<p><b>Dir. de Entrega:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedido()->getDireccionEntrega() ?></p>
+<h2>Pedido N&uacute;mero:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedidoId() ?></h2>
+<p><b>Fecha:</b>&nbsp;&nbsp;<?php echo implode('/', array_reverse(explode('-', $detalles[0]->getPedido()->getFecha()))); ?></p>
 <p><b>Obs:</b>&nbsp;&nbsp;<?php echo $detalles[0]->getPedido()->getObservacion() ?></p>
-<table border="1" cellspacing="0" cellpadding="1">
+<table width="100%" border="1" cellspacing="0" cellpadding="1">
   <tr>
     <th style="background: #CCC;">Producto</th>
     <th style="background: #CCC;">Cantidad</th>

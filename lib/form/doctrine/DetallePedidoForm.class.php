@@ -50,6 +50,8 @@ class DetallePedidoForm extends BaseDetallePedidoForm
     $this->widgetSchema['cantidad'] = new sfWidgetFormInput(array(), array('size' => 5));
     $this->validatorSchema['cantidad'] =  new sfValidatorNumber(array('required' => true));
     
+    $this->validatorSchema['nro_lote'] =  new sfValidatorString(array('required' => false));
+    
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();  
     
   }

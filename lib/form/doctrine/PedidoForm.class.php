@@ -13,7 +13,7 @@ class PedidoForm extends BasePedidoForm
   public function configure()
   {
 		parent::configure();
-    unset($this['cliente_id'], $this['fecha'], $this['fecha_venta'], $this['finalizado']);
+    unset($this['cliente_id'], $this['fecha'], $this['fecha_venta'], $this['finalizado'], $this['zona_id']);
 		
 		$this->widgetSchema['forma_envio'] = new sfWidgetFormChoice(array('choices' => array(1 => 'Envío a domicilio', 2 => 'Retiro en oficina')));
 		$this->validatorSchema['forma_envio'] =  new sfValidatorNumber(array('required' => true));

@@ -45,7 +45,7 @@ class detpedActions extends autoDetpedActions
     return $this->renderText(json_encode($nro_lote));
   } 
   
-  public function executeList_volver(sfWebRequest $request){
+  public function executeListVolver(sfWebRequest $request){
     $this->redirect('@pedido');
   }
   
@@ -105,6 +105,7 @@ class detpedActions extends autoDetpedActions
     $pedido = new Pedido();
     $pedido->setFecha(date('Y-m-d'));
     $pedido->setClienteId($id_cliente);
+    $pedido->setZonaId(1);
     $pedido->save();
     $id_ped = $pedido->getId();
     $this->getUser()->setAttribute('pid', $id_ped);
@@ -161,7 +162,7 @@ class detpedActions extends autoDetpedActions
 		$this->redirect('@detalle_pedido_new');
   }  
   
-  public function executeList_imprimir(sfWebRequest $request){
+  public function executeListImprimir(sfWebRequest $request){
     $pid = $this->getUser()->getAttribute('pid', 1);
     $detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
     

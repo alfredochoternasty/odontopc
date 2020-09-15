@@ -42,6 +42,10 @@ class pedcerrActions extends autoPedcerrActions
     // has filters? (usefull for activate reset button)
     $this->hasFilters = $this->getUser()->getAttribute('pedcerr.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     
-  }  
+  }
+  
+  public function executeListDetalle(sfWebRequest $request){
+    $this->redirect('detped/index?pid='.$this->getRequestParameter('id'));
+  }
 
 }

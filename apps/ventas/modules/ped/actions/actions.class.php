@@ -13,8 +13,8 @@ require_once dirname(__FILE__).'/../lib/pedGeneratorHelper.class.php';
  */
 class pedActions extends autoPedActions
 {
-  public function executeListDetalle(sfWebRequest $request){
-    $this->redirect( 'detped/index?pid='.$this->getRequestParameter('id'));
+  public function executeListDetalle(sfWebRequest $request) {
+    $this->redirect('detped/index?pid='.$this->getRequestParameter('id'));
   }
   
   public function executeIndex(sfWebRequest $request)

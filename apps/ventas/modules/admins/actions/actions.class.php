@@ -136,35 +136,24 @@ class adminsActions extends sfActions
 	}	
 	
 	public function executeIndex(sfWebRequest $request)
-	{		
-		$tbl_excluir = array(
-			'cliente_saldo', 
-			'cliente_ultima_compra', 
-			'comp_fact', 'control_stock', 
-			'cta_cte', 
-			'cta_cte_prov', 
-			'listado_cobros', 
-			'listado_compras', 
-			'listado_ventas', 
-			'producto_traza', 
-			'ventas_zona',
-			'vta_fact',
-			'facturas_afip',
-			'lista_precio_detalle'
-		);
-
-		$oCurrentConnection = Doctrine_Manager::getInstance()->getCurrentConnection();
-		list($host, $db) = explode(';', $oCurrentConnection->getOption('dsn'));
-		list($aux, $sdb) = explode('=', $db);
-		$user = $oCurrentConnection->getOption('username');
-		$pwd = $oCurrentConnection->getOption('password');
+	{	
+		$fecha_actual = date('Ymd');
+		$sql_file = $fecha_actual.'_bak_'.$name.'.sql';
 		
-		$entorno = sfConfig::get('sf_environment');
-		if ($entorno == 'dev') {
-			$filename = $this->backup_tables('localhost','root','','ventas', $tbl_excluir);
-		} else {
-			$filename = $this->backup_tables('localhost', $user, $pwd, $sdb, $tbl_excluir);
-		}
+    $dump = new Ifsnop\Mysqldump\Mysqldump('mysql:host=localhost;dbname=ventas', 'root', '');
+		$dump->start($sql_file);
+
+		// borro el .zip anterior
+		$fecha_backup_anterior = date('Ymd', strtotime($fecha_actual."- 1 days"));
+		if(file_exists($fecha_backup_anterior.'_bak_'.$name.'.zip')) unlink($fecha_backup_anterior.'_bak_'.$name.'.zip');
+		
+		$zip = new ZipArchive();
+		$filename = $fecha_actual.'_bak_'.$name.'.zip';
+		$zip->open($filename, ZipArchive::CREATE);
+		$zip->addFile($sql_file);
+		$zip->close();
+		
+		if(file_exists($sql_file)) unlink($sql_file);		
 		
 		$mensaje = Swift_Message::newInstance();
 		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
