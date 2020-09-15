@@ -47,7 +47,7 @@
 	<table cellpadding="10" cellspacing="0" border="0" width="100%">
 		<tr>
 			<td width="44%">
-				<img src="images/logo_nti.png" width=204 height=77>
+				<img src="http://ventas.ntiimplantes.com.ar/images/logo_nti.png" width=204 height=77>
 				<p>
 					<b>Razon Social: </b>NTI Implantes<br>
 					<b>Domicilio Comercial: </b>Feliciano 581 - Paraná (Entre Ríos)<br>
