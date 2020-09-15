@@ -23,6 +23,8 @@ class CompraForm extends BaseCompraForm
 			$this->widgetSchema['remito_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Resumen', 'table_method' => 'getRemitosParaCompra', 'method' => 'getDescRemito', 'add_empty' => true, 'order_by' => array('fecha', 'desc')), array('style' => 'width:250px;'));
 		} else {
 			unset($this['remito_id']);
+			$this->widgetSchema['numero'] = new sfWidgetFormInputText();
+			$this->validatorSchema['numero'] =  new sfValidatorInteger();
 		}
 		
     $this->widgetSchema['proveedor_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Proveedor'), 'table_method' => 'ProveedorZona', 'add_empty' => ($zona_id == 1), 'order_by' => array('razon_social', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));
@@ -34,9 +36,6 @@ class CompraForm extends BaseCompraForm
 		$this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Tipofactura'), 'table_method' => 'TipoFactCompraZona', 'add_empty' => false));
     
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
-	
-    $this->widgetSchema['numero'] = new sfWidgetFormInputText();
-		$this->validatorSchema['numero'] =  new sfValidatorInteger();    
 		
 		$this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger();
