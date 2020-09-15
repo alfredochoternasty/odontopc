@@ -13,7 +13,7 @@
  *
  */
 
-// namespace Ifsnop\Mysqldump;
+namespace Ifsnop\Mysqldump;
 
 use Exception;
 use PDO;

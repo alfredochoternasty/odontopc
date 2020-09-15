@@ -72,7 +72,7 @@
 			<img id="cerrar_menu" src="<?php echo $base_url?>/images/back.png" style="position: absolute;top: 5px; right: 10px;">
 				<?php
 					/* para que esto funcione tuve que modificar la clase sfDoctrineGuardPlugin	- getAllPermissions */
-					$statement = Doctrine_Manager::getInstance()->connection();  
+					$statement = Doctrine_Manager::getInstance()->connection(); 
 					$sql = 'select name, description, padre from sf_guard_permission where id >=10 order by id';
 					$results = $statement->execute($sql);
 					$bandera = 0;

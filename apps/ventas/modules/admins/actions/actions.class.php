@@ -137,10 +137,11 @@ class adminsActions extends sfActions
 	
 	public function executeIndex(sfWebRequest $request)
 	{	
+		$name = 'ventas';
 		$fecha_actual = date('Ymd');
 		$sql_file = $fecha_actual.'_bak_'.$name.'.sql';
 		
-    $dump = new Ifsnop\Mysqldump\Mysqldump('mysql:host=localhost;dbname=ventas', 'root', '');
+    $dump = new Mysqldump('mysql:host=localhost;dbname='.$name, 'root', '');
 		$dump->start($sql_file);
 
 		// borro el .zip anterior
@@ -160,7 +161,7 @@ class adminsActions extends sfActions
 		$mensaje->setTo(array('alfredochoternasty@gmail.com' => 'Backup Sistema'));
 		if(file_exists($filename)){
 			$mensaje->attach(Swift_Attachment::fromPath($filename));
-			if ($sdb == 'ventas') {
+			if ($name == 'ventas') {
 				$mensaje->setSubject('backup blanco NTI');
 				$mensaje->setBody('aca esta el backup blanco');
 			} else {
@@ -169,7 +170,7 @@ class adminsActions extends sfActions
 			}
 		} else {
 				$mensaje->setSubject('error en backup NTI');
-				$mensaje->setBody('no se hizo el backup de '.$sdb);
+				$mensaje->setBody('no se hizo el backup de '.$name);
 		}
 		$mensaje->setContentType("text/html");
 		$this->getMailer()->send($mensaje);
