@@ -202,7 +202,7 @@ $(document).ready(function(){
     var cantidad = $("#detalle_resumen_cantidad").val();
     if ($('#detalle_resumen_iva').length){
       var subtotal = cantidad * precio;
-      var iva = (subtotal * 21)/100;
+      var iva = subtotal * 0.21;
       var total = subtotal + iva;    
       $("#detalle_resumen_iva").attr('value', iva.toFixed(2));
       $("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
@@ -271,9 +271,10 @@ $(document).ready(function(){
 
 		if ($('#detalle_resumen_iva').length) {
 			precio = precio - precio * descuento/100
-			var subtotal = cantidad * truncar(precio, 2);
-			var iva = subtotal * 21/100;
-			var total = subtotal + iva;
+			var subtotal = cantidad * precio;
+			var iva = (subtotal * 0.21);
+			var total = Math.round(subtotal + iva);
+			iva = total - subtotal;
 			$("#detalle_resumen_iva").attr('value', iva.toFixed(2));
 			$("#detalle_resumen_sub_total").attr('value', subtotal.toFixed(2));
 		}else{

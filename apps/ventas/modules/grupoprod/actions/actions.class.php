@@ -17,10 +17,10 @@ class grupoprodActions extends autoGrupoprodActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->grupoprod = $this->getRoute()->getObject();
-	$lista = '';
-	$grupoprods = $this->grupoprod->getProductos();
-	foreach ($grupoprods as $prod) $lista[$prod->id] = $prod->nombre;
-	$parametros = array('productos' => $lista, 'image_url' => 'GetImagen?img='.$this->grupoprod->getImagen());
+		$lista = array();
+		$grupoprods = $this->grupoprod->getProductos();
+		foreach ($grupoprods as $prod) $lista[$prod->id] = $prod->nombre;
+		$parametros = array('productos' => $lista, 'image_url' => 'GetImagen?img='.$this->grupoprod->getImagen());
     $this->form = $this->configuration->getForm($this->grupoprod, $parametros);
   }
 	
