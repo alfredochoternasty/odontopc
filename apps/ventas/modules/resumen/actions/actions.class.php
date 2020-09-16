@@ -150,6 +150,7 @@ class resumenActions extends autoResumenActions
 			'zona_id' => $this->getUser()->getGuardUser()->getZonaId(),
 			'usuario_id' => $this->getUser()->getGuardUser()->getId(),
 		);
+		
 		$this->form = $this->configuration->getForm(null, $parametros_form);
     $this->resumen = $this->form->getObject();
   }
@@ -164,7 +165,7 @@ class resumenActions extends autoResumenActions
     $this->resumen = $this->getRoute()->getObject();
     $this->form = $this->configuration->getForm($this->resumen, $parametros_form);
   }
-	
+
   public function executeVerdetalle(sfWebRequest $request){
     $rid = $this->getRequestParameter('rid');
     $this->resumen = Doctrine::getTable('Resumen')->find($rid);
@@ -202,14 +203,14 @@ class resumenActions extends autoResumenActions
 	
   public function executeGetnroremito(sfWebRequest $request){
     $q = Doctrine_Query::create()
-			->select('r.nro_factura, r.id, r.fecha')
-			->from('resumen r')
-			->where('r.tipofactura_id = 4')
-			->andWhere('r.nro_factura is not null')
-			->limit('1');
-		$max_nro_remito = $q->execute();
-			$nro = $max_nro_remito[0]['nro_factura'];
-			$nro += 1;
-			return $this->renderText(json_encode($nro));
+	->select('r.nro_factura, r.id, r.fecha')
+	->from('resumen r')
+	->where('r.tipofactura_id = 4')
+	->andWhere('r.nro_factura is not null')
+	->limit('1');
+	$max_nro_remito = $q->execute();
+    $nro = $max_nro_remito[0]['nro_factura'];
+    $nro += 1;
+    return $this->renderText(json_encode($nro));
   }
 }

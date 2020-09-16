@@ -141,7 +141,7 @@ class adminsActions extends sfActions
 		$fecha_actual = date('Ymd');
 		$sql_file = $fecha_actual.'_bak_'.$name.'.sql';
 		
-    $dump = new Mysqldump('mysql:host=localhost;dbname='.$name, 'root', '');
+    	$dump = new Mysqldump('mysql:host=localhost;dbname='.$name, 'ntisis', 'maf/2826');
 		$dump->start($sql_file);
 
 		// borro el .zip anterior

@@ -389,11 +389,11 @@ class detresActions extends autoDetresActions
 			$wsaa = new WSAA(dirname(__FILE__)); 
 			$dt_expira = new DateTime($wsaa->get_expiration());
 			$dt_actual = new DateTime(date("Y-m-d h:m:i"));
-			if($dt_expira < $dt_actual) {
+			//if($dt_expira < $dt_actual) {
 				if (!$wsaa->generar_TA()) {
 					die('<br>'.$wsaa->error.'<br>');
 				}
-			}
+			//}
 			
 			$ptovta = '0005';
 			
