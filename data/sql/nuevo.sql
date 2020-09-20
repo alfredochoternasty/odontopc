@@ -1,35 +1,32 @@
-DROP VIEW listado_ventas;
-CREATE VIEW listado_ventas AS 
-select 
-  detalle_resumen.id,
-	resumen.id as resumen_id,
-  resumen.cliente_id,
-  detalle_resumen.producto_id,
-	producto.grupoprod_id,
-	resumen.zona_id,
-	resumen.fecha,
-  nro_lote,
-  cantidad,
-	resumen.tipofactura_id,
-	detalle_resumen.det_remito_id
-from 
-	resumen 
-		join detalle_resumen on resumen.id = detalle_resumen.resumen_id
-		join producto on producto.id = detalle_resumen.producto_id
-UNION ALL
-select 
-	dev_producto.id,
-	dev_producto.resumen_id,
-	dev_producto.cliente_id,
-	dev_producto.producto_id,
-	producto.grupoprod_id,
-	dev_producto.zona_id,
-	dev_producto.fecha,
-	dev_producto.nro_lote,
-	dev_producto.cantidad * -1 AS cantidad,
-	dev_producto.tipofactura_id,
-	null
-from 
-	dev_producto
-		join producto on dev_producto.producto_id = producto.id
-		join resumen on dev_producto.resumen_id = resumen.id;
+delete from sf_guard_group_permission;
+
+ALTER TABLE `ventas`.`sf_guard_group_permission` 
+ADD CONSTRAINT `fk_group_permission_permision`
+  FOREIGN KEY (`permission_id`)
+  REFERENCES `ventas`.`sf_guard_permission` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_group_permission_group`
+  FOREIGN KEY (`group_id`)
+  REFERENCES `ventas`.`sf_guard_group` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+update sf_guard_permission set id = id+1000;
+update sf_guard_permission set padre = padre+1000;
+
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`) VALUES ('100', 'Stock Minimo', 'Panel Inicio');
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`) VALUES ('110', 'Nuevos Pedidos', 'Panel Inicio');
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`) VALUES ('120', 'Ventas Actuales', 'Panel Inicio');
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`) VALUES ('130', 'Cantidad Clientes', 'Panel Inicio');
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`) VALUES ('140', 'Clientes Nuevos', 'Panel Inicio');
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`) VALUES ('150', 'Ventas por Pedido', 'Panel Inicio');
+INSERT INTO `ventas`.`sf_guard_permission` (`id`, `name`, `description`, `padre`) VALUES ('50', 'Paneles Inicio', 'Paneles Inicio', '0');
+
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '0' WHERE (`id` = '50');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '100');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '110');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '120');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '130');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '140');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '150');

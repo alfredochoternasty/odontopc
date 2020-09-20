@@ -82,27 +82,29 @@ header{
 }
 
 .checkbox_list li{margin-left: 50px;}
-#sf_guard_user_permissions_list_10, 
-#sf_guard_user_permissions_list_60, 
-#sf_guard_user_permissions_list_90, 
-#sf_guard_user_permissions_list_170, 
-#sf_guard_user_permissions_list_230, 
-#sf_guard_user_permissions_list_310, 
-#sf_guard_user_permissions_list_150, 
-#sf_guard_user_permissions_list_305, 
-#sf_guard_user_permissions_list_360{
+#sf_guard_user_permissions_list_50, 
+#sf_guard_user_permissions_list_1010, 
+#sf_guard_user_permissions_list_1060, 
+#sf_guard_user_permissions_list_1090, 
+#sf_guard_user_permissions_list_1170, 
+#sf_guard_user_permissions_list_1230, 
+#sf_guard_user_permissions_list_1310, 
+#sf_guard_user_permissions_list_1150, 
+#sf_guard_user_permissions_list_1305, 
+#sf_guard_user_permissions_list_1360{
 	margin-left: -30px;
 	font-weight: bold;
 }
-#sf_guard_user_permissions_list_10 + label, 
-#sf_guard_user_permissions_list_60 + label, 
-#sf_guard_user_permissions_list_90 + label, 
-#sf_guard_user_permissions_list_170 + label, 
-#sf_guard_user_permissions_list_230 + label, 
-#sf_guard_user_permissions_list_310 + label, 
-#sf_guard_user_permissions_list_150 + label, 
-#sf_guard_user_permissions_list_305 + label, 
-#sf_guard_user_permissions_list_360 + label{
+#sf_guard_user_permissions_list_50 + label, 
+#sf_guard_user_permissions_list_1010 + label, 
+#sf_guard_user_permissions_list_1060 + label, 
+#sf_guard_user_permissions_list_1090 + label, 
+#sf_guard_user_permissions_list_1170 + label, 
+#sf_guard_user_permissions_list_1230 + label, 
+#sf_guard_user_permissions_list_1310 + label, 
+#sf_guard_user_permissions_list_1150 + label, 
+#sf_guard_user_permissions_list_1305 + label, 
+#sf_guard_user_permissions_list_1360 + label{
 	font-weight: bold;
 	font-size: larger;
 	background-color: #0087ca;

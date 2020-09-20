@@ -73,12 +73,12 @@
 				<?php
 					/* para que esto funcione tuve que modificar la clase sfDoctrineGuardPlugin	- getAllPermissions */
 					$statement = Doctrine_Manager::getInstance()->connection(); 
-					$sql = 'select name, description, padre from sf_guard_permission where id >=10 order by id';
+					$sql = 'select name, description, padre from sf_guard_permission where id >=1000 order by id';
 					$results = $statement->execute($sql);
 					$bandera = 0;
 					echo "<ul><li>".link_to("Inicio","@homepage")."</li>";
 					foreach ($results as $r){
-						if ($r['padre'] == 0 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
+						if ($r['padre'] == 1000 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
 							echo $bandera?"</ul></li>":"";
 							echo "<li><a href='javascript:void();'>".$r['name'];
 							if ($r['name'] == 'Pedidos') include_component('ped', 'CantPedNuevos');	
@@ -88,7 +88,7 @@
 						if ($r['name'] == 'Cambiar Clave') {
 							echo "<li>".link_to($r['name'], "sfGuardUser/clave?id=".$id)."</li>";
 						} else {
-							if ($r['padre'] > 0 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
+							if ($r['padre'] > 1000 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
 								echo "<li>".link_to($r['name'], $r['description'])."</li>";
 							}
 						}
