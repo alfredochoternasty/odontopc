@@ -21,8 +21,8 @@ class inicioActions extends autoInicioActions
     //borra los pedidos que iniciados y que no tienen detalle
     //el pedido su hay detalle se hace una cabecera, y despues se borra el detalle y la cabecera queda sola
     // $q = Doctrine_Query::create()->delete()->from('pedido p')->where('p.id not in (select pedido_id from detalle_pedido)')->execute();
-
-    $zona_id = $this->getUser()->getGuardUser()->zona_id;
+    $usuario = $this->getUser();
+    $zona_id = $usuario->getGuardUser()->zona_id;
     $modulo_pedidos = $this->getUser()->getVarConfig('modulo_pedidos');
 
     if ($modulo_pedidos == 'S') {
@@ -52,15 +52,21 @@ class inicioActions extends autoInicioActions
     
     $modulo_tablero = 'S'; //$this->getUser()->getVarConfig('modulo_tablero');
     if ($modulo_tablero == 'S') {
-        $this->ventas = Doctrine::getTable('Categoria')->findAll();
+        if ($usuario->hasCredential('Ventas Actuales')) $this->ventas = Doctrine::getTable('Categoria')->findAll();
+        
         $this->clientes = array();
-        $this->clientes['web'] = Doctrine::getTable('Cliente')->getAltasWeb($zona_id);
-        $this->clientes['nuevos'] = Doctrine::getTable('Cliente')->getNuevos($zona_id);
-        $this->clientes['anterior'] = Doctrine::getTable('Cliente')->getNuevosAnt($zona_id);
-        $this->clientes['total'] = count(Doctrine::getTable('Cliente')->findByActivoAndZonaId(1, $zona_id));
+        if ($usuario->hasCredential('Clientes Nuevos')) $this->clientes['web'] = Doctrine::getTable('Cliente')->getAltasWeb($zona_id);
+        if ($usuario->hasCredential('Cantidad Clientes')) {
+            $this->clientes['nuevos'] = Doctrine::getTable('Cliente')->getNuevos($zona_id);
+            $this->clientes['anterior'] = Doctrine::getTable('Cliente')->getNuevosAnt($zona_id);
+            $this->clientes['total'] = count(Doctrine::getTable('Cliente')->findByActivoAndZonaId(1, $zona_id));
+        }
+        
         $this->tipo_ventas = array();
-        $this->tipo_ventas['ventas'] = Doctrine::getTable('Resumen')->getVentas($zona_id);
-        $this->tipo_ventas['pedidos'] = Doctrine::getTable('Resumen')->getVentasPedidos($zona_id);
+        if ($usuario->hasCredential('Ventas por Pedido')) {
+            $this->tipo_ventas['ventas'] = Doctrine::getTable('Resumen')->getVentas($zona_id);
+            $this->tipo_ventas['pedidos'] = Doctrine::getTable('Resumen')->getVentasPedidos($zona_id);
+        }
     }
     $this->zona_id = $zona_id;
   }

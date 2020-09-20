@@ -1,7 +1,7 @@
 <div style="float:left; width:45%;margin:5px;">
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
-		<h1>Ventas mes actual comparadas con mismo dia mes anterior</h1>
+		<h1>Ventas al dia actual comparadas al mismo dia mes anterior</h1>
 	</caption>
 
 	<thead class="ui-widget-header">

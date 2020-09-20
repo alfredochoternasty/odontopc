@@ -30,3 +30,13 @@ UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '120');
 UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '130');
 UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '140');
 UPDATE `ventas`.`sf_guard_permission` SET `padre` = '50' WHERE (`id` = '150');
+
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '1170' WHERE (`id` = '1081');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '1170' WHERE (`id` = '1082');
+UPDATE `ventas`.`sf_guard_permission` SET `padre` = '1170' WHERE (`id` = '1083');
+
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '1224' WHERE (`id` = '1081');
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '1225' WHERE (`id` = '1082');
+UPDATE `ventas`.`sf_guard_permission` SET `id` = '1226' WHERE (`id` = '1083');
+
+UPDATE `ventas`.`sf_guard_permission` SET `name` = 'Compras', `description` = '@Compras Menu' WHERE (`id` = '1170');

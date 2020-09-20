@@ -68,20 +68,21 @@ class ResumenTable extends Doctrine_Table
 			return $result;
 		}
 		
-	public function getVentas() {
-		$sql = "select count(id) as cantidad from resumen where fecha >= date_format(curdate(), '%Y-%m-01')";
+	public function getVentas($p_zona_id=1) {
+		$sql = "select count(id) as cantidad from resumen where zona_id = $p_zona_id and fecha >= date_format(curdate(), '%Y-%m-01')";
 		$con = Doctrine_Manager::getInstance()->connection();
 		$st = $con->execute($sql);
 		$resultado = $st->fetch(PDO::FETCH_OBJ);
 		return $resultado->cantidad;
 	}
 	
-	public function getVentasPedidos() {
+	public function getVentasPedidos($p_zona_id=1) {
 		$sql = "
 			select count(id) as cantidad 
 			from resumen 
 			where 
 				pedido_id is not null
+				and zona_id = $p_zona_id 
 				and fecha >= date_format(curdate(), '%Y-%m-01')
 		";
 		$con = Doctrine_Manager::getInstance()->connection();

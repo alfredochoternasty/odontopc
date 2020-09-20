@@ -39,13 +39,14 @@ class ProductoTable extends Doctrine_Table
     
     public function ProdutosSinStock(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$zona_id = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
 			$rootAlias = $q->getRootAlias();
 			$q->addSelect('r.nombre');
 			$q->addSelect('r.minimo_stock');
 			$q->addSelect('sum(l.stock) as stock');
 			$q->leftJoin($rootAlias . '.Lote l');
 			$q->where('grupoprod_id <> 1 and grupoprod_id <> 15 and activo = 1');
-			$q->andWhere('l.zona_id = 1');
+			$q->andWhere('l.zona_id = '.$zona_id);
 			$q->andWhere('l.stock > 0');
 			$q->andWhere("l.nro_lote not like 'er%'");
 			$q->groupBy('r.nombre, r.minimo_stock');
