@@ -28,7 +28,7 @@ generator:
         batch_actions:
            pagar: ~
         actions:
-          excel: ~
+          excel: {label: Descargar Todo}
       filter:
         fields:
           fecha: { label: Fecha de Venta, date_format: dd/MM/yyyy }

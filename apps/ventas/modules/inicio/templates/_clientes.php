@@ -28,7 +28,8 @@
 				$nuevos = $clientes['nuevos'];
 				$anterior = $clientes['anterior'];
 				$total = $clientes['total'];
-				$porcentaje = ($nuevos*100/$anterior)-100;
+				$porcentaje = 0;
+				if (!empty($anterior)) $porcentaje = ($nuevos*100/$anterior)-100;
 		?>
 				<tr class="sf_admin_row ui-widget-content">
 					<td class="sf_admin_text"><?php echo $nuevos ?></td>

@@ -23,40 +23,61 @@ class vta_zonaActions extends autoVta_zonaActions
     header("Content-Type: application/vnd.ms-excel");
     
     echo 'Listado de Ventas por zona' . "\r\n";
-    $titulos = array('Fecha', 'Factura', 'Cliente', 'Producto', 'Zona', 'Neto', 'Descuento', 'Total');
+    $titulos = array('Fecha', 'Factura', 'Cliente', 'Producto', 'Zona', 'Neto', 'Porcentaje', 'Comision');
     $flag = false;
 		$total_todo = 0;
+		$clientes_compartidos = array(808, 664, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
+		$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
+		$tot_descuento = 0;
+		$zona_id = 0;
+		$array_devueltos = array();
     foreach($vtas as $vta):
 			if (!$flag) {
 					echo implode("\t", $titulos) . "\r\n";
 					$flag = true;
 			} 
 					
-			if (!empty($vta->grupo_porc_desc)) {
-				$descuento = $vta->grupo_porc_desc.' %';
-				$total = $vta->getDetalleResumen()->sub_total * $vta->grupo_porc_desc / 100;
+			if (in_array($vta->cliente_id, $clientes_compartidos)) {
+				// si es algun cliente compartido la comision es de 10%
+				$total = $descuento = ($vta->getDetalleResumen()->sub_total) * 10 / 100;
+				$porc = '10%';
+			} elseif (in_array($vta->cliente_id, $clintes_sin_comision)) {
+				// si es algun cliente compartido la comision es de 0%
+				$total = $descuento = 0;
+				$porc = '0%';
+			} elseif (!empty($vta->grupo_porc_desc)) {
+				$total = $descuento = ($vta->getDetalleResumen()->sub_total) * $vta->grupo_porc_desc / 100;
+				$porc = $vta->grupo_porc_desc.'%';
 			} elseif (!empty($vta->prod_porc_desc)) {
-				$descuento = $vta->prod_porc_desc.' %';
-				$total = $vta->getDetalleResumen()->sub_total * $vta->prod_porc_desc / 100;
+				$total = $descuento = ($vta->getDetalleResumen()->sub_total)  * $vta->prod_porc_desc / 100;
+				$porc = $vta->prod_porc_desc.'%';
 			} elseif (!empty($vta->grupo_precio_desc)) {
-				$descuento = $vta->grupo_precio_desc;
-				$total = $vta->grupo_precio_desc;
+				$total = $descuento = $vta->grupo_precio_desc;
+				$porc = $vta->grupo_precio_desc.'%';
 			} elseif (!empty($vta->prod_precio_desc)) {
-				$descuento = $vta->prod_precio_desc;
-				$total = $vta->prod_precio_desc;
+				$total = $descuento = $vta->prod_precio_desc;
+				$porc = $vta->prod_precio_desc.'%';
 			} else {
-				$descuento = 0;
-				$total = 0;
+				$total = $descuento = 0;
 			}
 			$total_fmt = str_replace('.', ',', $total);
 					
-			$fila = array($vta->getFecha(), $vta->getResumen(), $vta->getCliente(), $vta->getProducto(), $vta->getZona(), $vta->getDetalleResumen()->getSubTotal(), $descuento, $total_fmt);
+			$fila = array(
+				$vta->getFecha(), 
+				$vta->getResumen(), 
+				$vta->getCliente(), 
+				$vta->getProducto(), 
+				$vta->getZona(), 
+				$vta->getDetalleResumen()->getSubTotal(), 
+				$porc, 
+				$total_fmt
+			);
 			$string = implode("\t", array_values($fila));
 			echo utf8_decode($string)."\r\n"; 
 		  $total_todo += $total;
     endforeach;
 	
-	$total_todo_fmt = str_replace('.', ',', $total_todo);
+		$total_todo_fmt = str_replace('.', ',', $total_todo);
     $fila = array('', '', '', '', '', '', '', $total_todo_fmt);
     $string = implode("\t", array_values($fila));
     echo utf8_decode($string)."\r\n";

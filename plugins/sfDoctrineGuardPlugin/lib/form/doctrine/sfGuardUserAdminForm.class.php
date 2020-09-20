@@ -18,7 +18,7 @@ class sfGuardUserAdminForm extends BasesfGuardUserAdminForm
 		unset($this['groups_list']);
 	  $this->widgetSchema['usuario_zona'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => $this->getRelatedModelName('Zona'), 'expanded' => true), array('size' => '20'));
     // $this->validatorSchema['usuario_zona'] = new sfValidatorDoctrineChoice(array('model' => 'UsuarioZona', 'required' => false));
-    $this->validatorSchema['usuario_zona'] = new sfValidatorChoice(array('choices' => array(1,2,3,4), 'multiple' => true, 'min' => 1));
+    $this->validatorSchema['usuario_zona'] = new sfValidatorChoice(array('choices' => array(1,2,3,4), 'multiple' => true, 'required' => false));
     
 	  $this->widgetSchema['permissions_list'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardPermission', 'expanded' => true), array('size' => '20'));
 		
