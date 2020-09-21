@@ -17,13 +17,15 @@ class cliActions extends autoCliActions
 	public function executeListGenerarUsuario(sfWebRequest $request)
 	{
 		$this->GenerarUsuario($request);
-		$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
+		$this->executeEdit($request);
+		$this->setTemplate('edit');
 	}
 	
 	public function executeListUsuario(sfWebRequest $request)
 	{
 		$this->GenerarUsuario($request);
-		$this->redirect(array('sf_route' => 'cliente'));
+		$this->executeIndex($request);
+		$this->setTemplate('index');
 	}
 	
   private function GenerarUsuario(sfWebRequest $request)
@@ -83,7 +85,6 @@ class cliActions extends autoCliActions
 		$mensaje->setBody($msj, "text/html");
 		$this->getMailer()->send($mensaje);    
 		$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
-		$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
   }
 
   public function executeAutocomplete(sfWebRequest $request){
