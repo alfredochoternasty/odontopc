@@ -105,6 +105,7 @@ Cliente:
     nro_matricula: {type: string(255)}
     foto_matricula: {type: string(255)}
     modo_alta: {type: string(255)}
+    fecha_alta: {type: date(25)}
   relations:
     Resumenes: {type: many, class: Resumen, local: id, foreign: cliente_id}
     Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
@@ -903,10 +904,12 @@ DescuentoZona:
     porc_desc: {type: integer(4)}
     precio_desc: {type: integer(4)}
     zona_id: {type: integer(4)}
+    cliente_id: {type: integer(4)}
   relations:
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     Grupoprod: {type: one, local: grupoprod_id, onDelete: RESTRICT}
+    Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
 VentasZona:
   connection: doctrine
   tableName: ventas_zona

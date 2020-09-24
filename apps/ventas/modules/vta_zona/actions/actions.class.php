@@ -97,42 +97,46 @@ class vta_zonaActions extends autoVta_zonaActions
 			$devs = $q3->execute();
 		}
 		
+		$clientes_compartidos = array(808, 664, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
+		$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
+		
 		$total_todo = 0;
 		foreach ($ventas as $vta) {
-			if (!empty($vta->grupo_porc_desc)) {
-				$descuento = $vta->grupo_porc_desc.' %';
+			if (in_array($vta->cliente_id, $clientes_compartidos)) {
+				$total = $vta->getDetalleResumen()->sub_total * 10/100;
+			} elseif (in_array($vta->cliente_id, $clintes_sin_comision)) {
+				$total = 0;
+			} elseif (!empty($vta->grupo_porc_desc)) {
 				$total = $vta->getDetalleResumen()->sub_total * $vta->grupo_porc_desc / 100;
 			} elseif (!empty($vta->prod_porc_desc)) {
-				$descuento = $vta->prod_porc_desc.' %';
 				$total = $vta->getDetalleResumen()->sub_total * $vta->prod_porc_desc / 100;
 			} elseif (!empty($vta->grupo_precio_desc)) {
-				$descuento = $vta->grupo_precio_desc;
 				$total = $vta->grupo_precio_desc;
 			} elseif (!empty($vta->prod_precio_desc)) {
-				$descuento = $vta->prod_precio_desc;
 				$total = $vta->prod_precio_desc;
 			} else {
-				$descuento = 0;
 				$total = 0;
 			}
 			$total_todo += $total;
 		}
+		
 		$total_todo_dev = 0;
 		foreach ($devs as $dev) {
 			$grupoprod_id = Doctrine_Core::getTable('Producto')->find($dev->producto_id)->grupoprod_id;
 			$desc_zona_grupo = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndGrupoprodId($dev->zona_id, $dev->getProducto()->grupoprod_id);
 			$desc_zona_prod = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndProductoId($dev->zona_id, $dev->producto_id);
-			if (!empty($desc_zona_grupo[0]->porc_desc)) {
-				$descuento_dev = $desc_zona_grupo[0]->porc_desc.' %';
+			if (in_array($dev->cliente_id, $clientes_compartidos)) {
+				$total_dev = ($dev->precio * $dev->cantidad) * 10/100;
+			} elseif (in_array($dev->cliente_id, $clintes_sin_comision)) {
+				$total_dev = 0;
+			} elseif (!empty($dev->grupo_porc_desc)) {
 				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
 			} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
-				$descuento_dev = $desc_zona_prod[0]->porc_desc.' %';
 				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_prod[0]->porc_desc/100);
 			} else {
-				$descuento_dev = 0;
 				$total_dev = 0;
 			}
-			
+
 			$total_todo_dev += $total_dev;
 		}
 

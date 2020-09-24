@@ -28,5 +28,5 @@ generator:
         title: Por favor ingrese sus datos
         display: [dni, cuit, condicionfiscal_id, apellido, nombre, domicilio, nro_matricula, telefono, celular, email]
         actions:
-          _save: ~
-          _list: ~
+          _list: {label: Volver}
+          _save: {label: Guardar}

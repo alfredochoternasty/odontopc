@@ -179,10 +179,10 @@
 					<td class="sf_admin_text">
 						<?php
 							// $plata_devuelta = $ventas_zona->getDetalleResumen()->precio * $total_dev;
-							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
+							if (in_array($devuelto->cliente_id, $clientes_compartidos)) {
 								// si es algun cliente compartido la comision es de 10%
 								$descuento = ($devuelto->precio * $devuelto->cantidad) * (10/100);
-							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
+							} elseif (in_array($devuelto->cliente_id, $clintes_sin_comision)) {
 								// si es algun cliente compartido la comision es de 0%
 								$descuento = 0;
 							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
