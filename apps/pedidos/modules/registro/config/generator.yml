@@ -20,13 +20,14 @@ generator:
         telefono: {label: Nro. de Teléfono Fijo, help: Solo números}
         domicilio: {help: Por favor indique ciudad y provincia}
         nro_matricula: {label: Nro. de Matrícula Profesional}
+        email_2: {label: Email Comfirmación}
       list:    ~
       filter:  ~
       form:    ~
       edit:    ~
       new:
         title: Por favor ingrese sus datos
-        display: [dni, cuit, condicionfiscal_id, apellido, nombre, domicilio, nro_matricula, telefono, celular, email]
+        display: [dni, cuit, condicionfiscal_id, apellido, nombre, domicilio, nro_matricula, telefono, celular, email, email_2]
         actions:
           _list: {label: Volver}
           _save: {label: Guardar}

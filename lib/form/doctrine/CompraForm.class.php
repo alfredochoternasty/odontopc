@@ -15,8 +15,8 @@ class CompraForm extends BaseCompraForm
     parent::configure();
     unset($this['pagado'], $this['cuenta_id'], $this['moneda_id']);
 		
-		$zona_id = $this->getOption('zona_id');
-		$usuario_id = $this->getOption('usuario_id');
+		$zona_id = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
+		$usuario_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 		
 		if ($zona_id != 1) {
 			unset($this['numero']);

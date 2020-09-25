@@ -27,6 +27,7 @@ class ClienteForm extends BaseClienteForm
     $this->widgetSchema['telefono'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['celular'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['email'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['email_2'] = new sfWidgetFormInputText(array(), array('size' => 30));
     $this->widgetSchema['nro_matricula'] = new sfWidgetFormInputText(array(), array('size' => 30));
 
 		
@@ -43,17 +44,24 @@ class ClienteForm extends BaseClienteForm
 		
     $this->validatorSchema['dni'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['cuit'] = new sfValidatorCUIT(array('required' => true));
-    $this->validatorSchema['nro_matricula'] = new sfValidatorString(array('required' => $zona_id?true:false));
+    $this->validatorSchema['nro_matricula'] = new sfValidatorString(array('required' => $zona_id?false:true));
     $this->validatorSchema['celular'] = new sfValidatorNumber(array('required' => false));
     $this->validatorSchema['apellido'] = new sfValidatorString(array('required' => true));
     $this->validatorSchema['condicionfiscal_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Condfiscal'), 'required' => $zona_id?true:false));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => $zona_id?true:false, 'choices' => array('', 1, 0)));    
-    $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => $zona_id?true:false));
+    $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => $zona_id?false:true));
+    $this->validatorSchema['email_2'] = new sfValidatorEmail(array('required' => $zona_id?false:true));
     $this->validatorSchema['lista_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista')), array('required' => true));
     
-		$validadores[] = new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni')));
-		if (!empty($zona_id)) $validadores[] = new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('cuit')));
-    $this->validatorSchema->setPostValidator(new sfValidatorAnd($validadores));
+		if (!empty($zona_id)) {
+			$validador = array(new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni', 'cuit', 'zona_id'))));
+			$error_validador = array('invalid' => 'Ya existe un cliente con el dni y/o cuit ingresados en la su zona');
+		} else {
+			$validadores = array(new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni'))));
+			// $error_validador = array('invalid' => 'El DNI ingresado ya existe! si usted es cliente puede intentar recuperar su usuario y clave');
+			$validadores[] = new sfValidatorSchemaCompare('email', sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'email_2', array(), array('invalid' => 'El email y su confirmación no coinciden'));  
+		}
+    $this->validatorSchema->setPostValidator(new sfValidatorAnd($validadores), array());
 		
 		$this->validatorSchema->setOption('allow_extra_fields', true);
   }

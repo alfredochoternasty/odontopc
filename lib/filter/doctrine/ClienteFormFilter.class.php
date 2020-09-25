@@ -27,8 +27,8 @@ class ClienteFormFilter extends BaseClienteFormFilter
 		$this->widgetSchema['sexo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'Masculino', 'F' => 'Femenino', 'J' => 'Persona Juridica')));
 		$this->validatorSchema['sexo'] = new sfValidatorPass(array('required' => false));
 		
-		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'add_empty' => true, 'order_by' => array('nombre', 'asc')));
-		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));		
+		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
+		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));
 		
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));        
