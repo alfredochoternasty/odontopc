@@ -19,7 +19,9 @@ class ProductoFormFilter extends BaseProductoFormFilter
     unset($this['codigo'], $this['precio_vta'], $this['mueve_stock'], $this['stock_actual'], $this['ctr_fact_grupo']);
     
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
-    $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));        
+    $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
+    
+    $this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true, 'order_by' => array('nombre', 'asc')));    
     
     $this->widgetSchema['genera_comision'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
     $this->validatorSchema['genera_comision'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));

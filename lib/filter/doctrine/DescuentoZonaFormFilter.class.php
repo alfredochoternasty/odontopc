@@ -15,6 +15,7 @@ class DescuentoZonaFormFilter extends BaseDescuentoZonaFormFilter
 		parent::setup();
 		
     $choices = ProductoTable::getArrayActivos();
-    $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));        		
+    $this->widgetSchema['producto_id'] = new sfWidgetFormChoice(array('choices' => $choices), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+		$this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupoprod'), 'add_empty' => true, 'order_by' => array('nombre', 'asc')));    
   }
 }

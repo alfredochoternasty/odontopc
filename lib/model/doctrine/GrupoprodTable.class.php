@@ -14,20 +14,20 @@ class GrupoprodTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('Grupoprod');
+        return Doctrine_Core::getTable('Grupoprod')->orderBy('nombre ASC');
     }
     
     public function retrieveProds(Doctrine_Query $q){
       $rootAlias = $q->getRootAlias();
       $q->where('id <> 1');
-      $q->orderBy('nombre');
+      $q->orderBy('nombre ASC');
       return $q;
     }
     
     public function getGruposActivos(){
       $q = Doctrine::getTable('Grupoprod')->createquery('q');
       $q->where('id <> 1');
-      $q->orderBy('nombre');
+      $q->orderBy('nombre ASC');
       return $q->execute();
     } 
 }

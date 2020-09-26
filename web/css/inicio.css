@@ -73,12 +73,11 @@ header{
 	font-size:16px;
 }
 
-.sf_admin_form{
+.sf_admin_form_row,
+.sf_admin_text, 
+.sf_admin_date,
+.sf_admin_form {
 	font-size: 1.3em;
-}
-
-.sf_admin_text, .sf_admin_date {
-	font-size: 1.2em;
 }
 
 .checkbox_list li{margin-left: 50px;}
