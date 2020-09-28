@@ -28,19 +28,7 @@ class Categoria extends BaseCategoria
 	public function getCantVendida($p_zona=0) {
 		$sql = "
 			select 
-				sum(dr.cantidad) - (
-					select coalesce(sum(dp.cantidad), 0)
-					from 
-						dev_producto dp
-							join producto p2 on dp.producto_id = p2.id
-							join grupoprod g2 on p2.grupoprod_id = g2.id
-							join resumen r2 on dp.resumen_id = r2.id
-					where 
-						g2.categoria_id = g.categoria_id
-						and r2.tipofactura_id <> 4
-						and dp.fecha >= date_format(curdate(), '%Y-%m-01')
-						and ($p_zona = 0 or dp.zona_id = $p_zona)
-				) as cantidad
+				sum(dr.cantidad) as cantidad
 			from 
 				resumen r
 					join detalle_resumen dr on r.id = dr.resumen_id
@@ -52,26 +40,29 @@ class Categoria extends BaseCategoria
 				and r.fecha >= date_format(curdate(), '%Y-%m-01')
 				and ($p_zona = 0 or r.zona_id = $p_zona)
 		";
-		$resultado = $this->ejecutarSQL($sql);
-		return $resultado->cantidad;
+		$vendidos = $this->ejecutarSQL($sql);
+		
+		$sql = "
+			select coalesce(sum(dp.cantidad), 0) as cantidad
+			from 
+				dev_producto dp
+					join producto p on dp.producto_id = p.id
+					join grupoprod g on p.grupoprod_id = g.id
+					join resumen r on dp.resumen_id = r.id
+			where 
+				g.categoria_id = ".$this->id."
+				and r.tipofactura_id <> 4
+				and dp.fecha >= date_format(curdate(), '%Y-%m-01')
+				and ($p_zona = 0 or dp.zona_id = $p_zona)
+		";
+		$devueltos = $this->ejecutarSQL($sql);		
+		return $vendidos->cantidad - $devueltos->cantidad;
 	}
 
 	public function getCantVendidaAnt($p_zona=0) {
 		$sql = "
 			select 
-				sum(dr.cantidad) - (
-					select coalesce(sum(dp.cantidad), 0)
-					from 
-						dev_producto dp
-							join producto p2 on dp.producto_id = p2.id
-							join grupoprod g2 on p2.grupoprod_id = g2.id
-							join resumen r2 on dp.resumen_id = r2.id
-					where 
-						g2.categoria_id = g.categoria_id
-						and r2.tipofactura_id <> 4
-						and dp.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
-						and ($p_zona = 0 or dp.zona_id = $p_zona)
-				) as cantidad
+				sum(dr.cantidad) as cantidad
 			from 
 				resumen r
 					join detalle_resumen dr on r.id = dr.resumen_id
@@ -83,8 +74,23 @@ class Categoria extends BaseCategoria
 				and r.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
 				and ($p_zona = 0 or r.zona_id = $p_zona)
 		";
-		$resultado = $this->ejecutarSQL($sql);
-		return $resultado->cantidad;
+		$vendidos = $this->ejecutarSQL($sql);
+		
+		$sql = "
+			select coalesce(sum(dp.cantidad), 0) as cantidad
+			from 
+				dev_producto dp
+					join producto p on dp.producto_id = p.id
+					join grupoprod g on p.grupoprod_id = g.id
+					join resumen r on dp.resumen_id = r.id
+			where 
+				g.categoria_id = ".$this->id."
+				and r.tipofactura_id <> 4
+				and dp.fecha between date_format(date_sub(curdate(), interval 1 month), '%Y-%m-01') and date_sub(curdate(), interval 1 month)
+				and ($p_zona = 0 or dp.zona_id = $p_zona)
+		";
+		$devueltos = $this->ejecutarSQL($sql);		
+		return $vendidos->cantidad - $devueltos->cantidad;
 	}
 	
 	public function getCantVendidaHist($p_zona=0) {
@@ -92,19 +98,7 @@ class Categoria extends BaseCategoria
 			select
 				year(r.fecha) as anio,
 				month(r.fecha) as mes,
-				sum(dr.cantidad) - (
-					select coalesce(sum(dp.cantidad), 0)
-					from 
-						dev_producto dp
-							join producto p2 on dp.producto_id = p2.id
-							join grupoprod g2 on p2.grupoprod_id = g2.id
-							join resumen r2 on dp.resumen_id = r2.id
-					where 
-						g2.categoria_id = g.categoria_id
-						and r2.tipofactura_id <> 4
-						and year(dp.fecha) = year(r.fecha)
-						and month(dp.fecha) = month(r.fecha)
-				) as cantidad
+				sum(dr.cantidad) as cantidad
 			from 
 				resumen r
 					join detalle_resumen dr on r.id = dr.resumen_id
@@ -121,7 +115,43 @@ class Categoria extends BaseCategoria
 				anio asc, mes asc
 		";
 		$conexion = Doctrine_Manager::connection();
-		return $conexion->execute($sql);
+		$ventas =  $conexion->execute($sql);
+		
+		$sql = "
+			select 
+				year(dp.fecha) as anio,
+				month(dp.fecha) as mes,
+				coalesce(sum(dp.cantidad), 0) as cantidad
+			from 
+				dev_producto dp
+					join producto p on dp.producto_id = p.id
+					join grupoprod g on p.grupoprod_id = g.id
+					join resumen r on dp.resumen_id = r.id
+			where 
+				g.categoria_id = ".$this->id."
+				and r.tipofactura_id <> 4
+				and dp.fecha between date_format(date_sub(curdate(), interval 13 month), '%Y-%m-01') and last_day(date_sub(curdate(), interval 1 month))
+			group by
+				anio, mes
+			order by
+				anio asc, mes asc
+		";
+		$conexion = Doctrine_Manager::connection();
+		$devueltos =  $conexion->execute($sql);
+		
+		$devoluciones = array();
+		foreach ($devueltos as $dev) $devoluciones[] = $dev;
+		
+		$vendidos = array();
+		foreach ($ventas as $vta) {
+			foreach ($devoluciones as $dev) {
+				if ($vta['anio'] == $dev['anio'] && $vta['mes'] == $dev['mes']) {
+					$vendidos[$vta['anio'].$vta['mes']]['cantidad'] = $vta['cantidad'];// - $dev['cantidad'];
+				}
+			}
+		}
+		
+		return $vendidos;
 	}
 	
 }

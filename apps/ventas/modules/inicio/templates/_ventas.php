@@ -7,8 +7,12 @@
 	<thead class="ui-widget-header">
 		<tr>
 			<th class="ui-state-default" style="height:2em;">Categoria</th>
-			<th class="ui-state-default" style="height:2em;">Actual</th>
-			<th class="ui-state-default" style="height:2em;">Mes Anterior</th>
+			<th class="ui-state-default" style="height:2em;">del <?php echo date('01/m').' al '.date('d/m') ?></th>
+			<?php 
+				$fecha = date_create(date('Y-m-d'));
+				date_sub($fecha, date_interval_create_from_date_string('1 month'));
+			?>
+			<th class="ui-state-default" style="height:2em;">del <?php echo date_format($fecha, '01/m').' al '.date_format($fecha, 'd/m') ?></th>
 			<th class="ui-state-default" style="height:2em;">Diferencia</th>
 		</tr>
 	</thead>

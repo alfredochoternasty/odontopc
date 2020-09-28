@@ -34,6 +34,6 @@ select
 from 
 	dev_producto
 		join producto on dev_producto.producto_id = producto.id
-		join resumen on dev_producto.resumen_id = resumen.id;
+		join resumen on dev_producto.resumen_id = resumen.id
 where
-	resumen.tipofactura_id <> 4
+	resumen.tipofactura_id <> 4;
