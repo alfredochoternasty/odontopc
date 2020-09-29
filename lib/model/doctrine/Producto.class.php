@@ -131,8 +131,9 @@ class Producto extends BaseProducto
 		$q = Doctrine::getTable('Lote')->createQuery('p')
 			->where('producto_id = ?', $this->getId())
 			->andWhere('stock > 0')
+			->andWhere('activo = 1')
+			->andWhere('externo = 0')
 			->andWhere('zona_id = ?', $p_zona)
-			->andWhere("nro_lote not like 'er%'")
 			->orderBy('fecha_vto ASC, id ASC');
 		return $q->execute();
 	}

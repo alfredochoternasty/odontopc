@@ -1,7 +1,10 @@
 <div style="float:left; width:45%;margin:5px;">
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
-		<h1>Ventas al dia actual comparadas al mismo dia mes anterior</h1>
+		<?php
+			$titulo = $zona_id==1?'<span style="color:#f00">(Todas las Zonas)</span>':'actuales';
+		?>
+		<h1>Ventas <?php echo $titulo ?> comparadas al mismo dia mes anterior</h1>
 	</caption>
 
 	<thead class="ui-widget-header">
@@ -31,8 +34,9 @@
 		<?php 
 			foreach ($ventas as $i => $categoria) {
 				$odd = fmod(++$i, 2) ? ' odd' : '';
-				$actual = $categoria->getCantVendida($zona_id);
-				$anterior = $categoria->getCantVendidaAnt($zona_id);
+				$zid = $zona_id==1?0:$zona_id;
+				$actual = $categoria->getCantVendida($zid);
+				$anterior = $categoria->getCantVendidaAnt($zid);
 				$porcentaje = $anterior>0?($actual*100/$anterior)-100:0;
 		?>
 				<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
@@ -44,4 +48,9 @@
 		<?php } ?>
 	</tbody>
 </table>
+<?php if ($zona_id == 1): ?>
+<div class="sf_admin_actions_block">
+	<?php echo link_to('Ver Historico', 'catprod/ListVerHistorico', array('target'=>'blank', 'class'=>'fg-button fg-button-mini ui-state-default fg-button-icon-left')); ?>
+</div>
+<?php endif; ?>
 </div>

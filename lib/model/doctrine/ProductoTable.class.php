@@ -87,20 +87,20 @@ class ProductoTable extends Doctrine_Table
 			$query->select('id, nombre');
 			$query->where('activo = 1');	
 			$query->andWhere('grupoprod_id not in (1, 15)');
+			
 			if ($debito) {
 				$query->andWhere('id = 309');
+			} elseif (!empty($grupo)) {
+				$query->andWhere('grupoprod_id = ?', $grupo);
+				$query->orderBy('grupoprod_id');
+				$query->addOrderBy('orden_grupo');
+				$query->addOrderBy('nombre');	
 			} else {
-				if (!empty($grupo)) {
-					$query->andWhere('grupoprod_id = ?', $grupo);
-					$query->orderBy('grupoprod_id');
-					$query->addOrderBy('orden_grupo');
-					$query->addOrderBy('nombre');	
-				} else {
-					$query->orderBy('nombre');
-				}
+				$query->orderBy('nombre');
 			}
+			
 			return $query->execute();
-			}
+		}
 		
 		public function getProdDebito() {
 			return $this->getActivos(true);

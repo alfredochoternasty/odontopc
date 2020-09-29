@@ -129,7 +129,7 @@ class vta_zonaActions extends autoVta_zonaActions
 				$total_dev = ($dev->precio * $dev->cantidad) * 10/100;
 			} elseif (in_array($dev->cliente_id, $clintes_sin_comision)) {
 				$total_dev = 0;
-			} elseif (!empty($dev->grupo_porc_desc)) {
+			} elseif (!empty($desc_zona_grupo->grupo_porc_desc)) {
 				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
 			} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
 				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_prod[0]->porc_desc/100);

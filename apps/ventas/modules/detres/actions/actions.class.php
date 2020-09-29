@@ -218,14 +218,15 @@ class detresActions extends autoDetresActions
 		$zona = $resumen->getCliente()->getZonaId();
 		
     $q = Doctrine_Query::create();    
+		$q->select('l.nro_lote, l.fecha_vto, l.stock');
     $q->from('Lote l');
     $q->where('l.producto_id = '.$pid);
 		$q->andWhere("l.zona_id = $zona");
-		$q->andWhere("l.nro_lote not like 'er%'");
-    $q->andWhere("l.fecha_vto > '".date('Y-m-d')."' or l.fecha_vto is null");
-		$q->select('l.nro_lote, l.fecha_vto, l.stock');
-		$q->andWhere('l.stock > 0 ');
-    $q->orderBy('l.fecha_vto asc');
+    $q->andWhere("l.fecha_vto > curdate() or l.fecha_vto is null");
+		$q->andWhere('l.stock > 0');
+		$q->andWhere('l.activo = 1');
+		$q->andWhere('l.externo = 0');
+    $q->orderBy('l.fecha_vto ASC, l.id ASC');
     $lotes_stock = $q->fetchArray();
 	
 		if ($zona == 1 && $resumen->tipofactura_id != 4) {

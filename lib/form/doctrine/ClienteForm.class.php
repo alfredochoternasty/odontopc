@@ -14,7 +14,7 @@ class ClienteForm extends BaseClienteForm
   {
 		unset($this['sexo']);
 		
-		$zona_id = $this->getOption('zona_id');
+		$zona_id = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
 		
     $this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Localidad'), 'add_empty' => true, 'order_by' => array('nombre', 'asc'), 'method' => 'getLocConProvincia', 'table_method' => 'retrieveConJoins'), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));    
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
@@ -52,9 +52,9 @@ class ClienteForm extends BaseClienteForm
     $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => $zona_id?false:true));
     $this->validatorSchema['email_2'] = new sfValidatorEmail(array('required' => $zona_id?false:true));
     $this->validatorSchema['lista_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista')), array('required' => true));
-    
+    // echo 'zona: '.$zona_id;
 		if (!empty($zona_id)) {
-			$validador = array(new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni', 'cuit', 'zona_id'))));
+			$validadores = array(new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni', 'cuit', 'zona_id'))));
 			$error_validador = array('invalid' => 'Ya existe un cliente con el dni y/o cuit ingresados en la su zona');
 		} else {
 			$validadores = array(new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni'))));

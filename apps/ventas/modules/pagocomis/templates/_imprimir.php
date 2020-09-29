@@ -67,7 +67,7 @@
 				<?php $suma_total += $comision; ?>
 			</tr>
 		<?php endforeach; ?>
-		<tr><td colspan="7" style="text-align:right;">Total Comisi&oacute;n&nbsp;</td><td><b style="font-size:16px;">&nbsp;$ <?php echo $total_comis_fact ?></b></td></tr>
+		<tr><td colspan="7" style="text-align:right;">Total Comisi&oacute;n&nbsp;</td><td><b style="font-size:16px;">&nbsp;$ <?php echo sprintf("$ %01.2f", $total_comis_fact); ?></b></td></tr>
 	</table>
 	<br>
   <?php endforeach;?>
