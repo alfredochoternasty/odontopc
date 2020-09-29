@@ -17,7 +17,7 @@ generator:
         asignacion_lote: {label: lote}
       list: 
         title: Detalle de pedido
-        display: [Producto, nro_lote, precio, cantidad, total, asignacion_lote]
+        display: [Producto, nro_lote, cantidad, asignacion_lote]
         object_actions: []
         actions:
           asignar_lote: ~
@@ -27,6 +27,6 @@ generator:
       form:    ~
       edit:
         title: Modificar de pedido
-        display: [producto_id, nro_lote, precio, cantidad, total]
+        display: [producto_id, nro_lote, cantidad]
       new: 
         title: Nuevo de pedido

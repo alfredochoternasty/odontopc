@@ -63,12 +63,16 @@ class detpedidosActions extends autoDetpedidosActions
       $resumen->cliente_id = $pedido->cliente_id;
       $resumen->pedido_id = $pedido->id;
       $resumen->zona_id = $pedido->getCliente()->zona_id; 
-      $tipos_facturas = Doctrine::getTable('TipoFactura')->findAll();
-      foreach ($tipos_facturas as $tipo_factura) {
-        $cond_fiscales = explode(',', $tipo_factura->cond_fiscales);
-        if ($pedido->getCliente()->condicionfiscal_id == $cond_fiscales[0]) {
-          $resumen->tipofactura_id = $tipo_factura->id;
-          break;
+      if (in_array($pedido->cliente_id, array(635,536))) {
+        $resumen->tipofactura_id = 4;
+      } else {
+        $tipos_facturas = Doctrine::getTable('TipoFactura')->findAll();
+        foreach ($tipos_facturas as $tipo_factura) {
+          $cond_fiscales = explode(',', $tipo_factura->cond_fiscales);
+          if ($pedido->getCliente()->condicionfiscal_id == $cond_fiscales[0]) {
+            $resumen->tipofactura_id = $tipo_factura->id;
+            break;
+          }
         }
       }
       $resumen->usuario = $this->getUser()->getGuardUser()->getId();

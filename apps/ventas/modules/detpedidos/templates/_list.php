@@ -65,15 +65,6 @@
           ?>
         </tr>
       <?php endforeach; ?>
-
-      <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-        <td colspan="3" class="sf_admin_text">&nbsp;</td>
-        <td style="text-align: right;" class="sf_admin_text">Total:</td>
-        <td class="sf_admin_text">
-          <?php echo $detalle_pedido->SimboloMoneda() .' '. sprintf("%01.2f", $suma_total) ?>
-        </td>
-        <td colspan="3" class="sf_admin_text">&nbsp;</td>
-      </tr>
       
     </tbody>    
   </table>

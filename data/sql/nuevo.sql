@@ -34,7 +34,7 @@ select
 from 
 	dev_producto
 		join producto on dev_producto.producto_id = producto.id
-		join resumen on dev_producto.resumen_id = resumen.id;
+		join resumen on dev_producto.resumen_id = resumen.id
 where
 	resumen.tipofactura_id <> 4;
 	
@@ -94,21 +94,21 @@ DELETE FROM det_lis_precio WHERE (id = '460');
 
 delete from grupoprod where id in (8,9,10);
 
-UPDATE `ventas`.`producto` SET `orden_grupo` = '10' WHERE (`id` = '156');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '20' WHERE (`id` = '155');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '30' WHERE (`id` = '150');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '40' WHERE (`id` = '151');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '50' WHERE (`id` = '152');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '60' WHERE (`id` = '153');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '100' WHERE (`id` = '157');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '120' WHERE (`id` = '158');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '130' WHERE (`id` = '159');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '140' WHERE (`id` = '160');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '150' WHERE (`id` = '161');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '160' WHERE (`id` = '162');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '200' WHERE (`id` = '163');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '220' WHERE (`id` = '164');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '230' WHERE (`id` = '165');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '240' WHERE (`id` = '166');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '250' WHERE (`id` = '168');
-UPDATE `ventas`.`producto` SET `orden_grupo` = '260' WHERE (`id` = '167');
+UPDATE producto SET orden_grupo = '10' WHERE (id = '156');
+UPDATE producto SET orden_grupo = '20' WHERE (id = '155');
+UPDATE producto SET orden_grupo = '30' WHERE (id = '150');
+UPDATE producto SET orden_grupo = '40' WHERE (id = '151');
+UPDATE producto SET orden_grupo = '50' WHERE (id = '152');
+UPDATE producto SET orden_grupo = '60' WHERE (id = '153');
+UPDATE producto SET orden_grupo = '100' WHERE (id = '157');
+UPDATE producto SET orden_grupo = '120' WHERE (id = '158');
+UPDATE producto SET orden_grupo = '130' WHERE (id = '159');
+UPDATE producto SET orden_grupo = '140' WHERE (id = '160');
+UPDATE producto SET orden_grupo = '150' WHERE (id = '161');
+UPDATE producto SET orden_grupo = '160' WHERE (id = '162');
+UPDATE producto SET orden_grupo = '200' WHERE (id = '163');
+UPDATE producto SET orden_grupo = '220' WHERE (id = '164');
+UPDATE producto SET orden_grupo = '230' WHERE (id = '165');
+UPDATE producto SET orden_grupo = '240' WHERE (id = '166');
+UPDATE producto SET orden_grupo = '250' WHERE (id = '168');
+UPDATE producto SET orden_grupo = '260' WHERE (id = '167');
