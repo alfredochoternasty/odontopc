@@ -136,14 +136,14 @@
 				<?php
 				} else {
 					foreach ($pager->getResults() as $i => $listado_ventas): $odd = fmod(++$i, 2) ? ' odd' : '' ;
-						if ($listado_ventas->cantidad >= 0):
+						// if ($listado_ventas->cantidad >= 0):
 				?>
 					<tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 						<?php include_partial('listvta/list_td_tabular', array('listado_ventas' => $listado_ventas)) ?>
 						<?php include_partial('listvta/list_td_actions', array('listado_ventas' => $listado_ventas, 'helper' => $helper)) ?>
 					</tr>
 					<?php
-						endif;
+						// endif;
 					endforeach; 
 				}
 			?>

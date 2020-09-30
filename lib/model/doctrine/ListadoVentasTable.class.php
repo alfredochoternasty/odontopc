@@ -18,7 +18,7 @@ class ListadoVentasTable extends Doctrine_Table
     }
 
 		// devuelve los detalles de las ventas y ventas asociado a un remitos
-		// tambien devuelve las devoluciones y no se muestran en interfaz
+		// tambien devuelve las devoluciones
     public function retrieveConJoins(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 			
@@ -38,12 +38,13 @@ class ListadoVentasTable extends Doctrine_Table
 			return $q;
     }
 		
-    // devuelve los detaller las ventas y remitos, sin las devoluciones
+    // devuelve los detaller las ventas y remitos
 		public function retrieveCtrlvtadet(Doctrine_Query $q){
 			$rootAlias = $q->getRootAlias();
 			$q->where($rootAlias . '.zona_id = 1');
 			$q->andWhere($rootAlias . '.det_remito_id is null');
-			$q->andWhere($rootAlias . '.cantidad >= 0');
+			$q->andWhere($rootAlias . '.tipofactura_id <> 4');
+			// $q->andWhere($rootAlias . '.cantidad >= 0');
 			return $q;
     }
 }

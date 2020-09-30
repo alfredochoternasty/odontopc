@@ -1,0 +1,1 @@
+<?php echo ($listado_ventas->cantidad < 0)? Doctrine::getTable('DevProducto')->find($listado_ventas->id) : $listado_ventas->getResumen() ?>
