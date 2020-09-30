@@ -24,6 +24,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @property Producto $Producto
  * @property Grupoprod $Grupo
  * @property Zona $Zona
+ * @property TipoFactura $TipoFactura
  * 
  * @method integer        getId()             Returns the current record's "id" value
  * @method integer        getResumenId()      Returns the current record's "resumen_id" value
@@ -42,6 +43,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method Producto       getProducto()       Returns the current record's "Producto" value
  * @method Grupoprod      getGrupo()          Returns the current record's "Grupo" value
  * @method Zona           getZona()           Returns the current record's "Zona" value
+ * @method TipoFactura    getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method ListadoVentas  setId()             Sets the current record's "id" value
  * @method ListadoVentas  setResumenId()      Sets the current record's "resumen_id" value
  * @method ListadoVentas  setClienteId()      Sets the current record's "cliente_id" value
@@ -59,6 +61,7 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method ListadoVentas  setProducto()       Sets the current record's "Producto" value
  * @method ListadoVentas  setGrupo()          Sets the current record's "Grupo" value
  * @method ListadoVentas  setZona()           Sets the current record's "Zona" value
+ * @method ListadoVentas  setTipoFactura()    Sets the current record's "TipoFactura" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -142,6 +145,10 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
 
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('TipoFactura', array(
+             'local' => 'tipofactura_id',
              'foreign' => 'id'));
     }
 }

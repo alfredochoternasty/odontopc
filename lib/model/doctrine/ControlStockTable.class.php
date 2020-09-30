@@ -21,13 +21,13 @@ class ControlStockTable extends Doctrine_Table
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
 			
 			$rootAlias = $q->getRootAlias();
-			// $q->leftJoin($rootAlias . '.Producto p');
-			// $q->leftJoin($rootAlias . '.Grupo g');
+			$q->leftJoin($rootAlias . '.Producto p');
+			$q->leftJoin($rootAlias . '.Grupo g');
 			$q->leftJoin($rootAlias . '.Zona z');
 			$q->leftJoin('z.UsuarioZona uz');
 			$q->andWhere('uz.usuario = '.$id);
 			$q->andWhere($rootAlias . '.stock_guardado > 0');
-			// $q->orderBy('lower(p.nombre)');
+			$q->orderBy('g.nombre, p.orden_grupo, p.nombre');
 			
 			return $q;
     }		

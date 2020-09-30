@@ -32,6 +32,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property string $nro_matricula
  * @property string $foto_matricula
  * @property string $modo_alta
+ * @property date $fecha_alta
  * @property Doctrine_Collection $Resumenes
  * @property Localidad $Localidad
  * @property CondicionFiscal $Condfiscal
@@ -52,6 +53,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Doctrine_Collection $ClienteSeguimiento
  * @property Doctrine_Collection $CursoInscripcion
  * @property Doctrine_Collection $FacturasAfip
+ * @property Doctrine_Collection $DescuentoZona
  * @property Doctrine_Collection $VentasZona
  * @property Doctrine_Collection $PagoComision
  * 
@@ -80,6 +82,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method string              getNroMatricula()       Returns the current record's "nro_matricula" value
  * @method string              getFotoMatricula()      Returns the current record's "foto_matricula" value
  * @method string              getModoAlta()           Returns the current record's "modo_alta" value
+ * @method date                getFechaAlta()          Returns the current record's "fecha_alta" value
  * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
  * @method Localidad           getLocalidad()          Returns the current record's "Localidad" value
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
@@ -100,6 +103,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Doctrine_Collection getClienteSeguimiento() Returns the current record's "ClienteSeguimiento" collection
  * @method Doctrine_Collection getCursoInscripcion()   Returns the current record's "CursoInscripcion" collection
  * @method Doctrine_Collection getFacturasAfip()       Returns the current record's "FacturasAfip" collection
+ * @method Doctrine_Collection getDescuentoZona()      Returns the current record's "DescuentoZona" collection
  * @method Doctrine_Collection getVentasZona()         Returns the current record's "VentasZona" collection
  * @method Doctrine_Collection getPagoComision()       Returns the current record's "PagoComision" collection
  * @method Cliente             setId()                 Sets the current record's "id" value
@@ -127,6 +131,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setNroMatricula()       Sets the current record's "nro_matricula" value
  * @method Cliente             setFotoMatricula()      Sets the current record's "foto_matricula" value
  * @method Cliente             setModoAlta()           Sets the current record's "modo_alta" value
+ * @method Cliente             setFechaAlta()          Sets the current record's "fecha_alta" value
  * @method Cliente             setResumenes()          Sets the current record's "Resumenes" collection
  * @method Cliente             setLocalidad()          Sets the current record's "Localidad" value
  * @method Cliente             setCondfiscal()         Sets the current record's "Condfiscal" value
@@ -147,6 +152,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setClienteSeguimiento() Sets the current record's "ClienteSeguimiento" collection
  * @method Cliente             setCursoInscripcion()   Sets the current record's "CursoInscripcion" collection
  * @method Cliente             setFacturasAfip()       Sets the current record's "FacturasAfip" collection
+ * @method Cliente             setDescuentoZona()      Sets the current record's "DescuentoZona" collection
  * @method Cliente             setVentasZona()         Sets the current record's "VentasZona" collection
  * @method Cliente             setPagoComision()       Sets the current record's "PagoComision" collection
  * 
@@ -267,6 +273,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
+        $this->hasColumn('fecha_alta', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
+             ));
     }
 
     public function setUp()
@@ -354,6 +364,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'foreign' => 'cliente_id'));
 
         $this->hasMany('FacturasAfip', array(
+             'local' => 'id',
+             'foreign' => 'cliente_id'));
+
+        $this->hasMany('DescuentoZona', array(
              'local' => 'id',
              'foreign' => 'cliente_id'));
 

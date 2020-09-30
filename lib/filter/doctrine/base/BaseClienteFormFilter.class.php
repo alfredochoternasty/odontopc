@@ -37,6 +37,7 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'nro_matricula'      => new sfWidgetFormFilterInput(),
       'foto_matricula'     => new sfWidgetFormFilterInput(),
       'modo_alta'          => new sfWidgetFormFilterInput(),
+      'fecha_alta'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(
@@ -64,6 +65,7 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'nro_matricula'      => new sfValidatorPass(array('required' => false)),
       'foto_matricula'     => new sfValidatorPass(array('required' => false)),
       'modo_alta'          => new sfValidatorPass(array('required' => false)),
+      'fecha_alta'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_filters[%s]');
@@ -108,6 +110,7 @@ abstract class BaseClienteFormFilter extends BaseFormFilterDoctrine
       'nro_matricula'      => 'Text',
       'foto_matricula'     => 'Text',
       'modo_alta'          => 'Text',
+      'fecha_alta'         => 'Date',
     );
   }
 }

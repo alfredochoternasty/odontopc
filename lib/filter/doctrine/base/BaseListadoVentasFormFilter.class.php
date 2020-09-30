@@ -21,7 +21,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'fecha'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'nro_lote'       => new sfWidgetFormFilterInput(),
       'cantidad'       => new sfWidgetFormFilterInput(),
-      'tipofactura_id' => new sfWidgetFormFilterInput(),
+      'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'det_remito_id'  => new sfWidgetFormFilterInput(),
     ));
 
@@ -34,7 +34,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'fecha'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'nro_lote'       => new sfValidatorPass(array('required' => false)),
       'cantidad'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'tipofactura_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
       'det_remito_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
@@ -64,7 +64,7 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'fecha'          => 'Date',
       'nro_lote'       => 'Text',
       'cantidad'       => 'Number',
-      'tipofactura_id' => 'Number',
+      'tipofactura_id' => 'ForeignKey',
       'det_remito_id'  => 'Number',
     );
   }

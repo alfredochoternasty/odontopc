@@ -40,6 +40,7 @@ abstract class BaseClienteForm extends BaseFormDoctrine
       'nro_matricula'      => new sfWidgetFormInputText(),
       'foto_matricula'     => new sfWidgetFormInputText(),
       'modo_alta'          => new sfWidgetFormInputText(),
+      'fecha_alta'         => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
@@ -68,6 +69,7 @@ abstract class BaseClienteForm extends BaseFormDoctrine
       'nro_matricula'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'foto_matricula'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'modo_alta'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'fecha_alta'         => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cliente[%s]');

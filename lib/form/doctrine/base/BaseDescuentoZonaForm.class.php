@@ -21,6 +21,7 @@ abstract class BaseDescuentoZonaForm extends BaseFormDoctrine
       'porc_desc'    => new sfWidgetFormInputText(),
       'precio_desc'  => new sfWidgetFormInputText(),
       'zona_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'cliente_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseDescuentoZonaForm extends BaseFormDoctrine
       'porc_desc'    => new sfValidatorInteger(array('required' => false)),
       'precio_desc'  => new sfValidatorInteger(array('required' => false)),
       'zona_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
+      'cliente_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('descuento_zona[%s]');

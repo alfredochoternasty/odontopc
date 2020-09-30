@@ -24,6 +24,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @property Producto $Producto
  * @property Grupoprod $Grupo
  * @property Zona $Zona
+ * @property TipoFactura $TipoFactura
  * 
  * @method integer            getId()             Returns the current record's "id" value
  * @method integer            getResumenId()      Returns the current record's "resumen_id" value
@@ -42,6 +43,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method Producto           getProducto()       Returns the current record's "Producto" value
  * @method Grupoprod          getGrupo()          Returns the current record's "Grupo" value
  * @method Zona               getZona()           Returns the current record's "Zona" value
+ * @method TipoFactura        getTipoFactura()    Returns the current record's "TipoFactura" value
  * @method MovimientoProducto setId()             Sets the current record's "id" value
  * @method MovimientoProducto setResumenId()      Sets the current record's "resumen_id" value
  * @method MovimientoProducto setClienteId()      Sets the current record's "cliente_id" value
@@ -59,6 +61,7 @@ Doctrine_Manager::getInstance()->bindComponent('MovimientoProducto', 'doctrine')
  * @method MovimientoProducto setProducto()       Sets the current record's "Producto" value
  * @method MovimientoProducto setGrupo()          Sets the current record's "Grupo" value
  * @method MovimientoProducto setZona()           Sets the current record's "Zona" value
+ * @method MovimientoProducto setTipoFactura()    Sets the current record's "TipoFactura" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -142,6 +145,10 @@ abstract class BaseMovimientoProducto extends sfDoctrineRecord
 
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('TipoFactura', array(
+             'local' => 'tipofactura_id',
              'foreign' => 'id'));
     }
 }

@@ -24,7 +24,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'fecha'          => new sfWidgetFormDate(),
       'nro_lote'       => new sfWidgetFormInputText(),
       'cantidad'       => new sfWidgetFormInputText(),
-      'tipofactura_id' => new sfWidgetFormInputText(),
+      'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'det_remito_id'  => new sfWidgetFormInputText(),
     ));
 
@@ -38,7 +38,7 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'fecha'          => new sfValidatorDate(array('required' => false)),
       'nro_lote'       => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'cantidad'       => new sfValidatorInteger(array('required' => false)),
-      'tipofactura_id' => new sfValidatorInteger(array('required' => false)),
+      'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'required' => false)),
       'det_remito_id'  => new sfValidatorInteger(array('required' => false)),
     ));
 

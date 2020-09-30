@@ -451,6 +451,7 @@ ListadoVentas:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id}
     Zona: {type: one, class: Zona, local: zona_id}
+    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id}
 MovimientoProducto:
   connection: doctrine
   tableName: listado_ventas
@@ -473,6 +474,7 @@ MovimientoProducto:
     Producto: {type: one, class: Producto, local: producto_id}
     Grupo: {type: one, class: Grupoprod, local: grupoprod_id}
     Zona: {type: one, class: Zona, local: zona_id}
+    TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id}
 ListadoCobros:
   connection: doctrine
   tableName: listado_cobros

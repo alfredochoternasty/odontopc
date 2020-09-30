@@ -18,6 +18,7 @@ abstract class BaseDescuentoZonaFormFilter extends BaseFormFilterDoctrine
       'porc_desc'    => new sfWidgetFormFilterInput(),
       'precio_desc'  => new sfWidgetFormFilterInput(),
       'zona_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'cliente_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ abstract class BaseDescuentoZonaFormFilter extends BaseFormFilterDoctrine
       'porc_desc'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'precio_desc'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'zona_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
+      'cliente_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('descuento_zona_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BaseDescuentoZonaFormFilter extends BaseFormFilterDoctrine
       'porc_desc'    => 'Number',
       'precio_desc'  => 'Number',
       'zona_id'      => 'ForeignKey',
+      'cliente_id'   => 'ForeignKey',
     );
   }
 }

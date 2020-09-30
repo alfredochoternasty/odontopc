@@ -19,12 +19,6 @@ class ListadoVentasFormFilter extends BaseListadoVentasFormFilter
     $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));		
 
-    $this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'TipoFactura', 'add_empty' => true ));
-    $this->validatorSchema['tipofactura_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'TipoFactura', 'column' => 'id'));		
-    
-		$this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'),'add_empty' => true, 'order_by' => array('nombre', 'asc')));    		
-    $this->validatorSchema['grupoprod_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Grupo'), 'column' => 'id'));		
-
 		$this->widgetSchema['categoria_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Categoria', 'add_empty' => true, 'order_by' => array('nombre', 'asc')));    		
     $this->validatorSchema['categoria_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Categoria', 'column' => 'id'));		
     
