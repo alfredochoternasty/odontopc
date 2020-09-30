@@ -306,25 +306,11 @@ class detresActions extends autoDetresActions
   }
 
   public function executeGet_stock_remito(sfWebRequest $request){
-    $drid = $request->getParameter('drid');
-		$dr = Doctrine_Core::getTable('DetalleResumen')->find($drid);
-		$cant_vend = $dr->RemitoProductoCantVend();
-
-		// $q = Doctrine_Query::create();
-		// $q->select('sum(cantidad) as cant_vend');
-		// $q->from('DetalleResumen dr');
-		// $q->where('dr.det_remito_id = '.$drid);
-    	// $remitos = $q->fetchArray();
-		// $cant_vend = $remitos[0]['cant_vend'];		
-		
-		$q = Doctrine_Query::create();
-		$q->select('dr.cantidad');
-		$q->from('DetalleResumen dr');
-		$q->where('dr.id = '.$drid);
-    	$remitos = $q->fetchArray();
-		$cantidad = $remitos[0]['cantidad'];		
-		
-		$stock = $cantidad - $cant_vend;
+    $det_remito_id = $request->getParameter('drid');
+		$detalle_remito = Doctrine_Core::getTable('DetalleResumen')->find($det_remito_id);
+		$vendidos = $detalle_remito->RemitoProductoCantVend();
+		$devueltos = $detalle_remito->RemitoProductoCantDev();
+		$stock = $detalle_remito->cantidad - ($vendidos - $devueltos);
     $options[] = '<option value="1">1</option>';
     for($i = 2; $i <= $stock; $i++){
       $options[] = '<option value="'.$i.'">'.$i.'</option>';

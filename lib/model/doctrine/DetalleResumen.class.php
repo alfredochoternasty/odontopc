@@ -42,20 +42,23 @@ class DetalleResumen extends BaseDetalleResumen
   }
 	
 	public function RemitoProductoCantVend(){
-		$sql = "
-			select 
-				sum(cantidad)+
-				sum(bonificados)-
-				coalesce((select sum(cantidad) 
-				from dev_producto 
-				where dev_producto.resumen_id = detalle_resumen.resumen_id 
-					and dev_producto.producto_id = detalle_resumen.producto_id 
-					and dev_producto.nro_lote = detalle_resumen.nro_lote), 0) as total
-			from detalle_resumen
-			where det_remito_id =".$this->id;
-		$con = Doctrine_Manager::getInstance()->connection();
-		$st = $con->execute($sql);
-		$resultado = $st->fetchAll();
-		return $resultado[0]['total'];
+		// ventas asociadas al remito
+		$vendidos = Doctrine::getTable('DetalleResumen')->findByDetRemitoId($this->id);
+		$total_vta = 0;
+		foreach($vendidos as $vta) {
+			// devoluciones asociadas a las ventas asociadas al remito
+			$dev_a_remito = Doctrine::getTable('DevProducto')->findByResumenId($vta->resumen_id);
+			$total_dev_r = 0;
+			foreach($dev_a_remito as $dev_r) $total_dev_r += $dev_r->cantidad;
+			$total_vta += $vta->cantidad - $total_dev_r;
+		}
+		return $total_vta;
+	}
+	
+	public function RemitoProductoCantDev(){
+		$devueltos = Doctrine::getTable('DevProducto')->findByResumenIdAndProductoIdAndNroLote($this->resumen_id, $this->producto_id, $this->nro_lote);
+		$total_dev = 0;
+		foreach($devueltos as $dev) $total_dev += $dev->cantidad;
+		return $total_dev;
 	}
 }

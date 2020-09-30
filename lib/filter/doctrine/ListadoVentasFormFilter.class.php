@@ -18,6 +18,9 @@ class ListadoVentasFormFilter extends BaseListadoVentasFormFilter
 	
     $this->widgetSchema['producto_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'table_method' => 'getActivos', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
     $this->validatorSchema['producto_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id'));		
+
+    $this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'TipoFactura', 'add_empty' => true ));
+    $this->validatorSchema['tipofactura_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'TipoFactura', 'column' => 'id'));		
     
 		$this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'),'add_empty' => true, 'order_by' => array('nombre', 'asc')));    		
     $this->validatorSchema['grupoprod_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Grupo'), 'column' => 'id'));		
@@ -37,11 +40,14 @@ class ListadoVentasFormFilter extends BaseListadoVentasFormFilter
 	
 		$this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
 		$this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
+
+		$this->widgetSchema['nro_remito'] = new sfWidgetFormFilterInput(array('with_empty' => false));
+		$this->validatorSchema['nro_remito'] = new sfValidatorPass(array('required' => false));
   }
 	
 	public function getFields()
 	{
-		return array_merge(parent::getFields(), array('categoria_id' => 'Number'));
+		return array_merge(parent::getFields(), array('categoria_id' => 'Number', 'nro_remito' => 'Number'));
 	}	
 	
 	public function addCategoriaIdColumnQuery($query, $field, $value)
@@ -50,6 +56,18 @@ class ListadoVentasFormFilter extends BaseListadoVentasFormFilter
 			$rootAlias = $query->getRootAlias();
 			$query->leftJoin($rootAlias.'.Grupo g');
 			$query->andWhere('g.categoria_id = '.$value);
+		}
+		return $query;
+	}
+
+	public function addNroRemitoColumnQuery($query, $field, $value)
+	{
+		if (!empty($value['text']) && is_numeric($value['text'])) {
+			$remito = Doctrine::getTable('Resumen')->findByNroFacturaAndTipofacturaId($value['text'], 4);
+			$detalle_remito = Doctrine::getTable('DetalleResumen')->findByResumenId($remito[0]->id);
+			$det_ids = array();
+			foreach($detalle_remito as $det) $det_ids[] = $det->id;
+			$query->andWhereIn('det_remito_id', $det_ids);
 		}
 		return $query;
 	}

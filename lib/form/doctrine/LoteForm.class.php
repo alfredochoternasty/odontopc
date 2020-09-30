@@ -32,5 +32,11 @@ class LoteForm extends BaseLoteForm
 
     $this->widgetSchema['usuario'] = new sfWidgetFormInputHidden();
 		$this->validatorSchema['usuario'] =  new sfValidatorInteger(array('required' => false));
+    
+		$this->widgetSchema['activo'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['activo'] =  new sfValidatorInteger(array('required' => false));
+		
+    $this->widgetSchema['externo'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['externo'] =  new sfValidatorInteger(array('required' => false));
   }
 }

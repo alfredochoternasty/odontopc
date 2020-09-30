@@ -455,7 +455,7 @@ $(document).ready(function(){
 
   $("#dev_producto_cantidad").change(function(event){
 		var precio_u = $("#dev_producto_precio_unitario").val();	
-		var iva_u = $("#dev_producto_iva_unitario").val();
+		var iva_u = $("#dev_producto_iva").val();
     
 		var cantidad = $("#dev_producto_cantidad").find(':selected').val();      
 	  var precio = parseFloat(precio_u) * parseFloat(cantidad);

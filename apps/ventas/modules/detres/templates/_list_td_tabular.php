@@ -22,9 +22,14 @@
 </td>
 <td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $detalle_resumen->getCantidad() ?></td>
 
-<?php if($detalle_resumen->getResumen()->tipofactura_id == 4): ?>
-	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $detalle_resumen->RemitoProductoCantVend() ?></td>
-	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $detalle_resumen->getCantidad() - $detalle_resumen->RemitoProductoCantVend()?></td>
+<?php 
+	if($detalle_resumen->getResumen()->tipofactura_id == 4): 
+		$cant_vend = $detalle_resumen->RemitoProductoCantVend();
+		$cant_dev = $detalle_resumen->RemitoProductoCantDev();
+?>
+	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $cant_vend ?></td>
+	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $cant_dev ?></td>
+	<td class="sf_admin_text sf_admin_list_td_cantidad"><?php echo $detalle_resumen->cantidad - ($cant_vend + $cant_dev); ?></td>
 <?php endif;?>
 
 <?php if($detalle_resumen->getResumen()->tipofactura_id != 4): ?>

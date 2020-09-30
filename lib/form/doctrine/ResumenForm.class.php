@@ -31,19 +31,19 @@ class ResumenForm extends BaseResumenForm
 				$this->widgetSchema['pto_vta'] = new sfWidgetFormInputHidden();
 			} else {
 				$this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
-				$this->widgetSchema['pto_vta'] = new sfWidgetFormChoice(array('choices' => array('', '4', '5')));				
+				$this->widgetSchema['pto_vta'] = new sfWidgetFormChoice(array('choices' => array('', '4', '5')));
 			}
 			$this->widgetSchema['cuit'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 			$this->widgetSchema['afip'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));			      
 			$this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false));
 			
 			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInputHidden();
-			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger();
+			$this->validatorSchema['saldo_dolar'] =  new sfValidatorNumber(array('required' => false));
 			$this->setDefault ('saldo_dolar', 0);
     }else{
       unset($this['nro_factura'], $this['pto_vta']);
 			$this->widgetSchema['saldo_dolar'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1; font-weight: bold; font-size:16px; color:#FF0000'));
-			$this->validatorSchema['saldo_dolar'] =  new sfValidatorInteger(array('required' => false));
+			$this->validatorSchema['saldo_dolar'] =  new sfValidatorNumber(array('required' => false));
 			$this->widgetSchema['cuit'] = new sfWidgetFormInputHidden();
 			$this->widgetSchema['afip'] = new sfWidgetFormInputHidden();
     }

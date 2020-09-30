@@ -153,14 +153,15 @@ class devprodActions extends autoDevprodActions
   }
   
   public function executeGet_vta_lotes(sfWebRequest $request){
-    $lotes = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($request->getparameter('rid'), $request->getparameter('pid'), $request->getparameter('lid'));
+    $vendidos = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($request->getparameter('rid'), $request->getparameter('pid'), $request->getparameter('lid'));
+    $devueltos = Doctrine::getTable('DevProducto')->findByResumenIdAndProductoIdAndNroLote($request->getparameter('rid'), $request->getparameter('pid'), $request->getparameter('lid'));
+		
 		$cantidad = 0;
-		foreach ($lotes as $lote) 
-			$cantidad += $lote['cantidad'];
-    // $options[] = '<option value="1" selected >1</option>';
-    for($i = 1; $i <= $cantidad; $i++){
-      $options[] = '<option value="'.$i.'">'.$i.'</option>';
-    }
+		foreach ($vendidos as $vta) $cantidad += $vta->cantidad;
+		foreach ($devueltos as $dev) $cantidad -= $dev->cantidad;
+    
+		// $options[] = '<option value="1" selected >1</option>';
+    for($i = 1; $i <= $cantidad; $i++)$options[] = '<option value="'.$i.'">'.$i.'</option>';
     echo implode($options);
     return sfView::NONE;
   }

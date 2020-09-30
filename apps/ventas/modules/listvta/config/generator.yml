@@ -18,6 +18,7 @@ generator:
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
         remito: {Label: De Rto.}
+        nro_remito: {Label: Nro. de Remito}
       list:
         table_method: retrieveConJoins
         title: Listado de Ventas
@@ -32,7 +33,7 @@ generator:
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:
-        display: [zona_id, tipofactura_id, fecha, cliente_id, grupoprod_id, producto_id, nro_lote, categoria_id]
+        display: [zona_id, tipofactura_id, nro_remito, fecha, cliente_id, grupoprod_id, producto_id, nro_lote, categoria_id]
       form:    ~
       edit:    ~
       new:     ~
