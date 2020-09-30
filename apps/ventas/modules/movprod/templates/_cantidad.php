@@ -1,1 +1,1 @@
-<?php echo $movimiento_producto->cantidad>0?:$movimiento_producto->cantidad*-1 ?>
+<?php echo abs($movimiento_producto->cantidad) ?>

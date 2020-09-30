@@ -1,1 +1,1 @@
-<?php echo $listado_ventas->cantidad>0?:$listado_ventas->cantidad*-1 ?>
+<?php echo abs($listado_ventas->cantidad) ?>
