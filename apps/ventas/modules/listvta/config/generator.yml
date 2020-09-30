@@ -19,6 +19,7 @@ generator:
         nro_lote: {label: Lote}
         remito: {Label: De Rto.}
         nro_remito: {Label: Nro. de Remito}
+        categoria_id: {Label: Categoria}
       list:
         table_method: retrieveConJoins
         title: Listado de Ventas
