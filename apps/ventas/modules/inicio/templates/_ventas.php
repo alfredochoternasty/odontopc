@@ -2,7 +2,7 @@
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
 		<?php
-			$titulo = $zona_id==1?'<span style="color:#f00">(Todas las Zonas)</span>':'actuales';
+			$titulo = $zona_id==1?'<span style="color:#fff700">(Todas las Zonas)</span>':'actuales';
 		?>
 		<h1>Ventas <?php echo $titulo ?> comparadas al mismo dia mes anterior</h1>
 	</caption>

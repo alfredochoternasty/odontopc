@@ -36,7 +36,7 @@
       <?php foreach ($pager->getResults() as $categoria): ?>
         <tr class="sf_admin_row ui-widget-content">
         <?php
-          echo '<td>'.$categoria->nombre.'</td>';
+          echo '<td class="sf_admin_text">'.$categoria->nombre.'</td>';
           $historico = $categoria->getCantVendidaHist();
           foreach($historico as $fila) {
             $data[$categoria->nombre][] = $fila['cantidad'];

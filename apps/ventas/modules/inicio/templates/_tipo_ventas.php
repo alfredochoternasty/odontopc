@@ -32,7 +32,7 @@
 				<tr class="sf_admin_row ui-widget-content">
 					<td class="sf_admin_text"><?php echo $ventas ?></td>
 					<td class="sf_admin_text"><?php echo $pedidos ?></td>
-					<td class="sf_admin_text" style="font-weight:bold; color:<?php echo ($porcentaje>=0)?'#ff4000':'#00b359'; ?>"><?php echo ($porcentaje>=0)?'&#9660; ':'&#9650; '; ?><?php echo number_format(abs($porcentaje), 2).'%'; ?></td>
+					<td class="sf_admin_text" style="font-weight:bold; color:<?php echo ($porcentaje<50)?'#ff4000':'#00b359'; ?>"><?php echo number_format(abs($porcentaje), 2).'%'; ?></td>
 				</tr>
 	</tbody>
 </table>
