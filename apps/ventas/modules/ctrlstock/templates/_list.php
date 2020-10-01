@@ -34,15 +34,14 @@
 
     <thead class="ui-widget-header">
       <tr>
-        
         <?php include_partial('ctrlstock/list_th_tabular', array('sort' => $sort)) ?>
-
-              </tr>
+        <th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
+      </tr>
     </thead>
 
     <tfoot>
       <tr>
-        <th colspan="8">
+        <th colspan="9">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('ctrlstock/pagination', array('pager' => $pager)) ?>
           </div>
@@ -51,24 +50,11 @@
     </tfoot>
 
     <tbody>
-				<?php /*
-					if ($hasFilters->count() > 0) {
-						echo '<tr><td> Filtro utilizado: ';
-						foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-							@$valor = $hasFilters->getRaw($name);
-							$tag = $field->getConfig('label');
-							$tag = empty($tag)?$name:$tag;							
-							if (!empty($valor)) echo $tag.' = '.$valor;
-						}
-						echo '</td></tr>';
-					} */
-				?>
       <?php foreach ($pager->getResults() as $i => $control_stock): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
-        <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-          
+        <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">          
           <?php include_partial('ctrlstock/list_td_tabular', array('control_stock' => $control_stock)) ?>
-
-                  </tr>
+          <?php include_partial('ctrlstock/list_td_actions', array('control_stock' => $control_stock)) ?>
+        </tr>
       <?php endforeach; ?>
     </tbody>
   </table>

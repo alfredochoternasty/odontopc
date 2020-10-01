@@ -18,15 +18,16 @@ class listvtaActions extends autoListvtaActions
     parent::executeIndex($request);
   }
   
-  
   public function executeListVerTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);
-    $this->redirect('listvta/index?page=1');
+    $this->executeIndex($request);
+    $this->setTemplate('index');
   }  
   
   public function executeListVerDetallado(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', false);
-    $this->redirect('listvta/index?page=1');
+    $this->executeIndex($request);
+    $this->setTemplate('index');
   }
   
   public function executeListImprimirPagina(sfWebRequest $request){

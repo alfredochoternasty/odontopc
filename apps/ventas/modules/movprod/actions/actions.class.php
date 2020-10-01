@@ -13,7 +13,18 @@ require_once dirname(__FILE__).'/../lib/movprodGeneratorHelper.class.php';
  */
 class movprodActions extends autoMovprodActions
 {
-	
+	public function executeIndex(sfWebRequest $request){
+    if ($request->hasParameter('producto_id')) {
+        $filtros = array(
+          'producto_id' => $request->getParameter('producto_id'),
+          'nro_lote' => array('text' => urldecode($request->getParameter('nro_lote'))),
+          'zona_id' => $request->getParameter('zona_id')
+        );
+        $this->setFilters($filtros);
+    }
+    parent::executeIndex($request);
+  }  
+  
   public function executeListVerTotales(sfWebRequest $request){
     $this->getUser()->setAttribute('totales', true);
     $this->redirect('movprod/index?page=1');

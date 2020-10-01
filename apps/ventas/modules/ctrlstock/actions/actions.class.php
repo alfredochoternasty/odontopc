@@ -19,4 +19,13 @@ class ctrlstockActions extends autoCtrlstockActions
     return 'landscape';
   }
   
+  public function executeListDetalle(sfWebRequest $request) {
+    $ctrl_stock = $this->getRoute()->getObject();
+    $url = $this->generateUrl('movimiento_producto', array(
+      'producto_id' => $ctrl_stock->producto_id,
+      'nro_lote' => urlencode($ctrl_stock->nro_lote),
+      'zona_id' => $ctrl_stock->zona_id
+    ));
+    $this->redirect($url);
+  }
 }

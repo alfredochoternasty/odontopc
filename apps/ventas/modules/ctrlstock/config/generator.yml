@@ -26,7 +26,8 @@ generator:
         table_method: retrieveConJoins
         title: Listado de Control de Stock
         display: [Zona, Grupo, Producto, nro_lote, _comprados, _vendidos, stock_guardado, ult_venta]
-        object_actions: []
+        object_actions:
+          detalle: {label: Detalle Ventas}
         batch_actions: []
         actions:
           imprimir_pagina: {label: Imprimir Pagina}

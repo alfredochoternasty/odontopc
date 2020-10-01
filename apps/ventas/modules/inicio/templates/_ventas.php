@@ -1,4 +1,10 @@
 <div style="float:left; width:45%;margin:5px;">
+  <div class="sf_admin_flashes ui-widget">
+    <div class="notice ui-state-highlight ui-corner-all">
+      <span class="ui-icon ui-icon-info floatleft"></span>&nbsp;
+      <?php echo __('Se cuentan las ventas, las ventas asociadas a un remito y las devoluciones que no sean asociadas a un remito', array(), 'sf_admin') ?>
+    </div>
+  </div>
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
 		<?php

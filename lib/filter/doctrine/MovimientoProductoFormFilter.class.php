@@ -28,7 +28,7 @@ class MovimientoProductoFormFilter extends BaseMovimientoProductoFormFilter
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));	
 	
 		$this->widgetSchema['nro_lote'] = new sfWidgetFormFilterInput(array('with_empty' => false), array('size' => '60px'));
-		$this->validatorSchema['nro_lote'] = new sfValidatorPass(array('required' => false));
+		$this->validatorSchema['nro_lote'] = new sfValidatorString(array('required' => false));
 		
 		$this->widgetSchema['categoria_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Categoria', 'add_empty' => true, 'order_by' => array('nombre', 'asc')));    		
     $this->validatorSchema['categoria_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Categoria', 'column' => 'id'));		
