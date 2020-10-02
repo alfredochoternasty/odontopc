@@ -1,7 +1,7 @@
 <html>
 <head>
 <style type="text/css">
-body {font-family:sans-serif; font-size:0.5em;}
+body {font-family:sans-serif; font-size:0.6em;}
 #logo{position:absolute;left:0;top:-20}
 main table{width:100%}
 main table tr th{background: #CCC;}

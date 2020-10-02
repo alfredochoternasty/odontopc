@@ -16,8 +16,6 @@ from
 	resumen 
 		join detalle_resumen on resumen.id = detalle_resumen.resumen_id
 		join producto on producto.id = detalle_resumen.producto_id
-where
-	det_remito_id is null
 UNION ALL
 select 
 	dev_producto.id,
@@ -36,4 +34,5 @@ from
 		join producto on dev_producto.producto_id = producto.id
 		join resumen on dev_producto.resumen_id = resumen.id
 where
-	not exists(select '' from detalle_resumen where resumen_id = resumen.id and det_remito_id is not null)
+  (dev_producto.zona_id = 1 and resumen.tipofactura_id <> 4)
+  or (dev_producto.zona_id > 1)

@@ -34,11 +34,5 @@ from
 		join producto on dev_producto.producto_id = producto.id
 		join resumen on dev_producto.resumen_id = resumen.id
 where
-	not exists(
-		select '' 
-		from detalle_resumen 
-		where 
-			resumen_id = resumen.id 
-			and det_remito_id is not null
-			and zona_id = 1
-	)
+  (dev_producto.zona_id = 1 and resumen.tipofactura_id <> 4)
+  or (dev_producto.zona_id > 1)

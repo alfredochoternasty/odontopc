@@ -1,13 +1,11 @@
 DROP VIEW cta_cte;
-CREATE VIEW cta_cte (
-  id,concepto,numero,fecha,cliente_id,moneda_id,debe,haber,observacion
-) AS 
+CREATE VIEW cta_cte AS 
 select
   d.id, 
-  'Venta',
-  r.id as res_id, 
+  'Venta' as concepto,
+  r.id as numero, 
   r.fecha, 
-  c.id as compra_id, 
+  c.id as cliente_id, 
   d.moneda_id, 
   sum( d.total ) AS debe, 
   '0' AS haber,
@@ -21,9 +19,9 @@ UNION
 SELECT 
   c.id, 
   if(c.devprod_id is null, 'Cobro', 'Devolución'),
-  c.id as compra_id, 
+  c.id as numero, 
   c.fecha, 
-  cl.id as cli_id, 
+  cl.id as cliente_id, 
   c.moneda_id, 
   '0' AS debe, 
   sum( c.monto ) AS haber, 
