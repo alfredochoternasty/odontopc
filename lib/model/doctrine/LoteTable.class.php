@@ -21,7 +21,9 @@ class LoteTable extends Doctrine_Table
       $rootAlias = $q->getRootAlias();
       $q->leftJoin($rootAlias . '.Producto p');
       $q->leftJoin($rootAlias . '.Zona z');
-      $q->where($rootAlias . ".nro_lote not like 'er%'");
+      $q->where($rootAlias . '.activo = 1');
+      $q->andWhere($rootAlias . '.externo = 0');
+      $q->orderBy('z.nombre, g.nombre, p.orden_grupo, p.nombre, '.$rootAlias.'nro_lote');
       return $q;      
     }
 }

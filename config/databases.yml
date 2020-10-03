@@ -2,7 +2,7 @@ dev:
   doctrine:
     class: sfDoctrineDatabase
     param:
-      dsn: 'mysql:host=localhost;dbname=venta_dev'
+      dsn: 'mysql:host=localhost;dbname=ventas_dev'
       username: root
       password: 
       attributes:

@@ -16,6 +16,10 @@ class CobroTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Cobro');
     }
+
+    function construct(){
+        $this->setOption('orderBy','fecha desc, id desc');
+    }
     
     public function retrieveConJoins(Doctrine_Query $q){
 		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();

@@ -18,7 +18,7 @@ class CompraTable extends Doctrine_Table
     }
     
     function construct(){
-        $this->setOption('orderBy','fecha DESC');
+        $this->setOption('orderBy','fecha desc, id desc');
     }    
     public function retrieveConJoins(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();

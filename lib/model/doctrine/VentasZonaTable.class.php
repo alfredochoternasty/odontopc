@@ -17,6 +17,10 @@ class VentasZonaTable extends Doctrine_Table
         return Doctrine_Core::getTable('VentasZona');
     }
 		
+		function construct(){
+        $this->setOption('orderBy','fecha desc, id desc');
+    }
+		
     public function retrieveConJoins(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       $rootAlias = $q->getRootAlias();
@@ -26,7 +30,6 @@ class VentasZonaTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Resumen res');
       $q->leftJoin($rootAlias . '.Producto p');
 			$q->andWhere('uz.usuario = '.$id);
-      $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }
 }

@@ -16,6 +16,10 @@ class ClienteSaldoTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ClienteSaldo');
     }
+
+    function construct(){
+        $this->setOption('orderBy','apellido, nombre');
+    }
 		
     public function retrieveConJoins(Doctrine_Query $q){
 			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();

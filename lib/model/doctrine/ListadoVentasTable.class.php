@@ -16,6 +16,10 @@ class ListadoVentasTable extends Doctrine_Table
     {
       return Doctrine_Core::getTable('ListadoVentas');
     }
+		
+    function construct(){
+        $this->setOption('orderBy','fecha desc, resumen_id desc');
+    }
 
 		// devuelve los detalles de las ventas y ventas asociado a un remitos
 		// tambien devuelve las devoluciones

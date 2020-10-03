@@ -16,4 +16,8 @@ class BancoTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Banco');
     }
+    
+    function construct(){
+        $this->setOption('orderBy','nombre');
+    }
 }

@@ -22,7 +22,7 @@ class ProductoTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Grupo g');
       $q->where('grupoprod_id <> 1');
       $q->andWhere('grupoprod_id <> 15');
-      //$q->andWhere('activo = 1');
+      $q->orderBy('g.nombre, orden_grupo, nombre');
       return $q;
     }
     

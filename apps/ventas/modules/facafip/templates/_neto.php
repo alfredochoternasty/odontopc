@@ -1,1 +1,3 @@
-<?php echo sprintf("$"." %01.2f", $facturas_afip->tipofactura_id>5?$facturas_afip->neto*-1:$facturas_afip->neto) ?>
+<?php
+	echo '$ '.number_format($facturas_afip->tipofactura_id>5?$facturas_afip->neto*-1:$facturas_afip->neto, 2, ',', '.'); 
+?>

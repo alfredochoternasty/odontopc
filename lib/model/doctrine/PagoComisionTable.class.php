@@ -18,6 +18,6 @@ class PagoComisionTable extends Doctrine_Table
     }
     
      function construct(){
-        $this->setOption('orderBy','fecha desc');
+        $this->setOption('orderBy','fecha desc, id desc');
     }
 }

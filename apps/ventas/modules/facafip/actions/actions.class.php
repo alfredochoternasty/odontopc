@@ -13,7 +13,7 @@ require_once dirname(__FILE__).'/../lib/facafipGeneratorHelper.class.php';
  */
 class facafipActions extends autoFacafipActions
 {
-	
+	/*
   public function executeListImprimir(sfWebRequest $request){
     $filtro = new FacturasAfipFormFilter();
     $consulta = $filtro->buildQuery($this->getFilters());
@@ -81,4 +81,5 @@ class facafipActions extends autoFacafipActions
 		$this->forward('resumen', 'index');
     return sfView::NONE;
   }
+	*/
 }
