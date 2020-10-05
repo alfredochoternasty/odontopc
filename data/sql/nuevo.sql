@@ -35,4 +35,7 @@ from
 		join resumen on dev_producto.resumen_id = resumen.id
 where
   (dev_producto.zona_id = 1 and resumen.tipofactura_id <> 4)
-  or (dev_producto.zona_id > 1)
+  or (dev_producto.zona_id > 1);
+	
+UPDATE `ventas_dev`.`sf_guard_permission` SET `name` = 'Salidas de Deposito' WHERE (`id` = '1052');
+UPDATE `ventas_dev`.`sf_guard_permission` SET `id` = '1309', `padre` = '1305' WHERE (`id` = '1052');
