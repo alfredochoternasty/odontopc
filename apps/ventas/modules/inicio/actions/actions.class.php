@@ -31,7 +31,7 @@ class inicioActions extends autoInicioActions
         ->andWhere('p.vendido = 0')
         ->andWhere('p.finalizado = 1')
         ->andWhere('p.zona_id = ?', $zona_id)
-        ->orderBy('p.fecha ASC');
+        ->orderBy('p.id ASC');
         
       if ($this->getUser()->getGuardUser()->es_cliente){
         $id_usuario = $this->getUser()->getGuardUser()->getId();

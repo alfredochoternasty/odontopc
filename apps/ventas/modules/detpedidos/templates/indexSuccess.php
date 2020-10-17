@@ -7,14 +7,8 @@
   <div id="sf_admin_header">
     <?php include_partial('detpedidos/list_header', array('pager' => $pager)) ?>
   </div>
-
-      <div id="sf_admin_bar ui-helper-hidden" style="display:none">
-      <?php include_partial('detpedidos/filters', array('form' => $filters, 'configuration' => $configuration)) ?>
-    </div>
   
-  <div id="sf_admin_content">
-          <form action="<?php echo url_for('detalle_pedido_detpedidos_collection', array('action' => 'batch')) ?>" method="post" id="sf_admin_content_form">
-    
+  <div id="sf_admin_content">    
     <?php 
       $detalles = $pager->getResults();
       if (empty($detalles[0]->getPedido()->vendido)):?>
@@ -22,15 +16,11 @@
         <?php include_partial('detpedidos/list_actions', array('helper' => $helper)) ?>
       </div>
     <?php endif; ?>
-
-      <?php include_partial('detpedidos/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'filters' => $filters, 'configuration' => $configuration)) ?>
-
-          </form>
-      </div>
+    <?php include_partial('detpedidos/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'filters' => $filters, 'configuration' => $configuration)) ?>
+  </div>
 
   <div id="sf_admin_footer">
     <?php include_partial('detpedidos/list_footer', array('pager' => $pager)) ?>
   </div>
 
-  <?php include_partial('detpedidos/themeswitcher') ?>
 </div>

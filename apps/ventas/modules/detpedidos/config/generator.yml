@@ -23,6 +23,7 @@ generator:
           asignar_lote: ~
           vender: ~
           imprimir: ~
+          original: {label: Ver Pedido Original}
       filter: {}
       form:    ~
       edit:

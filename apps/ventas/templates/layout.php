@@ -80,8 +80,12 @@
 					foreach ($results as $r){
 						if ($r['padre'] == 1000 && ($sf_user->hasPermission($r['name']) || $sf_user->isSuperAdmin())) {
 							echo $bandera?"</ul></li>":"";
-							echo "<li><a href='javascript:void();'>".$r['name'];
-							if ($r['name'] == 'Pedidos') include_component('ped', 'CantPedNuevos');	
+							if ($r['name'] == 'Pedidos') {
+								echo '<li style="margin-right:10px;"><a href="javascript:void();">'.$r['name'];
+								include_component('ped', 'CantPedNuevos');
+							} else {
+								echo '<li><a href="javascript:void();">'.$r['name']."</a>";
+							}
 							echo "</a><ul>";
 							$bandera = 1;
 						}

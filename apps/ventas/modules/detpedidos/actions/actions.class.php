@@ -21,9 +21,10 @@ class detpedidosActions extends autoDetpedidosActions
     } 
     $this->getUser()->setAttribute('pid', $pid);
     $this->setFilters(array("pedido_id" => $pid));
+    $this->pedido_original = Doctrine::getTable('DetallePedidoOriginal')->findByPedidoId($pid);
     parent::executeIndex($request);
-  } 
-  
+  }
+
   public function executeNew(sfWebRequest $request){
     $detped = new DetallePedido();
     if($request->hasParameter('pid')){
@@ -162,11 +163,22 @@ class detpedidosActions extends autoDetpedidosActions
     $detpedidos = Doctrine::getTable('DetallePedido')->findByPedidoId($pid);
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("detalles" => $detpedidos)));
+    $dompdf->load_html($this->getPartial("imprimir", array("detalles" => $detpedidos, 'lotes' => true)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
     $dompdf->stream("pedido_nro_$pid.pdf");    
     return sfView::NONE;
   }
-  
+
+  public function executeListOriginal(sfWebRequest $request){
+    $pid = $this->getUser()->getAttribute('pid', 1);
+    $detpedidos = Doctrine::getTable('DetallePedidoOriginal')->findByPedidoId($pid);
+    
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($this->getPartial("imprimir", array("detalles" => $detpedidos, 'lotes' => false)));
+    $dompdf->set_paper('A4','portrait');
+    $dompdf->render();
+    $dompdf->stream("pedido_nro_$pid.pdf");
+    return sfView::NONE;
+  }  
 }

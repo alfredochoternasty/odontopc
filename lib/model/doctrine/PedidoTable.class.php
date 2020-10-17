@@ -23,7 +23,7 @@ class PedidoTable extends Doctrine_Table
       $q->where($rootAlias . '.vendido = 0');
       $q->andWhere($rootAlias . '.finalizado = 1');
       $q->andWhere($rootAlias . '.zona_id = ?', $zid);
-      $q->orderBy($rootAlias . '.fecha desc');
+      $q->orderBy($rootAlias.'.id asc');
       return $q;
     }        
     
@@ -33,7 +33,8 @@ class PedidoTable extends Doctrine_Table
       $q->where($rootAlias . '.vendido = 1');
       $q->andWhere($rootAlias . '.finalizado = 1');
       $q->andWhere($rootAlias . '.zona_id = ?', $zid);
-      $q->orderBy($rootAlias . '.fecha desc');
+      $q->orderBy($rootAlias.'.id desc');
       return $q;
-    }       
+    }
+
 }

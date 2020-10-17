@@ -8,16 +8,20 @@
 <table border="1" cellspacing="0" cellpadding="1">
   <tr>
     <th style="background: #CCC;">Producto</th>
-    <th style="background: #CCC;">Lote</th>
     <th style="background: #CCC;">Cantidad</th>
+    <?php if ($lotes): ?>
+    <th style="background: #CCC;">Lote</th>
     <th style="background: #CCC;">Asignacion Lote</th>
+    <?php endif; ?>
   </tr>
   <?php foreach($detalles as $detalle): ?>
   <tr>
     <td><?php echo $detalle->getProducto() ?></td>
-    <td><?php echo $detalle->getNroLote() ?></td>
     <td><?php echo $detalle->getCantidad() ?></td>
+    <?php if ($lotes): ?>
+    <td><?php echo $detalle->getNroLote() ?></td>
     <td><?php echo $detalle->getAsignacionLote() ?></td>
+    <?php endif; ?>
   </tr>
   <?php endforeach; ?>
 </table>
