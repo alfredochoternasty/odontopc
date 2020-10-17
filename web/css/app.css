@@ -75,6 +75,26 @@
 	width:100%;
 }
 
+#notificaciones{
+	position: fixed;
+	bottom: 0px;
+	height: 30px;
+	width: 95%;
+	padding: 2%;
+	background-color: #fff;
+}
+
+#notificaciones #titulo{
+	height: 40px;
+	font-size: 0.9em;
+	font-weight: bold;
+	background-color: #ffffff;
+	color: #ff0000;
+	padding: 2px;
+	text-align: center;
+	width:100%;
+}
+
 #cerrar_promo{display:none}
 
 #promociones .promocion{

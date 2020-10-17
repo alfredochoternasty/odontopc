@@ -40,6 +40,11 @@
 </div>
 <?php endforeach; ?>
 </div>
+<div id="notificaciones">
+	<table id="titulo">
+		<tr><td><span id="abrir_promo">Los pedidos se envian o se retiran a las 48hs</span></td></tr>
+	</table>
+</div>
 <?php if (!empty(count($promociones))): ?>
 	<div id="promociones">
 	<table id="titulo">
