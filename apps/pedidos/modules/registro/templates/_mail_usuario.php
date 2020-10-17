@@ -3,9 +3,9 @@
 	<br>Gracias por registrarte en sistema de pedidos de NTI IMPLANTES.
 </p>
 <p>
-	Ahora puedes ingresar a nuestros servicios, usando las siguientes credenciales:
+	Ahora puedes ingresar usando los siguientes datos:
 	<ul>
-		<li><a href="http://pedidos.ntiimplantes.com.ar/web">http://pedidos.ntiimplantes.com.ar/web</a></li>
+		<li><a href="http://pedidos.ntiimplantes.com.ar">http://pedidos.ntiimplantes.com.ar</a></li>
 		<li><b>Usuario:</b>&nbsp;&nbsp;<?php echo $cliente->getUsuario()->getUsername() ?></li>
 		<li><b>Clave:</b>&nbsp;&nbsp;<?php echo $clave ?></li>
 	</ul>
