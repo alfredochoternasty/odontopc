@@ -125,11 +125,12 @@
 }
 
 #lista_productos .cant_pedir{
-	width:30%;
+	width:60%;
 	border: 1px solid #f4800c;
 	height:14pt;
 	text-align:center;
 	display:inline;
+	margin-bottom: 7%;
 }
 
 .combo_grupos{

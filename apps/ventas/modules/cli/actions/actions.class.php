@@ -31,32 +31,30 @@ class cliActions extends autoCliActions
   private function GenerarUsuario(sfWebRequest $request)
   {
     $cliente = Doctrine::getTable('Cliente')->find($request->getParameter('id'));
-    
-		$correo = trim($cliente->email);
-		$usuario = $cliente->cuit;
-		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		$clave = substr(str_shuffle($chars),0,8);
-    
-		if(empty($usuario)){
-      $this->getUser()->setFlash('error', 'El cliente debe tener cargado un CUIT');
-      $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
-		}
+		$user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
 		
-		if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
-			$this->getUser()->setFlash('error', 'El usuario no posee Email correcto - '.$correo);
+		$correo = trim($cliente->email);
+    if(empty($correo)){
+      $this->getUser()->setFlash('error', 'El usuario no tiene cargado un email');
+      $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
+    } elseif(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
+			$this->getUser()->setFlash('error', 'El email del cliente no tiene un formato correcto - '.$correo);
 			$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));		
 		}
 		
-    if(empty($correo)){
-      $this->getUser()->setFlash('error', 'El usuario no posee Email');
-      $this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
-    }
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$clave = substr(str_shuffle($chars),0,8);
 		
-		$user = Doctrine::getTable('sfGuardUser')->findByUsername($usuario);
-		if(empty($user[0])){
+		if(!$user){
+			$usuario = $cliente->cuit;
+			if(empty($usuario)){
+				$this->getUser()->setFlash('error', 'El cliente debe tener cargado un CUIT');
+				$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
+			}
+			
 			$user = new sfGuardUser();
 			$accion = 'generado';
-			$user->setEmailAddress($correo);				
+			$user->setEmailAddress($correo);
 			$user->setUsername($usuario); 
 			$user->setIsActive(true);
 			$user->setIsSuperAdmin(false);
@@ -69,10 +67,10 @@ class cliActions extends autoCliActions
 			$cliente->setUsuarioId($user->getId());
 			$cliente->save();
 		}else{
-			$user = $user[0];
 			$accion = 'actualizado';
+			$usuario = $user->username;
 			$user->setPassword($clave);
-			$user->save();      	  
+			$user->save();
 		}
 
 		$mensaje = Swift_Message::newInstance();
@@ -81,7 +79,7 @@ class cliActions extends autoCliActions
 		$mensaje->setSubject('NTI Sistema de Pedidos');
 		$headers = $mensaje->getHeaders();
 		$headers->addTextHeader('Content-Type', 'text/html');
-		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));
+		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'usuario' => $usuario, 'clave' => $clave));
 		$mensaje->setBody($msj, "text/html");
 		$this->getMailer()->send($mensaje);    
 		$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());

@@ -14,7 +14,7 @@ class ClienteForm extends BaseClienteForm
   {
 		unset($this['sexo']);
 		
-		$zona_id = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
+		$zona_id = !empty(sfContext::getInstance()->getUser()->getGuardUser())? sfContext::getInstance()->getUser()->getGuardUser()->getZonaId():0;
 		
     $this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Localidad'), 'add_empty' => true, 'order_by' => array('nombre', 'asc'), 'method' => 'getLocConProvincia', 'table_method' => 'retrieveConJoins'), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));    
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
@@ -37,7 +37,7 @@ class ClienteForm extends BaseClienteForm
 			$this->validatorSchema['lista_id'] =  new sfValidatorInteger();
 			$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
 			$this->setDefault('lista_id', 1);
-			$this->setDefault('zona_id', $zona_id?:1);
+			$this->setDefault('zona_id', empty($zona_id)?:1);
 		} else {
 			$this->widgetSchema['lista_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true));			
 		}

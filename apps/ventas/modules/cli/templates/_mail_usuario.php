@@ -2,7 +2,7 @@
 <p>
 	<ul>
 		<li><a href="https://pedidos.ntiimplantes.com.ar">https://pedidos.ntiimplantes.com.ar</a></li>
-		<li><b>Usuario:</b>&nbsp;&nbsp;<?php echo $cliente->cuit ?></li>
+		<li><b>Usuario:</b>&nbsp;&nbsp;<?php echo $usuario ?></li>
 		<li><b>Clave:</b>&nbsp;&nbsp;<?php echo $clave ?></li>
 	</ul>
 	<b>Para mayor seguridad cambie la clave.</b>

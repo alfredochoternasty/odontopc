@@ -23,7 +23,7 @@ class LoteTable extends Doctrine_Table
       $q->leftJoin($rootAlias . '.Zona z');
       $q->where($rootAlias . '.activo = 1');
       $q->andWhere($rootAlias . '.externo = 0');
-      $q->orderBy('z.nombre, g.nombre, p.orden_grupo, p.nombre, '.$rootAlias.'nro_lote');
+      $q->orderBy('z.nombre, p.orden_grupo, p.nombre, '.$rootAlias.'.nro_lote');
       return $q;      
     }
 }
