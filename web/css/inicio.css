@@ -72,11 +72,16 @@ header{
 	font-size:16px;
 }
 
+.sf_admin_text input, textarea, select {
+	margin: 0.1em 0;
+	border: 2px solid #c5dff3;
+}
+
 .sf_admin_form_row,
 .sf_admin_text, 
 .sf_admin_date,
 .sf_admin_form {
-	font-size: 1.3em;
+	font-size: 1.2em;
 }
 
 .checkbox_list li{margin-left: 50px;}

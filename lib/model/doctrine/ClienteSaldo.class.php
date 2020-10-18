@@ -11,7 +11,7 @@
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 class ClienteSaldo extends BaseClienteSaldo
-{
+{	
 	public function getSaldoColor() {
 		$color = $this->saldo > 5000 ? ' style="font-weight:bold; color:#f00"' : '';
 		echo '<span '.$color.'>'.$this->getMoneda()->simbolo.' '.number_format($this->saldo, 2, ',', '.').'</span>'; 

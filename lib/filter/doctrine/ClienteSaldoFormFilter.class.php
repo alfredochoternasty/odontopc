@@ -16,6 +16,12 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 		$this->widgetSchema ['mayor'] = new sfWidgetFormInputText();
 		$this->validatorSchema ['mayor'] = new sfValidatorString();
 		
+    $this->widgetSchema['ult_cobro'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
+    $this->validatorSchema['ult_cobro'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
+
+    $this->widgetSchema['ult_venta'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
+    $this->validatorSchema['ult_venta'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));
+		
 		$this->widgetSchema['zona_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Zona', 'table_method' => 'getZonasUsuario', 'method' => 'getNomZona', 'add_empty' => false, 'order_by' => array('nombre', 'asc')));
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));
 		
@@ -24,7 +30,7 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 	
 	public function getFields()
 	{
-		return array_merge(parent::getFields(), array('mayor' => 'Number'));
+		return array_merge(parent::getFields(), array('mayor' => 'Number', 'ult_cobro' => 'Date', 'ult_venta' => 'Date'));
 	}	
 	
 	public function addMayorColumnQuery($query, $field, $value)
@@ -36,5 +42,22 @@ class ClienteSaldoFormFilter extends BaseClienteSaldoFormFilter
 		}
 		return $query;
 	}
+
+	public function addUltCobroColumnQuery($query, $field, $value)
+	{
+    $rootAlias = $query->getRootAlias();
+		if (!empty($value) && is_numeric($value)) {
+			$query->andWhere($rootAlias.'.ult_cobro <= '.$value);
+		}
+		return $query;
+	}
 	
+	public function addUltVentaColumnQuery($query, $field, $value)
+	{
+    $rootAlias = $query->getRootAlias();
+		if (!empty($value) && is_numeric($value)) {
+			$query->andWhere($rootAlias.'.ult_venta <= '.$value);
+		}
+		return $query;
+	}	
 }

@@ -20,7 +20,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Listado de Saldos  
-        display: [apellido, nombre, _saldo]
+        display: [apellido, nombre, _saldo, ult_venta, ult_cobro]
         object_actions: []
         batch_actions: []
         actions:
@@ -29,9 +29,9 @@ generator:
           excel_pagina: {label: Descargar Pagina}
           excel_todo: {label: Descargar Todo}
       filter:
-        display: [apellido, moneda_id, zona_id, mayor]
+        display: [apellido, moneda_id, zona_id, mayor, ult_venta, ult_cobro]
       form:    ~
       edit:    ~
       new:     ~
       show:
-        display: [apellido, nombre, saldo]
+        display: [apellido, nombre, saldo, ult_venta, ult_cobro]

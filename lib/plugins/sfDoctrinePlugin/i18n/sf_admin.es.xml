@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit>
         <source>The item has not been saved due to some errors.</source>
-        <target>El elemento no se ha guardado porque se ha producido algún error.</target>
+        <target>Los datos ingresados no son válidos, por favor revise.</target>
       </trans-unit>
       <trans-unit>
         <source>The item was deleted successfully.</source>

@@ -13,20 +13,5 @@ require_once dirname(__FILE__).'/../lib/saldosGeneratorHelper.class.php';
  */
 class saldosActions extends autoSaldosActions
 {
-  public function executeListImprimir(sfWebRequest $request){
-    $filtro = new ClienteSaldoFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-		$pagina = $this->getUser()->getAttribute('saldo.page', '1', 'admin_module')-1;
-		$consulta->limit(50)->offset($pagina * 50);
-    $listado = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial('imprimir' , array('saldos' => $listado)));
-    $dompdf->set_paper('A4','portrait');
-    $dompdf->render();
-    $dompdf->stream("saldos.pdf");    
-    
-		return sfView::NONE;
-  }
 	
 }

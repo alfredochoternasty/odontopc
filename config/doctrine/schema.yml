@@ -837,6 +837,8 @@ ClienteSaldo:
     moneda_id: {type: integer(4)}
     saldo: {type: 'decimal(10, 2)', notnull: true}
     zona_id: {type: integer(4)}
+    ult_cobro: {type: date(25)}
+    ult_venta: {type: date(25)}
   relations:
     Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
