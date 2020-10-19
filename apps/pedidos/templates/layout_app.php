@@ -71,7 +71,7 @@
 				<span>Saldo</span><span style="margin-left:4px;color:#F00;">
 				<?php
 					$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($sf_user->getGuardUser()->getId());
-					echo "$ ".$clientes[0]->getSaldoCtaCte(1, null, true);
+					// echo "$ ".$clientes[0]->getSaldoCtaCte(1, null, true);
 				?>
 				</span>
 			</div>

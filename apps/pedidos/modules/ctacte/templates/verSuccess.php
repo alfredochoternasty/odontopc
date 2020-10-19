@@ -13,7 +13,7 @@
 					$concepto = '';
 					if ($fila->concepto == 'Venta') {
 						$comprobante = Doctrine::getTable('Resumen')->find($fila->numero);
-						$concepto = 'Compra';
+						$concepto = $fila->concepto;
 					} elseif ($fila->concepto == 'Cobro') {
 						$comprobante = Doctrine::getTable('Cobro')->find($fila->numero);
 						$concepto = 'Pago';

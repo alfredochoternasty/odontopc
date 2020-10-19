@@ -16,12 +16,11 @@ generator:
       fields:
         dni: {label: DNI, help: Solo números y sin puntos}
         cuit: {label: CUIT, help: Solo números}
-        celular: {label: Celular, help: Solo números}
-        telefono: {label: Teléfono, help: Solo números}
+        celular: {label: Nro. de Celular, help: Solo números}
+        telefono: {label: Nro. de Teléfono Fijo, help: Solo números}
         domicilio: {help: Por favor indique ciudad y provincia}
-        nro_matricula: {label: Matrícula Profesional}
-        email_2: {label: Comfirmar Email}
-        condicionfiscal_id: {label: Codición Fiscal}
+        nro_matricula: {label: Nro. de Matrícula Profesional}
+        email_2: {label: Email Comfirmación}
       list:    ~
       filter:  ~
       form:    ~
