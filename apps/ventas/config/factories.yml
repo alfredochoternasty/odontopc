@@ -34,7 +34,7 @@ prod:
           encryption: ssl
           auth_mode: auth
           username: implantesnti@gmail.com
-          password: implantesnti2020abc
+          password: milito3304
 
 all:
   user:
