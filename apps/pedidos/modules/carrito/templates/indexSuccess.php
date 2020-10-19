@@ -3,7 +3,7 @@
 <div class="contenido contenido_boton">
 	<h3 class="titulo">Pedido Nro: <?php echo $nro_pedido?></h3>
 	<p class="sub_titulo">Total: <b>$ <?php echo $total_pedido ?></p>
-	
+	<h4 style="width:100%;text-align:center;color:#ff0000;">Los pedidos se envian o se retiran a las 48hs</h4>
 	<?php foreach ($detalle_pedido as $detped): ?>
 	<div class="fila_contenido">
 		<table width="100%">

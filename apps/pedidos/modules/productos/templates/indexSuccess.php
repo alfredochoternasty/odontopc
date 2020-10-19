@@ -16,7 +16,7 @@
 	<table width="100%">
 		<tr >
 		  <td width="10%"><img src="<?php echo url_for('productos/GetImagen?img='.$producto->getImagen()) ?>" height="60vw" width="80vw"></td>
-		  <td width="60%">
+		  <td width="70%">
 			<span class="nombre_producto"><?php echo $producto ?></span><br>
 			<span class="nombre_grupo"><?php echo $producto->getGrupo() ?></span><br>
 			<span class="precio">$ 
@@ -28,10 +28,10 @@
 				?>
 			</span>
 		  </td>
-		  <td width="30%" style="text-align:right">
+		  <td width="70%" style="text-align:center">
 			<form action="<?php echo url_for('productos/pedir') ?>" onSubmit="return validar(this);">
 			  <input name="producto_id" type="hidden" value="<?php echo $producto->getId() ?>">
-			  <input name="cantidad" placeholder="Cant." type="number" class="cant_pedir">
+			  <input name="cantidad" placeholder="Cant." type="number" class="cant_pedir"><br>
 			  <input type="submit" value="Pedir" class="boton_prod">
 			</form>
 		  </td>
@@ -39,6 +39,11 @@
 	</table>
 </div>
 <?php endforeach; ?>
+</div>
+<div id="notificaciones">
+	<table id="titulo">
+		<tr><td><span id="abrir_promo">Los pedidos se envian o se retiran a las 48hs</span></td></tr>
+	</table>
 </div>
 <?php if (!empty(count($promociones))): ?>
 	<div id="promociones">
