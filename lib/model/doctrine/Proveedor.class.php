@@ -38,13 +38,14 @@ class Proveedor extends BaseProveedor
           ->where('proveedor_id = ?', $this->getId())
           ->andWhere('tipofactura_id in (4, 1)');
     $rs = $q->execute();
-	
+	if (empty($rs[0]['id'])) return 1;
+	  
     $q = Doctrine_Query::create()
           ->select('numero')
           ->from('Compra c')
           ->where('id = '.$rs[0]['id']);
     $rs = $q->execute();
 	  
-    return $rs[0]['numero'] + 1;
+    return empty($rs[0]['numero'])?1:$rs[0]['numero']+1;
 	}
 }
