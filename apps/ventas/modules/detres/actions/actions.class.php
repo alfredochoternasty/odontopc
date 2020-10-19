@@ -446,7 +446,7 @@ class detresActions extends autoDetresActions
 						$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
 					} elseif ($res['resultado'] == 'A') {
 						$afip_estado = 1;
-						$resumen->setFecha(date("Y-m-d"));
+						//$resumen->setFecha(date("Y-m-d"));
 						$resumen->setAfipCae($res['cae']);
 						$resumen->setNroFactura($nuevo_nro);
 						$resumen->setPtoVta($ptovta);
@@ -475,19 +475,22 @@ class detresActions extends autoDetresActions
 			$resumen->setAfipEstado(1);
 		}
 		
-		$saldo_cliente = $resumen->getCliente()->getSaldoCtaCte(1, null, false) - $resumen->getTotalResumen();
-		if ($saldo_cliente < 0) { // si tiene saldo a favor
-			$saldo_resumen = $resumen->getTotalResumen() - $resumen->getTotalCobrado() + $resumen->getTotalDevuelto();
-			$objCobro = new CobroResumen();
-			$objCobro->setResumenId($resumen->getId());			
-			if (abs($saldo_cliente-5) >= $saldo_resumen) {//tolerancia de 5 pesos
-				$objCobro->setMonto($resumen->getTotalResumen());
-				$resumen->setPagado(1);
-				$resumen->setFechaPagado(date('Y-m-d'));
-			} else {
-				$objCobro->setMonto(abs($saldo_cliente));
+		$esta_cargado = count(Doctrine::getTable('CobroResumen')->findByResumenId($resumen->getId()));
+		if ($esta_cargado == 0) {
+			$saldo_cliente = $resumen->getCliente()->getSaldoCtaCte(1, null, false) - $resumen->getTotalResumen();
+			if ($saldo_cliente < 0) { // si tiene saldo a favor
+				$saldo_resumen = $resumen->getTotalResumen() - $resumen->getTotalCobrado() + $resumen->getTotalDevuelto();
+				$objCobro = new CobroResumen();
+				$objCobro->setResumenId($resumen->getId());			
+				if (abs($saldo_cliente-5) >= $saldo_resumen) {//tolerancia de 5 pesos
+					$objCobro->setMonto($resumen->getTotalResumen());
+					$resumen->setPagado(1);
+					$resumen->setFechaPagado(date('Y-m-d'));
+				} else {
+					$objCobro->setMonto(abs($saldo_cliente));
+				}
+				$objCobro->save();
 			}
-			$objCobro->save();
 		}
 		
 		$resumen->save();
