@@ -34,7 +34,7 @@ class registroActions extends autoRegistroActions
 			
 			$cliente->setUsuarioId($user->getId());
 			$cliente->setModoAlta('web');
-			// $cliente->setFechaAlta(date('Y-m-d'));
+			$cliente->setFechaAlta(date('Y-m-d'));
 			$cliente->save();
 			
 			$mensaje = Swift_Message::newInstance();

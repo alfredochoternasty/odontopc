@@ -16,7 +16,8 @@ generator:
       fields:
         apellido: {label: Apellido}
         nombre: {label: Nombre}
-        mayor: {label: Saldo mayor que, help: numero sin puntos ni comas por ej 5000}
+        mayor: {label: Saldo mayor que}
+        ult_fec_cobro: {label: Ultimo Cobro antes de}
       list:
         table_method: retrieveConJoins
         title: Listado de Saldos  
@@ -29,7 +30,7 @@ generator:
           excel_pagina: {label: Descargar Pagina}
           excel_todo: {label: Descargar Todo}
       filter:
-        display: [apellido, moneda_id, zona_id, mayor, ult_venta, ult_cobro]
+        display: [apellido, moneda_id, zona_id, mayor, ult_fec_cobro]
       form:    ~
       edit:    ~
       new:     ~

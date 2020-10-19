@@ -21,6 +21,8 @@ abstract class BaseClienteSaldoForm extends BaseFormDoctrine
       'moneda_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'saldo'     => new sfWidgetFormInputText(),
       'zona_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'ult_cobro' => new sfWidgetFormDate(),
+      'ult_venta' => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +32,8 @@ abstract class BaseClienteSaldoForm extends BaseFormDoctrine
       'moneda_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'required' => false)),
       'saldo'     => new sfValidatorNumber(),
       'zona_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
+      'ult_cobro' => new sfValidatorDate(array('required' => false)),
+      'ult_venta' => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_saldo[%s]');

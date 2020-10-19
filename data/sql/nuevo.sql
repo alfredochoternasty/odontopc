@@ -32,3 +32,9 @@ GROUP BY
 	c.id, cta.moneda_id
 ORDER BY 
 	c.apellido, c.nombre;
+	
+UPDATE cliente SET fecha_alta = '2020-09-23' WHERE (id = '849');
+UPDATE cliente SET fecha_alta = '2020-09-26' WHERE (id = '852');
+UPDATE cliente SET fecha_alta = '2020-10-16' WHERE (id = '867');
+DELETE FROM cliente WHERE (id = '866');
+DELETE FROM cliente WHERE (id = '869');

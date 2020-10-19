@@ -141,7 +141,6 @@ class ClienteTable extends Doctrine_Table
 		->where("q.activo = 1")
 		->andWhere("q.zona_id = $p_zona_id")
 		->andWhere("q.modo_alta = 'web'")
-		->andWhere('q.condicionfiscal_id is null')
 		->orderBy('apellido ASC, nombre ASC');
 		return $query->execute();
 	}

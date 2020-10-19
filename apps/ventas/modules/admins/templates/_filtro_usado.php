@@ -12,7 +12,7 @@
 					}
 					break;
 				case 'Date':
-					if (array_key_exists('from', $valor)) {
+					if (is_array($valor) && array_key_exists('from', $valor)) {
 						$desde = implode('/', array_reverse(explode('-', $valor['from'])));
 						$h = explode(' ', $valor['to']);
 						$hasta = implode('/', array_reverse(explode('-', $h[0])));
@@ -20,6 +20,8 @@
 							$valor = $desde;
 						else 
 							$valor = "desde: $desde hasta $hasta";
+					} else{
+						$valor = implode('/', array_reverse(explode('-', $valor)));
 					}
 					break;
 				case 'Text':

@@ -18,6 +18,8 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
       'moneda_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => true)),
       'saldo'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'zona_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'ult_cobro' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'ult_venta' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(
@@ -26,6 +28,8 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
       'moneda_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Moneda'), 'column' => 'id')),
       'saldo'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'zona_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
+      'ult_cobro' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'ult_venta' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('cliente_saldo_filters[%s]');
@@ -51,6 +55,8 @@ abstract class BaseClienteSaldoFormFilter extends BaseFormFilterDoctrine
       'moneda_id' => 'ForeignKey',
       'saldo'     => 'Number',
       'zona_id'   => 'ForeignKey',
+      'ult_cobro' => 'Date',
+      'ult_venta' => 'Date',
     );
   }
 }

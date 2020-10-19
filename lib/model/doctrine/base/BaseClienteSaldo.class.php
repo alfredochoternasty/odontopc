@@ -13,6 +13,8 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSaldo', 'doctrine');
  * @property integer $moneda_id
  * @property decimal $saldo
  * @property integer $zona_id
+ * @property date $ult_cobro
+ * @property date $ult_venta
  * @property TipoMoneda $Moneda
  * @property Zona $Zona
  * 
@@ -22,6 +24,8 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSaldo', 'doctrine');
  * @method integer      getMonedaId()  Returns the current record's "moneda_id" value
  * @method decimal      getSaldo()     Returns the current record's "saldo" value
  * @method integer      getZonaId()    Returns the current record's "zona_id" value
+ * @method date         getUltCobro()  Returns the current record's "ult_cobro" value
+ * @method date         getUltVenta()  Returns the current record's "ult_venta" value
  * @method TipoMoneda   getMoneda()    Returns the current record's "Moneda" value
  * @method Zona         getZona()      Returns the current record's "Zona" value
  * @method ClienteSaldo setId()        Sets the current record's "id" value
@@ -30,6 +34,8 @@ Doctrine_Manager::getInstance()->bindComponent('ClienteSaldo', 'doctrine');
  * @method ClienteSaldo setMonedaId()  Sets the current record's "moneda_id" value
  * @method ClienteSaldo setSaldo()     Sets the current record's "saldo" value
  * @method ClienteSaldo setZonaId()    Sets the current record's "zona_id" value
+ * @method ClienteSaldo setUltCobro()  Sets the current record's "ult_cobro" value
+ * @method ClienteSaldo setUltVenta()  Sets the current record's "ult_venta" value
  * @method ClienteSaldo setMoneda()    Sets the current record's "Moneda" value
  * @method ClienteSaldo setZona()      Sets the current record's "Zona" value
  * 
@@ -70,6 +76,14 @@ abstract class BaseClienteSaldo extends sfDoctrineRecord
         $this->hasColumn('zona_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
+             ));
+        $this->hasColumn('ult_cobro', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
+             ));
+        $this->hasColumn('ult_venta', 'date', 25, array(
+             'type' => 'date',
+             'length' => 25,
              ));
     }
 
