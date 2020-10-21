@@ -1,10 +1,10 @@
 <html>
 <head>
 <style type="text/css">
-body {font-family:sans-serif; font-size:0.6em;}
+body {font-family:sans-serif; font-size:0.7em;}
 #logo{position:absolute;left:0;top:-20}
-main table{width:100%}
-main table tr th{background: #CCC;}
+table{width:100%}
+table tr th{background: #CCC;}
 #titulo{width:100%;text-align:center;}
 .page-number {text-align: right;}
 .page-number:before {content: "Página " counter(page);}
@@ -22,4 +22,3 @@ p:last-child { page-break-after: never; }
 <?php $logo_cabecera = $sf_user->getVarConfig('logo_cabecera'); ?>
 <header><img src="images/<?php echo $logo_cabecera ?>" id="logo"></header>
 <footer><div class="page-number"></div></footer>
-<main>

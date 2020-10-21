@@ -29,6 +29,7 @@ header{
 
 .pedidos_nuevos {
     position: absolute;
+		width: 25px;
     background-color: red;
     text-align: center;
     color: white;

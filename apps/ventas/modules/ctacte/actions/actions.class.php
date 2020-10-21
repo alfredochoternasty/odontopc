@@ -58,6 +58,7 @@ class ctacteActions extends autoCtacteActions
     $dompdf = new DOMPDF();
     $dompdf->load_html($this->getPartial("imprimir", array("cta_cte" => $cta_cte)));
     $dompdf->set_paper('A4','portrait');
+
     $dompdf->render();
     $dompdf->stream("ctacte.pdf");    
     return sfView::NONE;
