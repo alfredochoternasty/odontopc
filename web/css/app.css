@@ -78,7 +78,7 @@
 #notificaciones{
 	position: fixed;
 	bottom: 0px;
-	height: 30px;
+	height: 50px;
 	width: 95%;
 	padding: 2%;
 	background-color: #fff;
@@ -206,7 +206,7 @@ a:link, a:visited, a:active,a:hover {text-decoration: none;outline:0;}
 .boton_azul{
 	position: absolute;
 	left: 8%;
-	height: 5%;
+	height: 30px;
 	width: 80%;
 	color: #fff;
 	font-size: 15pt;
