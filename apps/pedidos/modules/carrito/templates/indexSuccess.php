@@ -37,6 +37,6 @@
 
 <a href="<?php echo url_for('carrito/confirmar') ?>"> 
 <div class="boton_azul boton_abajo_1">
-	<img src="<?php echo $base_url?>/images/order.png">&nbsp;&nbsp;Terminar Pedido
+	<img src="<?php echo $base_url?>/images/order.png">&nbsp;&nbsp;Confirmar Pedido
 </div>
 </a>

@@ -40,11 +40,15 @@
 </div>
 <?php endforeach; ?>
 </div>
-<div id="notificaciones">
-	<table id="titulo">
-		<tr><td><span id="abrir_promo">Los pedidos se envian o se retiran a las 48hs</span></td></tr>
-	</table>
-</div>
+<?php if (!empty($sf_user->getAttribute('pid'))): ?>
+	<div id="notificaciones">
+		<a href="<?php echo url_for('carrito/index') ?>"> 
+		<div class="boton_azul boton_abajo_1">
+			<img src="<?php echo $base_url?>/images/order.png">&nbsp;&nbsp;Confirmar Pedido
+		</div>
+		</a>	
+	</div>
+<?php endif; ?>
 <?php if (!empty(count($promociones))): ?>
 	<div id="promociones">
 	<table id="titulo">
