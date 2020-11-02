@@ -1,40 +1,24 @@
-DROP TRIGGER IF EXISTS tu_pedido;
-DELIMITER $$
-CREATE TRIGGER tu_pedido AFTER UPDATE ON pedido
-FOR EACH ROW
-BEGIN
-	INSERT INTO log_pedido (log_fecha, log_operacion, id, fecha, cliente_id, observacion, vendido, fecha_venta, direccion_entrega, forma_envio, finalizado, cliente_domicilio_id, zona_id, usuario_id)
-	VALUES(NOW(), 'UPDATE', NEW.id, NEW.fecha, NEW.cliente_id, NEW.observacion, NEW.vendido, NEW.fecha_venta, NEW.direccion_entrega, NEW.forma_envio, NEW.finalizado, NEW.cliente_domicilio_id, NEW.zona_id, NEW.usuario_id);
-	if (NEW.finalizado = 1 and OLD.finalizado = 0 and NEW.vendido = 0 and OLD.vendido = 0) then
-		insert into detalle_pedido_original
-		select * from detalle_pedido where pedido_id = NEW.id;
-	end if;
-END$$
-DELIMITER ;
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '199');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '237');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '160');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '193');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '188');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '216');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '197');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '205');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '212');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '150');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '149');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '280');
+DELETE FROM `ventas_dev`.`sf_guard_user` WHERE (`id` = '157');
 
-DROP VIEW cliente_saldo;
-CREATE VIEW cliente_saldo AS
-SELECT 
-	c.id as id, 
-	c.apellido, 
-	c.nombre, 
-	cta.moneda_id, 
-	SUM(cta.debe - cta.haber) AS saldo,
-	zona_id,
-	(select max(fecha) from cobro where cliente_id = c.id) as ult_cobro,
-	(select max(fecha) from resumen where cliente_id = c.id) as ult_venta
-FROM 
-	cliente c 
-		LEFT JOIN cta_cte cta ON c.id = cta.cliente_id 
-WHERE 
-	c.activo = 1
-GROUP BY 
-	c.id, cta.moneda_id
-ORDER BY 
-	c.apellido, c.nombre;
-	
-UPDATE cliente SET fecha_alta = '2020-09-23' WHERE (id = '849');
-UPDATE cliente SET fecha_alta = '2020-09-26' WHERE (id = '852');
-UPDATE cliente SET fecha_alta = '2020-10-16' WHERE (id = '867');
-DELETE FROM cliente WHERE (id = '866');
-DELETE FROM cliente WHERE (id = '869');
+update cliente set usuario_id = (select sf_guard_user.id from sf_guard_user where es_cliente = 1 and (username = dni or username = cuit))
+where usuario_id is null and zona_id = 1 and activo = 1
+and exists(select 1 from sf_guard_user where  es_cliente = 1 and (username = dni or username = cuit))
+
+UPDATE `ventas_dev`.`cliente` SET `domicilio` = 'Peĺlegrini 326 Gchu', `telefono` = '03446 437072', `celular` = '3446565626' WHERE (`id` = '371');
+DELETE FROM `ventas_dev`.`cliente` WHERE (`id` = '849');
+UPDATE `ventas_dev`.`pedido` SET `cliente_id` = '371' WHERE (`id` = '106');
+
+UPDATE `ventas_dev`.`sf_guard_user` SET `is_active` = '0' WHERE (`id` = '162');
+UPDATE `ventas_dev`.`sf_guard_user` SET `is_active` = '0' WHERE (`id` = '192');
