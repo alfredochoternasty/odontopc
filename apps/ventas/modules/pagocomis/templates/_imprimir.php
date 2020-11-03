@@ -4,8 +4,12 @@
 <h3>Fecha: <?php echo implode('/', array_reverse(explode('-', $pago->fecha))) ?></h3>
 <h3>Comisi&oacute;n: $ <?php echo $pago->monto ?></h3>
 <h3>Detalle de ventas pagadas</h3>
-  <?php $suma_total = 0; ?>
-  <?php 
+<?php $suma_total = 0; ?>
+<?php 
+
+	$clientes_compartidos = array(808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
+	$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
+			
 	foreach($facturas as $fila): 	
 	?>
 	<table border="1" cellspacing="0" cellpadding="1" width="100%">
@@ -34,9 +38,7 @@
 			<th style="background: #CCC;">Comisi&oacute;n</th>
 		</tr>
 		<?php 
-			$clientes_compartidos = array(808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
-			$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);		
-
+		
 			$total_comis_fact = 0;
 			foreach($fila->getDetalle() as $det): 
 				if (in_array($fila->cliente_id, $clientes_compartidos)) {

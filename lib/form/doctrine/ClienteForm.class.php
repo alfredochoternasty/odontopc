@@ -37,7 +37,7 @@ class ClienteForm extends BaseClienteForm
 			$this->validatorSchema['lista_id'] =  new sfValidatorInteger();
 			$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
 			$this->setDefault('lista_id', 1);
-			$this->setDefault('zona_id', empty($zona_id)?:1);
+			$this->setDefault('zona_id', !empty($zona_id)?:1);
 		} else {
 			$this->widgetSchema['lista_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true));			
 		}

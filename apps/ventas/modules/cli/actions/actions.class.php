@@ -30,8 +30,8 @@ class cliActions extends autoCliActions
 	
   private function GenerarUsuario(sfWebRequest $request)
   {
-    $cliente = Doctrine::getTable('Cliente')->find($request->getParameter('id'));
-		$user = Doctrine::getTable('sfGuardUser')->find($cliente->usuario_id);
+		$cliente = $this->getRoute()->getObject();
+		$user = empty($cliente->usuario_id)?0:$cliente->getUsuario();
 		
 		$correo = trim($cliente->email);
     if(empty($correo)){
