@@ -145,6 +145,12 @@
 					if ($name == 'zona_id' && !empty($valor)) $q->andWhere("d.zona_id = $valor");
 					if ($name == 'cliente_id' && !empty($valor)) $q->andWhere("d.cliente_id = $valor");
 					if ($name == 'producto_id' && !empty($valor)) $q->andWhere("d.producto_id = $valor");
+					if ($name == 'pagado') {
+						if ($valor > 0) 
+							$q->andWhere("d.pago_comision_id is not null");
+						else 
+							$q->andWhere("d.pago_comision_id is null");
+					}
 					// if ($name == 'grupoprod_id')
 					if ($name == 'nro_lote' && !empty($valor['text'])) $q->andWhere("d.nro_lote = '".$valor['text']."'");
 				}
