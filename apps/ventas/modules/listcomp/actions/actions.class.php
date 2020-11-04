@@ -26,4 +26,9 @@ class listcompActions extends autoListcompActions
     return sfView::NONE;
   }
   
+  public function executeListDetalle(sfWebRequest $request) {
+    $listado_compras = $this->getRoute()->getObject();
+    $url = $this->generateUrl('detalle_compra', array('cid' => $listado_compras->compra_id));
+    $this->redirect($url);
+  }
 }

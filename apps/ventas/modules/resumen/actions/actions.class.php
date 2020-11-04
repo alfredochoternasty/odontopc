@@ -50,6 +50,11 @@ class resumenActions extends autoResumenActions
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $resumen = $form->save();
 			
+			if (!in_array($resumen->getCliente()->condicionfiscal_id, explode(',', $resumen->getTipoFactura()->cond_fiscales))) {
+				$this->getUser()->setFlash('error', 'El tipo de factura no es permitido para la condicion fiscal del cliente');
+				return $resumen->getId();
+			}
+			
       $id_pedido = $resumen->getPedidoId();
       if($id_pedido > 0){
         $detalle_pedido = Doctrine::getTable('DetallePedido')->findbyPedidoId($id_pedido);

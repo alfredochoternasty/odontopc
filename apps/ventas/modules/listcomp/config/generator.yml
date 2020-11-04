@@ -24,7 +24,8 @@ generator:
         title: Listado de Compras
         display: [Zona, Proveedor, Compra, fecha, Producto, cantidad, nro_lote]
         object_actions: []
-        batch_actions: []
+        object_actions:
+          detalle: {label: Ver Compra}
         actions:
           imprimir_pagina: {label: Imprimir Pagina}
           imprimir_todo: {label: Imprimir todo}
