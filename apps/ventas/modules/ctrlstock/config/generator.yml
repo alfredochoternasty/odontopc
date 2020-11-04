@@ -27,7 +27,7 @@ generator:
         title: Listado de Control de Stock
         display: [Zona, Grupo, Producto, nro_lote, _comprados, _vendidos, stock_guardado, ult_venta]
         object_actions:
-          detalle: {label: Detalle Ventas}
+          detalle: {label: Ver salidas de deposito}
         batch_actions: []
         actions:
           imprimir_pagina: {label: Imprimir Pagina}
