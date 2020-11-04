@@ -20,9 +20,10 @@ generator:
         display: [Producto, nro_lote, cantidad, asignacion_lote]
         object_actions: []
         actions:
-          asignar_lote: ~
-          vender: ~
           imprimir: ~
+          asignar_lote: ~
+          vender: {label: Hacer Factura}
+          remito: {label: Hacer Remito}
           original: {label: Ver Pedido Original}
       filter: {}
       form:    ~

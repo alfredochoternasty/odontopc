@@ -1,1 +1,1 @@
-<?php echo '$ '. $resumen->getTotalResumen(); ?>
+<?php echo $resumen->tipofactura_id==4?'':'$ '.$resumen->getTotalResumen(); ?>

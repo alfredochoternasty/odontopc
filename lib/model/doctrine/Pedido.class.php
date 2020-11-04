@@ -18,6 +18,15 @@ class Pedido extends BasePedido
   }*/
   
   
+  // retorna true si al menos un producto del pedido tiene lote asignado
+  public function SePuedeVender(){
+    $det_pedido = $this->getDetalle();
+    foreach ($det_pedido as $det) {
+      if (!empty($det->nro_lote)) return true;
+    }
+    return false;
+  }
+
   
   public function getTotal() {
     $rsTotal = Doctrine_Core::getTable('DetallePedido')
@@ -29,27 +38,26 @@ class Pedido extends BasePedido
   }
   
   public function getCantidadProductos() {
-    $rs = Doctrine::getTable('DetallePedido')->findByPedidoId($this->getId());
-    return count($rs);
+    return count($thid->getDetalle());
   }
   
   public function getPromosPedido(){
-    $sql_promo_prod = Doctrine_Core::getTable('PromocionProducto')->createQuery('pp');
+    // $sql_promo_prod = Doctrine_Core::getTable('PromocionProducto')->createQuery('pp');
     
-    $sql_prods_pedido = $sql_promo_prod->createSubquery()
-      ->select('dp.producto_id')
-      ->from('DetallePedido dp')
-      ->where('dp.pedido_id = '.$this->id);
+    // $sql_prods_pedido = $sql_promo_prod->createSubquery()
+      // ->select('dp.producto_id')
+      // ->from('DetallePedido dp')
+      // ->where('dp.pedido_id = '.$this->id);
     
-    $promociones = $sql_promo_prod->select('distinct(promocion_id) as promocion_id')
-      ->where('pp.producto_id  IN ('.$sql_prods_pedido->getDql().')')
-      ->execute();
+    // $promociones = $sql_promo_prod->select('distinct(promocion_id) as promocion_id')
+      // ->where('pp.producto_id  IN ('.$sql_prods_pedido->getDql().')')
+      // ->execute();
     
-    $promos = array();
-    foreach ($promociones as $promocion) 
-      $promos[] = Doctrine::getTable('Promocion')->find($promocion['promocion_id']);
+    // $promos = array();
+    // foreach ($promociones as $promocion) 
+      // $promos[] = Doctrine::getTable('Promocion')->find($promocion['promocion_id']);
         
-    return $promos;
+    return array();
   }
   
   public function ControlarPromo($pid){
@@ -67,6 +75,5 @@ class Pedido extends BasePedido
     else
       return false;
   }
-  
   
 }

@@ -14,7 +14,11 @@ class DetallePedidoTable extends Doctrine_Table
 	 */
 	public static function getInstance()
 	{
-		return Doctrine_Core::getTable('DetallePedido');        
+		return Doctrine_Core::getTable('DetallePedido');
+	}
+	
+	function construct(){
+			$this->setOption('orderBy','producto_id, cantidad');
 	}
 	
   public function getOrdernadoCantidad($pid)

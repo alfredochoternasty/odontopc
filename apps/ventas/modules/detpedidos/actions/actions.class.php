@@ -40,31 +40,23 @@ class detpedidosActions extends autoDetpedidosActions
   }
   
   public function executeListVender(sfWebRequest $request){
-    if($request->hasParameter('pid')){
-      $pid = $request->getParameter('pid');
-    }else{
-      $pid = $this->getUser()->getAttribute('pid');
-    }
-    
-    $pedido = Doctrine::getTable('Pedido')->find($pid);
-    $det_pedido = Doctrine::getTable('DetallePedido')->getOrdernadoCantidad($pedido->id);
-		
-    $uno_con_lote = '';
-    foreach ($det_pedido as $det) {
-      if (!empty($det->nro_lote)) {
-        $uno_con_lote = 'S';
-        break;
-      } else {
-        $uno_con_lote = 'N';
-      }
-    }
-    
-    if ($uno_con_lote == 'S') {
+    $pid = $this->getUser()->getAttribute('pid', 0);
+    $this->Vender($pid);
+  }
+  
+  public function executeListRemito(sfWebRequest $request){
+    $pid = $this->getUser()->getAttribute('pid', 0);
+    $this->Vender($pid, true);    
+  }
+  
+  public function Vender($p_pid, $p_es_remito=false){
+    $pedido = Doctrine::getTable('Pedido')->find($p_pid);
+    if ($pedido->SePuedeVender()) {
       $resumen = new Resumen();
       $resumen->cliente_id = $pedido->cliente_id;
       $resumen->pedido_id = $pedido->id;
       $resumen->zona_id = $pedido->getCliente()->zona_id; 
-      if (in_array($pedido->cliente_id, array(635,536))) {
+      if ($p_es_remito || in_array($pedido->cliente_id, array(635,536))) {
         $resumen->tipofactura_id = 4;
       } else {
         $tipos_facturas = Doctrine::getTable('TipoFactura')->findAll();
@@ -85,6 +77,7 @@ class detpedidosActions extends autoDetpedidosActions
         if (!$pedido->ControlarPromo($promo->id))
           unset($promos_pedido[$k]);
       
+      $det_pedido = $pedido->getDetalle();
       foreach($det_pedido as $detalle_pedido) {
         if (!empty($detalle_pedido->nro_lote)) {
           $descuento = 0;
