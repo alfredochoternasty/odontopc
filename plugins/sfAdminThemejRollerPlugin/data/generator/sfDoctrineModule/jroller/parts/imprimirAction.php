@@ -91,7 +91,7 @@
               echo implode("\t", $titulos) . "\r\n";
               $flag = true;
           }			
-          $fila_exp = array(<?php echo implode(", ", $campos) ?>);
+          $fila_exp = array(<?php echo "strip_tags(".implode("), strip_tags(", $campos).")" ?>);
           $string = implode("\t", array_values($fila_exp));
           echo utf8_decode($string)."\r\n";
         }

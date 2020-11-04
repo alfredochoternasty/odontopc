@@ -3,6 +3,7 @@
 	foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
 		@$valor = $hasFilters->getRaw($name);
 		@$tipo = $field->getType();
+		// echo $name.'-'.$valor.'<br>';
 		if (isset($valor)) {
 			switch($tipo){
 				case 'ForeignKey':
@@ -25,9 +26,11 @@
 					}
 					break;
 				case 'Text':
-					if (!empty($valor['text']))
+					if (is_array($valor) && !empty($valor['text']))
 						$valor = $valor['text'];
-					else 
+					elseif (!is_array($valor) && !empty($valor))
+						$valor = $valor;
+					else
 						$valor = null;
 					break;
 				case 'Boolean':
