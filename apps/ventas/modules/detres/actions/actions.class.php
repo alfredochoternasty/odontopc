@@ -406,7 +406,7 @@ class detresActions extends autoDetresActions
 			} else {
 				$regfe['DocNro'] = $resumen->getCuitCliente();
 			}
-			$regfe['CbteFch'] = $resumen->getFechaYMD(); //date('Ymd');
+			$regfe['CbteFch'] = date('Ymd'); //$resumen->getFechaYMD();
 			$regfe['MonId'] = 'PES';
 			$regfe['MonCotiz'] = 1;			
 			
@@ -446,7 +446,7 @@ class detresActions extends autoDetresActions
 						$msj2 = str_replace('\'', '\'\'', implode('//', $a_msj));
 					} elseif ($res['resultado'] == 'A') {
 						$afip_estado = 1;
-						//$resumen->setFecha(date("Y-m-d"));
+						$resumen->setFecha(date("Y-m-d"));
 						$resumen->setAfipCae($res['cae']);
 						$resumen->setNroFactura($nuevo_nro);
 						$resumen->setPtoVta($ptovta);
