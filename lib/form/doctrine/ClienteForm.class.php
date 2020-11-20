@@ -37,11 +37,11 @@ class ClienteForm extends BaseClienteForm
 			$this->validatorSchema['lista_id'] =  new sfValidatorInteger();
 			$this->validatorSchema['zona_id'] =  new sfValidatorInteger();
 			$this->setDefault('lista_id', 1);
-			$this->setDefault('zona_id', !empty($zona_id)?:1);
+			$this->setDefault('zona_id', !empty($zona_id)?$zona_id:1);
 		} else {
 			$this->widgetSchema['lista_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Lista'), 'add_empty' => true));			
 		}
-		
+
     $this->validatorSchema['dni'] = new sfValidatorNumber(array('required' => true));
     $this->validatorSchema['cuit'] = new sfValidatorCUIT(array('required' => true));
     $this->validatorSchema['nro_matricula'] = new sfValidatorString(array('required' => $zona_id?false:true));
@@ -52,7 +52,7 @@ class ClienteForm extends BaseClienteForm
     $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => $zona_id?false:true));
     $this->validatorSchema['email_2'] = new sfValidatorEmail(array('required' => $zona_id?false:true));
     $this->validatorSchema['lista_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Lista')), array('required' => true));
-    // echo 'zona: '.$zona_id;
+
 		if (!empty($zona_id)) {
 			$validadores = array(new sfValidatorDoctrineUnique(array('model' => 'Cliente', 'column' => array('dni', 'cuit', 'zona_id'))));
 			$error_validador = array('invalid' => 'Ya existe un cliente con el dni y/o cuit ingresados en la su zona');

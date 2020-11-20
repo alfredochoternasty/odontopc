@@ -52,6 +52,12 @@ class cliActions extends autoCliActions
 				$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
 			}
 			
+			$GuardUser = Doctrine::getTable('SfGuardUser')->findByUsername($usuario);
+			if(!empty($GuardUser[0])){
+				$this->getUser()->setFlash('error', 'Ya existe un usuario con el CUIT '.$usuario);
+				$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));
+			}			
+			
 			$user = new sfGuardUser();
 			$accion = 'generado';
 			$user->setEmailAddress($correo);
