@@ -16,8 +16,6 @@ class ClienteFormFilter extends BaseClienteFormFilter
 {
 	public function configure()
 	{
-		// unset($this['cuit'], $this['fecha_nacimiento'], $this['domicilio'], $this['telefono'], $this['celular'], $this['fax'], $this['email'], $this['observacion']);
-
 		$this->widgetSchema['localidad_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Localidad', 'add_empty' => true), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));    
 		$this->validatorSchema['localidad_id'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Localidad'), 'column' => 'id'));
 		
@@ -31,10 +29,11 @@ class ClienteFormFilter extends BaseClienteFormFilter
 		$this->validatorSchema['zona_id'] = new sfValidatorPass(array('required' => false));
 		
     $this->widgetSchema['activo'] = new sfWidgetFormChoice(array('choices' => array('' => '', 1 => 'Si', 0 => 'No')));
-    $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));        
+    $this->validatorSchema['activo'] = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
 		
-		//$this->validatorSchema->setOption('allow_extra_fields', true);
-		//$this->validatorSchema->setOption('filter_extra_fields', false);			
+    $this->widgetSchema['fecha_alta'] = new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true)), 'to_date' => new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true)), 'with_empty' => false, 'template' => 'desde %from_date% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hasta %to_date%'));
+    $this->validatorSchema['fecha_alta'] = new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~')), 'to_date' => new sfValidatorDate(array('required' => false, 'date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'))));
+		
 	}	
 	
 	public function getFields()
