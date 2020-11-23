@@ -15,6 +15,10 @@ class productosActions extends sfActions
 		$this->productos = Doctrine::getTable('Producto')->getActivos();
 		$this->grupo_id = 0;
 		$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
+		
+		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
+		$this->lista_id = $clientes[0]->getListaId();
+		
 		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->getGruposActivos();
 		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
     $this->setLayout('layout_app');
@@ -36,6 +40,9 @@ class productosActions extends sfActions
 			$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		// }
 		
+		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
+		$this->lista_id = $clientes[0]->getListaId();
+		
 		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->getGruposActivos();
 		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
     $this->setLayout('layout_app');
@@ -46,8 +53,10 @@ class productosActions extends sfActions
   {
 		$producto_id = $request->getParameter('producto_id');
 		$cantidad = $request->getParameter('cantidad');
+		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
+		$lista_id = $clientes[0]->getListaId();
+		
 		if (empty($this->getUser()->getAttribute('pid'))) {
-			$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
 			$pedido = new Pedido();
 			$pedido->setFecha(date('Y-m-d'));
 			$pedido->setClienteId($clientes[0]->getId());
@@ -67,7 +76,7 @@ class productosActions extends sfActions
 			$detalle_pedido->cantidad += $cantidad;
 		}
 		$producto = Doctrine::getTable('Producto')->find($producto_id);
-		$precio = $producto->precio_vta;
+		list($precio, $moneda) = explode('##', $producto->getPrecioFinal($lista_id));
 		$iva = round($precio * 0.21, 1);
 		$total = round($precio + $iva);
 		$detalle_pedido->precio = $total;

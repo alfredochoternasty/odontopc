@@ -21,7 +21,7 @@
 			<span class="nombre_grupo"><?php echo $producto->getGrupo() ?></span><br>
 			<span class="precio">$ 
 				<?php 
-					$precio = $producto->precio_vta;
+					list($precio, $moneda) = explode('##', $producto->getPrecioFinal($lista_id));
 					$iva = round($precio * 0.21, 1);
 					$total = round($precio + $iva);
 					echo sprintf("%01.2f", $total);
