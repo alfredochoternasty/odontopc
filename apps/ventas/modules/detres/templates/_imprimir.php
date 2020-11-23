@@ -130,7 +130,7 @@
 				</b>
 			</td>
 		</tr>
-		<tr><td colspan="3" style="text-align:center;"><b>Pág. <span class="pagenum"></span> de <?php echo floor(count($resumen->getDetalle())/15)+1 ?></b></td></tr>
+		<tr><td colspan="3" style="text-align:center;"><b>Pág. <span class="pagenum"></span> de <?php echo ceil(count($resumen->getDetalle())/10) ?></b></td></tr>
 		<tr>
 			<td style="width:60%; text-align:center;">
 				<img src="images/afip.png">
@@ -163,7 +163,7 @@
 </div>
 <?php else: ?>
 <div id="footer_remito">
-	Pág. <span class="pagenum"></span> de <?php echo floor(count($resumen->getDetalle())/15) ?>
+	Pág. <span class="pagenum"></span> de <?php echo ceil(count($resumen->getDetalle())/10) ?>
 </div>
 <?php endif; ?>
 
@@ -177,7 +177,7 @@
 		$cont = 0;
 		$cont_total = 0;
 		$primero = true;
-		$items_por_pagina = ($resumen->getTipoFactura()->letra != 'X')?15:35;
+		$items_por_pagina = ($resumen->getTipoFactura()->letra != 'X')?10:35;
 		foreach($resumen->getDetalle() as $detalle):
 			if ($cont > $items_por_pagina) {
 				$cont = 0;
@@ -190,6 +190,7 @@
 		?>
 			<table style="page-break-after: <?php echo ($cont_total + $items_por_pagina >= $total_items )?'never':'always'; ?>;" cellpadding="2" cellspacing="0" border="1" width="100%">	
 				<tr class="titulo">
+					<td><b>Nro.</b></td>
 					<td><b>Artículo</b></td>
 					<td><b>Cantidad</b></td>
 					<?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
@@ -199,12 +200,13 @@
 						<?php if ($resumen->getTipoFactura()->letra == 'A'): ?>
 							<td><b>IVA</b></td>
 							<td><b>Total con IVA</b></td>
-						<?php endif;?>
-					<?php endif;?>
+						<?php endif; ?>
+					<?php endif; ?>
 				</tr>
 		<?php endif; ?>
 			<tr>
-				<td><?php echo $detalle->getProducto() .' - '. $detalle->getNroLote()?></td>
+				<td><?php echo $cont_total+1 ?></td>
+				<td><?php echo $detalle->getProducto() .'<br>'. $detalle->getNroLote()?></td>
 				<td><?php echo $detalle->getCantidad() ?></td>
 				<?php 
 					if ($resumen->getTipoFactura()->letra != 'X'): 
