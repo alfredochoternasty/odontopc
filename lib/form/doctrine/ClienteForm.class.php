@@ -12,7 +12,7 @@ class ClienteForm extends BaseClienteForm
 {
   public function configure()
   {
-		unset($this['sexo']);
+		unset($this['sexo'], $this['usuario_id']);
 		
 		$zona_id = !empty(sfContext::getInstance()->getUser()->getGuardUser())? sfContext::getInstance()->getUser()->getGuardUser()->getZonaId():0;
 		

@@ -17,7 +17,13 @@ class productosActions extends sfActions
 		$this->getUser()->setAttribute('grupo_id', $this->grupo_id);
 		
 		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
-		$this->lista_id = $clientes[0]->getListaId();
+		$this->lista_id = $clientes[0]->getListaId()?:1;
+		
+		$pedido_actual = $this->getUser()->getAttribute('pid', 0);
+		if (empty($pedido_actual)) {
+			$pedidos_pendientes = Doctrine::getTable('Pedido')->findByClienteIdAndFinalizado($clientes[0]->getId(), 0);
+			if (!empty($pedidos_pendientes[0])) $this->getUser()->setAttribute('pid', $pedidos_pendientes[0]->getId());
+		}
 		
 		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->getGruposActivos();
 		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();
@@ -41,7 +47,7 @@ class productosActions extends sfActions
 		// }
 		
 		$clientes = Doctrine::getTable('Cliente')->findByUsuarioId($this->getUser()->getGuardUser()->getId());
-		$this->lista_id = $clientes[0]->getListaId();
+		$this->lista_id = $clientes[0]->getListaId()?:1;
 		
 		$this->grupos_prod = Doctrine_Core::getTable('Grupoprod')->getGruposActivos();
 		$this->promociones = Doctrine_Core::getTable('Promocion')->getVigentes();

@@ -86,7 +86,6 @@ class ProductoTable extends Doctrine_Table
 			$query = Doctrine_Core::getTable('Producto')->createQuery('q');
 			$query->select('id, nombre');
 			$query->where('activo = 1');	
-			$query->andWhere('grupoprod_id not in (1, 15)');
 			
 			if ($debito) {
 				$query->andWhere('id = 309');
@@ -96,6 +95,7 @@ class ProductoTable extends Doctrine_Table
 				$query->addOrderBy('orden_grupo');
 				$query->addOrderBy('nombre');	
 			} else {
+				$query->andWhere('grupoprod_id not in (1, 15)');
 				$query->orderBy('nombre');
 			}
 			

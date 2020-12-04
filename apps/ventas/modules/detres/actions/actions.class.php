@@ -13,6 +13,7 @@ require_once dirname(__FILE__).'/afipfe/wsfev1.class.php';
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
+ 
 class detresActions extends autoDetresActions
 {
 
@@ -478,7 +479,7 @@ class detresActions extends autoDetresActions
 		$esta_cargado = count(Doctrine::getTable('CobroResumen')->findByResumenId($resumen->getId()));
 		if ($esta_cargado == 0) {
 			$saldo_cliente = $resumen->getCliente()->getSaldoCtaCte(1, null, false) - $resumen->getTotalResumen();
-			if ($saldo_cliente < 0) { // si tiene saldo a favor
+			if ($saldo_cliente <= 0) { // si tiene saldo a favor
 				$saldo_resumen = $resumen->getTotalResumen() - $resumen->getTotalCobrado() + $resumen->getTotalDevuelto();
 				$objCobro = new CobroResumen();
 				$objCobro->setResumenId($resumen->getId());			
