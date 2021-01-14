@@ -112,8 +112,11 @@ hr {
     }
 ?>
 	<tr>
-		<?php if ($mostrar_foto && empty($producto->getGrupo()->foto)) echo '<td width="150px"><img witdh="150" height="80" src="'.$base_url.'/prod/GetImagen?img='.$producto->getImagen().'"></td>'; ?>
-    <td <?php echo $mostrar_foto?'colspan="2"':'' ?>>
+		<?php 
+			if ($mostrar_foto && empty($producto->getGrupo()->foto)) 
+				echo '<td width="150px"><img witdh="150" height="80" src="'.$base_url.'/prod/GetImagen?img='.$producto->getImagen().'"></td>'; 
+		?>
+    <td <?php //if ($mostrar_foto && empty($producto->getGrupo()->foto)) echo 'colspan="2"' ?>>
 			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>
 		</td>

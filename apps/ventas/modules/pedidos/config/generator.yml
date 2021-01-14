@@ -22,8 +22,14 @@ generator:
         display: [id, fecha, Cliente, direccion_entrega]
         object_actions:
           detalle: ~
+          eliminar: ~
       filter:
         display: [fecha, cliente_id]
       form:    ~
-      edit:    ~
+      edit:
+        display: [observacion]
+        title: Eliminar el pedido %%id%% de %%Cliente%%
+        actions:
+          _list:         ~
+          _save:         ~
       new:     ~

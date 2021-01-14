@@ -20,7 +20,7 @@ generator:
       list:
         title: Pedidos Vendidos
         table_method: get_vendidos
-        display: [id, fecha, Cliente, fecha_venta]
+        display: [id, fecha, Cliente, fecha_venta, observacion]
         object_actions:
           detalle: ~
       filter:

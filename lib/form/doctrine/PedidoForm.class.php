@@ -13,15 +13,24 @@ class PedidoForm extends BasePedidoForm
   public function configure()
   {
 		parent::configure();
-    unset($this['cliente_id'], $this['fecha'], $this['fecha_venta'], $this['finalizado'], $this['zona_id']);
+    unset(
+			$this['cliente_id'], 
+			$this['fecha'], 
+			$this['finalizado'], 
+			$this['direccion_entrega'], 
+			$this['zona_id']
+		);
 		
-		$this->widgetSchema['forma_envio'] = new sfWidgetFormChoice(array('choices' => array(1 => 'Envío a domicilio', 2 => 'Retiro en oficina')));
-		$this->validatorSchema['forma_envio'] =  new sfValidatorNumber(array('required' => true));
-		
-		$this->widgetSchema['direccion_entrega'] = new sfWidgetFormTextarea();
-		$this->validatorSchema['direccion_entrega'] =  new sfValidatorString(array('required' => false));
-		
+		$this->widgetSchema['forma_envio'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['forma_envio'] =  new sfValidatorString();
+
+		$this->widgetSchema['vendido'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['vendido'] =  new sfValidatorString();
+
+		$this->widgetSchema['fecha_venta'] = new sfWidgetFormInputHidden();
+		$this->validatorSchema['fecha_venta'] =  new sfValidatorString();
+
 		$this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
-		$this->validatorSchema['observacion'] =  new sfValidatorString(array('required' => false));
+		$this->validatorSchema['observacion'] =  new sfValidatorString(array('required' => true));
   }
 }

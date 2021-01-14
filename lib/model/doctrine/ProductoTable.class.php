@@ -47,7 +47,7 @@ class ProductoTable extends Doctrine_Table
 			$q->leftJoin($rootAlias . '.Lote l');
 			$q->where('grupoprod_id <> 1 and grupoprod_id <> 15 and activo = 1');
 			$q->andWhere('l.zona_id = '.$zona_id);
-			$q->andWhere('l.stock > 0');
+			$q->andWhere('l.stock >= 0');
 			$q->andWhere("l.nro_lote not like 'er%'");
 			$q->groupBy('r.nombre, r.minimo_stock');
 			$q->having('sum(l.stock) <= r.minimo_stock');
