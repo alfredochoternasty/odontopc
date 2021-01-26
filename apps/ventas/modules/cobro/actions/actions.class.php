@@ -34,7 +34,7 @@ class cobroActions extends autoCobroActions
 			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false);
 			if ($saldo_cliente >= 0) $saldo_cliente = 0;
 				
-			$Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagado($cobro['cliente_id'], 0);  
+			$Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagadoAndEstadoAfip($cobro['cliente_id'], 0, 0);  
 			foreach($Resumenes as $resumen){
 				$saldo_resumen = $resumen->getTotalResumen() - ($resumen->getTotalCobrado() + $resumen->getTotalDevuelto() + $saldo_cliente);
 				$objCobro = new CobroResumen();

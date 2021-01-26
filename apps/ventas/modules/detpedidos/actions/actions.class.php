@@ -173,5 +173,10 @@ class detpedidosActions extends autoDetpedidosActions
     $dompdf->render();
     $dompdf->stream("pedido_nro_$pid.pdf");
     return sfView::NONE;
+  }
+  
+  public function executeListEliminar(sfWebRequest $request){
+    $pid = $this->getUser()->getAttribute('pid', 1);
+    $this->redirect("pedidos/edit?id=$pid");
   }  
 }

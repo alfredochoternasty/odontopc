@@ -454,7 +454,7 @@ $(document).ready(function(){
   });
 
   $("#dev_producto_cantidad").change(function(event){
-		var precio_u = $("#dev_producto_precio_unitario").val();	
+		var precio_u = $("#dev_producto_precio").val();	
 		var iva_u = $("#dev_producto_iva").val();
     
 		var cantidad = $("#dev_producto_cantidad").find(':selected').val();      

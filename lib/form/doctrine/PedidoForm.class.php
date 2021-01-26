@@ -28,9 +28,9 @@ class PedidoForm extends BasePedidoForm
 		$this->validatorSchema['vendido'] =  new sfValidatorString();
 
 		$this->widgetSchema['fecha_venta'] = new sfWidgetFormInputHidden();
-		$this->validatorSchema['fecha_venta'] =  new sfValidatorString();
+		$this->validatorSchema['fecha_venta'] =  new sfValidatorString(array('required' => false));
 
 		$this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
 		$this->validatorSchema['observacion'] =  new sfValidatorString(array('required' => true));
-  }
+	}
 }

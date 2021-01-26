@@ -26,6 +26,12 @@ class pedidosActions extends autoPedidosActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $pedido = $form->save();
+
+      $pedido->vendido = 1;
+      $pedido->forma_envio = 9;
+      $pedido->fecha_venta = date('Y-m-d');
+      $pedido->save();
+    
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $pedido)));
       if ($request->hasParameter('_save_and_add')){
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
@@ -47,9 +53,6 @@ class pedidosActions extends autoPedidosActions
   public function executeListEliminar(sfWebRequest $request)
   {
     $this->pedido = $this->getRoute()->getObject();
-    $this->pedido->vendido = 1;
-    $this->pedido->forma_envio = 9;
-    $this->pedido->fecha_venta = date('Y-m-d');
     $this->form = $this->configuration->getForm($this->pedido);
     $this->setTemplate('edit');
   }
