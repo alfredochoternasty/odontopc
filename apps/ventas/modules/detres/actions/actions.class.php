@@ -483,7 +483,7 @@ class detresActions extends autoDetresActions
 				$saldo_resumen = $resumen->getTotalResumen() - $resumen->getTotalCobrado() + $resumen->getTotalDevuelto();
 				$objCobro = new CobroResumen();
 				$objCobro->setResumenId($resumen->getId());			
-				if (abs($saldo_cliente-5) >= $saldo_resumen) {//tolerancia de 5 pesos
+				if (abs($saldo_cliente-10) >= $saldo_resumen) {//tolerancia de 10 pesos
 					$objCobro->setMonto($resumen->getTotalResumen());
 					$resumen->setPagado(1);
 					$resumen->setFechaPagado(date('Y-m-d'));

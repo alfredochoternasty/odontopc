@@ -88,8 +88,8 @@ hr {
 
 <table width="100%" class="lista_precios">  
 <?php
-	//$base_url = $sf_user->getVarConfig('base_url');
-	//$base_url = 'http://localhost'.$sf_user->getVarConfig('base_url');
+	// $base_url = $sf_user->getVarConfig('base_url');
+	// $base_url = 'http://localhost'.$sf_user->getVarConfig('base_url');
 	$base_url = 'http://ventas.ntiimplantes.com.ar'.$sf_user->getVarConfig('base_url');
 	$count = 1;
   $grupo = 0;
@@ -99,11 +99,12 @@ hr {
     if($aux <> $grupo){
 			$count=1;
       $grupo = $aux;
+			$foto_grupo = !empty($producto->getGrupo()->foto);
       ?>
         <tr style="background-color:#3D6092;color:#ffffff;font-weight:bold;">
-					<td colspan="<?php echo $mostrar_foto?3:2 ?>">
+					<td colspan="3">
 						<?php 
-							if ($mostrar_foto && !empty($producto->getGrupo()->foto)) echo '<img src="'.$base_url.'/prod/GetImagen?img='.$producto->getGrupo()->getImagen().'">';
+							if ($foto_grupo) echo '<img src="'.$base_url.'/prod/GetImagen?img='.$producto->getGrupo()->getImagen().'">';
 							echo '&nbsp;&nbsp;&nbsp;'.$producto->getGrupo();
 						?>
 					</td>
@@ -113,10 +114,9 @@ hr {
 ?>
 	<tr>
 		<?php 
-			if ($mostrar_foto && empty($producto->getGrupo()->foto)) 
-				echo '<td width="150px"><img witdh="150" height="80" src="'.$base_url.'/prod/GetImagen?img='.$producto->getImagen().'"></td>'; 
+			if (!$foto_grupo) echo '<td width="150px"><img witdh="150" height="80" src="'.$base_url.'/prod/GetImagen?img='.$producto->getImagen().'"></td>'; 
 		?>
-    <td <?php //if ($mostrar_foto && empty($producto->getGrupo()->foto)) echo 'colspan="2"' ?>>
+    <td <?php if ($foto_grupo) echo 'colspan="2"' ?>>
 			<?php echo $producto->nombre ?><br>
 			<span style="font-size:8pt;color:#999999">C&oacute;digo: <?php echo $producto->getCodigo() ?></span>
 		</td>

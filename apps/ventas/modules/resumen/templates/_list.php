@@ -43,7 +43,7 @@
 
     <tfoot>
       <tr>
-        <th colspan="8">
+        <th colspan="<?php echo ($sf_user->getGuardUser()->getZonaId()>1)?9:8 ?>">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('resumen/pagination', array('pager' => $pager)) ?>
           </div>
@@ -54,23 +54,12 @@
     <tbody>
       <?php foreach ($pager->getResults() as $i => $resumen): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-          
           <?php include_partial('resumen/list_td_tabular', array('resumen' => $resumen)) ?>
-
-                      <?php include_partial('resumen/list_td_actions', array('resumen' => $resumen, 'helper' => $helper)) ?>
-                  </tr>
+          <?php include_partial('resumen/list_td_actions', array('resumen' => $resumen, 'helper' => $helper)) ?>
+        </tr>
       <?php endforeach; ?>
     </tbody>
   </table>
 
   <?php endif; ?>
 </div>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-function checkAll()
-{
-  var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'sf_admin_batch_checkbox') box.checked = document.getElementById('sf_admin_list_batch_checkbox').checked } return true;
-}
-/* ]]> */
-</script>
