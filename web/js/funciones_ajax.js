@@ -6,6 +6,10 @@ function truncar (x, posiciones = 0) {
   return Number(numStr)
 }
 
+function roundToTwo(num) {    
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
 jQuery(function($){
 // $("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
 $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
@@ -70,7 +74,7 @@ $(document).ready(function(){
   $("#producto_total").bind("propertychange keyup input paste", function(event){
 		var total = $("#producto_total").val();
 		total = total * 1;
-		var precio = truncar(total / 1.21, 2);
+		var precio = roundToTwo(total / 1.21);
 		var iva = total - precio;
 		$("#producto_iva").attr('value', iva.toFixed(2));
 		$("#producto_precio_vta").attr('value', precio.toFixed(2));
