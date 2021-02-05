@@ -12,5 +12,58 @@
  */
 class DetallePresupuesto extends BaseDetallePresupuesto
 {
+  public function AsignarLote(){
+    $zona_id = $this->getPresupuesto()->zona_id;
+    $lotes_disponibles = $this->getProducto()->getLotesDisponibles($zona_id);
+    if (!empty($lotes_disponibles[0])) {
+      $lote = $lotes_disponibles[0];
+      
+      // si el stock alcanza asigno el lote
+      if ($lote->stock >= $this->cantidad) { 
+        $this->nro_lote = $lote->nro_lote;
+        $this->asignacion_lote = 'OK';
+        $this->save();
+      } else {
+        unset($lotes_disponibles[0]);
+        
+        //si la cantidad solicitada es mayor que el stock
+        $this->nro_lote = $lote->nro_lote;
+        $resto = ($this->cantidad - $lote->stock);
+        $this->cantidad = $lote->stock; //modifico la cantidad del pedido con la cantidad del stock
+        $this->sub_total = $this->precio * $this->cantidad; //actualizo el total xq modifique la cantidad
+        $this->sub_total -= $this->subtotal * $this->descuento; //actualizo el total xq modifique la cantidad
+        $this->iva = $this->sub_total * 0.21; //actualizo el total xq modifique la cantidad
+        $this->total = $this->sub_total + $this->iva; //actualizo el total xq modifique la cantidad
+        $this->asignacion_lote = 'ok - se agrega otro renglon para completar la cantidad con otro lote';
+        $this->save();
 
+        if (empty($lotes_disponibles[1])) {
+          $this->asignacion_lote = 'Faltan '.$resto.' unidades por no tener lotes disponibles';
+          $this->save();
+        } else { 
+          foreach ($lotes_disponibles as $lote) {
+            $nueva_cantidad = ($lote->stock - $resto > 0)? $resto : $lote->stock;
+            $nueva_fila = new DetallePresupuesto();
+            $nueva_fila->presupuesto_id = $this->presupuesto_id;
+            $nueva_fila->producto_id = $this->producto_id;
+            $nueva_fila->precio = $this->precio;
+            $nueva_fila->cantidad = $nueva_cantidad;
+            $nueva_fila->descuento = $this->descuento;
+            $nueva_fila->sub_total = $this->precio * $nueva_cantidad;
+            $nueva_fila->sub_total -= $this->subtotal * $this->descuento;
+            $nueva_fila->iva = $this->sub_total * 0.21;
+            $nueva_fila->total = $this->sub_total + $this->iva;
+            $nueva_fila->nro_lote = $lote->nro_lote;
+            $nueva_fila->asignacion_lote = 'Renglon agregado para completar pedido con otro lote';
+            $nueva_fila->save();
+            $resto = ($resto - $lote->stock);
+            if ($resto < 0) break;
+          }
+        }
+      }
+    } else{
+      $this->asignacion_lote = 'No hay lotes disponibles';
+      $this->save();     
+    }
+  }
 }

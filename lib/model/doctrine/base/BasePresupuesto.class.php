@@ -14,30 +14,48 @@ Doctrine_Manager::getInstance()->bindComponent('Presupuesto', 'doctrine');
  * @property integer $zona_id
  * @property string $email
  * @property string $telefono
+ * @property integer $cliente_id
+ * @property integer $vendido
+ * @property date $fecha_venta
+ * @property integer $usuario_id
  * @property ListaPrecio $Lista
  * @property Zona $Zona
- * @property Doctrine_Collection $DetallePresupuesto
+ * @property Cliente $Cliente
+ * @property Doctrine_Collection $Detalle
+ * @property Doctrine_Collection $Resumen
  * 
- * @method integer             getId()                 Returns the current record's "id" value
- * @method date                getFecha()              Returns the current record's "fecha" value
- * @method integer             getListaId()            Returns the current record's "lista_id" value
- * @method text                getDescripcion()        Returns the current record's "descripcion" value
- * @method integer             getZonaId()             Returns the current record's "zona_id" value
- * @method string              getEmail()              Returns the current record's "email" value
- * @method string              getTelefono()           Returns the current record's "telefono" value
- * @method ListaPrecio         getLista()              Returns the current record's "Lista" value
- * @method Zona                getZona()               Returns the current record's "Zona" value
- * @method Doctrine_Collection getDetallePresupuesto() Returns the current record's "DetallePresupuesto" collection
- * @method Presupuesto         setId()                 Sets the current record's "id" value
- * @method Presupuesto         setFecha()              Sets the current record's "fecha" value
- * @method Presupuesto         setListaId()            Sets the current record's "lista_id" value
- * @method Presupuesto         setDescripcion()        Sets the current record's "descripcion" value
- * @method Presupuesto         setZonaId()             Sets the current record's "zona_id" value
- * @method Presupuesto         setEmail()              Sets the current record's "email" value
- * @method Presupuesto         setTelefono()           Sets the current record's "telefono" value
- * @method Presupuesto         setLista()              Sets the current record's "Lista" value
- * @method Presupuesto         setZona()               Sets the current record's "Zona" value
- * @method Presupuesto         setDetallePresupuesto() Sets the current record's "DetallePresupuesto" collection
+ * @method integer             getId()          Returns the current record's "id" value
+ * @method date                getFecha()       Returns the current record's "fecha" value
+ * @method integer             getListaId()     Returns the current record's "lista_id" value
+ * @method text                getDescripcion() Returns the current record's "descripcion" value
+ * @method integer             getZonaId()      Returns the current record's "zona_id" value
+ * @method string              getEmail()       Returns the current record's "email" value
+ * @method string              getTelefono()    Returns the current record's "telefono" value
+ * @method integer             getClienteId()   Returns the current record's "cliente_id" value
+ * @method integer             getVendido()     Returns the current record's "vendido" value
+ * @method date                getFechaVenta()  Returns the current record's "fecha_venta" value
+ * @method integer             getUsuarioId()   Returns the current record's "usuario_id" value
+ * @method ListaPrecio         getLista()       Returns the current record's "Lista" value
+ * @method Zona                getZona()        Returns the current record's "Zona" value
+ * @method Cliente             getCliente()     Returns the current record's "Cliente" value
+ * @method Doctrine_Collection getDetalle()     Returns the current record's "Detalle" collection
+ * @method Doctrine_Collection getResumen()     Returns the current record's "Resumen" collection
+ * @method Presupuesto         setId()          Sets the current record's "id" value
+ * @method Presupuesto         setFecha()       Sets the current record's "fecha" value
+ * @method Presupuesto         setListaId()     Sets the current record's "lista_id" value
+ * @method Presupuesto         setDescripcion() Sets the current record's "descripcion" value
+ * @method Presupuesto         setZonaId()      Sets the current record's "zona_id" value
+ * @method Presupuesto         setEmail()       Sets the current record's "email" value
+ * @method Presupuesto         setTelefono()    Sets the current record's "telefono" value
+ * @method Presupuesto         setClienteId()   Sets the current record's "cliente_id" value
+ * @method Presupuesto         setVendido()     Sets the current record's "vendido" value
+ * @method Presupuesto         setFechaVenta()  Sets the current record's "fecha_venta" value
+ * @method Presupuesto         setUsuarioId()   Sets the current record's "usuario_id" value
+ * @method Presupuesto         setLista()       Sets the current record's "Lista" value
+ * @method Presupuesto         setZona()        Sets the current record's "Zona" value
+ * @method Presupuesto         setCliente()     Sets the current record's "Cliente" value
+ * @method Presupuesto         setDetalle()     Sets the current record's "Detalle" collection
+ * @method Presupuesto         setResumen()     Sets the current record's "Resumen" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -80,6 +98,26 @@ abstract class BasePresupuesto extends sfDoctrineRecord
              'type' => 'string',
              'length' => 50,
              ));
+        $this->hasColumn('cliente_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
+        $this->hasColumn('vendido', 'integer', 1, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
+             'length' => 1,
+             ));
+        $this->hasColumn('fecha_venta', 'date', 25, array(
+             'type' => 'date',
+             'notnull' => true,
+             'length' => 25,
+             ));
+        $this->hasColumn('usuario_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -95,7 +133,16 @@ abstract class BasePresupuesto extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
-        $this->hasMany('DetallePresupuesto', array(
+        $this->hasOne('Cliente', array(
+             'local' => 'cliente_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasMany('DetallePresupuesto as Detalle', array(
+             'local' => 'id',
+             'foreign' => 'presupuesto_id'));
+
+        $this->hasMany('Resumen', array(
              'local' => 'id',
              'foreign' => 'presupuesto_id'));
     }

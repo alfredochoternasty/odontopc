@@ -16,13 +16,28 @@ class presuActions extends autoPresuActions
   public function executeListDetalle(sfWebRequest $request){
     $this->redirect( 'detpresu/index?pid='.$this->getRequestParameter('id'));
   }
-
+  
   protected function processForm(sfWebRequest $request, sfForm $form){
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-      $presu = $form->save();      
-      $this->redirect( 'detpresu/new?pid='.$presu->getId());
+      $presupuesto = $form->save();
+      $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $presupuesto)));
+      if ($request->hasParameter('_save_and_add')){
+        $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+        $presu = $form->save();      
+        $this->redirect( 'detpresu/new?pid='.$presu->getId());
+      }else{
+        if ($request->hasParameter('rtn')){
+          return $presupuesto->getId();
+        }else{
+          $this->getUser()->setFlash('notice', $notice);
+          //$this->redirect(array('sf_route' => 'presupuesto_edit', 'sf_subject' => $presupuesto));
+          $this->redirect('@presupuesto');
+        }
+      }
+    }else{
+      $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
   

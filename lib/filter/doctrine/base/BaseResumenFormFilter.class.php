@@ -35,6 +35,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'afip_mensaje'     => new sfWidgetFormFilterInput(),
       'pago_comision_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PagoComision'), 'add_empty' => true)),
       'zona_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
+      'presupuesto_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -60,6 +61,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'afip_mensaje'     => new sfValidatorPass(array('required' => false)),
       'pago_comision_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('PagoComision'), 'column' => 'id')),
       'zona_id'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
+      'presupuesto_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Presupuesto'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('resumen_filters[%s]');
@@ -102,6 +104,7 @@ abstract class BaseResumenFormFilter extends BaseFormFilterDoctrine
       'afip_mensaje'     => 'Text',
       'pago_comision_id' => 'ForeignKey',
       'zona_id'          => 'ForeignKey',
+      'presupuesto_id'   => 'ForeignKey',
     );
   }
 }

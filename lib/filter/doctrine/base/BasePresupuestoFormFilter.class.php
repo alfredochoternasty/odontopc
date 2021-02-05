@@ -19,6 +19,10 @@ abstract class BasePresupuestoFormFilter extends BaseFormFilterDoctrine
       'zona_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'email'       => new sfWidgetFormFilterInput(),
       'telefono'    => new sfWidgetFormFilterInput(),
+      'cliente_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => true)),
+      'vendido'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'fecha_venta' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'usuario_id'  => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -28,6 +32,10 @@ abstract class BasePresupuestoFormFilter extends BaseFormFilterDoctrine
       'zona_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
       'email'       => new sfValidatorPass(array('required' => false)),
       'telefono'    => new sfValidatorPass(array('required' => false)),
+      'cliente_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Cliente'), 'column' => 'id')),
+      'vendido'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'fecha_venta' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'usuario_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('presupuesto_filters[%s]');
@@ -54,6 +62,10 @@ abstract class BasePresupuestoFormFilter extends BaseFormFilterDoctrine
       'zona_id'     => 'ForeignKey',
       'email'       => 'Text',
       'telefono'    => 'Text',
+      'cliente_id'  => 'ForeignKey',
+      'vendido'     => 'Number',
+      'fecha_venta' => 'Date',
+      'usuario_id'  => 'Number',
     );
   }
 }

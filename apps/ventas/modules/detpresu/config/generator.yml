@@ -17,13 +17,16 @@ generator:
         table_method: retrieveConJoins
         title: Detalle del presupuesto
         max_per_page: 9999
-        display: [Producto, _precio, cantidad, _descuento, _sub_total, _iva, _total]
+        display: [Producto, nro_lote, _precio, cantidad, _descuento, _sub_total, _iva, _total, asignacion_lote]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
         actions:
           _new: {label: Nuevo}
           imprimir: {label: Imprimir}
+          asignar_lote: ~
+          vender: {label: Hacer Factura}
+          cliente: {label: Asignar Cliente}
       filter: {}
       form: ~
       edit:

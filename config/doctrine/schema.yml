@@ -288,6 +288,7 @@ Resumen:
     afip_mensaje: {type: string(255)}
     pago_comision_id: {type: integer(4)}
     zona_id: {type: integer(4)}
+    presupuesto_id: {type: integer(4)}
   relations:
     Detalle: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
     Remito: {type: many, class: Resumen, local: remito_id, foreign: id}
@@ -304,6 +305,7 @@ Resumen:
     TipoFactura: {type: one, class: TipoFactura, local: tipofactura_id, foreign: id, onDelete: RESTRICT}
     sfGuardUser: {type: one, local: usuario, onDelete: RESTRICT}
     Zona: {type: one, local: zona_id, onDelete: RESTRICT}
+    Presupuesto: {type: one, local: presupuesto_id, onDelete: RESTRICT}
 DetalleResumen:
   connection: doctrine
   tableName: detalle_resumen
@@ -542,9 +544,16 @@ Presupuesto:
     zona_id: {type: integer(4)}
     email: {type: string(100)}
     telefono: {type: string(50)}
+    cliente_id: {type: integer(4), notnull: true}
+    vendido: {type: integer(1), notnull: true, default: 0}
+    fecha_venta: {type: date(25), notnull: true}
+    usuario_id: {type: integer(4)}
   relations:
     Lista: {type: one, class: ListaPrecio, local: lista_id, onDelete: RESTRICT}
     Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
+    Cliente: {type: one, class: Cliente, local: cliente_id, onDelete: RESTRICT}
+    Detalle: {type: many, class: DetallePresupuesto, local: id, foreign: presupuesto_id}
+    Usuario: {type: one, local: usuario_id, onDelete: RESTRICT}
 DetallePresupuesto:
   connection: doctrine
   tableName: detalle_presupuesto
@@ -558,6 +567,9 @@ DetallePresupuesto:
     iva: {type: 'decimal(10, 2)', default: 0}
     descuento: {type: integer(4)}
     sub_total: {type: 'decimal(10, 2)'}
+    observacion: {type: string(255)}
+    nro_lote: {type: string(255)}
+    asignacion_lote: {type: string(255)}
   relations:
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}
     Presupuesto: {type: one, class: Presupuesto, local: presupuesto_id, onDelete: RESTRICT}

@@ -32,7 +32,7 @@
 
     <tfoot>
       <tr>
-        <th colspan="9">
+        <th colspan="11">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('detpresu/pagination', array('pager' => $pager)) ?>
           </div>
@@ -57,7 +57,7 @@
       <?php endforeach; ?>
       
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-      <td colspan="6" class="sf_admin_text">&nbsp;</td>
+      <td colspan="7" class="sf_admin_text">&nbsp;</td>
       <td style="text-align: right;" class="sf_admin_text">Total:</td>
       <td class="sf_admin_text">
         <?php echo sprintf("$ "."%01.2f", $suma_total) ?>

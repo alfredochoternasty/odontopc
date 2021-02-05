@@ -48,6 +48,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @property Doctrine_Collection $MovimientoProducto
  * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $DevProducto
+ * @property Doctrine_Collection $Presupuesto
  * @property Doctrine_Collection $Pedido
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $ClienteSeguimiento
@@ -98,6 +99,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
  * @method Doctrine_Collection getListadoCobros()      Returns the current record's "ListadoCobros" collection
  * @method Doctrine_Collection getDevProducto()        Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getPresupuesto()        Returns the current record's "Presupuesto" collection
  * @method Doctrine_Collection getPedido()             Returns the current record's "Pedido" collection
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getClienteSeguimiento() Returns the current record's "ClienteSeguimiento" collection
@@ -147,6 +149,7 @@ Doctrine_Manager::getInstance()->bindComponent('Cliente', 'doctrine');
  * @method Cliente             setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
  * @method Cliente             setListadoCobros()      Sets the current record's "ListadoCobros" collection
  * @method Cliente             setDevProducto()        Sets the current record's "DevProducto" collection
+ * @method Cliente             setPresupuesto()        Sets the current record's "Presupuesto" collection
  * @method Cliente             setPedido()             Sets the current record's "Pedido" collection
  * @method Cliente             setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Cliente             setClienteSeguimiento() Sets the current record's "ClienteSeguimiento" collection
@@ -344,6 +347,10 @@ abstract class BaseCliente extends sfDoctrineRecord
              'foreign' => 'cliente'));
 
         $this->hasMany('DevProducto', array(
+             'local' => 'id',
+             'foreign' => 'cliente_id'));
+
+        $this->hasMany('Presupuesto', array(
              'local' => 'id',
              'foreign' => 'cliente_id'));
 

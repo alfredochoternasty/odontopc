@@ -16,31 +16,40 @@ Doctrine_Manager::getInstance()->bindComponent('DetallePresupuesto', 'doctrine')
  * @property decimal $iva
  * @property integer $descuento
  * @property decimal $sub_total
+ * @property string $observacion
+ * @property string $nro_lote
+ * @property string $asignacion_lote
  * @property Producto $Producto
  * @property Presupuesto $Presupuesto
  * 
- * @method integer            getId()             Returns the current record's "id" value
- * @method integer            getPresupuestoId()  Returns the current record's "presupuesto_id" value
- * @method integer            getProductoId()     Returns the current record's "producto_id" value
- * @method integer            getCantidad()       Returns the current record's "cantidad" value
- * @method decimal            getPrecio()         Returns the current record's "precio" value
- * @method decimal            getTotal()          Returns the current record's "total" value
- * @method decimal            getIva()            Returns the current record's "iva" value
- * @method integer            getDescuento()      Returns the current record's "descuento" value
- * @method decimal            getSubTotal()       Returns the current record's "sub_total" value
- * @method Producto           getProducto()       Returns the current record's "Producto" value
- * @method Presupuesto        getPresupuesto()    Returns the current record's "Presupuesto" value
- * @method DetallePresupuesto setId()             Sets the current record's "id" value
- * @method DetallePresupuesto setPresupuestoId()  Sets the current record's "presupuesto_id" value
- * @method DetallePresupuesto setProductoId()     Sets the current record's "producto_id" value
- * @method DetallePresupuesto setCantidad()       Sets the current record's "cantidad" value
- * @method DetallePresupuesto setPrecio()         Sets the current record's "precio" value
- * @method DetallePresupuesto setTotal()          Sets the current record's "total" value
- * @method DetallePresupuesto setIva()            Sets the current record's "iva" value
- * @method DetallePresupuesto setDescuento()      Sets the current record's "descuento" value
- * @method DetallePresupuesto setSubTotal()       Sets the current record's "sub_total" value
- * @method DetallePresupuesto setProducto()       Sets the current record's "Producto" value
- * @method DetallePresupuesto setPresupuesto()    Sets the current record's "Presupuesto" value
+ * @method integer            getId()              Returns the current record's "id" value
+ * @method integer            getPresupuestoId()   Returns the current record's "presupuesto_id" value
+ * @method integer            getProductoId()      Returns the current record's "producto_id" value
+ * @method integer            getCantidad()        Returns the current record's "cantidad" value
+ * @method decimal            getPrecio()          Returns the current record's "precio" value
+ * @method decimal            getTotal()           Returns the current record's "total" value
+ * @method decimal            getIva()             Returns the current record's "iva" value
+ * @method integer            getDescuento()       Returns the current record's "descuento" value
+ * @method decimal            getSubTotal()        Returns the current record's "sub_total" value
+ * @method string             getObservacion()     Returns the current record's "observacion" value
+ * @method string             getNroLote()         Returns the current record's "nro_lote" value
+ * @method string             getAsignacionLote()  Returns the current record's "asignacion_lote" value
+ * @method Producto           getProducto()        Returns the current record's "Producto" value
+ * @method Presupuesto        getPresupuesto()     Returns the current record's "Presupuesto" value
+ * @method DetallePresupuesto setId()              Sets the current record's "id" value
+ * @method DetallePresupuesto setPresupuestoId()   Sets the current record's "presupuesto_id" value
+ * @method DetallePresupuesto setProductoId()      Sets the current record's "producto_id" value
+ * @method DetallePresupuesto setCantidad()        Sets the current record's "cantidad" value
+ * @method DetallePresupuesto setPrecio()          Sets the current record's "precio" value
+ * @method DetallePresupuesto setTotal()           Sets the current record's "total" value
+ * @method DetallePresupuesto setIva()             Sets the current record's "iva" value
+ * @method DetallePresupuesto setDescuento()       Sets the current record's "descuento" value
+ * @method DetallePresupuesto setSubTotal()        Sets the current record's "sub_total" value
+ * @method DetallePresupuesto setObservacion()     Sets the current record's "observacion" value
+ * @method DetallePresupuesto setNroLote()         Sets the current record's "nro_lote" value
+ * @method DetallePresupuesto setAsignacionLote()  Sets the current record's "asignacion_lote" value
+ * @method DetallePresupuesto setProducto()        Sets the current record's "Producto" value
+ * @method DetallePresupuesto setPresupuesto()     Sets the current record's "Presupuesto" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -98,6 +107,18 @@ abstract class BaseDetallePresupuesto extends sfDoctrineRecord
              'type' => 'decimal',
              'length' => 10,
              'scale' => '2',
+             ));
+        $this->hasColumn('observacion', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('nro_lote', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('asignacion_lote', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 

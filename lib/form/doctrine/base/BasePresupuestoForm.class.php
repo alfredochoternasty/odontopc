@@ -22,6 +22,10 @@ abstract class BasePresupuestoForm extends BaseFormDoctrine
       'zona_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'email'       => new sfWidgetFormInputText(),
       'telefono'    => new sfWidgetFormInputText(),
+      'cliente_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'add_empty' => false)),
+      'vendido'     => new sfWidgetFormInputText(),
+      'fecha_venta' => new sfWidgetFormDate(),
+      'usuario_id'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -32,6 +36,10 @@ abstract class BasePresupuestoForm extends BaseFormDoctrine
       'zona_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
       'email'       => new sfValidatorString(array('max_length' => 100, 'required' => false)),
       'telefono'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'cliente_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'))),
+      'vendido'     => new sfValidatorInteger(array('required' => false)),
+      'fecha_venta' => new sfValidatorDate(),
+      'usuario_id'  => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('presupuesto[%s]');

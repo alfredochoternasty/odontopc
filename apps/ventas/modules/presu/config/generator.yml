@@ -20,7 +20,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Administracion Presupuestos
-        display: [id, fecha, descripcion, email, telefono]
+        display: [id, fecha, descripcion, email, telefono, Cliente, _vendido]
         actions:
           _new: {label: Nuevo}
         object_actions:
@@ -34,7 +34,8 @@ generator:
       form:
         actions:
           _list: {label: Volver}
-          _save: {label: 'Guardar y Agregar Detalle'}
+          _save: {label: 'Guardar y volver'}
+          _save_and_add: {label: 'Guardar y Agregar Detalle'}
       edit:
         title: Modificar Presupuesto
       new:

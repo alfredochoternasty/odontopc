@@ -13,4 +13,12 @@
 class Presupuesto extends BasePresupuesto
 {
 
+  public function SePuedeVender(){
+    $det_presupuesto = $this->getDetalle();
+    foreach ($det_presupuesto as $det) {
+      if (!empty($det->nro_lote)) return true;
+    }
+    return false;
+  }
+	
 }

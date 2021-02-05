@@ -15,27 +15,33 @@ abstract class BaseDetallePresupuestoForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'             => new sfWidgetFormInputHidden(),
-      'presupuesto_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'), 'add_empty' => false)),
-      'producto_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => false)),
-      'cantidad'       => new sfWidgetFormInputText(),
-      'precio'         => new sfWidgetFormInputText(),
-      'total'          => new sfWidgetFormInputText(),
-      'iva'            => new sfWidgetFormInputText(),
-      'descuento'      => new sfWidgetFormInputText(),
-      'sub_total'      => new sfWidgetFormInputText(),
+      'id'              => new sfWidgetFormInputHidden(),
+      'presupuesto_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'), 'add_empty' => false)),
+      'producto_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => false)),
+      'cantidad'        => new sfWidgetFormInputText(),
+      'precio'          => new sfWidgetFormInputText(),
+      'total'           => new sfWidgetFormInputText(),
+      'iva'             => new sfWidgetFormInputText(),
+      'descuento'       => new sfWidgetFormInputText(),
+      'sub_total'       => new sfWidgetFormInputText(),
+      'observacion'     => new sfWidgetFormInputText(),
+      'nro_lote'        => new sfWidgetFormInputText(),
+      'asignacion_lote' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'presupuesto_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'))),
-      'producto_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'))),
-      'cantidad'       => new sfValidatorInteger(array('required' => false)),
-      'precio'         => new sfValidatorNumber(array('required' => false)),
-      'total'          => new sfValidatorNumber(array('required' => false)),
-      'iva'            => new sfValidatorNumber(array('required' => false)),
-      'descuento'      => new sfValidatorInteger(array('required' => false)),
-      'sub_total'      => new sfValidatorNumber(array('required' => false)),
+      'id'              => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'presupuesto_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'))),
+      'producto_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'))),
+      'cantidad'        => new sfValidatorInteger(array('required' => false)),
+      'precio'          => new sfValidatorNumber(array('required' => false)),
+      'total'           => new sfValidatorNumber(array('required' => false)),
+      'iva'             => new sfValidatorNumber(array('required' => false)),
+      'descuento'       => new sfValidatorInteger(array('required' => false)),
+      'sub_total'       => new sfValidatorNumber(array('required' => false)),
+      'observacion'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'nro_lote'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'asignacion_lote' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_presupuesto[%s]');

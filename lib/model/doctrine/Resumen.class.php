@@ -164,4 +164,24 @@ class Resumen extends BaseResumen
 		$detalle_resumen->save();
 		return $detalle_resumen;
 	}
+	
+	public function AgregarProductoDePresupuesto($p_datos) {
+		$detalle_resumen = new DetalleResumen();
+		$detalle_resumen->resumen_id = $this->id;
+		$detalle_resumen->producto_id = $p_datos->producto_id;
+		$detalle_resumen->moneda_id = 1;
+		$detalle_resumen->nro_lote = $p_datos->nro_lote;
+		$detalle_resumen->cantidad = $p_datos->cantidad;
+		$detalle_resumen->observacion = $p_datos->observacion;
+		
+		// if ($this->tipofactura_id != 4) {
+			$detalle_resumen->precio = ($p_datos->precio);
+			$detalle_resumen->descuento = $p_datos->descuento;
+			$detalle_resumen->sub_total = $p_datos->sub_total;
+			$detalle_resumen->iva = $p_datos->iva;
+			$detalle_resumen->total = $p_datos->total;
+		// }
+		$detalle_resumen->save();
+		return $detalle_resumen;
+	}
 }

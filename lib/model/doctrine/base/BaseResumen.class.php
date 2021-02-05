@@ -30,6 +30,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property string $afip_mensaje
  * @property integer $pago_comision_id
  * @property integer $zona_id
+ * @property integer $presupuesto_id
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
@@ -45,6 +46,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property TipoFactura $TipoFactura
  * @property sfGuardUser $sfGuardUser
  * @property Zona $Zona
+ * @property Presupuesto $Presupuesto
  * @property Resumen $Resumen
  * @property Doctrine_Collection $ListadoVentas
  * @property Doctrine_Collection $MovimientoProducto
@@ -75,6 +77,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method string              getAfipMensaje()        Returns the current record's "afip_mensaje" value
  * @method integer             getPagoComisionId()     Returns the current record's "pago_comision_id" value
  * @method integer             getZonaId()             Returns the current record's "zona_id" value
+ * @method integer             getPresupuestoId()      Returns the current record's "presupuesto_id" value
  * @method Doctrine_Collection getDetalle()            Returns the current record's "Detalle" collection
  * @method Doctrine_Collection getRemito()             Returns the current record's "Remito" collection
  * @method Cliente             getCliente()            Returns the current record's "Cliente" value
@@ -90,6 +93,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method TipoFactura         getTipoFactura()        Returns the current record's "TipoFactura" value
  * @method sfGuardUser         getSfGuardUser()        Returns the current record's "sfGuardUser" value
  * @method Zona                getZona()               Returns the current record's "Zona" value
+ * @method Presupuesto         getPresupuesto()        Returns the current record's "Presupuesto" value
  * @method Resumen             getResumen()            Returns the current record's "Resumen" value
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
  * @method Doctrine_Collection getMovimientoProducto() Returns the current record's "MovimientoProducto" collection
@@ -119,6 +123,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setAfipMensaje()        Sets the current record's "afip_mensaje" value
  * @method Resumen             setPagoComisionId()     Sets the current record's "pago_comision_id" value
  * @method Resumen             setZonaId()             Sets the current record's "zona_id" value
+ * @method Resumen             setPresupuestoId()      Sets the current record's "presupuesto_id" value
  * @method Resumen             setDetalle()            Sets the current record's "Detalle" collection
  * @method Resumen             setRemito()             Sets the current record's "Remito" collection
  * @method Resumen             setCliente()            Sets the current record's "Cliente" value
@@ -134,6 +139,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setTipoFactura()        Sets the current record's "TipoFactura" value
  * @method Resumen             setSfGuardUser()        Sets the current record's "sfGuardUser" value
  * @method Resumen             setZona()               Sets the current record's "Zona" value
+ * @method Resumen             setPresupuesto()        Sets the current record's "Presupuesto" value
  * @method Resumen             setResumen()            Sets the current record's "Resumen" value
  * @method Resumen             setListadoVentas()      Sets the current record's "ListadoVentas" collection
  * @method Resumen             setMovimientoProducto() Sets the current record's "MovimientoProducto" collection
@@ -247,6 +253,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('presupuesto_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -317,6 +327,11 @@ abstract class BaseResumen extends sfDoctrineRecord
 
         $this->hasOne('Zona', array(
              'local' => 'zona_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
+        $this->hasOne('Presupuesto', array(
+             'local' => 'presupuesto_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
