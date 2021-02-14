@@ -20,5 +20,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     sfValidatorBase::setDefaultMessage('required','Este campo debe tener un valor');
     sfValidatorBase::setDefaultMessage('invalid','El valor para el campo no es v&aacute;lido');
     sfValidatorInteger::setDefaultMessage('invalid','El valor "%value%" no es un n&uacute;mero');
+    
+    $this->setWebDir($this->getRootDir().'/../ventas.ntiimplantes.com.ar');
   }
 }
