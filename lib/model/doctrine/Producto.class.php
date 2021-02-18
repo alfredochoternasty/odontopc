@@ -124,6 +124,7 @@ class Producto extends BaseProducto
   
   public function getPrecioFinal($p_lista_id){
 		if (!empty($this->lista_id)) $p_lista_id = $this->lista_id;
+		if (empty($p_lista_id)) $p_lista_id = 1;
 		return Doctrine::getTable('ListaPrecio')->find($p_lista_id)->getPrecioLista($this->getId(), $this->getPrecioVta());
   }
    
