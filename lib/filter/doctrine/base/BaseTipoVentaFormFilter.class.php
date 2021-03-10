@@ -13,11 +13,13 @@ abstract class BaseTipoVentaFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'nombre' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'nombre'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'porc_recargo' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'nombre' => new sfValidatorPass(array('required' => false)),
+      'nombre'       => new sfValidatorPass(array('required' => false)),
+      'porc_recargo' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_venta_filters[%s]');
@@ -37,8 +39,9 @@ abstract class BaseTipoVentaFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'     => 'Number',
-      'nombre' => 'Text',
+      'id'           => 'Number',
+      'nombre'       => 'Text',
+      'porc_recargo' => 'Number',
     );
   }
 }

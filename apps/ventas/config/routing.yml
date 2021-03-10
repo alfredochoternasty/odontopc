@@ -1,3 +1,12 @@
+tipo_venta:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                TipoVenta
+    module:               tipvta
+    prefix_path:          /tipvta
+    column:               id
+    with_wildcard_routes: true
+
 usuario:
   class: sfDoctrineRouteCollection
   options:

@@ -9,14 +9,17 @@ Doctrine_Manager::getInstance()->bindComponent('TipoVenta', 'doctrine');
  * 
  * @property integer $id
  * @property string $nombre
+ * @property integer $porc_recargo
  * @property Doctrine_Collection $Resumen
  * 
- * @method integer             getId()      Returns the current record's "id" value
- * @method string              getNombre()  Returns the current record's "nombre" value
- * @method Doctrine_Collection getResumen() Returns the current record's "Resumen" collection
- * @method TipoVenta           setId()      Sets the current record's "id" value
- * @method TipoVenta           setNombre()  Sets the current record's "nombre" value
- * @method TipoVenta           setResumen() Sets the current record's "Resumen" collection
+ * @method integer             getId()           Returns the current record's "id" value
+ * @method string              getNombre()       Returns the current record's "nombre" value
+ * @method integer             getPorcRecargo()  Returns the current record's "porc_recargo" value
+ * @method Doctrine_Collection getResumen()      Returns the current record's "Resumen" collection
+ * @method TipoVenta           setId()           Sets the current record's "id" value
+ * @method TipoVenta           setNombre()       Sets the current record's "nombre" value
+ * @method TipoVenta           setPorcRecargo()  Sets the current record's "porc_recargo" value
+ * @method TipoVenta           setResumen()      Sets the current record's "Resumen" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -38,6 +41,10 @@ abstract class BaseTipoVenta extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'length' => 255,
+             ));
+        $this->hasColumn('porc_recargo', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
     }
 

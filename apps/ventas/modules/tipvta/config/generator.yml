@@ -1,13 +1,13 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:           TipoFactura
+    model_class:           TipoVenta
     theme:                 jroller
     non_verbose_templates: true
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          tipo_factura
+    route_prefix:          tipo_venta
     with_doctrine_route:   true
     actions_base_class:    sfActions
 
@@ -15,8 +15,8 @@ generator:
       actions: ~
       fields:  ~
       list:
-        title: Tipos de Facturas
-        display: [nombre]
+        title: Tipos de Ventas
+        display: [nombre, porc_recargo]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -25,6 +25,6 @@ generator:
       filter:  ~
       form:    ~
       edit:
-        title: Modificar Tipo de Factura
+        title: Modificar Tipo de Venta
       new:
-        title: Nuevo Tipo de Factura
+        title: Nuevo Tipo de Venta

@@ -168,16 +168,7 @@ class detresActions extends autoDetresActions
 			}
 			
 			// para ventas con tarj de credito
-			switch ($detalle_resumen->getResumen()->tipo_venta_id) {
-				case 3:
-					$recargo = 0.05;
-					break;
-				case 4:
-					$recargo = 0.15;
-					break;
-				default:
-					$recargo = 0;
-			}
+			$recargo = $detalle_resumen->getResumen()->getTipoVenta()->porc_recargo/100?:0;
 			$detalle_resumen->precio += $detalle_resumen->precio * $recargo;
 			$detalle_resumen->sub_total += $detalle_resumen->sub_total * $recargo;
 			$detalle_resumen->iva += $detalle_resumen->iva * $recargo;
