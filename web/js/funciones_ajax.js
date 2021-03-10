@@ -12,10 +12,10 @@ function roundToTwo(num) {
 
 jQuery(function($){
 // $("#cliente_cuit").mask("99-99999999-9",{placeholder:" "});
-$("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
-$("#cliente_seguimiento_hora").mask("99:99",{placeholder:" "});
-$("#cliente_seguimiento_prox_contac_hora").mask("99:99",{placeholder:" "});
-$("#curso_hora").mask("99:99",{placeholder:" "});
+// $("#proveedor_cuit").mask("99-99999999-9",{placeholder:" "});
+// $("#cliente_seguimiento_hora").mask("99:99",{placeholder:" "});
+// $("#cliente_seguimiento_prox_contac_hora").mask("99:99",{placeholder:" "});
+// $("#curso_hora").mask("99:99",{placeholder:" "});
 $("#curso_mail_enviado_tipo_envio").change(function(event){
 	var id = $("#curso_mail_enviado_tipo_envio").find(':selected').val();
 	if (id == 3) {

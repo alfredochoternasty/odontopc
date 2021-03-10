@@ -33,7 +33,7 @@ class ProductoTable extends Doctrine_Table
       $q->where('grupoprod_id <> 1');
       $q->andWhere('grupoprod_id <> 15');
       $q->andWhere('stock < 0'); 
-	  $q->andWhere('activo = 1');			
+			$q->andWhere('activo = 1');			
       return $q;
     }
     
@@ -83,22 +83,18 @@ class ProductoTable extends Doctrine_Table
 
 
     public function getActivos($grupo=0, $debito=false){
-			$query = Doctrine_Core::getTable('Producto')->createQuery('q');
-			$query->select('id, nombre');
-			$query->where('activo = 1');	
+			$query = Doctrine_Core::getTable('Producto')->createQuery('p')->leftJoin('p.Grupo gr');
+			$query->select('p.id, p.nombre');
+			$query->where('p.activo = 1');	
 			
 			if ($debito) {
 				$query->andWhere('id = 309');
 			} elseif (!empty($grupo)) {
 				$query->andWhere('grupoprod_id = ?', $grupo);
-				$query->orderBy('grupoprod_id');
-				$query->addOrderBy('orden_grupo');
-				$query->addOrderBy('nombre');	
 			} else {
 				$query->andWhere('grupoprod_id not in (1, 15)');
-				$query->orderBy('nombre');
 			}
-			
+			$query->orderBy('gr.nombre asc, p.orden_grupo asc, p.nombre asc');
 			return $query->execute();
 		}
 		

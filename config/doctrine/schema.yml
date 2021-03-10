@@ -18,6 +18,7 @@ TipoVenta:
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
     nombre: {type: string(255), notnull: true}
+    porc_recargo: {type: integer(4)}
 Cuenta:
   connection: doctrine
   tableName: cuenta_compras

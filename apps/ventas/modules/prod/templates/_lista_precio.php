@@ -1,9 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//Es" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<html lang="es">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-<title>Lista de precios NTI Implantes</title>
 <style type="text/css">
 @page {
 	margin: 2cm;
@@ -43,7 +39,6 @@ body {
 
 #header td {
 	padding: 0;
-	width: 50%;
 }
 
 .page-number {
@@ -51,7 +46,7 @@ body {
 }
 
 .page-number:before {
-	content: "P?gina " counter(page);
+	content: "Pagina " counter(page);
 }
 
 hr {
@@ -70,19 +65,23 @@ hr {
 </style>
 </head>
 <body>
-<img src="images/nti_lista.jpg">
-<hr>
+
+<?php if (!empty($postada)): ?>
+	<img src="./images/<?php echo $portada ?>">
+	<hr>
+<?php endif; ?>
+
 <div id="header">
   <table>
     <tr>
       <td>Listado de Precios - <?php echo date("d/m/Y"); ?></td>
-      <td style="text-align: right;">NTI Implantes</td>
+      <td style="text-align: right;"><?php echo $empresa ?></td>
     </tr>
   </table>
 </div>
 
 <div id="footer">
-  <div style="float:left;">Todos los precios incluyen IVA</div>
+  <div style="float:left;"><?php echo $extra ?></div>
   <div style="float:right;text-align:right;" class="page-number"></div>
 </div>
 
@@ -131,7 +130,6 @@ hr {
   endforeach;
   ?>
 </table>
-<p><b>Por compras superiores a 10-20-50-100 consultar promociones</b></p>
 
 </body>
 <html>

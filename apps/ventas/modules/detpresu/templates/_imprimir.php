@@ -27,13 +27,13 @@
 <?php 
 	$moneda = $presupuesto->getLista()->getMoneda()->getSimbolo();
 
-	$total_items = count($presupuesto->getDetallePresupuesto());
+	$total_items = count($presupuesto->getDetalle());
 	$cont = 0;
 	$cont_total = 0;
 	$primero = true;
 	$items_por_pagina = 35;
   $total = 0;
-  foreach($presupuesto->getDetallePresupuesto() as $detalle):
+  foreach($presupuesto->getDetalle() as $detalle):
 		if ($cont > $items_por_pagina) {
 			$cont = 0;
 			$primero = false;					

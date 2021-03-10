@@ -27,7 +27,7 @@
 		}
 		#footer {
 				position: fixed; 
-				bottom: 360px;
+				bottom: 300px;
 		}
 		#footer_remito {
 				position: fixed; 
@@ -81,11 +81,10 @@
 					<b>Ingresos Brutos: </b>30-71227246-1<br>
 					<b>Inicio de Actividades: </b>01/05/2012
 				</span>
-				</b>
 			</td>
 		</tr>
-		</table>
-		<table cellpadding="1" cellspacing="0" border="0" width="100%" style="border-top:1px solid #000; border-bottom:1px solid #000;">
+	</table>
+	<table cellpadding="1" cellspacing="0" border="0" width="100%" style="border-top:1px solid #000; border-bottom:1px solid #000;">
 		<tr>
 			<td align="left"><b>C.U.I.T. : </b><?php echo $resumen->getCliente()->getCuit() ?></td>
 			<td colspan="2" align="left"><b>Razón Social: </b><?php echo $resumen->getCliente() ?></td>
@@ -102,9 +101,9 @@
 
 <?php if ($resumen->getTipoFactura()->letra != 'X'): ?>
 <div id="footer">
-	<table>
+	<table width="100%">
 		<tr>
-			<td style="width:60%; vertical-align: top;">Otros Tributos<br>
+			<td style="width:70%; vertical-align: top;">Otros Tributos<br>
 				<table cellpadding="1" cellspacing="0" border="0" width="100%">	
 					<tr class="titulo" style="border: 1px solid #000;"><td>Descripción</td><td>Detalle</td><td>Alic. %</td><td>Importe</td></tr>
 					<tr><td>Per./Ret. de Impuesto a las Ganancias</td><td>&nbsp;</td><td>&nbsp;</td><td>0.00</td></tr>
@@ -115,46 +114,53 @@
 					<tr><td>&nbsp;</td><td colspan="2">Importe Otros Tributos: $</td><td>0.00</td></tr>
 				</table>
 			</td>
-			<td style="width:40%;"><b>
+			<td	style="width:30%;"><b>
 				<table>
-					<tr><td>Importe Neto Gravado: $</td><td><?php echo ($resumen->getTipoFactura()->letra == 'A')?$resumen->getSubTotalResumen():'0.00'; ?></td></tr>
-					<tr><td>IVA 27%: $</td><td>0.00</td></tr>
-					<tr><td>IVA 21%: $</td><td><?php echo ($resumen->getTipoFactura()->letra == 'A')?$resumen->getIVATotalResumen():'0.00'; ?></td></tr>
-					<tr><td>IVA 10.5%: $</td><td>0.00</td></tr>
-					<tr><td>IVA 5%: $</td><td>0.00</td></tr>
-					<tr><td>IVA 2.5%: $</td><td>0.00</td></tr>
-					<tr><td>IVA 0%: $</td><td>0.00</td></tr>
-					<tr><td>Importe Otros Tributos: $</td><td>0.00</td></tr>
-					<tr><td>Importe Total: $</td><td><?php echo $resumen->getTotalResumen() ?></td></tr>
+					<tr><td>Importe Neto Gravado: $</td><td style="text-align:right;"><?php echo ($resumen->getTipoFactura()->letra == 'A')?$resumen->getSubTotalResumen():'0.00'; ?></td></tr>
+					<tr><td>IVA 27%: $</td><td style="text-align:right;">0.00</td></tr>
+					<tr><td>IVA 21%: $</td><td style="text-align:right;"><?php echo ($resumen->getTipoFactura()->letra == 'A')?$resumen->getIVATotalResumen():'0.00'; ?></td></tr>
+					<tr><td>IVA 10.5%: $</td><td style="text-align:right;">0.00</td></tr>
+					<tr><td>IVA 5%: $</td><td style="text-align:right;">0.00</td></tr>
+					<tr><td>IVA 2.5%: $</td><td style="text-align:right;">0.00</td></tr>
+					<tr><td>IVA 0%: $</td><td style="text-align:right;">0.00</td></tr>
+					<tr><td>Importe Otros Tributos: $</td><td style="text-align:right;">0.00</td></tr>
+					<tr><td>Importe Total: $</td><td style="text-align:right;"><?php echo sprintf("%01.2f", $resumen->getTotalResumen()) ?></td></tr>
 				</table>
 				</b>
 			</td>
 		</tr>
-		<tr><td colspan="3" style="text-align:center;"><b>Pág. <span class="pagenum"></span> de <?php echo ceil(count($resumen->getDetalle())/10) ?></b></td></tr>
+		<tr><td colspan="2" style="text-align:center;"><b>Pág. <span class="pagenum"></span> de <?php echo ceil(count($resumen->getDetalle())/10) ?></b></td></tr>
 		<tr>
-			<td style="width:60%; text-align:center;">
-				<img src="images/afip.png">
-				<br>
-				<?php
-					$nro = '30712272461'.str_pad($resumen->getTipoFactura()->cod_tipo_afip, 2, "0", STR_PAD_LEFT).str_pad($resumen->pto_vta, 4, "0", STR_PAD_LEFT).$resumen->getAfipCae().implode('', explode('-', $resumen->getAfipVtoCae()));
-					$suma_par = $suma_impar = 0;
-					for ($i=0; $i<39; $i++) {
-						if (($i % 2) == 0) {
-							$suma_impar += $nro[$i];
-							//echo $nro[$i].'-';
-						} else {
-							$suma_par += $nro[$i];
-						}
-					}
-					$suma_impar = $suma_impar * 3;
-					$total = $suma_par + $suma_impar;
-					$d_v = 10 - ($total % 10);
-					if ($d_v == 10) $d_v = 0;
+			<td style="text-align:left; vertical-align:top">
+				<?php			
+					
+					$codeContents = 'https://www.afip.gob.ar/fe/qr/?p='.base64_encode(json_encode(array(
+						'ver' => 1,
+						'fecha' => implode('/', array_reverse(explode('-', $resumen->getFecha()))),
+						'cuit' => '30712272461',
+						'ptoVta' => str_pad($resumen->pto_vta, 4, "0", STR_PAD_LEFT),
+						'tipoCmp' => str_pad($resumen->getTipoFactura()->cod_tipo_afip, 2, "0", STR_PAD_LEFT),
+						'nroCmp' => str_pad($resumen->getNroFactura(), 8, 0,STR_PAD_LEFT),
+						'importe' => $resumen->getIVATotalResumen(),
+						'moneda' => 'PES',
+						'ctz' => 1,
+						'tipoDocRec' => 80,
+						'nroDocRec' => $resumen->getCliente()->getCuit(),
+						'tipoCodAut' => 'E',
+						'codAut' => $resumen->getAfipCae()
+					)));
+					
+					$tempDir = 'images/';
+					$fileName = 'qr_afip.png';    
+					$pngAbsoluteFilePath = $tempDir.$fileName;
+					@unlink($pngAbsoluteFilePath);
+        	QRcode::png($codeContents, $pngAbsoluteFilePath);			
+					
 				?>
-				&nbsp;&nbsp;&nbsp;<img src="images/codigo.php?nro=<?php echo $nro.$d_v; ?>">
-				<?php echo $nro.$d_v; ?>
+				<img width="100px" height="100px" src="<?php echo $pngAbsoluteFilePath; ?>">
+				<img src="images/afip.png">
 			</td>
-			<td style="width:40%; font-size:14px;">
+			<td>
 				<b>CAE N&ordm;: </b><?php echo $resumen->getAfipCae() ?><br>
 				<b>Fecha Vto. de CAE: </b><?php echo implode('/', array_reverse(explode('-', $resumen->getAfipVtoCae()))) ?>
 			</td>
@@ -163,7 +169,7 @@
 </div>
 <?php else: ?>
 <div id="footer_remito">
-	Pág. <span class="pagenum"></span> de <?php echo ceil(count($resumen->getDetalle())/10) ?>
+	Pág. <span class="pagenum"></span> de <?php echo ceil(count($resumen->getDetalle())/20) ?>
 </div>
 <?php endif; ?>
 
@@ -177,7 +183,7 @@
 		$cont = 0;
 		$cont_total = 0;
 		$primero = true;
-		$items_por_pagina = ($resumen->getTipoFactura()->letra != 'X')?10:35;
+		$items_por_pagina = ($resumen->getTipoFactura()->letra != 'X')?10:20;
 		foreach($resumen->getDetalle() as $detalle):
 			if ($cont > $items_por_pagina) {
 				$cont = 0;

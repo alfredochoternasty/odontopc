@@ -16,6 +16,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfImageTransformPlugin');
     $this->enablePlugins('sfJPGraphPlugin');
     $this->enablePlugins('sfMysqlDumpPlugin');
+    $this->enablePlugins('sfQRCodePlugin');
     
     sfValidatorBase::setDefaultMessage('required','Este campo debe tener un valor');
     sfValidatorBase::setDefaultMessage('invalid','El valor para el campo no es v&aacute;lido');

@@ -16,80 +16,50 @@ class prodActions extends autoProdActions
   protected function executeBatchDesactivar(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
-
-    $count = Doctrine_Query::create()
-      ->update('Producto p')
-      ->set('p.activo', '?', 0)
-      ->whereIn('id', $ids)
-      ->execute();
-
-    if ($count >= count($ids))
-    {
+    $count = Doctrine_Query::create()->update('Producto p')->set('p.activo', '?', 0)->whereIn('id', $ids)->execute();
+    if ($count >= count($ids)) 
       $this->getUser()->setFlash('notice', 'The selected items have been deleted successfully.');
-    }
-    else
-    {
+    else 
       $this->getUser()->setFlash('error', 'A problem occurs when deleting the selected items.');
-    }
-
     $this->redirect('@producto');
   }
   
   protected function executeBatchActivar(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
-
-    $count = Doctrine_Query::create()
-      ->update('Producto p')
-      ->set('p.activo', '?', 1)
-      ->whereIn('id', $ids)
-      ->execute();
-
-    if ($count >= count($ids))
-    {
+    $count = Doctrine_Query::create()->update('Producto p')->set('p.activo', '?', 1)->whereIn('id', $ids)->execute();
+    if ($count >= count($ids)) 
       $this->getUser()->setFlash('notice', 'The selected items have been deleted successfully.');
-    }
     else
-    {
       $this->getUser()->setFlash('error', 'A problem occurs when deleting the selected items.');
-    }
-
     $this->redirect('@producto');
   }
   
-  public function executeListLista(sfWebRequest $request){
-    $filtro = new ProductoFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-    $consulta->leftJoin('r.Grupo gr');
-    $consulta->addWhere('r.grupoprod_id <> 1');
-    $consulta->andWhere('r.grupoprod_id <> 15');
-    $consulta->andWhere('r.activo = 1');
-    $consulta->orderBy('gr.nombre asc, r.orden_grupo asc, r.nombre asc');
-    $productos = $consulta->execute();
+  public function ImprimiListaPrecios($p_vars=array()) {
+    $productos = Doctrine::getTable('Producto')->getActivos();
+    
+    $parametros = array(
+      'productos' => $productos,
+      'empresa' => $this->getUser()->getVarConfig('empresa'),
+      'portada' => $this->getUser()->getVarConfig('lista_precio_portada'),
+      'extra' => $this->getUser()->getVarConfig('extra')
+    );
     
     $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("lista_precio", array("productos" => $productos, 'mostrar_foto' => true)));
+    $dompdf->load_html($this->getPartial("lista_precio", array_merge($parametros, $p_vars)));
     $dompdf->set_paper('A4','portrait');
     $dompdf->render();
-    $dompdf->stream("lista_precio_con_fotos.pdf");    
+    $dompdf->stream("lista_precio.pdf");
+    return sfView::NONE;
+  }
+  
+  public function executeListLista(sfWebRequest $request){
+    $this->ImprimiListaPrecios(array('mostrar_foto' => true));
     return sfView::NONE;
   }
   
   public function executeListLista2(sfWebRequest $request){
-    $filtro = new ProductoFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-    $consulta->leftJoin('r.Grupo gr');
-    $consulta->addWhere('r.grupoprod_id <> 1');
-    $consulta->andWhere('r.grupoprod_id <> 15');
-    $consulta->andWhere('r.activo = 1');
-    $consulta->orderBy('gr.nombre asc, r.orden_grupo asc, r.nombre asc');
-    $productos = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("lista_precio", array("productos" => $productos, 'mostrar_foto' => false)));
-    $dompdf->set_paper('A4','portrait');
-    $dompdf->render();
-    $dompdf->stream("lista_precio_sin_fotos.pdf");    
+    $this->ImprimiListaPrecios(array('mostrar_foto' => false));
     return sfView::NONE;
   }
   
@@ -153,7 +123,7 @@ class prodActions extends autoProdActions
 	  $this->producto = $this->getRoute()->getObject();
     $parametros = array(
       'base_url' => $this->getUser()->getVarConfig('base_url'),
-		'image_url' => 'GetImagen?img='.$this->producto->getImagen(),
+      'image_url' => 'GetImagen?img='.$this->producto->getImagen(),
       'modulo_factura' => $this->getUser()->getVarConfig('modulo_factura')
     );
     $this->form = $this->configuration->getForm($this->producto, $parametros);

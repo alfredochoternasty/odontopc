@@ -1,8 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+<!DOCTYPE html>
+<html lang="es">
   <head>
-    <title>Odonto Venta</title>
-		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+    <title>Sistema de Ventas</title>
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
     <?php use_helper('Date') ?>
@@ -15,33 +14,10 @@
 		$mostrar_cabecera = $sf_user->getVarConfig('mostrar_cabecera');
 		$logo_cabecera = $sf_user->getVarConfig('logo_cabecera');
 		
-		if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/images/'.$favicon.'" />';
-		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
-		if (!empty($cssmenu)) echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$base_url.'/css/'.$cssmenu.'" />';
+		if (!empty($favicon)) echo '<link rel="shortcut icon" href="/images/'.$favicon.'" />';
+		if (!empty($jquery) && $jquery == 'S') echo '<link rel="stylesheet" type="text/css" media="screen" href="/sfAdminThemejRollerPlugin/css/jquery/redmond/jquery-ui.custom.css" />';
+		if (!empty($cssmenu)) echo '<link rel="stylesheet" type="text/css" media="screen" href="/css/'.$cssmenu.'" />';
 		?>
-		
-		<script type="text/javascript">
-			function abrir(){$(".menujq").css("left","0");}
-			function cerrar(){$(".menujq").css("left","-400px");}
-			$(document).ready(function(){$("#menu").click(function(e){abrir();});});
-			$(document).ready(function(){$("#cerrar_menu").click(function(e){cerrar();});});
-			$(document).ready(function(){
-				$('.menujq > ul > li:has(ul)').addClass('desplegable');
-				$('.menujq > ul > li > a').click(function() {
-					var comprobar = $(this).next();
-					$('.menujq li').removeClass('activa');
-					$(this).closest('li').addClass('activa');
-					if((comprobar.is('ul')) && (comprobar.is(':visible'))) {
-						$(this).closest('li').removeClass('activa');
-						comprobar.slideUp('normal');
-					}
-					if((comprobar.is('ul')) && (!comprobar.is(':visible'))) {
-						$('.menujq ul ul:visible').slideUp('normal');
-						comprobar.slideDown('normal');
-					}
-				});
-			});
-		</script>
   </head>
   <body style="margin:0px">
   <?php 
@@ -51,7 +27,7 @@
 		if($mostrar_cabecera == 'S'){ ?>
 			<header>
 					<div id="logo">
-						<img src="<?php echo $base_url?>/images/<?php echo $logo_cabecera ?>">
+						<img src="/images/<?php echo $logo_cabecera ?>">
 					</div>
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
@@ -59,17 +35,14 @@
 						Fecha Actualización: 05/11/2020
 					</div>
 					<?php if (date("Ymd") == '20201105') { ?>
-					<img src="<?php echo $base_url ?>/images/new.png" style="position: absolute;right: 0px;top: 0px;">
+					<img src="/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
 			</header>
 		<?php 
 		} 
 		?>
- 		<div class="header" style="width:100%; height:60px; background-color:#eaeaea; position:fixed; top:0px; left:0px;">
-			<img id="menu" src="<?php echo $base_url?>/images/menu.png" style="margin:10px;float:left">			
-		</div>
-		<div id="nav" class="menujq">
-			<img id="cerrar_menu" src="<?php echo $base_url?>/images/back.png" style="position: absolute;top: 5px; right: 10px;">
+
+		<div id="nav">
 				<?php
 					/* para que esto funcione tuve que modificar la clase sfDoctrineGuardPlugin	- getAllPermissions */
 					$statement = Doctrine_Manager::getInstance()->connection(); 
