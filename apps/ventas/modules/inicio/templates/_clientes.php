@@ -6,8 +6,8 @@
 
 	<thead class="ui-widget-header">
 		<tr>
-			<th class="ui-state-default" style="height:2em;">nuevos</th>
-			<th class="ui-state-default" style="height:2em;">Mes Anterior</th>
+			<th class="ui-state-default" style="height:2em;">Nuevos este mes</th>
+			<th class="ui-state-default" style="height:2em;">Nuevos mes anterior</th>
 			<th class="ui-state-default" style="height:2em;">Diferencia</th>
 			<th class="ui-state-default" style="height:2em;">Total</th>
 		</tr>

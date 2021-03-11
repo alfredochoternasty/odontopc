@@ -1,13 +1,13 @@
 <div style="float:left; width:45%;margin:5px;">
 <table>
 	<caption class="fg-toolbar ui-widget-header ui-corner-top">
-		<h1>Ventas por Pedido</h1>
+		<h1>Ventas realizadas mediantes pedidos</h1>
 	</caption>
 
 	<thead class="ui-widget-header">
 		<tr>
-			<th class="ui-state-default" style="height:2em;">Ventas</th>
-			<th class="ui-state-default" style="height:2em;">Pedidos</th>
+			<th class="ui-state-default" style="height:2em;">Ventas manuales</th>
+			<th class="ui-state-default" style="height:2em;">Ventas por Pedido</th>
 			<th class="ui-state-default" style="height:2em;">Porcentaje Pedidos</th>
 		</tr>
 	</thead>
