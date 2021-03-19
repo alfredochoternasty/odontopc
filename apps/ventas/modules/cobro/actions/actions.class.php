@@ -150,21 +150,22 @@ class cobroActions extends autoCobroActions
     $this->redirect('@cobro');
   }
 
-	public function executeDescargar(sfwebRequest $request)
-	{
-			$cobro = Doctrine::getTable('cobro')->find($request->getParameter('cid'));
-			$archivo = sfConfig::get('sf_upload_dir').'/cobros/'.$cobro->archivo;
-			list($nom, $ext) = explode('.', $cobro->archivo);
-			header('Content-Description: File Transfer');
-			header('Accept-Ranges: bytes');
-			header('Content-Disposition: attachment; filename='.$cobro.'-'.$cobro->getCliente().'.'.$ext);
-			header('Content-Transfer-Encoding: binary');
-			header('Expires: 0');
-			header('Content-Length: '.filesize($archivo));
-			ob_clean();
-			flush();
-			readfile($archivo);
-			return sfView::NONE;
-	}
+  public function executeIndex(sfWebRequest $request)
+  {
+    if ($request->getParameter('sort')) $this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
+
+    if ($request->getParameter('page')) $this->setPage($request->getParameter('page'));
+
+    $this->pager = $this->getPager();
+    $this->sort = $this->getSort();
+
+    $this->hasFilters = $this->getUser()->getAttribute('cobro.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+		if ($this->hasFilters) {
+			$consulta = $this->buildQuery($this->getFilters());
+			$cobros = $consulta->execute();
+			$this->total = 0;
+			foreach ($cobros as $cobro) $this->total += $cobro->monto;
+		}
+  }
 
 }

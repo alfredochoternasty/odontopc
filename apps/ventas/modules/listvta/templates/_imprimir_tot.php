@@ -1,6 +1,4 @@
-<?php include_partial('global/cabecera_impresion') ?>
-<h1 id="header" style="width:100%;text-align:center;">Listado de Ventas (solo totales)</h1>
-<?php if ($hasFilters->count() > 0) include_partial('admins/filtro_usado', array('configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters)) ?>
+<?php include_partial('global/cabecera_listado', array('titulo' => 'Listado de Ventas (solo totales)', 'configuration' => $configuration, 'filters' => $filters, 'hasFilters' => $hasFilters)) ?>
 <table border="1" cellspacing="0" cellpadding="1" width="100%">
   <tr>
     <th style="background: #CCC;">Grupo</th>
@@ -72,4 +70,4 @@
     <td colspan="3" style="font-size:34px;"><b><?php echo $suma_total + $suma_total_bon - $suma_total_dev ?></b></td>
   </tr>
 </table>
-<?php include_partial('global/pie_impresion') ?>
+<?php include_partial('global/pie_listado') ?>

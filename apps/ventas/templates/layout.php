@@ -31,10 +31,10 @@
 					</div>
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-						<b>Versión del Sistema: 5.2</b><br>
-						Fecha Actualización: 05/11/2020
+						<b>Versión del Sistema: 5.5</b><br>
+						Fecha Actualización: 19/03/2021
 					</div>
-					<?php if (date("Ymd") == '20201105') { ?>
+					<?php if (date("Ymd") == '20210319') { ?>
 					<img src="/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
 			</header>
