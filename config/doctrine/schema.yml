@@ -290,6 +290,7 @@ Resumen:
     pago_comision_id: {type: integer(4)}
     zona_id: {type: integer(4)}
     presupuesto_id: {type: integer(4)}
+    comp_asoc_id: {type: integer(4)}
   relations:
     Detalle: {type: many, class: DetalleResumen, local: id, foreign: resumen_id}
     Remito: {type: many, class: Resumen, local: remito_id, foreign: id}

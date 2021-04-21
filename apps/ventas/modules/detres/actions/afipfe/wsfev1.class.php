@@ -51,7 +51,7 @@ class WSFEV1 {
     
     if (self::LOG_XMLS) {//guarda lo que se envía al web services y lo que responde, todo en xml
 			$fh = date('Ymd_his');
-      file_put_contents($this->path.self::LOGS_DIR.$fh."request-".$method.".xml",$this->client->__getLastRequest());
+      // file_put_contents($this->path.self::LOGS_DIR.$fh."request-".$method.".xml",$this->client->__getLastRequest());
       file_put_contents($this->path.self::LOGS_DIR.$fh."response-".$method.".xml",$this->client->__getLastResponse());
     }
     
@@ -130,7 +130,12 @@ class WSFEV1 {
       'PtoVta' => $ptovta,
       'CbteTipo' => $tipo_cbte
     );
-	$results = $this->client->FECompUltimoAutorizado($datos);
+		
+		$fh = date('Ymd_his');
+		$txt = "<pre>".print_r($datos, true)."</pre>";
+		file_put_contents($this->path.self::LOGS_DIR.$fh."request-FECompUltimoAutorizado.txt", $txt);
+		
+		$results = $this->client->FECompUltimoAutorizado($datos);
     $e = $this->_checkErrors($results, 'FECompUltimoAutorizado');
     return $e === false? $results->FECompUltimoAutorizadoResult->CbteNro : 'error';
 	}
@@ -169,6 +174,11 @@ class WSFEV1 {
 			'FeDetReq' => array($FECAEDetRequest) 
 		  ) 
 		);
+		
+		$fh = date('Ymd_his');
+		$txt = "<pre>".print_r($params, true)."</pre>";
+		file_put_contents($this->path.self::LOGS_DIR.$fh."request-FECAESolicitar.txt", $txt);
+		
 		$results = $this->client->FECAESolicitar($params);
 		$e = $this->_checkErrors($results, 'FECAESolicitar');
 		if ($e == false) {

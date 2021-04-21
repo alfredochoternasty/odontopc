@@ -398,13 +398,24 @@ class detresActions extends autoDetresActions
 			$regfe['ImpTrib'] = 0;
 			$regfe['ImpTotConc'] = 0;
 			$regfe['ImpNeto'] = $resumen->getSubTotalResumen();
-			$regfeasoc = '';
 			$regfetrib = '';
 			$regfeiva[] = array(
 				'Id' => 5, 
 				'BaseImp' => $resumen->getSubTotalResumen(), 
 				'Importe' => $resumen->getIVATotalResumen()
 			);
+			
+			// nota de debito A o B
+			if (in_array($resumen->tipofactura_id, array(5, 7)) {
+				$comp_asoc = Doctrine::getTable('Resumen')->find($resumen->comp_asoc_id);
+				$regfeasoc[] = array(
+					'Tipo' => $comp_asoc->getTipoFactura()->getCodTipoAfip(), 
+					'PtoVta' => $ptovta, //$resumen->pto_vta, 
+					'Nro' => $comp_asoc->getNroFactura()
+				);
+			} else {				
+				$regfeasoc = '';
+			}
 			
 			$regfe['CbteTipo'] = $resumen->getTipoFactura()->getCodTipoAfip();
 			$regfe['Concepto'] = 1;
