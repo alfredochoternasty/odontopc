@@ -39,6 +39,7 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'pago_comision_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PagoComision'), 'add_empty' => true)),
       'zona_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
       'presupuesto_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'), 'add_empty' => true)),
+      'comp_asoc_id'     => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -66,6 +67,7 @@ abstract class BaseResumenForm extends BaseFormDoctrine
       'pago_comision_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PagoComision'), 'required' => false)),
       'zona_id'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
       'presupuesto_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Presupuesto'), 'required' => false)),
+      'comp_asoc_id'     => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('resumen[%s]');

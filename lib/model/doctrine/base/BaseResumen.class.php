@@ -31,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property integer $pago_comision_id
  * @property integer $zona_id
  * @property integer $presupuesto_id
+ * @property integer $comp_asoc_id
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
@@ -78,6 +79,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method integer             getPagoComisionId()     Returns the current record's "pago_comision_id" value
  * @method integer             getZonaId()             Returns the current record's "zona_id" value
  * @method integer             getPresupuestoId()      Returns the current record's "presupuesto_id" value
+ * @method integer             getCompAsocId()         Returns the current record's "comp_asoc_id" value
  * @method Doctrine_Collection getDetalle()            Returns the current record's "Detalle" collection
  * @method Doctrine_Collection getRemito()             Returns the current record's "Remito" collection
  * @method Cliente             getCliente()            Returns the current record's "Cliente" value
@@ -124,6 +126,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setPagoComisionId()     Sets the current record's "pago_comision_id" value
  * @method Resumen             setZonaId()             Sets the current record's "zona_id" value
  * @method Resumen             setPresupuestoId()      Sets the current record's "presupuesto_id" value
+ * @method Resumen             setCompAsocId()         Sets the current record's "comp_asoc_id" value
  * @method Resumen             setDetalle()            Sets the current record's "Detalle" collection
  * @method Resumen             setRemito()             Sets the current record's "Remito" collection
  * @method Resumen             setCliente()            Sets the current record's "Cliente" value
@@ -254,6 +257,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('presupuesto_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('comp_asoc_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

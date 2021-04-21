@@ -33,6 +33,7 @@ class ResumenForm extends BaseResumenForm
 				$this->widgetSchema['nro_factura'] = new sfWidgetFormInput();
 				$this->widgetSchema['pto_vta'] = new sfWidgetFormChoice(array('choices' => array('', '4', '5')));
 			}
+			$this->widgetSchema['comp_asoc_id'] = new sfWidgetFormChoice(array('choices' => array('')));
 			$this->widgetSchema['cuit'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));
 			$this->widgetSchema['afip'] = new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'style' => 'background-color : #d1d1d1;'));			      
 			$this->widgetSchema['tipofactura_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => false));

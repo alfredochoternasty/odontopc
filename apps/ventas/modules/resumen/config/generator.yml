@@ -18,6 +18,7 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
         nro_factura: { label: Numero, help: En caso de generar las factura desde afip cargar el numero en forma manual }
         tipofactura_id: { label: Comprobante }
+        comp_asoc_id: { label: Comprobante Asociado}
         tipo_venta_id: { label: Tipo Venta }
         afip_estado: { label: AFIP }
         pto_vta: { label: Punto de Venta, help: El punto 4 es para facturas generadas en afip y el punto 5 es para las facturas generadas por sistema}
@@ -37,7 +38,7 @@ generator:
       filter:
         display: [tipo_venta_id, tipofactura_id, fecha, cliente_id, nro_factura]
       form:
-        display: [fecha, cliente_id, tipofactura_id, pto_vta, nro_factura, tipo_venta_id, cuit, afip, saldo_pesos, saldo_dolar, observacion]
+        display: [fecha, cliente_id, tipofactura_id, pto_vta, nro_factura, comp_asoc_id, tipo_venta_id, cuit, afip, saldo_pesos, saldo_dolar, observacion]
       edit:
         title: Modificar Venta
         actions:
