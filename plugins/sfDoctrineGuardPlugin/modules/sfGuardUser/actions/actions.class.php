@@ -13,5 +13,10 @@ require_once dirname(__FILE__).'/../lib/sfGuardUserGeneratorHelper.class.php';
  */
 class sfGuardUserActions extends autoSfGuardUserActions
 {
-
+	public function executeClave(sfWebRequest $request)
+  {
+    $this->sf_guard_user = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->sf_guard_user);
+		$this->setLayout('layout');
+  }
 }

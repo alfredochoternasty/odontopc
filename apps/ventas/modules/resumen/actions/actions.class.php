@@ -206,6 +206,17 @@ class resumenActions extends autoResumenActions
 		return $this->renderText(json_encode($options));
 	}
 	
+	public function executeGetcompasoc(sfWebRequest $request){
+		$modulo_factura = $this->getUser()->getVarConfig('modulo_factura');
+		$options = '';
+		if ($modulo_factura == 'S') {
+			$tipofactura = Doctrine::getTable('TipoFactura')->find($request->getParameter('fid'));
+			$comprobantes = Doctrine::getTable('Resumen')->getComprobantesParaAsociar($request->getParameter('cid'), $tipofactura->id_fact_cancela);
+			foreach ($comprobantes as $resumen) $options .= '<option value="'.$resumen->id.'">'.$resumen.'</option>';
+		}
+		return $this->renderText(json_encode($options));
+	}
+	
   public function executeGetnroremito(sfWebRequest $request){
     $q = Doctrine_Query::create()
 	->select('r.nro_factura, r.id, r.fecha')

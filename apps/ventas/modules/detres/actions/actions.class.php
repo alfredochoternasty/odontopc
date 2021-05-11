@@ -405,15 +405,14 @@ class detresActions extends autoDetresActions
 				'Importe' => $resumen->getIVATotalResumen()
 			);
 			
-			// nota de debito A o B
-			if (in_array($resumen->tipofactura_id, array(5, 7)) {
+			if ($resumen->tipofactura_id == 5 || $resumen->tipofactura_id == 7) {
 				$comp_asoc = Doctrine::getTable('Resumen')->find($resumen->comp_asoc_id);
 				$regfeasoc[] = array(
 					'Tipo' => $comp_asoc->getTipoFactura()->getCodTipoAfip(), 
 					'PtoVta' => $ptovta, //$resumen->pto_vta, 
 					'Nro' => $comp_asoc->getNroFactura()
 				);
-			} else {				
+			} else {
 				$regfeasoc = '';
 			}
 			

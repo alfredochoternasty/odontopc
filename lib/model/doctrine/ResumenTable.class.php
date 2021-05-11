@@ -90,4 +90,14 @@ class ResumenTable extends Doctrine_Table
 		$resultado = $st->fetch(PDO::FETCH_OBJ);
 		return $resultado->cantidad;
 	}
+	
+	public function getComprobantesParaAsociar($cliente_id, $tipofactura_id) {
+		return Doctrine::getTable('Resumen')
+			->createQuery()
+			->where('cliente_id = ?', $cliente_id)
+			->andWhere('tipofactura_id = ?', $tipofactura_id)
+			->andWhere('fecha >= date_sub(current_date(), interval 15 day)')
+			->orderBy('fecha desc')
+			->execute();	
+	}
 }

@@ -159,25 +159,37 @@ $(document).ready(function(){
         success: function(data) {
           $("#resumen_tipofactura_id").html(data);
         },
-      });			
+      });
   });
 	
 	$("#resumen_tipofactura_id").change(function(event){
     var fid = $("#resumen_tipofactura_id").find(':selected').val();
 		if (fid == 4) {
-				$("#resumen_remito_id").attr('value', '');
-        $(".sf_admin_form_field_remito_id").hide();
-				$(".sf_admin_form_field_nro_factura").show();
-				$.ajax({
-						url: 'getnroremito',
-						dataType: "json",
-						success: function(data) {
-							$("#resumen_nro_factura").attr('value', data);
-						}
-					});
+			$("#resumen_remito_id").attr('value', '');
+			$(".sf_admin_form_field_remito_id").hide();
+			$(".sf_admin_form_field_comp_asoc_id").hide();
+			$(".sf_admin_form_field_nro_factura").show();
+			$.ajax({
+					url: 'getnroremito',
+					dataType: "json",
+					success: function(data) {
+						$("#resumen_nro_factura").attr('value', data);
+					}
+			});
+		} else if (fid == 5 || fid == 7) {
+			$(".sf_admin_form_field_comp_asoc_id").show();
+			var cid = $("#resumen_cliente_id").find(':selected').val();
+			$.ajax({
+					url: 'getcompasoc?cid='+cid+'&fid='+fid,
+					dataType: "json",
+					success: function(data) {
+						$("#resumen_comp_asoc_id").html(data);
+					},
+			});
 		} else {
 			$("#resumen_nro_factura").attr('value', '');
       $(".sf_admin_form_field_nro_factura").hide();
+      $(".sf_admin_form_field_comp_asoc_id").hide();
 			$(".sf_admin_form_field_remito_id").show();
 		}
   });

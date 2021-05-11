@@ -184,4 +184,5 @@ class Resumen extends BaseResumen
 		$detalle_resumen->save();
 		return $detalle_resumen;
 	}
+
 }
