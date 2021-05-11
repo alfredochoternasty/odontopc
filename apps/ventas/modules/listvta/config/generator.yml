@@ -17,8 +17,7 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
         grupoprod_id: {label: Grupo}
         nro_lote: {label: Lote}
-        remito: {Label: De Rto.}
-        nro_remito: {Label: Nro. de Remito}
+        nro_factura: {Label: Nro. de Remito}
         categoria_id: {Label: Categoria}
       list:
         table_method: retrieveConJoins
@@ -34,7 +33,7 @@ generator:
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:
-        display: [zona_id, tipofactura_id, nro_remito, fecha, cliente_id, grupoprod_id, producto_id, nro_lote, categoria_id]
+        display: [zona_id, tipofactura_id, nro_factura, fecha, cliente_id, grupoprod_id, producto_id, nro_lote, categoria_id]
       form:    ~
       edit:    ~
       new:     ~

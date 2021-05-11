@@ -11,7 +11,8 @@ select
   nro_lote,
   cantidad,
 	resumen.tipofactura_id,
-	detalle_resumen.det_remito_id
+	detalle_resumen.det_remito_id,
+	resumen.nro_factura
 from 
 	resumen 
 		join detalle_resumen on resumen.id = detalle_resumen.resumen_id
@@ -28,7 +29,8 @@ select
 	dev_producto.nro_lote,
 	dev_producto.cantidad * -1 AS cantidad,
 	resumen.tipofactura_id,
-	null
+	null,
+	dev_producto.nro_factura
 from 
 	dev_producto
 		join producto on dev_producto.producto_id = producto.id
