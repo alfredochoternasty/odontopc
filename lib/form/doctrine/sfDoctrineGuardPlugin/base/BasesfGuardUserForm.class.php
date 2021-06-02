@@ -202,7 +202,7 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
     }
 
     $existing = $this->object->UsuarioZona->getPrimaryKeys();
-    $values = $this->getValue('usuario_zona');
+    $values = $this->getValue('usuario_zona_list');
     if (!is_array($values))
     {
       $values = array();

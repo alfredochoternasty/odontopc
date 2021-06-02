@@ -167,5 +167,22 @@ class cobroActions extends autoCobroActions
 			foreach ($cobros as $cobro) $this->total += $cobro->monto;
 		}
   }
+	
+	public function executeDescargar(sfwebRequest $request)
+	{
+			$cobro = Doctrine::getTable('cobro')->find($request->getParameter('cid'));
+			$archivo = sfConfig::get('sf_upload_dir').'/cobros/'.$cobro->archivo;
+			list($nom, $ext) = explode('.', $cobro->archivo);
+			header('Content-Description: File Transfer');
+			header('Accept-Ranges: bytes');
+			header('Content-Disposition: attachment; filename='.$cobro.'-'.$cobro->getCliente().'.'.$ext);
+			header('Content-Transfer-Encoding: binary');
+			header('Expires: 0');
+			header('Content-Length: '.filesize($archivo));
+			ob_clean();
+			flush();
+			readfile($archivo);
+			return sfView::NONE;
+	}
 
 }

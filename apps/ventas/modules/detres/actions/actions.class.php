@@ -235,7 +235,7 @@ class detresActions extends autoDetresActions
 		$q->andWhere('l.activo = 1');
 		$q->andWhere('l.externo = 0');
     $q->orderBy('l.fecha_vto ASC, l.id ASC');
-    $lotes_stock = $q->fetchArray();
+    $lotes_stock = $q->fetchArray()?:array();
 	
 		if ($zona == 1 && $resumen->tipofactura_id != 4) {
 			$q = Doctrine_Query::create();

@@ -17,14 +17,19 @@ generator:
         fecha: {label: Ultima compra, date_format: dd/MM/yyyy }
       list:
         max_per_page: 20
-        title: Ultima compra por clientes
-        display: [apellido, nombre, fecha, telefono, celular, email]
+        title: Ultima compra por cliente
+        display: [Zona, apellido, nombre, fecha, telefono, celular, email]
         object_actions:
-          detalle: ~
+          factura: ~
         actions:
-          imprimir: {label: Imprimir}
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
       filter:
-        display: [apellido, nombre, fecha]
+        display: [zona_id, apellido, nombre, fecha]
       form:    ~
       edit:    ~
       new:     ~
+      show:
+        display: [apellido, nombre, fecha, telefono, celular, email]

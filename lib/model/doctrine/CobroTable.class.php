@@ -28,6 +28,7 @@ class CobroTable extends Doctrine_Table
 		$q->leftJoin('c.Zona z');
 		$q->leftJoin('z.UsuarioZona uz');
 		$q->where($rootAlias . '.tipo_id <> 5');
+		$q->andWhere('uz.usuario = '.$id);
 		$q->orderBy($rootAlias . '.fecha desc');
 		return $q;
     }    

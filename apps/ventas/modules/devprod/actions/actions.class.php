@@ -104,10 +104,9 @@ class devprodActions extends autoDevprodActions
   public function executeBuscarprecio(sfWebRequest $request){
     $producto = $request->getParameter('pid');
     $resumen = $request->getParameter('rid');
-    if(empty($rid)){
-      $rid = $this->getUser()->getAttribute('rid');
-    }
-    $prec_prod = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoId($resumen, $producto);
+    $lote = $request->getParameter('lid');
+    if(empty($rid)) $rid = $this->getUser()->getAttribute('rid');
+    $prec_prod = Doctrine::getTable('DetalleResumen')->findByResumenIdAndProductoIdAndNroLote($resumen, $producto, $lote);
     $datos['descuento'] = $prec_prod[0]->descuento.'%';
     $datos['precio_vta'] = $prec_prod[0]->precio;
     $datos['precio'] = sprintf("%01.2f", $prec_prod[0]->precio - ($prec_prod[0]->precio * $prec_prod[0]->descuento/100));

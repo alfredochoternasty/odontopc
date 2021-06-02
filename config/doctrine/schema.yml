@@ -681,12 +681,16 @@ ClienteUltimaCompra:
   tableName: cliente_ultima_compra
   columns:
     id: {type: integer(4), primary: true, autoincrement: true}
+    zona_id: {type: integer(4)}
     apellido: {type: string(50)}
     nombre: {type: string(50)}
     telefono: {type: string(50)}
     email: {type: string(50)}
     celular: {type: string(50)}
     fecha: {type: date(25)}
+    resumen_id: {type: integer(4)}
+  relations:
+    Zona: {type: one, local: zona_id, onDelete: RESTRICT}
 ListadoCompras:
   connection: doctrine
   tableName: listado_compras

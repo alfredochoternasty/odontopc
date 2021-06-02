@@ -17,16 +17,9 @@ class ultcompActions extends autoUltcompActions
     $this->redirect( 'ultcompdet/index?rid='.$this->getRequestParameter('id'));
   }
 
-  public function executeListImprimir(sfWebRequest $request){
-    $filtro = new ClienteUltimaCompraFormFilter();
-    $consulta = $filtro->buildQuery($this->getFilters());
-    $listado = $consulta->execute();
-    
-    $dompdf = new DOMPDF();
-    $dompdf->load_html($this->getPartial("imprimir", array("listado" => $listado)));
-    $dompdf->set_paper('letter','portrait');
-    $dompdf->render();
-    $dompdf->stream("ultima_compra.pdf");    
-    return sfView::NONE;
-  }
+	public function getModoImpresion()
+	{
+		return 'landscape';
+	}
+
 }
