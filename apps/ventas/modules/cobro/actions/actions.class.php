@@ -22,40 +22,37 @@ class cobroActions extends autoCobroActions
 			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
 			$cobro = $form->save();
 			
-			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
-			$max_nro = $q->execute();
-			$nro = $max_nro[0]['nro'];
-			$cobro->nro_recibo = $nro+1;
+			$cobro->nro_recibo = Doctrine::getTable('Cobro')->getProxNroRecibo();
 			$cobro->zona_id = $cobro->getCliente()->zona_id;
 			$cobro->usuario = $this->getUser()->getGuardUser()->getId();
 			$cobro->save();
 			
-			$monto = $cobro->getMonto();
-			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false);
-			if ($saldo_cliente >= 0) $saldo_cliente = 0;
+			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false); //saldo negativo es favor del cliente
+			if ($saldo_cliente >= 0) $saldo_cliente = 0; //si tiene saldo deudor no importa cuanto es
 				
-			$Resumenes = Doctrine::getTable('Resumen')->findByClienteIdAndPagadoAndAfipEstado($cobro['cliente_id'], 0, 1);  
-			foreach($Resumenes as $resumen){
-				$saldo_resumen = $resumen->getTotalResumen() - ($resumen->getTotalCobrado() + $resumen->getTotalDevuelto() + $saldo_cliente);
-				$objCobro = new CobroResumen();
-				$objCobro->setCobroId($cobro->getId());
-				$objCobro->setResumenId($resumen->getId());
+			$monto_cobrado = $cobro->getMonto();
+			$fact_imapagas = Doctrine::getTable('Resumen')->getFacturasImpagasCliente($cobro['cliente_id']);  
+			foreach($fact_imapagas as $factura){
+				$saldo_factura = $factura->getTotalResumen() - ($factura->getTotalCobrado() + $factura->getTotalDevuelto() + $saldo_cliente);
+				$CobroResumen = new CobroResumen();
+				$CobroResumen->setCobroId($cobro->getId());
+				$CobroResumen->setResumenId($factura->getId());
 				
-				if(($monto + 10) >= $saldo_resumen){//tolerancia de 10 pesos
-					$objCobro->setMonto($saldo_resumen);
-					$monto = $monto - $saldo_resumen;
-					$resumen->pagado = 1;
-					$resumen->fecha_pagado = $cobro->fecha;
-					$resumen->save();
-					$objCobro->save();
+				if(($monto_cobrado + 10) >= $saldo_factura){//tolerancia de 10 pesos
+					$CobroResumen->setMonto($saldo_factura);
+					$monto_cobrado = $monto_cobrado - $saldo_factura; //actualizo el monto cobrado para la proxima factura
+					$factura->pagado = 1;
+					$factura->fecha_pagado = $cobro->fecha;
+					$factura->save();
+					$CobroResumen->setMonto($saldo_factura);
 				}else{
-					$objCobro->setMonto($monto);
-					$objCobro->save();
+					$CobroResumen->setMonto($monto_cobrado);
 					break;
 				}
+				$CobroResumen->save();
 			}
 
-			$this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $objCobro)));
+			$this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $CobroResumen)));
 			$cobro_alerta = $this->getUser()->getVarConfig('cobro_alerta');
 			if ($cobro->getCliente()->zona_id > 1 && $cobro_alerta == 'S') {
 				$cobro_alerta_mail = $this->getUser()->getVarConfig('cobro_alerta_mail');

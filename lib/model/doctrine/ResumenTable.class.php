@@ -100,4 +100,14 @@ class ResumenTable extends Doctrine_Table
 			->orderBy('fecha desc')
 			->execute();	
 	}
+	
+	public function getFacturasImpagasCliente($p_cid){
+		return Doctrine_Core::getTable('Resumen')
+			->createQuery('q')
+			->where('q.cliente_id = '.$cid)
+			->andWhere('pagado = 0')
+			->andWhere('afip_estado = 1')
+			->orderBy('fecha asc')
+			->execute();
+	}
 }

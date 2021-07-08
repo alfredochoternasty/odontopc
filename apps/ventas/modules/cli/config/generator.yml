@@ -41,7 +41,7 @@ generator:
       filter:
         display: [zona_id, dni, apellido, nombre, localidad_id, provincia_id, lista_id, activo, fecha_alta]
       form:
-        display: [activo, condicionfiscal_id, cuit, dni, apellido, nombre, lista_id, localidad_id, domicilio, telefono, celular, email, zona_id, observacion]
+        display: [activo, condicionfiscal_id, cuit, nro_matricula, dni, apellido, nombre, lista_id, localidad_id, domicilio, telefono, celular, email, zona_id, observacion]
       edit:
         title: Modificar Cliente
         actions:

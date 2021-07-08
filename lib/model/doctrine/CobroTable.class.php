@@ -14,22 +14,29 @@ class CobroTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('Cobro');
+       return Doctrine_Core::getTable('Cobro');
     }
 
     function construct(){
-        $this->setOption('orderBy','fecha desc, id desc');
+       $this->setOption('orderBy','fecha desc, id desc');
     }
     
     public function retrieveConJoins(Doctrine_Query $q){
-		$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-		$rootAlias = $q->getRootAlias();
-		$q->leftJoin($rootAlias . '.Cliente c');
-		$q->leftJoin('c.Zona z');
-		$q->leftJoin('z.UsuarioZona uz');
-		$q->where($rootAlias . '.tipo_id <> 5');
-		$q->andWhere('uz.usuario = '.$id);
-		$q->orderBy($rootAlias . '.fecha desc');
-		return $q;
-    }    
+			$id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+			$rootAlias = $q->getRootAlias();
+			$q->leftJoin($rootAlias . '.Cliente c');
+			$q->leftJoin('c.Zona z');
+			$q->leftJoin('z.UsuarioZona uz');
+			$q->where($rootAlias . '.tipo_id <> 5');
+			$q->andWhere('uz.usuario = '.$id);
+			$q->orderBy($rootAlias . '.fecha desc');
+			return $q;
+    }
+		
+		public function getProxNroRecibo() {
+			$q = Doctrine_Query::create()->select('max(nro_recibo) as nro')->from('cobro');
+			$max_nro = $q->execute();
+			$nro = $max_nro[0]['nro'];
+			return $nro+1;
+		}
 }

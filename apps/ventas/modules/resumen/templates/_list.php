@@ -43,7 +43,7 @@
 
     <tfoot>
       <tr>
-        <th colspan="<?php echo ($sf_user->getGuardUser()->getZonaId()>1)?10:9 ?>">
+        <th colspan="11">
           <div class="ui-state-default ui-th-column ui-corner-bottom">
             <?php include_partial('resumen/pagination', array('pager' => $pager)) ?>
           </div>

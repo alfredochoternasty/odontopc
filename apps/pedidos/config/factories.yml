@@ -34,7 +34,7 @@ prod:
           encryption: ssl
           auth_mode: auth
           username: implantesnti@gmail.com
-          password: milito3304
+          password: REUMAS@105
 
 all:
   routing:
