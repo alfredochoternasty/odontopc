@@ -32,6 +32,8 @@ generator:
           _edit: {label: Modificar}
           inscriptos: ~
           enviar: ~
+        actions:
+          _new: {label: Cargar Nuevo Curso}
       filter:
         display: [nombre, fecha]
       form:    ~

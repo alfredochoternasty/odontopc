@@ -102,7 +102,7 @@ class cursosActions extends sfActions
   {
     $table = Doctrine_Core::getTable('Curso');
     $rs = $table->createQuery('c')->where("habilitado = 'SI'")->execute();
-	$this->redirect('cursos/show?id='.$rs[0]['id']);
+    $this->redirect('cursos/show?id='.$rs[0]['id']);
   }
 
   public function executeShow(sfWebRequest $request)

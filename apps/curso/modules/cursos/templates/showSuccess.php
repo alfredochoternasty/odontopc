@@ -2,7 +2,7 @@
   <?php if ($sf_user->hasFlash('notice')){ ?>
       <div class="success"><?php echo $sf_user->getFlash('notice') ?></div>
   <?php } ?>
-  <img style="margin-left:10px;" src="/uploads/cursos/<?php echo $curso->getLogo()?>" />
+  <img style="margin-left:10px;" src="uploads/cursos/<?php echo $curso->getLogo()?>" />
   <?php if($curso->getDescripcion() != ''){ ?>
   <div style="width:60%; font-family: verdana; padding-left:10px;">
     <p style="padding:5px;"><?php echo $curso->getDescripcion() ?></p>
