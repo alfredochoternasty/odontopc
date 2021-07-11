@@ -82,4 +82,4 @@
     
   </body>
 </html>
-<script type="text/javascript"> $(".chzn-select").chosen();</script>
+<script type="text/javascript"> $(".chzn-select").chosen({allow_single_deselect:true});</script>

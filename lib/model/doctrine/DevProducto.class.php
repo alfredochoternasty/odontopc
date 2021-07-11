@@ -43,4 +43,32 @@ class DevProducto extends BaseDevProducto
 	{
 		return $this->getIVA() * $this->getCantidad();
 	}	
+	
+	public function getPorcentajeComision() {
+		$comision = Doctrine::getTable('DescuentoZona')->findByClienteId($this->getClienteId());
+		if (empty($comision[0])) {
+			$comision = Doctrine::getTable('DescuentoZona')->findByGrupoprodId($this->getProducto()->getGrupoprodId());
+			if (empty($comision[0])) {
+				$comision = Doctrine::getTable('DescuentoZona')->findByProductoId($this->getProductoId());
+				if (empty($comision[0])) {
+					return 'No Definida';
+				}
+			}
+		}
+		return $comision[0]->porc_desc;
+	}
+
+	public function getComision() {
+		$comision = Doctrine::getTable('DescuentoZona')->findByClienteId($this->getClienteId());
+		if (empty($comision[0])) {
+			$comision = Doctrine::getTable('DescuentoZona')->findByGrupoprodId($this->getProducto()->getGrupoprodId());
+			if (empty($comision[0])) {
+				$comision = Doctrine::getTable('DescuentoZona')->findByProductoId($this->getProductoId());
+				if (empty($comision[0])) {
+					return 0;
+				}
+			}
+		}
+		return ($this->precio * $this->cantidad) * ($comision[0]->porc_desc/100);
+	}
 }

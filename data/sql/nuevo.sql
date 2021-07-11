@@ -17,3 +17,9 @@ CREATE VIEW cliente_ultima_compra AS select
       )
   ) as resumen_id
 from cliente c;
+
+insert into descuento_zona (zona_id, cliente_id, porc_desc)
+select zona_id, id, 10 from cliente where id in (808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
+
+insert into descuento_zona (zona_id, cliente_id, porc_desc)
+select zona_id, id, 0 from cliente where id in (795, 783, 778, 709, 779, 787, 671, 682, 780);

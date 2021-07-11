@@ -1,3 +1,1 @@
-<?php
-echo '$ '.sprintf("%01.2f", $ventas_zona->getDetalleResumen()->total);
-?>
+<?php echo '$ '.number_format($ventas_zona->getDetalleResumen()->total, 2, ',', '.'); ?>

@@ -55,14 +55,4 @@
   <?php echo __('Neto', array(), 'messages') ?>
 </th>
 <?php end_slot(); ?>
-<?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
-<th class="sf_admin_text sf_admin_list_th_iva ui-state-default ui-th-column">
-  <?php echo __('Iva', array(), 'messages') ?>
-</th>
-<?php end_slot(); ?>
-<?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
-<th class="sf_admin_text sf_admin_list_th_total ui-state-default ui-th-column">
-  <?php echo __('Total', array(), 'messages') ?>
-</th>
-<?php end_slot(); ?>
 <?php include_slot('sf_admin.current_header') ?>

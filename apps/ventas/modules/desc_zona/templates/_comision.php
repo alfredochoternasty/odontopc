@@ -1,0 +1,1 @@
+<?php echo $descuento_zona->porc_desc.' %'; ?>

@@ -26,41 +26,11 @@ class vta_zonaActions extends autoVta_zonaActions
     $titulos = array('Fecha', 'Factura', 'Cliente', 'Producto', 'Zona', 'Neto', 'Porcentaje', 'Comision');
     $flag = false;
 		$total_todo = 0;
-		$clientes_compartidos = array(808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
-		$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
-		$tot_descuento = 0;
-		$zona_id = 0;
-		$array_devueltos = array();
     foreach($vtas as $vta):
 			if (!$flag) {
 					echo implode("\t", $titulos) . "\r\n";
 					$flag = true;
-			} 
-					
-			if (in_array($vta->cliente_id, $clientes_compartidos)) {
-				// si es algun cliente compartido la comision es de 10%
-				$total = $descuento = ($vta->getDetalleResumen()->sub_total) * 10 / 100;
-				$porc = '10%';
-			} elseif (in_array($vta->cliente_id, $clintes_sin_comision)) {
-				// si es algun cliente compartido la comision es de 0%
-				$total = $descuento = 0;
-				$porc = '0%';
-			} elseif (!empty($vta->grupo_porc_desc)) {
-				$total = $descuento = ($vta->getDetalleResumen()->sub_total) * $vta->grupo_porc_desc / 100;
-				$porc = $vta->grupo_porc_desc.'%';
-			} elseif (!empty($vta->prod_porc_desc)) {
-				$total = $descuento = ($vta->getDetalleResumen()->sub_total)  * $vta->prod_porc_desc / 100;
-				$porc = $vta->prod_porc_desc.'%';
-			} elseif (!empty($vta->grupo_precio_desc)) {
-				$total = $descuento = $vta->grupo_precio_desc;
-				$porc = $vta->grupo_precio_desc.'%';
-			} elseif (!empty($vta->prod_precio_desc)) {
-				$total = $descuento = $vta->prod_precio_desc;
-				$porc = $vta->prod_precio_desc.'%';
-			} else {
-				$total = $descuento = 0;
 			}
-			$total_fmt = str_replace('.', ',', $total);
 					
 			$fila = array(
 				$vta->getFecha(), 
@@ -69,19 +39,74 @@ class vta_zonaActions extends autoVta_zonaActions
 				$vta->getProducto(), 
 				$vta->getZona(), 
 				$vta->getDetalleResumen()->getSubTotal(), 
-				$porc, 
-				$total_fmt
+				$vta->getPorcentajeComision().'%', 
+				'$ '.number_format($vta->getComision(), 2, ',', '.')
 			);
 			$string = implode("\t", array_values($fila));
 			echo utf8_decode($string)."\r\n"; 
-		  $total_todo += $total;
+		  $total_todo += $vta->getComision();
     endforeach;
 	
 		$total_todo_fmt = str_replace('.', ',', $total_todo);
     $fila = array('', '', '', '', '', '', '', $total_todo_fmt);
     $string = implode("\t", array_values($fila));
-    echo utf8_decode($string)."\r\n";
+    // echo utf8_decode($string)."\r\n";
 	
+		$q = Doctrine_Core::getTable('DevProducto')->createQuery('d');
+		foreach ($this->getFilters() as $name => $valor) {
+			if ($name == 'fecha') {
+				if (array_key_exists('from', $valor) && !empty($valor['from'])) $q->andWhere("d.fecha >= '".$valor['from']."'");
+				if (array_key_exists('to', $valor) && !empty($valor['to'])) $q->andWhere("d.fecha <= '".$valor['to']."'");
+			}
+			if ($name == 'fecha_cobrado') {
+				if (array_key_exists('from', $valor) && !empty($valor['from'])) $q->andWhere("d.fecha >= '".$valor['from']."'");
+				if (array_key_exists('to', $valor) && !empty($valor['to'])) $q->andWhere("d.fecha <= '".$valor['to']."'");
+			}
+			if ($name == 'zona_id' && !empty($valor)) $q->andWhere("d.zona_id = $valor");
+			if ($name == 'cliente_id' && !empty($valor)) $q->andWhere("d.cliente_id = $valor");
+			if ($name == 'producto_id' && !empty($valor)) $q->andWhere("d.producto_id = $valor");
+			if ($name == 'pagado') {
+				if ($valor === 1) 
+					$q->andWhere("d.pago_comision_id is not null");
+				elseif ($valor === 0) 
+					$q->andWhere("d.pago_comision_id is null");
+			}
+			// if ($name == 'grupoprod_id')
+			if ($name == 'nro_lote' && !empty($valor['text'])) $q->andWhere("d.nro_lote = '".$valor['text']."'");
+		}
+		$q->orderBy('fecha DESC');
+		$devueltos = $q->execute();
+
+    echo 'Listado de devoluciones por zona' . "\r\n";
+    $titulos = array('Fecha', 'Factura', 'Cliente', 'Producto', 'Zona', 'Neto', 'Porcentaje', 'Comision');
+    $flag = false;
+		$total_todo = 0;
+    foreach($devueltos as $dev):
+			if (!$flag) {
+					echo implode("\t", $titulos) . "\r\n";
+					$flag = true;
+			}
+			
+			$fila = array(
+				$dev->getFecha(), 
+				$dev, 
+				$dev->getCliente(), 
+				$dev->getProducto(), 
+				$dev->getZona(), 
+				$dev->precio * $dev->cantidad, 
+				$dev->getPorcentajeComision().'%', 
+				'$ '.number_format($dev->getComision(), 2, ',', '.')
+			);
+			$string = implode("\t", array_values($fila));
+			echo utf8_decode($string)."\r\n"; 
+		  $total_todo += $dev->getComision();
+    endforeach;
+		
+		$total_todo_fmt = str_replace('.', ',', $total_todo);
+    $fila = array('', '', '', '', '', '', '', $total_todo_fmt);
+    $string = implode("\t", array_values($fila));
+    echo utf8_decode($string)."\r\n";
+		
     return sfView::NONE;	
 	}
 	
@@ -97,47 +122,14 @@ class vta_zonaActions extends autoVta_zonaActions
 			$devs = $q3->execute();
 		}
 		
-		$clientes_compartidos = array(808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
-		$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
-		
 		$total_todo = 0;
 		foreach ($ventas as $vta) {
-			if (in_array($vta->cliente_id, $clientes_compartidos)) {
-				$total = $vta->getDetalleResumen()->sub_total * 10/100;
-			} elseif (in_array($vta->cliente_id, $clintes_sin_comision)) {
-				$total = 0;
-			} elseif (!empty($vta->grupo_porc_desc)) {
-				$total = $vta->getDetalleResumen()->sub_total * $vta->grupo_porc_desc / 100;
-			} elseif (!empty($vta->prod_porc_desc)) {
-				$total = $vta->getDetalleResumen()->sub_total * $vta->prod_porc_desc / 100;
-			} elseif (!empty($vta->grupo_precio_desc)) {
-				$total = $vta->grupo_precio_desc;
-			} elseif (!empty($vta->prod_precio_desc)) {
-				$total = $vta->prod_precio_desc;
-			} else {
-				$total = 0;
-			}
-			$total_todo += $total;
+			$total_todo += $vta->getComision();
 		}
 		
 		$total_todo_dev = 0;
 		foreach ($devs as $dev) {
-			$grupoprod_id = Doctrine_Core::getTable('Producto')->find($dev->producto_id)->grupoprod_id;
-			$desc_zona_grupo = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndGrupoprodId($dev->zona_id, $dev->getProducto()->grupoprod_id);
-			$desc_zona_prod = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndProductoId($dev->zona_id, $dev->producto_id);
-			if (in_array($dev->cliente_id, $clientes_compartidos)) {
-				$total_dev = ($dev->precio * $dev->cantidad) * 10/100;
-			} elseif (in_array($dev->cliente_id, $clintes_sin_comision)) {
-				$total_dev = 0;
-			} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
-				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
-			} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
-				$total_dev = ($dev->precio * $dev->cantidad) * ($desc_zona_prod[0]->porc_desc/100);
-			} else {
-				$total_dev = 0;
-			}
-
-			$total_todo_dev += $total_dev;
+			$total_todo_dev += $dev->getComision();
 		}
 
 		$zona = Doctrine::getTable('Zona')->find($vta->zona_id?:$dev->zona_id);

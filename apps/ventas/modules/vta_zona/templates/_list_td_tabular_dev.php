@@ -14,16 +14,11 @@
   <?php echo $devuelto->getProducto() ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_precio">
-  <?php echo $devuelto->precio; ?>
+<?php echo '$ '.number_format($devuelto->precio, 2, ',', '.'); ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_cantidad">
   <?php echo $devuelto->cantidad ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_neto">
-</td>
-<td class="sf_admin_text sf_admin_list_td_iva">
-  <?php echo $devuelto->iva ?>
-</td>
-<td class="sf_admin_text sf_admin_list_td_total">
-  <?php echo $devuelto->total ?>
+  <?php echo '$ '.number_format($devuelto->getSubTotal(), 2, ',', '.'); ?>
 </td>

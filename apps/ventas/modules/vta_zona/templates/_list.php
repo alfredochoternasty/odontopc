@@ -38,73 +38,31 @@
 					<input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();total_a_pagar();" />
 				</th>
         <?php	include_partial('vta_zona/list_th_tabular', array('sort' => $sort)) ?>
-				<th class="sf_admin_text ui-state-default ui-th-column"><?php echo __('Descuento', array(), 'messages') ?></th>
-				<th class="sf_admin_text ui-state-default ui-th-column"><?php echo __('Total', array(), 'messages') ?></th>
+				<th class="sf_admin_text ui-state-default ui-th-column"><?php echo __('%', array(), 'messages') ?></th>
+				<th class="sf_admin_text ui-state-default ui-th-column"><?php echo __('Comision', array(), 'messages') ?></th>
       </tr>
     </thead>
 
     <tbody>
       <?php 
-				$clientes_compartidos = array(808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
-				$clintes_sin_comision = array(795, 783, 778, 709, 779, 787, 671, 682, 780);
-				$tot_descuento = 0;
-				$zona_id = 0;
-				$array_devueltos = array();
+				$array_ventas = array();
+				$array_devoluciones = array();
 				foreach ($pager->getResults() as $i => $ventas_zona): $odd = fmod(++$i, 2) ? ' odd' : '' ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<?php include_partial('vta_zona/list_td_batch_actions', array('ventas_zona' => $ventas_zona, 'helper' => $helper)) ?>
           <?php include_partial('vta_zona/list_td_tabular', array('ventas_zona' => $ventas_zona)); ?>
+					<td class="sf_admin_text"><?php echo $ventas_zona->getPorcentajeComision().'%'; ?></td>
 					<td class="sf_admin_text">
 						<?php 
-							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
-								// si es algun cliente compartido la comision es de 10%
-								$descuento = "10.00%";
-							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
-								// si es algun cliente compartido la comision es de 0%
-								$descuento = "00.00%";
-							} elseif (!empty($ventas_zona->grupo_porc_desc)) {
-								  $descuento = sprintf("%01.2f", $ventas_zona->grupo_porc_desc)." %";
-							} elseif (!empty($ventas_zona->prod_porc_desc)) {
-								$descuento = sprintf("%01.2f", $ventas_zona->prod_porc_desc)." %";
-							} elseif (!empty($ventas_zona->grupo_precio_desc)) {
-								$descuento = sprintf("$ %01.2f", $ventas_zona->grupo_precio_desc);
-							} elseif (!empty($ventas_zona->prod_precio_desc)) {
-								$descuento = sprintf("$ %01.2f", $ventas_zona->prod_precio_desc);
-							} else {
-								$descuento = '';
-							}
-							echo $descuento;
-					?>
-					</td>					
-					<td class="sf_admin_text">
-						<?php
-							if (in_array($ventas_zona->cliente_id, $clientes_compartidos)) {
-								// si es algun cliente compartido la comision es de 10%
-								$descuento = ($ventas_zona->getDetalleResumen()->sub_total) * 10 / 100;
-							} elseif (in_array($ventas_zona->cliente_id, $clintes_sin_comision)) {
-								// si es algun cliente compartido la comision es de 0%
-								$descuento = 0;
-							} elseif (!empty($ventas_zona->grupo_porc_desc)) {
-								$descuento = ($ventas_zona->getDetalleResumen()->sub_total) * $ventas_zona->grupo_porc_desc / 100;
-							} elseif (!empty($ventas_zona->prod_porc_desc)) {
-								$descuento = ($ventas_zona->getDetalleResumen()->sub_total)  * $ventas_zona->prod_porc_desc / 100;
-							} elseif (!empty($ventas_zona->grupo_precio_desc)) {
-								$descuento = $ventas_zona->grupo_precio_desc;
-							} elseif (!empty($ventas_zona->prod_precio_desc)) {
-								$descuento = $ventas_zona->prod_precio_desc;
-							} else {
-								$descuento = 0;
-							}
-							echo sprintf("$ %01.2f", $descuento); 
-							$tot_descuento += $descuento;
-							$zona_id = $ventas_zona->zona_id;
-							$array_descuentos[$ventas_zona->id] = $descuento;
+							$comision = $ventas_zona->getComision();
+							$array_ventas[$ventas_zona->id] = $comision;
+							echo '$ '.number_format($comision, 2, ',', '.');
 						?>					
 					</td>
 				</tr>
       <?php endforeach; ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total de Comisiones: $ <span id="total_comisiones" style="color:red;">0</span></b></td>
+					<td colspan="15" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total de Comisiones: $ <span id="total_comisiones" style="color:red;">0</span></b></td>
 				</tr>
     </tbody>
 	</table>
@@ -121,10 +79,10 @@
 				</th>
         <?php	include_partial('vta_zona/list_th_tabular_dev', array('sort' => $sort)) ?>
 				<th class="sf_admin_text ui-state-default ui-th-column">
-					<?php echo __('Descuento', array(), 'messages') ?>
+					<?php echo __('%', array(), 'messages') ?>
 				</th>
 				<th class="sf_admin_text ui-state-default ui-th-column">
-					<?php echo __('Total', array(), 'messages') ?>
+					<?php echo __('Comision', array(), 'messages') ?>
 				</th>
       </tr>
     </thead>
@@ -146,9 +104,9 @@
 					if ($name == 'cliente_id' && !empty($valor)) $q->andWhere("d.cliente_id = $valor");
 					if ($name == 'producto_id' && !empty($valor)) $q->andWhere("d.producto_id = $valor");
 					if ($name == 'pagado') {
-						if ($valor > 0) 
+						if ($valor === 1) 
 							$q->andWhere("d.pago_comision_id is not null");
-						else 
+						elseif ($valor === 0) 
 							$q->andWhere("d.pago_comision_id is null");
 					}
 					// if ($name == 'grupoprod_id')
@@ -157,58 +115,24 @@
 				$q->orderBy('fecha DESC');
 				$devueltos = $q->execute();
 			
-				$tot_descuento = 0;
-				$zona_id = 0;
 				foreach ($devueltos as $devuelto): ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<?php include_partial('vta_zona/list_td_batch_actions_dev', array('devuelto' => $devuelto, 'helper' => $helper)) ?>
           <?php include_partial('vta_zona/list_td_tabular_dev', array('devuelto' => $devuelto));?>
+					<td class="sf_admin_text"><?php echo $devuelto->getPorcentajeComision().'%'; ?></td>
 					<td class="sf_admin_text">
-						<?php
-							$grupoprod_id = Doctrine_Core::getTable('Producto')->find($devuelto->producto_id)->grupoprod_id;
-							$desc_zona_grupo = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndGrupoprodId($devuelto->zona_id, $grupoprod_id);
-							$desc_zona_prod = Doctrine_Core::getTable('DescuentoZona')->findByZonaIdAndProductoId($devuelto->zona_id, $devuelto->producto_id);
-							if (in_array($devuelto->cliente_id, $clientes_compartidos)) {
-								// si es algun cliente compartido la comision es de 10%
-								$descuento = "10.00%";
-							} elseif (in_array($devuelto->cliente_id, $clintes_sin_comision)) {
-								// si es algun cliente compartido la comision es de 0%
-								$descuento = "00.00%";
-							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
-								$descuento = sprintf("%01.2f", $desc_zona_grupo[0]->porc_desc)." %";
-							} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
-								$descuento = sprintf("%01.2f", $desc_zona_prod[0]->porc_desc)." %";
-							}
-							echo $descuento;
-					?>
-					</td>					
-					<td class="sf_admin_text">
-						<?php
-							if (in_array($devuelto->cliente_id, $clientes_compartidos)) {
-								// si es algun cliente compartido la comision es de 10%
-								$descuento = ($devuelto->precio * $devuelto->cantidad) * (10/100);
-							} elseif (in_array($devuelto->cliente_id, $clintes_sin_comision)) {
-								// si es algun cliente compartido la comision es de 0%
-								$descuento = 0;
-							} elseif (!empty($desc_zona_grupo[0]->porc_desc)) {
-								$descuento = ($devuelto->precio * $devuelto->cantidad) * ($desc_zona_grupo[0]->porc_desc/100);
-							} elseif (!empty($desc_zona_prod[0]->porc_desc)) {
-								$descuento = ($devuelto->precio * $devuelto->cantidad) * ($desc_zona_prod[0]->porc_desc/100);
-							} else {
-								$descuento = 0;
-							}
-							echo sprintf("$ %01.2f", $descuento); 
-							$tot_descuento += $descuento;
-							$zona_id = $ventas_zona->zona_id;
-							$array_devueltos[$devuelto->id] = $descuento;
+						<?php 
+							$comision = $devuelto->getComision();
+							$array_devoluciones[$devuelto->id] = $comision;
+							echo '$ '.number_format($comision, 2, ',', '.');
 						?>					
 					</td>
 				</tr>
       <?php endforeach;
-				$sf_user->setAttribute('comision_zona', $zona_id);
+				$sf_user->setAttribute('comision_zona', $ventas_zona->zona_id);
 			?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-					<td colspan="17" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total Devoluciones: $ <span id="total_restar" style="color:red;">0</span></b></td>
+					<td colspan="15" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total Devoluciones: $ <span id="total_restar" style="color:red;">0</span></b></td>
 				</tr>
     </tbody>
 	</table>
@@ -225,8 +149,8 @@
   <?php endif; ?>
 </div>
 <script type="text/javascript">
-var descuentos = <?php echo json_encode($array_descuentos, JSON_PRETTY_PRINT) ?>;
-var devueltos = <?php echo json_encode($array_devueltos, JSON_PRETTY_PRINT) ?>;
+var ventas = <?php echo json_encode($array_ventas, JSON_PRETTY_PRINT) ?>;
+var devoluciones = <?php echo json_encode($array_devoluciones, JSON_PRETTY_PRINT) ?>;
 function total_a_pagar() 
 {
 	var total = 0;
@@ -235,12 +159,12 @@ function total_a_pagar()
 	var inputElements = $("input:checked");
 	for(var i=0; inputElements[i]; ++i){
 		if(inputElements[i].checked && inputElements[i].className == 'sf_admin_batch_checkbox'){
-			comisiones += descuentos[inputElements[i].value];
+			comisiones += ventas[inputElements[i].value];
 			if (isNaN(comisiones)) 
 				comisiones = 0;
 		}
 		if(inputElements[i].checked && inputElements[i].className == 'sf_admin_batch_checkbox_dev'){
-			restar += devueltos[inputElements[i].value];
+			restar += devoluciones[inputElements[i].value];
 			if (isNaN(restar)) 
 				restar = 0;
 		}

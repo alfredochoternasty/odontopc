@@ -61,4 +61,32 @@ class DetalleResumen extends BaseDetalleResumen
 		foreach($devueltos as $dev) $total_dev += $dev->cantidad;
 		return $total_dev;
 	}
+	
+	public function getPorcentajeComision() {
+		$comision = Doctrine::getTable('DescuentoZona')->findByClienteId($this->getResumen()->cliente_id);
+		if (empty($comision[0])) {
+			$comision = Doctrine::getTable('DescuentoZona')->findByGrupoprodId($this->getProducto()->grupoprod_id);
+			if (empty($comision[0])) {
+				$comision = Doctrine::getTable('DescuentoZona')->findByProductoId($this->producto_id);
+				if (empty($comision[0])) {
+					return 'No Definida';
+				}
+			}
+		}
+		return $comision[0]->porc_desc;
+	}
+
+	public function getComision() {
+		$comision = Doctrine::getTable('DescuentoZona')->findByClienteId($this->getResumen()->cliente_id);
+		if (empty($comision[0])) {
+			$comision = Doctrine::getTable('DescuentoZona')->findByGrupoprodId($this->getProducto()->grupoprod_id);
+			if (empty($comision[0])) {
+				$comision = Doctrine::getTable('DescuentoZona')->findByProductoId($this->producto_id);
+				if (empty($comision[0])) {
+					return 0;
+				}
+			}
+		}
+		return $this->sub_total * $comision[0]->porc_desc / 100;
+	}
 }

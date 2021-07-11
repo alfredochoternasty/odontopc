@@ -14,22 +14,20 @@ generator:
     config:
       actions: ~
       fields:
-        grupoprod_id: {label: Grupo}
-        Grupoprod: {label: Grupo}
-        porc_desc: {label: Porcentaje}
-        zona_id: {label: Zona}
-        Zona: {label: Zona}
+        asignado: {label: Asignado a}
+        comision: {label: Comision}
+        porc_desc: {label: Comision}
       list:
         title: Comisiones por Zona
-        display: [Producto, Grupoprod, porc_desc, Zona]
+        display: [Zona, _asignado, _nombre, _comision]
         object_actions:
-            _edit: ~
             _delete: ~
         actions:
             _new: {label: Nuevo}
-      filter:  ~
+      filter:
+        display: [cliente_id, grupoprod_id, producto_id, porc_desc, zona_id]
       form:
-        display: [producto_id, grupoprod_id, porc_desc, zona_id]
+        display: [operacion, cliente_id, grupoprod_id, producto_id, porc_desc, zona_id]
       edit:
         title: Modificar
       new:
