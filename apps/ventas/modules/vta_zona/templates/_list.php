@@ -129,7 +129,7 @@
 					</td>
 				</tr>
       <?php endforeach;
-				$sf_user->setAttribute('comision_zona', $ventas_zona->zona_id);
+				$sf_user->setAttribute('comision_zona', empty($ventas_zona->zona_id)?:0);
 			?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<td colspan="15" style="font-size:20px; text-align:center;" class="sf_admin_text"><b>Total Devoluciones: $ <span id="total_restar" style="color:red;">0</span></b></td>

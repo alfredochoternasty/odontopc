@@ -46,9 +46,7 @@
     <thead class="ui-widget-header">
       <tr>
         <?php include_partial('detres/list_th_tabular', array('sort' => $sort, 'res_tipo_factura' => $resumen->tipofactura_id)) ?>
-				<?php if ($resumen->afip_estado == 0) : ?>
 				<th id="sf_admin_list_th_actions" class="ui-state-default ui-th-column"><?php echo __('Actions', array(), 'sf_admin') ?></th>
-				<?php endif; ?>
       </tr>
     </thead>
 
@@ -72,7 +70,7 @@
         foreach ($suma_total as $i => $suma): 
 			?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-        <td colspan="<?php echo $sf_user->hasGroup('Blanco')? 8 : 7; ?>" style="text-align: right;" class="sf_admin_text">Total en <?php echo $suma['moneda'] ?>:</td>
+        <td colspan="<?php echo $sf_user->hasGroup('Blanco')? 9 : 8; ?>" style="text-align: right;" class="sf_admin_text">Total en <?php echo $suma['moneda'] ?>:</td>
         <td class="sf_admin_text">
           <?php echo sprintf($suma['simbolo']." %01.2f", $suma['total']) ?>
         </td>
