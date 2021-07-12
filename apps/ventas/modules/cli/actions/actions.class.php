@@ -115,6 +115,20 @@ class cliActions extends autoCliActions
 		);
     $this->form = $this->configuration->getForm($this->cliente, $parametros);
   }
+	
+	public function executeDelete(sfWebRequest $request) {
+		parent::executeDelete($request);
+		$cliente = $this->getRoute()->getObject();
+		if ($this->getUser()->getVarConfig('enviar_cliente') == 'S') {
+			$a_cliente = $cliente->toArray();
+			$enviado = $this->enviar_cliente($a_cliente, 'del');
+			if($enviado == true){
+				$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
+			} else {
+				$this->getUser()->setFlash('notice', 'Error: '.$enviado);
+			}
+		}
+	}
   
   public function executeGuardarnuevalocalidad(sfWebRequest $request){
     $nom_loc = $request->getParameter('loc');
@@ -150,7 +164,7 @@ class cliActions extends autoCliActions
       
 			if ($this->getUser()->getVarConfig('enviar_cliente') == 'S') {
 				$a_cliente = $cliente->toArray();
-				$enviado = $this->enviar_cliente($a_cliente);
+				$enviado = $this->enviar_cliente($a_cliente, $es_nuevo?'add':'edit');
 				if($enviado == true){
 					$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
 				} else {
@@ -247,13 +261,25 @@ class cliActions extends autoCliActions
 	  return sfView::NONE;
   }
 	
-  protected function enviar_cliente($arr_datos)
+  protected function enviar_cliente($arr_datos, $operacion)
   {
-		unset($arr_datos['id']);
+		unset(
+			$arr_datos['id'], 
+			$arr_datos['usuario_id'], 
+			$arr_datos['modo_alta'], 
+			$arr_datos['fecha_alta'], 
+			$arr_datos['nro_matricula'], 
+			$arr_datos['foto_matricula'],
+			$arr_datos['recibir_curso']
+		);
+		
+		$vars = array('operacion' => $operacion);
     foreach($arr_datos as $k => $v){
       $vars[] = $k.'='.urlencode($v);
     }
+		
 		$url = $this->getUser()->getVarConfig('enviar_cliente_url').'?'.implode('&', $vars);
 		if (!empty($url) && $url != 'http://') echo file_get_contents($url);
   }
+
 }
