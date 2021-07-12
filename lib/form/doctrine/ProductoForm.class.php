@@ -33,10 +33,9 @@ class ProductoForm extends BaseProductoForm
                                       'template' => '<div>%input%<br>%file%<br>%delete_label%&nbsp;%delete%</div>',
                                   ));
                                   
-    $ruta = sfConfig::get('sf_upload_dir').'/productos/';
     $this->validatorSchema['foto'] = new sfValidatorFile(array(
       'required'   => false,
-      'path'       => $ruta,
+      'path'       => sfConfig::get('sf_upload_dir').'/productos/',
       'mime_types' => 'web_images',
     ));
     

@@ -23,3 +23,14 @@ select zona_id, id, 10 from cliente where id in (808, 803, 810, 806, 793, 708, 7
 
 insert into descuento_zona (zona_id, cliente_id, porc_desc)
 select zona_id, id, 0 from cliente where id in (795, 783, 778, 709, 779, 787, 671, 682, 780);
+
+CREATE TEMPORARY TABLE fecha_alta_clientes
+select id, log_fecha from log_cliente where log_operacion = 'INSERT';
+
+update cliente 
+set fecha_alta = (select log_fecha from fecha_alta_clientes where fecha_alta_clientes.id = cliente.id) 
+where fecha_alta is null;
+
+update cliente 
+set modo_alta = 'sistema'
+where modo_alta is null or modo_alta = '';

@@ -1,0 +1,1 @@
+<?php if (!empty($cliente->foto_matricula)) echo link_to(image_tag('bill.png'), 'cli/VerMatricula?img='.$cliente->foto_matricula, array('target' => '_blank')); ?>

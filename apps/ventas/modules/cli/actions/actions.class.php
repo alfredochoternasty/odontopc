@@ -109,7 +109,11 @@ class cliActions extends autoCliActions
   {
 		$zid = $this->getUser()->getGuardUser()->getZonaId();
     $this->cliente = $this->getRoute()->getObject();
-    $this->form = $this->configuration->getForm($this->cliente, array('zona_id' => $zid));
+		$parametros = array(
+			'zona_id' => $zid, 
+			'image_url' => !empty($this->cliente->foto_matricula)?'GetImagen?img='.$this->cliente->foto_matricula:''
+		);
+    $this->form = $this->configuration->getForm($this->cliente, $parametros);
   }
   
   public function executeGuardarnuevalocalidad(sfWebRequest $request){
@@ -139,6 +143,10 @@ class cliActions extends autoCliActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $cliente = $form->save();
+			
+			$cliente->setModoAlta('sistema');
+			$cliente->setFechaAlta(date('Y-m-d'));
+			$cliente->save();
       
 			if ($this->getUser()->getVarConfig('enviar_cliente') == 'S') {
 				$a_cliente = $cliente->toArray();
@@ -215,6 +223,30 @@ class cliActions extends autoCliActions
     $this->redirect('@cliente');
   }  
   
+  public function executeGetImagen(sfWebRequest $request)
+  {
+	  $img = $request->getParameter('img');
+	  list($nom, $ext) = explode('.', $img);
+	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/matriculas/'.$img, 'image/'.$ext);
+	  $response = $this->getResponse();
+	  $response->setContentType($img->getMIMEType());
+		$img->thumbnail(100,100);
+		$img->setQuality(50);
+	  $response->setContent($img);
+	  return sfView::NONE;
+  }
+
+  public function executeVerMatricula(sfWebRequest $request)
+  {
+	  $img = $request->getParameter('img');
+	  list($nom, $ext) = explode('.', $img);
+	  $img = new sfImage(sfConfig::get('sf_upload_dir').'/matriculas/'.$img, 'image/'.$ext);
+	  $response = $this->getResponse();
+	  $response->setContentType($img->getMIMEType());
+	  $response->setContent($img);
+	  return sfView::NONE;
+  }
+	
   protected function enviar_cliente($arr_datos)
   {
 		unset($arr_datos['id']);
@@ -224,5 +256,4 @@ class cliActions extends autoCliActions
 		$url = $this->getUser()->getVarConfig('enviar_cliente_url').'?'.implode('&', $vars);
 		if (!empty($url) && $url != 'http://') echo file_get_contents($url);
   }
-
 }

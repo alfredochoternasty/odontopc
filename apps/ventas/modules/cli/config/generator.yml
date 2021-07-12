@@ -15,6 +15,8 @@ generator:
       actions: ~
       fields:
         condicionfiscal_id: {label: Cond. Fiscal}
+        c_fiscal: {label: CUIT}
+        foto_mat: {label: Matricula}
         dni: {help: Número de documento sin puntos '.'}
         cuit: {help: Número de CUIT sin guion '-'}
         localidad_id: {label: Ciudad, help: Si la ciudad no existe puede agregar un nueva}
@@ -24,7 +26,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Clientes
-        display: [Zona, _c_fiscal, apellido, nombre, _direccion, _telefonos, email, activo, fecha_alta]
+        display: [Zona, _c_fiscal, apellido, nombre, _direccion, _telefonos, email, activo, _foto_mat, fecha_alta]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
@@ -41,7 +43,7 @@ generator:
       filter:
         display: [zona_id, dni, apellido, nombre, localidad_id, provincia_id, lista_id, activo, fecha_alta]
       form:
-        display: [activo, condicionfiscal_id, cuit, nro_matricula, dni, apellido, nombre, lista_id, localidad_id, domicilio, telefono, celular, email, zona_id, observacion]
+        display: [activo, condicionfiscal_id, cuit, nro_matricula, foto_matricula, dni, apellido, nombre, lista_id, localidad_id, domicilio, telefono, celular, email, zona_id, observacion]
       edit:
         title: Modificar Cliente
         actions:
