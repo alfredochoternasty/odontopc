@@ -121,7 +121,7 @@ class cliActions extends autoCliActions
 		$cliente = $this->getRoute()->getObject();
 		if ($this->getUser()->getVarConfig('enviar_cliente') == 'S') {
 			$a_cliente = $cliente->toArray();
-			$enviado = $this->enviar_cliente($a_cliente, 'del');
+			$enviado = $this->enviar_cliente($a_cliente);
 			if($enviado == true){
 				$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
 			} else {
@@ -153,7 +153,6 @@ class cliActions extends autoCliActions
   
   protected function processForm(sfWebRequest $request, sfForm $form){
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-    $es_nuevo = $form->getObject()->isNew();
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $cliente = $form->save();
@@ -164,7 +163,7 @@ class cliActions extends autoCliActions
       
 			if ($this->getUser()->getVarConfig('enviar_cliente') == 'S') {
 				$a_cliente = $cliente->toArray();
-				$enviado = $this->enviar_cliente($a_cliente, $es_nuevo?'add':'edit');
+				$enviado = $this->enviar_cliente($a_cliente);
 				if($enviado == true){
 					$this->getUser()->setFlash('notice', 'Cliente tambien agregado en el otro sistema');
 				} else {
@@ -261,7 +260,7 @@ class cliActions extends autoCliActions
 	  return sfView::NONE;
   }
 	
-  protected function enviar_cliente($arr_datos, $operacion)
+  protected function enviar_cliente($arr_datos)
   {
 		unset(
 			$arr_datos['id'], 
@@ -273,13 +272,16 @@ class cliActions extends autoCliActions
 			$arr_datos['recibir_curso']
 		);
 		
-		$vars = array('operacion' => $operacion);
     foreach($arr_datos as $k => $v){
       $vars[] = $k.'='.urlencode($v);
     }
 		
 		$url = $this->getUser()->getVarConfig('enviar_cliente_url').'?'.implode('&', $vars);
-		if (!empty($url) && $url != 'http://') echo file_get_contents($url);
+		echo $url;
+		die();
+		$enviado = 0;
+		if (!empty($url) && $url != 'http://') $enviado = trim(file_get_contents($url));
+		return $enviado;
   }
 
 }

@@ -227,24 +227,6 @@ Proveedor:
     Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
     Compras: {type: many, class: Compra, local: id, foreign: proveedor_id}
     Condfiscal: {type: one, class: CondicionFiscal, local: condicionfiscal_id, onDelete: RESTRICT}
-Venta:
-  connection: doctrine
-  tableName: venta
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    cliente_id: {type: integer(4), notnull: true}
-    resumen_id: {type: integer(4), notnull: true}
-    numero: {type: integer(4), notnull: true}
-    tipofactura_id: {type: integer(4), notnull: true}
-    fecha: {type: date(25), notnull: true}    
-    moneda_id: {type: integer(4), notnull: true}
-    observacion: {type: string(200)}
-  relations:
-    Resumen: {type: one, class: Resumen, local: resumen_id}
-    Detalle: {type: many, class: DetalleVenta, local: id, foreign: venta_id}
-    Tipofactura: {type: one, local: tipofactura_id, onDelete: RESTRICT}
-    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
-    Cliente: {type: one, local: cliente_id, onDelete: RESTRICT}
 DetalleVenta:
   connection: doctrine
   tableName: detalle_venta

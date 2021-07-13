@@ -79,7 +79,15 @@
 		
     
     <?php echo $sf_content ?>
-    
+		
+		<?php 
+			// $cotizaciones = json_decode(file_get_contents('http://urucoder.com/cotizador_dolar/rest.php'), true);
+			// $ofi_compra = $cotizaciones['rates']['promedio']['compra'];
+			// $ofi_venta = $cotizaciones['rates']['promedio']['venta'];
+			// $blue_compra = $cotizaciones['rates']['blue']['compra'];
+			// $blue_venta = $cotizaciones['rates']['blue']['venta'];		
+			// echo "<b>Oficial: </b> compra: $ofi_compra - venta: $ofi_venta <b>Blue: </b> compra: $blue_compra - venta: $blue_venta";
+		?>
   </body>
 </html>
 <script type="text/javascript"> $(".chzn-select").chosen({allow_single_deselect:true});</script>
