@@ -32,9 +32,9 @@
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
 						<b>Versión del Sistema: 5.6</b><br>
-						Fecha Actualización: 08/07/2021
+						Fecha Actualización: 12/07/2021
 					</div>
-					<?php if (date("Ymd") == '20210708') { ?>
+					<?php if (date("Ymd") == '20210712') { ?>
 					<img src="/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
 			</header>

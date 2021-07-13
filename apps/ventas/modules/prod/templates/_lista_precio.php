@@ -66,7 +66,7 @@ hr {
 </head>
 <body>
 
-<?php if (!empty($postada)): ?>
+<?php if (!empty($portada)): ?>
 	<img src="./images/<?php echo $portada ?>">
 	<hr>
 <?php endif; ?>
