@@ -32,7 +32,6 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property TipoMoneda $Moneda
  * @property ListaPrecio $Lista
  * @property Doctrine_Collection $DetalleCompra
- * @property Doctrine_Collection $DetalleVenta
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $DetLisPrecio
  * @property Doctrine_Collection $ListadoVentas
@@ -76,7 +75,6 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method TipoMoneda          getMoneda()                Returns the current record's "Moneda" value
  * @method ListaPrecio         getLista()                 Returns the current record's "Lista" value
  * @method Doctrine_Collection getDetalleCompra()         Returns the current record's "DetalleCompra" collection
- * @method Doctrine_Collection getDetalleVenta()          Returns the current record's "DetalleVenta" collection
  * @method Doctrine_Collection getDetalleResumen()        Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getDetLisPrecio()          Returns the current record's "DetLisPrecio" collection
  * @method Doctrine_Collection getListadoVentas()         Returns the current record's "ListadoVentas" collection
@@ -119,7 +117,6 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setMoneda()                Sets the current record's "Moneda" value
  * @method Producto            setLista()                 Sets the current record's "Lista" value
  * @method Producto            setDetalleCompra()         Sets the current record's "DetalleCompra" collection
- * @method Producto            setDetalleVenta()          Sets the current record's "DetalleVenta" collection
  * @method Producto            setDetalleResumen()        Sets the current record's "DetalleResumen" collection
  * @method Producto            setDetLisPrecio()          Sets the current record's "DetLisPrecio" collection
  * @method Producto            setListadoVentas()         Sets the current record's "ListadoVentas" collection
@@ -259,10 +256,6 @@ abstract class BaseProducto extends sfDoctrineRecord
              'onDelete' => 'RESTRICT'));
 
         $this->hasMany('DetalleCompra', array(
-             'local' => 'id',
-             'foreign' => 'producto_id'));
-
-        $this->hasMany('DetalleVenta', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
 

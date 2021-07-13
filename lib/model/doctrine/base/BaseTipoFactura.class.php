@@ -14,7 +14,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @property integer $id_fact_cancela
  * @property string $modelo_impresion
  * @property string $cond_fiscales
- * @property Doctrine_Collection $Ventas
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Resumen
  * @property Doctrine_Collection $ListadoVentas
@@ -29,7 +28,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method integer             getIdFactCancela()      Returns the current record's "id_fact_cancela" value
  * @method string              getModeloImpresion()    Returns the current record's "modelo_impresion" value
  * @method string              getCondFiscales()       Returns the current record's "cond_fiscales" value
- * @method Doctrine_Collection getVentas()             Returns the current record's "Ventas" collection
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method Doctrine_Collection getResumen()            Returns the current record's "Resumen" collection
  * @method Doctrine_Collection getListadoVentas()      Returns the current record's "ListadoVentas" collection
@@ -43,7 +41,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoFactura', 'doctrine');
  * @method TipoFactura         setIdFactCancela()      Sets the current record's "id_fact_cancela" value
  * @method TipoFactura         setModeloImpresion()    Sets the current record's "modelo_impresion" value
  * @method TipoFactura         setCondFiscales()       Sets the current record's "cond_fiscales" value
- * @method TipoFactura         setVentas()             Sets the current record's "Ventas" collection
  * @method TipoFactura         setCompras()            Sets the current record's "Compras" collection
  * @method TipoFactura         setResumen()            Sets the current record's "Resumen" collection
  * @method TipoFactura         setListadoVentas()      Sets the current record's "ListadoVentas" collection
@@ -97,10 +94,6 @@ abstract class BaseTipoFactura extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Venta as Ventas', array(
-             'local' => 'id',
-             'foreign' => 'tipofactura_id'));
-
         $this->hasMany('Compra as Compras', array(
              'local' => 'id',
              'foreign' => 'tipofactura_id'));

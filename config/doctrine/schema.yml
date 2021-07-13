@@ -227,23 +227,6 @@ Proveedor:
     Localidad: {type: one, local: localidad_id, onDelete: RESTRICT}
     Compras: {type: many, class: Compra, local: id, foreign: proveedor_id}
     Condfiscal: {type: one, class: CondicionFiscal, local: condicionfiscal_id, onDelete: RESTRICT}
-DetalleVenta:
-  connection: doctrine
-  tableName: detalle_venta
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true}
-    venta_id: {type: integer(4), notnull: true}
-    producto_id: {type: integer(4), notnull: true}
-    precio: {type: 'decimal(10, 2)', notnull: true}
-    cantidad: {type: integer(4), notnull: true, default: 1}
-    subtotal: {type: 'decimal(10, 2)', notnull: true}
-    iva: {type: 'decimal(10, 2)', notnull: true}
-    total: {type: 'decimal(10, 2)'}
-    observacion: {type: string(200)}
-    nro_lote: {type: string(50)}
-  relations:
-    Venta: {type: one, class: Venta, local: venta_id, foreign: id, onDelete: CASCADE}
-    Producto: {type: one, class: Producto, local: producto_id, foreign: id, onDelete: RESTRICT}
 Resumen:
   connection: doctrine
   tableName: resumen

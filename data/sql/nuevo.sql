@@ -34,3 +34,8 @@ where fecha_alta is null;
 update cliente 
 set modo_alta = 'sistema'
 where modo_alta is null or modo_alta = '';
+
+DROP TEMPORARY TABLE fecha_alta_clientes;
+
+UPDATE configuracion SET valor = 'S' WHERE (id = 'enviar_cliente');
+UPDATE configuracion SET valor = 'http://sistema.ntiimplantes.com.ar/web/cliente.php' WHERE (id = 'enviar_cliente_url');

@@ -11,7 +11,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property string $nombre
  * @property string $simbolo
  * @property Doctrine_Collection $Resumenes
- * @property Doctrine_Collection $Ventas
  * @property Doctrine_Collection $Cobros
  * @property Doctrine_Collection $Compras
  * @property Doctrine_Collection $Producto
@@ -27,7 +26,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method string              getNombre()             Returns the current record's "nombre" value
  * @method string              getSimbolo()            Returns the current record's "simbolo" value
  * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
- * @method Doctrine_Collection getVentas()             Returns the current record's "Ventas" collection
  * @method Doctrine_Collection getCobros()             Returns the current record's "Cobros" collection
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method Doctrine_Collection getProducto()           Returns the current record's "Producto" collection
@@ -42,7 +40,6 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method TipoMoneda          setNombre()             Sets the current record's "nombre" value
  * @method TipoMoneda          setSimbolo()            Sets the current record's "simbolo" value
  * @method TipoMoneda          setResumenes()          Sets the current record's "Resumenes" collection
- * @method TipoMoneda          setVentas()             Sets the current record's "Ventas" collection
  * @method TipoMoneda          setCobros()             Sets the current record's "Cobros" collection
  * @method TipoMoneda          setCompras()            Sets the current record's "Compras" collection
  * @method TipoMoneda          setProducto()           Sets the current record's "Producto" collection
@@ -85,10 +82,6 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Resumen as Resumenes', array(
-             'local' => 'id',
-             'foreign' => 'moneda_id'));
-
-        $this->hasMany('Venta as Ventas', array(
              'local' => 'id',
              'foreign' => 'moneda_id'));
 

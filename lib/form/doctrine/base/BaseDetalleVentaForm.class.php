@@ -16,7 +16,7 @@ abstract class BaseDetalleVentaForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'venta_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Venta'), 'add_empty' => false)),
+      'venta_id'    => new sfWidgetFormInputText(),
       'producto_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => false)),
       'precio'      => new sfWidgetFormInputText(),
       'cantidad'    => new sfWidgetFormInputText(),
@@ -29,7 +29,7 @@ abstract class BaseDetalleVentaForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'venta_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Venta'))),
+      'venta_id'    => new sfValidatorInteger(),
       'producto_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'))),
       'precio'      => new sfValidatorNumber(),
       'cantidad'    => new sfValidatorInteger(array('required' => false)),

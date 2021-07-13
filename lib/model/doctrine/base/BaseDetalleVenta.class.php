@@ -17,7 +17,6 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleVenta', 'doctrine');
  * @property decimal $total
  * @property string $observacion
  * @property string $nro_lote
- * @property Venta $Venta
  * @property Producto $Producto
  * 
  * @method integer      getId()          Returns the current record's "id" value
@@ -30,7 +29,6 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleVenta', 'doctrine');
  * @method decimal      getTotal()       Returns the current record's "total" value
  * @method string       getObservacion() Returns the current record's "observacion" value
  * @method string       getNroLote()     Returns the current record's "nro_lote" value
- * @method Venta        getVenta()       Returns the current record's "Venta" value
  * @method Producto     getProducto()    Returns the current record's "Producto" value
  * @method DetalleVenta setId()          Sets the current record's "id" value
  * @method DetalleVenta setVentaId()     Sets the current record's "venta_id" value
@@ -42,7 +40,6 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleVenta', 'doctrine');
  * @method DetalleVenta setTotal()       Sets the current record's "total" value
  * @method DetalleVenta setObservacion() Sets the current record's "observacion" value
  * @method DetalleVenta setNroLote()     Sets the current record's "nro_lote" value
- * @method DetalleVenta setVenta()       Sets the current record's "Venta" value
  * @method DetalleVenta setProducto()    Sets the current record's "Producto" value
  * 
  * @package    odontopc
@@ -113,11 +110,6 @@ abstract class BaseDetalleVenta extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Venta', array(
-             'local' => 'venta_id',
-             'foreign' => 'id',
-             'onDelete' => 'CASCADE'));
-
         $this->hasOne('Producto', array(
              'local' => 'producto_id',
              'foreign' => 'id',

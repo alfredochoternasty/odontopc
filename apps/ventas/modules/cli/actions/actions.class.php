@@ -277,8 +277,6 @@ class cliActions extends autoCliActions
     }
 		
 		$url = $this->getUser()->getVarConfig('enviar_cliente_url').'?'.implode('&', $vars);
-		echo $url;
-		die();
 		$enviado = 0;
 		if (!empty($url) && $url != 'http://') $enviado = trim(file_get_contents($url));
 		return $enviado;

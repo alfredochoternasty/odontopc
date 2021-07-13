@@ -35,7 +35,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Doctrine_Collection $Detalle
  * @property Doctrine_Collection $Remito
  * @property Cliente $Cliente
- * @property Venta $Venta
  * @property Doctrine_Collection $Cobros
  * @property Doctrine_Collection $Compra
  * @property Doctrine_Collection $Devueltos
@@ -83,7 +82,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Doctrine_Collection getDetalle()            Returns the current record's "Detalle" collection
  * @method Doctrine_Collection getRemito()             Returns the current record's "Remito" collection
  * @method Cliente             getCliente()            Returns the current record's "Cliente" value
- * @method Venta               getVenta()              Returns the current record's "Venta" value
  * @method Doctrine_Collection getCobros()             Returns the current record's "Cobros" collection
  * @method Doctrine_Collection getCompra()             Returns the current record's "Compra" collection
  * @method Doctrine_Collection getDevueltos()          Returns the current record's "Devueltos" collection
@@ -130,7 +128,6 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setDetalle()            Sets the current record's "Detalle" collection
  * @method Resumen             setRemito()             Sets the current record's "Remito" collection
  * @method Resumen             setCliente()            Sets the current record's "Cliente" value
- * @method Resumen             setVenta()              Sets the current record's "Venta" value
  * @method Resumen             setCobros()             Sets the current record's "Cobros" collection
  * @method Resumen             setCompra()             Sets the current record's "Compra" collection
  * @method Resumen             setDevueltos()          Sets the current record's "Devueltos" collection
@@ -281,10 +278,6 @@ abstract class BaseResumen extends sfDoctrineRecord
              'local' => 'cliente_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
-
-        $this->hasOne('Venta', array(
-             'local' => 'id',
-             'foreign' => 'resumen_id'));
 
         $this->hasMany('Cobro as Cobros', array(
              'local' => 'id',

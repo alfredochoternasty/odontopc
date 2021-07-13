@@ -13,7 +13,7 @@ abstract class BaseDetalleVentaFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'venta_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Venta'), 'add_empty' => true)),
+      'venta_id'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'producto_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Producto'), 'add_empty' => true)),
       'precio'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'cantidad'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -25,7 +25,7 @@ abstract class BaseDetalleVentaFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'venta_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Venta'), 'column' => 'id')),
+      'venta_id'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'producto_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Producto'), 'column' => 'id')),
       'precio'      => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'cantidad'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -54,7 +54,7 @@ abstract class BaseDetalleVentaFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'          => 'Number',
-      'venta_id'    => 'ForeignKey',
+      'venta_id'    => 'Number',
       'producto_id' => 'ForeignKey',
       'precio'      => 'Number',
       'cantidad'    => 'Number',
