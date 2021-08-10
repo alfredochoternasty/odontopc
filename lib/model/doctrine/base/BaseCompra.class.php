@@ -21,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @property integer $remito_id
  * @property Proveedor $Proveedor
  * @property Doctrine_Collection $Detalles
+ * @property Doctrine_Collection $Pagos
  * @property TipoFactura $Tipofactura
  * @property Cuenta $Cuenta
  * @property TipoMoneda $Moneda
@@ -44,6 +45,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method integer             getRemitoId()       Returns the current record's "remito_id" value
  * @method Proveedor           getProveedor()      Returns the current record's "Proveedor" value
  * @method Doctrine_Collection getDetalles()       Returns the current record's "Detalles" collection
+ * @method Doctrine_Collection getPagos()          Returns the current record's "Pagos" collection
  * @method TipoFactura         getTipofactura()    Returns the current record's "Tipofactura" value
  * @method Cuenta              getCuenta()         Returns the current record's "Cuenta" value
  * @method TipoMoneda          getMoneda()         Returns the current record's "Moneda" value
@@ -66,6 +68,7 @@ Doctrine_Manager::getInstance()->bindComponent('Compra', 'doctrine');
  * @method Compra              setRemitoId()       Sets the current record's "remito_id" value
  * @method Compra              setProveedor()      Sets the current record's "Proveedor" value
  * @method Compra              setDetalles()       Sets the current record's "Detalles" collection
+ * @method Compra              setPagos()          Sets the current record's "Pagos" collection
  * @method Compra              setTipofactura()    Sets the current record's "Tipofactura" value
  * @method Compra              setCuenta()         Sets the current record's "Cuenta" value
  * @method Compra              setMoneda()         Sets the current record's "Moneda" value
@@ -153,6 +156,10 @@ abstract class BaseCompra extends sfDoctrineRecord
              'foreign' => 'id'));
 
         $this->hasMany('DetalleCompra as Detalles', array(
+             'local' => 'id',
+             'foreign' => 'compra_id'));
+
+        $this->hasMany('Pago as Pagos', array(
              'local' => 'id',
              'foreign' => 'compra_id'));
 

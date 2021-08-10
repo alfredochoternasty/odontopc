@@ -1,0 +1,24 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Resumen
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          resumen_usuvta
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Ventas por Usuario
+        max_per_page: 20
+        display: [TipoFactura, nro_factura, fecha, Cliente, sfGuardUser]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

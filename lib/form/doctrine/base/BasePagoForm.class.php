@@ -18,28 +18,26 @@ abstract class BasePagoForm extends BaseFormDoctrine
       'id'           => new sfWidgetFormInputHidden(),
       'fecha'        => new sfWidgetFormDate(),
       'proveedor_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Proveedor'), 'add_empty' => false)),
-      'cuenta_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cuenta'), 'add_empty' => false)),
-      'compra_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'), 'add_empty' => false)),
       'moneda_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'), 'add_empty' => false)),
       'monto'        => new sfWidgetFormInputText(),
       'tipo_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Tipo'), 'add_empty' => false)),
       'banco_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Banco'), 'add_empty' => true)),
       'numero'       => new sfWidgetFormInputText(),
       'observacion'  => new sfWidgetFormInputText(),
+      'comprobante'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'fecha'        => new sfValidatorDate(),
       'proveedor_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Proveedor'))),
-      'cuenta_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cuenta'))),
-      'compra_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Compra'))),
       'moneda_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Moneda'))),
       'monto'        => new sfValidatorNumber(),
       'tipo_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Tipo'))),
       'banco_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Banco'), 'required' => false)),
       'numero'       => new sfValidatorInteger(array('required' => false)),
-      'observacion'  => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+      'observacion'  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'comprobante'  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('pago[%s]');

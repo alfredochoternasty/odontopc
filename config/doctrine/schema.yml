@@ -1015,3 +1015,70 @@ Categoria:
     nombre: {type: string(255)}
   relations:
     Grupos: {type: many, class: Grupoprod, local: id, onDelete: RESTRICT}
+Pago:
+  connection: doctrine
+  tableName: pago
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    fecha: {type: date(25), notnull: true}
+    proveedor_id: {type: integer(4), notnull: true}
+    moneda_id: {type: integer(4), notnull: true}
+    monto: {type: 'decimal(10, 2)', notnull: true}
+    tipo_id: {type: integer(4), notnull: true}
+    banco_id: {type: integer(4)}
+    numero: {type: integer(4)}
+    observacion: {type: string(255)}
+    comprobante: {type: string(255)}
+  relations:
+    Proveedor: {type: one, class: Proveedor, local: proveedor_id}
+    Tipo: {type: one, class: TipoCobroPago, local: tipo_id, onDelete: RESTRICT}
+    Moneda: {type: one, class: TipoMoneda, local: moneda_id, foreign: id, onDelete: RESTRICT}
+    Banco: {type: one, local: banco_id, onDelete: RESTRICT}
+Envio:
+  connection: doctrine
+  tableName: envio
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    resumen_id: {type: integer(4), notnull: true}
+    estado_id: {type: integer(4), notnull: true}
+    fecha: {type: date(25), notnull: true}
+    empresa_id: {type: integer(4), notnull: true}
+    fecha_salida: {type: 'decimal(10, 2)', notnull: true}
+    fecha_llegada: {type: integer(4)}
+    nro_seguimiento: {type: integer(4)}
+    comprobante: {type: string(255)}
+    observacion: {type: string(255)}
+  relations:
+    Resumen: {type: one, class: Resumen, local: resumen_id, onDelete: RESTRICT}
+    Estado: {type: one, class: Estado, local: estado_id, onDelete: RESTRICT}
+    Empresa: {type: one, class: Empresa, local: empresa_id, onDelete: RESTRICT}
+Estado:
+  connection: doctrine
+  tableName: estado
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(50), notnull: true}
+    categoria: {type: string(50), notnull: true}
+Empresa:
+  connection: doctrine
+  tableName: empresa
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    nombre: {type: string(50), notnull: true}
+LoteAjuste:
+  connection: doctrine
+  tableName: lote_ajuste
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true}
+    fecha: {type: date(25), notnull: true}
+    producto_id: {type: integer(4)}
+    nro_lote: {type: string(255)}
+    zona_id: {type: integer(4)}
+    cantidad: {type: integer(4)}
+    observacion: {type: string(255)}
+    usuario_id: {type: integer(4)}
+  relations:
+    Producto: {type: one, class: Producto, local: producto_id, onDelete: RESTRICT}
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
+    Lote: {type: one, class: Lote, local: nro_lote, onDelete: RESTRICT}
+    sfGuardUser: {type: one, local: usuario_id, onDelete: RESTRICT}

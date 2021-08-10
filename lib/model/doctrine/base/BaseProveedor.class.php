@@ -20,6 +20,7 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @property Doctrine_Collection $Compras
  * @property CondicionFiscal $Condfiscal
  * @property Doctrine_Collection $ListadoCompras
+ * @property Doctrine_Collection $Pago
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getCuit()               Returns the current record's "cuit" value
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
  * @method CondicionFiscal     getCondfiscal()         Returns the current record's "Condfiscal" value
  * @method Doctrine_Collection getListadoCompras()     Returns the current record's "ListadoCompras" collection
+ * @method Doctrine_Collection getPago()               Returns the current record's "Pago" collection
  * @method Proveedor           setId()                 Sets the current record's "id" value
  * @method Proveedor           setCuit()               Sets the current record's "cuit" value
  * @method Proveedor           setCondicionfiscalId()  Sets the current record's "condicionfiscal_id" value
@@ -47,6 +49,7 @@ Doctrine_Manager::getInstance()->bindComponent('Proveedor', 'doctrine');
  * @method Proveedor           setCompras()            Sets the current record's "Compras" collection
  * @method Proveedor           setCondfiscal()         Sets the current record's "Condfiscal" value
  * @method Proveedor           setListadoCompras()     Sets the current record's "ListadoCompras" collection
+ * @method Proveedor           setPago()               Sets the current record's "Pago" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -118,6 +121,10 @@ abstract class BaseProveedor extends sfDoctrineRecord
              'onDelete' => 'RESTRICT'));
 
         $this->hasMany('ListadoCompras', array(
+             'local' => 'id',
+             'foreign' => 'proveedor_id'));
+
+        $this->hasMany('Pago', array(
              'local' => 'id',
              'foreign' => 'proveedor_id'));
     }

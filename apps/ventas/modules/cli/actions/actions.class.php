@@ -156,7 +156,7 @@ class cliActions extends autoCliActions
     if ($form->isValid()){
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
       $cliente = $form->save();
-			
+			// print_r($this->form->getValues());
 			$cliente->setModoAlta('sistema');
 			$cliente->setFechaAlta(date('Y-m-d'));
 			$cliente->save();

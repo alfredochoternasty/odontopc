@@ -10,17 +10,20 @@ Doctrine_Manager::getInstance()->bindComponent('TipoCobroPago', 'doctrine');
  * @property integer $id
  * @property string $nombre
  * @property Doctrine_Collection $Cobros
+ * @property Doctrine_Collection $pagos
  * @property Doctrine_Collection $ListadoCobros
  * @property Doctrine_Collection $PagoComision
  * 
  * @method integer             getId()            Returns the current record's "id" value
  * @method string              getNombre()        Returns the current record's "nombre" value
  * @method Doctrine_Collection getCobros()        Returns the current record's "Cobros" collection
+ * @method Doctrine_Collection getPagos()         Returns the current record's "pagos" collection
  * @method Doctrine_Collection getListadoCobros() Returns the current record's "ListadoCobros" collection
  * @method Doctrine_Collection getPagoComision()  Returns the current record's "PagoComision" collection
  * @method TipoCobroPago       setId()            Sets the current record's "id" value
  * @method TipoCobroPago       setNombre()        Sets the current record's "nombre" value
  * @method TipoCobroPago       setCobros()        Sets the current record's "Cobros" collection
+ * @method TipoCobroPago       setPagos()         Sets the current record's "pagos" collection
  * @method TipoCobroPago       setListadoCobros() Sets the current record's "ListadoCobros" collection
  * @method TipoCobroPago       setPagoComision()  Sets the current record's "PagoComision" collection
  * 
@@ -51,6 +54,10 @@ abstract class BaseTipoCobroPago extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Cobro as Cobros', array(
+             'local' => 'id',
+             'foreign' => 'tipo_id'));
+
+        $this->hasMany('Pago as pagos', array(
              'local' => 'id',
              'foreign' => 'tipo_id'));
 

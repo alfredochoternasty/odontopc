@@ -1,3 +1,21 @@
+lote_ajuste:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                LoteAjuste
+    module:               stockajuste
+    prefix_path:          /stockajuste
+    column:               id
+    with_wildcard_routes: true
+
+resumen_usuvta:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Resumen
+    module:               usuvta
+    prefix_path:          /usuvta
+    column:               id
+    with_wildcard_routes: true
+
 tipo_venta:
   class: sfDoctrineRouteCollection
   options:

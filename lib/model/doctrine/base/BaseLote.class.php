@@ -24,6 +24,7 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @property Doctrine_Collection $DetalleCompra
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $DevProducto
+ * @property Doctrine_Collection $LoteAjuste
  * 
  * @method integer             getId()             Returns the current record's "id" value
  * @method integer             getProductoId()     Returns the current record's "producto_id" value
@@ -42,6 +43,7 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method Doctrine_Collection getDetalleCompra()  Returns the current record's "DetalleCompra" collection
  * @method Doctrine_Collection getDetalleResumen() Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getDevProducto()    Returns the current record's "DevProducto" collection
+ * @method Doctrine_Collection getLoteAjuste()     Returns the current record's "LoteAjuste" collection
  * @method Lote                setId()             Sets the current record's "id" value
  * @method Lote                setProductoId()     Sets the current record's "producto_id" value
  * @method Lote                setNroLote()        Sets the current record's "nro_lote" value
@@ -59,6 +61,7 @@ Doctrine_Manager::getInstance()->bindComponent('Lote', 'doctrine');
  * @method Lote                setDetalleCompra()  Sets the current record's "DetalleCompra" collection
  * @method Lote                setDetalleResumen() Sets the current record's "DetalleResumen" collection
  * @method Lote                setDevProducto()    Sets the current record's "DevProducto" collection
+ * @method Lote                setLoteAjuste()     Sets the current record's "LoteAjuste" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -147,5 +150,9 @@ abstract class BaseLote extends sfDoctrineRecord
         $this->hasMany('DevProducto', array(
              'local' => 'id',
              'foreign' => 'lote_id'));
+
+        $this->hasMany('LoteAjuste', array(
+             'local' => 'id',
+             'foreign' => 'nro_lote'));
     }
 }

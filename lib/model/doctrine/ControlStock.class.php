@@ -47,4 +47,14 @@ class ControlStock extends BaseControlStock
 		}
 		return $cantidad;
 	}
+	
+	function getCantAjustes()
+	{
+		$ajustes = Doctrine::getTable('LoteAjuste')->findByProductoIdAndNroLoteAndZonaId($this->producto_id, $this->nro_lote, $this->zona_id);
+		$cantidad = 0;
+		foreach ($ajustes as $ajuste) {
+			$cantidad += $ajuste->cantidad;
+		}
+		return $cantidad;
+	}
 }

@@ -49,6 +49,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @property Doctrine_Collection $VentasZona
  * @property Doctrine_Collection $PromocionProducto
  * @property Doctrine_Collection $PromocionRegalo
+ * @property Doctrine_Collection $LoteAjuste
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getCodigo()                Returns the current record's "codigo" value
@@ -92,6 +93,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Doctrine_Collection getVentasZona()            Returns the current record's "VentasZona" collection
  * @method Doctrine_Collection getPromocionProducto()     Returns the current record's "PromocionProducto" collection
  * @method Doctrine_Collection getPromocionRegalo()       Returns the current record's "PromocionRegalo" collection
+ * @method Doctrine_Collection getLoteAjuste()            Returns the current record's "LoteAjuste" collection
  * @method Producto            setId()                    Sets the current record's "id" value
  * @method Producto            setCodigo()                Sets the current record's "codigo" value
  * @method Producto            setNombre()                Sets the current record's "nombre" value
@@ -134,6 +136,7 @@ Doctrine_Manager::getInstance()->bindComponent('Producto', 'doctrine');
  * @method Producto            setVentasZona()            Sets the current record's "VentasZona" collection
  * @method Producto            setPromocionProducto()     Sets the current record's "PromocionProducto" collection
  * @method Producto            setPromocionRegalo()       Sets the current record's "PromocionRegalo" collection
+ * @method Producto            setLoteAjuste()            Sets the current record's "LoteAjuste" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -324,6 +327,10 @@ abstract class BaseProducto extends sfDoctrineRecord
              'foreign' => 'producto_id'));
 
         $this->hasMany('PromocionRegalo', array(
+             'local' => 'id',
+             'foreign' => 'producto_id'));
+
+        $this->hasMany('LoteAjuste', array(
              'local' => 'id',
              'foreign' => 'producto_id'));
     }

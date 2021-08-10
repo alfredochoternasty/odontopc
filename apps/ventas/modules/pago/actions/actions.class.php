@@ -109,6 +109,16 @@ return $this->renderText($resultado);
     }
   }
   
+  public function executeEdit(sfWebRequest $request)
+  {
+		$zid = $this->getUser()->getGuardUser()->getZonaId();
+    $this->pago = $this->getRoute()->getObject();
+		$parametros = array(
+			'image_url' => !empty($this->pago->comprobante)?'GetImagen?img='.$this->pago->comprobante:''
+		);
+    $this->form = $this->configuration->getForm($this->pago, $parametros);
+  }
+  
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();

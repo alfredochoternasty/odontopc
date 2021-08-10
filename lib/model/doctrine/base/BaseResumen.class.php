@@ -53,6 +53,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @property Doctrine_Collection $CobroResumen
  * @property Doctrine_Collection $ProductoTraza
  * @property Doctrine_Collection $VentasZona
+ * @property Doctrine_Collection $Envio
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method date                getFecha()              Returns the current record's "fecha" value
@@ -100,6 +101,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Doctrine_Collection getCobroResumen()       Returns the current record's "CobroResumen" collection
  * @method Doctrine_Collection getProductoTraza()      Returns the current record's "ProductoTraza" collection
  * @method Doctrine_Collection getVentasZona()         Returns the current record's "VentasZona" collection
+ * @method Doctrine_Collection getEnvio()              Returns the current record's "Envio" collection
  * @method Resumen             setId()                 Sets the current record's "id" value
  * @method Resumen             setFecha()              Sets the current record's "fecha" value
  * @method Resumen             setTipoVentaId()        Sets the current record's "tipo_venta_id" value
@@ -146,6 +148,7 @@ Doctrine_Manager::getInstance()->bindComponent('Resumen', 'doctrine');
  * @method Resumen             setCobroResumen()       Sets the current record's "CobroResumen" collection
  * @method Resumen             setProductoTraza()      Sets the current record's "ProductoTraza" collection
  * @method Resumen             setVentasZona()         Sets the current record's "VentasZona" collection
+ * @method Resumen             setEnvio()              Sets the current record's "Envio" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -356,6 +359,10 @@ abstract class BaseResumen extends sfDoctrineRecord
              'foreign' => 'resumen_id'));
 
         $this->hasMany('VentasZona', array(
+             'local' => 'id',
+             'foreign' => 'resumen_id'));
+
+        $this->hasMany('Envio', array(
              'local' => 'id',
              'foreign' => 'resumen_id'));
     }

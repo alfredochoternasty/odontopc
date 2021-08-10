@@ -10,58 +10,49 @@ Doctrine_Manager::getInstance()->bindComponent('Pago', 'doctrine');
  * @property integer $id
  * @property date $fecha
  * @property integer $proveedor_id
- * @property integer $cuenta_id
- * @property integer $compra_id
  * @property integer $moneda_id
  * @property decimal $monto
  * @property integer $tipo_id
  * @property integer $banco_id
  * @property integer $numero
  * @property string $observacion
- * @property Compra $Compra
+ * @property string $comprobante
  * @property Proveedor $Proveedor
  * @property TipoCobroPago $Tipo
- * @property Cuenta $Cuenta
  * @property TipoMoneda $Moneda
  * @property Banco $Banco
- * @property Doctrine_Collection $PagoCompra
+ * @property Compra $Compra
  * 
- * @method integer             getId()           Returns the current record's "id" value
- * @method date                getFecha()        Returns the current record's "fecha" value
- * @method integer             getProveedorId()  Returns the current record's "proveedor_id" value
- * @method integer             getCuentaId()     Returns the current record's "cuenta_id" value
- * @method integer             getCompraId()     Returns the current record's "compra_id" value
- * @method integer             getMonedaId()     Returns the current record's "moneda_id" value
- * @method decimal             getMonto()        Returns the current record's "monto" value
- * @method integer             getTipoId()       Returns the current record's "tipo_id" value
- * @method integer             getBancoId()      Returns the current record's "banco_id" value
- * @method integer             getNumero()       Returns the current record's "numero" value
- * @method string              getObservacion()  Returns the current record's "observacion" value
- * @method Compra              getCompra()       Returns the current record's "Compra" value
- * @method Proveedor           getProveedor()    Returns the current record's "Proveedor" value
- * @method TipoCobroPago       getTipo()         Returns the current record's "Tipo" value
- * @method Cuenta              getCuenta()       Returns the current record's "Cuenta" value
- * @method TipoMoneda          getMoneda()       Returns the current record's "Moneda" value
- * @method Banco               getBanco()        Returns the current record's "Banco" value
- * @method Doctrine_Collection getPagoCompra()   Returns the current record's "PagoCompra" collection
- * @method Pago                setId()           Sets the current record's "id" value
- * @method Pago                setFecha()        Sets the current record's "fecha" value
- * @method Pago                setProveedorId()  Sets the current record's "proveedor_id" value
- * @method Pago                setCuentaId()     Sets the current record's "cuenta_id" value
- * @method Pago                setCompraId()     Sets the current record's "compra_id" value
- * @method Pago                setMonedaId()     Sets the current record's "moneda_id" value
- * @method Pago                setMonto()        Sets the current record's "monto" value
- * @method Pago                setTipoId()       Sets the current record's "tipo_id" value
- * @method Pago                setBancoId()      Sets the current record's "banco_id" value
- * @method Pago                setNumero()       Sets the current record's "numero" value
- * @method Pago                setObservacion()  Sets the current record's "observacion" value
- * @method Pago                setCompra()       Sets the current record's "Compra" value
- * @method Pago                setProveedor()    Sets the current record's "Proveedor" value
- * @method Pago                setTipo()         Sets the current record's "Tipo" value
- * @method Pago                setCuenta()       Sets the current record's "Cuenta" value
- * @method Pago                setMoneda()       Sets the current record's "Moneda" value
- * @method Pago                setBanco()        Sets the current record's "Banco" value
- * @method Pago                setPagoCompra()   Sets the current record's "PagoCompra" collection
+ * @method integer       getId()           Returns the current record's "id" value
+ * @method date          getFecha()        Returns the current record's "fecha" value
+ * @method integer       getProveedorId()  Returns the current record's "proveedor_id" value
+ * @method integer       getMonedaId()     Returns the current record's "moneda_id" value
+ * @method decimal       getMonto()        Returns the current record's "monto" value
+ * @method integer       getTipoId()       Returns the current record's "tipo_id" value
+ * @method integer       getBancoId()      Returns the current record's "banco_id" value
+ * @method integer       getNumero()       Returns the current record's "numero" value
+ * @method string        getObservacion()  Returns the current record's "observacion" value
+ * @method string        getComprobante()  Returns the current record's "comprobante" value
+ * @method Proveedor     getProveedor()    Returns the current record's "Proveedor" value
+ * @method TipoCobroPago getTipo()         Returns the current record's "Tipo" value
+ * @method TipoMoneda    getMoneda()       Returns the current record's "Moneda" value
+ * @method Banco         getBanco()        Returns the current record's "Banco" value
+ * @method Compra        getCompra()       Returns the current record's "Compra" value
+ * @method Pago          setId()           Sets the current record's "id" value
+ * @method Pago          setFecha()        Sets the current record's "fecha" value
+ * @method Pago          setProveedorId()  Sets the current record's "proveedor_id" value
+ * @method Pago          setMonedaId()     Sets the current record's "moneda_id" value
+ * @method Pago          setMonto()        Sets the current record's "monto" value
+ * @method Pago          setTipoId()       Sets the current record's "tipo_id" value
+ * @method Pago          setBancoId()      Sets the current record's "banco_id" value
+ * @method Pago          setNumero()       Sets the current record's "numero" value
+ * @method Pago          setObservacion()  Sets the current record's "observacion" value
+ * @method Pago          setComprobante()  Sets the current record's "comprobante" value
+ * @method Pago          setProveedor()    Sets the current record's "Proveedor" value
+ * @method Pago          setTipo()         Sets the current record's "Tipo" value
+ * @method Pago          setMoneda()       Sets the current record's "Moneda" value
+ * @method Pago          setBanco()        Sets the current record's "Banco" value
+ * @method Pago          setCompra()       Sets the current record's "Compra" value
  * 
  * @package    odontopc
  * @subpackage model
@@ -85,16 +76,6 @@ abstract class BasePago extends sfDoctrineRecord
              'length' => 25,
              ));
         $this->hasColumn('proveedor_id', 'integer', 4, array(
-             'type' => 'integer',
-             'notnull' => true,
-             'length' => 4,
-             ));
-        $this->hasColumn('cuenta_id', 'integer', 4, array(
-             'type' => 'integer',
-             'notnull' => true,
-             'length' => 4,
-             ));
-        $this->hasColumn('compra_id', 'integer', 4, array(
              'type' => 'integer',
              'notnull' => true,
              'length' => 4,
@@ -123,31 +104,25 @@ abstract class BasePago extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('observacion', 'string', 200, array(
+        $this->hasColumn('observacion', 'string', 255, array(
              'type' => 'string',
-             'length' => 200,
+             'length' => 255,
+             ));
+        $this->hasColumn('comprobante', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Compra', array(
-             'local' => 'compra_id',
-             'foreign' => 'id',
-             'onDelete' => 'CASCADE'));
-
         $this->hasOne('Proveedor', array(
              'local' => 'proveedor_id',
              'foreign' => 'id'));
 
         $this->hasOne('TipoCobroPago as Tipo', array(
              'local' => 'tipo_id',
-             'foreign' => 'id',
-             'onDelete' => 'RESTRICT'));
-
-        $this->hasOne('Cuenta', array(
-             'local' => 'cuenta_id',
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
@@ -161,8 +136,8 @@ abstract class BasePago extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'RESTRICT'));
 
-        $this->hasMany('PagoCompra', array(
-             'local' => 'id',
-             'foreign' => 'pago_id'));
+        $this->hasOne('Compra', array(
+             'local' => 'compra_id',
+             'foreign' => 'id'));
     }
 }

@@ -13,6 +13,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @property Doctrine_Collection $Resumenes
  * @property Doctrine_Collection $Cobros
  * @property Doctrine_Collection $Compras
+ * @property Doctrine_Collection $Pagos
  * @property Doctrine_Collection $Producto
  * @property Doctrine_Collection $DetalleResumen
  * @property Doctrine_Collection $CtaCte
@@ -28,6 +29,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method Doctrine_Collection getResumenes()          Returns the current record's "Resumenes" collection
  * @method Doctrine_Collection getCobros()             Returns the current record's "Cobros" collection
  * @method Doctrine_Collection getCompras()            Returns the current record's "Compras" collection
+ * @method Doctrine_Collection getPagos()              Returns the current record's "Pagos" collection
  * @method Doctrine_Collection getProducto()           Returns the current record's "Producto" collection
  * @method Doctrine_Collection getDetalleResumen()     Returns the current record's "DetalleResumen" collection
  * @method Doctrine_Collection getCtaCte()             Returns the current record's "CtaCte" collection
@@ -42,6 +44,7 @@ Doctrine_Manager::getInstance()->bindComponent('TipoMoneda', 'doctrine');
  * @method TipoMoneda          setResumenes()          Sets the current record's "Resumenes" collection
  * @method TipoMoneda          setCobros()             Sets the current record's "Cobros" collection
  * @method TipoMoneda          setCompras()            Sets the current record's "Compras" collection
+ * @method TipoMoneda          setPagos()              Sets the current record's "Pagos" collection
  * @method TipoMoneda          setProducto()           Sets the current record's "Producto" collection
  * @method TipoMoneda          setDetalleResumen()     Sets the current record's "DetalleResumen" collection
  * @method TipoMoneda          setCtaCte()             Sets the current record's "CtaCte" collection
@@ -90,6 +93,10 @@ abstract class BaseTipoMoneda extends sfDoctrineRecord
              'foreign' => 'moneda_id'));
 
         $this->hasMany('Compra as Compras', array(
+             'local' => 'id',
+             'foreign' => 'moneda_id'));
+
+        $this->hasMany('Pago as Pagos', array(
              'local' => 'id',
              'foreign' => 'moneda_id'));
 

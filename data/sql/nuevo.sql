@@ -1,41 +1,134 @@
-DROP VIEW cliente_ultima_compra;
-CREATE VIEW cliente_ultima_compra AS select 
-	id, 
-	zona_id,
-	apellido, 
-	nombre,
-	telefono, 
-	email, 
-	celular,
-	(select max(r1.fecha) from resumen r1 where r1.cliente_id = c.id) as fecha,
-  (
-    select max(r2.id) 
-    from resumen r2
-    where r2.cliente_id = c.id 
-      and r2.fecha = (
-        select max(r3.fecha) from resumen r3 where r3.cliente_id = c.id
-      )
-  ) as resumen_id
-from cliente c;
+ALTER TABLE pago 
+ADD COLUMN comprobante VARCHAR(255) NULL AFTER observacion;
 
-insert into descuento_zona (zona_id, cliente_id, porc_desc)
-select zona_id, id, 10 from cliente where id in (808, 803, 810, 806, 793, 708, 791, 792, 813, 800, 788, 802, 657, 811, 805, 777, 675, 812, 797, 769, 655, 736, 801, 782, 770, 790, 798, 840, 784, 796, 671, 804, 785, 789, 756, 786, 724, 719, 746, 722, 698, 781, 767);
+CREATE TABLE lote_ajuste (
+  id INT NOT NULL AUTO_INCREMENT,
+  fecha DATE NULL,
+  producto_id INT NULL,
+  nro_lote VARCHAR(45) NULL,
+  zona_id INT NULL,
+  cantidad INT NULL,
+  observacion VARCHAR(255) NULL,
+  usuario_id INT NULL,
+  PRIMARY KEY (id));
 
-insert into descuento_zona (zona_id, cliente_id, porc_desc)
-select zona_id, id, 0 from cliente where id in (795, 783, 778, 709, 779, 787, 671, 682, 780);
+insert into lote_ajuste(fecha, producto_id, nro_lote, zona_id, cantidad, observacion, usuario_id)values 
+(current_date, 37, '1201201500001/18', 3, 1, 'ajuste por recuento de stock', 1),
+(current_date, 92, '4109300014001/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 311, '5301300140001/20', 3, -4, 'ajuste por recuento de stock', 1),
+(current_date, 310, '5301100210001/20', 3, 2, 'ajuste por recuento de stock', 1),
+(current_date, 327, '5201300140001/20', 3, 4, 'ajuste por recuento de stock', 1),
+(current_date, 313, '5201100210001/20', 3, -2, 'ajuste por recuento de stock', 1),
+(current_date, 105, '1004500350001/18', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 251, '3903750300003/19', 3, -5, 'ajuste por recuento de stock', 1),
+(current_date, 155, '0103500850002B/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 150, '0103501000001C/19', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 263, '2203501000002D/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 264, '2203501150002D/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 265, '2203501300002B/19', 3, -2, 'ajuste por recuento de stock', 1),
+(current_date, 268, '2203750850001C/19', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 269, '2203751000001A/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 189, '0403300450001/19', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 189, '0403300450002/19', 3, -7, 'ajuste por recuento de stock', 1),
+(current_date, 190, '04033055001/17', 3, 6, 'ajuste por recuento de stock', 1),
+(current_date, 176, 'C05033025004/21', 3, 1, 'ajuste por recuento de stock', 1),
+(current_date, 177, 'C05033035001/21', 3, 1, 'ajuste por recuento de stock', 1),
+(current_date, 178, '0503300450002/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 184, '0504500250003/20 - 0801800800003/20', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 185, '0504500350001/20', 3, -2, 'ajuste por recuento de stock', 1),
+(current_date, 240, '4003302508002/18', 3, -1, 'ajuste por recuento de stock', 1),
+(current_date, 241, '4003303508001/20', 3, 1, 'ajuste por recuento de stock', 1),
+(current_date, 243, '4003302515002/18', 3, -9, 'ajuste por recuento de stock', 1),
+(current_date, 244, '4003303515001/20', 3, 2, 'ajuste por recuento de stock', 1),
+(current_date, 246, '4003302525001/19', 3, -2, 'ajuste por recuento de stock', 1),
+(current_date, 247, '4003303525002/18', 3, 2, 'ajuste por recuento de stock', 1),
+(current_date, 169, '020330020001/20', 3, -3, 'ajuste por recuento de stock', 1),
+(current_date, 170, '0203300300002/20', 3, 12, 'ajuste por recuento de stock', 1),
+(current_date, 227, '0203300600001/19', 3, 2, 'ajuste por recuento de stock', 1),
+(current_date, 418, '0204500300001/21', 3, 2, 'ajuste por recuento de stock', 1),
+(current_date, 174, '0204500350001/19', 3, -11, 'ajuste por recuento de stock', 1);
 
-CREATE TEMPORARY TABLE fecha_alta_clientes
-select id, log_fecha from log_cliente where log_operacion = 'INSERT';
 
-update cliente 
-set fecha_alta = (select log_fecha from fecha_alta_clientes where fecha_alta_clientes.id = cliente.id) 
-where fecha_alta is null;
+update lote set stock = 5 where zona_id = 3 and nro_lote = '1201202000001/20';
+update lote set stock = 3 where zona_id = 3 and nro_lote = '1201201500001/18';
+update lote set stock = 6 where zona_id = 3 and nro_lote = '4109300014001/20';
+update lote set stock = 4 where zona_id = 3 and nro_lote = '1502340310002/19';
+update lote set stock = 3 where zona_id = 3 and nro_lote = '5301300140001/20';
+update lote set stock = 9 where zona_id = 3 and nro_lote = '5301100210001/20';
+update lote set stock = 12 where zona_id = 3 and nro_lote = '5201300140001/20';
+update lote set stock = 9 where zona_id = 3 and nro_lote = '5201100210001/20';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '1004500350001/18';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '3903750300003/19';
+update lote set stock = 10 where zona_id = 3 and nro_lote = '4501500350003/20';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '0103500850002B/20';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '0103501000001C/19';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '2203501000002D/20';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '2203501150002D/20';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '2203501300002B/19';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '2203750850001C/19';
+update lote set stock = 6 where zona_id = 3 and nro_lote = '2203751000001A/20';
+update lote set stock = 12 where zona_id = 3 and nro_lote = '0403300450001/19';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '0403300450002/19';
+update lote set stock = 7 where zona_id = 3 and nro_lote = '04033055001/17';
+update lote set stock = 23 where zona_id = 3 and nro_lote = 'C05033025004/21';
+update lote set stock = 5 where zona_id = 3 and nro_lote = 'C05033035001/21';
+update lote set stock = 1 where zona_id = 3 and nro_lote = '0503300450002/20';
+update lote set stock = 18 where zona_id = 3 and nro_lote = '0504500250003/20 - 0801800800003/20';
+update lote set stock = 9 where zona_id = 3 and nro_lote = '0504500350001/20';
+update lote set stock = 0 where zona_id = 3 and nro_lote = '4003302508002/18';
+update lote set stock = 10 where zona_id = 3 and nro_lote = '4003303508001/20';
+update lote set stock = 3 where zona_id = 3 and nro_lote = '4003302515002/18';
+update lote set stock = 10 where zona_id = 3 and nro_lote = '4003303515001/20';
+update lote set stock = 4 where zona_id = 3 and nro_lote = '4003302525001/19';
+update lote set stock = 4 where zona_id = 3 and nro_lote = '4003303525002/18';
+update lote set stock = 8 where zona_id = 3 and nro_lote = '020330020001/20';
+update lote set stock = 16 where zona_id = 3 and nro_lote = '0203300300002/20';
+update lote set stock = 5 where zona_id = 3 and nro_lote = '0203300600001/19';
+update lote set stock = 8 where zona_id = 3 and nro_lote = '0204500300001/21';
+update lote set stock = 5 where zona_id = 3 and nro_lote = '0204500350001/19';
 
-update cliente 
-set modo_alta = 'sistema'
-where modo_alta is null or modo_alta = '';
+create table temp_cobros
+select cliente_id, sum(monto) as monto from cobro where fecha >= '2021-07-01' group by cliente_id;
 
-DROP TEMPORARY TABLE fecha_alta_clientes;
+create table temp_cobrado
+select 
+  fecha, 
+  cliente_id
+from resumen r
+  join detalle_resumen dr on dr.resumen_id = r.id
+  join cliente c on r.cliente_id = c.id
+where c.zona_id = 3 and pagado = 0 and afip_estado = 1 and cliente_id in (select cliente_id from temp_cobros)
+group by fecha, cliente_id;
 
-UPDATE configuracion SET valor = 'S' WHERE (id = 'enviar_cliente');
-UPDATE configuracion SET valor = 'http://sistema.ntiimplantes.com.ar/web/cliente.php' WHERE (id = 'enviar_cliente_url');
+update resumen set pagado = 1, fecha_pagado = (select max(fecha) from temp_cobros where temp_cobros.cliente_id = resumen.cliente_id) where afip_estado = 1 and pagado = 0 and cliente_id in (
+  select cliente_id 
+  from temp_cobrado 
+  where (select sum(debe-haber) from cta_cte where cta_cte.cliente_id = temp_cobrado.cliente_id) <= 0.5
+) or id in (8730, 8887, 8934);
+
+
+delete from temp_cobrado;
+insert into temp_cobrado
+select 
+  fecha, 
+  cliente_id
+from resumen r
+  join detalle_resumen dr on dr.resumen_id = r.id
+  join cliente c on r.cliente_id = c.id
+where c.zona_id = 2 and pagado = 0 and afip_estado = 1 and cliente_id in (select cliente_id from temp_cobros)
+group by fecha, cliente_id;
+
+update resumen set pagado = 1, fecha_pagado = (select max(fecha) from temp_cobros where temp_cobros.cliente_id = resumen.cliente_id) where afip_estado = 1 and pagado = 0 and cliente_id in (
+  select cliente_id 
+  from temp_cobrado 
+  where (select sum(debe-haber) from cta_cte where cta_cte.cliente_id = temp_cobrado.cliente_id) <= 0.5
+) and id <> 8507;
+
+
+drop table temp_cobros;
+drop table temp_cobrado;
+
+update resumen 
+set fecha_pagado = (select min(fecha) from cobro where cobro.cliente_id = resumen.cliente_id and cobro.fecha >= resumen.fecha),
+observacion = '-'
+where zona_id = 2 and afip_estado = 1 and fecha < '2021-01-01' and fecha_pagado >= '2021-07-01';

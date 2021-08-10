@@ -31,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $UsuarioZona
  * @property Doctrine_Collection $DescuentoZona
  * @property Doctrine_Collection $VentasZona
+ * @property Doctrine_Collection $LoteAjuste
  * 
  * @method integer             getId()                  Returns the current record's "id" value
  * @method string              getNombre()              Returns the current record's "nombre" value
@@ -56,6 +57,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getUsuarioZona()         Returns the current record's "UsuarioZona" collection
  * @method Doctrine_Collection getDescuentoZona()       Returns the current record's "DescuentoZona" collection
  * @method Doctrine_Collection getVentasZona()          Returns the current record's "VentasZona" collection
+ * @method Doctrine_Collection getLoteAjuste()          Returns the current record's "LoteAjuste" collection
  * @method Zona                setId()                  Sets the current record's "id" value
  * @method Zona                setNombre()              Sets the current record's "nombre" value
  * @method Zona                setClienteId()           Sets the current record's "cliente_id" value
@@ -80,6 +82,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setUsuarioZona()         Sets the current record's "UsuarioZona" collection
  * @method Zona                setDescuentoZona()       Sets the current record's "DescuentoZona" collection
  * @method Zona                setVentasZona()          Sets the current record's "VentasZona" collection
+ * @method Zona                setLoteAjuste()          Sets the current record's "LoteAjuste" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -193,6 +196,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('VentasZona', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('LoteAjuste', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
     }

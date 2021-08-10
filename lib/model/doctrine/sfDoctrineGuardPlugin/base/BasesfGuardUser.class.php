@@ -33,6 +33,7 @@
  * @property Doctrine_Collection $Cobro
  * @property Doctrine_Collection $DevProducto
  * @property Doctrine_Collection $ClienteSeguimiento
+ * @property Doctrine_Collection $LoteAjuste
  * 
  * @method string                getFirstName()             Returns the current record's "first_name" value
  * @method string                getLastName()              Returns the current record's "last_name" value
@@ -61,6 +62,7 @@
  * @method Doctrine_Collection   getCobro()                 Returns the current record's "Cobro" collection
  * @method Doctrine_Collection   getDevProducto()           Returns the current record's "DevProducto" collection
  * @method Doctrine_Collection   getClienteSeguimiento()    Returns the current record's "ClienteSeguimiento" collection
+ * @method Doctrine_Collection   getLoteAjuste()            Returns the current record's "LoteAjuste" collection
  * @method sfGuardUser           setFirstName()             Sets the current record's "first_name" value
  * @method sfGuardUser           setLastName()              Sets the current record's "last_name" value
  * @method sfGuardUser           setEmailAddress()          Sets the current record's "email_address" value
@@ -88,6 +90,7 @@
  * @method sfGuardUser           setCobro()                 Sets the current record's "Cobro" collection
  * @method sfGuardUser           setDevProducto()           Sets the current record's "DevProducto" collection
  * @method sfGuardUser           setClienteSeguimiento()    Sets the current record's "ClienteSeguimiento" collection
+ * @method sfGuardUser           setLoteAjuste()            Sets the current record's "LoteAjuste" collection
  * 
  * @package    odontopc
  * @subpackage model
@@ -230,6 +233,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasMany('ClienteSeguimiento', array(
              'local' => 'id',
              'foreign' => 'usuario'));
+
+        $this->hasMany('LoteAjuste', array(
+             'local' => 'id',
+             'foreign' => 'usuario_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

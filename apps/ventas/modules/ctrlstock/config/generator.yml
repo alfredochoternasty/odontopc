@@ -25,7 +25,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Listado de Control de Stock
-        display: [Zona, Grupo, Producto, nro_lote, _comprados, _vendidos, stock_guardado, ult_venta]
+        display: [Zona, Grupo, Producto, nro_lote, _comprados, _vendidos, _ajustes, stock_guardado, ult_venta]
         object_actions:
           detalle: {label: Ver salidas de deposito}
         batch_actions: []
@@ -40,4 +40,4 @@ generator:
       edit:    ~
       new:     ~
       show:
-        display: [Zona, Grupo, Producto, nro_lote, _comprados, _vendidos, stock_guardado, ult_venta]
+        display: [Zona, Grupo, Producto, nro_lote, _comprados, _vendidos, _ajuste, stock_guardado, ult_venta]

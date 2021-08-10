@@ -17,12 +17,16 @@ generator:
         fecha: { date_format: dd/MM/yyyy }
       list:
         title: Pagos a Proveedores
-        display: [Proveedor, fecha, monto, Tipo, Banco, numero, observacion]
+        display: [Proveedor, fecha, monto, moneda_id, Tipo, Banco, numero, observacion]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
-      filter:  ~
-      form:    ~
+        actions:
+          _new: {label: Cargar Nuevo Pago}
+      filter:
+        display: [proveedor_id, fecha, tipo_id, banco_id, numero]
+      form:
+        display: [proveedor_id, fecha, tipo_id, moneda_id, monto, banco_id, numero, comprobante, observacion]
       edit:
         title: Modificar Pago a Proveedor
       new:
