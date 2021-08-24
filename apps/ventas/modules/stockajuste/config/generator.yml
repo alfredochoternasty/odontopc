@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           LoteAjuste
-    theme:                 admin
+    theme:                 jroller
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -13,8 +13,12 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
+      fields:
+        SfGuardUser: {label: Usuario}
+        nro_lote: {label: Lote}
+      list:
+        title: Ajustes de Stock
+        display: [Zona, fecha, Producto, nro_lote, cantidad, observacion, SfGuardUser]
       filter:  ~
       form:    ~
       edit:    ~

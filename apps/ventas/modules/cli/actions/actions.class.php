@@ -42,7 +42,8 @@ class cliActions extends autoCliActions
 			$this->redirect(array('sf_route' => 'cliente_edit', 'sf_subject' => $cliente));		
 		}
 		
-		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		// $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$chars = "abcdefghijklmnopqrstuvwxyz0123456789";
 		$clave = substr(str_shuffle($chars),0,8);
 		
 		if(!$user){
