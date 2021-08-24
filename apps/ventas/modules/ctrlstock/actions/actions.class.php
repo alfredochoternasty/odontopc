@@ -28,4 +28,26 @@ class ctrlstockActions extends autoCtrlstockActions
     ));
     $this->redirect($url);
   }
+  
+  public function executeListPlanillaControl(sfWebRequest $request) {
+    $datos = $this->get_datos();
+    $dompdf = new DOMPDF();
+    $_hasFilters = $this->getUser()->getAttribute('ctrlstock.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $dompdf->load_html($this->getPartial("planilla_ctrl", array("listado" => $datos, 'configuration' => $this->configuration, 'filters' => $this->filters, 'hasFilters' => $_hasFilters)));
+    $dompdf->set_paper('A4',$this->getModoImpresion());
+    $dompdf->render();
+    $dompdf->stream("planilla_control.pdf");    
+    return sfView::NONE;
+  }
+  
+  public function executeListPlanillaDistribucion(sfWebRequest $request) {
+    $datos = $this->get_datos();
+    $dompdf = new DOMPDF();
+    $_hasFilters = $this->getUser()->getAttribute('ctrlstock.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+    $dompdf->load_html($this->getPartial("planilla_distribucion", array("listado" => $datos, 'configuration' => $this->configuration, 'filters' => $this->filters, 'hasFilters' => $_hasFilters)));
+    $dompdf->set_paper('A4',$this->getModoImpresion());
+    $dompdf->render();
+    $dompdf->stream("planilla_distribucion.pdf");    
+    return sfView::NONE;
+  }
 }

@@ -7,7 +7,7 @@ table{width:100%}
 table tr th{background: #CCC;}
 #titulo{width:100%;text-align:center;}
 .page-number {text-align: right;}
-.page-number:before {content: "P?gina " counter(page);}
+.page-number:before {content: "Página " counter(page);}
 hr {page-break-after: always;border: 0;}
 #footer2 {position:fixed; bottom:0; right:0; width:20%}
 

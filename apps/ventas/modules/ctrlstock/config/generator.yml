@@ -35,6 +35,8 @@ generator:
           imprimir_todo: {label: Imprimir todo}
           excel_pagina: {label: Descargar Pagina}
           excel_todo: {label: Descargar Todo}
+          planilla_control: {label: Imp. Control de Inventario}
+          planilla_distribucion: {label: Imp. Planilla de Distribucion}
       filter:
         display: [grupoprod_id, producto_id, nro_lote, zona_id, ult_venta]
       form:    ~
