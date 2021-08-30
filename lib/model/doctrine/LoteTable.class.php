@@ -26,4 +26,17 @@ class LoteTable extends Doctrine_Table
       $q->orderBy('z.nombre, p.orden_grupo, p.nombre, '.$rootAlias.'.nro_lote');
       return $q;      
     }
+    
+    public function getLotesProductoZona($p_producto, $p_zona) {
+      return Doctrine::getTable('Lote')
+        ->createQuery()
+        ->where("producto_id = $p_producto")
+        ->andWhere("zona_id = $p_zona")
+        ->andWhere("fecha_vto > curdate() or fecha_vto is null")
+        ->andWhere('stock > 0')
+        ->andWhere('activo = 1')
+        ->andWhere('externo = 0')
+        ->orderBy('fecha_vto ASC, id ASC')
+        ->execute();
+    }
 }

@@ -13,12 +13,22 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        sfGuardUser: {label: Usuario}
       list:
         title: Ventas por Usuario
         max_per_page: 20
         display: [TipoFactura, nro_factura, fecha, Cliente, sfGuardUser]
+        actions:
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
+        object_actions: []
+        batch_actions: []
       filter:  ~
       form:    ~
       edit:    ~
       new:     ~
+      show:
+        display: [TipoFactura, nro_factura, fecha, Cliente, sfGuardUser]

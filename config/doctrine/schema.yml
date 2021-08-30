@@ -746,6 +746,7 @@ Curso:
     foto2: {type: string(255)}
     foto3: {type: string(255)}
     foto4: {type: string(255)}
+    cupo_max: {type: integer(4)}
 CursoInscripcion:
   connection: doctrine
   tableName: curso_inscripcion

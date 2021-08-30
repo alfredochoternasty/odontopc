@@ -19,7 +19,20 @@ generator:
       list:
         title: Ajustes de Stock
         display: [Zona, fecha, Producto, nro_lote, cantidad, observacion, SfGuardUser]
-      filter:  ~
-      form:    ~
+        actions:
+          _new: {label: Nuevo}
+        object_actions:
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar Todo}
+        batch_actions: []
+      filter:
+        display: [fecha, zona_id, producto_id, nro_lote]
+      form:
+        display: [fecha, zona_id, producto_id, nro_lote, cantidad, observacion, usuario_id]
       edit:    ~
-      new:     ~
+      new:
+        title: Nuevo Ajuste
+      show:
+        display: [Zona, fecha, Producto, nro_lote, cantidad, observacion, SfGuardUser]

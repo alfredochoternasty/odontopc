@@ -13,4 +13,17 @@ require_once dirname(__FILE__).'/../lib/stockajusteGeneratorHelper.class.php';
  */
 class stockajusteActions extends autoStockajusteActions
 {
+	public function executeGet_lotes_producto(sfWebRequest $request){
+    $pid = $request->getParameter('pid');
+    $zid = $request->getParameter('zid');
+		$lotes = Doctrine::getTable('Lote')->getLotesProductoZona($pid, $zid);
+		
+		echo '<option value=""></option>';
+		foreach ($lotes as $lote) {
+			echo '<option value="'.$lote->nro_lote.'">'.$lote->nro_lote.'</option>';
+		}
+
+    return sfView::NONE;
+	}
+
 }

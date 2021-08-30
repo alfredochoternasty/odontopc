@@ -219,24 +219,18 @@ class detresActions extends autoDetresActions
   public function executeGet_lotes_producto(sfWebRequest $request){
     $pid = $request->getParameter('pid');
     $rid = $request->getParameter('rid');
-    if(empty($rid)){
-      $rid = $this->getUser()->getAttribute('rid');
-    }
+    if(empty($rid)) $rid = $this->getUser()->getAttribute('rid');
 		$resumen = Doctrine::getTable('Resumen')->find($rid);
 		$zona = $resumen->getCliente()->getZonaId();
-		
-    $q = Doctrine_Query::create();    
-		$q->select('l.nro_lote, l.fecha_vto, l.stock');
-    $q->from('Lote l');
-    $q->where('l.producto_id = '.$pid);
-		$q->andWhere("l.zona_id = $zona");
-    $q->andWhere("l.fecha_vto > curdate() or l.fecha_vto is null");
-		$q->andWhere('l.stock > 0');
-		$q->andWhere('l.activo = 1');
-		$q->andWhere('l.externo = 0');
-    $q->orderBy('l.fecha_vto ASC, l.id ASC');
-    $lotes_stock = $q->fetchArray()?:array();
-	
+
+		$lotes = Doctrine::getTable('Lote')->getLotesProductoZona($pid, $zona);
+		if (!$lotes) {
+			$lotes_stock = array();
+		} else {
+			foreach ($lotes as $lote) 
+				$lotes_stock = array('nro_lote' => $lote->nro_lote, 'fecha_vto' => $lote->fecha_vto, 'stock' => $lote->stock);
+		}
+
 		if ($zona == 1 && $resumen->tipofactura_id != 4) {
 			$q = Doctrine_Query::create();
 			// $q->select('dr.nro_lote, (dr.cantidad - sum(coalesce(dr2.cantidad, 0))+sum(coalesce(dr2.bonificados, 0))) vend_remito');
