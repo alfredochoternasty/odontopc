@@ -296,6 +296,7 @@ DetalleResumen:
     lote_id: {type: integer(4)}
     det_remito_id: {type: integer(4)}
     descuento: {type: integer(4)}
+    tipo_descuento: {type: integer(4)}
   relations:
     Resumen: {type: one, local: resumen_id, onDelete: CASCADE}
     Producto: {type: one, local: producto_id, onDelete: RESTRICT}

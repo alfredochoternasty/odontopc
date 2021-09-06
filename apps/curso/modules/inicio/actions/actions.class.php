@@ -79,7 +79,7 @@ class inicioActions extends sfActions
 
   public function executeVolver(sfWebRequest $request)
   {
-		$this->redirect('@inicio/index);
+		$this->redirect('@inicio/index');
   }
 
   public function executeImprimirPagina(sfWebRequest $request)
