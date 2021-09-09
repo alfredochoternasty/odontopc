@@ -24,6 +24,8 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'det_remito_id'  => new sfWidgetFormFilterInput(),
       'nro_factura'    => new sfWidgetFormFilterInput(),
+      'descuento'      => new sfWidgetFormFilterInput(),
+      'tipo_descuento' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -38,6 +40,8 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoFactura'), 'column' => 'id')),
       'det_remito_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'nro_factura'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'descuento'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'tipo_descuento' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas_filters[%s]');
@@ -69,6 +73,8 @@ abstract class BaseListadoVentasFormFilter extends BaseFormFilterDoctrine
       'tipofactura_id' => 'ForeignKey',
       'det_remito_id'  => 'Number',
       'nro_factura'    => 'Number',
+      'descuento'      => 'Number',
+      'tipo_descuento' => 'Number',
     );
   }
 }

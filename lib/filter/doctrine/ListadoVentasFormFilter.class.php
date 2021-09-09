@@ -38,7 +38,10 @@ class ListadoVentasFormFilter extends BaseListadoVentasFormFilter
 		$this->widgetSchema['nro_remito'] = new sfWidgetFormFilterInput(array('with_empty' => false));
 		$this->validatorSchema['nro_remito'] = new sfValidatorPass(array('required' => false));
 		
-		$this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true, 'order_by' => array('nombre', 'asc')));    
+		$this->widgetSchema['grupoprod_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Grupo'), 'add_empty' => true, 'order_by' => array('nombre', 'asc')));
+		
+		$this->widgetSchema['tipo_descuento'] = new sfWidgetFormChoice(array('choices' => array('' => '', 0 => 'Descuento Normal', 1 => 'Bonificacion Especial')));
+		$this->validatorSchema['tipo_descuento'] = new sfValidatorInteger(array('required' => false));
   }
 	
 	public function getFields()

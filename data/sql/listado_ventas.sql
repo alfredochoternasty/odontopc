@@ -12,7 +12,9 @@ select
   cantidad,
 	resumen.tipofactura_id,
 	detalle_resumen.det_remito_id,
-	resumen.nro_factura
+	resumen.nro_factura,
+	detalle_resumen.descuento,
+	detalle_resumen.tipo_descuento
 from 
 	resumen 
 		join detalle_resumen on resumen.id = detalle_resumen.resumen_id
@@ -30,11 +32,13 @@ select
 	dev_producto.cantidad * -1 AS cantidad,
 	resumen.tipofactura_id,
 	null,
-	dev_producto.nro_factura
+	dev_producto.nro_factura,
+	null,
+	null
 from 
 	dev_producto
 		join producto on dev_producto.producto_id = producto.id
 		join resumen on dev_producto.resumen_id = resumen.id
 where
   (dev_producto.zona_id = 1 and resumen.tipofactura_id <> 4)
-  or (dev_producto.zona_id > 1)
+  or (dev_producto.zona_id > 1);

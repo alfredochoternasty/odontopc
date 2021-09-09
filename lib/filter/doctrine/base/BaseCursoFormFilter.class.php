@@ -31,6 +31,7 @@ abstract class BaseCursoFormFilter extends BaseFormFilterDoctrine
       'foto2'          => new sfWidgetFormFilterInput(),
       'foto3'          => new sfWidgetFormFilterInput(),
       'foto4'          => new sfWidgetFormFilterInput(),
+      'cupo_max'       => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -52,6 +53,7 @@ abstract class BaseCursoFormFilter extends BaseFormFilterDoctrine
       'foto2'          => new sfValidatorPass(array('required' => false)),
       'foto3'          => new sfValidatorPass(array('required' => false)),
       'foto4'          => new sfValidatorPass(array('required' => false)),
+      'cupo_max'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('curso_filters[%s]');
@@ -90,6 +92,7 @@ abstract class BaseCursoFormFilter extends BaseFormFilterDoctrine
       'foto2'          => 'Text',
       'foto3'          => 'Text',
       'foto4'          => 'Text',
+      'cupo_max'       => 'Number',
     );
   }
 }

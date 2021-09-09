@@ -27,6 +27,8 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'tipofactura_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'add_empty' => true)),
       'det_remito_id'  => new sfWidgetFormInputText(),
       'nro_factura'    => new sfWidgetFormInputText(),
+      'descuento'      => new sfWidgetFormInputText(),
+      'tipo_descuento' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -42,6 +44,8 @@ abstract class BaseListadoVentasForm extends BaseFormDoctrine
       'tipofactura_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoFactura'), 'required' => false)),
       'det_remito_id'  => new sfValidatorInteger(array('required' => false)),
       'nro_factura'    => new sfValidatorInteger(array('required' => false)),
+      'descuento'      => new sfValidatorInteger(array('required' => false)),
+      'tipo_descuento' => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('listado_ventas[%s]');

@@ -22,7 +22,7 @@ generator:
       list:
         table_method: retrieveConJoins
         title: Listado de Ventas
-        display: [Zona, _comprobante, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote, _remito]
+        display: [Zona, _comprobante, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, descuento, tipo_descuento, _total, nro_lote, _remito]
         max_per_page: 9999
         object_actions:
           _factura: {label: Fact}
@@ -33,9 +33,9 @@ generator:
           imprimir_pagina: ~
           imprimir_todo: ~
       filter:
-        display: [zona_id, tipofactura_id, nro_factura, fecha, cliente_id, grupoprod_id, producto_id, nro_lote, categoria_id]
+        display: [zona_id, tipofactura_id, nro_factura, fecha, cliente_id, grupoprod_id, producto_id, nro_lote, categoria_id, tipo_descuento]
       form:    ~
       edit:    ~
       new:     ~
       show:
-        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, _total, nro_lote, _remito]
+        display: [Zona, Resumen, fecha, Cliente, Producto, _precio, _cantidad, _iva, _neto, descuento, tipo_descuento, _total, nro_lote, _remito]

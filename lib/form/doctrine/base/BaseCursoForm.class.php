@@ -34,6 +34,7 @@ abstract class BaseCursoForm extends BaseFormDoctrine
       'foto2'          => new sfWidgetFormInputText(),
       'foto3'          => new sfWidgetFormInputText(),
       'foto4'          => new sfWidgetFormInputText(),
+      'cupo_max'       => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -56,6 +57,7 @@ abstract class BaseCursoForm extends BaseFormDoctrine
       'foto2'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'foto3'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'foto4'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'cupo_max'       => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('curso[%s]');

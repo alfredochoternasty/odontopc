@@ -25,6 +25,8 @@ class DetalleResumenForm extends BaseDetalleResumenForm
 	
     $this->widgetSchema['nro_lote'] = new sfWidgetFormChoice(array('choices' => array()));
     $this->widgetSchema['cantidad'] = new sfWidgetFormChoice(array('choices' => array()));
+				
+    $this->widgetSchema['tipo_descuento'] = new sfWidgetFormChoice(array('choices' => array(0 => 'Descuento Normal', 1 => 'Bonificacion Especial')));
     $this->widgetSchema['descuento'] = new sfWidgetFormChoice(array('choices' => array(
 			0 => 'Sin Descuento',
 			5 => '5% de descuento',

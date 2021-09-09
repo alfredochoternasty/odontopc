@@ -89,4 +89,11 @@ class DetalleResumen extends BaseDetalleResumen
 		}
 		return $this->sub_total * $comision[0]->porc_desc / 100;
 	}
+	
+	public function getTipoDesc() {
+		if ($this->getTipoDescuento() == 1) 
+			return 'Bonif.';
+		else 
+			return '';
+	}
 }

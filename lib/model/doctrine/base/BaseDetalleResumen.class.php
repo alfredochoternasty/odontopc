@@ -26,6 +26,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @property integer $lote_id
  * @property integer $det_remito_id
  * @property integer $descuento
+ * @property integer $tipo_descuento
  * @property Resumen $Resumen
  * @property Producto $Producto
  * @property sfGuardUser $sfGuardUser
@@ -57,6 +58,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method integer             getLoteId()             Returns the current record's "lote_id" value
  * @method integer             getDetRemitoId()        Returns the current record's "det_remito_id" value
  * @method integer             getDescuento()          Returns the current record's "descuento" value
+ * @method integer             getTipoDescuento()      Returns the current record's "tipo_descuento" value
  * @method Resumen             getResumen()            Returns the current record's "Resumen" value
  * @method Producto            getProducto()           Returns the current record's "Producto" value
  * @method sfGuardUser         getSfGuardUser()        Returns the current record's "sfGuardUser" value
@@ -87,6 +89,7 @@ Doctrine_Manager::getInstance()->bindComponent('DetalleResumen', 'doctrine');
  * @method DetalleResumen      setLoteId()             Sets the current record's "lote_id" value
  * @method DetalleResumen      setDetRemitoId()        Sets the current record's "det_remito_id" value
  * @method DetalleResumen      setDescuento()          Sets the current record's "descuento" value
+ * @method DetalleResumen      setTipoDescuento()      Sets the current record's "tipo_descuento" value
  * @method DetalleResumen      setResumen()            Sets the current record's "Resumen" value
  * @method DetalleResumen      setProducto()           Sets the current record's "Producto" value
  * @method DetalleResumen      setSfGuardUser()        Sets the current record's "sfGuardUser" value
@@ -203,6 +206,10 @@ abstract class BaseDetalleResumen extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('descuento', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('tipo_descuento', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

@@ -26,6 +26,7 @@ Doctrine_Manager::getInstance()->bindComponent('Curso', 'doctrine');
  * @property string $foto2
  * @property string $foto3
  * @property string $foto4
+ * @property integer $cupo_max
  * @property Doctrine_Collection $CursoInscripcion
  * @property Doctrine_Collection $CursoMailEnviado
  * 
@@ -48,6 +49,7 @@ Doctrine_Manager::getInstance()->bindComponent('Curso', 'doctrine');
  * @method string              getFoto2()            Returns the current record's "foto2" value
  * @method string              getFoto3()            Returns the current record's "foto3" value
  * @method string              getFoto4()            Returns the current record's "foto4" value
+ * @method integer             getCupoMax()          Returns the current record's "cupo_max" value
  * @method Doctrine_Collection getCursoInscripcion() Returns the current record's "CursoInscripcion" collection
  * @method Doctrine_Collection getCursoMailEnviado() Returns the current record's "CursoMailEnviado" collection
  * @method Curso               setId()               Sets the current record's "id" value
@@ -69,6 +71,7 @@ Doctrine_Manager::getInstance()->bindComponent('Curso', 'doctrine');
  * @method Curso               setFoto2()            Sets the current record's "foto2" value
  * @method Curso               setFoto3()            Sets the current record's "foto3" value
  * @method Curso               setFoto4()            Sets the current record's "foto4" value
+ * @method Curso               setCupoMax()          Sets the current record's "cupo_max" value
  * @method Curso               setCursoInscripcion() Sets the current record's "CursoInscripcion" collection
  * @method Curso               setCursoMailEnviado() Sets the current record's "CursoMailEnviado" collection
  * 
@@ -176,6 +179,10 @@ abstract class BaseCurso extends sfDoctrineRecord
         $this->hasColumn('foto4', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
+             ));
+        $this->hasColumn('cupo_max', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
     }
 

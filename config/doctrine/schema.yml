@@ -415,6 +415,8 @@ ListadoVentas:
     tipofactura_id: {type: integer(4)}
     det_remito_id: {type: integer(4)}
     nro_factura: {type: integer(4)}
+    descuento: {type: integer(4)}
+    tipo_descuento: {type: integer(4)}
   relations:
     DetalleResumen: {type: one, class: DetalleResumen, local: id}
     Resumen: {type: one, class: Resumen, local: resumen_id}

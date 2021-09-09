@@ -19,6 +19,8 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @property integer $tipofactura_id
  * @property integer $det_remito_id
  * @property integer $nro_factura
+ * @property integer $descuento
+ * @property integer $tipo_descuento
  * @property DetalleResumen $DetalleResumen
  * @property Resumen $Resumen
  * @property Cliente $Cliente
@@ -39,6 +41,8 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method integer        getTipofacturaId()  Returns the current record's "tipofactura_id" value
  * @method integer        getDetRemitoId()    Returns the current record's "det_remito_id" value
  * @method integer        getNroFactura()     Returns the current record's "nro_factura" value
+ * @method integer        getDescuento()      Returns the current record's "descuento" value
+ * @method integer        getTipoDescuento()  Returns the current record's "tipo_descuento" value
  * @method DetalleResumen getDetalleResumen() Returns the current record's "DetalleResumen" value
  * @method Resumen        getResumen()        Returns the current record's "Resumen" value
  * @method Cliente        getCliente()        Returns the current record's "Cliente" value
@@ -58,6 +62,8 @@ Doctrine_Manager::getInstance()->bindComponent('ListadoVentas', 'doctrine');
  * @method ListadoVentas  setTipofacturaId()  Sets the current record's "tipofactura_id" value
  * @method ListadoVentas  setDetRemitoId()    Sets the current record's "det_remito_id" value
  * @method ListadoVentas  setNroFactura()     Sets the current record's "nro_factura" value
+ * @method ListadoVentas  setDescuento()      Sets the current record's "descuento" value
+ * @method ListadoVentas  setTipoDescuento()  Sets the current record's "tipo_descuento" value
  * @method ListadoVentas  setDetalleResumen() Sets the current record's "DetalleResumen" value
  * @method ListadoVentas  setResumen()        Sets the current record's "Resumen" value
  * @method ListadoVentas  setCliente()        Sets the current record's "Cliente" value
@@ -122,6 +128,14 @@ abstract class BaseListadoVentas extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('nro_factura', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('descuento', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
+        $this->hasColumn('tipo_descuento', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

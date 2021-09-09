@@ -36,6 +36,7 @@
 	<td class="sf_admin_text sf_admin_list_td_precio"><?php echo $detalle_resumen->PrecioFormato() ?></td>
 	<td class="sf_admin_text sf_admin_list_td_sub_total"><?php echo $detalle_resumen->SubTotalFormato() ?></td>
 	<td class="sf_admin_text sf_admin_list_td_descuento"><?php echo $detalle_resumen->getDescuento() ?></td>
+	<td class="sf_admin_text sf_admin_list_td_descuento"><?php echo $detalle_resumen->getTipoDesc() ?></td>
 	<?php
 		$modulo_factura = $sf_user->getVarConfig('modulo_factura');
 		if ($modulo_factura == 'S'):

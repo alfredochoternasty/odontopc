@@ -31,6 +31,7 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'lote_id'          => new sfWidgetFormFilterInput(),
       'det_remito_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DetalleRemito'), 'add_empty' => true)),
       'descuento'        => new sfWidgetFormFilterInput(),
+      'tipo_descuento'   => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -52,6 +53,7 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'lote_id'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'det_remito_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('DetalleRemito'), 'column' => 'id')),
       'descuento'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'tipo_descuento'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('detalle_resumen_filters[%s]');
@@ -90,6 +92,7 @@ abstract class BaseDetalleResumenFormFilter extends BaseFormFilterDoctrine
       'lote_id'          => 'Number',
       'det_remito_id'    => 'ForeignKey',
       'descuento'        => 'Number',
+      'tipo_descuento'   => 'Number',
     );
   }
 }

@@ -20,7 +20,7 @@ generator:
         table_method: retrieveConJoins
         title: Detalle de la Venta
         max_per_page: 999
-        display: [_producto, nro_lote, _precio, cantidad, _descuento, sub_total, iva, _total, observacion]
+        display: [_producto, nro_lote, _precio, cantidad, tipo_descuento, _descuento, sub_total, iva, _total, observacion]
         object_actions:
           _delete: ~
         batch_actions: {}
@@ -33,4 +33,4 @@ generator:
         title: Modificar Detalle
       new:
         title: Nuevo Detalle
-        display: [producto_id, nro_lote, det_remito_id, precio, cantidad, sub_total, descuento, iva, total, observacion]
+        display: [producto_id, nro_lote, det_remito_id, precio, cantidad, sub_total, tipo_descuento, descuento, iva, total, observacion]
