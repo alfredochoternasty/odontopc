@@ -1,0 +1,1 @@
+<?php	if ($curso_inscripcion->visto) echo 'SI'; ?>

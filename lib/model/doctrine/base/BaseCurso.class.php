@@ -27,6 +27,8 @@ Doctrine_Manager::getInstance()->bindComponent('Curso', 'doctrine');
  * @property string $foto3
  * @property string $foto4
  * @property integer $cupo_max
+ * @property integer $zona_id
+ * @property Zona $Zona
  * @property Doctrine_Collection $CursoInscripcion
  * @property Doctrine_Collection $CursoMailEnviado
  * 
@@ -50,6 +52,8 @@ Doctrine_Manager::getInstance()->bindComponent('Curso', 'doctrine');
  * @method string              getFoto3()            Returns the current record's "foto3" value
  * @method string              getFoto4()            Returns the current record's "foto4" value
  * @method integer             getCupoMax()          Returns the current record's "cupo_max" value
+ * @method integer             getZonaId()           Returns the current record's "zona_id" value
+ * @method Zona                getZona()             Returns the current record's "Zona" value
  * @method Doctrine_Collection getCursoInscripcion() Returns the current record's "CursoInscripcion" collection
  * @method Doctrine_Collection getCursoMailEnviado() Returns the current record's "CursoMailEnviado" collection
  * @method Curso               setId()               Sets the current record's "id" value
@@ -72,6 +76,8 @@ Doctrine_Manager::getInstance()->bindComponent('Curso', 'doctrine');
  * @method Curso               setFoto3()            Sets the current record's "foto3" value
  * @method Curso               setFoto4()            Sets the current record's "foto4" value
  * @method Curso               setCupoMax()          Sets the current record's "cupo_max" value
+ * @method Curso               setZonaId()           Sets the current record's "zona_id" value
+ * @method Curso               setZona()             Sets the current record's "Zona" value
  * @method Curso               setCursoInscripcion() Sets the current record's "CursoInscripcion" collection
  * @method Curso               setCursoMailEnviado() Sets the current record's "CursoMailEnviado" collection
  * 
@@ -107,7 +113,6 @@ abstract class BaseCurso extends sfDoctrineRecord
              ));
         $this->hasColumn('hora', 'string', 5, array(
              'type' => 'string',
-             'notnull' => true,
              'length' => 5,
              ));
         $this->hasColumn('lugar', 'string', 255, array(
@@ -116,7 +121,6 @@ abstract class BaseCurso extends sfDoctrineRecord
              ));
         $this->hasColumn('precio', 'decimal', 10, array(
              'type' => 'decimal',
-             'notnull' => true,
              'default' => 0,
              'length' => 10,
              'scale' => '2',
@@ -125,7 +129,6 @@ abstract class BaseCurso extends sfDoctrineRecord
              'type' => 'string',
              'fixed' => 1,
              'default' => 'SI',
-             'notnull' => true,
              'length' => 2,
              ));
         $this->hasColumn('logo', 'string', 255, array(
@@ -142,26 +145,22 @@ abstract class BaseCurso extends sfDoctrineRecord
              ));
         $this->hasColumn('ini_insc', 'date', 25, array(
              'type' => 'date',
-             'notnull' => true,
              'length' => 25,
              ));
         $this->hasColumn('fin_insc', 'date', 25, array(
              'type' => 'date',
-             'notnull' => true,
              'length' => 25,
              ));
         $this->hasColumn('habilitado', 'string', 2, array(
              'type' => 'string',
              'fixed' => 1,
              'default' => 'SI',
-             'notnull' => true,
              'length' => 2,
              ));
         $this->hasColumn('permite_insc', 'string', 2, array(
              'type' => 'string',
              'fixed' => 1,
              'default' => 'SI',
-             'notnull' => true,
              'length' => 2,
              ));
         $this->hasColumn('foto1', 'string', 255, array(
@@ -184,11 +183,20 @@ abstract class BaseCurso extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
+        $this->hasColumn('zona_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('Zona', array(
+             'local' => 'zona_id',
+             'foreign' => 'id',
+             'onDelete' => 'RESTRICT'));
+
         $this->hasMany('CursoInscripcion', array(
              'local' => 'id',
              'foreign' => 'curso_id'));

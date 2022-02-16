@@ -12,9 +12,13 @@
  */
 class Curso extends BaseCurso
 {
-  public function __toString(){
-    $val = $this->getNombre();
-    return empty($val)? '' : $val;
+	public function __toString()
+	{
+		return empty($this->nombre)? '':$this->nombre;
+	}
+	
+  public function getNomCurso(){
+    return $this->nombre;
   }
   
   public function InscripcionDesdeHasta(){
@@ -22,19 +26,5 @@ class Curso extends BaseCurso
     $fin = implode('/', array_reverse(explode('-', $this->getFinInsc())));
     return 'Desde el '.$inicio.' al '.$fin;
   }
-  
-  public function hayActivos(){
-    $q = Doctrine_Query::create()->select('count(id) as cuenta')->from('Curso c')->where('habilitado = ?', 'SI');
-    $cuenta = $q->execute();
-    if($cuenta[0]['cuenta'] > 0)
-      return true;
-    else
-      return false;
-  }
-  
-  public function DesactivarOtros(){
-	$table = Doctrine::getTable('Curso');
-    $table->createQuery()->update()->set('habilitado', "'NO'")->where('id <> ?', $this->getId())->execute();
-  }  
   
 }

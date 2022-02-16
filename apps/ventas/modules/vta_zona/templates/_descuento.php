@@ -1,0 +1,1 @@
+<?php if (!empty($ventas_zona->getDetalleResumen()->descuento)) echo $ventas_zona->getDetalleResumen()->descuento.'%' ?>

@@ -14,6 +14,30 @@ class CursoTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('Curso');
+      return Doctrine_Core::getTable('Curso');
     }
+    
+    public function retrievePorZona(Doctrine_Query $q){
+        $id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+        $rootAlias = $q->getRootAlias();
+        $q->leftJoin($rootAlias . '.Zona z');
+        $q->leftJoin('z.UsuarioZona uz');	
+        $q->where('uz.usuario = '.$id);
+        $q->orderBy($rootAlias . '.fecha desc');
+        $q->addOrderBy($rootAlias . '.zona_id');
+        $q->addOrderBy($rootAlias . '.nombre');
+        return $q;
+    }
+    
+		public function getCursosZona(){
+        $id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+        $q = Doctrine_Core::getTable('Curso')->createQuery('q');
+        $q->leftJoin('q.Zona z');
+        $q->leftJoin('z.UsuarioZona uz');	
+        $q->where('uz.usuario = '.$id);            
+        $q->orderBy('q.fecha desc');
+        $q->addOrderBy('q.zona_id');
+        $q->addOrderBy('q.nombre');
+        return $q->execute();
+		}	
 }

@@ -28,13 +28,28 @@ class insccursoActions extends autoInsccursoActions
   }
   
   public function executeIndex(sfWebRequest $request){
-    if($request->hasParameter('cid')){
-      $cid = $request->getParameter('cid');
-      $this->getUser()->setAttribute('cid', $cid);
-    }else{
-      $cid = $this->getUser()->getAttribute('cid');
-    } 
-    $this->setFilters(array("curso_id" => $cid));
+    if($request->hasParameter('cid')) $this->setFilters(array("curso_id" => $request->getParameter('cid')));
     parent::executeIndex($request);
-  }  
+  }
+  
+  public function executeListAsistio(sfWebRequest $request){
+    $this->curso_inscripcion = $this->getRoute()->getObject();
+    $this->curso_inscripcion->asistio = !$this->curso_inscripcion->asistio;
+    $this->curso_inscripcion->save();
+    $this->redirect('@curso_inscripcion');
+  }
+  
+  public function executeListPago(sfWebRequest $request){
+    $this->curso_inscripcion = $this->getRoute()->getObject();
+    $this->curso_inscripcion->pago = !$this->curso_inscripcion->pago;
+    $this->curso_inscripcion->save();
+    $this->redirect('@curso_inscripcion');
+  }
+  
+  public function executeListVisto(sfWebRequest $request){
+    $this->curso_inscripcion = $this->getRoute()->getObject();
+    $this->curso_inscripcion->visto = !$this->curso_inscripcion->visto;
+    $this->curso_inscripcion->save();
+    $this->redirect('@curso_inscripcion');
+  }
 }

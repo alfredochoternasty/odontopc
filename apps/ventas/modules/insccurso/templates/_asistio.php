@@ -1,0 +1,1 @@
+<?php	if ($curso_inscripcion->asistio) echo 'SI'; ?>

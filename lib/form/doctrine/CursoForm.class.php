@@ -30,7 +30,7 @@ class CursoForm extends BaseCursoForm
     $this->widgetSchema['permite_insc'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));
     $this->widgetSchema['mostrar_precio'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));
     
-    $ruta = '/uploads/cursos/';
+    $ruta = sfConfig::get('sf_upload_dir').'/cursos/';
     $this->widgetSchema['logo'] = new sfWidgetFormInputFileEditable(array(
                                       'label' => ' ',
                                       'file_src' => $ruta.$this->getObject()->getLogo(),
@@ -38,7 +38,7 @@ class CursoForm extends BaseCursoForm
                                       'edit_mode' => true,
                                       'template' => '<div>%input%<br>%file%</div>',
                                   ));
-    $this->validatorSchema['logo'] = new sfValidatorFile(array('mime_types' => 'web_images','path' => sfConfig::get('sf_upload_dir').'/cursos','required' => false,));
+    $this->validatorSchema['logo'] = new sfValidatorFile(array('mime_types' => 'web_images','path' => sfConfig::get('sf_upload_dir').'/cursos/','required' => false));
         
     $this->widgetSchema['foto1'] = new sfWidgetFormInputFile();
     $this->validatorSchema['foto1'] = new sfValidatorFile(array('path' => sfConfig::get('sf_upload_dir').'/cursos','required' => false,));

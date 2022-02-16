@@ -13,6 +13,13 @@ require_once dirname(__FILE__).'/../lib/resumenGeneratorHelper.class.php';
  */
 class resumenActions extends autoResumenActions
 {
+	
+  public function executeListCobros(sfWebRequest $request) {
+    $resumen = $this->getRoute()->getObject();
+    $url = $this->generateUrl('cobro_resumen', array('resumen_id' => $resumen->id));
+    $this->redirect($url);
+  }
+	
   public function executeListDetalle(sfWebRequest $request){
     $this->redirect( 'detres/index?rid='.$this->getRequestParameter('id'));
   }

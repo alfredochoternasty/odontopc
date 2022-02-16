@@ -14,23 +14,27 @@ generator:
     config:
       actions: ~
       fields:
-        fecha: { date_format: dd/MM/yyyy }
+        fecha: { label: Fecha Insc., date_format: dd/MM/yyyy }
         tipo_insc_id: {label: Tipo Inscripcion}
       list:
+        table_method: retrievePorZona
         title: Insacriptos a Cursos
-        display: [Curso, nombre, correo, fecha, TipoInscripcion]
+        display: [_zona, Curso, dni, nombre, localidad, telefono, correo, fecha, _visto, _asistio, _pago]
         actions:
-          _new: {label: Nuevo}
-          imprimir: ~
+          imprimir_pagina: {label: Imprimir Pagina}
+          imprimir_todo: {label: Imprimir todo}
+          excel_pagina: {label: Descargar Pagina}
+          excel_todo: {label: Descargar todo}
         object_actions:
-          _edit: {label: Modificar}
-          _delete: {label: Eliminar}
+          _visto:
+          _asistio:
+          _pago:
       filter:
-        display: [curso_id, cliente_id, nombre, correo, fecha, tipo_insc_id]                
-      form:    ~
+        display: [curso_id, dni, nombre, localidad, telefono, correo, fecha, visto, asistio, pago]
+      form: ~
       edit:
         title: Editar Inscripcion
-        display: [curso_id, cliente_id, nombre, correo, fecha, tipo_insc_id, comentario]        
+        display: [curso_id, dni, nombre, localidad, telefono, correo, comentario]
       new:
         title: Nueva Inscripcion
-        display: [curso_id, cliente_id, nombre, correo, fecha, tipo_insc_id, comentario]
+        display: [curso_id, dni, nombre, localidad, telefono, correo, comentario]

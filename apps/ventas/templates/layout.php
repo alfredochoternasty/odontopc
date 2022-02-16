@@ -31,10 +31,10 @@
 					</div>
 					<div id="info">
 						<b>Usuario: <?php echo $sf_user->getGuardUser() ?></b><br>
-						<b>Versión del Sistema: 5.6</b><br>
-						Fecha Actualización: 12/07/2021
+						<b>Versión del Sistema: 5.9</b><br>
+						Fecha Actualización: 11/11/2021
 					</div>
-					<?php if (date("Ymd") == '20210712') { ?>
+					<?php if (date("Ymd") == '20211111') { ?>
 					<img src="/images/new.png" style="position: absolute;right: 0px;top: 0px;">
 					<?php } ?>
 			</header>
@@ -56,6 +56,9 @@
 							if ($r['name'] == 'Pedidos') {
 								echo '<li style="margin-right:10px;"><a href="javascript:void();">'.$r['name'];
 								include_component('ped', 'CantPedNuevos');
+							} elseif ($r['name'] == 'Cursos') {
+								echo '<li style="margin-right:10px;"><a href="javascript:void();">'.$r['name'];
+								include_component('insccurso', 'CantInscNuevos');
 							} else {
 								echo '<li><a href="javascript:void();">'.$r['name']."</a>";
 							}

@@ -24,11 +24,14 @@ abstract class BaseCursoInscripcionForm extends BaseFormDoctrine
       'fecha'        => new sfWidgetFormDate(),
       'tipo_insc_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoInscripcion'), 'add_empty' => false)),
       'comentario'   => new sfWidgetFormInputText(),
-      'asistio'      => new sfWidgetFormInputText(),
-      'pago_monto'   => new sfWidgetFormInputText(),
-      'mas_info'     => new sfWidgetFormInputText(),
+      'asistio'      => new sfWidgetFormInputCheckbox(),
+      'pago'         => new sfWidgetFormInputCheckbox(),
+      'visto'        => new sfWidgetFormInputCheckbox(),
       'compro'       => new sfWidgetFormInputText(),
       'observacion'  => new sfWidgetFormInputText(),
+      'telefono'     => new sfWidgetFormInputText(),
+      'dni'          => new sfWidgetFormInputText(),
+      'localidad'    => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -41,11 +44,14 @@ abstract class BaseCursoInscripcionForm extends BaseFormDoctrine
       'fecha'        => new sfValidatorDate(),
       'tipo_insc_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoInscripcion'))),
       'comentario'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'asistio'      => new sfValidatorString(array('max_length' => 2, 'required' => false)),
-      'pago_monto'   => new sfValidatorNumber(array('required' => false)),
-      'mas_info'     => new sfValidatorString(array('max_length' => 2, 'required' => false)),
+      'asistio'      => new sfValidatorBoolean(array('required' => false)),
+      'pago'         => new sfValidatorBoolean(array('required' => false)),
+      'visto'        => new sfValidatorBoolean(array('required' => false)),
       'compro'       => new sfValidatorString(array('max_length' => 2, 'required' => false)),
       'observacion'  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'telefono'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'dni'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'localidad'    => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('curso_inscripcion[%s]');

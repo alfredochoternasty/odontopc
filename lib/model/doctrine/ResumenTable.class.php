@@ -106,7 +106,7 @@ class ResumenTable extends Doctrine_Table
 			->createQuery('q')
 			->where('q.cliente_id = '.$p_cid)
 			->andWhere('pagado = 0')
-			->andWhere('afip_estado = 1')
+			->andWhere('afip_estado > 0')
 			->orderBy('fecha asc')
 			->execute();
 	}

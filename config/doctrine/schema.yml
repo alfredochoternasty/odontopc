@@ -734,22 +734,25 @@ Curso:
     nombre: {type: string(100), notnull: true}
     descripcion: {type: string()}
     fecha: {type: date(25), notnull: true}
-    hora: {type: string(5), notnull: true}
+    hora: {type: string(5)}
     lugar: {type: string(255)}
-    precio: {type: 'decimal(10, 2)', notnull: true, default: 0}
-    mostrar_precio: {type: string(2), fixed: true, default: SI, notnull: true}
+    precio: {type: 'decimal(10, 2)', default: 0}
+    mostrar_precio: {type: string(2), fixed: true, default: SI}
     logo: {type: string(255)}
     link_mapa: {type: string()}
     sitio_web: {type: string(255)}
-    ini_insc: {type: date(25), notnull: true}
-    fin_insc: {type: date(25), notnull: true}
-    habilitado: {type: string(2), fixed: true, default: SI, notnull: true}
-    permite_insc: {type: string(2), fixed: true, default: SI, notnull: true}
+    ini_insc: {type: date(25)}
+    fin_insc: {type: date(25)}
+    habilitado: {type: string(2), fixed: true, default: SI}
+    permite_insc: {type: string(2), fixed: true, default: SI}
     foto1: {type: string(255)}
     foto2: {type: string(255)}
     foto3: {type: string(255)}
     foto4: {type: string(255)}
     cupo_max: {type: integer(4)}
+    zona_id: {type: integer(4)}
+  relations:
+    Zona: {type: one, class: Zona, local: zona_id, onDelete: RESTRICT}
 CursoInscripcion:
   connection: doctrine
   tableName: curso_inscripcion
@@ -761,13 +764,16 @@ CursoInscripcion:
     correo: {type: string(100)}
     es_cliente: {type: string(2)}
     fecha: {type: date(25), notnull: true}
-    tipo_insc_id: {type: integer(4), notnull: true}    
+    tipo_insc_id: {type: integer(4), notnull: true}
     comentario: {type: string(255)}
-    asistio: {type: string(2)}
-    pago_monto: {type: 'decimal(10, 2)', notnull: true, default: 0}
-    mas_info: {type: string(2)}
+    asistio: {type: boolean}
+    pago: {type: boolean}
+    visto: {type: boolean}
     compro: {type: string(2)}
     observacion: {type: string(255)}
+    telefono: {type: string(255)}
+    dni: {type: string(255)}
+    localidad: {type: string(255)}
   relations:
     Cliente: {type: one, class: Cliente, local: cliente_id}
     Curso: {type: one, class: Curso, local: curso_id}

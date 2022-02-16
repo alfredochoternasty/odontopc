@@ -51,14 +51,7 @@
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<?php include_partial('vta_zona/list_td_batch_actions', array('ventas_zona' => $ventas_zona, 'helper' => $helper)) ?>
           <?php include_partial('vta_zona/list_td_tabular', array('ventas_zona' => $ventas_zona)); ?>
-					<td class="sf_admin_text"><?php echo $ventas_zona->getPorcentajeComision().'%'; ?></td>
-					<td class="sf_admin_text">
-						<?php 
-							$comision = $ventas_zona->getComision();
-							$array_ventas[$ventas_zona->id] = $comision;
-							echo '$ '.number_format($comision, 2, ',', '.');
-						?>					
-					</td>
+					<?php $array_ventas[$ventas_zona->id] = $ventas_zona->getComision(); ?>	
 				</tr>
       <?php endforeach; ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
@@ -78,55 +71,16 @@
 					<input id="sf_admin_list_batch_checkbox_dev" type="checkbox" onclick="checkAlldev();total_a_pagar();" />
 				</th>
         <?php	include_partial('vta_zona/list_th_tabular_dev', array('sort' => $sort)) ?>
-				<th class="sf_admin_text ui-state-default ui-th-column">
-					<?php echo __('%', array(), 'messages') ?>
-				</th>
-				<th class="sf_admin_text ui-state-default ui-th-column">
-					<?php echo __('Comision', array(), 'messages') ?>
-				</th>
       </tr>
     </thead>
 
     <tbody>
-      <?php 
-				$q = Doctrine_Core::getTable('DevProducto')->createQuery('d');
-				foreach ($configuration->getFormFilterFields($filters) as $name => $field) {
-					@$valor = $hasFilters->getRaw($name);
-					if ($name == 'fecha') {
-						if (array_key_exists('from', $valor) && !empty($valor['from'])) $q->andWhere("d.fecha >= '".$valor['from']."'");
-						if (array_key_exists('to', $valor) && !empty($valor['to'])) $q->andWhere("d.fecha <= '".$valor['to']."'");
-					}
-					if ($name == 'fecha_cobrado') {
-						if (array_key_exists('from', $valor) && !empty($valor['from'])) $q->andWhere("d.fecha >= '".$valor['from']."'");
-						if (array_key_exists('to', $valor) && !empty($valor['to'])) $q->andWhere("d.fecha <= '".$valor['to']."'");
-					}
-					if ($name == 'zona_id' && !empty($valor)) $q->andWhere("d.zona_id = $valor");
-					if ($name == 'cliente_id' && !empty($valor)) $q->andWhere("d.cliente_id = $valor");
-					if ($name == 'producto_id' && !empty($valor)) $q->andWhere("d.producto_id = $valor");
-					if ($name == 'pagado') {
-						if ($valor === 1) 
-							$q->andWhere("d.pago_comision_id is not null");
-						elseif ($valor === 0) 
-							$q->andWhere("d.pago_comision_id is null");
-					}
-					// if ($name == 'grupoprod_id')
-					if ($name == 'nro_lote' && !empty($valor['text'])) $q->andWhere("d.nro_lote = '".$valor['text']."'");
-				}
-				$q->orderBy('fecha DESC');
-				$devueltos = $q->execute();
-			
+      <?php			
 				foreach ($devueltos as $devuelto): ?>
         <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
 					<?php include_partial('vta_zona/list_td_batch_actions_dev', array('devuelto' => $devuelto, 'helper' => $helper)) ?>
           <?php include_partial('vta_zona/list_td_tabular_dev', array('devuelto' => $devuelto));?>
-					<td class="sf_admin_text"><?php echo $devuelto->getPorcentajeComision().'%'; ?></td>
-					<td class="sf_admin_text">
-						<?php 
-							$comision = $devuelto->getComision();
-							$array_devoluciones[$devuelto->id] = $comision;
-							echo '$ '.number_format($comision, 2, ',', '.');
-						?>					
-					</td>
+					<?php $array_devoluciones[$devuelto->id] = $devuelto->getComision(); ?>		
 				</tr>
       <?php endforeach;
 				$sf_user->setAttribute('comision_zona', empty($ventas_zona->zona_id)?:0);

@@ -24,7 +24,7 @@
 		</td>
 		<td>
 			<span style="font-size: 14px;">
-			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?><b>Condición de Venta : </b>Cuenta Corriente<br><?php endif;?>
+			<?php if ($resumen->getTipoFactura()->letra != 'X'): ?><b>Condición de Venta : </b><?php echo $resumen->getTipoVenta() ?><br><?php endif;?>
 			<?php if (!empty($resumen->pedido_id)): ?><b>Pedido Nro: </b> <?php echo $resumen->getPedido()->id; ?><br><?php endif;?>
 			<b>Estado : </b><?php echo empty($resumen->pagado)?'No Cobrada':'Cobrada'; ?><br>
 			<?php if (!empty($resumen->pagado)): ?><b>Fecha Cobrada : </b><?php echo $resumen->getFechaCobrada() ?><br><?php endif;?>

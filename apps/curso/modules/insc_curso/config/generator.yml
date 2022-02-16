@@ -1,0 +1,29 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           CursoInscripcion
+    theme:                 jroller
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          curso_inscripcion
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        telefono: {label: Tel./Celular}
+        correo: {label: Email}
+        nombre: {label: Nombre y Apellido}
+      list:    ~
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:
+        title: Por favor ingrese sus datos
+        display: [curso_id, fecha, dni, nombre, localidad, telefono, correo, comentario]
+        actions:
+          _list: {label: Volver}
+          _save: {label: Enviar}

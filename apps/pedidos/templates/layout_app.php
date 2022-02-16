@@ -10,7 +10,7 @@
 			$favicon = $sf_user->getVarConfig('favicon');	
 		?>
 		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url?>/css/app.css">
-	  	<?php if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/images/'.$favicon.'" />'; ?>
+	  <?php if (!empty($favicon)) echo '<link rel="shortcut icon" href="'.$base_url.'/images/'.$favicon.'" />'; ?>
 	
 		<script src="<?php echo $base_url?>/sfAdminThemejRollerPlugin/js/jquery.min.js"></script>
 		<style>

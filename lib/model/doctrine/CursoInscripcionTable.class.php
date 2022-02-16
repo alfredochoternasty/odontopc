@@ -16,4 +16,30 @@ class CursoInscripcionTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('CursoInscripcion');
     }
+    
+    public function retrievePorZona(Doctrine_Query $q){
+        $id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+        $rootAlias = $q->getRootAlias();
+        $q->leftJoin($rootAlias.'.Curso c');
+        $q->leftJoin('c.Zona z');
+        $q->leftJoin('z.UsuarioZona uz');	
+        $q->where('uz.usuario = '.$id);
+        $q->orderBy($rootAlias.'.fecha desc');
+        $q->addOrderBy($rootAlias.'.curso_id');
+        $q->addOrderBy('c.zona_id');
+        $q->addOrderBy($rootAlias.'.nombre');
+        return $q;
+    }
+    
+    public function CantInscNuevosPorZona(){
+        $id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+        $q = Doctrine::getTable('CursoInscripcion')->createQuery();
+        $rootAlias = $q->getRootAlias();
+        $q->leftJoin($rootAlias.'.Curso c');
+        $q->leftJoin('c.Zona z');
+        $q->leftJoin('z.UsuarioZona uz');	
+        $q->where('uz.usuario = '.$id);
+        $q->andWhere($rootAlias.'.visto = 0');
+        return $q->execute();
+    }
 }

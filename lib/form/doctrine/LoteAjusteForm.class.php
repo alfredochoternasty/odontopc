@@ -25,5 +25,11 @@ class LoteAjusteForm extends BaseLoteAjusteForm
     $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
     $this->validatorSchema['observacion'] =  new sfValidatorString(array('required' => true));
     $this->widgetSchema['usuario_id'] = new sfWidgetFormInputHidden();
+    
+		// $zona_id = $this->getOption('zona_id');
+		// $this->setDefault ('zona_id', $zona_id);
+    
+		$usuario_id = $this->getOption('usuario_id');
+		$this->setDefault ('usuario_id', $usuario_id);
   }
 }

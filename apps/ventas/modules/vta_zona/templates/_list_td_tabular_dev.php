@@ -22,3 +22,12 @@
 <td class="sf_admin_text sf_admin_list_td_neto">
   <?php echo '$ '.number_format($devuelto->getSubTotal(), 2, ',', '.'); ?>
 </td>
+<td class="sf_admin_boolean sf_admin_list_td_pagado">
+  <?php echo get_partial('vta_zona/list_field_boolean', array('value' => !empty($devuelto->getPagoComisionId()))) ?>
+</td>
+<td class="sf_admin_text">
+  <?php echo $devuelto->getPorcentajeComision().'%'; ?>
+</td>
+<td class="sf_admin_text">
+  <?php echo '$ '.number_format($devuelto->getComision(), 2, ',', '.'); ?>
+</td>

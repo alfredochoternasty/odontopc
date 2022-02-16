@@ -16,11 +16,14 @@ Doctrine_Manager::getInstance()->bindComponent('CursoInscripcion', 'doctrine');
  * @property date $fecha
  * @property integer $tipo_insc_id
  * @property string $comentario
- * @property string $asistio
- * @property decimal $pago_monto
- * @property string $mas_info
+ * @property boolean $asistio
+ * @property boolean $pago
+ * @property boolean $visto
  * @property string $compro
  * @property string $observacion
+ * @property string $telefono
+ * @property string $dni
+ * @property string $localidad
  * @property Cliente $Cliente
  * @property Curso $Curso
  * @property TipoInscripcion $TipoInscripcion
@@ -34,11 +37,14 @@ Doctrine_Manager::getInstance()->bindComponent('CursoInscripcion', 'doctrine');
  * @method date             getFecha()           Returns the current record's "fecha" value
  * @method integer          getTipoInscId()      Returns the current record's "tipo_insc_id" value
  * @method string           getComentario()      Returns the current record's "comentario" value
- * @method string           getAsistio()         Returns the current record's "asistio" value
- * @method decimal          getPagoMonto()       Returns the current record's "pago_monto" value
- * @method string           getMasInfo()         Returns the current record's "mas_info" value
+ * @method boolean          getAsistio()         Returns the current record's "asistio" value
+ * @method boolean          getPago()            Returns the current record's "pago" value
+ * @method boolean          getVisto()           Returns the current record's "visto" value
  * @method string           getCompro()          Returns the current record's "compro" value
  * @method string           getObservacion()     Returns the current record's "observacion" value
+ * @method string           getTelefono()        Returns the current record's "telefono" value
+ * @method string           getDni()             Returns the current record's "dni" value
+ * @method string           getLocalidad()       Returns the current record's "localidad" value
  * @method Cliente          getCliente()         Returns the current record's "Cliente" value
  * @method Curso            getCurso()           Returns the current record's "Curso" value
  * @method TipoInscripcion  getTipoInscripcion() Returns the current record's "TipoInscripcion" value
@@ -52,10 +58,13 @@ Doctrine_Manager::getInstance()->bindComponent('CursoInscripcion', 'doctrine');
  * @method CursoInscripcion setTipoInscId()      Sets the current record's "tipo_insc_id" value
  * @method CursoInscripcion setComentario()      Sets the current record's "comentario" value
  * @method CursoInscripcion setAsistio()         Sets the current record's "asistio" value
- * @method CursoInscripcion setPagoMonto()       Sets the current record's "pago_monto" value
- * @method CursoInscripcion setMasInfo()         Sets the current record's "mas_info" value
+ * @method CursoInscripcion setPago()            Sets the current record's "pago" value
+ * @method CursoInscripcion setVisto()           Sets the current record's "visto" value
  * @method CursoInscripcion setCompro()          Sets the current record's "compro" value
  * @method CursoInscripcion setObservacion()     Sets the current record's "observacion" value
+ * @method CursoInscripcion setTelefono()        Sets the current record's "telefono" value
+ * @method CursoInscripcion setDni()             Sets the current record's "dni" value
+ * @method CursoInscripcion setLocalidad()       Sets the current record's "localidad" value
  * @method CursoInscripcion setCliente()         Sets the current record's "Cliente" value
  * @method CursoInscripcion setCurso()           Sets the current record's "Curso" value
  * @method CursoInscripcion setTipoInscripcion() Sets the current record's "TipoInscripcion" value
@@ -112,26 +121,32 @@ abstract class BaseCursoInscripcion extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
-        $this->hasColumn('asistio', 'string', 2, array(
-             'type' => 'string',
-             'length' => 2,
+        $this->hasColumn('asistio', 'boolean', null, array(
+             'type' => 'boolean',
              ));
-        $this->hasColumn('pago_monto', 'decimal', 10, array(
-             'type' => 'decimal',
-             'notnull' => true,
-             'default' => 0,
-             'length' => 10,
-             'scale' => '2',
+        $this->hasColumn('pago', 'boolean', null, array(
+             'type' => 'boolean',
              ));
-        $this->hasColumn('mas_info', 'string', 2, array(
-             'type' => 'string',
-             'length' => 2,
+        $this->hasColumn('visto', 'boolean', null, array(
+             'type' => 'boolean',
              ));
         $this->hasColumn('compro', 'string', 2, array(
              'type' => 'string',
              'length' => 2,
              ));
         $this->hasColumn('observacion', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('telefono', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('dni', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
+        $this->hasColumn('localidad', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
              ));

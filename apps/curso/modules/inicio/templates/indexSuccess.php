@@ -1,54 +1,28 @@
-<h1>Cursos List</h1>
+<?php use_helper('I18N', 'Date') ?>
 
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Nombre</th>
-      <th>Descripcion</th>
-      <th>Fecha</th>
-      <th>Hora</th>
-      <th>Lugar</th>
-      <th>Precio</th>
-      <th>Mostrar precio</th>
-      <th>Logo</th>
-      <th>Link mapa</th>
-      <th>Sitio web</th>
-      <th>Ini insc</th>
-      <th>Fin insc</th>
-      <th>Habilitado</th>
-      <th>Permite insc</th>
-      <th>Foto1</th>
-      <th>Foto2</th>
-      <th>Foto3</th>
-      <th>Foto4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($cursos as $curso): ?>
-    <tr>
-      <td><a href="<?php echo url_for('inicio/show?id='.$curso->getId()) ?>"><?php echo $curso->getId() ?></a></td>
-      <td><?php echo $curso->getNombre() ?></td>
-      <td><?php echo $curso->getDescripcion() ?></td>
-      <td><?php echo $curso->getFecha() ?></td>
-      <td><?php echo $curso->getHora() ?></td>
-      <td><?php echo $curso->getLugar() ?></td>
-      <td><?php echo $curso->getPrecio() ?></td>
-      <td><?php echo $curso->getMostrarPrecio() ?></td>
-      <td><?php echo $curso->getLogo() ?></td>
-      <td><?php echo $curso->getLinkMapa() ?></td>
-      <td><?php echo $curso->getSitioWeb() ?></td>
-      <td><?php echo $curso->getIniInsc() ?></td>
-      <td><?php echo $curso->getFinInsc() ?></td>
-      <td><?php echo $curso->getHabilitado() ?></td>
-      <td><?php echo $curso->getPermiteInsc() ?></td>
-      <td><?php echo $curso->getFoto1() ?></td>
-      <td><?php echo $curso->getFoto2() ?></td>
-      <td><?php echo $curso->getFoto3() ?></td>
-      <td><?php echo $curso->getFoto4() ?></td>
-    </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+<div style="margin: 10px 0;font-size: 1.15em;font-weight: bold;font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;">
+<?php if ($sf_user->hasFlash('notice')): ?>
+  <div style="padding: 10px;-moz-border-radius: 5px;-webkit-border-radius: 5px;border: 1px solid #fad42e;background: #fbec88 url(images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;color: #363636;">
+    <span style="
+    width: 16px;
+    height: 16px;
+    float: left;
+    background-repeat: no-repeat;
+    background-position: -16px -144px;
+    background-image: url(images/ui-icons_2e83ff_256x240.png);
+    "></span>&nbsp;
+    <?php echo __($sf_user->getFlash('notice'), array(), 'sf_admin') ?>
+  </div>
+<?php endif; ?>
+</div>
 
-  <a href="<?php echo url_for('inicio/new') ?>">New</a>
+<div class="grid-container">
+<?php foreach ($cursos as $curso): ?>
+      <div class="grid-item1">
+        <table>
+          <tr><td><img height="100%" width="100%" src="<?php echo url_for('inicio/GetImagen?img='.$curso->getLogo()) ?>"></td></tr>
+          <tr><td style="height:50px;text-align:center;"><a href="<?php echo url_for('insc_curso/new?cid='.$curso->id) ?>" class="button"/>Consulta por Inscripci&oacute;n</a></td></tr>
+        </table>
+      </div>
+<?php endforeach; ?>
+</div>

@@ -1,3 +1,12 @@
+cobro_resumen:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                CobroResumen
+    module:               cobres
+    prefix_path:          /cobres
+    column:               cobro_id
+    with_wildcard_routes: true
+
 lote_ajuste:
   class: sfDoctrineRouteCollection
   options:

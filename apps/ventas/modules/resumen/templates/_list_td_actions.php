@@ -25,7 +25,7 @@
 				echo '<li class="sf_admin_action_factura">'.link_to('Enviar AFIP', 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere ENVIAR A AFIP', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')).'</li>';
 		} elseif ($resumen->afip_estado == 0) {
 			echo '<li class="sf_admin_action_factura">'.link_to('Finalizar', 'resumen/ListFactura?id='.$resumen->getId(), array('confirm' => 'Seguro que quiere FINALIZAR', 'class' => 'fg-button-mini fg-button ui-state-default fg-button-icon-left')).'</li>';
-		}				
-		?>
+		}
+		echo link_to(__('Cobros', array(), 'messages'), 'resumen/ListCobros?id='.$resumen->getId(), 'class=fg-button-mini fg-button ui-state-default fg-button-icon-left ') ?> </li>
 	</ul>
 </td>

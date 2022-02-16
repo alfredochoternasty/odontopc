@@ -29,6 +29,16 @@ class ctrlstockActions extends autoCtrlstockActions
     $this->redirect($url);
   }
   
+  public function executeListAjustes(sfWebRequest $request) {
+    $ajuste = $this->getRoute()->getObject();
+    $url = $this->generateUrl('lote_ajuste', array(
+      'producto_id' => $ajuste->producto_id,
+      'nro_lote' => urlencode($ajuste->nro_lote),
+      'zona_id' => $ajuste->zona_id
+    ));
+    $this->redirect($url);
+  }
+  
   public function executeListPlanillaControl(sfWebRequest $request) {
     $datos = $this->get_datos();
     $dompdf = new DOMPDF();

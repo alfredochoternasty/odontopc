@@ -35,6 +35,7 @@ abstract class BaseCursoForm extends BaseFormDoctrine
       'foto3'          => new sfWidgetFormInputText(),
       'foto4'          => new sfWidgetFormInputText(),
       'cupo_max'       => new sfWidgetFormInputText(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -42,15 +43,15 @@ abstract class BaseCursoForm extends BaseFormDoctrine
       'nombre'         => new sfValidatorString(array('max_length' => 100)),
       'descripcion'    => new sfValidatorString(array('required' => false)),
       'fecha'          => new sfValidatorDate(),
-      'hora'           => new sfValidatorString(array('max_length' => 5)),
+      'hora'           => new sfValidatorString(array('max_length' => 5, 'required' => false)),
       'lugar'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'precio'         => new sfValidatorNumber(array('required' => false)),
       'mostrar_precio' => new sfValidatorString(array('max_length' => 2, 'required' => false)),
       'logo'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'link_mapa'      => new sfValidatorString(array('required' => false)),
       'sitio_web'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'ini_insc'       => new sfValidatorDate(),
-      'fin_insc'       => new sfValidatorDate(),
+      'ini_insc'       => new sfValidatorDate(array('required' => false)),
+      'fin_insc'       => new sfValidatorDate(array('required' => false)),
       'habilitado'     => new sfValidatorString(array('max_length' => 2, 'required' => false)),
       'permite_insc'   => new sfValidatorString(array('max_length' => 2, 'required' => false)),
       'foto1'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
@@ -58,6 +59,7 @@ abstract class BaseCursoForm extends BaseFormDoctrine
       'foto3'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'foto4'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'cupo_max'       => new sfValidatorInteger(array('required' => false)),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('curso[%s]');

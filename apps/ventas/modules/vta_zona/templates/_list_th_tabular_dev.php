@@ -55,4 +55,19 @@
   <?php echo __('Neto', array(), 'messages') ?>
 </th>
 <?php end_slot(); ?>
+<?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
+<th class="sf_admin_text sf_admin_list_th_neto ui-state-default ui-th-column">
+  <?php echo __('Com. Descontada', array(), 'messages') ?>
+</th>
+<?php end_slot(); ?>
+<?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
+<th class="sf_admin_text sf_admin_list_th_neto ui-state-default ui-th-column">
+  <?php echo __('%', array(), 'messages') ?>
+</th>
+<?php end_slot(); ?>
+<?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
+<th class="sf_admin_text sf_admin_list_th_neto ui-state-default ui-th-column">
+  <?php echo __('Comision', array(), 'messages') ?>
+</th>
+<?php end_slot(); ?>
 <?php include_slot('sf_admin.current_header') ?>

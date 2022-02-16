@@ -37,15 +37,15 @@ class registroActions extends autoRegistroActions
 			$cliente->setFechaAlta(date('Y-m-d'));
 			$cliente->save();
 			
-			$mensaje = Swift_Message::newInstance();
-			$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
-			$mensaje->setTo($cliente->email);
-			$mensaje->setSubject('NTI Sistema de Pedidos');
-			$headers = $mensaje->getHeaders();
-			$headers->addTextHeader('Content-Type', 'text/html');
-			$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));
-			$mensaje->setBody($msj, "text/html");
-			$this->getMailer()->send($mensaje);   
+			// $mensaje = Swift_Message::newInstance();
+			// $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
+			// $mensaje->setTo($cliente->email);
+			// $mensaje->setSubject('NTI Sistema de Pedidos');
+			// $headers = $mensaje->getHeaders();
+			// $headers->addTextHeader('Content-Type', 'text/html');
+			// $msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'clave' => $clave));
+			// $mensaje->setBody($msj, "text/html");
+			// $this->getMailer()->send($mensaje);
 			
 			$this->redirect('registro/listo?cid='.$cliente->id);
     }else{

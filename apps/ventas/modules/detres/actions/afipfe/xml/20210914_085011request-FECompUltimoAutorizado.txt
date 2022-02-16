@@ -1,0 +1,21 @@
+<pre>Array
+(
+    [Auth] => Array
+        (
+            [Token] => SimpleXMLElement Object
+                (
+                    [0] => PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgc3JjPSJDTj13c2FhLCBPPUFGSVAsIEM9QVIsIFNFUklBTE5VTUJFUj1DVUlUIDMzNjkzNDUwMjM5IiBkc3Q9IkNOPXdzZmUsIE89QUZJUCwgQz1BUiIgdW5pcXVlX2lkPSIzNjAzMjg0ODg4IiBnZW5fdGltZT0iMTYzMTY2MzM1MCIgZXhwX3RpbWU9IjE2MzE3MDY2MTAiLz4KICAgIDxvcGVyYXRpb24gdHlwZT0ibG9naW4iIHZhbHVlPSJncmFudGVkIj4KICAgICAgICA8bG9naW4gZW50aXR5PSIzMzY5MzQ1MDIzOSIgc2VydmljZT0id3NmZSIgdWlkPSJTRVJJQUxOVU1CRVI9Q1VJVCAzMDcxMjI3MjQ2MSwgQ049dmVudGFzX2ZhY3QiIGF1dGhtZXRob2Q9ImNtcyIgcmVnbWV0aG9kPSIyMiI+CiAgICAgICAgICAgIDxyZWxhdGlvbnM+CiAgICAgICAgICAgICAgICA8cmVsYXRpb24ga2V5PSIzMDcxMjI3MjQ2MSIgcmVsdHlwZT0iNCIvPgogICAgICAgICAgICA8L3JlbGF0aW9ucz4KICAgICAgICA8L2xvZ2luPgogICAgPC9vcGVyYXRpb24+Cjwvc3NvPgo=
+                )
+
+            [Sign] => SimpleXMLElement Object
+                (
+                    [0] => MvdJmzi4yGrgOm/51Xof1S7a/VDGpnJtWzSChEqILtRI+ERx7+5ncoPI3Y/OGJ452R4yx+IecykSd5KZ2A+OElq2c41EDNnpHu69ixHm3sj7okGrpm2t+XhJSQk+dTexEuAiBCMPyr2qMyruvVXCfMQmhH4vAwtlypnCXtpm8+g=
+                )
+
+            [Cuit] => 30712272461
+        )
+
+    [PtoVta] => 0005
+    [CbteTipo] => 6
+)
+</pre>

@@ -11,5 +11,12 @@ jQuery(function($){
           }
         });                  
   });
+  
+  $("form").submit(function(event) {
+    if ($("#lote_ajuste_observacion").val().length < 1) {
+      alert('El campo OBSERVACION no puede estar vacio');
+      return false;
+    }
+  });
 })
 </script>

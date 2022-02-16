@@ -21,11 +21,11 @@ generator:
         display: [Zona, fecha, Producto, nro_lote, cantidad, observacion, SfGuardUser]
         actions:
           _new: {label: Nuevo}
-        object_actions:
           imprimir_pagina: {label: Imprimir Pagina}
           imprimir_todo: {label: Imprimir todo}
           excel_pagina: {label: Descargar Pagina}
           excel_todo: {label: Descargar Todo}
+        object_actions: []
         batch_actions: []
       filter:
         display: [fecha, zona_id, producto_id, nro_lote]

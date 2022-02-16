@@ -19,7 +19,7 @@
       			<?php include_partial('vta_zona/list_actions', array('helper' => $helper)) ?>
       </div>
 
-      <?php include_partial('vta_zona/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'filters' => $filters, 'configuration' => $configuration)) ?>
+      <?php include_partial('vta_zona/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'hasFilters' => $hasFilters, 'filters' => $filters, 'configuration' => $configuration, 'devueltos' => $devueltos)) ?>
       
       <?php if ($zona_id == 1): ?>
       <ul class="sf_admin_actions">

@@ -1,0 +1,1 @@
+<?php echo '$ '.number_format($cobro_resumen->getCobro()->getMonto(), 2, ',', '.'); ?>

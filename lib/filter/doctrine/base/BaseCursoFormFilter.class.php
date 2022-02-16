@@ -16,22 +16,23 @@ abstract class BaseCursoFormFilter extends BaseFormFilterDoctrine
       'nombre'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'descripcion'    => new sfWidgetFormFilterInput(),
       'fecha'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'hora'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'hora'           => new sfWidgetFormFilterInput(),
       'lugar'          => new sfWidgetFormFilterInput(),
-      'precio'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'mostrar_precio' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'precio'         => new sfWidgetFormFilterInput(),
+      'mostrar_precio' => new sfWidgetFormFilterInput(),
       'logo'           => new sfWidgetFormFilterInput(),
       'link_mapa'      => new sfWidgetFormFilterInput(),
       'sitio_web'      => new sfWidgetFormFilterInput(),
-      'ini_insc'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'fin_insc'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'habilitado'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'permite_insc'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'ini_insc'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'fin_insc'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'habilitado'     => new sfWidgetFormFilterInput(),
+      'permite_insc'   => new sfWidgetFormFilterInput(),
       'foto1'          => new sfWidgetFormFilterInput(),
       'foto2'          => new sfWidgetFormFilterInput(),
       'foto3'          => new sfWidgetFormFilterInput(),
       'foto4'          => new sfWidgetFormFilterInput(),
       'cupo_max'       => new sfWidgetFormFilterInput(),
+      'zona_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Zona'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -54,6 +55,7 @@ abstract class BaseCursoFormFilter extends BaseFormFilterDoctrine
       'foto3'          => new sfValidatorPass(array('required' => false)),
       'foto4'          => new sfValidatorPass(array('required' => false)),
       'cupo_max'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'zona_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Zona'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('curso_filters[%s]');
@@ -93,6 +95,7 @@ abstract class BaseCursoFormFilter extends BaseFormFilterDoctrine
       'foto3'          => 'Text',
       'foto4'          => 'Text',
       'cupo_max'       => 'Number',
+      'zona_id'        => 'ForeignKey',
     );
   }
 }

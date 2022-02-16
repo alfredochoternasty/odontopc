@@ -27,6 +27,7 @@ generator:
         actions:
           _new: ~
           imprimir: {label: Imprimir}
+          recalcular: {label: Recalcular Precio}
       filter: ~
       form: ~
       edit:

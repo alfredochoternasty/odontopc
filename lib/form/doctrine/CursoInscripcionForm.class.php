@@ -12,20 +12,35 @@ class CursoInscripcionForm extends BaseCursoInscripcionForm
 {
   public function configure()
   {
-    $this->widgetSchema['cliente_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'), 'table_method' => 'getActivosVta', 'add_empty' => true, 'order_by' => array('apellido', 'asc')), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:350px;'));
-    $this->validatorSchema['cliente_id'] = new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Cliente'))); 
-
-    $this->widgetSchema['es_cliente'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));    
-    $this->widgetSchema['es_cliente'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));    
+    unset(
+        $this['tipo_insc_id'], 
+        $this['cliente_id'], 
+        $this['es_cliente'], 
+        $this['asistio'], 
+        $this['pago'], 
+        $this['mas_info'], 
+        $this['compro'], 
+        $this['observacion']
+    );
     
-    $this->widgetSchema['fecha'] = new sfWidgetFormDateJQueryUI(array("change_month" => true, "change_year" => true));
-    $this->validatorSchema['fecha'] = new sfValidatorDate(array('date_format' => '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~'));  
+		$curso_id = $this->getOption('curso_id');
+		$zona_id = $this->getOption('curso_id');
     
-    $this->widgetSchema['asistio'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));    
-    $this->widgetSchema['mas_info'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));
-
-    $this->widgetSchema['compro'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'SI' => 'Si', 'NO' => 'No')));    
+    $this->setDefault('curso_id', $curso_id);
+    $this->setDefault('fecha', date('Y-m-d'));
     
-    $this->widgetSchema['observacion'] = new sfWidgetFormTextarea();
+    // $this->widgetSchema['captcha'] = new sfWidgetFormReCaptcha(array('public_key' => 'CLAVE_PUBLICA_DE_RECAPTCHA'));
+    $this->widgetSchema['fecha'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['curso_id'] = new sfWidgetFormInputHidden();
+    // $this->widgetSchema['curso_id'] = new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Curso'), 'add_empty' => true, 'order_by' => array('nombre', 'asc'), 'method' => 'getLocConProvincia', 'table_method' => 'retrieveConJoins'), array('data-placeholder' => 'Escriba un Nombre...', 'class' => 'chzn-select', 'style' => 'width:450px;'));
+    $this->widgetSchema['dni'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
+    $this->validatorSchema['dni'] =  new sfValidatorNumber();
+    $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['localidad'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['telefono'] = new sfWidgetFormInputNumber(array(), array('size' => 30));
+    $this->validatorSchema['telefono'] =  new sfValidatorNumber();
+    $this->widgetSchema['correo'] = new sfWidgetFormInputText(array(), array('size' => 30));
+    $this->widgetSchema['comentario'] = new sfWidgetFormTextarea(array(), array('cols' => 29, 'rows' => 5));
+    
   }
 }

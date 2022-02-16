@@ -70,7 +70,7 @@
         foreach ($suma_total as $i => $suma): 
 			?>
       <tr class="sf_admin_row ui-widget-content <?php echo $odd ?>">
-        <td colspan="<?php echo $sf_user->hasGroup('Blanco')? 10 : 9; ?>" style="text-align: right;" class="sf_admin_text">Total en <?php echo $suma['moneda'] ?>:</td>
+        <td colspan="<?php echo $sf_user->hasGroup('Blanco')? 9 : 8; ?>" style="text-align: right;" class="sf_admin_text">Total en <?php echo $suma['moneda'] ?>:</td>
         <td class="sf_admin_text">
           <?php echo sprintf($suma['simbolo']." %01.2f", $suma['total']) ?>
         </td>

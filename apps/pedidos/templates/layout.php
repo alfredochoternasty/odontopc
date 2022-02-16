@@ -105,4 +105,3 @@
     
   </body>
 </html>
-<script type="text/javascript"> $(".chzn-select").chosen();</script>

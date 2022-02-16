@@ -1,23 +1,23 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/05-Factories
-dev:
-  mailer:
-    param:      
-      delivery_strategy: realtime
-      # delivery_strategy: none
-      # delivery_strategy: single_address
-      # delivery_address:  alfredochoternasty@gmail.com
-      transport:
-        class: Swift_SmtpTransport
-        param:
-          host: in-v3.mailjet.com
-          port: 25
-          # encryption: tls
-          # auth_mode: auth
-          username: 2a03b5e3c878137b3f77535377755dfe
-          password: 72a6a29d87c1f864d3129bc8c6fb1219
+# dev:
+  # mailer:
+    # param:      
+      # delivery_strategy: realtime
+      # # delivery_strategy: none
+      # # delivery_strategy: single_address
+      # # delivery_address:  alfredochoternasty@gmail.com
+      # transport:
+        # class: Swift_SmtpTransport
+        # param:
+          # host: in-v3.mailjet.com
+          # port: 25
+          # # encryption: tls
+          # # auth_mode: auth
+          # username: 2a03b5e3c878137b3f77535377755dfe
+          # password: 72a6a29d87c1f864d3129bc8c6fb1219
           
-prod:
+dev:
   logger:
     class:   sfNoLogger
     param:
@@ -29,12 +29,12 @@ prod:
       transport:
         class: Swift_SmtpTransport
         param:
-          host: smtp.gmail.com
-          port: 465
-          encryption: ssl
-          auth_mode: auth
-          username: implantesnti@gmail.com
-          password: REUMAS@105
+          host: mail.ntiimplantes.com.ar
+          port: 25
+          # encryption: tls
+          # auth_mode: auth
+          username: correo@ntiimplantes.com.ar
+          password: Ulzj92@2
 
 all:
   user:

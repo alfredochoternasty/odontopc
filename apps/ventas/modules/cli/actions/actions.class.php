@@ -80,16 +80,21 @@ class cliActions extends autoCliActions
 			$user->save();
 		}
 
-		$mensaje = Swift_Message::newInstance();
-		$mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
-		$mensaje->setTo($correo);
-		$mensaje->setSubject('NTI Sistema de Pedidos');
-		$headers = $mensaje->getHeaders();
-		$headers->addTextHeader('Content-Type', 'text/html');
-		$msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'usuario' => $usuario, 'clave' => $clave));
-		$mensaje->setBody($msj, "text/html");
-		$this->getMailer()->send($mensaje);    
-		$this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
+		 $mensaje = Swift_Message::newInstance();
+		 $mensaje->setFrom(array($this->getUser()->getVarConfig('mail_from') => $this->getUser()->getVarConfig('mail_from_nombre')));
+		 $mensaje->setTo($correo);
+		 $mensaje->setSubject('NTI Sistema de Pedidos');
+		 $headers = $mensaje->getHeaders();
+		 $headers->addTextHeader('Content-Type', 'text/html');
+		 $msj = $this->getPartial('mail_usuario', array('cliente' => $cliente, 'usuario' => $usuario, 'clave' => $clave));
+		 $mensaje->setBody($msj, "text/html");
+		 $enviado = $this->getMailer()->send($mensaje, $errores);
+		 if ($enviado) 
+			 $this->getUser()->setFlash('notice', 'Usuario '.$accion.'. Se enviaron los datos a '.$cliente->getEmail());
+		 else
+			$this->getUser()->setFlash('error', 'No se enviaron los datos a '.$cliente->getEmail().'<br>'.$errores);
+	  
+		// $this->getUser()->setFlash('notice', 'Usuario: '.$usuario.'. Clave: '.$clave);
   }
 
   public function executeAutocomplete(sfWebRequest $request){

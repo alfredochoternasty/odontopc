@@ -30,10 +30,11 @@ class cobroActions extends autoCobroActions
 			$saldo_cliente = $cobro->getCliente()->getSaldoCtaCte(1, null, false); //saldo negativo es favor del cliente
 			if ($saldo_cliente >= 0) $saldo_cliente = 0; //si tiene saldo deudor no importa cuanto es
 				
-			$monto_cobrado = $cobro->getMonto();
+			$monto_cobrado = $cobro->getMonto(); //24.500
 			$fact_imapagas = Doctrine::getTable('Resumen')->getFacturasImpagasCliente($cobro['cliente_id']);  
 			foreach($fact_imapagas as $factura){
 				$saldo_factura = $factura->getTotalResumen() - ($factura->getTotalCobrado() + $factura->getTotalDevuelto() + $saldo_cliente);
+				// 34.370 - (0 + 0 + 0)
 				$CobroResumen = new CobroResumen();
 				$CobroResumen->setCobroId($cobro->getId());
 				$CobroResumen->setResumenId($factura->getId());
@@ -45,11 +46,12 @@ class cobroActions extends autoCobroActions
 					$factura->fecha_pagado = $cobro->fecha;
 					$factura->save();
 					$CobroResumen->setMonto($saldo_factura);
+					$CobroResumen->save();
 				}else{
 					$CobroResumen->setMonto($monto_cobrado);
+					$CobroResumen->save();
 					break;
 				}
-				$CobroResumen->save();
 			}
 
 			$this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $CobroResumen)));

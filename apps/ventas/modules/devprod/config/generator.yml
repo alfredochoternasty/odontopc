@@ -40,7 +40,7 @@ generator:
           comprobante_imp: {label: Imprimir}
           mail: {label: Enviar Mail}
       filter:
-        display: [fecha, cliente_id, producto_id, nro_lote]
+        display: [zona_id, tipofactura_id, nro_factura, fecha, cliente_id, producto_id, nro_lote]
       form:
         display: [fecha, cliente_id, producto_id, resumen_id, nro_lote, cantidad, precio_unitario, descuento, precio, iva, total, observacion]
       edit:    ~

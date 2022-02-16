@@ -24,7 +24,7 @@ class DevProductoTable extends Doctrine_Table
     public function retrieveConJoins(Doctrine_Query $q){
 			$zid = sfContext::getInstance()->getUser()->getGuardUser()->getZonaId();
       $rootAlias = $q->getRootAlias();
-			$q->andWhere($rootAlias . '.zona_id = '.$zid);
+			$q->andWhere('('.$rootAlias.'.zona_id = '.$zid.' or 1 = '.$zid.')');
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }
@@ -40,4 +40,31 @@ class DevProductoTable extends Doctrine_Table
       $q->orderBy($rootAlias . '.fecha desc');
       return $q;
     }
+		
+		public function getDevolucionesZonaFilter(array $filtros){
+			$q = Doctrine_Core::getTable('DevProducto')->createQuery('d');
+			foreach ($filtros as $campo => $valor) {
+				if ($campo == 'fecha') {
+					if (array_key_exists('from', $valor) && !empty($valor['from'])) $q->andWhere("d.fecha >= '".$valor['from']."'");
+					if (array_key_exists('to', $valor) && !empty($valor['to'])) $q->andWhere("d.fecha <= '".$valor['to']."'");
+				}
+				if ($campo == 'fecha_cobrado') {
+					if (array_key_exists('from', $valor) && !empty($valor['from'])) $q->andWhere("d.fecha >= '".$valor['from']."'");
+					if (array_key_exists('to', $valor) && !empty($valor['to'])) $q->andWhere("d.fecha <= '".$valor['to']."'");
+				}
+				if ($campo == 'zona_id' && !empty($valor)) $q->andWhere("d.zona_id = $valor");
+				if ($campo == 'cliente_id' && !empty($valor)) $q->andWhere("d.cliente_id = $valor");
+				if ($campo == 'producto_id' && !empty($valor)) $q->andWhere("d.producto_id = $valor");
+				if ($campo == 'pagado') {
+					if ($valor === '1') 
+						$q->andWhere("d.pago_comision_id is not null");
+					elseif ($valor === '0') 
+						$q->andWhere("d.pago_comision_id is null");
+				}
+				// if ($campo == 'grupoprod_id')
+				if ($campo == 'nro_lote' && !empty($valor['text'])) $q->andWhere("d.nro_lote = '".$valor['text']."'");
+			}
+			$q->orderBy('fecha DESC');
+			return $q->execute();
+		}
 }

@@ -1,17 +1,14 @@
+curso_inscripcion:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                CursoInscripcion
+    module:               insc_curso
+    prefix_path:          /insc_curso
+    column:               id
+    with_wildcard_routes: true
+
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
-
-desuscribir:
-  url:   /desuscribir/:email
-  param: { module: cursos, action: desuscribir }
-
-ver_curso:
-  url:   /ver/:id
-  param: { module: cursos, action: show }
-  
-mostrar_curso:
-  url:   /ver/:id/:envio
-  param: { module: cursos, action: show }
 
 # default rules
 homepage:

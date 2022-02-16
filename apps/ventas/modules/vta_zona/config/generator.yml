@@ -23,7 +23,7 @@ generator:
         max_per_page: 9999
         table_method: retrieveConJoins
         title: Ventas por Zona
-        display: [fecha, Resumen, Zona, Cliente, Producto, _precio, _cantidad, _neto, cobrado, fecha_cobrado, pagado]
+        display: [fecha, Resumen, Zona, Cliente, Producto, _precio, _cantidad, _descuento, _neto, cobrado, fecha_cobrado, pagado]
         object_actions: []
         batch_actions:
            pagar: ~

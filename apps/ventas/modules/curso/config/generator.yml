@@ -25,18 +25,19 @@ generator:
         foto3: {label: Foto Extra}
         foto4: {label: Foto Extra}
       list:
+        table_method: retrievePorZona
         title: Administración de Cursos
-        display: [nombre, fecha, hora, lugar, precio, permite_insc, ini_insc, fin_insc, habilitado]
+        display: [Zona, nombre, fecha, ini_insc, fin_insc, habilitado]
         object_actions:
           _delete: {label: Eliminar}
           _edit: {label: Modificar}
           inscriptos: ~
-          enviar: ~
         actions:
           _new: {label: Cargar Nuevo Curso}
       filter:
-        display: [nombre, fecha]
-      form:    ~
+        display: [zona_id, nombre, fecha]
+      form:
+        display: [zona_id, nombre, fecha, ini_insc, fin_insc, habilitado, logo]
       edit:
         title: Editar Curso
       new:

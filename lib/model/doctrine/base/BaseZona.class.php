@@ -26,6 +26,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @property Doctrine_Collection $ClienteUltimaCompra
  * @property Doctrine_Collection $ListadoCompras
  * @property Doctrine_Collection $ControlStock
+ * @property Doctrine_Collection $Curso
  * @property Doctrine_Collection $ClienteSaldo
  * @property Doctrine_Collection $FacturasAfip
  * @property Doctrine_Collection $UsuarioZona
@@ -52,6 +53,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Doctrine_Collection getClienteUltimaCompra() Returns the current record's "ClienteUltimaCompra" collection
  * @method Doctrine_Collection getListadoCompras()      Returns the current record's "ListadoCompras" collection
  * @method Doctrine_Collection getControlStock()        Returns the current record's "ControlStock" collection
+ * @method Doctrine_Collection getCurso()               Returns the current record's "Curso" collection
  * @method Doctrine_Collection getClienteSaldo()        Returns the current record's "ClienteSaldo" collection
  * @method Doctrine_Collection getFacturasAfip()        Returns the current record's "FacturasAfip" collection
  * @method Doctrine_Collection getUsuarioZona()         Returns the current record's "UsuarioZona" collection
@@ -77,6 +79,7 @@ Doctrine_Manager::getInstance()->bindComponent('Zona', 'doctrine');
  * @method Zona                setClienteUltimaCompra() Sets the current record's "ClienteUltimaCompra" collection
  * @method Zona                setListadoCompras()      Sets the current record's "ListadoCompras" collection
  * @method Zona                setControlStock()        Sets the current record's "ControlStock" collection
+ * @method Zona                setCurso()               Sets the current record's "Curso" collection
  * @method Zona                setClienteSaldo()        Sets the current record's "ClienteSaldo" collection
  * @method Zona                setFacturasAfip()        Sets the current record's "FacturasAfip" collection
  * @method Zona                setUsuarioZona()         Sets the current record's "UsuarioZona" collection
@@ -176,6 +179,10 @@ abstract class BaseZona extends sfDoctrineRecord
              'foreign' => 'zona_id'));
 
         $this->hasMany('ControlStock', array(
+             'local' => 'id',
+             'foreign' => 'zona_id'));
+
+        $this->hasMany('Curso', array(
              'local' => 'id',
              'foreign' => 'zona_id'));
 

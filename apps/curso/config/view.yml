@@ -1,7 +1,17 @@
 default:
   http_metas:
     content-type: text/html
-  stylesheets:    [inicio.css,chosen.css,colorpicker.css,cssmenu.css]
-  javascripts:    [funciones_ajax.js,chosen.jquery.min.js,colorpicker.js, maskedinput.js]
+
+  metas:
+    #title:        symfony project
+    #description:  symfony project
+    #keywords:     symfony, project
+    #language:     en
+    #robots:       index, follow
+
+  stylesheets:    [inicio.css]
+
+  javascripts:    []
+
   has_layout:     true
   layout:         layout

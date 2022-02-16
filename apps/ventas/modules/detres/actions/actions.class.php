@@ -224,11 +224,11 @@ class detresActions extends autoDetresActions
 		$zona = $resumen->getCliente()->getZonaId();
 
 		$lotes = Doctrine::getTable('Lote')->getLotesProductoZona($pid, $zona);
-		if (!$lotes) {
+		if (!$lotes[0]) {
 			$lotes_stock = array();
 		} else {
 			foreach ($lotes as $lote) 
-				$lotes_stock = array('nro_lote' => $lote->nro_lote, 'fecha_vto' => $lote->fecha_vto, 'stock' => $lote->stock);
+				$lotes_stock[] = array('nro_lote' => $lote->nro_lote, 'fecha_vto' => $lote->fecha_vto, 'stock' => $lote->stock);
 		}
 
 		if ($zona == 1 && $resumen->tipofactura_id != 4) {
@@ -246,7 +246,7 @@ class detresActions extends autoDetresActions
 		} else {
 			$lotes = $lotes_stock;
 		}
-  
+
     $options[] = '<option value=""></option>';
     foreach($lotes as $lote){
 			if (!empty($lote['fecha_vto'])) {
@@ -509,5 +509,22 @@ class detresActions extends autoDetresActions
 		
 		$this->getUser()->setFlash($tipo_msj, $msj);
 		$this->redirect('detres/index?rid='.$this->getRequestParameter('rid'));
-  }  
+  }
+	
+	public function executeListRecalcular(sfWebRequest $request){
+    $rid = $this->getUser()->getAttribute('rid', 0);
+		$resumen = Doctrine::getTable('Resumen')->find($rid);
+		$detalles = $resumen->getDetalle();
+		foreach ($detalles as $detalle) {
+			$recargo = $resumen->getTipoVenta()->porc_recargo/100?:0;
+			$precio = $detalle->precio;
+			$detalle->precio = $precio + ($precio * $recargo);
+			$detalle->sub_total = $detalle->precio * $detalle->cantidad;
+			$detalle->iva = $detalle->sub_total * 0.21;
+			$detalle->total = $detalle->sub_total + $detalle->iva;
+			$detalle->save();
+		}
+		$this->getUser()->setFlash('notice', 'Precios Recalculado en un '.$resumen->getTipoVenta()->porc_recargo.'%');
+		$this->redirect('detres/index?rid='.$rid);
+	}
 }

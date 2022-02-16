@@ -21,11 +21,14 @@ abstract class BaseCursoInscripcionFormFilter extends BaseFormFilterDoctrine
       'fecha'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'tipo_insc_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoInscripcion'), 'add_empty' => true)),
       'comentario'   => new sfWidgetFormFilterInput(),
-      'asistio'      => new sfWidgetFormFilterInput(),
-      'pago_monto'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'mas_info'     => new sfWidgetFormFilterInput(),
+      'asistio'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'pago'         => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'visto'        => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'compro'       => new sfWidgetFormFilterInput(),
       'observacion'  => new sfWidgetFormFilterInput(),
+      'telefono'     => new sfWidgetFormFilterInput(),
+      'dni'          => new sfWidgetFormFilterInput(),
+      'localidad'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -37,11 +40,14 @@ abstract class BaseCursoInscripcionFormFilter extends BaseFormFilterDoctrine
       'fecha'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'tipo_insc_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoInscripcion'), 'column' => 'id')),
       'comentario'   => new sfValidatorPass(array('required' => false)),
-      'asistio'      => new sfValidatorPass(array('required' => false)),
-      'pago_monto'   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'mas_info'     => new sfValidatorPass(array('required' => false)),
+      'asistio'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'pago'         => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'visto'        => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'compro'       => new sfValidatorPass(array('required' => false)),
       'observacion'  => new sfValidatorPass(array('required' => false)),
+      'telefono'     => new sfValidatorPass(array('required' => false)),
+      'dni'          => new sfValidatorPass(array('required' => false)),
+      'localidad'    => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('curso_inscripcion_filters[%s]');
@@ -70,11 +76,14 @@ abstract class BaseCursoInscripcionFormFilter extends BaseFormFilterDoctrine
       'fecha'        => 'Date',
       'tipo_insc_id' => 'ForeignKey',
       'comentario'   => 'Text',
-      'asistio'      => 'Text',
-      'pago_monto'   => 'Number',
-      'mas_info'     => 'Text',
+      'asistio'      => 'Boolean',
+      'pago'         => 'Boolean',
+      'visto'        => 'Boolean',
       'compro'       => 'Text',
       'observacion'  => 'Text',
+      'telefono'     => 'Text',
+      'dni'          => 'Text',
+      'localidad'    => 'Text',
     );
   }
 }
